@@ -1,8 +1,10 @@
 package com.freelapp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.freelapp.model.Cliente;
 import com.freelapp.repository.ClienteRepository;
@@ -33,22 +34,36 @@ public class ClientController {
 	}
 	 
 	 @GetMapping("/cliente-search")
-	 public String clienteByPartitaIva(Model model, @RequestParam(name = "partitaIva", required = false) String partitaIva) {
-         
-		    if (partitaIva == null || partitaIva.isBlank()) {
-		          return "redirect:/Clienti";
-		       }
-		    else { 
-		    	 
-		    	   List<Cliente> listaClienti = repositoryCliente.findByPartitaIva(partitaIva);
+	 public String clienteByPartitaIva(@Param("input") String input, Model model) {
 
-		           if (listaClienti.isEmpty()) 
-		    			         return "redirect:/Clienti";     
-		           else  {  
-		        	   		model.addAttribute("list", listaClienti);
-			    	  		return "redirect:/Clienti/" + listaClienti.get(0).getId(); 
-			                }   
-		          } 
+
+				List<Cliente> list = new ArrayList<Cliente>();
+				
+				if(!input.isEmpty()) {
+					
+					list = repositoryCliente.search(input);
+					
+				} 
+					
+				model.addAttribute("list", list);	
+				
+				return "Clienti/listClient";
+		 
+		 
+//		    if (input == null || input.isBlank()) {
+//		          return "redirect:/Clienti";
+//		       }
+//		    else { 
+//		    	 
+//		    	   list = repositoryCliente.search(input);
+//
+//		           if (list.isEmpty()) 
+//		    			         return "redirect:/Clienti";     
+//		           else  {  
+//		        	   		model.addAttribute("list", list);
+//			    	  		return "redirect:/Clienti/" + list.get(0).getId(); 
+//			                }   
+//		          } 
 	  }	
 	
 	@GetMapping("/Clienti/{id}")

@@ -99,10 +99,11 @@
 
 <div class="container mt-5">
   	<div class="text-center mb-5">
-  	  <form class="mx-auto w-50" role="search" method:"get" th:action="@{/cliente-search}">
+  	  <form class="mx-auto w-50" role="search" method:"get" th:object="${Cliente}" th:action="@{/cliente-search}">
   	    <label for="ticket-search">Ricerca per partita iva</label>
-      	   <input type="text" name="name" placeholder="PartitaIva" aria-label="Search">
-      	     <button class="btn btn-primary ms-2" type="submit">Search</button>
+      	   <input type="text" name="input" placeholder="PartitaIva" aria-label="Search">
+      	     	<button class="btn btn-primary ms-2" type="submit">Search</button>
+				<a class="btn btn-primary" th:href="@{/Clienti}">Annulla</a>	
         </form>
       </div>  
     </div>
