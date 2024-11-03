@@ -40,17 +40,13 @@ public class Task{
 	@Column(name = "DataChiusuraDefinitiva", nullable = false)
 	private LocalDate dataChiusuraDefinitiva;
 
-	
 	@OneToOne(cascade = CascadeType.ALL)
-	    @JoinColumn(name = "contatore_id", referencedColumnName = "id")
-	    private Contatore contatore;
+	@JoinColumn(name = "contatore_id", referencedColumnName = "id")
+	private Contatore contatore;
 
-	
 	@ManyToOne
 	@JoinColumn(name = "ProgettoRif", nullable = false)
 	private Progetto progetto;
-	
-	
 	
 	public Contatore getContatore() {
 	    return contatore;
@@ -100,8 +96,6 @@ public class Task{
 		this.dataChiusuraStimata = dataChiusuraStimata;
 	}
 
-	
-	
 	public Progetto getProgetto() {
 		return progetto;
 	}
