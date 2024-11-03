@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table (name = "contatore")
+@Table (name = "contatori")
 public class Contatore {
     
     @Id
@@ -30,13 +30,13 @@ public class Contatore {
 	private Time stop;
     
     @Column(name = "stop_numbers", nullable = true)
-    	private int stop_numbers;
+    private int stop_numbers;
 	
     @OneToOne(mappedBy = "contatore")
     private Task task;
     
     // getter e setters
-
+    
     public int getId() {
         return id;
     }

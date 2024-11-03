@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<title>ModificaProgetto</title>
+</head>
+
+  <body>
+	<header>
+		<!-- barra di navigazione --> 
+					<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+				        <div class="container">
+					   <img th:src="@{/img/task.png}" alt="task" width="50" />
+				            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+				                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+									<li class="nav-item">
+										<a class="nav-link active" aria-current="page" th:href="@{/dashboard}">Dashboard</a>
+									</li>
+				                    <li class="nav-item">
+				                        <a class="nav-link active" aria-current="page" href="#">Servizi</a>
+				                    </li>
+				                    <li class="nav-item">
+				                        <a class="nav-link active" href="#">Contatti</a>
+				                    </li>
+				                    <li class="nav-item">
+				                        <a class="nav-link active" aria-current="page" href="#">Login</a>
+				                    </li>
+				                </ul>
+				            </div>
+				        </div>
+				    </nav>
+		</header>
+	
+	<div class="text-center mt-5 mb-5">
+		<h1>Modifica il progetto</h1>
+	</div>
+	
+	<div class="container">
+		<form class="mx-auto w-50" id="formProgetto" th:object="${formProgetto}" th:action="@{/Progetti/edit/{id}(id=${formProgetto.getId()})}" method="post">
+			<input type="hidden" th:field="*{utente}" id="utente">
+			<input type="hidden" th:field="*{elencoTask}" id="elencoTask">
+			<input type="hidden" th:field="*{cliente}" id="cliente">
+			<div class="form-group mb-2" >
+			  <label for="name">Nome del progetto</label>
+			  <input type="text" class="form-control" id="name" th:field="*{name}" th:errorClass="is-invalid">
+			    <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+			  		<ul>
+			  			<li th:each="err: ${#fields.errors('name')}" th:text="${err}"></li>
+			  		</ul>
+			    </div>
+			</div>
+			
+			<div class="form-group mb-2" >
+				<label for="DataInizio" name="data"> DataInizio</label>
+				<input type="date" class="form-control" id="dataInizio" th:field="*{dataInizio}" th:errorClass="is-invalid">
+				     <div th:if="${#fields.hasErrors('dataInizio')}" class="invalid-feedback">
+						<ul>
+				   		   <li th:each="err : ${#fields.errors('dataInizio')}" th:text="${err}"></li>
+					    </ul>
+					</div>
+			</div>
+			
+			<div class="form-group mb-2" >
+				<label for="DataInizio" name="data"> DataFine</label>
+				<input type="date" class="form-control" id="dataFine" th:field="*{dataFine}" th:errorClass="is-invalid">
+					<div th:if="${#fields.hasErrors('dataFine')}" class="invalid-feedback">
+						<ul>
+							<li th:each="err : ${#fields.errors('dataFine')}" th:text="${err}"></li>
+						</ul>
+					</div>
+			</div>
+					 	 		 
+	    <button type="submit" class="btn btn-primary"> Aggiorna </button>		  					
+	</form>	
+</div>		
+	
+	<script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
+	</body>
+</html>

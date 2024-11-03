@@ -72,7 +72,29 @@ public class ProgettoController {
 				return "redirect:/Admin/" + formProgetto.getUtente().getId();       
 			}
 	
-	 
 			
-	
+			@GetMapping("/Progetti/edit/{id}")
+			public String edit(@PathVariable("id") Integer id, Model model) {
+				
+				Progetto formProgetto = repositProgetto.findById(id).get();
+				
+				model.addAttribute("formProgetto", formProgetto);
+				
+				return "/Progetti/editProgetto";
+			}
+			
+			
+			@PostMapping("/Progetti/edit/{id}")
+		    public String updateProgetto(@Valid @ModelAttribute("formProgetto") Progetto formProgetto, BindingResult bindingResult, Model model) {
+							
+				if(bindingResult.hasErrors()) {
+					return  "/Progetti/editProgetto";
+				}
+ 
+				repositProgetto.save(formProgetto);
+				
+				return "redirect:/Admin/" + formProgetto.getUtente().getId(); 
+			    }
+		
+			
 }

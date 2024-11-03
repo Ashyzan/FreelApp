@@ -78,6 +78,7 @@
 				<th>DataFine</th>
 				<th>Cliente</th>
 				<th>PagCliente</th>
+				<th>Progetto</th>
 				<th>ModificaProg</th>
 				<th>CancellaProg</th>
 			</tr>
@@ -91,8 +92,13 @@
 				<td><a th:fragment="button(link)"
 					class="btn btn-primary"
 					th:href="@{/Clienti/{id}(id=${progetto.getCliente.getId()})}">
-					<i class="bi bi-file-earmark-text w-5"></i>
+					    <i class="bi bi-file-earmark-text w-5"></i>
 			        </a>
+				</td>
+				<td> 
+					<a th:href="@{|/Progetti/${progetto.id}|}" class="btn btn-primary"> 
+						<i class="bi bi-file-earmark-text w-5"></i>
+					</a> 
 				</td>
 				<td> 
 					 <a th:href="@{|/Progetti/edit/${progetto.id}|}" class="btn btn-primary"> 

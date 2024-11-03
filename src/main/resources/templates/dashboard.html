@@ -69,6 +69,11 @@
 													<a class="btn btn-primary" style="color: whitesmoke;"
 														th:href="@{|/Admin/edit/${user.id}|}"><i class="bi bi-pencil"></i>
 													</a>
+													<a class="btn btn-primary" style="color: whitesmoke;"
+														th:href="@{|/Progetti/insert/${user.id}|}"><i class="bi bi-list-check"></i>
+													</a>
+													
+													
 													<!--
 													<form th:action="@{'/Admin/delete/{id}'(id=${user.id})}"
 														method="post">
@@ -147,9 +152,7 @@
 									<span> Non sono presenti Clienti nel DataBase </span>
 								</div>
 				</div>	
-				
-				
-				
+							
 </div>
 </section>
 <hr>
@@ -206,8 +209,10 @@
 <hr>
 
 <!-- sezione dedicata ai task -->
+
+<section class="container p-3">
 <div class="border 	border-primary rounded p-4">
-	<h2>Sezione dedicata ai task</h2>		
+	<h2>Sezione dedicata ai Task</h2>	
 </div>
 </section>
 <hr>

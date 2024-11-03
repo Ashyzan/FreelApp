@@ -50,6 +50,7 @@
 					<th>Indirizzo</th>
 					<th>Città</th>
 					<th>PartitaIva</th>
+					<th>PagCliente</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -60,6 +61,11 @@
 					<td th:text="${progetto.getCliente().getIndirizzo()}"></td>
 					<td th:text="${progetto.getCliente().getCittà()}"></td>
 					<td th:text="${progetto.getCliente().getPartitaIva()}"></td>
+					<td>
+						<a class="btn btn-primary" th:href="@{/Clienti/{id}(id=${progetto.getCliente.getId()})}">
+							<i class="bi bi-file-earmark-text w-5"></i>
+						</a>
+					</td>
 					</tr>
 			</tbody>
 		 </table>
