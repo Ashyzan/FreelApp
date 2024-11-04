@@ -56,23 +56,11 @@ public class Task{
 	@JoinColumn(name = "ProgettoRif", nullable = false)
 	private Progetto progetto;
 	
-<<<<<<< Updated upstream
-	
-	
-	public Contatore getContatore() {
-	    return contatore;
-	}
-
-	public void setContatore(Contatore contatore) {
-	    this.contatore = contatore;
-	}
-
-=======
 	@ManyToOne
 	@JoinColumn(name = "StatoRif", nullable = false)
 	private Stato stato;
 	
->>>>>>> Stashed changes
+
 	public int getId() {
 		return id;
 	}
@@ -121,7 +109,6 @@ public class Task{
 		this.dataChiusuraStimata = dataChiusuraStimata;
 	}
 
-	
 	
 	public Progetto getProgetto() {
 		return progetto;
