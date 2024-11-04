@@ -1,0 +1,15 @@
+Modifiche branch (ProgettoController e TaskController)
+
+Sezione di progetto: 
+- metodi per la modifica del progetto (ProgettoController)
+- file editProgetto.html 
+
+Sezione dei task: 
+- metodo per la visualizzazione dei dati di un task esistente e metodo per l'archiviazione di un task (TaskController)
+- file descrizioneTask.html e insertTask.html
+- entità Stato e StatoRepository
+
+
+
+
+
