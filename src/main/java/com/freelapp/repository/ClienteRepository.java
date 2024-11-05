@@ -9,12 +9,7 @@ import com.freelapp.model.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
 	
-//    List<Cliente> findByPartitaIva(String partitaIva);
-    
-    
-//    query custom per la ricerca per partita IVA
-//    @Query("SELECT c FROM Cliente c WHERE c.partitaIva LIKE '%'||:input||'%' ")
-	
+
     @Query("SELECT c FROM Cliente c WHERE c.name LIKE '%'||:input||'%' OR "
     		+ "c.ragioneSociale LIKE '%'||:input||'%' OR "
     		+ "c.email LIKE '%'||:input||'%' OR "
