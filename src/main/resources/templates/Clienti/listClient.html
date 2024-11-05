@@ -59,7 +59,7 @@
 				<td th:text="${cliente.email}"></td>
 			    <td th:text="${cliente.telefono}"></td>
 				<td th:text="${cliente.indirizzo}"></td>
-			    <td th:text="${cliente.città}"></td>
+			    <td th:text="${cliente.city}"></td>
 				<td th:text="${cliente.ragioneSociale}"></td>
 				<td th:text="${cliente.partitaIva}"></td>
 				<td>  
@@ -100,8 +100,8 @@
 <div class="container mt-5">
   	<div class="text-center mb-5">
   	  <form class="mx-auto w-50" role="search" method:"get" th:object="${Cliente}" th:action="@{/cliente-search}">
-  	    <label for="ticket-search">Ricerca per partita iva</label>
-      	   <input type="text" name="input" placeholder="PartitaIva" aria-label="Search">
+  	    <label for="ticket-search">Ricerca Cliente</label>
+      	   <input type="text" name="input" placeholder="Ricerca..." aria-label="Search">
       	     	<button class="btn btn-primary ms-2" type="submit">Search</button>
 				<a class="btn btn-primary" th:href="@{/Clienti}">Annulla</a>	
         </form>
