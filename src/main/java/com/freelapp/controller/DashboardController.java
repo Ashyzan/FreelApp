@@ -10,12 +10,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.freelapp.model.User;
+import com.freelapp.model.Task;
 import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
 import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.UserRepository;
 import com.freelapp.repository.ProgettoRepository;
-
+import com.freelapp.repository.TaskRepository;
 
 @Controller
 public class DashboardController {
@@ -28,6 +29,10 @@ public class DashboardController {
 	
 	@Autowired
 	private ProgettoRepository progettoRepository;
+	
+	@Autowired
+	private TaskRepository taskRepository;
+
 
 	@GetMapping("/dashboard")
 	public String index(Model model){
@@ -52,7 +57,14 @@ public class DashboardController {
 
 		model.addAttribute("progettiList", progettiList);
 		
+		
+		List<Task> taskList = new ArrayList<Task> ();
 
+		taskList = taskRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+
+		model.addAttribute("taskList", taskList);
+		
+		
 		return "dashboard";
 
 	}

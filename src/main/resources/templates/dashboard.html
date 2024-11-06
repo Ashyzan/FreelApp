@@ -183,6 +183,9 @@
 										<a class="btn btn-primary" style="color: whitesmoke;"
 											th:href="@{|/Progetti/edit/${progetto.id}|}"><i class="bi bi-pencil"></i>
 										</a>
+										<a class="btn btn-primary" style="color: whitesmoke;"
+													th:href="@{|/Task/insert/${progetto.id}|}"><i class="bi bi-list-check"></i>
+										</a>
 									    <!--
 										   <form th:action="@{'/Admin/delete/{id}'(id=${user.id})}" method="post">
 											    <button class="btn btn-danger" type="submit" id="submitButton"
@@ -207,7 +210,56 @@
 
 <!-- sezione dedicata ai task -->
 <div class="border 	border-primary rounded p-4">
+<<<<<<< Updated upstream
 	<h2>Sezione dedicata ai task</h2>		
+=======
+	<h2>Sezione dedicata ai Task</h2>	
+	
+	<div class="mb-3">
+	 <h4 class="text-center">Elenco dei task</h4>
+		<table id="table-2" class="table table-striped align-items-center"
+			   th:unless="${taskList.isEmpty()}">
+						<thead>
+						    <tr>
+							  <th class="col-4"> Nome </th>
+							  <th class="col-4"> DataInizio </th>
+							  <th class="col-4"> DataChiusuraStimata </th>
+							  <th class="col-4" style="text-align: center;"> Azioni</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="task : ${taskList}">
+								<td> <span th:text="${task.getName()}"></span>  </td>
+								<td> <span th:text=" ${task.getDataInizio()}"></span> </td>
+								<td> <span th:text=" ${task.getDataChiusuraStimata()}"></span> </td>
+								<td class="d-flex justify-content-center gap-2">
+									<a class="btn btn-primary" style="color: whitesmoke;"
+										th:href="@{|/Task/${task.id}|}"><i class="bi bi-search"></i>
+									</a>
+									<a class="btn btn-primary" style="color: whitesmoke;"
+										th:href="@{|/Task/edit/${task.id}|}"><i class="bi bi-pencil"></i>
+									</a>
+								    <!--
+									   <form th:action="@{'/Admin/delete/{id}'(id=${user.id})}" method="post">
+										    <button class="btn btn-danger" type="submit" id="submitButton"
+											  style=" color: whitesmoke;"
+											  th:data-confirm-delete="|Sei sicuro di voler cancellare il task?|"
+											  onclick="if(!confirm(this.getAttribute('data-confirm-delete'))) return false">
+											  <i class="bi bi-trash"></i>
+											 </button>
+										</form>
+									-->
+								</td>
+							</tr>
+						 </tbody>
+			</table>			
+		<div th:if="${taskList.isEmpty()}">
+			<span> Non sono presenti task nel DataBase </span>
+		</div>
+	</div>				
+	
+	
+>>>>>>> Stashed changes
 </div>
 </section>
 <hr>

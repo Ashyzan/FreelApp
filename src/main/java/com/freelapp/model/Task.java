@@ -14,6 +14,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull; 
+import com.freelapp.model.StatoTask;
 
 @Entity
 @Table(name = "tasks")
@@ -23,11 +24,16 @@ public class Task{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	@Column(name = "DenominazioneTask", nullable = false)
+ 	@NotBlank(message = "La denominazione del task non può essere null")
+	@NotNull(message = "La denominazione del task non può essere null")
+	private String name;
+	
 	@Column(name = "Descrizione", nullable = false)
  	@NotBlank(message = "La descrizione del progetto non può essere blank")
 	@NotNull(message = "La descrizione del progetto non può essere null")
 	private String descrizione;
-	
+		
 	@Column(name = "DataInizio", nullable = false)
 	@NotNull(message = "La data di inizio non può essere null")
 	private LocalDate dataInizio;
@@ -50,15 +56,10 @@ public class Task{
 	@JoinColumn(name = "ProgettoRif", nullable = false)
 	private Progetto progetto;
 	
+	@ManyToOne
+	@JoinColumn(name = "StatoRif", nullable = false)
+	private Stato stato;
 	
-	
-	public Contatore getContatore() {
-	    return contatore;
-	}
-
-	public void setContatore(Contatore contatore) {
-	    this.contatore = contatore;
-	}
 
 	public int getId() {
 		return id;
@@ -66,6 +67,14 @@ public class Task{
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getDescrizione() {
@@ -101,7 +110,6 @@ public class Task{
 	}
 
 	
-	
 	public Progetto getProgetto() {
 		return progetto;
 	}
@@ -110,6 +118,21 @@ public class Task{
 		this.progetto = progetto;
 	}
 	
+	public Stato getStato() {
+		return stato;
+	}
+
+	public void setStato(Stato stato) {
+		this.stato = stato;
+	}
+	
+	public Contatore getContatore() {
+	    return contatore;
+	}
+
+	public void setContatore(Contatore contatore) {
+	    this.contatore = contatore;
+	}
 }
 
 
