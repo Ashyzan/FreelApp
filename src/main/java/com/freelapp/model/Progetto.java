@@ -1,18 +1,19 @@
 package com.freelapp.model;
 
+import java.time.LocalDate;
 import java.util.List;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+
 import jakarta.persistence.Column;
-import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import java.time.LocalDate; 
+import jakarta.validation.constraints.NotNull; 
 
 @Entity
 @Table(name = "Progetti")
@@ -26,6 +27,9 @@ public class Progetto {
  	@NotBlank(message = "La denominazione del progetto non può essere null")
 	@NotNull(message = "La denominazione del progetto non può essere null")
 	private String name;
+	
+	@Column(name = "descrizione", nullable = true)
+	private String descrizione;
 	
 	@Column(name = "DataInizio", nullable = false)
 	@NotNull(message = "La data di inizio non può essere null")
@@ -46,6 +50,15 @@ public class Progetto {
 	@JoinColumn(name = "UtenteRif", nullable = false)
 	private User utente;
 	
+	
+	public String getDescrizione() {
+	    return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+	    this.descrizione = descrizione;
+	}
+
 	public int getId() {
 		return id;
 	}
