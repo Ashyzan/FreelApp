@@ -11,6 +11,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate; 
 
@@ -26,6 +27,12 @@ public class Progetto {
  	@NotBlank(message = "La denominazione del progetto non può essere null")
 	@NotNull(message = "La denominazione del progetto non può essere null")
 	private String name;
+	
+	@Column(name = "Descrizione", nullable = false)
+	@Size(min = 1, max =500 , message="massimo 500 caratteri")
+ 	@NotBlank(message = "La descrizione del progetto non può essere blank")
+	@NotNull(message = "La descrizione del progetto non può essere null")
+	private String descrizione;
 	
 	@Column(name = "DataInizio", nullable = false)
 	@NotNull(message = "La data di inizio non può essere null")
@@ -62,6 +69,14 @@ public class Progetto {
 		this.name = name;
 	}
 
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+	
 	public LocalDate getDataInizio() {
 		return dataInizio;
 	}

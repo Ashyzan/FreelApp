@@ -11,10 +11,8 @@ public enum StatoTask {
 		this.numerazione = numerazione;
 		 }
 	
-	 public int getNumerazione() {
-	        return numerazione;
-	    }
-	
-	
+	public int getNumerazione() {
+	    return numerazione;
+	     }
 }
 

@@ -14,7 +14,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull; 
-import com.freelapp.model.StatoTask;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tasks")
@@ -30,6 +30,7 @@ public class Task{
 	private String name;
 	
 	@Column(name = "Descrizione", nullable = false)
+	@Size(min = 1, max =500 , message="massimo 500 caratteri")
  	@NotBlank(message = "La descrizione del progetto non può essere blank")
 	@NotNull(message = "La descrizione del progetto non può essere null")
 	private String descrizione;
@@ -42,16 +43,14 @@ public class Task{
 	@Column(name = "DataChiusuraStimata", nullable = false)
 	private LocalDate dataChiusuraStimata;
 	
-	@NotNull(message = "La data di chiusura definitiva non può essere null")
+	//@NotNull(message = "La data di chiusura definitiva non può essere null")
 	@Column(name = "DataChiusuraDefinitiva", nullable = false)
 	private LocalDate dataChiusuraDefinitiva;
 
-	
 	@OneToOne(cascade = CascadeType.ALL)
-	    @JoinColumn(name = "contatore_id", referencedColumnName = "id")
-	    private Contatore contatore;
+	@JoinColumn(name = "contatore_id", referencedColumnName = "id")
+	private Contatore contatore;
 
-	
 	@ManyToOne
 	@JoinColumn(name = "ProgettoRif", nullable = false)
 	private Progetto progetto;
@@ -60,7 +59,6 @@ public class Task{
 	@JoinColumn(name = "StatoRif", nullable = false)
 	private Stato stato;
 	
-
 	public int getId() {
 		return id;
 	}
@@ -109,7 +107,6 @@ public class Task{
 		this.dataChiusuraStimata = dataChiusuraStimata;
 	}
 
-	
 	public Progetto getProgetto() {
 		return progetto;
 	}

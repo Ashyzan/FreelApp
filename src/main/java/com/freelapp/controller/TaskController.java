@@ -1,5 +1,7 @@
 package com.freelapp.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +16,10 @@ import jakarta.validation.Valid;
 import com.freelapp.model.Task;
 import com.freelapp.repository.TaskRepository;
 import com.freelapp.model.Stato;
+import com.freelapp.repository.StatoRepository;
 import com.freelapp.model.Progetto;
 import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.model.StatoTask;
-
 
 @Controller
 public class TaskController {
@@ -28,6 +30,8 @@ public class TaskController {
 	@Autowired
 	private ProgettoRepository repositProgetto;
 	
+	@Autowired
+	private StatoRepository repositStato;
 	
 			@GetMapping("/Task/{id}")
 			public String descrizioneTask(@PathVariable("id") int taskId, Model model) {
@@ -51,8 +55,8 @@ public class TaskController {
 				return "/Task/insertTask";
 			}
 	
-	
-			@PostMapping("/Task/insert/{id}")
+
+			@PostMapping("/Task/insert")
 			public String storeTask(@Valid @ModelAttribute("formTask") Task formTask, BindingResult bindingResult, Model model) {
 		
 				if(bindingResult.hasErrors()) {
@@ -68,6 +72,34 @@ public class TaskController {
 				
 				 return "redirect:/Progetti/" + formTask.getProgetto().getId();       
 			}
-		
 			
+			
+			@GetMapping("/Task/edit/{id}")
+			public String edit(@PathVariable("id") Integer id, Model model) {
+				
+				List<Stato> listStati = repositStato.findAll();  
+				
+				Task formTask = repositTask.findById(id).get();
+				
+			    model.addAttribute("statiForm", listStati);
+				model.addAttribute("formTask", formTask);
+				
+				return "/Task/editTask";
+			}
+			
+			
+			@PostMapping("/Task/edit/{id}")
+		    public String updateTask(@Valid @ModelAttribute("formTask") Task formTask, BindingResult bindingResult, Model model) {
+							
+				if(bindingResult.hasErrors()) {
+					model.addAttribute("statiForm", repositStato.findAll());
+					return  "/Task/editTask";
+				}
+ 
+				repositTask.save(formTask);
+				
+				return "redirect:/Progetti/" + formTask.getProgetto().getId(); 
+				     
+			    }
+		
 }
