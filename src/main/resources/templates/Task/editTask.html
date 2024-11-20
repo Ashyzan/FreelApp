@@ -98,7 +98,7 @@
 					   <select class="form-select" id="stato" th:field="*{stato}" th:errorClass="is-invalid" >
 							<option th:each="stato : ${statiForm}" th:value="${stato.id}" th:text="${stato.tipoStato}"></option>
 						</select>	
-			</div>
+			</div ciao>
 				<div th:if="${#fields.hasErrors('stato')}" class="invalid-feedback">
 				     <ul>
 						<li th:each="err : ${#fields.errors('stato')}" th:text="${err}"></li>
