@@ -9,6 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -28,6 +30,11 @@ public class Progetto {
 	@NotNull(message = "La denominazione del progetto non può essere null")
 	private String name;
 	
+
+	
+	@Size(min = 1, max =500 , message="massimo 500 caratteri")
+ 	@NotBlank(message = "La descrizione del progetto non può essere blank")
+	@NotNull(message = "La descrizione del progetto non può essere null")
 	@Column(name = "descrizione", nullable = true)
 	private String descrizione;
 	
@@ -75,6 +82,14 @@ public class Progetto {
 		this.name = name;
 	}
 
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+	
 	public LocalDate getDataInizio() {
 		return dataInizio;
 	}

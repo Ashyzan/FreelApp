@@ -5,7 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">		 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">	
+  
   <title>Dashboard</title>
 </head>
 
@@ -34,7 +35,6 @@
 		      </div>
 	</nav>
 </header>
-
 
 <!--	sezione per prove utente -->
 <section class="container p-3">
@@ -69,6 +69,11 @@
 													<a class="btn btn-primary" style="color: whitesmoke;"
 														th:href="@{|/Admin/edit/${user.id}|}"><i class="bi bi-pencil"></i>
 													</a>
+													<a class="btn btn-primary" style="color: whitesmoke;"
+														th:href="@{|/Progetti/insert/${user.id}|}"><i class="bi bi-list-check"></i>
+													</a>
+													
+													
 													<!--
 													<form th:action="@{'/Admin/delete/{id}'(id=${user.id})}"
 														method="post">
@@ -92,7 +97,6 @@
 
 </section>
 <hr>
-
 
 <!-- sezione per prove clienti -->
 <section class="container p-3">
@@ -147,9 +151,7 @@
 									<span> Non sono presenti Clienti nel DataBase </span>
 								</div>
 				</div>	
-				
-				
-				
+							
 </div>
 </section>
 <hr>
@@ -212,6 +214,7 @@
 <hr>
 
 <!-- sezione dedicata ai task -->
+
 <section class="container p-3">
 	<div class="border 	border-primary rounded p-4">
 		<h2>Sezione dedicata ai Task</h2>	
@@ -220,7 +223,7 @@
 		</div>
 		<div class="mb-3">
 	 		<h4 class="text-center">Elenco dei task</h4>
-			<table id="table-2" class="table table-striped align-items-center"
+			<table id="table-2" class="table table-striped align-items-center>
 			   th:unless="${taskList.isEmpty()}">
 						<thead>
 						    <tr>
@@ -258,9 +261,10 @@
 			</table>			
 			<div th:if="${taskList.isEmpty()}">
 			<span> Non sono presenti task nel DataBase </span>
+
 			</div>
 		</div>				
-	</div>
+  </div>
 </section>
 <hr>
 
