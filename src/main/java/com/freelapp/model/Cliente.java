@@ -46,7 +46,7 @@ public class Cliente {
 	@Column(name = "Città", nullable = false)
 	@NotNull(message = "La città non può essere null")
 	@NotBlank(message = "La città non può essere blank ")
-	private String città;
+	private String city;
 	
 	@Column(name = "PartitaIva", nullable = false)
 	@NotNull(message = "La partitaIva non può essere null")
@@ -104,12 +104,14 @@ public class Cliente {
 		this.indirizzo = indirizzo;
 	}
 
-	public String getCittà() {
-		return città;
+	
+
+	public String getCity() {
+		return city;
 	}
 
-	public void setCittà(String città) {
-		this.città = città;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	public String getPartitaIva() {

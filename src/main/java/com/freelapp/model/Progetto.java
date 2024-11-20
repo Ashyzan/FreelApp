@@ -1,19 +1,21 @@
 package com.freelapp.model;
 
+import java.time.LocalDate;
 import java.util.List;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+
 import jakarta.persistence.Column;
-import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import java.time.LocalDate; 
+import jakarta.validation.constraints.NotNull; 
 
 @Entity
 @Table(name = "Progetti")
@@ -28,10 +30,12 @@ public class Progetto {
 	@NotNull(message = "La denominazione del progetto non può essere null")
 	private String name;
 	
-	@Column(name = "Descrizione", nullable = false)
+
+	
 	@Size(min = 1, max =500 , message="massimo 500 caratteri")
  	@NotBlank(message = "La descrizione del progetto non può essere blank")
 	@NotNull(message = "La descrizione del progetto non può essere null")
+	@Column(name = "descrizione", nullable = true)
 	private String descrizione;
 	
 	@Column(name = "DataInizio", nullable = false)
@@ -53,6 +57,15 @@ public class Progetto {
 	@JoinColumn(name = "UtenteRif", nullable = false)
 	private User utente;
 	
+	
+	public String getDescrizione() {
+	    return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+	    this.descrizione = descrizione;
+	}
+
 	public int getId() {
 		return id;
 	}

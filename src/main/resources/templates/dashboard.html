@@ -160,7 +160,10 @@
 <section class="container p-3">
 <div class="border 	border-primary rounded p-4">
 	<h2>Sezione dedicata ai progetti</h2>
-	
+	<div class="mb-3 text-end">
+		<a class="btn btn-primary" th:href="@{/Progetti/insert}">Inserisci nuovo Progetto</a>
+		<!-- <a class="btn btn-primary" th:href="@{/Clienti}">Vai alla lista dettagliata dei Progetti</a> -->
+	</div>
 	<div class="mb-3">
 		 <h4 class="text-center">Elenco dei progetti</h4>
 			<table id="table-2" class="table table-striped align-items-center"
@@ -213,12 +216,14 @@
 <!-- sezione dedicata ai task -->
 
 <section class="container p-3">
-<div class="border 	border-primary rounded p-4">
-	<h2>Sezione dedicata ai Task</h2>	
-	
-	<div class="mb-3">
-	 <h4 class="text-center">Elenco dei task</h4>
-		<table id="table-2" class="table table-striped align-items-center"
+	<div class="border 	border-primary rounded p-4">
+		<h2>Sezione dedicata ai Task</h2>	
+		<div class="mb-3 text-end">
+			<a class="btn btn-primary" th:href="@{/Admin/insert}">Inserisci nuovo Task</a>
+		</div>
+		<div class="mb-3">
+	 		<h4 class="text-center">Elenco dei task</h4>
+			<table id="table-2" class="table table-striped align-items-center>
 			   th:unless="${taskList.isEmpty()}">
 						<thead>
 						    <tr>
@@ -254,13 +259,12 @@
 							</tr>
 						 </tbody>
 			</table>			
-		<div th:if="${taskList.isEmpty()}">
+			<div th:if="${taskList.isEmpty()}">
 			<span> Non sono presenti task nel DataBase </span>
-		</div>
-	</div>				
-	
-	
-</div>
+
+			</div>
+		</div>				
+  </div>
 </section>
 <hr>
 

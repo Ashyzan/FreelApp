@@ -81,11 +81,11 @@
 			 </div>
 			 			 
 			 <div class="form-group mb-2">			  
-			 	<label for="città">Città:</label>
-			 	<input type="text" class="form-control" id="città" th:field="*{città}" th:errorClass="is-invalid">
-			 		<div th:if="${#fields.hasErrors('città')}" class="invalid-feedback">
+			 	<label for="city">Città:</label>
+			 	<input type="text" class="form-control" id="city" th:field="*{city}" th:errorClass="is-invalid">
+			 		<div th:if="${#fields.hasErrors('city')}" class="invalid-feedback">
 			 			 <ul>
-			 			 	<li th:each="err:${#fields.errors('città')}" th:text="${err}"></li>
+			 			 	<li th:each="err:${#fields.errors('city')}" th:text="${err}"></li>
 			 			 </ul>
 			 		</div>
 			 	</div>
