@@ -2,6 +2,7 @@ package com.freelapp.model;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,15 +37,18 @@ public class Task{
 	private String descrizione;
 		
 	@Column(name = "DataInizio", nullable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "La data di inizio non può essere null")
 	private LocalDate dataInizio;
 	
 	@NotNull(message = "La data di chiusura stimata non può essere null")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "DataChiusuraStimata", nullable = false)
 	private LocalDate dataChiusuraStimata;
 	
 	//@NotNull(message = "La data di chiusura definitiva non può essere null")
 	@Column(name = "DataChiusuraDefinitiva", nullable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataChiusuraDefinitiva;
 
 	@OneToOne(cascade = CascadeType.ALL)

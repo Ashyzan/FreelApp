@@ -46,7 +46,7 @@
 			<input type="hidden" th:field="*{stato}" id="stato">
 			<input type="hidden" th:field="*{dataChiusuraDefinitiva}" id="dataChiusuraDefinitiva">
 			<div class="form-group mb-2" >
-			  <label for="name">Nome del task</label>
+			  <label for="input">Nome del task</label>
 			  <input type="text" class="form-control" id="name" th:field="*{name}" th:errorClass="is-invalid">
 			    <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
 			  		<ul>
@@ -56,7 +56,7 @@
 			</div>
 						
 			<div class="form-group mb-2" >
-			  <label for="descrizione">Descrizione</label>
+			  <label for="input">Descrizione</label>
 				<textarea class="form-control" id="descrizione" name="descrizione" th:field="*{descrizione}" th:errorClass="is-invalid"></textarea>
 					<div th:if="${#fields.hasErrors('descrizione')}" class="invalid-feedback">
 								<ul>
@@ -66,7 +66,7 @@
 			</div>
 			
 			<div class="form-group mb-2" >
-				<label for="DataInizio" name="data"> DataInizio</label>
+				<label for="input"> DataInizio</label>
 				<input type="date" class="form-control" id="dataInizio" th:field="*{dataInizio}" th:errorClass="is-invalid">
 				     <div th:if="${#fields.hasErrors('dataInizio')}" class="invalid-feedback">
 						<ul>
@@ -76,7 +76,7 @@
 			</div>
 			
 			<div class="form-group mb-2" >
-				<label for="DataChiusuraStimata" name="data"> DataChiusuraStimata</label>
+				<label for="input"> DataChiusuraStimata</label>
 				<input type="date" class="form-control" id="dataChiusuraStimata" th:field="*{dataChiusuraStimata}" th:errorClass="is-invalid">
 					<div th:if="${#fields.hasErrors('dataChiusuraStimata')}" class="invalid-feedback">
 						<ul>
