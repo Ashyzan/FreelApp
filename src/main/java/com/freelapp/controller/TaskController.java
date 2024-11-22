@@ -63,13 +63,15 @@ public class TaskController {
 					return "/Task/insertTask";
 				}
 				
+	
 				 StatoTask st = StatoTask.IN_CORSO;
 				 Stato s = new Stato();
 				 s.setTipoStato(st);
 				 formTask.setStato(s);
 				 
 				 repositTask.save(formTask);
-				
+				 
+
 				 return "redirect:/Progetti/" + formTask.getProgetto().getId();       
 			}
 			
