@@ -62,3 +62,5 @@ src/main/java/com/freelapp/model/Task.java
 src/main/resources/templates/Task/editTask.html
 src/main/resources/templates/Task/editTask.html
 src/main/resources/application.properties
+src/main/resources/application.properties
+src/main/resources/templates/Task/editTask.html
