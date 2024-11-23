@@ -218,13 +218,9 @@
 <section class="container p-3">
 	<div class="border 	border-primary rounded p-4">
 		<h2>Sezione dedicata ai Task</h2>	
-		<div class="mb-3 text-end">
-			<a class="btn btn-primary" th:href="@{/Admin/insert}">Inserisci nuovo Task</a>
-		</div>
 		<div class="mb-3">
 	 		<h4 class="text-center">Elenco dei task</h4>
-			<table id="table-2" class="table table-striped align-items-center>
-			   th:unless="${taskList.isEmpty()}">
+			<table id="table-2" class="table table-striped align-items-center" th:unless="${taskList.isEmpty()}">
 						<thead>
 						    <tr>
 							  <th class="col-4"> Nome </th>
@@ -246,7 +242,7 @@
 										th:href="@{|/Task/edit/${task.id}|}"><i class="bi bi-pencil"></i>
 									</a>
 								    <!--
-									   <form th:action="@{'/Admin/delete/{id}'(id=${user.id})}" method="post">
+									   <form th:action="@{'/Task/delete/{id}'(id=${user.id})}" method="post">
 										    <button class="btn btn-danger" type="submit" id="submitButton"
 											  style=" color: whitesmoke;"
 											  th:data-confirm-delete="|Sei sicuro di voler cancellare il task?|"

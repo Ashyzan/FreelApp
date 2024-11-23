@@ -30,8 +30,6 @@ public class Progetto {
 	@NotNull(message = "La denominazione del progetto non può essere null")
 	private String name;
 	
-
-	
 	@Size(min = 1, max =500 , message="massimo 500 caratteri")
  	@NotBlank(message = "La descrizione del progetto non può essere blank")
 	@NotNull(message = "La descrizione del progetto non può essere null")
@@ -57,15 +55,6 @@ public class Progetto {
 	@JoinColumn(name = "UtenteRif", nullable = false)
 	private User utente;
 	
-	
-	public String getDescrizione() {
-	    return descrizione;
-	}
-
-	public void setDescrizione(String descrizione) {
-	    this.descrizione = descrizione;
-	}
-
 	public int getId() {
 		return id;
 	}
