@@ -1,6 +1,7 @@
 package com.freelapp.model;
 
 import java.sql.Time;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,15 +20,24 @@ public class Contatore {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
     
-    @Column(name = "start", nullable = false)
+    @Column(name = "timeStart", nullable = false)
 	@NotNull(message = "Start non può essere null")
 	private Time start;
     
-    @Column(name = "pause", nullable = true)
+    @Column(name = "dateStart")
+    	private LocalDate startDate;
+    
+    @Column(name = "timePause", nullable = true)
 	private Time pause;
+    
+    @Column(name = "pauseDate")
+    	private LocalDate pauseDate; /* forse superfluo?*/
 	
-    @Column(name = "stop", nullable = true)
+    @Column(name = "timeStop", nullable = true)
 	private Time stop;
+    
+    @Column(name = "stopDate")
+    	private LocalDate stopDate;
     
     @Column(name = "stop_numbers", nullable = true)
     	private int stop_numbers;
