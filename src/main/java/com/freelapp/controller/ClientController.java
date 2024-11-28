@@ -1,9 +1,14 @@
 package com.freelapp.controller;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+
+
+
+
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.freelapp.model.Cliente;
 import com.freelapp.repository.ClienteRepository;
+import com.freelapp.service.ClienteService;
 
 import jakarta.validation.Valid;
 
@@ -24,28 +30,82 @@ public class ClientController {
 	@Autowired
 	private ClienteRepository repositoryCliente;
 	
+	@Autowired
+	private ClienteService clienteService;
 	
-	 @GetMapping("/Clienti")
-	 public String listaClienti(Model model) {
 	
-		List<Cliente> listaClienti = repositoryCliente.findAll();
-		model.addAttribute("list", listaClienti);
+//	@GetMapping("/Clienti")
+//	public String listaClienti(Model model) {
+//		
+//		List<Cliente> listaClienti = repositoryCliente.findAll();
+//		
+//		model.addAttribute("list", listaClienti);
+//		
+//		return "/Clienti/listClient";
+//	} 
+	
+	@GetMapping("/Clienti")
+	public String listaClienti(Model model) {
+		
+		return getOnePage(1, model );
+	} 
+	
+	
+	@GetMapping("/Clienti/page/{pageNumber}")
+	public String getOnePage(@PathVariable("pageNumber") int currentPage, Model model ) {
+		
+		Page<Cliente> page = clienteService.findPage(currentPage);
+		
+		int totalPages = page.getTotalPages();
+		
+		long totalItems = page.getTotalElements();
+		
+		List<Cliente> listClienti = page.getContent();
+		
+		model.addAttribute("list", listClienti);
+		
+		model.addAttribute("currentPage", currentPage);
+	
+		model.addAttribute("totalPages", totalPages);
+		
+		model.addAttribute("totalItems", totalItems);
+		
 		return "/Clienti/listClient";
-	}
-	 
-	 @GetMapping("/cliente-search")
-	 public String clienteByPartitaIva(@Param("input") String input, Model model) {
+	} 
+	
+	@GetMapping("/cliente-search")
+	public String listaClientiSearch(@Param("input") String input,Model model) {
+		
+		return clienteBySearch(1, input, model);
+	} 
+		 
+	 @GetMapping("/cliente-search/page/{numberPage}")
+	 public String clienteBySearch(@PathVariable("pageNumber") int currentPage, String input,
+			 	Model model) {
 
+//		 		List<Cliente> list = new ArrayList<Cliente>();
+//
+//				 if(!input.isEmpty()) {
+//					 
+//					 list = repositoryCliente.search(input);
+//					 
+//				 } 
+				 
+				 Page<Cliente> page = clienteService.findSearchedPage(currentPage,input);
 
-				List<Cliente> list = new ArrayList<Cliente>();
+				 int totalPages = page.getTotalPages();
+				 
+				 long totalItems = page.getTotalElements();
+				 
+				 List<Cliente> listaClientiSearch = page.getContent();
 				
-				if(!input.isEmpty()) {
-					
-					list = repositoryCliente.search(input);
-					
-				} 
-					
-				model.addAttribute("list", list);	
+				model.addAttribute("currentPage", currentPage);
+			
+				model.addAttribute("totalPages", totalPages);
+				
+				model.addAttribute("totalItems", totalItems);
+				
+				model.addAttribute("list", listaClientiSearch);	
 				
 				return "Clienti/listClient";
 		 
@@ -126,6 +186,8 @@ public class ClientController {
 		
 		return "redirect:/Clienti";
 	  }
+
+	
 }
 	
 
