@@ -46,32 +46,32 @@ public class TaskController {
 				
 				Progetto progetto = repositProgetto.findById(id).get();
 				
+				//Progetto progetto = repositProgetto.getReferenceById(id);
+								
 				Task formTask = new Task();
-				
+			
 				formTask.setProgetto(progetto);
-			 
+			
+				StatoTask st = StatoTask.IN_CORSO;
+				Stato s = new Stato();
+				s.setTipoStato(st);
+				formTask.setStato(s);
+				
 				model.addAttribute("formTask", formTask);
 				
 				return "/Task/insertTask";
 			}
 	
 
-			@PostMapping("/Task/insert")
+			@PostMapping("/Task/insert/{id}")
 			public String storeTask(@Valid @ModelAttribute("formTask") Task formTask, BindingResult bindingResult, Model model) {
-		
-				if(bindingResult.hasErrors()) {
-					return "/Task/insertTask";
-				}
-				
-	
-				 StatoTask st = StatoTask.IN_CORSO;
-				 Stato s = new Stato();
-				 s.setTipoStato(st);
-				 formTask.setStato(s);
-				 
+			
+				//if(bindingResult.hasErrors()) {
+					//return "/Task/insertTask";
+			    //}
+							
 				 repositTask.save(formTask);
-				 
-
+				
 				 return "redirect:/Progetti/" + formTask.getProgetto().getId();       
 			}
 			
@@ -81,7 +81,7 @@ public class TaskController {
 				
 				List<Stato> listStati = repositStato.findAll();  
 				
-				Task formTask = repositTask.findById(id).get();
+				Task formTask = repositTask.getReferenceById(id);
 				
 			    model.addAttribute("statiForm", listStati);
 				model.addAttribute("formTask", formTask);
@@ -91,12 +91,12 @@ public class TaskController {
 			
 			
 			@PostMapping("/Task/edit/{id}")
-		    public String updateTask(@Valid @ModelAttribute("formTask") Task formTask, BindingResult bindingResult, Model model) {
-							
+		    public String updateTask(@Valid @ModelAttribute("formTask") Task formTask, BindingResult bindingResult, Model model) {					
+				
 				if(bindingResult.hasErrors()) {
-					model.addAttribute("statiForm", repositStato.findAll());
-					return  "/Task/editTask";
-				}
+				   model.addAttribute("statiForm", repositStato.findAll());
+				   return  "/Task/editTask";				
+				   }
  
 				repositTask.save(formTask);
 				
