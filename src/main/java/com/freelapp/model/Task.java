@@ -17,6 +17,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull; 
 import jakarta.validation.constraints.Size;
 
+
 @Entity
 @Table(name = "tasks")
 public class Task{
@@ -37,17 +38,15 @@ public class Task{
 	private String descrizione;
 		
 	@Column(name = "DataInizio", nullable = false)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "La data di inizio non può essere null")
 	private LocalDate dataInizio;
 	
 	@NotNull(message = "La data di chiusura stimata non può essere null")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "DataChiusuraStimata", nullable = false)
 	private LocalDate dataChiusuraStimata;
 	
 	//@NotNull(message = "La data di chiusura definitiva non può essere null")
-	@Column(name = "DataChiusuraDefinitiva", nullable = false)
+	@Column(name = "DataChiusuraDefinitiva", nullable = true)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataChiusuraDefinitiva;
 

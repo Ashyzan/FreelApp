@@ -40,13 +40,15 @@
 	</div>
 	
 	<div class="container">
-		<form class="mx-auto w-50" id="formTask" th:object="${formTask}" th:action="@{/Task/insert}" method="post">
-			<input type="hidden" th:field="*{progetto}" id="progetto">
+		<form class="mx-auto w-50" id="formTask" th:object="${formTask}" th:action="@{|/Task/insert/${id}|}" method="post">
+			
+			<input type="hidden" th:field="*{progetto}" >
 			<input type="hidden" th:field="*{contatore}" id="contatore">
 			<input type="hidden" th:field="*{stato}" id="stato">
 			<input type="hidden" th:field="*{dataChiusuraDefinitiva}" id="dataChiusuraDefinitiva">
+			
 			<div class="form-group mb-2" >
-			  <label for="input">Nome del task</label>
+			  <label for="name">Nome del task</label>
 			  <input type="text" class="form-control" id="name" th:field="*{name}" th:errorClass="is-invalid">
 			    <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
 			  		<ul>
@@ -56,7 +58,7 @@
 			</div>
 						
 			<div class="form-group mb-2" >
-			  <label for="input">Descrizione</label>
+			  <label for="descrizione">Descrizione</label>
 				<textarea class="form-control" id="descrizione" name="descrizione" th:field="*{descrizione}" th:errorClass="is-invalid"></textarea>
 					<div th:if="${#fields.hasErrors('descrizione')}" class="invalid-feedback">
 								<ul>
@@ -66,7 +68,7 @@
 			</div>
 			
 			<div class="form-group mb-2" >
-				<label for="input"> DataInizio</label>
+				<label for="DataInizio" name="data"> DataInizio</label>
 				<input type="date" class="form-control" id="dataInizio" th:field="*{dataInizio}" th:errorClass="is-invalid">
 				     <div th:if="${#fields.hasErrors('dataInizio')}" class="invalid-feedback">
 						<ul>
@@ -76,7 +78,7 @@
 			</div>
 			
 			<div class="form-group mb-2" >
-				<label for="input"> DataChiusuraStimata</label>
+				<label for="DataChiusuraStimata" name="data"> DataChiusuraStimata</label>
 				<input type="date" class="form-control" id="dataChiusuraStimata" th:field="*{dataChiusuraStimata}" th:errorClass="is-invalid">
 					<div th:if="${#fields.hasErrors('dataChiusuraStimata')}" class="invalid-feedback">
 						<ul>

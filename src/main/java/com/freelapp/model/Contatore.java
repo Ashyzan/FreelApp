@@ -1,6 +1,7 @@
 package com.freelapp.model;
 
-import java.sql.Time;
+//import java.sql.Time;
+import java.time.LocalTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,31 +13,30 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table (name = "contatore")
+@Table (name = "contatori")
 public class Contatore {
     
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
     
-    @Column(name = "start", nullable = false)
+    @Column(name = "start", nullable = true)
 	@NotNull(message = "Start non può essere null")
-	private Time start;
-    
+    private LocalTime start;
+	
     @Column(name = "pause", nullable = true)
-	private Time pause;
+	private LocalTime pause;
 	
     @Column(name = "stop", nullable = true)
-	private Time stop;
+	private LocalTime stop;
     
     @Column(name = "stop_numbers", nullable = true)
-    	private int stop_numbers;
+    private int stop_numbers;
 	
     @OneToOne(mappedBy = "contatore")
     private Task task;
     
     // getter e setters
-
     public int getId() {
         return id;
     }
@@ -45,31 +45,32 @@ public class Contatore {
         this.id = id;
     }
 
-    public Time getStart() {
-        return start;
-    }
 
-    public void setStart(Time start) {
-        this.start = start;
-    }
+	public LocalTime getStart() {
+		return start;
+	}
 
-    public Time getPause() {
-        return pause;
-    }
+	public void setStart(LocalTime start) {
+		this.start = start;
+	}
 
-    public void setPause(Time pause) {
-        this.pause = pause;
-    }
+	public LocalTime getPause() {
+		return pause;
+	}
 
-    public Time getStop() {
-        return stop;
-    }
+	public void setPause(LocalTime pause) {
+		this.pause = pause;
+	}
 
-    public void setStop(Time stop) {
-        this.stop = stop;
-    }
+	public LocalTime getStop() {
+		return stop;
+	}
 
-    public Task getTask() {
+	public void setStop(LocalTime stop) {
+		this.stop = stop;
+	}
+
+	public Task getTask() {
         return task;
     }
 
@@ -84,5 +85,5 @@ public class Contatore {
     public void setStop_numbers(int stop_numbers) {
         this.stop_numbers = stop_numbers;
     }
-	
+    
 }
