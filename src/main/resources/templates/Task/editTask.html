@@ -40,7 +40,7 @@
 	</div>
 	
 	<div class="container">
-		<form class="mx-auto w-50" id="formTask" th:object="${formTask}" th:action="@{/Task/edit/{id}(id=${formTask.getId()})}" method="post">
+		<form class="mx-auto w-50" id="formTask" th:object="${formTask}" th:action="@{|/Task/edit/${id}|}" method="post">
 			<input type="hidden" th:field="*{progetto}" id="progetto">
 			<input type="hidden" th:field="*{contatore}" id="contatore">
 			<div class="form-group mb-2" >
@@ -98,7 +98,7 @@
 					   <select class="form-select" id="stato" th:field="*{stato}" th:errorClass="is-invalid" >
 							<option th:each="stato : ${statiForm}" th:value="${stato.id}" th:text="${stato.tipoStato}"></option>
 						</select>	
-			</div ciao>
+			</div>
 				<div th:if="${#fields.hasErrors('stato')}" class="invalid-feedback">
 				     <ul>
 						<li th:each="err : ${#fields.errors('stato')}" th:text="${err}"></li>
