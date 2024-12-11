@@ -1,7 +1,7 @@
 package com.freelapp.model;
 
 //import java.sql.Time;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,14 +21,13 @@ public class Contatore {
     private int id;
     
     @Column(name = "start", nullable = true)
-	@NotNull(message = "Start non può essere null")
-    private LocalTime start;
+    private LocalDateTime start;
 	
     @Column(name = "pause", nullable = true)
-	private LocalTime pause;
+	private LocalDateTime pause;
 	
     @Column(name = "stop", nullable = true)
-	private LocalTime stop;
+	private LocalDateTime stop;
     
     @Column(name = "stop_numbers", nullable = true)
     private int stop_numbers;
@@ -40,33 +39,32 @@ public class Contatore {
     public int getId() {
         return id;
     }
-
+   
     public void setId(int id) {
         this.id = id;
     }
 
-
-	public LocalTime getStart() {
+	public LocalDateTime getStart() {
 		return start;
 	}
 
-	public void setStart(LocalTime start) {
+	public void setStart(LocalDateTime start) {
 		this.start = start;
 	}
 
-	public LocalTime getPause() {
+	public LocalDateTime getPause() {
 		return pause;
 	}
 
-	public void setPause(LocalTime pause) {
+	public void setPause(LocalDateTime pause) {
 		this.pause = pause;
 	}
 
-	public LocalTime getStop() {
+	public LocalDateTime getStop() {
 		return stop;
 	}
 
-	public void setStop(LocalTime stop) {
+	public void setStop(LocalDateTime stop) {
 		this.stop = stop;
 	}
 
