@@ -55,11 +55,28 @@
 	    </script>
 	-->
 	
-	<form class="mx-auto w-50" th:action="@{/Contatore/start}" th:object="${contatore}" method="post">
-    	<button type="submit" th:onclick="start()"> start </button>
-   </form>		
-   		<button th:onclick="pause()"> pause </button>
-   		<button th:onclick="stop()"> stop </button>
+	<div class="container mt-5" style="width: 25rem;" >
+		<div class="row">
+			<div class="col">
+				<form class="mx-auto w-50 mb-4" th:action="@{/Contatore/start}" th:object="${contatore}" method="post">
+				    	<button type="submit" th:onclick="start()"> start </button>
+				 </form>	
+		    </div>
+			
+			<div class="col">
+				<form class="mx-auto w-50" th:action="@{/Contatore/pause}" th:object="${contatore}" method="post">
+				       	<button type="submit" th:onclick="pause()"> pause </button>
+				    </form>	    		
+			</div>
+			
+			<div class="col">
+			   <form class="mx-auto w-50" th:action="@{/Contatore/stop}" th:object="${contatore}" method="post">
+				     <button type="submit" th:onclick="stop()"> stop </button>
+				</form>	
+			</div>	
+		</div>
+	</div>
+	
  </div>	
 
 <script th:src="@{/js/timer.js}"></script>
