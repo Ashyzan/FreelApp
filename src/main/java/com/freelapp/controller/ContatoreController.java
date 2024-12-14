@@ -67,13 +67,16 @@ public String dbContatore(@ModelAttribute("contatore") Contatore contatore)
 	return "redirect:/dashboard";
 }
 
-
 @PostMapping("/Contatore/pause")
 public String pauseContatore(@ModelAttribute("contatore") Contatore contatore)
 {
 	contatore.setPause(LocalDateTime.now());
 	
+	contatore.addStop_numbers();
+	
 	repositContatore.save(contatore);
+	
+	System.out.println(contatore.getStop_numbers());
 	
 	return "redirect:/dashboard";
 }
