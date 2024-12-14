@@ -30,7 +30,7 @@ public class Contatore {
 	private LocalDateTime stop;
     
     @Column(name = "stop_numbers", nullable = true)
-    private int stop_numbers;
+    private static int stop_numbers = 0;
 	
     @OneToOne(mappedBy = "contatore")
     private Task task;
@@ -76,12 +76,11 @@ public class Contatore {
         this.task = task;
     }
 
-    public int getStop_numbers() {
+    public static int getStop_numbers() {
         return stop_numbers;
     }
-
-    public void setStop_numbers(int stop_numbers) {
-        this.stop_numbers = stop_numbers;
-    }
-    
+   
+    public static void addStop_numbers() {
+         stop_numbers++;
+     }
 }
