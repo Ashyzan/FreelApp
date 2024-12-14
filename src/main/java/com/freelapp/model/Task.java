@@ -1,6 +1,7 @@
 package com.freelapp.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.persistence.CascadeType;
@@ -11,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -50,9 +52,12 @@ public class Task{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataChiusuraDefinitiva;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "contatore_id", referencedColumnName = "id")
-	private Contatore contatore;
+	//@OneToOne(cascade = CascadeType.ALL)
+	//@JoinColumn(name = "contatore_id", referencedColumnName = "id")
+	//private Contatore contatore;
+	
+	@OneToMany(mappedBy = "task")
+	private List<Contatore> contatori;
 
 	@ManyToOne
 	@JoinColumn(name = "ProgettoRif", nullable = false)
@@ -126,12 +131,12 @@ public class Task{
 		this.stato = stato;
 	}
 	
-	public Contatore getContatore() {
-	    return contatore;
+	public List<Contatore> getContatori() {
+		return contatori;
 	}
 
-	public void setContatore(Contatore contatore) {
-	    this.contatore = contatore;
+	public void setContatori(List<Contatore> contatori) {
+		this.contatori = contatori;
 	}
 }
 

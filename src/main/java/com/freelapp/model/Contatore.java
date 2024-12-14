@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -32,8 +34,12 @@ public class Contatore {
     @Column(name = "stop_numbers", nullable = true)
     private static int stop_numbers = 0;
 	
-    @OneToOne(mappedBy = "contatore")
-    private Task task;
+    //@OneToOne(mappedBy = "contatore")
+    //private Task task;
+    
+	@ManyToOne
+	@JoinColumn(name = "TaskRif", nullable = false)
+	private Task task;
     
     // getter e setters
     public int getId() {
@@ -68,15 +74,15 @@ public class Contatore {
 		this.stop = stop;
 	}
 
-	public Task getTask() {
-        return task;
-    }
+    public Task getTask() {
+		return task;
+	}
 
-    public void setTask(Task task) {
-        this.task = task;
-    }
+	public void setTask(Task task) {
+		this.task = task;
+	}
 
-    public static int getStop_numbers() {
+	public static int getStop_numbers() {
         return stop_numbers;
     }
    
