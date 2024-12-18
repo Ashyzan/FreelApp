@@ -34,12 +34,12 @@ public class Contatore {
     @Column(name = "stop_numbers", nullable = true)
     private static int stop_numbers = 0;
 	
-    //@OneToOne(mappedBy = "contatore")
-    //private Task task;
+    @OneToOne(mappedBy = "contatore")
+    private Task task;
     
-	@ManyToOne
-	@JoinColumn(name = "TaskRif", nullable = false)
-	private Task task;
+	//@ManyToOne
+	//@JoinColumn(name = "TaskRif", nullable = false)
+	//private Task task;
     
     // getter e setters
     public int getId() {
@@ -74,7 +74,7 @@ public class Contatore {
 		this.stop = stop;
 	}
 
-    public Task getTask() {
+	public Task getTask() {
 		return task;
 	}
 
