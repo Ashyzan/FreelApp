@@ -72,11 +72,13 @@ public String gestioneTimer(@PathVariable("id") Integer taskId, Model model) {
 @PostMapping("/Contatore/start")
 public String startContatore(@ModelAttribute("contatore") Contatore contatore, Model model)
 {		
-	contatore.setStart(LocalDateTime.now());
+	//contatore.setStart(LocalDateTime.now());
 	
 	System.out.println("indice del task in start" + contatore.getTask().getId()); 
 	
-	repositContatore.save(contatore);
+	repositContatore.updateStart(LocalDateTime.now(), contatore.getId());
+	
+	//repositContatore.save(contatore);
 	
 	return "redirect:/dashboard";
 }
@@ -85,11 +87,13 @@ public String startContatore(@ModelAttribute("contatore") Contatore contatore, M
 @PostMapping("/Contatore/pause")
 public String pauseContatore(@ModelAttribute("contatore") Contatore contatore, Model model)
 {
-	contatore.setPause(LocalDateTime.now());
+	//contatore.setPause(LocalDateTime.now());
 	
 	contatore.addStop_numbers();
 	
-	repositContatore.save(contatore);
+	repositContatore.updatePause(LocalDateTime.now(), contatore.getId());
+	
+	//repositContatore.save(contatore);
 	
 	System.out.println(contatore.getStop_numbers());
 	
@@ -100,9 +104,10 @@ public String pauseContatore(@ModelAttribute("contatore") Contatore contatore, M
 @PostMapping("/Contatore/stop")
 public String stopContatore(@ModelAttribute("contatore") Contatore contatore, Model model)
 {
-	contatore.setStop(LocalDateTime.now());
-	
-	repositContatore.save(contatore);
+	//contatore.setStop(LocalDateTime.now());
+
+	repositContatore.updateStop(LocalDateTime.now(), contatore.getId());
+	//repositContatore.save(contatore);
 	
 	return "redirect:/dashboard";
  }
