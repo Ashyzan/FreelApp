@@ -19,7 +19,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull; 
 import jakarta.validation.constraints.Size;
 
-
 @Entity
 @Table(name = "tasks")
 public class Task{
@@ -52,12 +51,12 @@ public class Task{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataChiusuraDefinitiva;
 
-	//@OneToOne(cascade = CascadeType.ALL)
-	//@JoinColumn(name = "contatore_id", referencedColumnName = "id")
-	//private Contatore contatore;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "contatore_id", referencedColumnName = "id")
+	private Contatore contatore;
 	
-	@OneToMany(mappedBy = "task")
-	private List<Contatore> contatori;
+	//@OneToMany(mappedBy = "task")
+	//private List<Contatore> contatori;
 
 	@ManyToOne
 	@JoinColumn(name = "ProgettoRif", nullable = false)
@@ -130,14 +129,15 @@ public class Task{
 	public void setStato(Stato stato) {
 		this.stato = stato;
 	}
-	
-	public List<Contatore> getContatori() {
-		return contatori;
+
+	public Contatore getContatore() {
+		return contatore;
 	}
 
-	public void setContatori(List<Contatore> contatori) {
-		this.contatori = contatori;
+	public void setContatore(Contatore contatore) {
+		this.contatore = contatore;
 	}
+
 }
 
 
