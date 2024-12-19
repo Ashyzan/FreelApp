@@ -30,6 +30,7 @@ private ContatoreRepository repositContatore;
 @GetMapping("/Contatore/timer/{id}")
 public String gestioneTimer(@PathVariable("id") Integer taskId, Model model) {
 	
+	boolean b;
 	Task t = repositTask.getReferenceById(taskId);
 	
 	if (t.getContatore() == null) {
@@ -40,14 +41,18 @@ public String gestioneTimer(@PathVariable("id") Integer taskId, Model model) {
 	
 			System.out.println("indice del task: " + contatore.getTask().getId()); 
 
+			b = true;
 			model.addAttribute("contatore", contatore);
+			model.addAttribute("b", b);
 
 			return "/Contatore/timer";
 	   }
 	else {
 		    Contatore contatore = t.getContatore();
-		
+		    
+		    b = false;
 			model.addAttribute("contatore", contatore);
+			model.addAttribute("b", b);
 
 			return "/Contatore/timer";
 	}
@@ -70,13 +75,14 @@ public String gestioneTimer(@PathVariable("id") Integer taskId, Model model) {
 
 
 @PostMapping("/Contatore/start")
-public String startContatore(@ModelAttribute("contatore") Contatore contatore, Model model)
+public String startContatore(@ModelAttribute("contatore") Contatore contatore, @ModelAttribute("b") boolean b, Model model)
 {		
 	//contatore.setStart(LocalDateTime.now());
 	
 	System.out.println("indice del task in start" + contatore.getTask().getId()); 
 	
-	repositContatore.updateStart(LocalDateTime.now(), contatore.getId());
+	if (b)
+	   repositContatore.updateStart(LocalDateTime.now(), contatore.getId());
 	
 	//repositContatore.save(contatore);
 	
