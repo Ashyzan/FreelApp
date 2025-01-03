@@ -26,7 +26,7 @@ public class HomePageController {
 			
 			model.addAttribute("formUser", utente);
 			
-			return "/Home"; 
+			return "/ProvaBottomNav"; 
 		}
  
 }
