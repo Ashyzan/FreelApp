@@ -19,14 +19,14 @@ public class HomePageController {
 	  @Autowired
 	  private UserRepository repositoryUser;
       
-      		@GetMapping("/HomePage/{id}")
+      		@GetMapping("/Home/{id}")
 		public String indexPage(@PathVariable("id") Integer id, Model model) {
 			
 			User utente = repositoryUser.findById(id).get();
 			
 			model.addAttribute("formUser", utente);
 			
-			return "/HomePage"; 
+			return "/Home"; 
 		}
  
 }
