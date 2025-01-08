@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
+    <clipPath id="_clip1">
+        <rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"/>
+    </clipPath>
+    <g clip-path="url(#_clip1)">
+        <g id="download" transform="matrix(9.99965,0,0,9.99965,-0.00263185,0.0485003)">
+            <path d="M15,7L12,7L12,1L8,1L8,7L5,7L10,12L15,7ZM19.338,13.532C19.128,13.308 17.727,11.809 17.327,11.418C17.062,11.159 16.683,11 16.285,11L14.528,11L17.592,13.994L14.048,13.994C13.946,13.994 13.854,14.046 13.808,14.127L12.992,16L7.008,16L6.192,14.127C6.146,14.046 6.053,13.994 5.952,13.994L2.408,13.994L5.471,11L3.715,11C3.318,11 2.939,11.159 2.673,11.418C2.273,11.81 0.872,13.309 0.662,13.532C0.173,14.053 -0.096,14.468 0.032,14.981L0.593,18.055C0.721,18.569 1.284,18.991 1.845,18.991L18.157,18.991C18.718,18.991 19.281,18.569 19.409,18.055L19.97,14.981C20.096,14.468 19.828,14.053 19.338,13.532Z" style="fill:rgb(255,229,65);fill-rule:nonzero;"/>
+        </g>
+    </g>
+</svg>

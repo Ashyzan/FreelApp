@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
+    <g id="Tavola-da-disegno11" serif:id="Tavola da disegno1">
+        <g id="gauge" transform="matrix(10,0,0,10,0,-1.56557)">
+            <path d="M8.127,13.6C7.438,14.797 7.902,15.78 8.859,16.332C9.815,16.885 10.9,16.797 11.591,15.6C12.28,14.405 16.638,3.735 16.259,3.516C15.88,3.297 8.817,12.404 8.127,13.6ZM10,6C10.438,6 10.864,6.037 11.281,6.109C11.719,5.56 12.209,4.955 12.686,4.381C11.834,4.135 10.934,4 10,4C4.393,4 0,8.729 0,14.766C0,15.137 0.016,15.508 0.049,15.869C0.098,16.42 0.589,16.824 1.133,16.777C1.684,16.726 2.09,16.242 2.041,15.691C2.014,15.389 2,15.076 2,14.766C2,9.85 5.514,6 10,6ZM17.219,7.25C16.94,8 16.645,8.764 16.385,9.424C17.4,10.894 18,12.738 18,14.766C18,15.082 17.985,15.401 17.957,15.709C17.907,16.26 18.312,16.746 18.862,16.797C18.892,16.799 18.923,16.801 18.954,16.801C19.465,16.801 19.902,16.41 19.949,15.891C19.982,15.521 20,15.143 20,14.766C20,11.812 18.947,9.176 17.219,7.25Z" style="fill:rgb(255,229,65);fill-rule:nonzero;"/>
+        </g>
+    </g>
+</svg>

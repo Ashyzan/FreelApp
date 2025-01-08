@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
+    <clipPath id="_clip1">
+        <rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"/>
+    </clipPath>
+    <g clip-path="url(#_clip1)">
+        <g id="area-graph" transform="matrix(10.0001,0,0,10.0001,-0.00168224,19.9985)">
+            <path d="M20,2L20,18L0.32,18C0.002,18 -0.096,17.791 0.104,17.535L4.573,11.787C4.772,11.531 5.126,11.504 5.362,11.725L6.781,13.059C7.016,13.28 7.353,13.237 7.528,12.963L10.575,8.223C10.75,7.95 11.084,7.911 11.316,8.133L13.487,10.229C13.719,10.454 14.046,10.409 14.211,10.129L19.344,2.344C19.51,2.062 19.75,2 20,2Z" style="fill:rgb(255,229,65);fill-rule:nonzero;"/>
+        </g>
+    </g>
+</svg>
