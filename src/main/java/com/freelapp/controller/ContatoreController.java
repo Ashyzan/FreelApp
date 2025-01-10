@@ -33,9 +33,10 @@ public String gestioneTimer(@PathVariable("id") Integer taskId, Model model) {
 	
 	// istanzio un nuovo contatore
 	Contatore C = new Contatore();
+	C.setStart(LocalDateTime.now());
 	
-	// associo il task al contatore
-	C.setTask(task);
+	// associo il contatore al task
+	task.setContatore(C);
 	
 	// associo la nuova istanza di contatore all'oggetto contatore nel modello themyleaf
 	model.addAttribute("contatore", C);
@@ -48,10 +49,7 @@ public String gestioneTimer(@PathVariable("id") Integer taskId, Model model) {
 public String startContatore( @ModelAttribute("contatore") Contatore contatore, 
 	Model model)
 {		
-	 Contatore C = new Contatore();
-	//System.out.println(contatore);
-	C.setStart(LocalDateTime.now());
-	System.out.println("ecco lo start del contatore " + C.getStart());
+	
 	repositContatore.save(contatore);
 	
 	return "/Contatore/timer";
