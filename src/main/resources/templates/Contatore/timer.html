@@ -42,7 +42,7 @@
 		<div class="row mt-lg-2">
 			 <div class="col mx-auto">
 				<p>
-					<h2 th:text="|Task: ${contatore.getTask().getId()}|"></h2>
+					<!-- <h2 th:text="|Task: ${contatore.getTask().getId()}|"></h2> -->
 				</p>
 		    </div>
 	    </div>
@@ -58,7 +58,7 @@
 	<div class="container mt-5" style="width: 25rem;" >
 		<div class="row">
 			<div class="col">
-				<form class="mx-auto w-50 mb-4" th:action="@{/Contatore/start}" th:object="${contatore}" method="post">
+				<form class="mx-auto w-50 mb-4" th:action="@{/start}" th:object="${contatore}" method="post">
 				    	<button type="submit" th:onclick="start()"> start </button>
 				 </form>	
 		    </div>

@@ -3,15 +3,13 @@ package com.freelapp.controller;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import jakarta.validation.Valid;
+
 import com.freelapp.model.Contatore;
 import com.freelapp.model.Task;
 import com.freelapp.repository.ContatoreRepository;
@@ -30,63 +28,34 @@ private ContatoreRepository repositContatore;
 @GetMapping("/Contatore/timer/{id}")
 public String gestioneTimer(@PathVariable("id") Integer taskId, Model model) {
 	
-	boolean b;
-	Task t = repositTask.getReferenceById(taskId);
+        // richiamo l'id del task 
+	Task task = repositTask.getReferenceById(taskId);
 	
-	if (t.getContatore() == null) {
+	// istanzio un nuovo contatore
+	Contatore C = new Contatore();
 	
-			Contatore contatore = new Contatore();
+	// associo il task al contatore
+	C.setTask(task);
 	
-			contatore.setTask(t);
+	// associo la nuova istanza di contatore all'oggetto contatore nel modello themyleaf
+	model.addAttribute("contatore", C);
 	
-			System.out.println("indice del task: " + contatore.getTask().getId()); 
-
-			b = true;
-			model.addAttribute("contatore", contatore);
-			model.addAttribute("b", b);
-
-			return "/Contatore/timer";
-	   }
-	else {
-		    Contatore contatore = t.getContatore();
-		    
-		    b = false;
-			model.addAttribute("contatore", contatore);
-			model.addAttribute("b", b);
-
-			return "/Contatore/timer";
-	}
+	return "/Contatore/timer";
  }
 
-//@PostMapping("/Contatore/timer/{id}")
-//public String gestioneTimer( @Valid @ModelAttribute("contatore") Contatore contatore, BindingResult bindingResult, Model model) {
-		
-	//if(bindingResult.hasErrors()) {
-	  //   return "/Contatore/timer";
-	  //}
-	
-//	System.out.println("indice del task" + contatore.getTask().getId()); 
-	
-	//repositContatore.save(contatore);
-	
-	//return "redirect:/Contatore/timer/" + contatore.getTask().getId();
-	
-  //}
 
-
-@PostMapping("/Contatore/start")
-public String startContatore(@ModelAttribute("contatore") Contatore contatore, @ModelAttribute("b") boolean b, Model model)
+@PostMapping("/start")
+public String startContatore( @ModelAttribute("contatore") Contatore contatore, 
+	Model model)
 {		
-	//contatore.setStart(LocalDateTime.now());
+	 Contatore C = new Contatore();
+	//System.out.println(contatore);
+	C.setStart(LocalDateTime.now());
+	System.out.println("ecco lo start del contatore " + C.getStart());
+	repositContatore.save(contatore);
 	
-	System.out.println("indice del task in start" + contatore.getTask().getId()); 
+	return "/Contatore/timer";
 	
-	if (b)
-	   repositContatore.updateStart(LocalDateTime.now(), contatore.getId());
-	
-	//repositContatore.save(contatore);
-	
-	return "redirect:/dashboard";
 }
 
 
@@ -95,15 +64,15 @@ public String pauseContatore(@ModelAttribute("contatore") Contatore contatore, M
 {
 	//contatore.setPause(LocalDateTime.now());
 	
-	contatore.addStop_numbers();
+	//contatore.addStop_numbers();
 	
 	repositContatore.updatePause(LocalDateTime.now(), contatore.getId());
 	
 	//repositContatore.save(contatore);
 	
-	System.out.println(contatore.getStop_numbers());
+	//System.out.println(contatore.getStop_numbers());
 	
-	return "redirect:/dashboard";
+	return "redirect:/Contatore/timer/{id}";
 }
 
 
@@ -115,7 +84,7 @@ public String stopContatore(@ModelAttribute("contatore") Contatore contatore, Mo
 	repositContatore.updateStop(LocalDateTime.now(), contatore.getId());
 	//repositContatore.save(contatore);
 	
-	return "redirect:/dashboard";
+	return "redirect:/Contatore/timer/{id}";
  }
 
 }
