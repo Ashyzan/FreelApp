@@ -54,7 +54,7 @@
 		<div class="row">
 			<div class="col">
 				<form class="mx-auto w-50 mb-4" th:action="@{/start}" th:object="${contatore}" method="post">
-					<input type="hidden" th:field="*{task}">	
+					<input type="hidden" th:field="*{task}"> <!-- hidden object is necessary for report task_id in the contatore -->
 					<button type="submit" th:onclick="start()"> start </button>
 				 </form>	
 		    </div>

@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,6 +25,7 @@ public class Task{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "task_id")
 	private int id;
 	
 	@Column(name = "DenominazioneTask", nullable = false)
@@ -50,12 +52,9 @@ public class Task{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataChiusuraDefinitiva;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "contatore_id", referencedColumnName = "id")
-	private Contatore contatore;
-	
-	//@OneToMany(mappedBy = "task")
-	//private List<Contatore> contatori;
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "contatore_id", referencedColumnName = "id")
+//	private Contatore contatore;
 
 	@ManyToOne
 	@JoinColumn(name = "ProgettoRif", nullable = false)
@@ -65,77 +64,89 @@ public class Task{
 	@JoinColumn(name = "StatoRif", nullable = true)
 	private Stato stato;
 	
+	@OneToOne(mappedBy = "task", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	private Contatore contatore;
+
+	
+	// getter setter
+	
 	public int getId() {
-		return id;
+	    return id;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+	    this.id = id;
 	}
-	
+
 	public String getName() {
-		return name;
+	    return name;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+	    this.name = name;
 	}
 
 	public String getDescrizione() {
-		return descrizione;
+	    return descrizione;
 	}
 
 	public void setDescrizione(String descrizione) {
-		this.descrizione = descrizione;
+	    this.descrizione = descrizione;
 	}
 
 	public LocalDate getDataInizio() {
-		return dataInizio;
+	    return dataInizio;
 	}
 
 	public void setDataInizio(LocalDate dataInizio) {
-		this.dataInizio = dataInizio;
+	    this.dataInizio = dataInizio;
 	}
 
 	public LocalDate getDataChiusuraStimata() {
-		return dataChiusuraStimata;
+	    return dataChiusuraStimata;
 	}
 
 	public void setDataChiusuraStimata(LocalDate dataChiusuraStimata) {
-		this.dataChiusuraStimata = dataChiusuraStimata;
-	}
-	
-	public LocalDate getDataChiusuraDefinitiva() {
-		return dataChiusuraStimata;
+	    this.dataChiusuraStimata = dataChiusuraStimata;
 	}
 
-	public void setDataChiusuraDefinitiva(LocalDate dataChiusuraStimata) {
-		this.dataChiusuraStimata = dataChiusuraStimata;
+	public LocalDate getDataChiusuraDefinitiva() {
+	    return dataChiusuraDefinitiva;
+	}
+
+	public void setDataChiusuraDefinitiva(LocalDate dataChiusuraDefinitiva) {
+	    this.dataChiusuraDefinitiva = dataChiusuraDefinitiva;
 	}
 
 	public Progetto getProgetto() {
-		return progetto;
+	    return progetto;
 	}
 
 	public void setProgetto(Progetto progetto) {
-		this.progetto = progetto;
+	    this.progetto = progetto;
 	}
-	
+
 	public Stato getStato() {
-		return stato;
+	    return stato;
 	}
 
 	public void setStato(Stato stato) {
-		this.stato = stato;
+	    this.stato = stato;
 	}
 
 	public Contatore getContatore() {
-		return contatore;
+	    return contatore;
 	}
 
 	public void setContatore(Contatore contatore) {
-		this.contatore = contatore;
+	    this.contatore = contatore;
+	    this.contatore.setTask(this); // setting the parent class as the value for the child instance
 	}
+	
+	
+	
+	
 
 }
 

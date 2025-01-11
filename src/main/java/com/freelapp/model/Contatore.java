@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -15,8 +15,12 @@ import jakarta.persistence.Table;
 @Table(name = "contatori")
 public class Contatore {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private int id;
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "task_id")
     private int id;
 
     @Column(name = "start", nullable = true)
@@ -31,54 +35,65 @@ public class Contatore {
     @Column(name = "stop_numbers", nullable = true)
     private int stop_numbers;
 
-    @OneToOne(mappedBy = "contatore")
+//    @OneToOne(mappedBy = "contatore")
+//    private Task task;
+//    
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "task_id")
     private Task task;
 
-    // getter e setters
-
     public int getId() {
-	return id;
-    }
-
-    public void setStop_numbers(int stop_numbers) {
-	this.stop_numbers = stop_numbers;
+        return id;
     }
 
     public void setId(int id) {
-	this.id = id;
+        this.id = id;
     }
 
     public LocalDateTime getStart() {
-	
-	return start;
+        return start;
     }
 
     public void setStart(LocalDateTime start) {
+	//start = LocalDateTime.now();
 	this.start = start;
     }
 
     public LocalDateTime getPause() {
-	return pause;
+        return pause;
     }
 
     public void setPause(LocalDateTime pause) {
-	this.pause = pause;
+        this.pause = pause;
     }
 
     public LocalDateTime getStop() {
-	return stop;
+        return stop;
     }
 
     public void setStop(LocalDateTime stop) {
-	this.stop = stop;
+        this.stop = stop;
+    }
+
+    public int getStop_numbers() {
+        return stop_numbers;
+    }
+
+    public void setStop_numbers(int stop_numbers) {
+        this.stop_numbers = stop_numbers;
     }
 
     public Task getTask() {
-	return task;
+        return task;
     }
 
     public void setTask(Task task) {
-	this.task = task;
+        this.task = task;
     }
+
+    // getter e setters
+
+    
 
 }

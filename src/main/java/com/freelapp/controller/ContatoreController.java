@@ -33,10 +33,12 @@ public String gestioneTimer(@PathVariable("id") Integer taskId, Model model) {
 	
 	// istanzio un nuovo contatore
 	Contatore C = new Contatore();
-	C.setStart(LocalDateTime.now());
-	
-	// associo il contatore al task
+
+	// associo il contatore al task (necessario)
 	task.setContatore(C);
+	
+	//C.setStart(LocalDateTime.now());
+	//System.out.println("STAMPO LO START " + C.getStart().toString()); // OK FUNZIONA
 	
 	// associo la nuova istanza di contatore all'oggetto contatore nel modello themyleaf
 	model.addAttribute("contatore", C);
