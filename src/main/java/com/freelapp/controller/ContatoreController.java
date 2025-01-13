@@ -31,27 +31,31 @@ public String gestioneTimer(@PathVariable("id") Integer taskId, Model model) {
         // richiamo l'id del task 
 	Task task = repositTask.getReferenceById(taskId);
 	
-	// istanzio un nuovo contatore
-	Contatore C = new Contatore();
-
-	// associo il contatore al task (necessario)
-	task.setContatore(C);
-	
-	//C.setStart(LocalDateTime.now());
-	//System.out.println("STAMPO LO START " + C.getStart().toString()); // OK FUNZIONA
-	
-	// associo la nuova istanza di contatore all'oggetto contatore nel modello themyleaf
-	model.addAttribute("contatore", C);
-	
 	return "/Contatore/timer";
  }
 
 
-@PostMapping("/start")
-public String startContatore( @ModelAttribute("contatore") Contatore contatore, 
-	Model model)
+@PostMapping("/start/{id}")
+public String startContatore(@PathVariable("id") Integer taskId, 
+	@ModelAttribute("contatore") Contatore contatore, Model model)
 {		
+    	// richiamo l'id del task
+    	Task task = repositTask.getReferenceById(taskId);
+    
+    	// istanzio un nuovo contatore
+    	contatore = new Contatore();
+    	
+    	// associo al task il nuovo contatore
+	task.setContatore(contatore);
+    	
+	//eseguo il TIMESTAMP
+	contatore.setStart(LocalDateTime.now());
 	
+	// collego nel modello html il task e il contatore
+	model.addAttribute("task" , task);
+	model.addAttribute("contatore" , contatore);
+
+	// salvo il contatore a DB
 	repositContatore.save(contatore);
 	
 	return "/Contatore/timer";
@@ -60,30 +64,19 @@ public String startContatore( @ModelAttribute("contatore") Contatore contatore,
 
 
 @PostMapping("/Contatore/pause")
-public String pauseContatore(@ModelAttribute("contatore") Contatore contatore, Model model)
+public String pauseContatore(@ModelAttribute("contatore") Contatore contatore, 
+	Model model)
 {
-	//contatore.setPause(LocalDateTime.now());
-	
-	//contatore.addStop_numbers();
-	
-	repositContatore.updatePause(LocalDateTime.now(), contatore.getId());
-	
-	//repositContatore.save(contatore);
-	
-	//System.out.println(contatore.getStop_numbers());
 	
 	return "redirect:/Contatore/timer/{id}";
 }
 
 
 @PostMapping("/Contatore/stop")
-public String stopContatore(@ModelAttribute("contatore") Contatore contatore, Model model)
+public String stopContatore(@ModelAttribute("contatore") Contatore contatore, 
+	Model model)
 {
-	//contatore.setStop(LocalDateTime.now());
 
-	repositContatore.updateStop(LocalDateTime.now(), contatore.getId());
-	//repositContatore.save(contatore);
-	
 	return "redirect:/Contatore/timer/{id}";
  }
 
