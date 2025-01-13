@@ -63,21 +63,46 @@ public String startContatore(@PathVariable("id") Integer taskId,
 }
 
 
-@PostMapping("/Contatore/pause")
-public String pauseContatore(@ModelAttribute("contatore") Contatore contatore, 
-	Model model)
+@PostMapping("/Contatore/pause/{id}")
+public String pauseContatore(@PathVariable("id") Integer contatoreId)
 {
+    	// richiamo il contatore a DB
+	Contatore contat = repositContatore.getReferenceById(contatoreId);
 	
-	return "redirect:/Contatore/timer/{id}";
+	contat.setPause(LocalDateTime.now());
+	
+	// recupero timestamp di inizio e pausa
+	LocalDateTime PAUSE = contat.getPause();
+	LocalDateTime START = contat.getStart();
+	
+	// metodo che calcola la differenza fra i due timestamp
+	String FinalTime = contat.findDifference(START, PAUSE);
+
+	// ad ogni clic la funzione prende gli stop e incrementa di 1
+	contat.setStop_numbers(contat.getStop_numbers() + 1);
+	
+	// salvo il contatore
+	repositContatore.save(contat);
+	
+	return "/Contatore/timer";
 }
 
 
-@PostMapping("/Contatore/stop")
-public String stopContatore(@ModelAttribute("contatore") Contatore contatore, 
-	Model model)
+@PostMapping("/Contatore/stop/{id}")
+public String stopContatore(@PathVariable("id") Integer contatoreId)
 {
+    	// richiamo il contatore a DB
+    	Contatore contat = repositContatore.getReferenceById(contatoreId);
+    	
+	//eseguo il TIMESTAMP dello STOP
+	contat.setStop(LocalDateTime.now());
 
-	return "redirect:/Contatore/timer/{id}";
+	// DA IMPLEMENTARE CALCOLO FINALE DEL TEMPO TRASCORSO FRA LO START E LO STOP
+	
+	// salvo il contatore
+    	repositContatore.save(contat);
+    	
+	return "/Contatore/timer";
  }
 
 }

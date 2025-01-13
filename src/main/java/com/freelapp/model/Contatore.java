@@ -2,6 +2,7 @@ package com.freelapp.model;
 
 //import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,10 +15,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "contatori")
 public class Contatore {
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private int id;
     
     @Id
     @Column(name = "task_id")
@@ -28,16 +25,16 @@ public class Contatore {
 
     @Column(name = "pause", nullable = true)
     private LocalDateTime pause;
+    
+    @Column(name = "finalTime", nullable = true)
+    private String finalTime;
 
     @Column(name = "stop", nullable = true)
     private LocalDateTime stop;
 
     @Column(name = "stop_numbers", nullable = true)
-    private int stop_numbers;
-
-//    @OneToOne(mappedBy = "contatore")
-//    private Task task;
-//    
+    private int stop_numbers = 0;
+    
     @OneToOne
     @MapsId
     @JoinColumn(name = "task_id")
@@ -56,7 +53,6 @@ public class Contatore {
     }
 
     public void setStart(LocalDateTime start) {
-	//start = LocalDateTime.now();
 	this.start = start;
     }
 
@@ -82,6 +78,7 @@ public class Contatore {
 
     public void setStop_numbers(int stop_numbers) {
         this.stop_numbers = stop_numbers;
+        
     }
 
     public Task getTask() {
@@ -91,9 +88,20 @@ public class Contatore {
     public void setTask(Task task) {
         this.task = task;
     }
+    
+    // function time difference
+    public String findDifference(LocalDateTime start_date, LocalDateTime end_date) {
+	
+	Long FinalTimeSeconds = start_date.until(end_date, ChronoUnit.SECONDS);
+	
+	Long hours = FinalTimeSeconds / 3600;
+	Long minutes = (FinalTimeSeconds % 3600) / 60;
+	Long seconds = FinalTimeSeconds % 60;
 
-    // getter e setters
-
+	finalTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+	
+	return finalTime;
+    }
     
 
 }
