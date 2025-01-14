@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
+    <clipPath id="_clip1">
+        <rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"/>
+    </clipPath>
+    <g clip-path="url(#_clip1)">
+        <g id="phone" transform="matrix(12.5014,0,0,12.5014,-24.99,-25.007)">
+            <path d="M11.229,11.229C9.646,12.811 7.812,14.325 7.087,13.6C6.05,12.563 5.41,11.659 3.122,13.498C0.835,15.336 2.592,16.562 3.597,17.566C4.757,18.726 9.081,17.628 13.355,13.355C17.628,9.081 18.723,4.757 17.562,3.597C16.557,2.591 15.337,0.835 13.499,3.122C11.66,5.409 12.563,6.049 13.602,7.087C14.324,7.812 12.811,9.646 11.229,11.229Z" style="fill:rgb(255,229,65);fill-rule:nonzero;"/>
+        </g>
+    </g>
+</svg>

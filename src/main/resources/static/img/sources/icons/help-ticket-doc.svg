@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
+    <clipPath id="_clip1">
+        <rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"/>
+    </clipPath>
+    <g clip-path="url(#_clip1)">
+        <g id="lifebuoy" transform="matrix(10.4167,0,0,10.4167,-4.16603,-4.17254)">
+            <path d="M16.788,3.212C13.039,-0.537 6.961,-0.537 3.213,3.212C-0.537,6.962 -0.537,13.04 3.211,16.788C6.961,20.538 13.039,20.538 16.789,16.788C20.537,13.039 20.537,6.961 16.788,3.212ZM6.748,13.252C4.951,11.455 4.951,8.543 6.748,6.747C8.543,4.951 11.457,4.951 13.254,6.747C15.051,8.544 15.049,11.456 13.254,13.252C11.457,15.049 8.545,15.049 6.748,13.252ZM15.347,12.879C16.315,11.08 16.316,8.92 15.347,7.12L17.13,6.16C18.419,8.551 18.419,11.45 17.132,13.838L15.347,12.879ZM13.839,2.869L12.878,4.653C11.079,3.686 8.919,3.686 7.122,4.653L6.161,2.87C8.551,1.582 11.448,1.582 13.839,2.869ZM2.87,6.16L4.654,7.121C3.686,8.919 3.686,11.078 4.653,12.877L2.869,13.838C1.581,11.449 1.582,8.551 2.87,6.16ZM6.159,17.129L7.12,15.346C8.919,16.315 11.08,16.315 12.879,15.346L13.84,17.131C11.448,18.418 8.55,18.418 6.159,17.129Z" style="fill:rgb(255,229,65);fill-rule:nonzero;"/>
+        </g>
+    </g>
+</svg>

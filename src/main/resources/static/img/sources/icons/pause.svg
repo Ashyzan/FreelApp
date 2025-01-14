@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
+    <g id="Tavola-da-disegno11" serif:id="Tavola da disegno1">
+        <g id="_279-pause" serif:id="279-pause" transform="matrix(12.5,0,0,12.5,3.55271e-15,1.24345e-14)">
+            <path d="M8,0C3.582,0 0,3.582 0,8C0,12.418 3.582,16 8,16C12.418,16 16,12.418 16,8C16,3.582 12.418,0 8,0ZM8,14.5C4.41,14.5 1.5,11.59 1.5,8C1.5,4.41 4.41,1.5 8,1.5C11.59,1.5 14.5,4.41 14.5,8C14.5,11.59 11.59,14.5 8,14.5ZM5,5L7,5L7,11L5,11L5,5ZM9,5L11,5L11,11L9,11L9,5Z" style="fill:rgb(255,229,65);fill-rule:nonzero;"/>
+        </g>
+    </g>
+</svg>
