@@ -65,7 +65,7 @@ public class DashboardController {
 		model.addAttribute("taskList", taskList);
 		
 		
-		return "dashboard";
+		return "freelApp-dashboard";
 
 	}
 }

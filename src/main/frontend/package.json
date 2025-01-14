@@ -1,0 +1,16 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"build": "tailwindcss -i ./styles.css -o ../resources/static/main.css --minify",
+	"watch": "tailwindcss -i ./styles.css -o ../resources/static/main.css --watch"
+  },
+  "author": "freelapp",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
