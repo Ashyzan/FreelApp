@@ -42,35 +42,31 @@
 		<div class="row mt-lg-2">
 			 <div class="col mx-auto">
 				<p>
-					<h2 th:text="|Task: ${contatore.getTask().getId()}|"></h2>
+					<!-- <h2 th:text="|Task: ${contatore.getTask().getId()}|"></h2> -->
 				</p>
 		    </div>
 	    </div>
    		<div class="container">
      		   <h1 id="timer">00:00:00</h1>
    		</div>
-	<!--	
-		<script>
-		   //var c = /*[[${contatore}]]*/ "prova";
-	    </script>
-	-->
 	
 	<div class="container mt-5" style="width: 25rem;" >
 		<div class="row">
 			<div class="col">
-				<form class="mx-auto w-50 mb-4" th:action="@{/Contatore/start}" th:object="${contatore}" method="post">
-				    	<button type="submit" th:onclick="start()"> start </button>
+				<form class="mx-auto w-50 mb-4" th:action="@{|/start/${id}|}" th:object="${contatore}" method="post">
+					<button type="submit" th:onclick="start()"> start </button>
 				 </form>	
 		    </div>
 			
 			<div class="col">
-				<form class="mx-auto w-50" th:action="@{/Contatore/pause}" th:object="${contatore}" method="post">
-				       	<button type="submit" th:onclick="pause()"> pause </button>
+				<form class="mx-auto w-50" th:action="@{|/Contatore/pause/${id}|}" th:object="${contatore}" method="post">
+					<!-- <input type="hidden" th:field="*{task}" th:value="${task.id}">  -->   	
+					<button type="submit" th:onclick="pause()"> pause </button>
 				    </form>	    		
 			</div>
 			
 			<div class="col">
-			   <form class="mx-auto w-50" th:action="@{/Contatore/stop}" th:object="${contatore}" method="post">
+			   <form class="mx-auto w-50" th:action="@{|/Contatore/stop/${id}|}" th:object="${contatore}" method="post">
 				     <button type="submit" th:onclick="stop()"> stop </button>
 				</form>	
 			</div>	
