@@ -69,7 +69,13 @@
 			   <form class="mx-auto w-50" th:action="@{|/Contatore/stop/${id}|}" th:object="${contatore}" method="post">
 				     <button type="submit" th:onclick="stop()"> stop </button>
 				</form>	
-			</div>	
+			</div>
+			
+			<div class="col">
+						   <form class="mx-auto w-50" th:action="@{|/Contatore/reset/${id}|}" th:object="${contatore}" method="post">
+							     <button type="submit" th:onclick="reset()"> reset </button>
+							</form>	
+						</div>	
 		</div>
 	</div>
 	

@@ -44,13 +44,28 @@ public String startContatore(@PathVariable("id") Integer taskId,
     	Task task = repositTask.getReferenceById(taskId);
     	
     	// se il contatore esiste, restituiscilo al modello
-    	if (task.getContatore() != null) {
-  
+    	if (task.getContatore() != null && task.getContatore().getStart() != null) {
+    	
     	// collego nel modello html il task e il contatore
     	    model.addAttribute("task" , task);
     	    model.addAttribute("contatore" , contatore);
     	}
     	
+    	 // se il contatore esiste ma ha lo start null (è stato resettato)
+    	else if(task.getContatore().getStart() == null) {
+    	    //eseguo il TIMESTAMP
+    	   
+    	    // task.getContatore().setStart(LocalDateTime.now());
+    	    contatore.setStart(LocalDateTime.now());
+    	    
+    	    // collego nel modello html il task e il contatore
+    	    model.addAttribute("task" , task);
+    	    model.addAttribute("contatore" , contatore);
+    	    
+    	    // salvo il contatore a DB
+    	    repositContatore.save(contatore);
+    
+    	}
     	// se il contatore non esiste:
     	else  {
     	    
@@ -111,7 +126,7 @@ public String pauseContatore(@PathVariable("id") Integer taskId)
 @PostMapping("/Contatore/stop/{id}")
 public String stopContatore(@PathVariable("id") Integer taskId)
 {
- // richiamo l'id del task
+    	// richiamo l'id del task
  	Task task = repositTask.getReferenceById(taskId);
  	
  	// verifica che il contatore esista
@@ -137,5 +152,30 @@ public String stopContatore(@PathVariable("id") Integer taskId)
     	
 	return "/Contatore/timer";
  }
+
+@PostMapping("/Contatore/reset/{id}") 
+    public String resetContatore(@PathVariable ("id") Integer taskId) {
+    
+    	// richiamo l'id del task
+  	Task task = repositTask.getReferenceById(taskId);
+  	
+  	// verifica che il contatore esista
+  	if (task.getContatore() != null) {
+  	    
+  	    //eseguo il RESET
+		task.getContatore().setStop(null);
+		task.getContatore().setStart(null);
+		task.getContatore().setPause(null);
+		task.getContatore().setStop_numbers(0);
+		task.getContatore().findDifference(LocalDateTime.now(),LocalDateTime.now());
+		
+		// salvo il contatore
+	 	repositContatore.save(task.getContatore());
+  	    
+  	}
+	
+    return "/Contatore/timer";
+    }
+
 
 }
