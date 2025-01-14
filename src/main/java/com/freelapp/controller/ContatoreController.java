@@ -39,25 +39,39 @@ public String gestioneTimer(@PathVariable("id") Integer taskId, Model model) {
 public String startContatore(@PathVariable("id") Integer taskId, 
 	@ModelAttribute("contatore") Contatore contatore, Model model)
 {		
+ 
     	// richiamo l'id del task
     	Task task = repositTask.getReferenceById(taskId);
+    	
+    	// se il contatore esiste, restituiscilo al modello
+    	if (task.getContatore() != null) {
+  
+    	// collego nel modello html il task e il contatore
+    	    model.addAttribute("task" , task);
+    	    model.addAttribute("contatore" , contatore);
+    	}
+    	
+    	// se il contatore non esiste:
+    	else  {
+    	    
+    	    // istanzio un nuovo contatore
+    	    contatore = new Contatore();
+    	    
+    	    // associo al task il nuovo contatore
+    	    task.setContatore(contatore);
+    	    
+    	    //eseguo il TIMESTAMP
+    	    contatore.setStart(LocalDateTime.now());
+    	    
+    	    // collego nel modello html il task e il contatore
+    	    model.addAttribute("task" , task);
+    	    model.addAttribute("contatore" , contatore);
+    	    
+    	    // salvo il contatore a DB
+    	    repositContatore.save(contatore);
+    	}
+    	    
     
-    	// istanzio un nuovo contatore
-    	contatore = new Contatore();
-    	
-    	// associo al task il nuovo contatore
-	task.setContatore(contatore);
-    	
-	//eseguo il TIMESTAMP
-	contatore.setStart(LocalDateTime.now());
-	
-	// collego nel modello html il task e il contatore
-	model.addAttribute("task" , task);
-	model.addAttribute("contatore" , contatore);
-
-	// salvo il contatore a DB
-	repositContatore.save(contatore);
-	
 	return "/Contatore/timer";
 	
 }
@@ -94,13 +108,21 @@ public String stopContatore(@PathVariable("id") Integer contatoreId)
     	// richiamo il contatore a DB
     	Contatore contat = repositContatore.getReferenceById(contatoreId);
     	
-	//eseguo il TIMESTAMP dello STOP
-	contat.setStop(LocalDateTime.now());
+    	if(contat.getStop() == null) {
+    	    
+    	    //eseguo il TIMESTAMP dello STOP
+    	    contat.setStop(LocalDateTime.now());
+    	    // recupero timestamp di start e stop
+    	}
+    	LocalDateTime STOP = contat.getStop();
+    	LocalDateTime START = contat.getStart();
+    	
+    	// metodo che calcola la differenza fra i due timestamp
+    	String FinalTime = contat.findDifference(START, STOP);
 
-	// DA IMPLEMENTARE CALCOLO FINALE DEL TEMPO TRASCORSO FRA LO START E LO STOP
-	
-	// salvo il contatore
+    	// salvo il contatore
     	repositContatore.save(contat);
+		
     	
 	return "/Contatore/timer";
  }
