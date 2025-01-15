@@ -15,8 +15,8 @@
     </div>
     <div class="nav-bar md:static absolute bg-[#0057A5] min-h-[60vh] md:min-h-fit md:w-auto w-full left-0 top-[-100%] flex items-center">
       <ul class="flex flex-col md:flex-row p-3 md:items-center">
-        <li class="md:mx-4 py-5 md:py-0 text-[#FFE541]">
-          <a class="flex items-center pointer-events-none" >
+        <li class="md:mx-4 py-5 md:py-0 hover:text-gray-400">
+          <a class="flex items-center" th:href="@{/dashboard}">
             <span class="px-2">
               <svg width="30px" height="30px" viewBox="0 0 200 200" version="1.1" >
                 <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
@@ -337,7 +337,7 @@
         <ul class="flex md:flex-col items-end justify-around w-full">
           <li class="py-4 px-2 sm:mx-6 md:m-0 mx-1">
             <div class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[65px] sm:h-[65px] w-[45px] h-[45px]">
-              <a class="pointer-events-none">
+              <a th:href="@{/dashboard}">
                 <svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
                   <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
                   <g id="Tavola-da-disegno11" serif:id="Tavola da disegno1">
@@ -388,7 +388,7 @@
           </li>
           <li class="py-4 px-2 sm:mx-6 md:m-0 mx-1">
             <div class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
-              <a th:href="@{/Clienti/insert}">
+              <a href="#">
                 <svg width="90%" height="90%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
                   <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
                   <clipPath id="_clip1">
@@ -435,19 +435,113 @@
         </svg>      
       </a>
     </div>
-    <div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center">
-      <div class="md:w-5/12 w-full h-2/5 md:h-5/12 border border-[#0057A5] bg-gray-100 p-3 m-3">
-        <h1 class="text-[#0057A5] font-bold">I TUOI PROGETTI IN CORSO</h1>
+     <div id="main-section" class="flex flex-col w-full flex-wrap h-full justify-center items-center  text-[#0057A5]">
+      
+      <div class="h-12 text-center font-bold items-center m-3">
+        <h1>INSERIMENTO NUOVO CLIENTE</h1>
       </div>
-      <div class="md:w-5/12 w-full h-2/5 md:h-5/12 border border-[#0057A5] bg-gray-100 p-3 m-3">
-        <h1 class="text-[#0057A5] font-bold">AREA STATISTICHE</h1>
-      </div>
-      <div class="md:w-5/12 w-full h-2/5 md:h-5/12 border border-[#0057A5] bg-gray-100 p-3 m-3">
-        <h1 class="text-[#0057A5] font-bold">I TUOI TASK AVVIATI</h1>
-      </div>
-      <div class="md:w-5/12 w-full h-2/5 md:h-5/12 border border-[#0057A5] bg-gray-100 p-3 m-3">
-        <h1 class="text-[#0057A5] font-bold">I TUOI CLIENTI</h1>
-      </div>
+      
+      <div class="w-11/12 md:w-3/5 h-auto border border-[#0057A5] rounded-[8px] bg-gray-100 p-3 mb-6">
+        <form class="py-3" id="formCliente" th:object="${formCliente}" th:action="@{/Clienti/insert}" method="post">
+          <div class="mb-4">
+            <div class="grid grid-cols-12 mb-2" >
+              <div class="col-start-1 col-end-4 ps-3">
+                <label for="name">Nome del cliente</label>
+              </div>
+              <div class="col-start-5 col-end-12">
+                <input type="text" class="w-full" id="name" th:field="*{name}" th:errorClass="is-invalid">
+              </div>
+                <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+                  <ul>
+                    <li th:each="err: ${#fields.errors('name')}" th:text="${err}"></li>
+                  </ul>
+                </div>
+            </div>           
+            <div class="grid grid-cols-12 mb-2"> 
+              <div class="col-start-1 col-end-4 ps-3">
+                <label for="email">Email del cliente</label>
+              </div>
+              <div class="col-start-5 col-end-12">
+                <input type="text" class="w-full" id="email" th:field="*{email}" th:errorClass="is-invalid">
+              </div>
+                <div th:if="${#fields.hasErrors('email')}" class="invalid-feedback">
+                  <ul>
+                    <li th:each="err : ${#fields.errors('email')}" th:text="${err}"></li>
+                  </ul>
+                </div>
+             </div>	
+            <div class="grid grid-cols-12 mb-2">	
+              <div class="col-start-1 col-end-4 ps-3">
+                <label for="telefono">Telefono</label>
+              </div>		  
+              <div class="col-start-5 col-end-12">
+                <input type="number" class="w-full" id="telefono" th:field="*{telefono}" th:errorClass="is-invalid">
+              </div>
+                <div th:if="${#fields.hasErrors('telefono')}" class="invalid-feedback">
+                   <ul>
+                     <li th:each="err:${#fields.errors('telefono')}" th:text="${err}"></li>
+                   </ul>
+                </div>
+             </div>
+             <div class="grid grid-cols-12 mb-2">		
+              <div class="col-start-1 col-end-4 ps-3">
+                <label for="indirizzo">Indirizzo</label>
+              </div>	  
+              <div class="col-start-5 col-end-12">
+                <input type="text" class="w-full" id="indirizzo" th:field="*{indirizzo}" th:errorClass="is-invalid">
+              </div>
+                 <div th:if="${#fields.hasErrors('indirizzo')}" class="invalid-feedback">
+                    <ul>
+                       <li th:each="err:${#fields.errors('indirizzo')}" th:text="${err}"></li>
+                     </ul>
+                 </div>
+             </div>
+             <div class="grid grid-cols-12 mb-2 ">
+              <div class="col-start-1 col-end-4 ps-3">
+                <label for="city">Città</label>
+              </div>
+              <div class="col-start-5 col-end-12">
+                <input type="text" class="w-full" id="city" th:field="*{city}" th:errorClass="is-invalid">
+              </div>			  
+                 <div th:if="${#fields.hasErrors('city')}" class="invalid-feedback">
+                    <ul>
+                      <li th:each="err:${#fields.errors('city')}" th:text="${err}"></li>
+                    </ul>
+                 </div>
+             </div>
+             <div class="grid grid-cols-12 mb-2">		
+              <div class="col-start-1 col-end-4 ps-3">
+                <label for="ragioneSociale">Ragione sociale</label>
+              </div>	
+              <div class="col-start-5 col-end-12">
+                <input type="text" class="w-full" id="ragioneSociale" th:field="*{ragioneSociale}" th:errorClass="is-invalid">
+              </div>  
+                 <div th:if="${#fields.hasErrors('ragioneSociale')}" class="invalid-feedback">
+                    <ul>
+                      <li th:each="err:${#fields.errors('ragioneSociale')}" th:text="${err}"></li>
+                    </ul>
+                 </div>
+             </div>		
+             <div class="grid grid-cols-12  mb-2">	
+              <div class="col-start-1 col-end-4 ps-3">
+                <label for="ragioneSociale">Partita Iva</label>
+              </div>	
+              <div class="col-start-5 col-end-12">
+                <input type="text" class="w-full" id="PartitaIva" th:field="*{partitaIva}" th:errorClass="is-invalid">
+              </div>	  
+                 <div th:if="${#fields.hasErrors('partitaIva')}" class="invalid-feedback">
+                    <ul>
+                      <li th:each="err:${#fields.errors('partitaIva')}" th:text="${err}"></li>
+                    </ul>
+                 </div>
+               </div>	    	 
+          </div>
+            <div class="text-center ">
+              <button type="submit" class="border-2 border-[#0057A5] bg-[#ffe541] rounded-[35px] px-3 py-1 shadow-slate-400 shadow-md"> Aggiungi </button>		  					
+            </div>             
+        </form>	
+         </div>		
+
       <div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden">
         <div class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
           <div class="flex justify-between items-center text-[#0057A5] font-bold">
@@ -516,7 +610,6 @@
         </div>
       </div>
     </div>
-  </div>
 </main>
     <script type="text/javascript" th:src="@{/js/timer.js}"></script>
     <script type="text/javascript" th:src="@{/js/layout.js}">

@@ -37,32 +37,32 @@ public class DashboardController {
 	@GetMapping("/dashboard")
 	public String index(Model model){
 
-		List<User> userList = new ArrayList<User> ();
-
-		userList = userRepository.findAll(Sort.by(Sort.Direction.ASC, "Cognome"));
-
-		model.addAttribute("list", userList);
-		
-
-		List<Cliente> clienteList = new ArrayList<Cliente> ();
-
-		clienteList = clienteRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
-
-		model.addAttribute("clientiList", clienteList);
-		
-		
-		List<Progetto> progettiList = new ArrayList<Progetto> ();
-
-		progettiList = progettoRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
-
-		model.addAttribute("progettiList", progettiList);
-		
-		
-		List<Task> taskList = new ArrayList<Task> ();
-
-		taskList = taskRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
-
-		model.addAttribute("taskList", taskList);
+//		List<User> userList = new ArrayList<User> ();
+//
+//		userList = userRepository.findAll(Sort.by(Sort.Direction.ASC, "Cognome"));
+//
+//		model.addAttribute("list", userList);
+//		
+//
+//		List<Cliente> clienteList = new ArrayList<Cliente> ();
+//
+//		clienteList = clienteRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+//
+//		model.addAttribute("clientiList", clienteList);
+//		
+//		
+//		List<Progetto> progettiList = new ArrayList<Progetto> ();
+//
+//		progettiList = progettoRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+//
+//		model.addAttribute("progettiList", progettiList);
+//		
+//		
+//		List<Task> taskList = new ArrayList<Task> ();
+//
+//		taskList = taskRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+//
+//		model.addAttribute("taskList", taskList);
 		
 		
 		return "freelApp-dashboard";
