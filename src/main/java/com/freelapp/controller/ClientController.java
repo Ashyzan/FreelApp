@@ -140,7 +140,7 @@ public class ClientController {
 	    
 	    model.addAttribute("formCliente", new Cliente());
 	    
-	    return "/Clienti/insertClient"; 
+	    return "/Clienti/freelapp-insertClient"; 
 	}
 	
 	
