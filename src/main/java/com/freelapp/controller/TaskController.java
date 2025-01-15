@@ -40,25 +40,33 @@ public class TaskController {
 		   }
 	
 			@GetMapping("/Task/insert/progetto-{id}")
-			public String insertTask(@PathVariable("id") Integer id, Model model) {
+			public String insertTask(@PathVariable("id") Integer id,
 				
-				Progetto progetto = repositProgetto.findById(id).get();
-							
+				Progetto progetto ,Model model) {
+			    
+			    	Task newTask = new Task();
+			    	
+				progetto = repositProgetto.getReferenceById(id);
+				
+				model.addAttribute("progetto", progetto);
+				model.addAttribute("task" , newTask);
+				
+				
 				return "/Task/insertTask";
 			}
 	
 
 			@PostMapping("/Task/insert/{id}")
 			public String storeTask(@PathVariable("id") Integer id , 
-				@ModelAttribute("newTask") Task task, 
+				@ModelAttribute("task") Task task, 
 				BindingResult bindingResult, Model model) {
 			
-			    	Progetto progetto = repositProgetto.findById(id).get();
+			    	Progetto progetto = repositProgetto.getReferenceById(id);
 			    
-			    	Task newTask = new Task();
+			    	task = new Task();
 				
-				newTask.setProgetto(progetto);	
-				
+				task.setProgetto(progetto);	
+				System.out.println("STAMPO PROGETTO" + progetto.getId());
 //				List<Task> listaTask = repositTask.findAll();  
 //				
 //				progetto.setElencoTask(listaTask);

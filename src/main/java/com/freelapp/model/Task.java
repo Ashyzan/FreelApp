@@ -44,11 +44,11 @@ public class Task{
 	private LocalDate dataInizio;
 	
 	@NotNull(message = "La data di chiusura stimata non può essere null")
-	@Column(name = "DataChiusuraStimata", nullable = false)
+	@Column(name = "DataChiusuraStimata", nullable = true)
 	private LocalDate dataChiusuraStimata;
 	
 	//@NotNull(message = "La data di chiusura definitiva non può essere null")
-	@Column(name = "DataChiusuraDefinitiva", nullable = false)
+	@Column(name = "DataChiusuraDefinitiva", nullable = true)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataChiusuraDefinitiva;
 

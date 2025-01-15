@@ -81,7 +81,7 @@ public String startContatore(@PathVariable("id") Integer taskId,
 public String pauseContatore(@PathVariable("id") Integer taskId)
 {
     
- // richiamo l'id del task
+    	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
 	
 	// verifica che il contatore esista
@@ -137,5 +137,28 @@ public String stopContatore(@PathVariable("id") Integer taskId)
     	
 	return "/Contatore/timer";
  }
+    @PostMapping("/Contatore/reset/{id}") 
+    public String resetContatore(@PathVariable ("id") Integer taskId) {
+    
+    	// richiamo l'id del task
+    	Task task = repositTask.getReferenceById(taskId);
+    	
+    	// verifica che il contatore esista
+    	if (task.getContatore() != null) {
+    	    
+    	    //eseguo il RESET
+    		task.getContatore().setStop(null);
+    		task.getContatore().setStart(null);
+    		task.getContatore().setPause(null);
+    		task.getContatore().setStop_numbers(0);
+    		task.getContatore().findDifference(LocalDateTime.now(),LocalDateTime.now());
+    		
+    		// salvo il contatore
+    	 	repositContatore.save(task.getContatore());
+    	    
+    	}
+    	
+    return "/Contatore/timer";
+    }
 
 }
