@@ -48,21 +48,16 @@ public class Task{
 	private LocalDate dataChiusuraStimata;
 	
 	//@NotNull(message = "La data di chiusura definitiva non può essere null")
-	@Column(name = "DataChiusuraDefinitiva", nullable = true)
+	@Column(name = "DataChiusuraDefinitiva", nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataChiusuraDefinitiva;
-
-//	@OneToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "contatore_id", referencedColumnName = "id")
-//	private Contatore contatore;
 
 	@ManyToOne
 	@JoinColumn(name = "ProgettoRif", nullable = false)
 	private Progetto progetto;
 	
-	@ManyToOne
-	@JoinColumn(name = "StatoRif", nullable = true)
-	private Stato stato;
+	@Column(name = "stato")
+	private String stato;
 	
 	@OneToOne(mappedBy = "task", cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
@@ -127,11 +122,13 @@ public class Task{
 	    this.progetto = progetto;
 	}
 
-	public Stato getStato() {
+	public String getStato() {
 	    return stato;
 	}
 
-	public void setStato(Stato stato) {
+
+	public void setStato(String stato) {
+	    stato = "in corso";
 	    this.stato = stato;
 	}
 
