@@ -59,7 +59,7 @@
 						<p th:text="|Data chiusura definitiva: ${task.getDataChiusuraDefinitiva()}|" class="card-text"></p>
 						<p th:text="|Contatore: ${task.getContatore.getPause()}|" class="card-text"></p>
 						<p th:text="|Progetto: ${task.getProgetto.getName()}|" class="card-text"></p>
-						<p th:text="|Stato: ${task.getStato().getTipoStato()}|" class="card-text"></p>
+				<!--		<p th:text="|Stato: ${task.getStato().getTipoStato()}|" class="card-text"></p> -->
 						<div class="text-center">
 							<a class="btn btn-primary mb-2" th:href="@{/Task/edit/{id}(id=${task.getId()})}"> Modifica il task </a>
 						</div>
