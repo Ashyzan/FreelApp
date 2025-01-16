@@ -43,12 +43,16 @@ public class TaskController {
 			public String insertTask(@PathVariable("id") Integer id,
 				
 				Progetto progetto ,Model model) {
-			    
-			    	Task newTask = new Task();
 			    	
-				progetto = repositProgetto.getReferenceById(id);
+			    	// richiamo il progetto tramite id
+			    	progetto = repositProgetto.getReferenceById(id);
+			    
+			    	// istanzio un nuovo task
+			    	Task newTask = new Task();
+			    	// attribuisco il task al progetto
+			    	newTask.setProgetto(progetto);
 				
-				model.addAttribute("progetto", progetto);
+			    	// riporto nel modello il task
 				model.addAttribute("task" , newTask);
 				
 				
@@ -60,19 +64,17 @@ public class TaskController {
 			public String storeTask(@PathVariable("id") Integer id , 
 				@ModelAttribute("task") Task task, 
 				BindingResult bindingResult, Model model) {
-			
+			    	
+			    	// richiamo il progetto tramite id
 			    	Progetto progetto = repositProgetto.getReferenceById(id);
 			    
-			    	task = new Task();
+			    	// attribuisco il task passato dal modello al progetto (progettoRif)
+				task.setProgetto(progetto);
 				
-				task.setProgetto(progetto);	
-				System.out.println("STAMPO PROGETTO" + progetto.getId());
-//				List<Task> listaTask = repositTask.findAll();  
-//				
-//				progetto.setElencoTask(listaTask);
-				
+				// restituisco il task al modello
 				model.addAttribute("task", task);
 				
+				// salvo il task
 				repositTask.save(task);
 				
 				 return "redirect:/dashboard";       
