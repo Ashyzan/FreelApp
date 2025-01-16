@@ -437,94 +437,136 @@
     <div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center">
     <div>
 		<section class="w-full">
-			<div class="text-center">
-				<h1>Menù</h1>
+				<div class="h-12 text-center text-[#0057A5] font-bold items-center m-3">
+		            <h1>ELENCO CLIENTI</h1>
+		          </div>	
+				<table class="text-[#0057A5] w-auto m-auto">
+					<thead class="border border-[#0057A5] md:h-12 h-8 bg-[#0057A5] text-white max-sm:text-[12px]">
+						<tr>
+							<th class="md:px-4 px-2">Nome</th>
+							<th class="md:px-4 px-2">Email</th>
+							<th class="md:px-4 px-2">Telefono</th>
+							<th class="md:px-4 px-2 max-md:hidden">Ragione Sociale</th>
+							<th class="md:px-4 px-2 max-md:hidden">Partita Iva</th>
+							<th class="md:px-4 px-2"></th>
+							<th class="md:px-4 px-2 max-md:hidden"></th>
+						</tr>
+					</thead>
+					
+					<tbody>
+		                <!-- <tr th:each="cliente : ${list}" class="border-b-2 h-6">
+							<td th:text="${cliente.name}"></td>
+							<td th:text="${cliente.email}"></td>
+						    <td th:text="${cliente.telefono}"></td>
+							<td th:text="${cliente.indirizzo}" ></td>
+						    <td th:text="${cliente.city}"></td>
+							<td th:text="${cliente.ragioneSociale}"></td>
+							<td th:text="${cliente.partitaIva}"></td>
+							<td>   -->
+						<tr th:each="cliente : ${list}" class="border-b-2 h-6 text-center max-sm:text-[10px]">
+							<td th:text="${cliente.name}" class="p-2 "></td>
+							<td th:text="${cliente.email}" class="p-2"></td>
+						    <td th:text="${cliente.telefono}" class="p-2"></td>
+							<td th:text="${cliente.ragioneSociale}" class="p-2 max-md:hidden"></td>
+							<td th:text="${cliente.partitaIva}" class=" p-2 max-md:hidden"></td>
+							<td>  
+		                        <div class="flex justify-center items-center gap-4 md:px-6 px-2">
+		                            <a  th:href="@{/Clienti/{id}(id=${cliente.getId()})}">
+		                                <div class="w-5 h-5">
+		                                    <svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+		                                        <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
+		                                        <clipPath id="_clip1">
+		                                            <rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"/>
+		                                        </clipPath>
+		                                        <g clip-path="url(#_clip1)">
+		                                            <g id="new-message" transform="matrix(11.1138,0,0,11.1138,-11.1124,-11.1627)">
+		                                                <path d="M18.174,1.826C17.072,0.724 16.092,1.049 16.092,1.049L7.453,9.681L6,14L10.317,12.546L18.951,3.908C18.951,3.908 19.275,2.928 18.174,1.826ZM10.605,11.605L10.134,12.075L8.661,12.575C8.557,12.335 8.427,12.098 8.163,11.835C7.899,11.571 7.663,11.441 7.423,11.337L7.923,9.864L8.394,9.394C8.394,9.394 9.17,9.305 9.931,10.067C10.693,10.828 10.605,11.605 10.605,11.605ZM16,17L3,17L3,4L8,4L10,2L3,2C1.9,2 1,2.9 1,4L1,17C1,18.1 1.9,19 3,19L16,19C17.1,19 18,18.1 18,17L18,10L16,12L16,17Z" style="fill:rgb(45, 87, 166);fill-rule:nonzero;"/>
+		                                            </g>
+		                                        </g>
+		                                    </svg>
+		                                </div>
+		                            </a>
+		                            <a  th:href="@{/Clienti/edit/{id}(id=${cliente.getId()})}" class="max-md:hidden">
+		                                <div class="w-5 h-5">
+		                                    <svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+		                                        <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
+		                                        <clipPath id="_clip1">
+		                                            <rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"/>
+		                                        </clipPath>
+		                                        <g clip-path="url(#_clip1)">
+		                                            <g id="new-message" transform="matrix(11.1138,0,0,11.1138,-11.1124,-11.1627)">
+		                                                <path d="M18.174,1.826C17.072,0.724 16.092,1.049 16.092,1.049L7.453,9.681L6,14L10.317,12.546L18.951,3.908C18.951,3.908 19.275,2.928 18.174,1.826ZM10.605,11.605L10.134,12.075L8.661,12.575C8.557,12.335 8.427,12.098 8.163,11.835C7.899,11.571 7.663,11.441 7.423,11.337L7.923,9.864L8.394,9.394C8.394,9.394 9.17,9.305 9.931,10.067C10.693,10.828 10.605,11.605 10.605,11.605ZM16,17L3,17L3,4L8,4L10,2L3,2C1.9,2 1,2.9 1,4L1,17C1,18.1 1.9,19 3,19L16,19C17.1,19 18,18.1 18,17L18,10L16,12L16,17Z" style="fill:rgb(45, 87, 166);fill-rule:nonzero;"/>
+		                                            </g>
+		                                        </g>
+		                                    </svg>
+		                                </div>
+		                            </a>
+		                        </div>
+							</td>
+							<td>
+								<form th:action="@{'/Clienti/delete/{id}'(id=${cliente.getId()})}" method="post" class="max-md:hidden">
+									<button class="flex items-center" type="submit" id="submitButton" th:data-confirm-delete="|Sei sicuro di voler cancellare il cliente?|
+									"onclick="if(!confirm(this.getAttribute('data-confirm-delete'))) return false">
+		                            <div class="flex justify-center items-center">
+		                                <div class="w-5 h-5">
+		                                    <svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+		                                        <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
+		                                        <clipPath id="_clip1">
+		                                            <rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"/>
+		                                        </clipPath>
+		                                        <g clip-path="url(#_clip1)">
+		                                            <g id="trash" transform="matrix(10,0,0,10,-0.005,-3.55271e-15)">
+		                                                <path d="M3.389,7.113L4.49,18.021C4.551,18.482 6.777,19.998 10,20C13.225,19.998 15.451,18.482 15.511,18.021L16.613,7.113C14.929,8.055 12.412,8.5 10,8.5C7.59,8.5 5.072,8.055 3.389,7.113ZM13.168,1.51L12.309,0.559C11.977,0.086 11.617,0 10.916,0L9.085,0C8.385,0 8.024,0.086 7.693,0.559L6.834,1.51C4.264,1.959 2.4,3.15 2.4,4.029L2.4,4.199C2.4,5.746 5.803,7 10,7C14.198,7 17.601,5.746 17.601,4.199L17.601,4.029C17.601,3.15 15.738,1.959 13.168,1.51ZM12.07,4.34L11,3L9,3L7.932,4.34L6.232,4.34C6.232,4.34 8.094,2.119 8.343,1.818C8.533,1.588 8.727,1.5 8.979,1.5L11.022,1.5C11.275,1.5 11.469,1.588 11.659,1.818C11.907,2.119 13.77,4.34 13.77,4.34L12.07,4.34Z" style="fill:rgb(255, 0, 0);fill-rule:nonzero;"/>
+		                                            </g>
+		                                        </g>
+		                                    </svg>
+		                                </div>
+		                            </div>
+									</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>		
+			  
+			<div th:if="${list.isEmpty()}">
+			   <div class="text-center text-[#0057A5] p-4">
+				   <h1>La ricerca non ha prodotto risultati</h1>
+			   </div>
 			</div>
-			<table class=" border mt-5 mx-auto" style="width: 900px">
-				<thead>
-					<tr>
-						<th>nome</th>
-						<th>email</th>
-						<th>telefono</th>
-						<th>indirizzo</th>
-						<th>città</th>
-						<th>ragioneSociale</th>
-						<th>partitaIva</th>
-						<th>Visualizza/Modifica</th>
-						<th>Elimina</th>
-					</tr>
-				</thead>
+			<div class="py-4 mb-10">
+				<div class="flex justify-between text-center">
+					<div class="col" th:text="|Clienti Totali: ${totalItems} - Pagina ${currentPage} di ${totalPages}|">	
+					</div>
+					<div class="col">
+						  <span class=" justify-center"
+						  	th:each="i : ${#numbers.sequence(1, totalPages)}">
+						    <a class="p-[3px] text-[#0057A5]" style="border: 1px solid #0057A5; border-radius: 5px;" th:href="@{'/Clienti/page/'+${i}}" th:text="${i}"></a>
+						  </span>	
+					</div>
+				</div>
+			</div>
+			<div class="text-center mx-6">
+			   <a th:fragment="button(link)" class="border-2 border-[#0057A5] bg-[#FFE541] text-[#0057A5] font-bold px-3 py-2 rounded-[35px]" th:href="@{/Clienti/insert}"> Inserisci un nuovo cliente </a>
+			</div>
+			<div class="mt-5">
+			  	<div class="text-center mb-5">
+			  	  <form class="mx-auto w-50" role="search" method="get" th:object="${Cliente}" th:action="@{/cliente-search}">
+			  	    <label for="ticket-search" class="text-[#0057A5]">Ricerca Cliente</label>
+			      	   <input type="text" class="border-2 border-[#0057A5]" name="input" placeholder="Ricerca..." aria-label="Search">
+			      	     	<button class="border-2 border-[#0057A5] bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]" type="submit">Search</button>
+							<a class="border-2 border-[#0057A5] bg-[#FFE541] text-[#0057A5] font-bold px-3 py-2 rounded-[35px]" th:href="@{/Clienti}">Annulla</a>	
+			        </form>
+			      </div>  
+			    </div>
 				
-				<tbody>
-					<tr th:each="cliente : ${list}">
-						<td th:text="${cliente.name}"></td>
-						<td th:text="${cliente.email}"></td>
-					    <td th:text="${cliente.telefono}"></td>
-						<td th:text="${cliente.indirizzo}"></td>
-					    <td th:text="${cliente.city}"></td>
-						<td th:text="${cliente.ragioneSociale}"></td>
-						<td th:text="${cliente.partitaIva}"></td>
-						<td>  
-							<a th:fragment="button(link)"
-							   class="btn btn-primary"
-							   th:href="@{/Clienti/{id}(id=${cliente.getId()})}">
-							   <i class="bi bi-file-earmark-text w-5"></i>
-							</a>
-							<a th:fragment="button(link)"
-								class="btn btn-primary"
-								th:href="@{/Clienti/edit/{id}(id=${cliente.getId()})}">
-								<i class="bi bi-pencil-square"></i>
-						    </a>
-						</td>
-						<td>
-							<form th:action="@{'/Clienti/delete/{id}'(id=${cliente.getId()})}" method="post">
-								<button class="btn btn-danger" type="submit" id="submitButton" th:data-confirm-delete="|Sei sicuro di voler cancellare il cliente?|
-								"onclick="if(!confirm(this.getAttribute('data-confirm-delete'))) return false">
-									<i class="bi bi-trash"></i>
-								</button>
-							</form>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</section>		
-		  
-		<div th:if="${list.isEmpty()}">
-		   <div class="text-center">
-			   <h1>La ricerca non ha prodotto risultati</h1>
-		   </div>
-		</div>
-		<div class="container">
-			<div class="row d-flex justify-content-between text-center">
-				<div class="col" th:text="|Clienti Totali: ${totalItems} - Pagina ${currentPage} di ${totalPages}|">	
+				<div>
+					<ul th:each="client : ${listClienti}">
+									<li th:text="${client.name}"></li>
+					</ul>
 				</div>
-				<div class="col">
-					  <span class=" justify-content-center"
-					  	th:each="i : ${#numbers.sequence(1, totalPages)}">
-					    <a class="p-2" style="border: 1px solid grey; border-radius: 5px;" th:href="@{'/Clienti/page/'+${i}}" th:text="${i}"></a>
-					  </span>	
-				</div>
-			</div>
-		</div>
-		<div class="text-center mt-5 mb-5">
-		   <a th:fragment="button(link)" class="btn btn-success" th:href="@{/Clienti/insert}"> Inserisci un nuovo cliente </a>
-		</div>
-		<div class="container mt-5">
-		  	<div class="text-center mb-5">
-		  	  <form class="mx-auto w-50" role="search" method="get" th:object="${Cliente}" th:action="@{/cliente-search}">
-		  	    <label for="ticket-search">Ricerca Cliente</label>
-		      	   <input type="text" name="input" placeholder="Ricerca..." aria-label="Search">
-		      	     	<button class="btn btn-primary ms-2" type="submit">Search</button>
-						<a class="btn btn-primary" th:href="@{/Clienti}">Annulla</a>	
-		        </form>
-		      </div>  
-		    </div>
-			
-			<div>
-				<ul th:each="client : ${listClienti}">
-								<li th:text="${client.name}"></li>
-				</ul>
-			</div>
+			</div></div>
 		</div>
       <div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden">
         <div class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
