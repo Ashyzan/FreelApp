@@ -620,18 +620,12 @@ video {
   top: -100%;
 }
 
-
 .col-auto {
   grid-column: auto;
 }
 
 .col-span-3 {
   grid-column: span 3 / span 3;
-
-.top-14{
-	top: 56px;
-}
-
 }
 
 .m-3 {
@@ -652,14 +646,18 @@ video {
   margin-right: 0.5rem;
 }
 
+.mx-6 {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
 }
 
-.mx-6 {
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
+.mb-10 {
+  margin-bottom: 2.5rem;
 }
 
 .mb-2 {
@@ -696,11 +694,6 @@ video {
 
 .mt-5 {
   margin-top: 1.25rem;
-}
-
-
-.mb-10 {
-  margin-bottom: 2.5rem;
 }
 
 .flex {
@@ -822,9 +815,6 @@ video {
 
 .grid-cols-4 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
-
-.grid-cols-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .flex-col {
@@ -895,7 +885,6 @@ video {
   border-width: 4px;
 }
 
-
 .border-b-2 {
   border-bottom-width: 2px;
 }
@@ -909,7 +898,6 @@ video {
   --tw-border-opacity: 1;
   border-color: rgb(255 229 65 / var(--tw-border-opacity, 1));
 }
-
 
 .border-red-600 {
   --tw-border-opacity: 1;
@@ -959,11 +947,6 @@ video {
 
 .p-4 {
   padding: 1rem;
-}
-
-
-.p-6 {
-  padding: 1.5rem;
 }
 
 .p-\[3px\] {
@@ -1115,11 +1098,6 @@ video {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
-.invalid\:border-red-500:invalid {
-  --tw-border-opacity: 1;
-  border-color: rgb(239 68 68 / var(--tw-border-opacity, 1));
-}
-
 .hover\:text-gray-400:hover {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity, 1));
@@ -1149,7 +1127,6 @@ video {
   .max-sm\:text-\[12px\] {
     font-size: 12px;
   }
-
 }
 
 @media (min-width: 640px) {
@@ -1197,7 +1174,6 @@ video {
     margin-right: 1rem;
   }
 
-
   .md\:my-3 {
     margin-top: 0.75rem;
     margin-bottom: 0.75rem;
@@ -1207,11 +1183,9 @@ video {
     display: none;
   }
 
-
   .md\:h-12 {
     height: 3rem;
   }
-
 
   .md\:h-\[35px\] {
     height: 35px;
@@ -1300,15 +1274,9 @@ video {
     display: none;
   }
 
-
   .lg\:max-w-\[600px\] {
     max-width: 600px;
   }
-
-  .lg\:pt-2 {
-    padding-top: 0.5rem;
-  }
-}
 
   .lg\:pt-2 {
     padding-top: 0.5rem;
