@@ -439,6 +439,7 @@
 		     <div class="h-12 text-center font-bold items-center m-3">
 		       <h1>INSERIMENTO NUOVO CLIENTE</h1>
 		     </div>			
+
 		     <div class="w-11/12 md:w-3/5 h-auto lg:max-w-[600px] border border-[#0057A5] rounded-[8px] bg-gray-100 p-3 mb-6">
 		       <form class="py-3" id="formCliente" th:object="${formCliente}" th:action="@{/Clienti/insert}" method="post">
 		         <div class="mb-4">
@@ -455,12 +456,14 @@
 		               </div>
 		             </div>
 		           </div>           
+
 		           <div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2"> 
 		             <div class="col">
 		               <label for="email">Email del cliente</label>
 		             </div>
 		             <div class="col md:col-span-2 col-span-3">
 		               <input type="text" class="border-red-600 w-full" id="email" th:field="*{email}" th:errorClass="border">
+
 		               <div th:if="${#fields.hasErrors('email')}" class="text-red-600 text-[12px] text-center w-full">
 		                 <ul>
 		                   <li th:each="err : ${#fields.errors('email')}" th:text="${err}"></li>
@@ -468,12 +471,14 @@
 		               </div>
 		             </div>
 		            </div>	
+
 		           <div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">	
 		             <div class="col">
 		               <label for="telefono">Telefono</label>
 		             </div>		  
 		             <div class="col md:col-span-2 col-span-3">
 		               <input type="number" class="border-red-600 w-full" id="telefono" th:field="*{telefono}" th:errorClass="border">
+
 		               <div th:if="${#fields.hasErrors('telefono')}" class="text-red-600 text-[12px] text-center w-full">
 		                  <ul>
 		                    <li th:each="err:${#fields.errors('telefono')}" th:text="${err}"></li>
@@ -481,12 +486,14 @@
 		               </div>
 		             </div>
 		            </div>
+
 		            <div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">		
 		             <div class="col">
 		               <label for="indirizzo">Indirizzo</label>
 		             </div>	  
 		             <div class="col md:col-span-2 col-span-3">
 		               <input type="text" class="border-red-600 w-full" id="indirizzo" th:field="*{indirizzo}" th:errorClass="border">
+
 		                <div th:if="${#fields.hasErrors('indirizzo')}" class="text-red-600 text-[12px] text-center w-full">
 		                   <ul>
 		                      <li th:each="err:${#fields.errors('indirizzo')}" th:text="${err}"></li>
@@ -494,12 +501,14 @@
 		                </div>
 		             </div>
 		            </div>
+
 		            <div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
 		             <div class="col">
 		               <label for="city">Città</label>
 		             </div>
 		             <div class="col md:col-span-2 col-span-3">
 		               <input type="text" class="border-red-600 w-full" id="city" th:field="*{city}" th:errorClass="border">
+
 		                <div th:if="${#fields.hasErrors('city')}" class="text-red-600 text-[12px] text-center w-full">
 		                   <ul>
 		                     <li th:each="err:${#fields.errors('city')}" th:text="${err}"></li>
@@ -507,12 +516,14 @@
 		                </div>
 		             </div>			  
 		            </div>
+
 		            <div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">		
 		             <div class="col">
 		               <label for="ragioneSociale">Ragione sociale</label>
 		             </div>	
 		             <div class="col md:col-span-2 col-span-3">
 		               <input type="text" class="border-red-600 w-full" id="ragioneSociale" th:field="*{ragioneSociale}" th:errorClass="border">
+
 		                <div th:if="${#fields.hasErrors('ragioneSociale')}" class="text-red-600 text-[12px] text-center w-full">
 		                   <ul>
 		                     <li th:each="err:${#fields.errors('ragioneSociale')}" th:text="${err}"></li>
@@ -520,12 +531,14 @@
 		                </div>
 		             </div>  
 		            </div>		
+
 		            <div class="grid md:grid-cols-3 grid-cols-4 mb-6 py-2">	
 		             <div class="col">
 		               <label for="ragioneSociale">Partita Iva</label>
 		             </div>	
 		             <div class="col md:col-span-2 col-span-3">
 		               <input type="text" class="border-red-600 w-full" id="PartitaIva" th:field="*{partitaIva}" th:errorClass="border">
+
 		                <div th:if="${#fields.hasErrors('partitaIva')}" class="text-red-600 text-[12px] text-center w-full">
 		                   <ul>
 		                     <li th:each="err:${#fields.errors('partitaIva')}" th:text="${err}"></li>

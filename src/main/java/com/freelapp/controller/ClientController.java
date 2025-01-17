@@ -148,7 +148,7 @@ public class ClientController {
 	public String storeCliente(@Valid @ModelAttribute("formCliente") Cliente formCliente, BindingResult bindingResult, Model model){
 		
 	   if(bindingResult.hasErrors()) {
-		   
+
 	      return "/Clienti/freelapp-insertClient";
 	   }
 

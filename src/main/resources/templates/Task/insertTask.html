@@ -41,16 +41,11 @@
 	<div></div>
 	
 	<div class="container">
-		<form class="mx-auto w-50" id="formTask" th:object="${formTask}" th:action="@{|/Task/insert/${id}|}" method="post">
-			
-			<input type="hidden" th:field="*{progetto}" >
-			<input type="hidden" th:field="*{contatore}" id="contatore">
-			<input type="hidden" th:field="*{stato}" id="stato">
-			<input type="hidden" th:field="*{dataChiusuraDefinitiva}" id="dataChiusuraDefinitiva">
-			
+		<form class="mx-auto w-50" th:object="${task}" th:action="@{|/Task/insert/${id}|}" method="post">
+			<!-- <input type="hidden" th:field="*{progetto}"> -->
 			<div class="form-group mb-2" >
 			  <label for="name">Nome del task</label>
-			  <input type="text" class="form-control" id="name" th:field="*{name}" th:errorClass="is-invalid">
+			  <input type="text" th:field="*{name}" th:errorClass="is-invalid">
 			    <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
 			  		<ul>
 			  			<li th:each="err: ${#fields.errors('name')}" th:text="${err}"></li>

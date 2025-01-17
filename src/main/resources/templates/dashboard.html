@@ -186,7 +186,10 @@
 										th:href="@{|/Progetti/edit/${progetto.id}|}"><i class="bi bi-pencil"></i>
 									</a>
 									<a class="btn btn-primary" style="color: whitesmoke;"
-												th:href="@{|/Task/insert/${progetto.id}|}"><i class="bi bi-list-check"></i>
+										th:href="@{|/Task/insert/progetto-${progetto.id}|}"><i class="bi bi-list-check"></i>
+									</a>
+									<a class="btn btn-primary" style="color: whitesmoke;"
+										th:href="@{|/Progetti/insert/${progetto.id}|}"><i class="bi bi-clipboard-plus"></i>
 									</a>
 								    <!--
 									   <form th:action="@{'/Admin/delete/{id}'(id=${user.id})}" method="post">
@@ -224,7 +227,7 @@
 						  <th class="col-4"> Nome </th>
 						  <th class="col-4"> DataInizio </th>
 						  <th class="col-4"> DataChiusuraStimata </th>
-						  <th class="col-4" style="text-align: center;"> Azioni</th>
+						  <th class="col-4" style="text-align: center;"> Progetto Rif.</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -232,6 +235,7 @@
 							<td> <span th:text="${task.getName()}"></span>  </td>
 							<td> <span th:text=" ${task.getDataInizio()}"></span> </td>
 							<td> <span th:text=" ${task.getDataChiusuraStimata()}"></span> </td>
+							<td> <span th:text="${task.getProgetto.name}"></span></td>
 							<td class="d-flex justify-content-center gap-2">
 								<a class="btn btn-primary" style="color: whitesmoke;"
 									th:href="@{|/Task/${task.id}|}"><i class="bi bi-search"></i>
