@@ -1,7 +1,10 @@
-const navBar = document.querySelector('.nav-bar')
-		      const navOptionsMobile = document.querySelector('#options-button-mobile')
-		      const navOptionsDesktop = document.querySelector('.nav-option-desktop')
+			
+			const navBar = document.querySelector('.nav-bar')
+		    const navOptionsMobile = document.querySelector('#options-button-mobile')
+		    const navOptionsDesktop = document.querySelector('.nav-option-desktop')
+			
 		      
+			
 		      function onToggleMenu(e){
 				navBar.classList.toggle('top-[-100%]')
 		        navBar.classList.toggle('top-14')
@@ -15,3 +18,5 @@ const navBar = document.querySelector('.nav-bar')
 				navOptionsDesktop.classList.toggle('top-[-100%]')
 		        navOptionsDesktop.classList.toggle('top-14')
 		      }
+			  
+			  

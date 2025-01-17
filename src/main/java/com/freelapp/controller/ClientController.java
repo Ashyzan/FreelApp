@@ -70,7 +70,7 @@ public class ClientController {
 		
 		model.addAttribute("totalItems", totalItems);
 		
-		return "/Clienti/listClient";
+		return "/Clienti/freelApp-listClient";
 	} 
 	
 	@GetMapping("/cliente-search")
@@ -107,7 +107,7 @@ public class ClientController {
 				
 				model.addAttribute("list", listaClientiSearch);	
 				
-				return "Clienti/listClient";
+				return "Clienti/freelApp-listClient";
 		 
 		 
 //		    if (input == null || input.isBlank()) {
@@ -148,6 +148,7 @@ public class ClientController {
 	public String storeCliente(@Valid @ModelAttribute("formCliente") Cliente formCliente, BindingResult bindingResult, Model model){
 		
 	   if(bindingResult.hasErrors()) {
+
 	      return "/Clienti/freelapp-insertClient";
 	   }
 
