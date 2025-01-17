@@ -73,6 +73,11 @@
 													th:href="@{|/Progetti/insert/${user.id}|}"><i class="bi bi-list-check"></i>
 												</a>
 												
+												<p>Aggiungi nuovo progetto</p>
+												<a class="btn btn-primary" style="color: whitesmoke;"
+												th:href="@{|/Progetti/insert/${user.id}|}"><i class="bi bi-clipboard-plus"></i>
+												</a>
+												
 												
 												<!--
 												<form th:action="@{'/Admin/delete/{id}'(id=${user.id})}"
@@ -161,6 +166,8 @@
 <div class="border 	border-primary rounded p-4">
 <h2>Sezione dedicata ai progetti</h2>
 
+
+
 <div class="mb-3">
 	 <h4 class="text-center">Elenco dei progetti</h4>
 		<table id="table-2" class="table table-striped align-items-center"
@@ -188,9 +195,7 @@
 									<a class="btn btn-primary" style="color: whitesmoke;"
 										th:href="@{|/Task/insert/progetto-${progetto.id}|}"><i class="bi bi-list-check"></i>
 									</a>
-									<a class="btn btn-primary" style="color: whitesmoke;"
-										th:href="@{|/Progetti/insert/${progetto.id}|}"><i class="bi bi-clipboard-plus"></i>
-									</a>
+									
 								    <!--
 									   <form th:action="@{'/Admin/delete/{id}'(id=${user.id})}" method="post">
 										    <button class="btn btn-danger" type="submit" id="submitButton"

@@ -28,18 +28,18 @@ public class Task{
 	@Column(name = "task_id")
 	private int id;
 	
-	@Column(name = "DenominazioneTask", nullable = false)
+	@Column(name = "DenominazioneTask", nullable = true)
  	@NotBlank(message = "La denominazione del task non può essere null")
 	@NotNull(message = "La denominazione del task non può essere null")
 	private String name;
 	
-	@Column(name = "Descrizione", nullable = false)
+	@Column(name = "Descrizione", nullable = true)
 	@Size(min = 1, max =500 , message="massimo 500 caratteri")
  	@NotBlank(message = "La descrizione del progetto non può essere blank")
 	@NotNull(message = "La descrizione del progetto non può essere null")
 	private String descrizione;
 		
-	@Column(name = "DataInizio", nullable = false)
+	@Column(name = "DataInizio", nullable = true)
 	@NotNull(message = "La data di inizio non può essere null")
 	private LocalDate dataInizio;
 	
