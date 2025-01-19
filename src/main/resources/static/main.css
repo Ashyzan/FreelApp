@@ -620,6 +620,10 @@ video {
   top: -100%;
 }
 
+.top-14{
+	top:56px;
+}
+
 .col-auto {
   grid-column: auto;
 }

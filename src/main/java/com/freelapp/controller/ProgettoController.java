@@ -2,10 +2,11 @@ package com.freelapp.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import com.freelapp.model.Progetto;
 import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.model.User;
 import com.freelapp.repository.UserRepository;
+import com.freelapp.service.ProgettoService;
 import com.freelapp.model.Cliente;
 import com.freelapp.repository.ClienteRepository;
 
@@ -32,6 +34,66 @@ public class ProgettoController {
 	@Autowired
 	private ClienteRepository repositClient;
 	
+	@Autowired
+	private ProgettoService progettoService;
+	
+			@GetMapping("/Progetti")
+			public String listaProgetti(Model model) {
+				
+				return getOnePage(1, model);
+			}
+			
+			@GetMapping("/Progetti/page/{pageNumber}")
+			public String getOnePage(@PathVariable("pageNumber") int currentPage, Model model ) {
+				
+					Page<Progetto> page = progettoService.findPage(currentPage);
+					
+					int totalPages = page.getTotalPages();
+					
+					long totalItems = page.getTotalElements();
+					
+					List<Progetto> listProgetti = page.getContent();
+					
+					model.addAttribute("list", listProgetti);
+					
+					model.addAttribute("currentPage", currentPage);
+				
+					model.addAttribute("totalPages", totalPages);
+					
+					model.addAttribute("totalItems", totalItems);
+				
+				return "/Progetti/freelApp-listaProgetti";
+			} 
+			
+			@GetMapping("/Progetti/progetto-search")
+			public String listaProgettiSearch(@Param("input") String input, Model model) {
+				
+				return progettoBySearch(1, input, model);
+			} 
+				 
+			 @GetMapping("/Progetti/progetto-search/page/{numberPage}")
+			 public String progettoBySearch(@PathVariable("pageNumber") int currentPage, String input,
+					 	Model model) {
+
+						 
+					Page<Progetto> page = progettoService.findSearchedPage(currentPage,input);
+
+					int totalPages = page.getTotalPages();
+						 
+					long totalItems = page.getTotalElements();
+						 
+					List<Progetto> listaClientiSearch = page.getContent();
+						
+					model.addAttribute("currentPage", currentPage);
+					
+					model.addAttribute("totalPages", totalPages);
+						
+					model.addAttribute("totalItems", totalItems);
+						
+					model.addAttribute("list", listaClientiSearch);	
+						
+				return "/Progetti/freelApp-listaProgetti";
+			}
 	
 			@GetMapping("/Progetti/{id}")
 			public String descrizioneProgetto(@PathVariable("id") int progettoId, Model model) {
