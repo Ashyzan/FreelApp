@@ -3,6 +3,8 @@ package com.freelapp.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -39,10 +41,12 @@ public class Progetto {
 	private String descrizione;
 	
 	@Column(name = "DataInizio", nullable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "La data di inizio non può essere null")
 	private LocalDate dataInizio;
 	
 	@NotNull(message = "La data di fine non può essere null")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "DataFine", nullable = false)
 	private LocalDate dataFine;
 	

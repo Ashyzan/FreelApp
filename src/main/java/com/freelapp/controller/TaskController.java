@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +17,6 @@ import com.freelapp.repository.ProgettoRepository;
 //import com.freelapp.repository.StatoRepository;
 import com.freelapp.repository.TaskRepository;
 
-import jakarta.validation.Valid;
-//import com.freelapp.model.StatoTask;
 
 @Controller
 public class TaskController {
@@ -74,6 +73,13 @@ public class TaskController {
 				// restituisco il task al modello
 				model.addAttribute("task", task);
 				
+				if(bindingResult.hasErrors()) {
+				  bindingResult.addError(
+				   new ObjectError("Errore", "Huston abbiamo un problema"));
+
+				   return  "/Task/insertTask";				
+				   }
+				
 				// salvo il task
 				repositTask.save(task);
 				
@@ -82,13 +88,9 @@ public class TaskController {
 			
 			
 			@GetMapping("/Task/edit/{id}")
-			public String edit(@PathVariable("id") Integer id, Model model) {
-				
-//				List<Stato> listStati = repositStato.findAll();  
+			public String edit(@PathVariable("id") Integer id, Model model) { 
 				
 				Task formTask = repositTask.getReferenceById(id);
-				
-//			    model.addAttribute("statiForm", listStati);
 				model.addAttribute("formTask", formTask);
 				
 				return "/Task/editTask";
@@ -96,17 +98,27 @@ public class TaskController {
 			
 			
 			@PostMapping("/Task/edit/{id}")
-		    public String updateTask(@Valid @ModelAttribute("formTask") Task formTask, BindingResult bindingResult, Model model) {					
-				
-				if(bindingResult.hasErrors()) {
-//				   model.addAttribute("statiForm", repositStato.findAll());
-				   return  "/Task/editTask";				
-				   }
+		    public String updateTask(@PathVariable("id") Integer id, @ModelAttribute("formTask") Task formTask, BindingResult bindingResult, Model model) {					
+				repositTask.getReferenceById(id);
  
 				repositTask.save(formTask);
 				
-				return "redirect:/Progetti/" + formTask.getProgetto().getId(); 
+    				if(bindingResult.hasErrors()) {
+    				    bindingResult.addError(new ObjectError("Errore", "c'è un errore nel salvataggio del form"));
+    				    
+    				    return  "/Task/editTask";				
+    				}
+				return "redirect:/dashboard"; 
 				     
 			    }
+			
+			@PostMapping("Task/delete/{id}")
+			public String deleteTask(@PathVariable("id") Integer id) {
+				
+				repositTask.deleteById(id);
+			
+				return "redirect:/dashboard"; 
+			}
+			
 		
 }
