@@ -20,37 +20,38 @@ public class Cliente {
 	private int id;
 	
 	@Column(name = "NomeDitta", nullable = false)
-	@NotNull(message = "Il nome non può essere null")
-	@NotBlank(message = "Il nome non può essere blank ")
+	@NotNull(message = "Inserimento del nome obbligatorio")
+	@NotBlank(message = "Inserimento del nome obbligatorio")
 	private String name;
 
 	@Column(name = "RagioneSociale", nullable = false)
-	@NotNull(message = "La ragione sociale non può essere null")
-	@NotBlank(message = "La ragione sociale non può essere blank ")
+	@NotNull(message = "Inserimento ragione sociale obbligatorio")
+	@NotBlank(message = "Inserimento ragione sociale obbligatorio")
 	private String ragioneSociale;
 	
 	@Column(name = "email", nullable = false)
-	@NotNull(message = "L'email non può essere null")
-	@NotBlank(message = "L'email non può essere blank ")
+	@NotNull(message = "Inserimento email obbligatorio")
+	@NotBlank(message = "Inserimento email obbligatorio")
 	private String email;
 	
 	@Column(name = "Telefono", nullable = false)
-	@NotNull(message = "Il telefono non può essere null")
+	@NotNull(message = "Inserimento numero telefono obbligatorio")
+	@NotBlank(message = "Inserimento numero telefono obbligatorio")
 	private String telefono;
 	
 	@Column(name = "Indirizzo", nullable = false)
-	@NotNull(message = "L'indirizzo non può essere null")
-	@NotBlank(message = "L'indirizzo non può essere blank ")
+	@NotNull(message = "Inserimento indirizzo obbligatorio")
+	@NotBlank(message = "Inserimento indirizzo obbligatorio")
 	private String indirizzo;
 	
 	@Column(name = "Città", nullable = false)
-	@NotNull(message = "La città non può essere null")
-	@NotBlank(message = "La città non può essere blank ")
+	@NotNull(message = "Inserimento città obbligatorio")
+	@NotBlank(message = "Inserimento città obbligatorio")
 	private String city;
 	
 	@Column(name = "PartitaIva", nullable = false)
-	@NotNull(message = "La partitaIva non può essere null")
-	@NotBlank(message = "La partitaIva non può essere blank ")
+	@NotNull(message = "Inserimento partita iva obbligatorio")
+	@NotBlank(message = "Inserimento partita iva obbligatorio")
 	private String partitaIva;
 	
 	@OneToMany(mappedBy = "cliente")

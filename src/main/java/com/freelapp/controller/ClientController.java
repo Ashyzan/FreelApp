@@ -137,7 +137,7 @@ public class ClientController {
 	    
 	    model.addAttribute("formCliente", new Cliente());
 	    
-	    return "/Clienti/insertClient"; 
+	    return "/Clienti/freelapp-insertClient"; 
 	}
 	
 	
@@ -145,7 +145,7 @@ public class ClientController {
 	public String storeCliente(@Valid @ModelAttribute("formCliente") Cliente formCliente, BindingResult bindingResult, Model model){
 		
 	   if(bindingResult.hasErrors()) {
-	      return "/Clienti/insertClient";
+	      return "/Clienti/freelapp-insertClient";
 	   }
 
 	   repositoryCliente.save(formCliente);

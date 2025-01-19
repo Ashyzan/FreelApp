@@ -42,7 +42,7 @@ public class TaskController {
 			public String insertTask(@PathVariable("id") Integer id,
 				
 				Progetto progetto ,Model model) {
-			    	
+
 			    	// richiamo il progetto tramite id
 			    	progetto = repositProgetto.getReferenceById(id);
 			    
@@ -52,7 +52,7 @@ public class TaskController {
 			    	newTask.setProgetto(progetto);
 				
 			    	// riporto nel modello il task
-				model.addAttribute("task" , newTask);
+				    model.addAttribute("task" , newTask);
 				
 				
 				return "/Task/insertTask";
@@ -63,7 +63,7 @@ public class TaskController {
 			public String storeTask(@PathVariable("id") Integer id , 
 				@ModelAttribute("task") Task task, 
 				BindingResult bindingResult, Model model) {
-			    	
+        
 			    	// richiamo il progetto tramite id
 			    	Progetto progetto = repositProgetto.getReferenceById(id);
 			    
