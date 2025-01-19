@@ -73,13 +73,14 @@ public class TaskController {
 				// restituisco il task al modello
 				model.addAttribute("task", task);
 				
+
 				if(bindingResult.hasErrors()) {
 				  bindingResult.addError(
 				   new ObjectError("Errore", "Huston abbiamo un problema"));
 
 				   return  "/Task/insertTask";				
 				   }
-				
+
 				// salvo il task
 				repositTask.save(task);
 				

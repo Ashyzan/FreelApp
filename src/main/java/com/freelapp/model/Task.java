@@ -39,6 +39,7 @@ public class Task{
 		
 	@Column(name = "DataInizio", nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+
 	@NotNull(message = "La data di inizio non può essere null")
 	private LocalDate dataInizio;
 	
