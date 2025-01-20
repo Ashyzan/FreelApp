@@ -25,27 +25,28 @@ public class Progetto {
 	private int id;
 	
 	@Column(name = "DenominazioneProgetto", nullable = false)
- 	@NotBlank(message = "La denominazione del progetto non può essere null")
-	@NotNull(message = "La denominazione del progetto non può essere null")
+ 	@NotBlank(message = "Inserimento denominazione obbligatorio")
+	@NotNull(message = "Inserimento denominazione obbligatorio")
 	private String name;
 	
 	@Size(min = 1, max =500 , message="massimo 500 caratteri")
- 	@NotBlank(message = "La descrizione del progetto non può essere blank")
-	@NotNull(message = "La descrizione del progetto non può essere null")
+ 	@NotBlank(message = "Inserimento descrizione obbligatorio")
+	@NotNull(message = "Inserimento descrizione obbligatorio")
 	@Column(name = "descrizione", nullable = true)
 	private String descrizione;
 	
 	@Column(name = "DataInizio", nullable = false)
-	@NotNull(message = "La data di inizio non può essere null")
+	@NotNull(message = "Data di inizio obbligatoria")
 	private LocalDate dataInizio;
 	
-	@NotNull(message = "La data di fine non può essere null")
+	@NotNull(message = "Data di fine obbligatoria")
 	@Column(name = "DataFine", nullable = false)
 	private LocalDate dataFine;
 	
 	@OneToMany(mappedBy = "progetto")
 	private List<Task> elencoTask;
 
+	@NotNull(message = "Scelta cliente obbligatoria")
 	@ManyToOne
 	@JoinColumn(name = "ClienteRif", nullable = false)
 	private Cliente cliente;

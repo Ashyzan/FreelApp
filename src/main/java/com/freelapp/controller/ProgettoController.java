@@ -118,7 +118,7 @@ public class ProgettoController {
 
 				model.addAttribute("formProgetto", formProgetto);
 				
-				return "/Progetti/insertProgetto";
+				return "/Progetti/freelapp-insertProgetto";
 			}
 	
 	
@@ -126,7 +126,9 @@ public class ProgettoController {
 			public String storeProgetto(@Valid @ModelAttribute("formProgetto") Progetto formProgetto, BindingResult bindingResult, Model model) {
 		
 				if(bindingResult.hasErrors()) {
-					return "/Progetti/insertProgetto";
+					
+					return "/Progetti/freelapp-insertProgetto";
+					
 				}
 		
 				repositProgetto.save(formProgetto);
