@@ -30,6 +30,14 @@ public class TaskController {
 //	@Autowired
 //	private StatoRepository repositStato;
 	
+			@GetMapping("/Task")
+			public String iMieiTask(Model model) {
+				
+				model.addAttribute("taskList");
+				
+				return "/Task/freelapp-listaTask";
+			}
+	
 			@GetMapping("/Task/{id}")
 			public String descrizioneTask(@PathVariable("id") int taskId, Model model) {
 		

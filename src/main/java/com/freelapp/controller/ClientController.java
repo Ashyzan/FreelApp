@@ -128,7 +128,7 @@ public class ClientController {
 		
 		model.addAttribute("cliente", repositoryCliente.getReferenceById(clienteId));
 	
-		return "/Clienti/descrizioneCliente";
+		return "/Clienti/freelapp-descrizioneCliente";
 	  }
 	
 	
@@ -160,7 +160,7 @@ public class ClientController {
 				
 		model.addAttribute("formCliente", repositoryCliente.findById(id).get());
 		
-		return "/Clienti/editClient";
+		return "/Clienti/freelapp-editClient";
 	}
 	
 	
@@ -168,7 +168,7 @@ public class ClientController {
 	public String updateCliente (@Valid @ModelAttribute("formCliente") Cliente formCliente, BindingResult bindingResult, Model model) {
 		
 		if(bindingResult.hasErrors()) {
-			return "/Clienti/editClient";
+			return "/Clienti/freelapp-editClient";
 		}
 		
 		repositoryCliente.save(formCliente);

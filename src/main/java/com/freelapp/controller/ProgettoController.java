@@ -144,7 +144,7 @@ public class ProgettoController {
 				
 				model.addAttribute("formProgetto", formProgetto);
 				
-				return "/Progetti/editProgetto";
+				return "/Progetti/freelapp-editProgetto";
 			}
 			
 			
@@ -152,7 +152,7 @@ public class ProgettoController {
 		    public String updateProgetto(@Valid @ModelAttribute("formProgetto") Progetto formProgetto, BindingResult bindingResult, Model model) {
 							
 				if(bindingResult.hasErrors()) {
-					return  "/Progetti/editProgetto";
+					return  "/Progetti/freelapp-editProgetto";
 				}
  
 				repositProgetto.save(formProgetto);

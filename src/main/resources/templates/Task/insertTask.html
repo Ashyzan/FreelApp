@@ -42,6 +42,7 @@
 	<div class="container">
 		<form class="mx-auto w-50" th:object="${task}" th:action="@{|/Task/insert/${id}|}" method="post">
 			<!-- <input type="hidden" th:field="*{progetto}"> -->
+
 						
 			<div class="form-group mb-2" >
 						  <label>Titolo Task</label>
@@ -51,6 +52,7 @@
 						  						  			<li th:each="err: ${#fields.errors('name')}" th:text="${err}"></li>
 						  						  		</ul>
 						  						    </div>
+
 			</div>
     
 			<div class="form-group mb-2" >
