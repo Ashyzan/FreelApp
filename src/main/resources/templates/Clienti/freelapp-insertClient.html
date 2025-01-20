@@ -464,7 +464,6 @@
 		             </div>
 		             <div class="col md:col-span-2 col-span-3">
 		               <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="email" th:field="*{email}" th:errorClass="border">
-
 		               <div th:if="${#fields.hasErrors('email')}" class="text-red-600 text-[12px] text-center w-full">
 		                 <ul>
 		                   <li th:each="err : ${#fields.errors('email')}" th:text="${err}"></li>
@@ -479,7 +478,6 @@
 		             </div>		  
 		             <div class="col md:col-span-2 col-span-3">
 		               <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="telefono" th:field="*{telefono}" th:errorClass="border">
-
 		               <div th:if="${#fields.hasErrors('telefono')}" class="text-red-600 text-[12px] text-center w-full">
 		                  <ul>
 		                    <li th:each="err:${#fields.errors('telefono')}" th:text="${err}"></li>
@@ -494,7 +492,6 @@
 		             </div>	  
 		             <div class="col md:col-span-2 col-span-3">
 		               <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="indirizzo" th:field="*{indirizzo}" th:errorClass="border">
-
 		                <div th:if="${#fields.hasErrors('indirizzo')}" class="text-red-600 text-[12px] text-center w-full">
 		                   <ul>
 		                      <li th:each="err:${#fields.errors('indirizzo')}" th:text="${err}"></li>
@@ -509,7 +506,6 @@
 		             </div>
 		             <div class="col md:col-span-2 col-span-3">
 		               <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="city" th:field="*{city}" th:errorClass="border">
-
 		                <div th:if="${#fields.hasErrors('city')}" class="text-red-600 text-[12px] text-center w-full">
 		                   <ul>
 		                     <li th:each="err:${#fields.errors('city')}" th:text="${err}"></li>
@@ -524,7 +520,6 @@
 		             </div>	
 		             <div class="col md:col-span-2 col-span-3">
 		               <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="ragioneSociale" th:field="*{ragioneSociale}" th:errorClass="border">
-
 		                <div th:if="${#fields.hasErrors('ragioneSociale')}" class="text-red-600 text-[12px] text-center w-full">
 		                   <ul>
 		                     <li th:each="err:${#fields.errors('ragioneSociale')}" th:text="${err}"></li>
@@ -539,7 +534,6 @@
 		             </div>	
 		             <div class="col md:col-span-2 col-span-3">
 		               <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="PartitaIva" th:field="*{partitaIva}" th:errorClass="border">
-
 		                <div th:if="${#fields.hasErrors('partitaIva')}" class="text-red-600 text-[12px] text-center w-full">
 		                   <ul>
 		                     <li th:each="err:${#fields.errors('partitaIva')}" th:text="${err}"></li>

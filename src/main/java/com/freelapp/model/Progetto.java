@@ -3,6 +3,12 @@ package com.freelapp.model;
 import java.time.LocalDate;
 import java.util.List;
 
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -44,6 +50,8 @@ public class Progetto {
 	private LocalDate dataFine;
 	
 	@OneToMany(mappedBy = "progetto")
+	@JsonManagedReference
+	@JsonIgnore
 	private List<Task> elencoTask;
 
 	@NotNull(message = "Scelta cliente obbligatoria")

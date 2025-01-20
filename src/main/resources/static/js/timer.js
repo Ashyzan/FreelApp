@@ -6,9 +6,10 @@ let seconds = 0;
 let minutes = 0;
 let hours = 0;
 
-
-function start(e) {
-	 interval = setInterval(timer, 1000); 
+function start() {
+	 interval = setInterval(timer, 1000);  // instead use setTimeout()
+	 // see for reference https://stackoverflow.com/questions/29971898/how-to-create-an-accurate-timer-in-javascript
+	 // https://stackoverflow.com/questions/6577246/how-to-access-a-java-object-in-javascript-from-jsp
  }
  
  const pause = () => {

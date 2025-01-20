@@ -1,3 +1,4 @@
+
 // recupero elementi dal DOM per navBar	
 const navBar = document.querySelector('.nav-bar');
 const navOptionsMobile = document.querySelector('#options-button-mobile');
@@ -44,4 +45,3 @@ function openModal(){
 function closeModal(){
 	modal.classList.add('scale-0');
 }		  
-		  
