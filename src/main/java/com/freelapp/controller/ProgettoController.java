@@ -1,6 +1,7 @@
 package com.freelapp.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -11,15 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import jakarta.validation.Valid;
 
+import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
-import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.model.User;
+import com.freelapp.repository.ClienteRepository;
+import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.repository.UserRepository;
 import com.freelapp.service.ProgettoService;
-import com.freelapp.model.Cliente;
-import com.freelapp.repository.ClienteRepository;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class ProgettoController {
@@ -111,7 +113,7 @@ public class ProgettoController {
 				Progetto formProgetto = new Progetto();
 				
 				formProgetto.setUtente(utente);
-					
+				
 				List<Cliente> listaClienti = repositClient.findAll();  
 				
 				model.addAttribute("formClienti", listaClienti);
@@ -143,6 +145,8 @@ public class ProgettoController {
 				Progetto formProgetto = repositProgetto.findById(id).get();
 				
 				model.addAttribute("formProgetto", formProgetto);
+				
+				model.addAttribute("formClienti", repositClient.findAll());
 				
 				return "/Progetti/freelapp-editProgetto";
 			}
