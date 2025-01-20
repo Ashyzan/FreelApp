@@ -168,6 +168,15 @@ public class ProgettoController {
 				repositProgetto.save(formProgetto);
 				
 				return "redirect:/Admin/" + formProgetto.getUtente().getId(); 
-			    }		
+			    }
+			
+			
+			@PostMapping("Progetti/delete/{id}")
+			public String deleteTask(@PathVariable("id") Integer id) {
+				
+			    repositProgetto.deleteById(id);
+			
+			    return "redirect:/Progetti";
+			}
 			
 }
