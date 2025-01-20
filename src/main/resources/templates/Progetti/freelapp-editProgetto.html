@@ -463,7 +463,7 @@
 		       <h1 th:text="|MODIFICA PROGETTO: ${formProgetto.getName()}"|></h1>
 		     </div>			
 		     <div class="w-11/12 md:w-3/5 h-auto lg:max-w-[600px] border border-[#0057A5] rounded-[8px] bg-gray-100 p-3 mb-6">
-		       <form class="py-3" id="formProgetto" th:object="${formProgetto}" th:action="@{/Progetti/insert}" method="post">
+		       <form class="py-3" id="formProgetto" th:object="${formProgetto}" th:action="@{'/Progetti/edit/{id}'(id=${formProgetto.id})}" method="post">
 		         <div class="mb-4">
 					<input type="hidden" th:field="*{utente}" id="utente">
 		           <div class="grid md:grid-cols-3  grid-cols-4 mb-2 py-2" >
