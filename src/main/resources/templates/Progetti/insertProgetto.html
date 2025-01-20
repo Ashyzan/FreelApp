@@ -40,7 +40,7 @@
 	</div>
 	
 	<div class="container">
-		<form class="mx-auto w-50" id="formProgetto" th:object="${formProgetto}" th:action="@{/Progetti/insert}" method="post">
+		<form class="mx-auto w-50" id="formProgetto" th:object="${formProgetto}" th:action="@{|/Progetti/insert/${id}|}" method="post">
 			<input type="hidden" th:field="*{utente}" id="utente">
 			<input type="hidden" th:field="*{elencoTask}" id="elencoTask">
 			<div class="form-group mb-2" >

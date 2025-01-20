@@ -126,13 +126,19 @@ public class ProgettoController {
 	
 			@PostMapping("/Progetti/insert")
 			public String storeProgetto(@Valid @ModelAttribute("formProgetto") Progetto formProgetto, BindingResult bindingResult, Model model) {
-		
-				if(bindingResult.hasErrors()) {
+			    	
+				
+			    	if(bindingResult.hasErrors()) {
 					
-					return "/Progetti/freelapp-insertProgetto";
+			    	    List<Cliente> listaClienti = repositClient.findAll();  
+				
+			    	    model.addAttribute("formClienti", listaClienti);
+					
+			    	    return "/Progetti/freelapp-insertProgetto";
 					
 				}
 		
+			    	//repositUser.findById(id).get();
 				repositProgetto.save(formProgetto);
 		
 				return "redirect:/Admin/" + formProgetto.getUtente().getId();       
