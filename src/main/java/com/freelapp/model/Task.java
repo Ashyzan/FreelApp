@@ -28,27 +28,26 @@ public class Task{
 	@Column(name = "task_id")
 	private int id;
 	
-	@Column(name = "DenominazioneTask", nullable = true)
- 	@NotBlank(message = "La denominazione del task non può essere null")
+	@Column(name = "DenominazioneTask", nullable = false)
+ 	@NotBlank(message = "La denominazione del task è obbligatoria")
 	@NotNull(message = "La denominazione del task non può essere null")
 	private String name;
 	
-	@Column(name = "Descrizione", nullable = true)
-	@Size(min = 1, max =500 , message="massimo 500 caratteri")
- 	@NotBlank(message = "La descrizione del progetto non può essere blank")
-	@NotNull(message = "La descrizione del progetto non può essere null")
+	@Column(name = "Descrizione")
+	@Size(max =500 , message="massimo 500 caratteri")
 	private String descrizione;
 		
-	@Column(name = "DataInizio", nullable = true)
+	@Column(name = "DataInizio", nullable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+
 	@NotNull(message = "La data di inizio non può essere null")
 	private LocalDate dataInizio;
 	
-	@NotNull(message = "La data di chiusura stimata non può essere null")
-	@Column(name = "DataChiusuraStimata", nullable = true)
+	@Column(name = "DataChiusuraStimata")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataChiusuraStimata;
 	
-	//@NotNull(message = "La data di chiusura definitiva non può essere null")
-	@Column(name = "DataChiusuraDefinitiva", nullable = true)
+	@Column(name = "DataChiusuraDefinitiva")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataChiusuraDefinitiva;
 

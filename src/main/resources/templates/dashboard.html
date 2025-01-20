@@ -251,8 +251,8 @@
 								<a class="btn btn-primary" style="color: whitesmoke;"
 									th:href="@{|/Contatore/timer/${task.id}|}"><i class="bi bi-watch"></i>
 								</a>
-							    <!--
-								   <form th:action="@{'/Task/delete/{id}'(id=${user.id})}" method="post">
+							    
+								   <form th:action="@{|/Task/delete/${task.id}|}" method="post">
 									    <button class="btn btn-danger" type="submit" id="submitButton"
 										  style=" color: whitesmoke;"
 										  th:data-confirm-delete="|Sei sicuro di voler cancellare il task?|"
@@ -260,7 +260,7 @@
 										  <i class="bi bi-trash"></i>
 										 </button>
 									</form>
-								-->
+							
 							</td>
 						</tr>
 					 </tbody>
