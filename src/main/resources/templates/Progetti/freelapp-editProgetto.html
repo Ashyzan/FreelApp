@@ -530,11 +530,11 @@
 		               <label for="city">Cliente progetto</label>
 		             </div>
 		             <div class="col md:col-span-2 col-span-3">
-							<select class="border-red-600 h-8  text-[#0057A5] rounded-lg block w-full  px-4 focus:outline-none" 
+                  <select class="border-red-600 h-8  text-[#0057A5] rounded-lg block w-full  px-4 focus:outline-none" 
 									id="cliente" th:field="*{cliente}" th:errorClass="border" >
 								<option value="">Seleziona cliente</option>
 								<option th:each="cliente : ${formClienti}" th:value="${cliente.id}" th:text="${cliente.getName()}"></option>
-							</select>	
+							</select>		
 						<div th:if="${#fields.hasErrors('cliente')}" class="text-red-600 text-[12px] text-center w-full">
 							<ul>
 							    <li th:each="err : ${#fields.errors('cliente')}" th:text="${err}"></li>
