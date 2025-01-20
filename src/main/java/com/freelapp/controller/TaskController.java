@@ -1,9 +1,6 @@
 package com.freelapp.controller;
 
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +16,8 @@ import com.freelapp.repository.ProgettoRepository;
 //import com.freelapp.model.Stato;
 //import com.freelapp.repository.StatoRepository;
 import com.freelapp.repository.TaskRepository;
+
+import jakarta.validation.Valid;
 
 
 @Controller
@@ -72,7 +71,7 @@ public class TaskController {
 
 			@PostMapping("/Task/insert/{id}")
 			public String storeTask(@PathVariable("id") Integer id , 
-				@ModelAttribute("task") Task task, 
+				@Valid @ModelAttribute("task") Task task, 
 				BindingResult bindingResult, Model model) {
         
 			    	// richiamo il progetto tramite id
@@ -110,10 +109,9 @@ public class TaskController {
 			
 			
 			@PostMapping("/Task/edit/{id}")
-		    public String updateTask(@PathVariable("id") Integer id, @ModelAttribute("formTask") Task formTask, BindingResult bindingResult, Model model) {					
+		    public String updateTask(@PathVariable("id") Integer id, @Valid @ModelAttribute("formTask") Task formTask, BindingResult bindingResult, Model model) {					
 				repositTask.getReferenceById(id);
  
-				repositTask.save(formTask);
 				
     				if(bindingResult.hasErrors()) {
     				    bindingResult.addError(new ObjectError("Errore", "c'è un errore nel salvataggio del form"));
@@ -121,13 +119,8 @@ public class TaskController {
     				    return  "/Task/editTask";				
     				}
 
-	// 				if (bindingResult.hasErrors()) {
-    //     List<String> errors = bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
-    //     // Here you can change ok to badRequest depending on your use case.
-    //     return ResponseEntity.ok(new ErrorResponse("404", "Validation failure", errors));
-    //     // In case if you want to fail the request, you need to use the below: 
-    //     // return ResponseEntity.badRequest().body(new ErrorResponse("404", "Validation failure", errors));
-    // }
+    				repositTask.save(formTask);
+
 				return "redirect:/dashboard"; 
 				     
 			    }
