@@ -630,7 +630,14 @@ video {
 
 .z-10 {
   z-index: 10;
+
 }
+
+
+.top-14{
+	top: 56px;
+}
+
 
 .col-auto {
   grid-column: auto;
@@ -871,6 +878,12 @@ video {
 
 .flex-row {
   flex-direction: row;
+
+}
+  
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
 }
 
 .flex-col {

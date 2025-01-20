@@ -1,6 +1,9 @@
 package com.freelapp.controller;
 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -117,6 +120,14 @@ public class TaskController {
     				    
     				    return  "/Task/editTask";				
     				}
+
+	// 				if (bindingResult.hasErrors()) {
+    //     List<String> errors = bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
+    //     // Here you can change ok to badRequest depending on your use case.
+    //     return ResponseEntity.ok(new ErrorResponse("404", "Validation failure", errors));
+    //     // In case if you want to fail the request, you need to use the below: 
+    //     // return ResponseEntity.badRequest().body(new ErrorResponse("404", "Validation failure", errors));
+    // }
 				return "redirect:/dashboard"; 
 				     
 			    }

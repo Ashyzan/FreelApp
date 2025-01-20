@@ -45,9 +45,10 @@
 
 						
 			<div class="form-group mb-2" >
-						  <label>Titolo Task</label>
+						  <label for="titolo">Titolo Task</label>
 						  <input type="text" th:field="*{name}" th:errorClass="is-invalid">
 						  <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+
 						  						  		<ul>
 						  						  			<li th:each="err: ${#fields.errors('name')}" th:text="${err}"></li>
 						  						  		</ul>
@@ -57,7 +58,8 @@
     
 			<div class="form-group mb-2" >
 			  <label for="descrizione">Descrizione</label>
-				<textarea class="form-control" id="descrizione" name="descrizione" th:field="*{descrizione}" th:errorClass="is-invalid"></textarea>
+				<textarea class="form-control" id="descrizione" name="descrizione" 
+				th:field="*{descrizione}" th:errorClass="is-invalid"></textarea>
 					<div th:if="${#fields.hasErrors('descrizione')}" class="invalid-feedback">
 						<ul>
 							<li th:each="err: ${#fields.errors('descrizione')}" th:text="${err}"></li>

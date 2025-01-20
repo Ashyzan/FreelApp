@@ -42,10 +42,12 @@ public class Progetto {
 	private String descrizione;
 	
 	@Column(name = "DataInizio", nullable = false)
+	@DateTimeFormat(pattern= "yyyy-MM-dd")
 	@NotNull(message = "Data di inizio obbligatoria")
 	private LocalDate dataInizio;
 	
 	@NotNull(message = "Data di fine obbligatoria")
+	@DateTimeFormat(pattern= "yyyy-MM-dd")
 	@Column(name = "DataFine", nullable = false)
 	private LocalDate dataFine;
 	
