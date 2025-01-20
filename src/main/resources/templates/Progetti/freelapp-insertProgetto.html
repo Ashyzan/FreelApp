@@ -26,7 +26,6 @@
 	          }
 	        }
 	      </style>
-	
     <title>FreelApp</title>
 </head>
 <body class="font-sans" style="width: 100vw; height: 100vh;">
@@ -532,6 +531,7 @@
 		             <div class="col md:col-span-2 col-span-3">
 							<select class="border-red-600 h-8  text-[#0057A5] rounded-lg block w-full  px-4 focus:outline-none" 
 									id="cliente" th:field="*{cliente}" th:errorClass="border" >
+
 								<option value="">Seleziona cliente</option>
 								<option th:each="cliente : ${formClienti}" th:value="${cliente.id}" th:text="${cliente.getName()}"></option>
 							</select>	
@@ -540,8 +540,8 @@
 							    <li th:each="err : ${#fields.errors('cliente')}" th:text="${err}"></li>
 							</ul>
 						</div>	 
+
 					</div>
-						
 		             </div>			  
 		            </div>	    	 
 		           <div class="text-center ">
