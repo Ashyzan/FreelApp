@@ -45,7 +45,7 @@ public class TaskController {
 		
 				model.addAttribute("task", repositTask.getReferenceById(taskId));
 	
-				return "/Task/descrizioneTask";
+				return "/Task/freelapp-descrizioneTask";
 		   }
 	
 			@GetMapping("/Task/insert/progetto-{id}")
@@ -74,11 +74,11 @@ public class TaskController {
 				@Valid @ModelAttribute("task") Task task, 
 				BindingResult bindingResult, Model model) {
         
-			    	// richiamo il progetto tramite id
-			    	Progetto progetto = repositProgetto.getReferenceById(id);
-			    
-			    	// attribuisco il task passato dal modello al progetto (progettoRif)
-				task.setProgetto(progetto);
+//			    	// richiamo il progetto tramite id
+//			    	Progetto progetto = repositProgetto.getReferenceById(id);
+//			    
+//			    	// attribuisco il task passato dal modello al progetto (progettoRif)
+//				task.setProgetto(progetto);
 				
 				// restituisco il task al modello
 				model.addAttribute("task", task);
@@ -140,7 +140,7 @@ public class TaskController {
 				Task formTask = repositTask.getReferenceById(id);
 				model.addAttribute("formTask", formTask);
 				
-				return "/Task/editTask";
+				return "/Task/freelapp-editTask";
 			}
 			
 			
@@ -152,7 +152,7 @@ public class TaskController {
     				if(bindingResult.hasErrors()) {
     				    bindingResult.addError(new ObjectError("Errore", "c'è un errore nel salvataggio del form"));
     				    
-    				    return  "/Task/editTask";				
+    				    return  "/Task/freelapp-editTask";				
     				}
 
     				repositTask.save(formTask);
@@ -161,7 +161,7 @@ public class TaskController {
 				     
 			    }
 			
-			@PostMapping("Task/delete/{id}")
+			@PostMapping("/Task/delete/{id}")
 			public String deleteTask(@PathVariable("id") Integer id) {
 				
 				repositTask.deleteById(id);
