@@ -35,7 +35,7 @@ public class TaskController {
 			@GetMapping("/Task")
 			public String iMieiTask(Model model) {
 				
-				model.addAttribute("taskList");
+				model.addAttribute("taskList", repositTask.findAll());
 				
 				return "/Task/freelapp-listaTask";
 			}
