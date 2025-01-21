@@ -35,7 +35,7 @@ public class TaskController {
 			@GetMapping("/Task")
 			public String iMieiTask(Model model) {
 				
-				model.addAttribute("taskList");
+				model.addAttribute("taskList", repositTask.findAll());
 				
 				return "/Task/freelapp-listaTask";
 			}
@@ -65,7 +65,7 @@ public class TaskController {
 				    model.addAttribute("task" , newTask);
 				
 				
-				return "/Task/insertTask";
+				return "/Task/freelapp-insertTask";
 			}
 	
 
@@ -85,16 +85,52 @@ public class TaskController {
 				
 
 				if(bindingResult.hasErrors()) {
-				  bindingResult.addError(
-				   new ObjectError("Errore", "Huston abbiamo un problema"));
+//				  bindingResult.addError(
+//				   new ObjectError("Errore", "Huston abbiamo un problema"));
 
-				   return  "/Task/insertTask";				
+				   return  "/Task/freelapp-insertTask";				
 				   }
 
 				// salvo il task
 				repositTask.save(task);
 				
 				 return "redirect:/dashboard";       
+			}
+			
+	//Inserimento nuovo Task da tasto rapido (senza progetto agganciato)
+			
+			@GetMapping("/Task/newTask")
+			private String newTaskWithoutProgetto(Model model) {
+				
+				// istanzio un nuovo task
+		    	Task newTask = new Task();
+		    	
+		    	// riporto nel modello il task
+			    model.addAttribute("task" , newTask);
+			    
+			    //riporto nel modello l'elenco dei progetti disponibili
+			    model.addAttribute("listaProgetti", repositProgetto.findAll());
+				
+				return "/Task/freelapp-insertTask-noProgetto";
+			}
+			
+			@PostMapping("Task/newTask")
+			private String saveNewTaskWithoutProgetto(@Valid @ModelAttribute("task") Task task, 
+				BindingResult bindingResult, Model model) {
+				
+				if(bindingResult.hasErrors()) {
+
+					//riporto nel modello l'elenco dei progetti disponibili
+				    model.addAttribute("listaProgetti", repositProgetto.findAll());
+					
+					   return  "/Task/freelapp-insertTask-noProgetto";				
+					   }
+
+					// salvo il task
+					repositTask.save(task);
+					
+					 return "redirect:/dashboard";   
+				
 			}
 			
 			

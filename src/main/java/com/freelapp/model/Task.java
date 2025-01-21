@@ -30,7 +30,7 @@ public class Task{
 	
 	@Column(name = "DenominazioneTask", nullable = false)
  	@NotBlank(message = "La denominazione del task è obbligatoria")
-	@NotNull(message = "La denominazione del task non può essere null")
+	@NotNull(message = "La denominazione del task è obbligatoria")
 	private String name;
 	
 	@Column(name = "Descrizione")
@@ -40,7 +40,7 @@ public class Task{
 	@Column(name = "DataInizio", nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 
-	@NotNull(message = "La data di inizio non può essere null")
+	@NotNull(message = "Inserimento data di inizio obbligatorio")
 	private LocalDate dataInizio;
 	
 	@Column(name = "DataChiusuraStimata")
@@ -52,6 +52,7 @@ public class Task{
 	private LocalDate dataChiusuraDefinitiva;
 
 	@ManyToOne
+	@NotNull(message = "La scelta del progetto è obbligatoria")
 	@JoinColumn(name = "ProgettoRif", nullable = false)
 	private Progetto progetto;
 	
