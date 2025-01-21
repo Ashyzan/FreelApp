@@ -1,6 +1,10 @@
 package com.freelapp.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +20,7 @@ import com.freelapp.repository.ProgettoRepository;
 //import com.freelapp.model.Stato;
 //import com.freelapp.repository.StatoRepository;
 import com.freelapp.repository.TaskRepository;
+import com.freelapp.service.TaskService;
 
 import jakarta.validation.Valid;
 
@@ -29,17 +34,72 @@ public class TaskController {
 	@Autowired
 	private ProgettoRepository repositProgetto;
 	
+	@Autowired
+	private TaskService taskService;
+	
 //	@Autowired
 //	private StatoRepository repositStato;
 	
 			@GetMapping("/Task")
 			public String iMieiTask(Model model) {
 				
-				model.addAttribute("taskList", repositTask.findAll());
+//				model.addAttribute("taskList", repositTask.findAll());
 				
-				return "/Task/freelapp-listaTask";
+				return getOnePage(1, model);
 			}
+			
+			@GetMapping("/Task/page/{pageNumber}")
+			public String getOnePage(@PathVariable("pageNumber") int currentPage, Model model ) {
+				
+					Page<Task> page = taskService.findPage(currentPage);
+					
+					int totalPages = page.getTotalPages();
+					
+					long totalItems = page.getTotalElements();
+					
+					List<Task> listTask = page.getContent();
+					
+					model.addAttribute("list", listTask);
+					
+					model.addAttribute("currentPage", currentPage);
+				
+					model.addAttribute("totalPages", totalPages);
+					
+					model.addAttribute("totalItems", totalItems);
+				
+				return "/Task/freelApp-listaTask";
+			} 
 	
+			@GetMapping("/Task/task-search")
+			public String listaTaskSearch(@Param("input") String input, Model model) {
+				
+				return taskBySearch(1, input, model);
+			} 
+				 
+			 @GetMapping("/Task/task-search/page/{numberPage}")
+			 public String taskBySearch(@PathVariable("pageNumber") int currentPage, String input,
+					 	Model model) {
+
+						 
+					Page<Task> page = taskService.findSearchedPage(currentPage,input);
+
+					int totalPages = page.getTotalPages();
+						 
+					long totalItems = page.getTotalElements();
+						 
+					List<Task> listaTaskSearch = page.getContent();
+						
+					model.addAttribute("currentPage", currentPage);
+					
+					model.addAttribute("totalPages", totalPages);
+						
+					model.addAttribute("totalItems", totalItems);
+						
+					model.addAttribute("list", listaTaskSearch);	
+						
+				return "/Task/freelApp-listaTask";
+			}
+			
 			@GetMapping("/Task/{id}")
 			public String descrizioneTask(@PathVariable("id") int taskId, Model model) {
 		
