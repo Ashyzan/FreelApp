@@ -65,7 +65,7 @@ public class TaskController {
 				    model.addAttribute("task" , newTask);
 				
 				
-				return "/Task/insertTask";
+				return "/Task/freelapp-insertTask";
 			}
 	
 
@@ -85,10 +85,10 @@ public class TaskController {
 				
 
 				if(bindingResult.hasErrors()) {
-				  bindingResult.addError(
-				   new ObjectError("Errore", "Huston abbiamo un problema"));
+//				  bindingResult.addError(
+//				   new ObjectError("Errore", "Huston abbiamo un problema"));
 
-				   return  "/Task/insertTask";				
+				   return  "/Task/freelapp-insertTask";				
 				   }
 
 				// salvo il task
