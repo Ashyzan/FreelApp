@@ -464,7 +464,6 @@
 		     </div>			
 		     <div class="w-11/12 md:w-3/5 h-auto lg:max-w-[600px] border border-[#0057A5] rounded-[8px] bg-gray-100 p-3 mb-6">
 		       <form class="py-3" id="task" th:object="${task}" th:action="@{|/Task/insert/${id}|}" method="post">
-				
 				<input type="hidden" th:field="*{progetto}" name="progetto" th:value="${progetto}">
 				 <div class="mb-4">
 					<div class="grid md:grid-cols-3  grid-cols-4 mb-2 py-2" >
@@ -525,6 +524,7 @@
 		                </div>
 		             </div>
 		            </div>
+
 				<!--
 					<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">		
 						<div class="col">

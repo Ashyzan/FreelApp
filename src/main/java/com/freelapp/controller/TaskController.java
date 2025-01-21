@@ -43,8 +43,6 @@ public class TaskController {
 			@GetMapping("/Task")
 			public String iMieiTask(Model model) {
 				
-//				model.addAttribute("taskList", repositTask.findAll());
-				
 				return getOnePage(1, model);
 			}
 			
