@@ -97,6 +97,42 @@ public class TaskController {
 				 return "redirect:/dashboard";       
 			}
 			
+	//Inserimento nuovo Task da tasto rapido (senza progetto agganciato)
+			
+			@GetMapping("/Task/newTask")
+			private String newTaskWithoutProgetto(Model model) {
+				
+				// istanzio un nuovo task
+		    	Task newTask = new Task();
+		    	
+		    	// riporto nel modello il task
+			    model.addAttribute("task" , newTask);
+			    
+			    //riporto nel modello l'elenco dei progetti disponibili
+			    model.addAttribute("listaProgetti", repositProgetto.findAll());
+				
+				return "/Task/freelapp-insertTask-noProgetto";
+			}
+			
+			@PostMapping("Task/newTask")
+			private String saveNewTaskWithoutProgetto(@Valid @ModelAttribute("task") Task task, 
+				BindingResult bindingResult, Model model) {
+				
+				if(bindingResult.hasErrors()) {
+
+					//riporto nel modello l'elenco dei progetti disponibili
+				    model.addAttribute("listaProgetti", repositProgetto.findAll());
+					
+					   return  "/Task/freelapp-insertTask-noProgetto";				
+					   }
+
+					// salvo il task
+					repositTask.save(task);
+					
+					 return "redirect:/dashboard";   
+				
+			}
+			
 			
 			@GetMapping("/Task/edit/{id}")
 			public String edit(@PathVariable("id") Integer id, Model model) { 
