@@ -472,7 +472,10 @@
 							<th class="md:px-4 px-2 max-lg:hidden">Ragione Sociale</th>
 							<th class="md:px-4 px-2 max-lg:hidden">Partita Iva</th>
 							<th class="md:px-4 px-2"></th>
+							<!--
+								
 							<th class="md:px-4 px-2 max-lg:hidden"></th>
+							-->
 						</tr>
 					</thead>
 					
@@ -515,6 +518,7 @@
 		                            </a>
 		                        </div>
 							</td>
+							<!--
 							<td>
 								<form th:action="@{'/Clienti/delete/{id}'(id=${cliente.getId()})}" method="post" class="max-lg:hidden">
 									<button class="flex items-center" type="submit" id="submitButton" th:data-confirm-delete="|Sei sicuro di voler cancellare il cliente?|
@@ -537,6 +541,8 @@
 									</button>
 								</form>
 							</td>
+								
+							-->
 						</tr>
 					</tbody>
 				</table>
