@@ -67,13 +67,13 @@ public class ProgettoController {
 				return "/Progetti/freelApp-listaProgetti";
 			} 
 			
-			@GetMapping("/Progetti/progetto-search")
+			@GetMapping("/progetto-search")
 			public String listaProgettiSearch(@Param("input") String input, Model model) {
 				
 				return progettoBySearch(1, input, model);
 			} 
 				 
-			 @GetMapping("/Progetti/progetto-search/page/{numberPage}")
+			 @GetMapping("/progetto-search/page/{numberPage}")
 			 public String progettoBySearch(@PathVariable("pageNumber") int currentPage, String input,
 					 	Model model) {
 

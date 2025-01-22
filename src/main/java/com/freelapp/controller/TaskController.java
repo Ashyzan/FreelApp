@@ -68,13 +68,13 @@ public class TaskController {
 				return "/Task/freelApp-listaTask";
 			} 
 	
-			@GetMapping("/Task/task-search")
+			@GetMapping("/task-search")
 			public String listaTaskSearch(@Param("input") String input, Model model) {
 				
 				return taskBySearch(1, input, model);
 			} 
 				 
-			 @GetMapping("/Task/task-search/page/{numberPage}")
+			 @GetMapping("/task-search/page/{numberPage}")
 			 public String taskBySearch(@PathVariable("pageNumber") int currentPage, String input,
 					 	Model model) {
 
