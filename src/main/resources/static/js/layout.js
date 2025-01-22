@@ -5,8 +5,8 @@ const navOptionsMobile = document.querySelector('#options-button-mobile');
 const navOptionsDesktop = document.querySelector('.nav-option-desktop');
 
 // recupero elementi dal DOM per modale	
-const modal = document.querySelector('#modal');
-const nuovoProgettoButton = document.querySelector('#nuovoProgettoButton');
+const modalDelete = document.querySelector('#modalDelete');
+const deleteButton = document.querySelector('#deleteButton');
 const modalCloseButton = document.querySelector('#modalCloseButton');
 		  
 // funzioni per navBar 		
@@ -26,22 +26,23 @@ function onToggleOptionsDesktop(e){
 
 // funzioni per modale
 
-//chiusura modale nuovoProgetto
+//chiusura modale 
 modalCloseButton.addEventListener('click', function(){
 	closeModal()
 })
 
-//apertura modale nuovoProgetto
-nuovoProgettoButton.addEventListener('click', function(){
+//apertura modale 
+deleteButton.addEventListener('click', function(){
 	openModal()
 })
 
 //funzione per aprire la modale
 function openModal(){
-	modal.classList.remove('scale-0');
+	modalDelete.classList.remove('scale-0');
 }
 
 //funzione per chiudere la modale
 function closeModal(){
-	modal.classList.add('scale-0');
+	modalDelete.classList.add('scale-0');
 }		  
+

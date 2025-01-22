@@ -102,7 +102,7 @@ public class ProgettoController {
 		
 				model.addAttribute("progetto", repositProgetto.getReferenceById(progettoId));
 	
-				return "/Progetti/descrizioneProgetto";
+				return "/Progetti/freelapp-descrizioneProgetto";
 		   }
 	
 			@GetMapping("/Progetti/insert/{id}")
