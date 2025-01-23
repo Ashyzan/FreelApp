@@ -18,6 +18,7 @@ import com.freelapp.model.Progetto;
 import com.freelapp.model.User;
 import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
+import com.freelapp.repository.TaskRepository;
 import com.freelapp.repository.UserRepository;
 import com.freelapp.service.ProgettoService;
 
@@ -38,6 +39,9 @@ public class ProgettoController {
 	
 	@Autowired
 	private ProgettoService progettoService;
+	
+	@Autowired
+	private TaskRepository repositTask;
 	
 			@GetMapping("/Progetti")
 			public String listaProgetti(Model model) {
@@ -171,8 +175,10 @@ public class ProgettoController {
 			    }
 			
 			
-			@PostMapping("Progetti/delete/{id}")
+			@PostMapping("/Progetti/delete/{id}")
 			public String deleteTask(@PathVariable("id") Integer id) {
+				
+				repositTask.deleteByProgettoId(id);
 				
 			    repositProgetto.deleteById(id);
 			

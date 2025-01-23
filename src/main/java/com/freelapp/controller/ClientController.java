@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.freelapp.model.Cliente;
+import com.freelapp.model.Progetto;
 import com.freelapp.repository.ClienteRepository;
+import com.freelapp.repository.ProgettoRepository;
+import com.freelapp.repository.TaskRepository;
 import com.freelapp.service.ClienteService;
 
 import jakarta.validation.Valid;
@@ -29,6 +32,12 @@ public class ClientController {
 	
 	@Autowired
 	private ClienteService clienteService;
+	
+	@Autowired
+	private ProgettoRepository repositProgetto;
+	
+	@Autowired
+	private TaskRepository repositTask;
 	
 	
 //	@GetMapping("/Clienti")
@@ -179,6 +188,29 @@ public class ClientController {
 	
 	@PostMapping("/Clienti/delete/{id}")
 	public String deleteClienti(@PathVariable("id") Integer id) {
+		
+		Cliente cliente = new Cliente();
+		
+		cliente = repositoryCliente.getReferenceById(id);
+		
+		//per poter cancellare i progetti collegati al cliente ho dovuto cancellare i task associati
+		//e per farlo ho creato una lista di progetti associati al cliente, l'ho iterata con il for 
+		//e per ogni progetto della lista vado a cancellare i suoi task. fatto questo esco
+		//dal for e procedo a cancellare i progetti del cliente e poi infine il cliente.
+		
+		List<Progetto> listaProgetti = cliente.getProgetti();
+		
+		Integer idProgetto = 0;
+		
+		for(int i = 0 ; i < listaProgetti.size(); i++) {
+			
+			idProgetto = listaProgetti.get(i).getId();
+			
+			repositTask.deleteByProgettoId(idProgetto);
+			
+		}
+		
+		repositProgetto.deleteByClienteId(id);
 		
 		repositoryCliente.deleteById(id);
 		
