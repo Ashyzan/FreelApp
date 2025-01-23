@@ -607,7 +607,7 @@
 	    </div>
 	    </div>
 	    <div class="w-full h-auto bg-white rounded-b-lg">
-			<form th:action="@{/Clienti/delete/${cliente.id}}"
+			<form th:action="@{|/Clienti/delete/${cliente.id}|}"
 						th:object="${cliente}"
 						method="post">
 						<div class="flex flex-col justify-center p-2 text-center ">

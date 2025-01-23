@@ -10,6 +10,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.freelapp.model.Task;
 
+import jakarta.transaction.Transactional;
+
 public interface TaskRepository extends JpaRepository<Task, Integer>, PagingAndSortingRepository<Task, Integer> {
 
 	@Query("SELECT t FROM Task t WHERE t.name LIKE '%'||:input||'%' OR "
@@ -17,5 +19,8 @@ public interface TaskRepository extends JpaRepository<Task, Integer>, PagingAndS
     public Page<Task> search( String input, Pageable pageable);
     
     public List<Task> findAll();
+    
+    @Transactional
+    void deleteByProgettoId(Integer id);
     
 }

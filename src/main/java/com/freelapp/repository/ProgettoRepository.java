@@ -10,6 +10,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.freelapp.model.Progetto;
 
+import jakarta.transaction.Transactional;
+
 public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, PagingAndSortingRepository<Progetto, Integer>{
 
 	 @Query("SELECT p FROM Progetto p WHERE p.name LIKE '%'||:input||'%' OR "
@@ -20,5 +22,8 @@ public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, Pa
 	    public Page<Progetto> search( String input, Pageable pageable);
 	    
 	    public List<Progetto> findAll();
+	    
+	    @Transactional
+	    void deleteByClienteId(Integer id);
 	    
 }
