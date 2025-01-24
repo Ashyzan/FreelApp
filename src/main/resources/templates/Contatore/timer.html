@@ -48,13 +48,16 @@
 	    </div>
    		<div class="container">
      		   <h1 id="timer">00:00:00</h1>
+			   
    		</div>
 	
 	<div class="container mt-5" style="width: 25rem;" >
 		<div class="row">
 			<div class="col">
+				 <!-- <input type="hidden" th:field="*{task}" th:value="${task.getId()}"> -->
 				<form class="mx-auto w-50 mb-4" th:action="@{|/start/${id}|}" th:object="${contatore}" method="post">
-					<button type="submit" th:onclick="start()"> start </button>
+					 <button th:onclick="avviaContatore([[${contatore}]])" type="submit"> start </button>
+					<!-- <button th:data="${contatore}" th:onclick="avviaContatore(this.getAttribute('data'))">using data attribute</button> -->
 				 </form>	
 		    </div>
 			
@@ -81,7 +84,18 @@
 	
  </div>	
 
-<script th:src="@{/js/timer.js}"></script>
+<!-- <script th:src="@{/static/js/timer.js}"></script> -->
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+  
+
+	let contatoreJs = /*[[${contatore.stop_numbers}]]*/ null;
+	console.log(contatoreJs);
+  
+/*]]>*/
+</script>
+ 	
 
 </body>
 </html>

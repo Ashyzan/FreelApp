@@ -1,44 +1,48 @@
 
-const timerElement = document.querySelector("#timer");
+//const timerElement = document.querySelector("#timer");
 
-let interval;
-let seconds = 0;
-let minutes = 0;
-let hours = 0;
+//let interval = setInterval();
+//let seconds = 10;
+//let minutes = 10;
+//let hours = 0;
+//let start = new Boolean(false);
 
-function start() {
-	 interval = setInterval(timer, 1000);  // instead use setTimeout()
-	 // see for reference https://stackoverflow.com/questions/29971898/how-to-create-an-accurate-timer-in-javascript
-	 // https://stackoverflow.com/questions/6577246/how-to-access-a-java-object-in-javascript-from-jsp
- }
+// ad ogni secondo esegue la funzione timer
+
+
+//function timer() {
+	
+	//while (start == true) {
+	  //setInterval(timer, 1000);
+	  //seconds++;
+	  
+	  //if (seconds == 60) {
+        //  minutes++;
+      //    seconds = 0;  
+    //}
+
+    //if (minutes == 60) {
+      //    minutes = 0;
+    //      hours++;
+  //  }
+    
+//		timerElement.innerHTML = hours + ":" + minutes + ":" + seconds;
+	
+//	}
+	
+	
+//}
+
+
+//function start() {
+//	 start = true;
+//	 timer();
+	 
+// }
  
- const pause = () => {
-      clearInterval(interval);
- }
-
- const stop = () => {
-     clearInterval(interval);
-  }
+// function pause (){
+	//start = false;
+ //}
  
-const digitZero = (digit) => {
-    if (digit < 10)
-        return `0${digit}`;
-    else return digit;
-}
-
-function timer() {
-    seconds++;
-
-    if (seconds == 60) {
-          minutes++;
-          seconds = 0;  
-    }
-
-    if (minutes == 60) {
-          minutes = 0;
-          hours++;
-    }
-
-    timerElement.innerHTML = digitZero(hours) + ":" + digitZero(minutes) + ":" + digitZero(seconds);
-  }
-
+ 
+ 

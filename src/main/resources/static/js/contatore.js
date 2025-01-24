@@ -1,5 +1,5 @@
 
-const timerElement = document.querySelector("#timer");
+//const timerElement = document.querySelector("#timer");
 
 let interval;
 let seconds = 0;

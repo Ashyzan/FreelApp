@@ -26,10 +26,13 @@ private ContatoreRepository repositContatore;
 
 
 @GetMapping("/Contatore/timer/{id}")
-public String gestioneTimer(@PathVariable("id") Integer taskId, Model model) {
+public String gestioneTimer(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore, Model model) {
 	
         // richiamo l'id del task 
 	Task task = repositTask.getReferenceById(taskId);
+	
+	 model.addAttribute("contatore" , contatore);
+
 	
 	return "/Contatore/timer";
  }
@@ -40,6 +43,7 @@ public String startContatore(@PathVariable("id") Integer taskId,
 	@ModelAttribute("contatore") Contatore contatore, Model model)
 {		
  
+    
     	// richiamo l'id del task
     	Task task = repositTask.getReferenceById(taskId);
     	
@@ -160,5 +164,4 @@ public String stopContatore(@PathVariable("id") Integer taskId)
     	
     return "/Contatore/timer";
     }
-
 }

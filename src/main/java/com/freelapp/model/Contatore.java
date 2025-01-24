@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "contatori")
-public class Contatore {
+public class Contatore{
     
     @Id
     @Column(name = "task_id")
