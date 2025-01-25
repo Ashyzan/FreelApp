@@ -28,6 +28,25 @@ public class Contatore{
     
     @Column(name = "finalTime", nullable = true)
     private String finalTime;
+    
+    @Column (name = "FinalTimeSecondsNow", nullable = true)
+    private Long FinalTimeSecondsNow;
+
+    public String getFinalTime() {
+        return finalTime;
+    }
+
+    public void setFinalTime(String finalTime) {
+        this.finalTime = finalTime;
+    }
+
+    public Long getFinalTimeSecondsNow() {
+        return FinalTimeSecondsNow;
+    }
+
+    public void setFinalTimeSecondsNow(Long finalTimeSecondsNow) {
+        FinalTimeSecondsNow = finalTimeSecondsNow;
+    }
 
     @Column(name = "stop", nullable = true)
     private LocalDateTime stop;
@@ -101,6 +120,18 @@ public class Contatore{
 	finalTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
 	
 	return finalTime;
+    }
+    
+    // metodo per calcolare lo scorrere del tempo in secondi
+    
+    public Long FindDifferenceEverySecond(LocalDateTime start_date) {
+	
+	LocalDateTime timeNow = LocalDateTime.now();
+	
+	Long FinalTimeSecondsNow = start_date.until(timeNow, ChronoUnit.SECONDS);
+	
+	return FinalTimeSecondsNow;
+	
     }
     
 

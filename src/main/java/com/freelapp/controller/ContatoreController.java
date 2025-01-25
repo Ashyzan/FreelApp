@@ -1,6 +1,9 @@
 package com.freelapp.controller;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,6 +41,13 @@ public String gestioneTimer(@PathVariable("id") Integer taskId, @ModelAttribute(
  }
 
 
+
+
+private void FindDifferenceEverySecond(LocalDateTime start) {
+    // TODO Auto-generated method stub
+    
+}
+
 @PostMapping("/start/{id}")
 public String startContatore(@PathVariable("id") Integer taskId, 
 	@ModelAttribute("contatore") Contatore contatore, Model model)
@@ -59,26 +69,53 @@ public String startContatore(@PathVariable("id") Integer taskId,
     	else  {
     	    
     	    // istanzio un nuovo contatore
-    	    contatore = new Contatore();
+    	  Contatore  contatore1 = new Contatore();
     	    
     	    // associo al task il nuovo contatore
-    	    task.setContatore(contatore);
+    	    task.setContatore(contatore1);
     	    
     	    //eseguo il TIMESTAMP
-    	    contatore.setStart(LocalDateTime.now());
+    	contatore1.setStart(LocalDateTime.now());
+    	  
+    	  LocalDateTime startF = contatore1.getStart(); 
     	    
+ /////////////////////////////////   	    
+    	    
+    	    
+    	    
+    	Runnable helloRunnable = new Runnable() {
+    	    public void run() {
+    		// funzione che calcola il tempo trascorso fra l'avvio dello start e 
+    		//il timestamp (restituisce in secondi tipo Long)
+        	  
+    		FindDifferenceEverySecond(startF);
+        	    repositContatore.save(contatore1);
+    		System.out.println("sto eseguendo il calcolo di tempo fra inizio = " + startF + "e fine " + contatore1.getFinalTimeSecondsNow());
+    	    }
+    	};
+
+    	// esegue helloRunnable ogni 1 secondo
+    	ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+    	executor.scheduleAtFixedRate(helloRunnable, 0, 1, TimeUnit.SECONDS);
+
+    	    
+    	    
+ /////////////////////////////////////   	    
     	    // collego nel modello html il task e il contatore
     	    model.addAttribute("task" , task);
-    	    model.addAttribute("contatore" , contatore);
+    	    model.addAttribute("contatore" , contatore1);
     	    
     	    // salvo il contatore a DB
-    	    repositContatore.save(contatore);
+    	    repositContatore.save(contatore1);
     	}
     	    
     
 	return "/Contatore/timer";
 	
 }
+
+
+
 
 
 @PostMapping("/Contatore/pause/{id}")
