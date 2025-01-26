@@ -72,17 +72,18 @@ public class ContatoreController {
 	    model.addAttribute("contatore", contatore1);
 
 	    // salvo il contatore a DB
-	    repositContatore.save(contatore);
+	    repositContatore.save(contatore1);
 	}
 
 	// set pause to null
 	task.getContatore().setPause(null);
-
+System.out.println("****************************************** ANNULLO LA PAUSA ");
 	while (task.getContatore().getPause() == null && task.getContatore().getStop() == null); {
 
-
+	    Contatore contatore3 = task.getContatore();
+	    
 	    Timer timer = new Timer();
-
+System.out.println("****************************************** FUORI DAL TIMER ");
 	    TimerTask timerTask = new TimerTask() {
 		@Override
 		public void run() {
@@ -90,10 +91,11 @@ public class ContatoreController {
 		    // recupero il timestamp di start
 		    LocalDateTime start = task.getContatore().getStart();
 
+System.out.println("****************************************** lo start è " + start);
 		    // salvo a db il tempo che scorre nel campo FinalTimeSecondsNow
 		    Long FinalTimeMillisec = task.getContatore().FindDifferenceEverySecond(start);
 
-		    repositContatore.save(contatore);
+		    repositContatore.save(contatore3);
 		}
 	    };
 
