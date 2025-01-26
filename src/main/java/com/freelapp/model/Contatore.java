@@ -31,6 +31,21 @@ public class Contatore{
     
     @Column (name = "FinalTimeSecondsNow", nullable = true)
     private Long FinalTimeSecondsNow;
+    
+    @Column(name = "stop", nullable = true)
+    private LocalDateTime stop;
+
+    @Column(name = "stop_numbers", nullable = true)
+    private int stop_numbers = 0;
+    
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "task_id")
+    private Task task;
+
+    public int getId() {
+        return id;
+    }
 
     public String getFinalTime() {
         return finalTime;
@@ -48,20 +63,6 @@ public class Contatore{
         FinalTimeSecondsNow = finalTimeSecondsNow;
     }
 
-    @Column(name = "stop", nullable = true)
-    private LocalDateTime stop;
-
-    @Column(name = "stop_numbers", nullable = true)
-    private int stop_numbers = 0;
-    
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "task_id")
-    private Task task;
-
-    public int getId() {
-        return id;
-    }
 
     public void setId(int id) {
         this.id = id;
@@ -133,6 +134,9 @@ public class Contatore{
 	return FinalTimeSecondsNow;
 	
     }
+
+
+    
     
 
 }
