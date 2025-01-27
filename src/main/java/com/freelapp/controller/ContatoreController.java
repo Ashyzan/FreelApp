@@ -59,6 +59,9 @@ public class ContatoreController {
     	// se il contatore esiste, restituiscilo al modello
     	if (task.getContatore() != null) {
   
+    	//    imposta il valore di restart
+    	    task.getContatore().setRestart(LocalDateTime.now());
+    	    
     	// collego nel modello html il task e il contatore
     	    model.addAttribute("task" , task);
     	    model.addAttribute("contatore" , contatore);
@@ -84,42 +87,7 @@ public class ContatoreController {
     	    repositContatore.save(contatore);
     	}
 	
-
-	// set pause to null
-	//task.getContatore().setPause(null);
-	
 	repositContatore.save(task.getContatore());
-	
-//System.out.println("****************************************** ANNULLO LA PAUSA ");
-//	while (task.getContatore().getPause() == null && task.getContatore().getStop() == null); {
-//
-//	    Contatore contatore3 = task.getContatore();
-//	    
-//	    Timer timer = new Timer();
-//System.out.println("****************************************** FUORI DAL TIMER ");
-//	    TimerTask timerTask = new TimerTask() {
-//		@Override
-//		public void run() {
-//		    
-//		    // recupero il timestamp di start
-//		    LocalDateTime start = task.getContatore().getStart();
-//
-//System.out.println("****************************************** lo start è " + start);
-//		    // salvo a db il tempo che scorre nel campo FinalTimeSecondsNow
-//		    int FinalTimeSec = task.getContatore().FindDifferenceEverySecond(start);
-//		    
-//		    task.getContatore().setFinalTimeSecondsNow(FinalTimeSec);
-//
-//		    repositContatore.save(contatore3);
-//		}
-//	    };
-//
-//	    timer.scheduleAtFixedRate(timerTask, 0, 1000);
-//
-//	    // timer.cancel();
-//	    
-//	}
-
 	
 
 	return "/Contatore/timer";
@@ -131,30 +99,52 @@ public class ContatoreController {
 
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
+	
+	// inserisco il contatore in una variabile
+	Contatore contatore = task.getContatore();
 
+	// recupero timestamp di inizio e pausa
+	LocalDateTime PAUSE = task.getContatore().getPause();
+	LocalDateTime START = task.getContatore().getStart();
+	LocalDateTime RESTART = task.getContatore().getRestart();
+	
 	// verifica che il contatore esista
-	if (task.getContatore() != null) {
-
-	    task.getContatore().setPause(LocalDateTime.now());
-
-	    // recupero timestamp di inizio e pausa
-	    LocalDateTime PAUSE = task.getContatore().getPause();
-	    LocalDateTime START = task.getContatore().getStart();
-
-	    // metodo che calcola la differenza fra i due timestamp
-	    Long FinalTime = task.getContatore().findDifference(START, PAUSE);
+	if (contatore != null) {
 	    
-	    // imposto il finaltime differenza fra stop e pausa - tipo Long
-	    task.getContatore().setFinaltime(FinalTime);
+	    // se la pausa non esiste
+	    if(PAUSE == null) {
+		
+		contatore.setPause(LocalDateTime.now());
 
-	    // ad ogni clic la funzione prende gli stop e incrementa di 1
-	    task.getContatore().setStop_numbers(task.getContatore().getStop_numbers() + 1);
+		// metodo che calcola la differenza fra i due timestamp
+		Long FinalTime = contatore.findDifference(START, PAUSE);
+		
+		// imposto il finaltime differenza fra stop e pausa - tipo Long
+		contatore.setFinaltime(FinalTime);
+		
+		// ad ogni clic la funzione prende gli stop e incrementa di 1
+		contatore.setStop_numbers(contatore.getStop_numbers() + 1);
+		
+	    }
+	    
+	 // se la pausa esiste già
+	    else  {
+		// imposto la nuova pausa
+		contatore.setPause(LocalDateTime.now());
+		
+		// metodo che calcola il tempo trascorso partendo dal restart e la nuova pausa
+		Long FinalTime = contatore.findTimeRestart(RESTART, PAUSE, task);
+				
+		// imposto il finaltime differenza fra stop e pausa - tipo Long
+		contatore.setFinaltime(FinalTime);
+				
+		// ad ogni clic la funzione prende gli stop e incrementa di 1
+		contatore.setStop_numbers(contatore.getStop_numbers() + 1);
+	    }
+	    
 
 	    // salvo il contatore
 	    repositContatore.save(task.getContatore());
-	    
-//	    model.addAttribute("task", task);
-//	    model.addAttribute("contatore", task.getContatore());
 	    
 
 	}

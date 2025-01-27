@@ -22,6 +22,9 @@ public class Contatore{
 
     @Column(name = "start", nullable = true)
     private LocalDateTime start;
+    
+    @Column(name = "restart", nullable = true)
+    private LocalDateTime restart;
 
     @Column(name = "pause", nullable = true)
     private LocalDateTime pause;
@@ -40,24 +43,12 @@ public class Contatore{
     @MapsId
     @JoinColumn(name = "task_id")
     private Task task;
+    
+    
 
     public int getId() {
         return id;
     }
-
- 
-
-    public Long getFinaltime() {
-        return finaltime;
-    }
-
-
-
-    public void setFinaltime(Long finaltime) {
-        this.finaltime = finaltime;
-    }
-
-
 
     public void setId(int id) {
         this.id = id;
@@ -69,6 +60,15 @@ public class Contatore{
 
     public void setStart(LocalDateTime start) {
 	this.start = start;
+    }
+    
+    public LocalDateTime getRestart() {
+        return restart;
+    }
+
+
+    public void setRestart(LocalDateTime restart) {
+        this.restart = restart;
     }
 
     public LocalDateTime getPause() {
@@ -85,6 +85,15 @@ public class Contatore{
 
     public void setStop(LocalDateTime stop) {
         this.stop = stop;
+    }
+    
+    public Long getFinaltime() {
+        return finaltime;
+    }
+
+
+    public void setFinaltime(Long finaltime) {
+        this.finaltime = finaltime;
     }
 
     public int getStop_numbers() {
@@ -104,39 +113,32 @@ public class Contatore{
         this.task = task;
     }
     
-    // function time difference
+    // function time difference start e primo stop
     public Long findDifference(LocalDateTime start_date, LocalDateTime end_date) {
 	
-	Long FinalTimeSeconds = start_date.until(end_date, ChronoUnit.SECONDS);
-	
-	//Long finaltime = FinalTimeSeconds.intValue();
-	//int hours = FinalTimeSeconds / 3600;
-	//int minutes = (FinalTimeSeconds % 3600) / 60;
-	//int seconds = FinalTimeSeconds % 60;
+	Long FinalTimeSeconds1 = start_date.until(end_date, ChronoUnit.SECONDS);
 
-	//finalTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
 	
-	//return finalTime;
-	
-	return FinalTimeSeconds;
+	return FinalTimeSeconds1;
     }
 
-
+    // calcola il tempo totale trascorso
     
-    // metodo per calcolare lo scorrere del tempo in secondi
-    
-//    public Long FindDifferenceEverySecond(LocalDateTime start_date) {
-//	
-//	LocalDateTime timeNow = LocalDateTime.now();
-//	
-//	Long FinalTimeSecondsNow = start_date.until(timeNow, ChronoUnit.SECONDS);
-//	
-//	return FinalTimeSecondsNow;
-//	
-//    }
-
-
-    
-    
+    public Long findTimeRestart(LocalDateTime restart_date, LocalDateTime pause_date, Task task) {
+	
+	
+	    
+	    restart_date = task.getContatore().getRestart();
+	    pause_date = task.getContatore().getRestart();
+	    
+	    Long finalTime  = restart_date.until(pause_date, ChronoUnit.SECONDS);
+	    
+	    Long FinalTimeSeconds2 = finalTime + task.getContatore().getFinaltime();
+	
+	
+	return FinalTimeSeconds2;
+	
+    }
+  
 
 }
