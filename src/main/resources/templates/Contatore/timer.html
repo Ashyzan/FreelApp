@@ -56,7 +56,7 @@
 			<div class="col">
 				 <!-- <input type="hidden" th:field="*{task}" th:value="${task.getId()}"> -->
 				<form class="mx-auto w-50 mb-4" th:action="@{|/start/${id}|}" th:object="${contatore}" method="post">
-					 <button th:onclick="avviaContatore([[${contatore}]])" type="submit"> start </button>
+					 <button  type="submit"> start </button>
 					<!-- <button th:data="${contatore}" th:onclick="avviaContatore(this.getAttribute('data'))">using data attribute</button> -->
 				 </form>	
 		    </div>
@@ -64,13 +64,13 @@
 			<div class="col">
 				<form class="mx-auto w-50" th:action="@{|/Contatore/pause/${id}|}" th:object="${contatore}" method="post">
 					<!-- <input type="hidden" th:field="*{task}" th:value="${task.id}">  -->   	
-					<button type="submit" th:onclick="pause()"> pause </button>
+					<button type="submit" > pause </button>
 				    </form>	    		
 			</div>
 			
 			<div class="col">
 			   <form class="mx-auto w-50" th:action="@{|/Contatore/stop/${id}|}" th:object="${contatore}" method="post">
-				     <button type="submit" th:onclick="stop()"> stop </button>
+				     <button type="submit" > stop </button>
 				</form>	
 			</div>
 			
@@ -89,13 +89,17 @@
 <script th:inline="javascript">
 /*<![CDATA[*/
   
-
-	let contatoreJs = /*[[${contatore.stop_numbers}]]*/ null;
-	console.log(contatoreJs);
+	
+	let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null;
+	
+	if(	contatoreTrue == true) {
+		let finalTime = /*[[${finaltime}]]*/ null;
+		console.log(finalTime);
+	}
+	
   
 /*]]>*/
 </script>
- 	
 
 </body>
 </html>

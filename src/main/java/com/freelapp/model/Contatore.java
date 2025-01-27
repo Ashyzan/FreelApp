@@ -26,11 +26,9 @@ public class Contatore{
     @Column(name = "pause", nullable = true)
     private LocalDateTime pause;
     
-    @Column(name = "finalTime", nullable = true)
-    private String finalTime;
-    
-    @Column (name = "FinalTimeSecondsNow", nullable = true)
-    private Long FinalTimeSecondsNow;
+    // tempo in secondi trascorso fra start e pause o stop
+    @Column(name = "finaltime", nullable = true)
+    private Long finaltime;
     
     @Column(name = "stop", nullable = true)
     private LocalDateTime stop;
@@ -47,21 +45,18 @@ public class Contatore{
         return id;
     }
 
-    public String getFinalTime() {
-        return finalTime;
+ 
+
+    public Long getFinaltime() {
+        return finaltime;
     }
 
-    public void setFinalTime(String finalTime) {
-        this.finalTime = finalTime;
+
+
+    public void setFinaltime(Long finaltime) {
+        this.finaltime = finaltime;
     }
 
-    public Long getFinalTimeSecondsNow() {
-        return FinalTimeSecondsNow;
-    }
-
-    public void setFinalTimeSecondsNow(Long finalTimeSecondsNow) {
-        FinalTimeSecondsNow = finalTimeSecondsNow;
-    }
 
 
     public void setId(int id) {
@@ -110,30 +105,35 @@ public class Contatore{
     }
     
     // function time difference
-    public String findDifference(LocalDateTime start_date, LocalDateTime end_date) {
+    public Long findDifference(LocalDateTime start_date, LocalDateTime end_date) {
 	
 	Long FinalTimeSeconds = start_date.until(end_date, ChronoUnit.SECONDS);
 	
-	Long hours = FinalTimeSeconds / 3600;
-	Long minutes = (FinalTimeSeconds % 3600) / 60;
-	Long seconds = FinalTimeSeconds % 60;
+	//Long finaltime = FinalTimeSeconds.intValue();
+	//int hours = FinalTimeSeconds / 3600;
+	//int minutes = (FinalTimeSeconds % 3600) / 60;
+	//int seconds = FinalTimeSeconds % 60;
 
-	finalTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+	//finalTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
 	
-	return finalTime;
+	//return finalTime;
+	
+	return FinalTimeSeconds;
     }
+
+
     
     // metodo per calcolare lo scorrere del tempo in secondi
     
-    public Long FindDifferenceEverySecond(LocalDateTime start_date) {
-	
-	LocalDateTime timeNow = LocalDateTime.now();
-	
-	Long FinalTimeSecondsNow = start_date.until(timeNow, ChronoUnit.SECONDS);
-	
-	return FinalTimeSecondsNow;
-	
-    }
+//    public Long FindDifferenceEverySecond(LocalDateTime start_date) {
+//	
+//	LocalDateTime timeNow = LocalDateTime.now();
+//	
+//	Long FinalTimeSecondsNow = start_date.until(timeNow, ChronoUnit.SECONDS);
+//	
+//	return FinalTimeSecondsNow;
+//	
+//    }
 
 
     

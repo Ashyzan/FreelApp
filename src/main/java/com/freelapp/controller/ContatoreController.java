@@ -1,8 +1,6 @@
 package com.freelapp.controller;
 
 import java.time.LocalDateTime;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,9 +30,22 @@ public class ContatoreController {
 
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
-
+	
+	// creo un boleano per stabilire se il contatore esiste
+	Boolean contatoreIsTrue = false;
+	
+	// se il contatore esiste
+	if (task.getContatore() != null) {
+	    
+	    contatoreIsTrue = true;
+	    model.addAttribute("finaltime", task.getContatore().getFinaltime());
+	    
+	}
+	
+	model.addAttribute("contatoreIsTrue" , contatoreIsTrue);
+	
 	model.addAttribute("contatore", contatore);
-
+	
 	return "/Contatore/timer";
     }
 
@@ -44,66 +55,70 @@ public class ContatoreController {
 
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
-
-	// se il contatore esiste, restituiscilo al modello
-	if (task.getContatore() != null) {
-
-	    // collego nel modello html il task e il contatore
-	    model.addAttribute("task", task);
-	    model.addAttribute("contatore", contatore);
-	}
-
-	// se il contatore non esiste:
-	else {
-
-	    // istanzio un nuovo contatore
-	    Contatore contatore1 = new Contatore();
-
-	    // associo al task il nuovo contatore
-	    task.setContatore(contatore1);
-
-	    // eseguo il TIMESTAMP
-	    contatore1.setStart(LocalDateTime.now());
-
-	    //LocalDateTime startF = contatore1.getStart();
-
-	    // collego nel modello html il task e il contatore
-	    model.addAttribute("task", task);
-	    model.addAttribute("contatore", contatore1);
-
-	    // salvo il contatore a DB
-	    repositContatore.save(contatore1);
-	}
+    	
+    	// se il contatore esiste, restituiscilo al modello
+    	if (task.getContatore() != null) {
+  
+    	// collego nel modello html il task e il contatore
+    	    model.addAttribute("task" , task);
+    	    model.addAttribute("contatore" , contatore);
+    	}
+    	
+    	// se il contatore non esiste:
+    	else  {
+    	    
+    	    // istanzio un nuovo contatore
+    	    contatore = new Contatore();
+    	    
+    	    // associo al task il nuovo contatore
+    	    task.setContatore(contatore);
+    	    
+    	    //eseguo il TIMESTAMP
+    	    contatore.setStart(LocalDateTime.now());
+    	    
+    	    // collego nel modello html il task e il contatore
+    	    model.addAttribute("task" , task);
+    	    model.addAttribute("contatore" , contatore);
+    	    
+    	    // salvo il contatore a DB
+    	    repositContatore.save(contatore);
+    	}
+	
 
 	// set pause to null
-	task.getContatore().setPause(null);
-System.out.println("****************************************** ANNULLO LA PAUSA ");
-	while (task.getContatore().getPause() == null && task.getContatore().getStop() == null); {
-
-	    Contatore contatore3 = task.getContatore();
-	    
-	    Timer timer = new Timer();
-System.out.println("****************************************** FUORI DAL TIMER ");
-	    TimerTask timerTask = new TimerTask() {
-		@Override
-		public void run() {
-		    
-		    // recupero il timestamp di start
-		    LocalDateTime start = task.getContatore().getStart();
-
-System.out.println("****************************************** lo start è " + start);
-		    // salvo a db il tempo che scorre nel campo FinalTimeSecondsNow
-		    Long FinalTimeMillisec = task.getContatore().FindDifferenceEverySecond(start);
-
-		    repositContatore.save(contatore3);
-		}
-	    };
-
-	    timer.scheduleAtFixedRate(timerTask, 0, 1000);
-
-	    // timer.cancel();
-	    
-	}
+	//task.getContatore().setPause(null);
+	
+	repositContatore.save(task.getContatore());
+	
+//System.out.println("****************************************** ANNULLO LA PAUSA ");
+//	while (task.getContatore().getPause() == null && task.getContatore().getStop() == null); {
+//
+//	    Contatore contatore3 = task.getContatore();
+//	    
+//	    Timer timer = new Timer();
+//System.out.println("****************************************** FUORI DAL TIMER ");
+//	    TimerTask timerTask = new TimerTask() {
+//		@Override
+//		public void run() {
+//		    
+//		    // recupero il timestamp di start
+//		    LocalDateTime start = task.getContatore().getStart();
+//
+//System.out.println("****************************************** lo start è " + start);
+//		    // salvo a db il tempo che scorre nel campo FinalTimeSecondsNow
+//		    int FinalTimeSec = task.getContatore().FindDifferenceEverySecond(start);
+//		    
+//		    task.getContatore().setFinalTimeSecondsNow(FinalTimeSec);
+//
+//		    repositContatore.save(contatore3);
+//		}
+//	    };
+//
+//	    timer.scheduleAtFixedRate(timerTask, 0, 1000);
+//
+//	    // timer.cancel();
+//	    
+//	}
 
 	
 
@@ -127,13 +142,20 @@ System.out.println("****************************************** lo start è " + s
 	    LocalDateTime START = task.getContatore().getStart();
 
 	    // metodo che calcola la differenza fra i due timestamp
-	    String FinalTime = task.getContatore().findDifference(START, PAUSE);
+	    Long FinalTime = task.getContatore().findDifference(START, PAUSE);
+	    
+	    // imposto il finaltime differenza fra stop e pausa - tipo Long
+	    task.getContatore().setFinaltime(FinalTime);
 
 	    // ad ogni clic la funzione prende gli stop e incrementa di 1
 	    task.getContatore().setStop_numbers(task.getContatore().getStop_numbers() + 1);
 
 	    // salvo il contatore
 	    repositContatore.save(task.getContatore());
+	    
+//	    model.addAttribute("task", task);
+//	    model.addAttribute("contatore", task.getContatore());
+	    
 
 	}
 
@@ -159,7 +181,7 @@ System.out.println("****************************************** lo start è " + s
 	    LocalDateTime START = task.getContatore().getStart();
 
 	    // metodo che calcola la differenza fra i due timestamp
-	    String FinalTime = task.getContatore().findDifference(START, STOP);
+	    Long FinalTime = task.getContatore().findDifference(START, STOP);
 
 	    // salvo il contatore
 	    repositContatore.save(task.getContatore());
