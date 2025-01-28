@@ -117,26 +117,55 @@ public class Contatore{
     public Long findDifference(LocalDateTime start_date, LocalDateTime end_date) {
 	
 	Long FinalTimeSeconds1 = start_date.until(end_date, ChronoUnit.SECONDS);
-
 	
-	return FinalTimeSeconds1;
+		//Long hours = FinalTimeSeconds / 3600;
+		//Long minutes = (FinalTimeSeconds % 3600) / 60;
+		Long seconds = FinalTimeSeconds1 % 60;
+
+		//finalTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+	
+	return seconds;
     }
 
-    // calcola il tempo totale trascorso
+    // calcola il tempo totale trascorso tra il restart e la pausa
     
     public Long findTimeRestart(LocalDateTime restart_date, LocalDateTime pause_date, Task task) {
 	
-	
-	    
+ 
 	    restart_date = task.getContatore().getRestart();
-	    pause_date = task.getContatore().getRestart();
+	    pause_date = task.getContatore().getPause();
 	    
 	    Long finalTime  = restart_date.until(pause_date, ChronoUnit.SECONDS);
 	    
-	    Long FinalTimeSeconds2 = finalTime + task.getContatore().getFinaltime();
+	    Long finalTimeSeconds = finalTime % 60;
+	    
+	    Long prevSec = task.getContatore().getFinaltime();
+	    
+	    Long FinalTimeSeconds2 = finalTimeSeconds + prevSec;
 	
 	
 	return FinalTimeSeconds2;
+	
+    }
+    
+// calcola il tempo totale trascorso fra il restart e lo stop
+    
+    public Long findTimeRestartStop(LocalDateTime restart_date, LocalDateTime stop_date, Task task) {
+	
+ 
+	    restart_date = task.getContatore().getRestart();
+	    stop_date = task.getContatore().getStop();
+	    
+	    Long finalTime  = restart_date.until(stop_date, ChronoUnit.SECONDS);
+	    
+	    Long finalTimeSeconds = finalTime % 60;
+	    
+	    Long prevSec = task.getContatore().getFinaltime();
+	    
+	    Long FinalTimeSeconds3 = finalTimeSeconds + prevSec;
+	
+	
+	return FinalTimeSeconds3;
 	
     }
   

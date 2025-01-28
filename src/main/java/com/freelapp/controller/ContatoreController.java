@@ -30,22 +30,22 @@ public class ContatoreController {
 
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
-	
+
 	// creo un boleano per stabilire se il contatore esiste
 	Boolean contatoreIsTrue = false;
-	
+
 	// se il contatore esiste
 	if (task.getContatore() != null) {
-	    
+
 	    contatoreIsTrue = true;
 	    model.addAttribute("finaltime", task.getContatore().getFinaltime());
-	    
+
 	}
-	
-	model.addAttribute("contatoreIsTrue" , contatoreIsTrue);
-	
+
+	model.addAttribute("contatoreIsTrue", contatoreIsTrue);
+
 	model.addAttribute("contatore", contatore);
-	
+
 	return "/Contatore/timer";
     }
 
@@ -55,40 +55,52 @@ public class ContatoreController {
 
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
-    	
-    	// se il contatore esiste, restituiscilo al modello
-    	if (task.getContatore() != null) {
-  
-    	//    imposta il valore di restart
-    	    task.getContatore().setRestart(LocalDateTime.now());
-    	    
-    	// collego nel modello html il task e il contatore
-    	    model.addAttribute("task" , task);
-    	    model.addAttribute("contatore" , contatore);
-    	}
-    	
-    	// se il contatore non esiste:
-    	else  {
-    	    
-    	    // istanzio un nuovo contatore
-    	    contatore = new Contatore();
-    	    
-    	    // associo al task il nuovo contatore
-    	    task.setContatore(contatore);
-    	    
-    	    //eseguo il TIMESTAMP
-    	    contatore.setStart(LocalDateTime.now());
-    	    
-    	    // collego nel modello html il task e il contatore
-    	    model.addAttribute("task" , task);
-    	    model.addAttribute("contatore" , contatore);
-    	    
-    	    // salvo il contatore a DB
-    	    repositContatore.save(contatore);
-    	}
-	
+
+	// se il contatore esiste, restituiscilo al modello
+	if (task.getContatore() != null && task.getContatore().getStop() == null && task.getContatore().getStart() != null) {
+
+	    // imposta il valore di restart
+	    task.getContatore().setRestart(LocalDateTime.now());
+
+	    // collego nel modello html il task e il contatore
+	    model.addAttribute("task", task);
+	    model.addAttribute("contatore", contatore);
+	}
+	// verifico che il contatore esista e lo stop sia nullo
+	else if (task.getContatore() != null && task.getContatore().getStop() != null) {
+
+	}
+	// verifico se il contatore è stato resettato
+	else if (task.getContatore() != null && task.getContatore().getStart() == null) {
+	 // imposta il valore di start
+	    task.getContatore().setStart(LocalDateTime.now());
+
+	    // collego nel modello html il task e il contatore
+	    model.addAttribute("task", task);
+	    model.addAttribute("contatore", contatore);
+	}
+
+	// se il contatore non esiste:
+	else {
+
+	    // istanzio un nuovo contatore
+	    contatore = new Contatore();
+
+	    // associo al task il nuovo contatore
+	    task.setContatore(contatore);
+
+	    // eseguo il TIMESTAMP
+	    contatore.setStart(LocalDateTime.now());
+
+	    // collego nel modello html il task e il contatore
+	    model.addAttribute("task", task);
+	    model.addAttribute("contatore", contatore);
+
+	    // salvo il contatore a DB
+	    repositContatore.save(contatore);
+	}
+
 	repositContatore.save(task.getContatore());
-	
 
 	return "/Contatore/timer";
 
@@ -99,55 +111,65 @@ public class ContatoreController {
 
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
-	
-	// inserisco il contatore in una variabile
 	Contatore contatore = task.getContatore();
 
-	// recupero timestamp di inizio e pausa
-	LocalDateTime PAUSE = task.getContatore().getPause();
-	LocalDateTime START = task.getContatore().getStart();
-	LocalDateTime RESTART = task.getContatore().getRestart();
-	
-	// verifica che il contatore esista
-	if (contatore != null) {
+	// verifica che il contatore esista e che non sia stato resettato
+	if (contatore != null && contatore.getStop() == null && contatore.getStart() != null) {
+
 	    
+	    // recupero timestamp di inizio e pausa
+	    LocalDateTime PAUSE = task.getContatore().getPause();
+	    LocalDateTime START = task.getContatore().getStart();
+	    LocalDateTime RESTART = task.getContatore().getRestart();
+
 	    // se la pausa non esiste
-	    if(PAUSE == null) {
-		
-		contatore.setPause(LocalDateTime.now());
+	    if (PAUSE == null) {
+
+		PAUSE = LocalDateTime.now();
+
+		contatore.setPause(PAUSE);
 
 		// metodo che calcola la differenza fra i due timestamp
 		Long FinalTime = contatore.findDifference(START, PAUSE);
-		
+
 		// imposto il finaltime differenza fra stop e pausa - tipo Long
 		contatore.setFinaltime(FinalTime);
-		
+
 		// ad ogni clic la funzione prende gli stop e incrementa di 1
 		contatore.setStop_numbers(contatore.getStop_numbers() + 1);
-		
+
+		// salvo il contatore
+		repositContatore.save(contatore);
+
 	    }
-	    
-	 // se la pausa esiste già
-	    else  {
-		// imposto la nuova pausa
+
+	    // se la pausa esiste già
+	    else {
+
+		// imposto comunque una nuova pausa
 		contatore.setPause(LocalDateTime.now());
-		
+
 		// metodo che calcola il tempo trascorso partendo dal restart e la nuova pausa
 		Long FinalTime = contatore.findTimeRestart(RESTART, PAUSE, task);
-				
+
 		// imposto il finaltime differenza fra stop e pausa - tipo Long
 		contatore.setFinaltime(FinalTime);
-				
+
 		// ad ogni clic la funzione prende gli stop e incrementa di 1
 		contatore.setStop_numbers(contatore.getStop_numbers() + 1);
-	    }
-	    
 
-	    // salvo il contatore
-	    repositContatore.save(task.getContatore());
-	    
+		// salvo il contatore
+		repositContatore.save(contatore);
+	    }
 
 	}
+
+	// verifico che il contatore non sia stoppato, se stoppato non faccio nulla
+	else if (task.getContatore() != null && task.getContatore().getStop() != null) {
+	}
+
+	// else se il contatore non esiste schiacciare la pausa non esegue nessun
+	// comando
 
 	return "/Contatore/timer";
     }
@@ -157,24 +179,81 @@ public class ContatoreController {
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
 
-	// verifica che il contatore esista
-	if (task.getContatore() != null) {
+	// setto le variabili
+	LocalDateTime STOP = task.getContatore().getStop();
+	LocalDateTime START = task.getContatore().getStart();
+	LocalDateTime RESTART = task.getContatore().getRestart();
+	LocalDateTime PAUSE = task.getContatore().getPause();
+	Contatore contatore = task.getContatore();
 
-	    // verifica che il contatore sia ancora attivo
+	// verifica che il contatore esista e che non sia stato resettato
+	if (task.getContatore() != null && contatore.getStart() != null) {
+
+	    // verifica che il contatore sia ancora stoppabile, cioè non abbia già lo stop
+	    // settato
 	    if (task.getContatore().getStop() == null) {
 
-		// eseguo il TIMESTAMP dello STOP
-		task.getContatore().setStop(LocalDateTime.now());
-		// recupero timestamp di start e stop
+		 // verifica che il contatore sia in fase di run (ma non abbia pause)
+		 if (PAUSE == null || RESTART == null) {
+
+		    // eseguo il TIMESTAMP dello STOP e chiudo il contatore
+		     STOP = LocalDateTime.now();
+
+		     contatore.setStop(STOP);
+		 
+		     if(PAUSE != null) {
+			 
+			 // metodo che calcola la differenza fra i due timestamp
+			 Long FinalTime = contatore.findDifference(START, PAUSE);
+			 
+			 // imposto il finaltime differenza fra stop e pausa - tipo Long
+			 contatore.setFinaltime(FinalTime);
+			 
+			 repositContatore.save(task.getContatore());
+		     }
+		     else {
+			// metodo che calcola la differenza fra i due timestamp
+			    Long FinalTime = contatore.findDifference(START, STOP);
+
+			    // imposto il finaltime differenza fra stop e pausa - tipo Long
+			    contatore.setFinaltime(FinalTime);
+
+			    repositContatore.save(task.getContatore());
+		     }
+		}
+
+		  // se invece il contatore è in fase di run, ma è stato riavviato
+		  else if (RESTART != null && PAUSE.isBefore(RESTART)) {
+
+		    // eseguo il TIMESTAMP dello STOP e chiudo il contatore
+		    task.getContatore().setStop(LocalDateTime.now());
+
+		    // eseguo il TIMESTAMP dello STOP e chiudo il contatore
+		     STOP = LocalDateTime.now();
+
+		     contatore.setStop(STOP);
+
+		    // metodo che calcola il tempo trascorso partendo dal restart e la nuova pausa
+		    Long FinalTime = contatore.findTimeRestartStop(RESTART, STOP, task);
+
+		    // imposto il finaltime differenza fra stop e pausa - tipo Long
+		    contatore.setFinaltime(FinalTime);
+
+		    repositContatore.save(task.getContatore());
+		}
+
+		// verifico che il contatore sia non attivo
+		  else if (RESTART != null && PAUSE.isAfter(RESTART)) {
+
+		   // eseguo il TIMESTAMP dello STOP e chiudo il contatore
+		   task.getContatore().setStop(LocalDateTime.now());
+		   
+		    repositContatore.save(task.getContatore());
+		}
+		
+
 	    }
-	    LocalDateTime STOP = task.getContatore().getStop();
-	    LocalDateTime START = task.getContatore().getStart();
 
-	    // metodo che calcola la differenza fra i due timestamp
-	    Long FinalTime = task.getContatore().findDifference(START, STOP);
-
-	    // salvo il contatore
-	    repositContatore.save(task.getContatore());
 	}
 
 	return "/Contatore/timer";
@@ -193,6 +272,7 @@ public class ContatoreController {
 	    task.getContatore().setStop(null);
 	    task.getContatore().setStart(null);
 	    task.getContatore().setPause(null);
+	    task.getContatore().setFinaltime(null);
 	    task.getContatore().setStop_numbers(0);
 	    task.getContatore().findDifference(LocalDateTime.now(), LocalDateTime.now());
 
