@@ -49,6 +49,26 @@ public class ContatoreController {
 	return "/Contatore/timer";
     }
 
+	// @GetMapping("/start/{id}")
+	// public String getstartContatore(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
+	// Model model) {
+
+	// 	// richiamo l'id del task
+	// Task task = repositTask.getReferenceById(taskId);
+
+	// // se il contatore esiste, restituiscilo al modello
+	// if (task.getContatore() != null && task.getContatore().getStop() == null && task.getContatore().getStart() != null) {
+
+	// 	//////// parte per javascript
+	// 	// creo un boleano per stabilire se il contatore esiste
+	// 	Boolean contatoreIsTrue = true;
+	//     model.addAttribute("finaltime", task.getContatore().getFinaltime());
+	// 	model.addAttribute("contatore", task.getContatore());
+	// }
+
+	// 	return "/Contatore/timer"; 
+	// }
+
     @PostMapping("/start/{id}")
     public String startContatore(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
 	    Model model) {
@@ -56,8 +76,23 @@ public class ContatoreController {
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
 
+	//////// parte per javascript //////////////////
+		// creo un boleano per stabilire se il contatore esiste
+		// Boolean contatoreIsTrue = false;
+
+		// // se il contatore esiste
+		// if (task.getContatore() != null) {
+
+		// 	contatoreIsTrue = true;
+		// 	model.addAttribute("finaltime", task.getContatore().getFinaltime());
+
+		// }
+	//////// parte per javascript //////////////////
+
 	// se il contatore esiste, restituiscilo al modello
 	if (task.getContatore() != null && task.getContatore().getStop() == null && task.getContatore().getStart() != null) {
+
+		
 
 	    // imposta il valore di restart
 	    task.getContatore().setRestart(LocalDateTime.now());
@@ -107,7 +142,7 @@ public class ContatoreController {
     }
 
     @PostMapping("/Contatore/pause/{id}")
-    public String pauseContatore(@PathVariable("id") Integer taskId) {
+    public String pauseContatore(@PathVariable("id") Integer taskId, Model model) {
 
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
@@ -175,23 +210,25 @@ public class ContatoreController {
     }
 
     @PostMapping("/Contatore/stop/{id}")
-    public String stopContatore(@PathVariable("id") Integer taskId) {
+    public String stopContatore(@PathVariable("id") Integer taskId, Model model) {
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
 
-	// setto le variabili
-	LocalDateTime STOP = task.getContatore().getStop();
-	LocalDateTime START = task.getContatore().getStart();
-	LocalDateTime RESTART = task.getContatore().getRestart();
-	LocalDateTime PAUSE = task.getContatore().getPause();
-	Contatore contatore = task.getContatore();
+	
+	// verifica che il contatore esista 
+	if (task.getContatore() != null ) {
+		
+		// setto le variabili
+		LocalDateTime STOP = task.getContatore().getStop();
+		LocalDateTime START = task.getContatore().getStart();
+		LocalDateTime RESTART = task.getContatore().getRestart();
+		LocalDateTime PAUSE = task.getContatore().getPause();
+		Contatore contatore = task.getContatore();
 
-	// verifica che il contatore esista e che non sia stato resettato
-	if (task.getContatore() != null && contatore.getStart() != null) {
 
 	    // verifica che il contatore sia ancora stoppabile, cioè non abbia già lo stop
-	    // settato
-	    if (task.getContatore().getStop() == null) {
+	    // settato e che non sia stato resettato
+	    if (task.getContatore().getStop() == null && contatore.getStart() != null) {
 
 		 // verifica che il contatore sia in fase di run (ma non abbia pause)
 		 if (PAUSE == null || RESTART == null) {

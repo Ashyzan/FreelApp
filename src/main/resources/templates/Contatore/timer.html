@@ -48,6 +48,10 @@
 	    </div>
    		<div class="container">
      		   <h1 id="timer">00:00:00</h1>
+
+				<div th:if="${contatore.getFinaltime()} != null">
+					<h1>Il contatore esiste</h1>
+				</div>
 			   
    		</div>
 	
@@ -95,6 +99,10 @@
 	if(	contatoreTrue == true) {
 		let finalTime = /*[[${finaltime}]]*/ null;
 		console.log(finalTime);
+	}
+	else{
+		let finalTime = /*[[${finaltime}]]*/ null;
+		console.log("finaltime is not defined");
 	}
 	
   
