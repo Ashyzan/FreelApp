@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 
 import org.springframework.data.repository.query.Param;
@@ -13,12 +14,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
@@ -31,6 +36,7 @@ import com.freelapp.service.UploadFileService;
 import jakarta.validation.Valid;
 
 @Controller
+@ControllerAdvice //  serve per la gestione degli errori di maxSize file
 public class ClientController {
 
 	@Autowired
@@ -49,15 +55,6 @@ public class ClientController {
 	private UploadFileService uploadFileService;
 	
 	
-//	@GetMapping("/Clienti")
-//	public String listaClienti(Model model) {
-//		
-//		List<Cliente> listaClienti = repositoryCliente.findAll();
-//		
-//		model.addAttribute("list", listaClienti);
-//		
-//		return "/Clienti/listClient";
-//	} 
 	
 	@GetMapping("/Clienti")
 	public String listaClienti(Model model) {
@@ -150,35 +147,23 @@ public class ClientController {
 	public String storeCliente(@RequestParam("file")MultipartFile file, Model model,
 							@Valid @ModelAttribute("formCliente") Cliente formCliente, BindingResult bindingResult)
 							throws IllegalStateException, IOException {
-		
+//	verifica attravero un metodo dell'UploadFileService se il file ha un formato non valido e restuisce un boolean
 		Boolean anyFormatImgError = uploadFileService.anyErrorFormatImage(file);
 		
-		Boolean anySizeImgError = uploadFileService.anySizeImgError(file);
-		
-		model.addAttribute("anyDimensionImgError", anySizeImgError);
-		
+//  se il file ha un formato non valido viene creato un nuovo errore e aggiunto al bindingResult		
 		if(anyFormatImgError == true) {
 			
 			ObjectError errorFormatImage = new ObjectError("formatImageError", "Formati consentiti: JPEG o JPG");
 			
 			bindingResult.addError(errorFormatImage);
 			
+//	una volta creato l'errore custom ne viene recueperato il messaggio e passato al model
+			
 			String errorFormatImageMessage = errorFormatImage.getDefaultMessage();
 		
 			model.addAttribute("errorFormatImageMessage", errorFormatImageMessage);
 		}
 		
-		if(anySizeImgError == true) {
-			
-			ObjectError errorSizeImage = new ObjectError("dimensionImageError", "Max size consentita: 500 KB");
-			
-			bindingResult.addError(errorSizeImage);
-			
-			String errorSizeImageMessage = errorSizeImage.getDefaultMessage();
-		
-			model.addAttribute("errorSizeImageMessage", errorSizeImageMessage);
-			
-		}
 		
 		if(bindingResult.hasErrors()) {
 		   
@@ -189,10 +174,15 @@ public class ClientController {
 		}
 	   
 		if(!file.isEmpty()) {
+			
+//	metodo dell'UploadFileService che trasferisce il file alla directory dell'applicazione ed
+//  a db viene salvato l'url per poi recuperare l'immagine e utilizzarla
 		   
 		   formCliente.setUrlLogo(uploadFileService.saveLogoImage(file));
 	  
 		} else {
+			
+//	se l'utente non ha scelto alcun file di default viene assegnato al logo cliente un avatar
 		   
 		   formCliente.setUrlLogo("/logoImage/avatar.jpg");
 
@@ -258,7 +248,23 @@ public class ClientController {
 		return "redirect:/Clienti";
 	  }
 
+// Valore che viene inserito per la dimensione massima presa da application.properties
+//  nel messaggio  di errore "handleMaxSizeUploadError" 
 	
+	@Value("${spring.servlet.multipart.max-file-size}")
+	private String maxUploadFileSize;
+	
+//	Metodo che restituice errore di maxSize per l'upload dei file e lo passa direttamente al
+//	template senza utilizzo del model. viene poi utilizato in js come gli altri valori passati
+//	con il model
+	
+	@ExceptionHandler(MaxUploadSizeExceededException.class)
+	public String handleMaxSizeUploadError(RedirectAttributes redirectAttributes) {
+		
+		redirectAttributes.addFlashAttribute("errorMaxFileSize", "Non è possibile fare l'upload di file superiori a " + maxUploadFileSize);
+		
+		return "redirect:/Clienti/insert";
+	}
 }
 	
 

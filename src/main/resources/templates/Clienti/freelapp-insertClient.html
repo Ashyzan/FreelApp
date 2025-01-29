@@ -510,18 +510,21 @@
 
 			                   <div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2"> 
 			                     <div class="col flex">
-			                       <label for="urlLogo">Logo o Immagine</label>
-								   <div class="t-tooltip w-5 h-5 ms-2">
+			                       <label for="urlLogo">Logo</label>
+								   <div class="t-tooltip w-5 h-5 ms-2 bg-[#0057A5] rounded-xl">
 										<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100%" height="100%" viewBox="0,0,256,256">
 											<g fill="#ffe541" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M25,2c-12.703,0 -23,10.297 -23,23c0,12.703 10.297,23 23,23c12.703,0 23,-10.297 23,-23c0,-12.703 -10.297,-23 -23,-23zM25,11c1.657,0 3,1.343 3,3c0,1.657 -1.343,3 -3,3c-1.657,0 -3,-1.343 -3,-3c0,-1.657 1.343,-3 3,-3zM29,38h-2h-4h-2v-2h2v-13h-2v-2h2h4v2v13h2z"></path></g></g>
 										</svg>
-								   		<div class="t-box hidden border border-red-600 bg-white rounded-lg absolute p-1 ms-[-85px] mt-[5px]">Formati consenti: JPEG o JPG - Dimensione max: 500 KB</div>
-								   		</div>
+								   		<div class="t-box hidden border border-[#0057a5] bg-[#ffe541] rounded-lg absolute p-3 ms-[-30px] mt-[5px] w-auto text-center">
+												<div>Formati consenti: JPEG o JPG</div>
+												<div> Dimensione max: 500 KB</div> 	
+										</div>
+								   	</div>
 			                     </div>
 			                     <div class="col md:col-span-2 col-span-3">
 			                       <input type="file" class="border-red-600 w-full rounded-lg bg-white block h-8 file:h-full file:rounded-s-md file:bg-[#0057A5]  file:text-white" id="urlLogo" name="file">
-								   <div  th:text="${errorFormatImageMessage}" class="text-red-600 text-[12px] text-center w-full"></div>
-								   <div  th:text="${errorDimensionImageMessage}" class="text-red-600 text-[12px] text-center w-full"></div>
+								   <div th:text="${errorFormatImageMessage}" class="text-red-600 text-[12px] text-center w-full"></div>
+								   <div th:text="${errorMaxFileSize}" class="text-red-600 text-[12px] text-center w-full"></div>
 			                     </div>
 			                    </div>	         
 			    
@@ -833,17 +836,15 @@
 	<script th:inline="javascript">
 		const contentDueError = document.getElementById('content-2');
 		const contentTreError = document.getElementById('content-3');
-		const errorFormatImageMessage =document.getElementById('urlLogo');
+		const inputFile =document.getElementById('urlLogo');
 			/*<![CDATA[*/
 
 			    var areErrors = /*[[${areErrors}]]*/ 'null';  
 				
 				var errorFormatImage = /*[[${errorFormatImageMessage}]]*/ 'null';
 
-				var errorDimensionImage = /*[[${errorDimensionImageMessage}]]*/ 'null'
-				
-				var anyDimensionImgError = /*[[${anyDimensionImgError}]]*/ 'null'
-				
+				var errorMaxFileSize = /*[[${errorMaxFileSize}]]*/ 'null'
+			
 				
 			/*]]>*/
 			 
@@ -853,8 +854,8 @@
 				contentTreError.classList.remove('hidden');
 			} 
 			
-			if(errorFormatImage != null || errorDimensionImage != null){
-				errorFormatImageMessage.classList.add('border');
+			if(errorFormatImage != null || errorMaxFileSize != null){
+				inputFile.classList.add('border');
 			}
 
 		</script>
