@@ -1,19 +1,24 @@
 package com.freelapp.controller;
 
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
@@ -21,6 +26,7 @@ import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.repository.TaskRepository;
 import com.freelapp.service.ClienteService;
+import com.freelapp.service.UploadFileService;
 
 import jakarta.validation.Valid;
 
@@ -38,6 +44,9 @@ public class ClientController {
 	
 	@Autowired
 	private TaskRepository repositTask;
+	
+	@Autowired
+	private UploadFileService uploadFileService;
 	
 	
 //	@GetMapping("/Clienti")
@@ -116,20 +125,6 @@ public class ClientController {
 				return "Clienti/freelApp-listClient";
 		 
 		 
-//		    if (input == null || input.isBlank()) {
-//		          return "redirect:/Clienti";
-//		       }
-//		    else { 
-//		    	 
-//		    	   list = repositoryCliente.search(input);
-//
-//		           if (list.isEmpty()) 
-//		    			         return "redirect:/Clienti";     
-//		           else  {  
-//		        	   		model.addAttribute("list", list);
-//			    	  		return "redirect:/Clienti/" + list.get(0).getId(); 
-//			                }   
-//		          } 
 	  }	
 	
 	@GetMapping("/Clienti/{id}")
@@ -146,22 +141,68 @@ public class ClientController {
 	    
 	    model.addAttribute("formCliente", new Cliente());
 	    
+	    model.addAttribute("areErrors", false);
+	    
 	    return "/Clienti/freelapp-insertClient"; 
 	}
 	
-	
-	@PostMapping("/Clienti/insert")
-	public String storeCliente(@Valid @ModelAttribute("formCliente") Cliente formCliente, BindingResult bindingResult, Model model){
+	@PostMapping(value = "/Clienti/insert", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public String storeCliente(@RequestParam("file")MultipartFile file, Model model,
+							@Valid @ModelAttribute("formCliente") Cliente formCliente, BindingResult bindingResult)
+							throws IllegalStateException, IOException {
 		
-	   if(bindingResult.hasErrors()) {
+		Boolean anyFormatImgError = uploadFileService.anyErrorFormatImage(file);
+		
+		Boolean anySizeImgError = uploadFileService.anySizeImgError(file);
+		
+		model.addAttribute("anyDimensionImgError", anySizeImgError);
+		
+		if(anyFormatImgError == true) {
+			
+			ObjectError errorFormatImage = new ObjectError("formatImageError", "Formati consentiti: JPEG o JPG");
+			
+			bindingResult.addError(errorFormatImage);
+			
+			String errorFormatImageMessage = errorFormatImage.getDefaultMessage();
+		
+			model.addAttribute("errorFormatImageMessage", errorFormatImageMessage);
+		}
+		
+		if(anySizeImgError == true) {
+			
+			ObjectError errorSizeImage = new ObjectError("dimensionImageError", "Max size consentita: 500 KB");
+			
+			bindingResult.addError(errorSizeImage);
+			
+			String errorSizeImageMessage = errorSizeImage.getDefaultMessage();
+		
+			model.addAttribute("errorSizeImageMessage", errorSizeImageMessage);
+			
+		}
+		
+		if(bindingResult.hasErrors()) {
+		   
+			model.addAttribute("areErrors", true);
+			
 
-	      return "/Clienti/freelapp-insertClient";
-	   }
+			return "/Clienti/freelapp-insertClient";
+		}
+	   
+		if(!file.isEmpty()) {
+		   
+		   formCliente.setUrlLogo(uploadFileService.saveLogoImage(file));
+	  
+		} else {
+		   
+		   formCliente.setUrlLogo("/logoImage/avatar.jpg");
 
-	   repositoryCliente.save(formCliente);
+		}
+	   
+
+		repositoryCliente.save(formCliente);
 	  
 
-	   return "redirect:/Clienti";
+		return "redirect:/Clienti";
 	}
 	
 	@GetMapping("/Clienti/edit/{id}")
