@@ -2,7 +2,6 @@ package com.freelapp.model;
 
 //import java.sql.Time;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -112,62 +111,6 @@ public class Contatore{
     public void setTask(Task task) {
         this.task = task;
     }
-    
-    // function time difference start e primo stop
-    public Long findDifference(LocalDateTime start_date, LocalDateTime end_date) {
-	
-	Long FinalTimeSeconds1 = start_date.until(end_date, ChronoUnit.SECONDS);
-	
-		//Long hours = FinalTimeSeconds / 3600;
-		//Long minutes = (FinalTimeSeconds % 3600) / 60;
-		Long seconds = FinalTimeSeconds1 % 60;
 
-		//finalTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-	
-	return seconds;
-    }
-
-    // calcola il tempo totale trascorso tra il restart e la pausa
-    
-    public Long findTimeRestart(LocalDateTime restart_date, LocalDateTime pause_date, Task task) {
-	
- 
-	    restart_date = task.getContatore().getRestart();
-	    pause_date = task.getContatore().getPause();
-	    
-	    Long finalTime  = restart_date.until(pause_date, ChronoUnit.SECONDS);
-	    
-	    Long finalTimeSeconds = finalTime % 60;
-	    
-	    Long prevSec = task.getContatore().getFinaltime();
-	    
-	    Long FinalTimeSeconds2 = finalTimeSeconds + prevSec;
-	
-	
-	return FinalTimeSeconds2;
-	
-    }
-    
-// calcola il tempo totale trascorso fra il restart e lo stop
-    
-    public Long findTimeRestartStop(LocalDateTime restart_date, LocalDateTime stop_date, Task task) {
-	
- 
-	    restart_date = task.getContatore().getRestart();
-	    stop_date = task.getContatore().getStop();
-	    
-	    Long finalTime  = restart_date.until(stop_date, ChronoUnit.SECONDS);
-	    
-	    Long finalTimeSeconds = finalTime % 60;
-	    
-	    Long prevSec = task.getContatore().getFinaltime();
-	    
-	    Long FinalTimeSeconds3 = finalTimeSeconds + prevSec;
-	
-	
-	return FinalTimeSeconds3;
-	
-    }
-  
 
 }

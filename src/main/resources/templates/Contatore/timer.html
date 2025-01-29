@@ -49,9 +49,9 @@
    		<div class="container">
      		   <h1 id="timer">00:00:00</h1>
 
-				<div th:if="${contatore.getFinaltime()} != null">
+				<!-- <div th:if="${contatore.getFinaltime()} != null"> 
 					<h1>Il contatore esiste</h1>
-				</div>
+				</div> 				-->
 			   
    		</div>
 	
@@ -93,16 +93,41 @@
 <script th:inline="javascript">
 /*<![CDATA[*/
   
-	
-	let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null;
+	let finalTime = /*[[${finaltime}]]*/ null;
+	let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
+	let START = /*[[${START}]]*/ null; // localdatetime
+	let STOP = 	/*[[${STOP}]]*/ null; // localdatetime
+	let PAUSE = /*[[${PAUSE}]]*/ null; // localdatetime
+	let RESTART = /*[[${RESTART}]]*/ null; // localdatetime
 	
 	if(	contatoreTrue == true) {
-		let finalTime = /*[[${finaltime}]]*/ null;
+		
+		
 		console.log(finalTime);
-	}
+		
+//		const timerElement = document.querySelector("#timer");
+//		let seconds = finalTime % 60;
+//		let minutes = (finalTime % 3600) / 60;
+//		let hours = finalTime / 3600;
+		
+//		setInterval(timerstart, 1000);
+		
+//		function timerstart() {
+			
+//			while (contatoreTrue == true) {
+			
+				// stampa il contatore  
+//				timerElement.innerHTML = "Ore: " + hours + ":" + "Minuti: " + minutes + ":" + "Secondi: " + seconds;
+			 
+				// finalTime = finalTime seconds++;
+			  
+			  
+			} 
+//		}
+//	}
 	else{
-		let finalTime = /*[[${finaltime}]]*/ null;
-		console.log("finaltime is not defined");
+		
+		console.log("finaltime is not defined" + finalTime);
 	}
 	
   
