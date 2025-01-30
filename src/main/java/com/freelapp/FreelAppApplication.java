@@ -8,6 +8,8 @@ public class FreelAppApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FreelAppApplication.class, args);
+		
+		
 	}
 
 }

@@ -1,30 +1,47 @@
 package com.freelapp.service;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 
+
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.multipart.MultipartFile;
+
+
+import com.freelapp.model.User;
 
 @Service
 public class UploadFileService {
 	
-	public String saveLogoImage(MultipartFile file) throws IllegalStateException, IOException {
+	
+	public String saveLogoImage(MultipartFile file, User utente) throws IllegalStateException, IOException {
 		
 		
-//	creazione file name
-		String finalFileName = LocalDateTime.now() + file.getOriginalFilename();
+//	creazione file name - quando sarà introdotto userLogged aggiungere id utente al nome per univocità
+		String finalFileName = LocalDateTime.now() + file.getOriginalFilename(); 
 		
-//	trasferimento alla directory del file !!! ATTENZIONE !!! essendo server locale il percorso varia per ogni 
-//	JVM pertanto è necessario cambiare il percorso della directory
+//		creazione/verifica esistenza della cartella Upload e sottocartelle
+//		utente.getId() sarà poi sostituito con userLogged
+		Path uploadPath = Paths.get("upload/images/logo/utentiId/" + utente.getId() );
 		
-		file.transferTo(new File("/Users/francesco/Desktop/Corso Backend JAVA Developer PT/Progetti Condivisi/FreelApp/FreelApp/src/main/resources/static/logoImage/" + finalFileName));
+//		verifica esistenza ed eventuale creazione della cartella Upload 
+//		e sottocartelle
+		if(!Files.exists(uploadPath)){
+			Files.createDirectories(uploadPath);
+		}
+		
+//	trasferimento alla directory del file 
+		InputStream inputStream = file.getInputStream();
+		Path filePath = uploadPath.resolve(finalFileName);
+		Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
 
 //	creazione dell'url che viene salvato a db nella colonna urlLogo
-		String imgPath = "/logoImage/" + finalFileName;
+		String imgPath = uploadPath + "/" + finalFileName;
 		
 		return imgPath;
 	}
@@ -47,5 +64,7 @@ public class UploadFileService {
 	
 	}
 	
+	
+
 
 }

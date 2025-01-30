@@ -83,9 +83,7 @@ public class Cliente {
 	@Column(name = "cap", length = 5 )
 	private String cap;
 	
-	@Column(name = "nazionalità", nullable = false)
-	@NotNull(message = "Scelta nazionalità obbligatoria")
-	@NotBlank(message = "Scelta nazionalità obbligatoria")
+	@Column(name = "nazionalità")
 	private String nazionalita;
 	
 	@Column(name = "nomeContatto")

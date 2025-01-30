@@ -27,9 +27,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
+import com.freelapp.model.User;
 import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.repository.TaskRepository;
+import com.freelapp.repository.UserRepository;
 import com.freelapp.service.ClienteService;
 import com.freelapp.service.UploadFileService;
 
@@ -44,6 +46,9 @@ public class ClientController {
 	
 	@Autowired
 	private ClienteService clienteService;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Autowired
 	private ProgettoRepository repositProgetto;
@@ -147,6 +152,8 @@ public class ClientController {
 	public String storeCliente(@RequestParam("file")MultipartFile file, Model model,
 							@Valid @ModelAttribute("formCliente") Cliente formCliente, BindingResult bindingResult)
 							throws IllegalStateException, IOException {
+		
+		
 //	verifica attravero un metodo dell'UploadFileService se il file ha un formato non valido e restuisce un boolean
 		Boolean anyFormatImgError = uploadFileService.anyErrorFormatImage(file);
 		
@@ -175,10 +182,17 @@ public class ClientController {
 	   
 		if(!file.isEmpty()) {
 			
+//	recupera utente da passare al metodo saveLogoImage di uploadFileService per creare
+//			la cartella dei loghi dei clienti relativi all'utente che poi diventera userLpgged
+			
+			User utente = new User();
+			
+			utente = userRepository.getReferenceById(1);
+			
 //	metodo dell'UploadFileService che trasferisce il file alla directory dell'applicazione ed
 //  a db viene salvato l'url per poi recuperare l'immagine e utilizzarla
 		   
-		   formCliente.setUrlLogo(uploadFileService.saveLogoImage(file));
+		   formCliente.setUrlLogo(uploadFileService.saveLogoImage(file, utente));
 	  
 		} else {
 			
