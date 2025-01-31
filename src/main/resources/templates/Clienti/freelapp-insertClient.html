@@ -507,9 +507,9 @@
 			                       </select>
 			                     </div>
 			                    </div>	
-
+								
 			                   <div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2"> 
-			                     <div class="col flex">
+			                     <div class="col flex items-center">
 			                       <label for="urlLogo">Logo</label>
 								   <div class="t-tooltip w-5 h-5 ms-2 bg-[#0057A5] rounded-xl">
 										<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100%" height="100%" viewBox="0,0,256,256">
@@ -522,11 +522,19 @@
 								   	</div>
 			                     </div>
 			                     <div class="col md:col-span-2 col-span-3">
-			                       <input type="file" class="border-red-600 w-full rounded-lg bg-white block h-8 file:h-full file:rounded-s-md file:bg-[#0057A5]  file:text-white" id="urlLogo" name="file">
-								   <div th:text="${errorFormatImageMessage}" class="text-red-600 text-[12px] text-center w-full"></div>
-								   <div th:text="${errorMaxFileSize}" class="text-red-600 text-[12px] text-center w-full"></div>
+									<div>
+										<div class="mx-auto w-[60px] h-[60px] p-1 my-2 border-2 border-[#ffe541] rounded-lg flex items-center justify-center">
+											<img id="previewLogoCliente" src="/logoAvatarClientImage/avatar.jpg" alt="Logo cliente">
+										</div>										
+									</div>
+									<div>
+				                       <input type="file" onchange="previewUploadFile(event)" class="border-red-600 w-full rounded-lg bg-white block h-8 file:h-full file:rounded-s-md file:bg-[#0057A5]  file:text-white" id="urlLogo" name="file">
+									   <div th:text="${errorFormatImageMessage}" class="text-red-600 text-[12px] text-center w-full"></div>
+									   <div th:text="${errorMaxFileSize}" class="text-red-600 text-[12px] text-center w-full"></div>	
+									</div>
 			                     </div>
-			                    </div>	         
+			                    </div>	
+									         
 			    
 			                 </div>
 			                </div>
@@ -831,18 +839,26 @@
 	<script th:inline="javascript">
 		const contentTreError = document.getElementById('content-3');
 		const inputFile =document.getElementById('urlLogo');
+		
+		//funzione che visualizza anteprima immagine selezionata prima di fare upload 
+		var previewUploadFile = function(event){
+		var previewLogoCliente = document.getElementById('previewLogoCliente');
+			console.log(previewLogoCliente)
+			previewLogoCliente.src = URL.createObjectURL(event.target.files[0]);//riempe la memoria temporanea con il file
+			previewLogoCliente.onload = function(){
+				URL.revokeObjectURL(previewLogoCliente.src) //svuota la memoria temporanea dal file
+			}
+		}
 			/*<![CDATA[*/
 
 			    var areErrors = /*[[${areErrors}]]*/ 'null';  
 				
 				var errorFormatImage = /*[[${errorFormatImageMessage}]]*/ 'null';
 
-				var errorMaxFileSize = /*[[${errorMaxFileSize}]]*/ 'null'
-			
+				var errorMaxFileSize = /*[[${errorMaxFileSize}]]*/ 'null';
 				
 			/*]]>*/
-			 
-			
+			 			
 			if(areErrors == true){
 				contentTreError.classList.remove('hidden');
 			} 
@@ -850,6 +866,7 @@
 			if(errorFormatImage != null || errorMaxFileSize != null){
 				inputFile.classList.add('border');
 			}
+			
 
 	</script>
 </body>
