@@ -7,7 +7,12 @@ const navOptionsDesktop = document.querySelector('.nav-option-desktop');
 // recupero elementi dal DOM per modale	
 const modal = document.querySelector('#modal');
 const nuovoProgettoButton = document.querySelector('#nuovoProgettoButton');
-const modalCloseButton = document.querySelector('#modalCloseButton');
+const modalCloseButton = document.getElementById('modalCloseButton');
+
+//recupero elementi dal Dom per modalDelete
+const modalDelete =document.getElementById('modalDelete');
+const deleteButton = document.getElementById('deleteButton');
+const modalDeleteCloseButton = document.getElementById('modalDeleteCloseButton');
 
 //recupero elementi dal DOM per accordion
 function toggleAccordion(index) {
@@ -38,6 +43,16 @@ function onToggleOptionsDesktop(e){
 }
 
 // funzioni per modale
+
+//apertura modalDelete
+deleteButton.addEventListener('click', function(){
+	modalDelete.classList.remove('scale-0');
+})
+
+//chiusura modalDelete
+modalDeleteCloseButton.addEventListener('click', function(){
+	modalDelete.classList.add('scale-0');
+})
 
 //chiusura modale nuovoProgetto
 modalCloseButton.addEventListener('click', function(){
