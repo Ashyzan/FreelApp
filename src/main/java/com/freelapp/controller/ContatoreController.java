@@ -37,7 +37,8 @@ public class ContatoreController {
 	Task task = repositTask.getReferenceById(taskId);
 	
 	// parte per javascript: serve per collegare il finaltime da java a javascript sul frontend
-	contatoreservice.contatoreIsActive(task, model);
+	contatoreservice.contatoreIsTrue(task, model);
+	contatoreservice.contatoreIsRun(task, model);
 
 	model.addAttribute("contatore", contatore);
 
@@ -54,7 +55,7 @@ public class ContatoreController {
 	Task task = repositTask.getReferenceById(taskId);
 
 	// parte per javascript: serve per collegare il finaltime da java a javascript sul frontend
-	contatoreservice.contatoreIsActive(task, model);
+	contatoreservice.contatoreIsTrue(task, model);
 
 
 	// se il contatore esiste, restituiscilo al modello
@@ -115,7 +116,7 @@ public class ContatoreController {
 	Contatore contatore = task.getContatore();
 	
 	// parte per javascript: serve per collegare il finaltime da java a javascript sul frontend
-	contatoreservice.contatoreIsActive(task, model);
+	contatoreservice.contatoreIsTrue(task, model);
 
 
 	// verifica che il contatore esista e che non sia stato resettato
@@ -149,13 +150,13 @@ public class ContatoreController {
 	    }
 
 	    // se la pausa esiste già
-	    else {
+	    else if (PAUSE != null){
 
 		// imposto comunque una nuova pausa
-		contatore.setPause(LocalDateTime.now());
+		PAUSE = LocalDateTime.now();
 
 		// metodo che calcola il tempo trascorso partendo dal restart e la nuova pausa
-		Long FinalTime = contatoreservice.findTimeRestart(RESTART, PAUSE, task);
+		Long FinalTime = contatore.getFinaltime() + contatoreservice.findTime(RESTART, PAUSE) ;
 
 		// imposto il finaltime differenza fra stop e pausa - tipo Long
 		contatore.setFinaltime(FinalTime);
@@ -185,7 +186,7 @@ public class ContatoreController {
 	Task task = repositTask.getReferenceById(taskId);
 
 	// parte per javascript: serve per collegare il finaltime da java a javascript sul frontend
-	contatoreservice.contatoreIsActive(task, model);
+	contatoreservice.contatoreIsTrue(task, model);
 	
 	// verifica che il contatore esista 
 	if (task.getContatore() != null ) {

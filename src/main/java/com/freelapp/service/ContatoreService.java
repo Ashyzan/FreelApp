@@ -20,7 +20,8 @@ public class ContatoreService {
     @Autowired
     private ContatoreRepository repositContatore;
     
-public void contatoreIsActive(Task task, Model model) {
+    // verific ache il contatore esista
+public void contatoreIsTrue(Task task, Model model) {
     
     Boolean contatoreIsTrue = false;
 
@@ -34,6 +35,43 @@ public void contatoreIsActive(Task task, Model model) {
 	 	}
 	
 	}
+
+// verifica ache il contatore stia andando, sia attivo
+public void contatoreIsRun(Task task, Model model) {
+    LocalDateTime START = task.getContatore().getStart();
+    LocalDateTime RESTART = task.getContatore().getRestart();
+    LocalDateTime PAUSE = task.getContatore().getPause();
+    Boolean contatoreIsRun = false;
+    
+    if (START.isAfter(PAUSE)) {
+	contatoreIsRun = true;
+	
+	Long finaltime = task.getContatore().getFinaltime();
+
+	Long timenow = START.until(LocalDateTime.now(), ChronoUnit.SECONDS);
+
+	
+	model.addAttribute("finaltime", finaltime);
+ 	model.addAttribute("contatoreIsRun", contatoreIsRun);
+ 	model.addAttribute("timenow", timenow);
+ 	
+    }
+    
+    else if (RESTART.isAfter(PAUSE)) {
+		contatoreIsRun = true;
+		
+		Long finaltime = task.getContatore().getFinaltime();
+
+		Long timenow = RESTART.until(LocalDateTime.now(), ChronoUnit.SECONDS);
+
+		
+		model.addAttribute("finaltime", finaltime);
+	 	model.addAttribute("contatoreIsRun", contatoreIsRun);
+	 	model.addAttribute("timenow", timenow);
+	 	
+	    }
+    
+}
 
 // function time difference start e primo stop
 public Long findTime(LocalDateTime start_date, LocalDateTime end_date) {
@@ -67,25 +105,5 @@ public Long findTimeRestart(LocalDateTime restart_date, LocalDateTime end_date, 
 	
 }
 
-//calcola il tempo totale trascorso fra il restart e lo stop
-
-//public Long findTimeRestartStop(LocalDateTime restart_date, LocalDateTime stop_date, Task task) {
-//	
-//
-//	    restart_date = task.getContatore().getRestart();
-//	    stop_date = task.getContatore().getStop();
-//	    
-//	    Long finalTime  = restart_date.until(stop_date, ChronoUnit.SECONDS);
-//	    
-//	   // Long finalTimeSeconds = finalTime % 60;
-//	    
-//	    Long prevSec = task.getContatore().getFinaltime();
-//	    
-//	    Long FinalTimeSeconds3 = finalTime + prevSec;
-//	
-//	
-//	return FinalTimeSeconds3;
-//	
-//}
 
 }
