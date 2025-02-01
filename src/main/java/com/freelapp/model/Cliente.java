@@ -3,6 +3,7 @@ package com.freelapp.model;
 import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
@@ -27,8 +28,14 @@ public class Cliente {
 	@Column(name = "tipologia")
 	private String tipologia;
 	
-	@Column(name = "ulrLogo")
-	private String urlLogo;
+	@Column(name = "Logo")
+	private String logo;
+	
+//	transient indica che il campoLogo path non è persistente sul db 
+//	ma viene creato temporanemente attraverso l'MVCConfiguration a seconda
+//	dell'ambiente in cui runna l'applicazione 
+	@Transient 
+	private String logoPath;
 	
 	@Column(name = "NomeCliente")
 //	@NotNull(message = "Inserimento del nome obbligatorio")
@@ -135,14 +142,14 @@ public class Cliente {
 
 
 
-	public String getUrlLogo() {
-		return urlLogo;
+	public String getLogo() {
+		return logo;
 	}
 
 
 
-	public void setUrlLogo(String urlLogo) {
-		this.urlLogo = urlLogo;
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
 
 
@@ -347,6 +354,19 @@ public class Cliente {
 	public void setPec(String pec) {
 		this.pec = pec;
 	}
+
+
+// questo get è riferito al LogoPath @Transient e restituisce il path realtivo derivato
+//	da quello assoluto creato tramite l'MVCConfigutation e lo restituisce se è stata caricata
+//	un'immagine altrimenti (logo == null), restiruisce quella di default
+	public String getLogoPath() {
+		if(logo == null) {
+			return "/logoDefaultClientImage/logo-default.jpg";
+		}
+		//quando sarà implementato il loggin l'1 diventerà l'id dell'utente loggato
+		return "/upload/images/logo/utentiId/1/" + this.logo;
+	}
+
 		
 	
 	

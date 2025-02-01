@@ -192,13 +192,13 @@ public class ClientController {
 //	metodo dell'UploadFileService che trasferisce il file alla directory dell'applicazione ed
 //  a db viene salvato l'url per poi recuperare l'immagine e utilizzarla
 		   
-		   formCliente.setUrlLogo(uploadFileService.saveLogoImage(file, utente));
+		   formCliente.setLogo(uploadFileService.saveLogoImage(file, utente));
 	  
 		} else {
 			
 //	se l'utente non ha scelto alcun file di default viene assegnato al logo cliente un avatar
 		   
-		   formCliente.setUrlLogo("/logoImage/avatar.jpg");
+//		   formCliente.setLogo("/logoDefaultClientImage/logo-default.jpg");
 
 		}
 	   
@@ -218,12 +218,57 @@ public class ClientController {
 	}
 	
 	
-	@PostMapping("/Clienti/edit/{id}")
-	public String updateCliente (@Valid @ModelAttribute("formCliente") Cliente formCliente, BindingResult bindingResult, Model model) {
+	@PostMapping(value = "/Clienti/edit/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public String updateCliente (@RequestParam("file")MultipartFile file, Model model, @PathVariable("id") Integer id, 
+			@Valid @ModelAttribute("formCliente") Cliente formCliente, BindingResult bindingResult)
+					throws IllegalStateException, IOException{
+		Cliente cliente = repositoryCliente.getReferenceById(id);
+		String previusUrl = cliente.getLogo();
+		
+		System.out.println("previusUrl: " + previusUrl);
+		
+//		verifica attravero un metodo dell'UploadFileService se il file ha un formato non valido e restuisce un boolean
+			Boolean anyFormatImgError = uploadFileService.anyErrorFormatImage(file);
+			
+	//  se il file ha un formato non valido viene creato un nuovo errore e aggiunto al bindingResult		
+			if(anyFormatImgError == true) {
+				
+				ObjectError errorFormatImage = new ObjectError("formatImageError", "Formati consentiti: JPEG o JPG");
+				
+				bindingResult.addError(errorFormatImage);
+				
+//		una volta creato l'errore custom ne viene recueperato il messaggio e passato al model
+				
+				String errorFormatImageMessage = errorFormatImage.getDefaultMessage();
+			
+				model.addAttribute("errorFormatImageMessage", errorFormatImageMessage);
+			}
+			
+			
 		
 		if(bindingResult.hasErrors()) {
 			return "/Clienti/freelapp-editClient";
 		}
+		
+		if(!file.isEmpty()) {
+			
+//			recupera utente da passare al metodo saveLogoImage di uploadFileService per creare
+//					la cartella dei loghi dei clienti relativi all'utente che poi diventera userLpgged
+					
+					User utente = new User();
+					
+					utente = userRepository.getReferenceById(1);
+					
+//			metodo dell'UploadFileService che trasferisce il file alla directory dell'applicazione ed
+		//  a db viene salvato l'url per poi recuperare l'immagine e utilizzarla
+				   
+				   formCliente.setLogo(uploadFileService.saveLogoImage(file, utente));
+			  
+				} else {
+					
+					formCliente.setLogo(previusUrl);
+					
+				}
 		
 		repositoryCliente.save(formCliente);
 		

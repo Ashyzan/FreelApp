@@ -41,9 +41,9 @@ public class UploadFileService {
 		Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
 
 //	creazione dell'url che viene salvato a db nella colonna urlLogo
-		String imgPath = uploadPath + "/" + finalFileName;
+		String imgName = finalFileName;
 		
-		return imgPath;
+		return imgName;
 	}
 	
 //	metodo che verifica se il formato del file rispecchia i requisiti (JPEG/JPG) e restituisce
