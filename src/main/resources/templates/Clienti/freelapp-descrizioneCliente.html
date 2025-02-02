@@ -466,7 +466,7 @@
 			<div class="flex flex-col w-auto md:w-4/5 lg:w-[600px] h-auto border-2 border-[#0057A5] rounded-lg p-2 md:p-4 bg-gray-100 m-2">
 				<div class="flex justify-between items-center border-b-4">
 					<div class="text-center font-bold text-[30px] mb-3">
-						<h1 th:text="${cliente.getName()}"></h1>					
+						<h1 th:text="${cliente.getLabelCliente()}"></h1>					
 					</div>
 					<div class="flex justify-center items-center gap-6">
 						<a  th:href="@{/Clienti/edit/{id}(id=${cliente.getId()})}">
@@ -592,11 +592,11 @@
 	 </div>
 </main>
 
-<!-- Modale cancellazione Progetto-->
+<!-- Modale cancellazione Cliente-->
 <div id="modalDelete" class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
 	  <div class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
 	    <div class=" w-full h-auto">
-	      <div id="modalCloseButton" class="flex justify-end items-center p-2 cursor-pointer">
+	      <div id="modalDeleteCloseButton" class="flex justify-end items-center p-2 cursor-pointer">
 	        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="30px" height="30px" fill-rule="nonzero">
 	          <g fill="#ffe541" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
 	            <g transform="scale(8.53333,8.53333)">
@@ -612,7 +612,7 @@
 						method="post">
 						<div class="flex flex-col justify-center p-2 text-center ">
 					   		<div class="p-3 text-[#0057A5]">
-					    		<p>Stai per cancellare il cliente <strong th:text="${cliente.getName()}"></strong> e tutto ciò che ad esso è collegato. Vuoi procedere?</p>
+					    		<p>Stai per cancellare il cliente <strong th:text="${cliente.getLabelCliente()}"></strong> e tutto ciò che ad esso è collegato. Vuoi procedere?</p>
 					   		</div>
 							<div class="p-6">
 								<button type="submit" class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>

@@ -9,20 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.freelapp.model.User;
-import com.freelapp.model.Task;
 import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
 import com.freelapp.repository.ClienteRepository;
-import com.freelapp.repository.UserRepository;
 import com.freelapp.repository.ProgettoRepository;
-import com.freelapp.repository.TaskRepository;
+
 
 @Controller
 public class DashboardController {
 
-	@Autowired
-	private UserRepository userRepository;
 
 	@Autowired
 	private ClienteRepository clienteRepository;
@@ -30,9 +25,6 @@ public class DashboardController {
 	@Autowired
 	private ProgettoRepository progettoRepository;
 	
-	@Autowired
-	private TaskRepository taskRepository;
-
 
 	@GetMapping("/dashboard")
 	public String index(Model model){
