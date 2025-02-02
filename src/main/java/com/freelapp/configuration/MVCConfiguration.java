@@ -21,7 +21,7 @@ public class MVCConfiguration implements WebMvcConfigurer{
 		
 		String logoClientePath = logoClienteDirectory.toFile().getAbsolutePath();
 		
-		System.out.println("logoClientePath" + logoClientePath);
+//		System.out.println("logoClientePath" + logoClientePath);
 		
 		registry.addResourceHandler("/" + logoLocation + "/**")
 			.addResourceLocations("file:" + logoClientePath + "/");

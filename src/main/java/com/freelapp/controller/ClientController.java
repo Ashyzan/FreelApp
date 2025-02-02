@@ -223,6 +223,9 @@ public class ClientController {
 			@Valid @ModelAttribute("formCliente") Cliente formCliente, BindingResult bindingResult)
 					throws IllegalStateException, IOException{
 		Cliente cliente = repositoryCliente.getReferenceById(id);
+		
+//		Salva url  precendente logo in modo che se l'utente modifica la schesa cliente senza 
+//		modificare l'immagine a db viene mantenuta la precedente (senza questo viene eliminata la precedente e salvato NULL)
 		String previusUrl = cliente.getLogo();
 		
 		System.out.println("previusUrl: " + previusUrl);
@@ -318,12 +321,14 @@ public class ClientController {
 //	con il model
 	
 	@ExceptionHandler(MaxUploadSizeExceededException.class)
-	public String handleMaxSizeUploadError(RedirectAttributes redirectAttributes) {
+	public String handleMaxSizeUploadErrorCreate(RedirectAttributes redirectAttributes) {
+	
 		
 		redirectAttributes.addFlashAttribute("errorMaxFileSize", "Non è possibile fare l'upload di file superiori a " + maxUploadFileSize);
+			return "redirect:/Errori/MaxUploadSizeExceeded";
 		
-		return "redirect:/Clienti/insert";
 	}
+
 }
 	
 
