@@ -3,6 +3,7 @@ package com.freelapp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Sort;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -56,6 +57,13 @@ public class TaskController {
 					long totalItems = page.getTotalElements();
 					
 					List<Task> listTask = page.getContent();
+
+			
+					//Sort.by(Sort.Direction.DESC, "dataInizio")
+
+					//model.addAttribute("postList", articoloRepository.findAll(Sort.by(Sort.Direction.DESC, "gdo")));
+					
+					//model.addAttribute("list", listTask.findAll(Sort.by(Sort.Direction.DESC, "dataIniziodo")));
 					
 					model.addAttribute("list", listTask);
 					
