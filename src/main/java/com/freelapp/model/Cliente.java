@@ -38,21 +38,15 @@ public class Cliente {
 	private String logoPath;
 	
 	@Column(name = "NomeCliente")
-//	@NotNull(message = "Inserimento del nome obbligatorio")
-//	@NotBlank(message = "Inserimento del nome obbligatorio")
 	private String name;
 	
 	@Column(name = "CognomeCliente")
 	private String surname;
 
 	@Column(name = "RagioneSociale")
-//	@NotNull(message = "Inserimento ragione sociale obbligatorio")
-//	@NotBlank(message = "Inserimento ragione sociale obbligatorio")
 	private String ragioneSociale;
 	
 	@Column(name = "PartitaIva")
-//	@NotNull(message = "Inserimento partita iva obbligatorio")
-//	@NotBlank(message = "Inserimento partita iva obbligatorio")
 	private String partitaIva;
 	
 	@Column(name = "codFiscale")
@@ -75,16 +69,12 @@ public class Cliente {
 	private String sito;
 	
 	@Column(name = "Indirizzo")
-//	@NotNull(message = "Inserimento indirizzo obbligatorio")
-//	@NotBlank(message = "Inserimento indirizzo obbligatorio")
 	private String indirizzo;
 	
 	@Column(name = "civico")
 	private String civico;
 	
 	@Column(name = "Città")
-//	@NotNull(message = "Inserimento città obbligatorio")
-//	@NotBlank(message = "Inserimento città obbligatorio")
 	private String city;
 	
 	@Column(name = "cap", length = 5 )

@@ -535,7 +535,7 @@
 									id="cliente" th:field="*{cliente}" th:errorClass="border" >
 
 								<option value="">Seleziona cliente</option>
-								<option th:each="cliente : ${formClienti}" th:value="${cliente.id}" th:text="${cliente.getName()}"></option>
+								<option th:each="cliente : ${formClienti}" th:value="${cliente.id}" th:text="${cliente.getLabelCliente()}"></option>
 							</select>	
 						<div th:if="${#fields.hasErrors('cliente')}" class="text-red-600 text-[12px] text-center w-full">
 							<ul>
