@@ -65,25 +65,19 @@
 				<h1>The Time IS:</h1>
 				<h1 id="timer"></h1>
 
-				<!-- <div th:if="${contatore.getFinaltime()} != null"> 
-					<h1>Il contatore esiste</h1>
-				</div> 				-->
-
 			</div>
 
 			<div class="container mt-5"
 				style="width: 25rem;">
 				<div class="row">
 					<div class="col">
-						<!-- <input type="hidden" th:field="*{task}" th:value="${task.getId()}"> -->
-						<form class="mx-auto w-50 mb-4"
+							<form class="mx-auto w-50 mb-4"
 							th:action="@{|/start/${id}|}"
 							th:object="${contatore}"
 							method="post">
 							<button type="submit"> start
 							</button>
-							<!-- <button th:data="${contatore}" th:onclick="avviaContatore(this.getAttribute('data'))">using data attribute</button> -->
-						</form>
+								</form>
 					</div>
 
 					<div class="col">
@@ -91,7 +85,6 @@
 							th:action="@{|/Contatore/pause/${id}|}"
 							th:object="${contatore}"
 							method="post">
-							<!-- <input type="hidden" th:field="*{task}" th:value="${task.id}">  -->
 							<button type="submit"> pause
 							</button>
 						</form>
