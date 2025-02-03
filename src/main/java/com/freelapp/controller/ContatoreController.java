@@ -203,7 +203,8 @@ public class ContatoreController {
 
 		Long timenow = contatoreservice.findTime(RESTART, PAUSE);
 
-		FinalTime = FinalTime + timenow;
+		// aggiungo 1 secondo per sincronizzare java con javascript frontend
+		FinalTime = FinalTime + timenow + 1;
 
 		contatore.setFinaltime(FinalTime);
 

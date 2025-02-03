@@ -63,7 +63,7 @@
 			</div>
 			<div class="container">
 				<h1>The Time IS:</h1>
-				<h1 id="timer">00:00:00</h1>
+				<h1 id="timer"></h1>
 
 				<!-- <div th:if="${contatore.getFinaltime()} != null"> 
 					<h1>Il contatore esiste</h1>
@@ -139,7 +139,6 @@
 	const timerElement = document.querySelector("#timer");
 				
 	function tempochescorre() {
-	
 		seconds++;
 		stampacontatore();
 		
@@ -158,7 +157,9 @@
 	
 	function stampacontatore() {
 	
+		// formattato con 2 cifre, per difetto
 		document.getElementById('timer').innerHTML = ('0' + Math.floor(hours)).slice(-2) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);
+
 	
 	}
 	
@@ -166,6 +167,8 @@
 	
 	
 		if (contatoreTrue && contatoreIsRun) {
+			// eseguo prim la funzione una volta per togliere il lag di 1 secondo, poi entro nel ciclo
+			tempochescorre();
 			setInterval(tempochescorre, 1000);
 	
 			console.log("isRun !!");
