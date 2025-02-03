@@ -26,7 +26,6 @@ function stampacontatore() {
 	// formattato con 2 cifre, per difetto
 	document.getElementById('timer').innerHTML = ('0' + Math.floor(hours)).slice(-2) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);
 
-
 }
 
 function timerstart() {
