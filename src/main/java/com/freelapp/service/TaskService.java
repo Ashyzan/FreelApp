@@ -22,13 +22,13 @@ public class TaskService {
 	}
 	
 	public Page<Task> findPage(int pageNumber){
-		Pageable pageable = PageRequest.of(pageNumber -1, 4);
+		Pageable pageable = PageRequest.of(pageNumber -1, 12);
 		return taskRepository.findAll(pageable);
 		
 	}
 	
 	public Page<Task> findSearchedPage(int pageNumber, String input){
-		Pageable pageable = PageRequest.of(pageNumber -1, 4);
+		Pageable pageable = PageRequest.of(pageNumber -1, 12);
 		return taskRepository.search(input, pageable);
 		
 	}

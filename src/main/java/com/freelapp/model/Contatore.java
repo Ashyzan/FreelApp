@@ -2,7 +2,6 @@ package com.freelapp.model;
 
 //import java.sql.Time;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,7 +13,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "contatori")
-public class Contatore {
+public class Contatore{
     
     @Id
     @Column(name = "task_id")
@@ -22,13 +21,17 @@ public class Contatore {
 
     @Column(name = "start", nullable = true)
     private LocalDateTime start;
+    
+    @Column(name = "restart", nullable = true)
+    private LocalDateTime restart;
 
     @Column(name = "pause", nullable = true)
     private LocalDateTime pause;
     
-    @Column(name = "finalTime", nullable = true)
-    private String finalTime;
-
+    // tempo in secondi trascorso fra start e pause o stop
+    @Column(name = "finaltime", nullable = true)
+    private Long finaltime;
+    
     @Column(name = "stop", nullable = true)
     private LocalDateTime stop;
 
@@ -39,6 +42,8 @@ public class Contatore {
     @MapsId
     @JoinColumn(name = "task_id")
     private Task task;
+    
+    
 
     public int getId() {
         return id;
@@ -55,6 +60,15 @@ public class Contatore {
     public void setStart(LocalDateTime start) {
 	this.start = start;
     }
+    
+    public LocalDateTime getRestart() {
+        return restart;
+    }
+
+
+    public void setRestart(LocalDateTime restart) {
+        this.restart = restart;
+    }
 
     public LocalDateTime getPause() {
         return pause;
@@ -70,6 +84,15 @@ public class Contatore {
 
     public void setStop(LocalDateTime stop) {
         this.stop = stop;
+    }
+    
+    public Long getFinaltime() {
+        return finaltime;
+    }
+
+
+    public void setFinaltime(Long finaltime) {
+        this.finaltime = finaltime;
     }
 
     public int getStop_numbers() {
@@ -88,20 +111,6 @@ public class Contatore {
     public void setTask(Task task) {
         this.task = task;
     }
-    
-    // function time difference
-    public String findDifference(LocalDateTime start_date, LocalDateTime end_date) {
-	
-	Long FinalTimeSeconds = start_date.until(end_date, ChronoUnit.SECONDS);
-	
-	Long hours = FinalTimeSeconds / 3600;
-	Long minutes = (FinalTimeSeconds % 3600) / 60;
-	Long seconds = FinalTimeSeconds % 60;
 
-	finalTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-	
-	return finalTime;
-    }
-    
 
 }
