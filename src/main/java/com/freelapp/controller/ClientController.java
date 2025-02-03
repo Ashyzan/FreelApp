@@ -1,30 +1,44 @@
 package com.freelapp.controller;
 
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
+import com.freelapp.model.User;
 import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.repository.TaskRepository;
+import com.freelapp.repository.UserRepository;
 import com.freelapp.service.ClienteService;
+import com.freelapp.service.UploadFileService;
 
 import jakarta.validation.Valid;
 
 @Controller
+@ControllerAdvice //  serve per la gestione degli errori di maxSize file
 public class ClientController {
 
 	@Autowired
@@ -34,21 +48,18 @@ public class ClientController {
 	private ClienteService clienteService;
 	
 	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
 	private ProgettoRepository repositProgetto;
 	
 	@Autowired
 	private TaskRepository repositTask;
 	
+	@Autowired
+	private UploadFileService uploadFileService;
 	
-//	@GetMapping("/Clienti")
-//	public String listaClienti(Model model) {
-//		
-//		List<Cliente> listaClienti = repositoryCliente.findAll();
-//		
-//		model.addAttribute("list", listaClienti);
-//		
-//		return "/Clienti/listClient";
-//	} 
+	
 	
 	@GetMapping("/Clienti")
 	public String listaClienti(Model model) {
@@ -116,20 +127,6 @@ public class ClientController {
 				return "Clienti/freelApp-listClient";
 		 
 		 
-//		    if (input == null || input.isBlank()) {
-//		          return "redirect:/Clienti";
-//		       }
-//		    else { 
-//		    	 
-//		    	   list = repositoryCliente.search(input);
-//
-//		           if (list.isEmpty()) 
-//		    			         return "redirect:/Clienti";     
-//		           else  {  
-//		        	   		model.addAttribute("list", list);
-//			    	  		return "redirect:/Clienti/" + list.get(0).getId(); 
-//			                }   
-//		          } 
 	  }	
 	
 	@GetMapping("/Clienti/{id}")
@@ -146,22 +143,70 @@ public class ClientController {
 	    
 	    model.addAttribute("formCliente", new Cliente());
 	    
+	    model.addAttribute("areErrors", false);
+	    
 	    return "/Clienti/freelapp-insertClient"; 
 	}
 	
-	
-	@PostMapping("/Clienti/insert")
-	public String storeCliente(@Valid @ModelAttribute("formCliente") Cliente formCliente, BindingResult bindingResult, Model model){
+	@PostMapping(value = "/Clienti/insert", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public String storeCliente(@RequestParam("file")MultipartFile file, Model model,
+							@Valid @ModelAttribute("formCliente") Cliente formCliente, BindingResult bindingResult)
+							throws IllegalStateException, IOException {
 		
-	   if(bindingResult.hasErrors()) {
+		
+//	verifica attravero un metodo dell'UploadFileService se il file ha un formato non valido e restuisce un boolean
+		Boolean anyFormatImgError = uploadFileService.anyErrorFormatImage(file);
+		
+//  se il file ha un formato non valido viene creato un nuovo errore e aggiunto al bindingResult		
+		if(anyFormatImgError == true) {
+			
+			ObjectError errorFormatImage = new ObjectError("formatImageError", "Formati consentiti: JPEG o JPG");
+			
+			bindingResult.addError(errorFormatImage);
+			
+//	una volta creato l'errore custom ne viene recueperato il messaggio e passato al model
+			
+			String errorFormatImageMessage = errorFormatImage.getDefaultMessage();
+		
+			model.addAttribute("errorFormatImageMessage", errorFormatImageMessage);
+		}
+		
+		
+		if(bindingResult.hasErrors()) {
+		   
+			model.addAttribute("areErrors", true);
+			
 
-	      return "/Clienti/freelapp-insertClient";
-	   }
+			return "/Clienti/freelapp-insertClient";
+		}
+	   
+		if(!file.isEmpty()) {
+			
+//	recupera utente da passare al metodo saveLogoImage di uploadFileService per creare
+//			la cartella dei loghi dei clienti relativi all'utente che poi diventera userLpgged
+			
+			User utente = new User();
+			
+			utente = userRepository.getReferenceById(1);
+			
+//	metodo dell'UploadFileService che trasferisce il file alla directory dell'applicazione ed
+//  a db viene salvato l'url per poi recuperare l'immagine e utilizzarla
+		   
+		   formCliente.setLogo(uploadFileService.saveLogoImage(file, utente));
+	  
+		} else {
+			
+//	se l'utente non ha scelto alcun file di default viene assegnato al logo cliente un avatar
+		   
+//		   formCliente.setLogo("/logoDefaultClientImage/logo-default.jpg");
 
-	   repositoryCliente.save(formCliente);
+		}
+	   
+
+		repositoryCliente.save(formCliente);
 	  
 
-	   return "redirect:/Clienti";
+		return "redirect:/Clienti";
 	}
 	
 	@GetMapping("/Clienti/edit/{id}")
@@ -173,12 +218,60 @@ public class ClientController {
 	}
 	
 	
-	@PostMapping("/Clienti/edit/{id}")
-	public String updateCliente (@Valid @ModelAttribute("formCliente") Cliente formCliente, BindingResult bindingResult, Model model) {
+	@PostMapping(value = "/Clienti/edit/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public String updateCliente (@RequestParam("file")MultipartFile file, Model model, @PathVariable("id") Integer id, 
+			@Valid @ModelAttribute("formCliente") Cliente formCliente, BindingResult bindingResult)
+					throws IllegalStateException, IOException{
+		Cliente cliente = repositoryCliente.getReferenceById(id);
+		
+//		Salva url  precendente logo in modo che se l'utente modifica la schesa cliente senza 
+//		modificare l'immagine a db viene mantenuta la precedente (senza questo viene eliminata la precedente e salvato NULL)
+		String previusUrl = cliente.getLogo();
+		
+		System.out.println("previusUrl: " + previusUrl);
+		
+//		verifica attravero un metodo dell'UploadFileService se il file ha un formato non valido e restuisce un boolean
+			Boolean anyFormatImgError = uploadFileService.anyErrorFormatImage(file);
+			
+	//  se il file ha un formato non valido viene creato un nuovo errore e aggiunto al bindingResult		
+			if(anyFormatImgError == true) {
+				
+				ObjectError errorFormatImage = new ObjectError("formatImageError", "Formati consentiti: JPEG o JPG");
+				
+				bindingResult.addError(errorFormatImage);
+				
+//		una volta creato l'errore custom ne viene recueperato il messaggio e passato al model
+				
+				String errorFormatImageMessage = errorFormatImage.getDefaultMessage();
+			
+				model.addAttribute("errorFormatImageMessage", errorFormatImageMessage);
+			}
+			
+			
 		
 		if(bindingResult.hasErrors()) {
 			return "/Clienti/freelapp-editClient";
 		}
+		
+		if(!file.isEmpty()) {
+			
+//			recupera utente da passare al metodo saveLogoImage di uploadFileService per creare
+//					la cartella dei loghi dei clienti relativi all'utente che poi diventera userLpgged
+					
+					User utente = new User();
+					
+					utente = userRepository.getReferenceById(1);
+					
+//			metodo dell'UploadFileService che trasferisce il file alla directory dell'applicazione ed
+		//  a db viene salvato l'url per poi recuperare l'immagine e utilizzarla
+				   
+				   formCliente.setLogo(uploadFileService.saveLogoImage(file, utente));
+			  
+				} else {
+					
+					formCliente.setLogo(previusUrl);
+					
+				}
 		
 		repositoryCliente.save(formCliente);
 		
@@ -217,7 +310,25 @@ public class ClientController {
 		return "redirect:/Clienti";
 	  }
 
+// Valore che viene inserito per la dimensione massima presa da application.properties
+//  nel messaggio  di errore "handleMaxSizeUploadError" 
 	
+	@Value("${spring.servlet.multipart.max-file-size}")
+	private String maxUploadFileSize;
+	
+//	Metodo che restituice errore di maxSize per l'upload dei file e lo passa direttamente al
+//	template senza utilizzo del model. viene poi utilizato in js come gli altri valori passati
+//	con il model
+	
+	@ExceptionHandler(MaxUploadSizeExceededException.class)
+	public String handleMaxSizeUploadErrorCreate(RedirectAttributes redirectAttributes) {
+	
+		
+		redirectAttributes.addFlashAttribute("errorMaxFileSize", "Non è possibile fare l'upload di file superiori a " + maxUploadFileSize);
+			return "redirect:/Errori/MaxUploadSizeExceeded";
+		
+	}
+
 }
 	
 
