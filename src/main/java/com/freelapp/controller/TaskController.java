@@ -121,6 +121,9 @@ public class TaskController {
 
 			    	// richiamo il progetto tramite id
 			    	progetto = repositProgetto.getReferenceById(id);
+			    	
+			    	//passo il progetto al model
+//			    	model.addAttribute("progetto", progetto);
 			    
 			    	// istanzio un nuovo task
 			    	Task newTask = new Task();
@@ -141,10 +144,10 @@ public class TaskController {
 				BindingResult bindingResult, Model model) {
         
 //			    	// richiamo il progetto tramite id
-//			    	Progetto progetto = repositProgetto.getReferenceById(id);
-//			    
+			    	Progetto progetto = repositProgetto.getReferenceById(id);
+			    
 //			    	// attribuisco il task passato dal modello al progetto (progettoRif)
-//				task.setProgetto(progetto);
+				task.setProgetto(progetto);
 				
 				// restituisco il task al modello
 				model.addAttribute("task", task);

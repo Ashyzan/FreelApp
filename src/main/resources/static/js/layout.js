@@ -14,18 +14,6 @@ const modalDelete =document.getElementById('modalDelete');
 const deleteButton = document.getElementById('deleteButton');
 const modalDeleteCloseButton = document.getElementById('modalDeleteCloseButton');
 
-//recupero elementi dal DOM per accordion
-function toggleAccordion(index) {
-    const content = document.querySelector(`#content-${index}`);
-    const line = document.querySelector(`.line-${index}`);
-      line.classList.toggle('hidden');
-      content.classList.toggle('hidden');
-    }
-  
-// recuper elementi dal DOM per manipolazione input fatturazione per tipologia
-const aziendaInput = document.getElementById('aziendaInput');
-const privatoInput = document.getElementById('privatoInput');
-
 		  
 // funzioni per navBar 		
 function onToggleMenu(e){
@@ -75,13 +63,3 @@ function closeModal(){
 }		  
 		 
 
-// funzione per cambiare input fatturazione cliente in base alla tipologia
-
-function tipologiaSelect(value){
-	if(value = "azienda"){
-		aziendaInput.classList.toggle('hidden');
-	} if(value = "privato") {
-		privatoInput.classList.toggle('hidden');
-	}
-
-}

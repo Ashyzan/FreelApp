@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.freelapp.model.Task;
@@ -18,7 +19,7 @@ public class TaskService {
 	private TaskRepository taskRepository;
 
 	public List<Task> findAll(){
-		return taskRepository.findAll();
+		return taskRepository.findAll(Sort.by(Sort.Direction.DESC, "dataInizio"));
 	}
 	
 	public Page<Task> findPage(int pageNumber){

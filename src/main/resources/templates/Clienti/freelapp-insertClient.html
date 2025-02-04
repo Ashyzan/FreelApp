@@ -834,33 +834,12 @@
 	     </div>
 	 </div>
 </main>
-    <script type="text/javascript" th:src="@{/js/timer.js}"></script>
+    <script type="text/javascript" th:src="@{/js/insert-edit-Cliente.js}"></script>
     <script type="text/javascript" th:src="@{/js/layout.js}"></script>
 	<script th:inline="javascript">
 		const contentTreError = document.getElementById('content-3');
 		const inputFile =document.getElementById('urlLogo');
-		const errorMaxFileSizeContainer = document.getElementById('errorMaxFileSize');
 		
-		let errorMaxFileSize;
-		
-		
-		//funzione che visualizza anteprima immagine selezionata prima di fare upload e fa il controllo frontend delle dimensioni
-		var previewUploadFile = function(event){
-				errorMaxFileSizeContainer.innerHTML = "";
-				inputFile.classList.remove('border')
-				const fileSize = inputFile.files[0].size
-				var previewLogoCliente = document.getElementById('previewLogoCliente');
-				console.log(fileSize)
-				previewLogoCliente.src = URL.createObjectURL(event.target.files[0]);//riempe la memoria temporanea con il file
-				previewLogoCliente.onload = function(){
-				URL.revokeObjectURL(previewLogoCliente.src) //svuota la memoria temporanea dal file
-				if (fileSize > 500000){
-					errorMaxFileSize = "";
-					errorMaxFileSizeContainer.innerHTML = "Non è possibile fare l'upload di file superiori a 500KB"
-					inputFile.classList.add('border')
-				}	
-			} 
-		}
 		
 			/*<![CDATA[*/
 
