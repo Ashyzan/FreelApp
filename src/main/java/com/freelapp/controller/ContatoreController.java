@@ -41,6 +41,15 @@ public class ContatoreController {
 	    contatoreservice.contatoreIsTrue(task, model);
 
 	    contatoreservice.contatoreIsRun(task, model);
+	    
+	    boolean contatoreIsRun = contatoreservice.contatoreIsRun(task, model);
+	    
+	    if(contatoreIsRun) {
+	    	
+	    	LocalDateTime timeNow = LocalDateTime.now();
+	    	
+	    	 task.getContatore().setFinaltime((long) (timeNow.getSecond()- task.getContatore().getStart().getSecond()));
+	    }
 	 
 	    Long FinalTime = task.getContatore().getFinaltime();
 	    

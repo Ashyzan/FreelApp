@@ -118,20 +118,38 @@
 <script th:inline="javascript">
 	/*<![CDATA[*/
 
-	let finalTime = /*[[${finaltime}]]*/ null;
-	let START = /*[[${start}]]*/ null;
-	let RESTART = /*[[${restart}]]*/ null;
+	let finalTimeSec = /*[[${finaltime}]]*/ null;
 	let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
 	let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean
-	let timenow = /*[[${timenow}]]*/ null;
+	let restartTime = /*[[${restartTime}]]*/ null;
 	
-	let hours = finalTime / 3600;
-	let minutes = (finalTime % 3600) / 60;
-	let seconds = finalTime % 60;
+	/*]]>*/
+	let finalTimeHour = finalTimeSec * 0.0002777778;
+	let hours = finalTimeSec / 3600;
+	let minutes = (finalTimeSec % 3600) / 60;
+	let seconds = finalTimeSec % 60;
+	
 	
 	const timerElement = document.querySelector("#timer");
 				
 	function tempochescorre() {
+		
+	let dateNowSec = (new Date().getTime())*0.0000002777778;
+	let timeNow = dateNowSec - restartTime;
+	finalTimeSec = (finalTimeHour + timeNow) /3600;
+	
+	if(contatoreIsRun){
+		
+	}else {
+		
+	}
+	
+	console.log("dateNowSec: " + dateNowSec);
+	console.log("restartTime: " + restartTime)	;
+	console.log("TimeNow: " + timeNow);	
+		
+		
+		
 		seconds++;
 		stampacontatore();
 		
@@ -139,52 +157,51 @@
 			seconds = 0;
 			minutes++;
 		}
-	
+
 		if (minutes >= 60) {
 			minutes = 0;
 			hours++;
 		}
 		
-	
+
 	}
+
 	
 	function stampacontatore() {
-	
+
 		// formattato con 2 cifre, per difetto
 		document.getElementById('timer').innerHTML = ('0' + Math.floor(hours)).slice(-2) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);
 
-	
-	}
-	
-	function timerstart() {
-	
-	
-		if (contatoreTrue && contatoreIsRun) {
-			// eseguo prim la funzione una volta per togliere il lag di 1 secondo, poi entro nel ciclo
-			tempochescorre();
-			setInterval(tempochescorre, 1000);
-	
-			console.log("isRun !!");
-			console.log("finaltime is " + finalTime);
-			console.log("ore " + hours + " minuti " + minutes + " secondi " + seconds)
-			console.log("timenow is " + timenow)
-	
-		}
-	
-		else if (contatoreIsRun !== true) {
 
-			stampacontatore();
-			console.log("contatore non attivo , finaltime = " + finalTime);
-		}
-	
-		else  {
-		
-			console.log("finaltime is not defined , finaltime = " + finalTime);
-		}
-	
 	}
 	
-	/*]]>*/
+	function timerstart(){
+		
+		if (contatoreTrue && contatoreIsRun) {
+				// eseguo prim la funzione una volta per togliere il lag di 1 secondo, poi entro nel ciclo
+				tempochescorre();
+				setInterval(tempochescorre, 1000);
+
+				//console.log("isRun !!");
+			//	console.log("finaltime is " + finalTime);
+			//	console.log("ore " + hours + " minuti " + minutes + " secondi " + seconds)
+			//	console.log("timenow is " + timenow)
+
+			}
+
+			else if (contatoreIsRun !== true) {
+
+				stampacontatore();
+				console.log("contatore non attivo , finaltime = " + finalTimeSec);
+			}
+
+			else  {
+			
+				console.log("finaltime is not defined , finaltime = " + finalTimeSec);
+			}
+		
+	}	
+	
 </script>
 
 <!-- <script th:src="@{/js/timer.js}"></script> -->
