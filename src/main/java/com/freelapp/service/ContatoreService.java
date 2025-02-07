@@ -3,24 +3,16 @@ package com.freelapp.service;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import com.freelapp.controller.ContatoreController;
-import com.freelapp.model.Contatore;
+
 import com.freelapp.model.Task;
-import com.freelapp.repository.ContatoreRepository;
-import com.freelapp.repository.TaskRepository;
 
 @Service
 public class ContatoreService {
 
-    @Autowired
-    private TaskRepository repositTask;
-
-    @Autowired
-    private ContatoreRepository repositContatore;
 
     // verifica che il contatore esista
     public void contatoreIsTrue(Task task, Model model) {
