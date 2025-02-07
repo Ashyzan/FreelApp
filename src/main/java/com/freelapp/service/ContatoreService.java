@@ -3,22 +3,16 @@ package com.freelapp.service;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+
 import com.freelapp.model.Task;
-import com.freelapp.repository.ContatoreRepository;
-import com.freelapp.repository.TaskRepository;
 
 @Service
 public class ContatoreService {
 
-    @Autowired
-    private TaskRepository repositTask;
-
-    @Autowired
-    private ContatoreRepository repositContatore;
 
     // verifica che il contatore esista
     public void contatoreIsTrue(Task task, Model model) {
@@ -37,7 +31,7 @@ public class ContatoreService {
     }
 
 // verifica ache il contatore stia andando cioè sia attivo
-    public void contatoreIsRun(Task task, Model model) {
+    public Boolean contatoreIsRun(Task task, Model model) {
 	LocalDateTime START = task.getContatore().getStart();
 	LocalDateTime STOP = task.getContatore().getStop();
 	LocalDateTime RESTART = task.getContatore().getRestart();
@@ -68,6 +62,7 @@ public class ContatoreService {
 	    model.addAttribute("contatoreIsRun", contatoreIsRun);
 	}
 
+	return contatoreIsRun;
     }
 
 // function time difference start e stop
@@ -83,4 +78,6 @@ public class ContatoreService {
 	return FinalTimeSeconds;
     }
 
+ 
+    
 }
