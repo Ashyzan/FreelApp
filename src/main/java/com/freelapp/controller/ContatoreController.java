@@ -44,16 +44,23 @@ public class ContatoreController {
 	    
 	    boolean contatoreIsRun = contatoreservice.contatoreIsRun(task, model);
 	    
-	    if(contatoreIsRun) {
-	    	
-	    	LocalDateTime timeNow = LocalDateTime.now();
+	    LocalDateTime restartTime =  task.getContatore().getRestart();
+	    
+	    LocalDateTime timeNow = LocalDateTime.now();
+	    
+	    Long FinalTime = task.getContatore().getFinaltime();	    
+	    
+	    if(contatoreIsRun == true && restartTime ==null ) {
 	    	
 	    	 task.getContatore().setFinaltime((long) (timeNow.getSecond()- task.getContatore().getStart().getSecond()));
+	    	 
+	    } else if(contatoreIsRun == true && restartTime!= null) {
+	    	
+	    	task.getContatore().setFinaltime((long) (FinalTime + (timeNow.getSecond()- task.getContatore().getRestart().getSecond())));
 	    }
 	 
-	    Long FinalTime = task.getContatore().getFinaltime();
 	    
-	    model.addAttribute("finaltime", FinalTime);
+	    model.addAttribute("finaltime", task.getContatore().getFinaltime());
 
 	}
 

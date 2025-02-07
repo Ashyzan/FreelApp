@@ -121,35 +121,23 @@
 	let finalTimeSec = /*[[${finaltime}]]*/ null;
 	let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
 	let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean
-	let restartTime = /*[[${restartTime}]]*/ null;
+	
 	
 	/*]]>*/
-	let finalTimeHour = finalTimeSec * 0.0002777778;
+	
 	let hours = finalTimeSec / 3600;
 	let minutes = (finalTimeSec % 3600) / 60;
 	let seconds = finalTimeSec % 60;
 	
+	console.log("finalTimeSec iniziale: " + finalTimeSec)
+	console.log("ore iniziali: " + hours);
+	console.log("minuti iniziali: " + minutes);
+	console.log("secndi iniziali: " + seconds);
 	
 	const timerElement = document.querySelector("#timer");
 				
 	function tempochescorre() {
-		
-	let dateNowSec = (new Date().getTime())*0.0000002777778;
-	let timeNow = dateNowSec - restartTime;
-	finalTimeSec = (finalTimeHour + timeNow) /3600;
 	
-	if(contatoreIsRun){
-		
-	}else {
-		
-	}
-	
-	console.log("dateNowSec: " + dateNowSec);
-	console.log("restartTime: " + restartTime)	;
-	console.log("TimeNow: " + timeNow);	
-		
-		
-		
 		seconds++;
 		stampacontatore();
 		
@@ -181,12 +169,6 @@
 				// eseguo prim la funzione una volta per togliere il lag di 1 secondo, poi entro nel ciclo
 				tempochescorre();
 				setInterval(tempochescorre, 1000);
-
-				//console.log("isRun !!");
-			//	console.log("finaltime is " + finalTime);
-			//	console.log("ore " + hours + " minuti " + minutes + " secondi " + seconds)
-			//	console.log("timenow is " + timenow)
-
 			}
 
 			else if (contatoreIsRun !== true) {
@@ -203,9 +185,6 @@
 	}	
 	
 </script>
-
-<!-- <script th:src="@{/js/timer.js}"></script> -->
-
 	</body>
 
 </html>
