@@ -101,7 +101,6 @@ public class ContatoreController {
 				(long) (FinalTime + (timeNow.getSecond() - task.getContatore().getRestart().getSecond())));
 		    }
 		
-		
 		model.addAttribute("finaltime", task.getContatore().getFinaltime());
 		// parte per javascript
 		contatoreservice.contatoreIsTrue(task, model);
