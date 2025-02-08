@@ -81,25 +81,53 @@ public class ContatoreController {
 	if ((task.getContatore() != null) && (task.getContatore().getStop() == null)
 		&& (task.getContatore().getStart() != null)) {
 
+	    // CONTATORE IS RUN
 	    if (contatoreservice.contatoreIsRun(task, model) != false) {
+
+		boolean contatoreIsRun = contatoreservice.contatoreIsRun(task, model);
+
+		    LocalDateTime restartTime = task.getContatore().getRestart();
+
+		    Long FinalTime = task.getContatore().getFinaltime();
+		    LocalDateTime timeNow = LocalDateTime.now();
+		if (contatoreIsRun == true && restartTime == null) {
+
+			task.getContatore()
+				.setFinaltime((long) (timeNow.getSecond() - task.getContatore().getStart().getSecond()));
+
+		    } else if (contatoreIsRun == true && restartTime != null) {
+
+			task.getContatore().setFinaltime(
+				(long) (FinalTime + (timeNow.getSecond() - task.getContatore().getRestart().getSecond())));
+		    }
+		
+		
+		model.addAttribute("finaltime", task.getContatore().getFinaltime());
+		// parte per javascript
+		contatoreservice.contatoreIsTrue(task, model);
+		contatoreservice.contatoreIsRun(task, model);
 
 	    }
 
-	    // imposta il valore di restart
-	    task.getContatore().setRestart(LocalDateTime.now());
+	    // CONTATORE IS NOT RUN
+	    else if (contatoreservice.contatoreIsRun(task, model) != true) {
 
-	    Long FinalTime = task.getContatore().getFinaltime();
+		// imposta il valore di restart
+		task.getContatore().setRestart(LocalDateTime.now());
 
-	    // collego nel modello html il task e il contatore
-	    model.addAttribute("task", task);
-	    model.addAttribute("contatore", contatore);
-	    model.addAttribute("finaltime", FinalTime);
+		Long FinalTime = task.getContatore().getFinaltime();
 
-	    repositContatore.save(task.getContatore());
+		// collego nel modello html il task e il contatore
+		model.addAttribute("task", task);
+		model.addAttribute("contatore", contatore);
+		model.addAttribute("finaltime", FinalTime);
 
-	    // parte per javascript
-	    contatoreservice.contatoreIsTrue(task, model);
-	    contatoreservice.contatoreIsRun(task, model);
+		repositContatore.save(task.getContatore());
+
+		// parte per javascript
+		contatoreservice.contatoreIsTrue(task, model);
+		contatoreservice.contatoreIsRun(task, model);
+	    }
 
 	}
 
@@ -245,10 +273,8 @@ public class ContatoreController {
 
 	// PAUSE DOPO STOP: verifico che il contatore non sia stoppato
 	else if ((task.getContatore() != null) && (task.getContatore().getStop() != null)) {
-	 // Parte per Javascript
+	    // Parte per Javascript
 	    Long FinalTime = task.getContatore().getFinaltime();
-//	    contatoreservice.contatoreIsTrue(task, model);
-//	    contatoreservice.contatoreIsRun(task, model);
 	    model.addAttribute("finaltime", FinalTime);
 	}
 

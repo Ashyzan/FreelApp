@@ -71,5 +71,9 @@ src/main/.DS_Store
 .DS_Store
 bin/.DS_Store
 src/main/resources/templates/.DS_Store
+<<<<<<< Updated upstream
+=======
+bin/.DS_Store
+>>>>>>> Stashed changes
 upload/images/logo/utentiId/1/2025-02-08T17:54:24.0185572024-08-31 23.45.11.jpg
 upload/images/logo/utentiId/1/2025-02-08T17:54:36.4272281840435.jpg
