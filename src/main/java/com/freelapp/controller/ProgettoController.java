@@ -152,10 +152,17 @@ public class ProgettoController {
 			public String edit(@PathVariable("id") Integer id, Model model) {
 				
 				Progetto formProgetto = repositProgetto.findById(id).get();
+			
+				//User utente = repositUser.findById(id).get();
+				
+				//formProgetto.setUtente(utente);
+				
+				List<Cliente> listaClienti = repositClient.findAll();  
+
 				
 				model.addAttribute("formProgetto", formProgetto);
 				
-				model.addAttribute("formClienti", repositClient.findAll());
+				model.addAttribute("formClienti", listaClienti);
 				
 				return "/Progetti/freelapp-editProgetto";
 			}
@@ -170,7 +177,7 @@ public class ProgettoController {
  
 				repositProgetto.save(formProgetto);
 				
-				return "redirect:/Progetti" + formProgetto.getUtente().getId(); 
+				return "redirect:/Progetti"; 
 			    }
 			
 			
