@@ -20,11 +20,6 @@ public interface TaskRepository extends JpaRepository<Task, Integer>, PagingAndS
     
     public List<Task> findAll();
 	
-	//public List<Task> findByOrderByDataInizioAsc(String name);
-	
-	// public static final TaskRepository repositTask = null;    
-	//List<Task> passengers = repositTask.findAll(Sort.by(Sort.Direction.ASC, "dataInizio"));
-    
     @Transactional
     void deleteByProgettoId(Integer id);
     

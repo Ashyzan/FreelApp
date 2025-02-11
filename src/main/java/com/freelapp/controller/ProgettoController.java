@@ -142,10 +142,9 @@ public class ProgettoController {
 					
 				}
 		
-			    	//repositUser.findById(id).get();
 				repositProgetto.save(formProgetto);
 		
-				return "redirect:/Admin/" + formProgetto.getUtente().getId();       
+				return "redirect:/Progetti";       
 			}
 	
 			
@@ -171,7 +170,7 @@ public class ProgettoController {
  
 				repositProgetto.save(formProgetto);
 				
-				return "redirect:/Admin/" + formProgetto.getUtente().getId(); 
+				return "redirect:/Progetti" + formProgetto.getUtente().getId(); 
 			    }
 			
 			
