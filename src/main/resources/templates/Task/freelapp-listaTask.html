@@ -1134,15 +1134,20 @@
 									</tr>
 									</th>
 								<tbody>
+									
+											
 									<tr th:each="task : ${list}"
 										class="border-b-2 h-6 text-center max-sm:text-[10px]">
 										<td
 											th:text="${task.getName()}">
 										</td>
-										<td th:text=" ${task.getDataInizio()}"
+								
+										<td 
+											th:text="${#temporals.format(task.getDataInizio(), 'dd MMM yyyy')}"
+										
 											class="p-2 max-lg:hidden">
 										</td>
-										<td th:text=" ${task.getDataChiusuraStimata()}"
+										<td th:text=" ${#temporals.format(task.getDataChiusuraStimata(), 'dd MMM yyyy')}"
 											class="p-2 max-lg:hidden">
 										</td>
 										<td
