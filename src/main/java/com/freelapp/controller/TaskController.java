@@ -55,15 +55,7 @@ public class TaskController {
 	long totalItems = page.getTotalElements();
 
 	List<Task> listTask = page.getContent();
-
-	// Sort.by(Sort.Direction.DESC, "dataInizio")
-
-	// model.addAttribute("postList",
-	// articoloRepository.findAll(Sort.by(Sort.Direction.DESC, "gdo")));
-
-	// model.addAttribute("list", listTask.findAll(Sort.by(Sort.Direction.DESC,
-	// "dataIniziodo")));
-
+	
 	model.addAttribute("list", listTask);
 
 	model.addAttribute("currentPage", currentPage);
@@ -119,9 +111,6 @@ public class TaskController {
 	// richiamo il progetto tramite id
 	progetto = repositProgetto.getReferenceById(id);
 
-	// passo il progetto al model
-//			    	model.addAttribute("progetto", progetto);
-
 	// istanzio un nuovo task
 	Task newTask = new Task();
 	// attribuisco il task al progetto
@@ -137,18 +126,18 @@ public class TaskController {
     public String storeTask(@PathVariable("id") Integer id, @Valid @ModelAttribute("task") Task task,
 	    BindingResult bindingResult, Model model) {
 
-//			    	// richiamo il progetto tramite id
+//// richiamo il progetto tramite id
 	Progetto progetto = repositProgetto.getReferenceById(id);
 
-//			    	// attribuisco il task passato dal modello al progetto (progettoRif)
+//// attribuisco il task passato dal modello al progetto (progettoRif)
 	task.setProgetto(progetto);
 
 	// restituisco il task al modello
 	model.addAttribute("task", task);
 
 	if (bindingResult.hasErrors()) {
-//				  bindingResult.addError(
-//				   new ObjectError("Errore", "Huston abbiamo un problema"));
+// bindingResult.addError(
+// new ObjectError("Errore", "Huston abbiamo un problema"));
 
 	    return "/Task/freelapp-insertTask";
 	}
