@@ -32,7 +32,7 @@ public class ContatoreController {
 
     @GetMapping("/Contatore/timer/{id}")
     public String gestioneTimer(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
-	    Model model) {
+	    Model model, BindingResult bindingresult) {
 
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
@@ -43,6 +43,8 @@ public class ContatoreController {
 	    contatoreservice.contatoreIsTrue(task, model);
 
 	    contatoreservice.contatoreIsRun(task, model);
+	    
+	    
 
 	    boolean contatoreIsRun = contatoreservice.contatoreIsRun(task, model);
 
@@ -57,10 +59,13 @@ public class ContatoreController {
 		task.getContatore()
 			.setFinaltime((long) (timeNow.getSecond() - task.getContatore().getStart().getSecond()));
 
+    	contatoreservice.timeExeed(bindingresult, task, model);
+
 	    } else if (contatoreIsRun == true && restartTime != null) {
 
 		task.getContatore().setFinaltime(
 			(long) (FinalTime + (timeNow.getSecond() - task.getContatore().getRestart().getSecond())));
+		contatoreservice.timeExeed(bindingresult, task, model);
 	    }
 
 	    model.addAttribute("finaltime", task.getContatore().getFinaltime());
@@ -74,7 +79,7 @@ public class ContatoreController {
 
     @PostMapping("/start/{id}")
     public String startContatore(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
-	    Model model) {
+	    Model model, BindingResult bindingresult) {
 
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
@@ -83,6 +88,8 @@ public class ContatoreController {
 	if ((task.getContatore() != null) && (task.getContatore().getStop() == null)
 		&& (task.getContatore().getStart() != null)) {
 
+		
+		
 	    // CONTATORE IS RUN
 	    if (contatoreservice.contatoreIsRun(task, model) != false) {
 

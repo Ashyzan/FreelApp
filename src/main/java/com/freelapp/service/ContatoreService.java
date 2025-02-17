@@ -1,5 +1,6 @@
 package com.freelapp.service;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -9,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
 import com.freelapp.model.Contatore;
@@ -88,29 +90,43 @@ public class ContatoreService {
 		return FinalTimeSeconds;
 	}
 
-//	public boolean timeExeed(Task task, Model model) {
-//	Long FinalTimeHours = START.until(PAUSE, ChronoUnit.HOURS);
-//	Long test = START.until(PAUSE, ChronoUnit.SECONDS);
-//
-//	// controlla che il timer non ecceda le ore consentite altrimenti mette in stop
-//	// il timer (8766 sono le ore presenti in un anno)
-//	if (
-//					test >= 35; 
-//			//FinalTimeHours >= 8766
-//			) {
-//		// errore: il task eccede le dimensioni consentite. Avviane uno nuovo.
-//		
-//		task.getContatore().setStop(LocalDateTime.now());
-//		repositContatore.save(task.getContatore());
-//		 
-//		bindingresult.addError(new ObjectError
-//				("ERRORE max hours.", 
-//						"Il task eccede le dimensioni consentite ed è stato messo in stop, "
-//						+ "Avviane uno nuovo per continuare."));
-//		
-//		}
-//	return false;
-//	}
+	// METODO controlla che il timer non ecceda le ore consentite altrimenti mette in stop
+	public String timeExeed(BindingResult bindingresult, Task task, Model model){
+	// (8766 sono le ore presenti in un anno)
+		
+		LocalDateTime START = task.getContatore().getStart();
+		
+		if (task.getContatore().getFinaltime() >= 5 ) {
+			
+			task.getContatore().setStop(LocalDateTime.now());
+			
+				Long FinalTimeSeconds = START.until(task.getContatore().getStop(), ChronoUnit.SECONDS);
+				task.getContatore().setFinaltime(FinalTimeSeconds);
+				
+				
+				repositContatore.save(task.getContatore());
+				
+				
+				
+				ObjectError errorTimeExeed = new ObjectError("errorTimeExeed", 
+		"Il task eccede le dimensioni consentite ed è stato messo in stop,"
+		+ "Avviane uno nuovo per continuare.");
+				
+				bindingresult.addError(errorTimeExeed);
+				
+//		una volta creato l'errore custom ne viene recueperato il messaggio e passato al model
+				
+				String errorTimeExeedmessage= errorTimeExeed.getDefaultMessage();
+			
+				model.addAttribute("errorTimeExeedmessage", errorTimeExeedmessage);
+				
+				return "/dashboard";
+			}
+		
+		
+		return "/Task";
+		
+	}
 
 	// metodo che mette in pausa tutti i contatori attivi
 	public void pauseOtherTimers() {
