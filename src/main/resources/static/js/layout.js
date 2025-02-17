@@ -14,7 +14,7 @@ const modalDelete =document.getElementById('modalDelete');
 const deleteButton = document.getElementById('deleteButton');
 const modalDeleteCloseButton = document.getElementById('modalDeleteCloseButton');
 
-		  
+  
 // funzioni per navBar 		
 function onToggleMenu(e){
 	navBar.classList.toggle('top-[-100%]')
@@ -30,6 +30,9 @@ function onToggleOptionsDesktop(e){
 	navOptionsDesktop.classList.toggle('top-14')
 }
 
+
+
+
 // funzioni per modale
 
 //apertura modalDelete
@@ -42,6 +45,8 @@ modalDeleteCloseButton.addEventListener('click', function(){
 	modalDelete.classList.add('scale-0');
 })
 
+
+
 //chiusura modale nuovoProgetto
 modalCloseButton.addEventListener('click', function(){
 	closeModal()
@@ -51,6 +56,9 @@ modalCloseButton.addEventListener('click', function(){
 nuovoProgettoButton.addEventListener('click', function(){
 	openModal()
 })
+
+
+
 
 //funzione per aprire la modale
 function openModal(){

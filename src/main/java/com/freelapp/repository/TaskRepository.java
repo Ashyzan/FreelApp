@@ -1,6 +1,7 @@
 package com.freelapp.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,5 +23,7 @@ public interface TaskRepository extends JpaRepository<Task, Integer>, PagingAndS
 	
     @Transactional
     void deleteByProgettoId(Integer id);
+    
+    public Optional<Task> findById(Integer id);
     
 }
