@@ -1,8 +1,7 @@
 package com.freelapp.controller;
 
 import java.time.LocalDateTime;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +31,7 @@ public class ContatoreController {
 
     @GetMapping("/Contatore/timer/{id}")
     public String gestioneTimer(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
-	    Model model) {
+	    Model model, BindingResult bindingresult) {
 
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
@@ -43,6 +42,8 @@ public class ContatoreController {
 	    contatoreservice.contatoreIsTrue(task, model);
 
 	    contatoreservice.contatoreIsRun(task, model);
+	    
+	    
 
 	    boolean contatoreIsRun = contatoreservice.contatoreIsRun(task, model);
 
@@ -51,16 +52,21 @@ public class ContatoreController {
 	    LocalDateTime timeNow = LocalDateTime.now();
 
 	    Long FinalTime = task.getContatore().getFinaltime();
+	    
+	    contatoreservice.timeExeed(bindingresult, task, model);
 
 	    if (contatoreIsRun == true && restartTime == null) {
 
 		task.getContatore()
 			.setFinaltime((long) (timeNow.getSecond() - task.getContatore().getStart().getSecond()));
 
+    	contatoreservice.timeExeed(bindingresult, task, model);
+
 	    } else if (contatoreIsRun == true && restartTime != null) {
 
 		task.getContatore().setFinaltime(
 			(long) (FinalTime + (timeNow.getSecond() - task.getContatore().getRestart().getSecond())));
+		contatoreservice.timeExeed(bindingresult, task, model);
 	    }
 
 	    model.addAttribute("finaltime", task.getContatore().getFinaltime());
@@ -74,7 +80,7 @@ public class ContatoreController {
 
     @PostMapping("/start/{id}")
     public String startContatore(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
-	    Model model) {
+	    Model model, BindingResult bindingresult) {
 
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
@@ -83,9 +89,14 @@ public class ContatoreController {
 	if ((task.getContatore() != null) && (task.getContatore().getStop() == null)
 		&& (task.getContatore().getStart() != null)) {
 
+		
+		
 	    // CONTATORE IS RUN
 	    if (contatoreservice.contatoreIsRun(task, model) != false) {
 
+	    	// metto in pausa gli altri contatori
+	    	contatoreservice.pauseOtherTimers();
+	    	
 		boolean contatoreIsRun = contatoreservice.contatoreIsRun(task, model);
 
 		    LocalDateTime restartTime = task.getContatore().getRestart();
@@ -172,6 +183,9 @@ public class ContatoreController {
 
 	    // associo al task il nuovo contatore
 	    task.setContatore(contatore);
+	    
+	 // metto in pausa gli altri contatori
+    	contatoreservice.pauseOtherTimers();
 
 	    // eseguo il TIMESTAMP
 	    contatore.setStart(LocalDateTime.now());
@@ -419,6 +433,14 @@ public class ContatoreController {
 
 	}
 
+	return "/Contatore/timer";
+    }
+    
+    @PostMapping("/Contatore/inserthours/{id}")
+    public String insertHours(@PathVariable("id") Integer taskId, Model model) {
+	
+	Task task = repositTask.getReferenceById(taskId);
+	
 	return "/Contatore/timer";
     }
 }
