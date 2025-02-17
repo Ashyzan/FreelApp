@@ -6,6 +6,7 @@ const modalTimerRapidCloseButton = document.getElementById('modalTimerRapidClose
 const taskResumeTable = document.getElementById('taskResumeTable');		
 const formTask = document.getElementById('form-task-select');
 
+//da cambiare con url definitivo
 const api_url= 'http://localhost:8080/api/task/'
 
 // apertura modale timerRapidButton
