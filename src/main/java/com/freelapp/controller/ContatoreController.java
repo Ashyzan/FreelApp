@@ -1,8 +1,7 @@
 package com.freelapp.controller;
 
 import java.time.LocalDateTime;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,6 +52,8 @@ public class ContatoreController {
 	    LocalDateTime timeNow = LocalDateTime.now();
 
 	    Long FinalTime = task.getContatore().getFinaltime();
+	    
+	    contatoreservice.timeExeed(bindingresult, task, model);
 
 	    if (contatoreIsRun == true && restartTime == null) {
 
@@ -432,6 +433,14 @@ public class ContatoreController {
 
 	}
 
+	return "/Contatore/timer";
+    }
+    
+    @PostMapping("/Contatore/inserthours/{id}")
+    public String insertHours(@PathVariable("id") Integer taskId, Model model) {
+	
+	Task task = repositTask.getReferenceById(taskId);
+	
 	return "/Contatore/timer";
     }
 }
