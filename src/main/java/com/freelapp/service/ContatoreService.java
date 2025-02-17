@@ -1,19 +1,28 @@
 package com.freelapp.service;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.validation.ObjectError;
 
-
+import com.freelapp.model.Contatore;
 import com.freelapp.model.Task;
-
+import com.freelapp.repository.ContatoreRepository;
+import com.freelapp.repository.TaskRepository;
 
 @Service
 public class ContatoreService {
-	
+	@Autowired
+	private ContatoreRepository repositContatore;
+
+	@Autowired
+	private TaskRepository taskrepository;
 
 	// verifica che il contatore esista
 	public void contatoreIsTrue(Task task, Model model) {
@@ -38,7 +47,6 @@ public class ContatoreService {
 		LocalDateTime RESTART = task.getContatore().getRestart();
 		LocalDateTime PAUSE = task.getContatore().getPause();
 		Boolean contatoreIsRun = false;
-		
 
 		// CASO 1 : RUN - CONTATORE SENZA PAUSE
 		if ((PAUSE == null) && (STOP == null)) {
@@ -79,9 +87,8 @@ public class ContatoreService {
 
 		return FinalTimeSeconds;
 	}
-	
-	
-//	public boolean timeExeed(LocalDateTime start_date, LocalDateTime end_date) {
+
+//	public boolean timeExeed(Task task, Model model) {
 //	Long FinalTimeHours = START.until(PAUSE, ChronoUnit.HOURS);
 //	Long test = START.until(PAUSE, ChronoUnit.SECONDS);
 //
@@ -96,9 +103,33 @@ public class ContatoreService {
 //		task.getContatore().setStop(LocalDateTime.now());
 //		repositContatore.save(task.getContatore());
 //		 
-//		bindingresult.addError(new ObjectError("ERRORE max hours.", "Il task eccede le dimensioni consentite ed è stato messo in stop, Avviane uno nuovo per continuare."));
+//		bindingresult.addError(new ObjectError
+//				("ERRORE max hours.", 
+//						"Il task eccede le dimensioni consentite ed è stato messo in stop, "
+//						+ "Avviane uno nuovo per continuare."));
 //		
 //		}
+//	return false;
 //	}
+
+	// metodo che mette in pausa tutti i contatori attivi
+	public void pauseOtherTimers() {
+
+		List<Contatore> allContatori = repositContatore.findAll();
+
+		allContatori.forEach(n -> {
+			if ((n.getPause() == null) && (n.getStop()== null )
+					|| (n.getRestart() != null) && (n.getRestart().isAfter(n.getPause()))) {
+				n.setPause(LocalDateTime.now());
+				Long FinalTimeSeconds = n.getStart().until(n.getPause(), ChronoUnit.SECONDS);
+				n.setFinaltime(FinalTimeSeconds);
+				repositContatore.save(n);
+				
+
+			}
+		
+		});
+
+	}
 
 }

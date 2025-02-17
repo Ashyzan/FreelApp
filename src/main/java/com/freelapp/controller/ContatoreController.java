@@ -86,6 +86,9 @@ public class ContatoreController {
 	    // CONTATORE IS RUN
 	    if (contatoreservice.contatoreIsRun(task, model) != false) {
 
+	    	// metto in pausa gli altri contatori
+	    	contatoreservice.pauseOtherTimers();
+	    	
 		boolean contatoreIsRun = contatoreservice.contatoreIsRun(task, model);
 
 		    LocalDateTime restartTime = task.getContatore().getRestart();
@@ -172,6 +175,9 @@ public class ContatoreController {
 
 	    // associo al task il nuovo contatore
 	    task.setContatore(contatore);
+	    
+	 // metto in pausa gli altri contatori
+    	contatoreservice.pauseOtherTimers();
 
 	    // eseguo il TIMESTAMP
 	    contatore.setStart(LocalDateTime.now());
