@@ -37,8 +37,16 @@ public class FreelappRestController {
 		String logoCliente = task.getProgetto().getCliente().getLogoPath();
 		
 		LocalDate chiusuraStimata = task.getDataChiusuraStimata();
+
+		Long finalTime = 0l;
+		
+		if(task.getContatore() != null && task.getContatore().getFinaltime() != null) {
+			
+			finalTime = task.getContatore().getFinaltime();
+			
+		}
 	
-		Optional<RestTask> restTask = Optional.of(new RestTask(nome, progetto, cliente, logoCliente, chiusuraStimata));
+		Optional<RestTask> restTask = Optional.of(new RestTask(nome, progetto, cliente, logoCliente, chiusuraStimata, finalTime));
 	
 		return restTask;
 	}

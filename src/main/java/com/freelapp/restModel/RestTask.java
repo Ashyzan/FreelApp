@@ -14,13 +14,16 @@ public class RestTask {
 	
 	private LocalDate chiusuraStimata;
 	
-	public RestTask(String nome, String progetto, String cliente, String logoCliente, LocalDate chiusuraStimata) {
+	private Long finalTime;
+	
+	public RestTask(String nome, String progetto, String cliente, String logoCliente, LocalDate chiusuraStimata, Long finalTime) {
 		super();
 		this.nome = nome;
 		this.progetto = progetto;
 		this.cliente = cliente;
 		this.logoCliente = logoCliente;
 		this.chiusuraStimata = chiusuraStimata;
+		this.finalTime = finalTime;
 	}
 
 	public String getNome() {
@@ -61,6 +64,14 @@ public class RestTask {
 
 	public void setChiusuraStimata(LocalDate chiusuraStimata) {
 		this.chiusuraStimata = chiusuraStimata;
+	}
+
+	public Long getFinalTime() {
+		return finalTime;
+	}
+
+	public void setFinalTime(Long finalTime) {
+		this.finalTime = finalTime;
 	}
 	
 }

@@ -5,6 +5,7 @@ const timerRapidButton = document.getElementById('timerRapidButton');
 const modalTimerRapidCloseButton = document.getElementById('modalTimerRapidCloseButton');
 const taskResumeTable = document.getElementById('taskResumeTable');		
 const formTask = document.getElementById('form-task-select');
+const timerResumeTask = document.getElementById('timerResumeTask');
 
 //da cambiare con url definitivo
 const api_url= 'http://localhost:8080/api/task/'
@@ -37,16 +38,14 @@ document.getElementById('form-select-input').addEventListener("change", (event) 
 async function getJsonTask(id){
 	const response = await fetch(api_url+id);
 	const data = await response.json();
-		console.log("nome: " + data.nome);
-	document.getElementById('taskNome').textContent = data.nome;
-		console.log("progetto: " + data.progetto);
-	document.getElementById('taskProgetto').textContent = data.progetto;
-		console.log("cliente: " + data.cliente);
-	document.getElementById('taskCliente').textContent = data.cliente;
-		console.log("logoCliente: " + data.logoCliente);
-	document.getElementById('taskLogoPath').src = data.logoCliente;
-		console.log("chiusuraStimata: " + data.chiusuraStimata);
-	document.getElementById('taskChiusuraStimata').textContent = data.chiusuraStimata;
+		
+	document.getElementById('taskNome').textContent = data.nome;	
+	document.getElementById('taskProgetto').textContent = data.progetto;	
+	document.getElementById('taskCliente').textContent = data.cliente;	
+	document.getElementById('taskLogoPath').src = data.logoCliente;	
+	document.getElementById('taskChiusuraStimata').textContent = data.chiusuraStimata;	
+	stampaContatore(data.finalTime)
+	//document.getElementById('timerResumeTask').textContent = data.finalTime;
 }
 
 function recapTask(event){
@@ -69,4 +68,15 @@ function recapTask(event){
 	const formStartContatore = document.getElementById('form-start-contatore');
 	formStartContatore.action = `/start/${valueInput}`;
 
+}
+
+function stampaContatore(finalTime){
+	let hours = finalTime/3600;
+	console.log("ore: " + hours)
+	let minutes = (finalTime % 3600) / 60;
+	console.log("minuti: " + minutes)
+	let seconds = (minutes - Math.floor(minutes)) * 60;
+	console.log("secondi: " + seconds)
+	//document.getElementById('timerResumeTask').textContent = `ciao`
+	document.getElementById('timerResumeTask').innerHTML = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);
 }
