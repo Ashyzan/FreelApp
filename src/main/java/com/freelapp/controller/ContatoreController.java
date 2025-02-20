@@ -28,6 +28,10 @@ public class ContatoreController {
 
     @Autowired
     private ContatoreRepository repositContatore;
+    
+    public static Contatore contatoreInUso;
+    
+    public static Task taskInUso;
 
     @GetMapping("/Contatore/timer/{id}")
     public String gestioneTimer(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
@@ -203,6 +207,9 @@ public class ContatoreController {
 	    contatoreservice.contatoreIsRun(task, model);
 
 	}
+
+	contatoreInUso = contatore;
+	taskInUso = task;
 
 	return "/Contatore/timer";
 

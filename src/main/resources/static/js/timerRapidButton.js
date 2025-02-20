@@ -72,11 +72,7 @@ function recapTask(event){
 
 function stampaContatore(finalTime){
 	let hours = finalTime/3600;
-	console.log("ore: " + hours)
 	let minutes = (finalTime % 3600) / 60;
-	console.log("minuti: " + minutes)
 	let seconds = (minutes - Math.floor(minutes)) * 60;
-	console.log("secondi: " + seconds)
-	//document.getElementById('timerResumeTask').textContent = `ciao`
 	document.getElementById('timerResumeTask').innerHTML = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);
 }
