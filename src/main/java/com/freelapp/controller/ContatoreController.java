@@ -36,6 +36,7 @@ public class ContatoreController {
     @GetMapping("/Contatore/timer/{id}")
     public String gestioneTimer(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
 	    Model model, BindingResult bindingresult) {
+    	
 
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
@@ -84,8 +85,10 @@ public class ContatoreController {
 
     @PostMapping("/start/{id}")
     public String startContatore(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
+    		// l'endpoint passato dal model serve a far ritornare sulla pagina di partenza dopo aver cliccato su start
+    		@ModelAttribute("endPoint") String endPoint,
 	    Model model, BindingResult bindingresult) {
-
+    	
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
 
@@ -211,12 +214,16 @@ public class ContatoreController {
 	contatoreInUso = contatore;
 	taskInUso = task;
 
-	return "/Contatore/timer";
+//	return "/Contatore/timer";
+	return "redirect:" + endPoint;
 
     }
 
     @PostMapping("/Contatore/pause/{id}")
-    public String pauseContatore(@PathVariable("id") Integer taskId, Model model) {
+    public String pauseContatore(@PathVariable("id") Integer taskId,
+    		// l'endpoint passato dal model serve a far ritornare sulla pagina di partenza dopo aver cliccato su pause
+    		@ModelAttribute("endPoint") String endPoint,
+    		Model model) {
 
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
@@ -303,11 +310,14 @@ public class ContatoreController {
 	    model.addAttribute("finaltime", FinalTime);
 	}
 
-	return "/Contatore/timer";
+//	return "/Contatore/timer";
+	return "redirect:" + endPoint;
     }
 
     @PostMapping("/Contatore/stop/{id}")
-    public String stopContatore(@PathVariable("id") Integer taskId, Model model) {
+    public String stopContatore(@PathVariable("id") Integer taskId, 
+    		Model model) {
+    	
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
 
@@ -415,11 +425,16 @@ public class ContatoreController {
 
 	}
 
-	return "/Contatore/timer";
+	contatoreInUso = null;
+	taskInUso = null;
+//	return "/Contatore/timer";
+	return "redirect:/Task/" + task.getId();
     }
 
     @PostMapping("/Contatore/reset/{id}")
-    public String resetContatore(@PathVariable("id") Integer taskId) {
+    public String resetContatore(@PathVariable("id") Integer taskId,
+    		// l'endpoint passato dal model serve a far ritornare sulla pagina di partenza dopo aver cliccato su start
+    		@ModelAttribute("endPoint") String endPoint) {
 
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
@@ -444,10 +459,14 @@ public class ContatoreController {
     }
     
     @PostMapping("/Contatore/inserthours/{id}")
-    public String insertHours(@PathVariable("id") Integer taskId, Model model) {
+    public String insertHours(@PathVariable("id") Integer taskId,
+    		// l'endpoint passato dal model serve a far ritornare sulla pagina di partenza dopo aver cliccato su RESTART
+    		@ModelAttribute("endPoint") String endPoint,
+    		Model model) {
 	
 	Task task = repositTask.getReferenceById(taskId);
 	
-	return "/Contatore/timer";
+//	return "/Contatore/timer";
+	return "redirect:" + endPoint;
     }
 }

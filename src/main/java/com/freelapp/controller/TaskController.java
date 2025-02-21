@@ -1,5 +1,6 @@
 package com.freelapp.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import com.freelapp.repository.ProgettoRepository;
 //import com.freelapp.model.Stato;
 //import com.freelapp.repository.StatoRepository;
 import com.freelapp.repository.TaskRepository;
+import com.freelapp.service.ContatoreService;
 import com.freelapp.service.TaskService;
 
 import jakarta.validation.Valid;
@@ -35,6 +37,9 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+    
+    @Autowired
+    private ContatoreService contatoreservice;
 
 //	@Autowired
 //	private StatoRepository repositStato;
@@ -98,6 +103,16 @@ public class TaskController {
     @GetMapping("/Task/{id}")
     public String descrizioneTask(@PathVariable("id") int taskId, Model model) {
 
+//  passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+    String endPoint = "/Task/";
+    model.addAttribute("endPoint", endPoint);
+    
+    contatoreservice.importContatoreInGet(model);
+    
+    
+	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+    	
 	model.addAttribute("task", repositTask.getReferenceById(taskId));
 
 	return "/Task/freelapp-descrizioneTask";
@@ -189,6 +204,16 @@ public class TaskController {
 
 	Task formTask = repositTask.getReferenceById(id);
 	model.addAttribute("formTask", formTask);
+	
+	//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+    String endPoint = "/Task/edit/";
+    model.addAttribute("endPoint", endPoint);
+    
+    contatoreservice.importContatoreInGet(model);
+    
+    
+	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+	model.addAttribute("taskInUso", ContatoreController.taskInUso);
 
 	return "/Task/freelapp-editTask";
     }

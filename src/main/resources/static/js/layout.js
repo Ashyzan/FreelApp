@@ -14,6 +14,12 @@ const modalDelete =document.getElementById('modalDelete');
 const deleteButton = document.getElementById('deleteButton');
 const modalDeleteCloseButton = document.getElementById('modalDeleteCloseButton');
 
+
+//recupero elementi dal DOM per modalSTOP
+const modalStopButton = document.getElementById('modalStopButton');
+const stopButtonBottom = document.getElementById('stopButtonBottom');
+const stopButtonTop = document.getElementById('stopButtonTop');
+const modalStopCloseButton = document.getElementById('modalStopCloseButton')
   
 // funzioni per navBar 		
 function onToggleMenu(e){
@@ -36,29 +42,54 @@ function onToggleOptionsDesktop(e){
 // funzioni per modale
 
 //apertura modalDelete
-deleteButton.addEventListener('click', function(){
-	modalDelete.classList.remove('scale-0');
-})
+if(deleteButton != null){
+	deleteButton.addEventListener('click', function(){
+		modalDelete.classList.remove('scale-0');
+	})	
+}
 
 //chiusura modalDelete
-modalDeleteCloseButton.addEventListener('click', function(){
-	modalDelete.classList.add('scale-0');
-})
+if(modalDeleteCloseButton != null){
+	modalDeleteCloseButton.addEventListener('click', function(){
+		modalDelete.classList.add('scale-0');
+	})	
+}
 
 
 
 //chiusura modale nuovoProgetto
-modalCloseButton.addEventListener('click', function(){
-	closeModal()
-})
+if(modalCloseButton != null){
+	modalCloseButton.addEventListener('click', function(){
+		closeModal()
+	})	
+}
 
 //apertura modale nuovoProgetto
-nuovoProgettoButton.addEventListener('click', function(){
-	openModal()
-})
+if(nuovoProgettoButton != null){
+	nuovoProgettoButton.addEventListener('click', function(){
+		openModal()
+	})	
+}
 
+//apertura modale STOP BUTTON top
+if(stopButtonTop != null){
+	stopButtonTop.addEventListener('click', function(){
+		modalStopButton.classList.remove('scale-0');
+	})
+}
+//apertura modale STOP BUTTON bottom
+if(stopButtonBottom != null){
+	stopButtonBottom.addEventListener('click', function(){
+		modalStopButton.classList.remove('scale-0');
+	})	
+}
 
-
+//chiusura modale STOP BUTTON
+if(modalStopCloseButton != null){
+	modalStopCloseButton.addEventListener('click', function(){
+		modalStopButton.classList.add('scale-0')
+	})	
+}
 
 //funzione per aprire la modale
 function openModal(){
