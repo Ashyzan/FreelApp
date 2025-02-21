@@ -7,6 +7,9 @@ const taskResumeTable = document.getElementById('taskResumeTable');
 const formTask = document.getElementById('form-task-select');
 const timerResumeTask = document.getElementById('timerResumeTask');
 
+//id del task in uso
+let taskAttualmenteInUso = 0;
+
 //da cambiare con url definitivo
 const api_url= 'http://localhost:8080/api/task/'
 
@@ -43,8 +46,11 @@ async function getJsonTask(id){
 	document.getElementById('taskProgetto').textContent = data.progetto;	
 	document.getElementById('taskCliente').textContent = data.cliente;	
 	document.getElementById('taskLogoPath').src = data.logoCliente;	
-	document.getElementById('taskChiusuraStimata').textContent = data.chiusuraStimata;	
-	stampaContatore(data.finalTime)
+	document.getElementById('taskChiusuraStimata').textContent = data.chiusuraStimata;
+	//taskAttualmenteInUso = data.taskAttualmenteInUso;	
+	
+		stampaContatore(data.finalTime, data.taskAttualmenteInUso)
+			
 	//document.getElementById('timerResumeTask').textContent = data.finalTime;
 }
 
@@ -60,6 +66,8 @@ function recapTask(event){
 		taskResumeTable.classList.add('hidden')
 	}
 	
+	
+	
 	// assegna endpoint dettaglio task in base al task scelto
 	const taskDetailHref = document.getElementById('taskDetailHref')
 	taskDetailHref.href = `/Task/${valueInput}`;
@@ -70,9 +78,14 @@ function recapTask(event){
 
 }
 
-function stampaContatore(finalTime){
-	let hours = finalTime/3600;
-	let minutes = (finalTime % 3600) / 60;
-	let seconds = (minutes - Math.floor(minutes)) * 60;
-	document.getElementById('timerResumeTask').innerHTML = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);
+function stampaContatore(finalTime,taskAttualmenteInUso){
+	const valueInput = document.getElementById('form-select-input').value;
+	if(taskAttualmenteInUso == valueInput){
+		document.getElementById('timerResumeTask').textContent = "Task in corso"
+	} else{
+		let hours = finalTime/3600;
+		let minutes = (finalTime % 3600) / 60;
+		let seconds = (minutes - Math.floor(minutes)) * 60;
+		document.getElementById('timerResumeTask').innerHTML = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);				
+	}
 }

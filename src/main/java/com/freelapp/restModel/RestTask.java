@@ -16,7 +16,9 @@ public class RestTask {
 	
 	private Long finalTime;
 	
-	public RestTask(String nome, String progetto, String cliente, String logoCliente, LocalDate chiusuraStimata, Long finalTime) {
+	private Integer taskAttualmenteInUso;
+	
+	public RestTask(String nome, String progetto, String cliente, String logoCliente, LocalDate chiusuraStimata, Long finalTime, Integer taskAttualmenteInUso) {
 		super();
 		this.nome = nome;
 		this.progetto = progetto;
@@ -24,6 +26,7 @@ public class RestTask {
 		this.logoCliente = logoCliente;
 		this.chiusuraStimata = chiusuraStimata;
 		this.finalTime = finalTime;
+		this.taskAttualmenteInUso = taskAttualmenteInUso;
 	}
 
 	public String getNome() {
@@ -72,6 +75,14 @@ public class RestTask {
 
 	public void setFinalTime(Long finalTime) {
 		this.finalTime = finalTime;
+	}
+
+	public Integer getTaskAttualmenteInUso() {
+		return taskAttualmenteInUso;
+	}
+
+	public void setTaskAttualmenteInUso(Integer taskAttualmenteInUso) {
+		this.taskAttualmenteInUso = taskAttualmenteInUso;
 	}
 	
 }
