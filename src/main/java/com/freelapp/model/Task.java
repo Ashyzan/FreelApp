@@ -39,8 +39,7 @@ public class Task{
 		
 	@Column(name = "DataInizio", nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-
-	@NotNull(message = "Inserimento data di inizio obbligatorio")
+	@NotNull(message = "data inserimento task obbligatoria")
 	private LocalDate dataInizio;
 	
 	@Column(name = "DataChiusuraStimata")
