@@ -36,27 +36,33 @@ function onToggleOptionsDesktop(e){
 // funzioni per modale
 
 //apertura modalDelete
-deleteButton.addEventListener('click', function(){
+if (deleteButton != null) {
+	deleteButton.addEventListener('click', function(){
 	modalDelete.classList.remove('scale-0');
 })
+} 
 
 //chiusura modalDelete
+if (modalDeleteCloseButton != null) {
 modalDeleteCloseButton.addEventListener('click', function(){
 	modalDelete.classList.add('scale-0');
 })
-
+}
 
 
 //chiusura modale nuovoProgetto
+if (modalCloseButton != null) {
 modalCloseButton.addEventListener('click', function(){
 	closeModal()
 })
+}
 
 //apertura modale nuovoProgetto
+if (nuovoProgettoButton != null) {
 nuovoProgettoButton.addEventListener('click', function(){
 	openModal()
 })
-
+}
 
 
 
