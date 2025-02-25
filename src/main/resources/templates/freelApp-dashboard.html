@@ -277,7 +277,7 @@
 												</svg>
 											</button>
 									</div>
-									<div th:if="${taskInUso == null || contatoreIsRun == false}" class="w-8 h-8">
+									<div th:if="${taskInUso == null}" class="w-8 h-8">
 										<svg width="90%" height="90%" viewBox="0 0 200 200" version="1.1"
 											xmlns="http://www.w3.org/2000/svg"
 											xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
@@ -295,7 +295,7 @@
 											</g>
 										</svg>
 									</div>
-									<div th:if="${taskInUso != null && contatoreIsRun == true}" class="w-8 h-8">
+									<div th:unless="${taskInUso == null}" class="w-8 h-8">
 										<div th:if="${!contatoreIsRun}">
 											<svg width="90%" height="90%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg"
 												xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
