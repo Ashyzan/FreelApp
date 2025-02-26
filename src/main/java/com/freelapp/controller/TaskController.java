@@ -78,13 +78,13 @@ public class TaskController {
 	if(currentPage != 0) {
 		String endPoint = "/Task/page/" + currentPage;
 		
+		contatoreservice.importContatoreInGet(model);
 		model.addAttribute("endPoint", endPoint);						
 	} else {
 		String endPoint = "/Task";
 		model.addAttribute("endPoint", endPoint);	
 	}
 	
-	contatoreservice.importContatoreInGet(model);
 	//passo al model i contatore e task in uso (gli static)
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);
