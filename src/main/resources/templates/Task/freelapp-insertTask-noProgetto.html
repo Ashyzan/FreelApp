@@ -27,9 +27,9 @@
 	        }
 	      </style>
 	
-    <title>FreelApp</title>
+   <title id="timerTitolo">FreelApp</title>
 </head>
-<body class="font-sans" style="width: 100vw; height: 100vh;">
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart()">
 <header>
   <nav id="navbar" class="flex justify-between items-center w-full h-fit md:px-1 md:py-0 p-2 mb-[2px] bg-[#0057A5] font-bold  text-sm text-white">
     <div id="icona" class="col-auto">
@@ -38,7 +38,7 @@
     <div class="nav-bar md:static absolute bg-[#0057A5] min-h-[60vh] md:min-h-fit md:w-auto w-full left-0 top-[-100%] flex items-center">
       <ul class="flex flex-col md:flex-row p-3 md:items-center">
         <li class="md:mx-4 py-5 md:py-0 hover:text-gray-400">
-          <a class="flex items-center pointer-events-none" >
+          <a th:href="@{/dashboard}" class="flex items-center" >
             <span class="px-2">
               <svg width="30px" height="30px" viewBox="0 0 200 200" version="1.1" >
                 <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
@@ -124,73 +124,209 @@
             <span class="pt-1">ESCI</span>
           </a>
         </li>
-        <li class="max-lg:hidden">
-          <div class="w-full h-fit border-4 border-[#FFE541] bg-white rounded-[30px] p-2 py-1">
-            <div class="flex items-center text-[#0057A5] font-bold">
-              <div class="col-auto w-8 h-8 ms-2">
-                <svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-                  <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
-                  <clipPath id="_clip1">
-                      <rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"/>
-                  </clipPath>
-                  <g clip-path="url(#_clip1)">
-                      <g id="stopwatch" transform="matrix(10.4707,0,0,10.4707,-10.6128,0)">
-                          <path d="M7.376,6.745C6.929,7.02 8.573,10.987 8.974,11.633C9.324,12.202 10.067,12.375 10.632,12.027C11.2,11.675 11.377,10.933 11.027,10.367C10.63,9.719 7.822,6.469 7.376,6.745ZM7.041,2.402C7.969,2.079 8.963,1.9 10,1.9C11.037,1.9 12.031,2.079 12.959,2.402C13.288,2.516 13.724,2.287 13.531,1.791C13.39,1.431 13.254,1.079 13.199,0.936C13.068,0.597 12.599,0.317 12.395,0.271C11.623,0.097 10.823,0 10,0C9.177,0 8.377,0.097 7.604,0.271C7.4,0.317 6.932,0.597 6.801,0.936C6.746,1.079 6.609,1.431 6.469,1.791C6.276,2.287 6.712,2.517 7.041,2.402ZM19.098,3.186C18.906,2.956 18.702,2.731 18.485,2.514C18.269,2.297 18.044,2.094 17.815,1.901C17.662,1.772 17.212,1.667 16.927,1.952C16.643,2.237 15.279,3.599 15.279,3.599C15.681,3.887 16.072,4.204 16.434,4.565C16.796,4.926 17.111,5.317 17.4,5.72C17.4,5.72 18.763,4.358 19.047,4.073C19.333,3.787 19.228,3.338 19.098,3.186ZM10,2.9C5.525,2.9 1.899,6.526 1.899,11C1.899,15.475 5.525,19.101 10,19.101C14.473,19.101 18.1,15.475 18.1,11C18.1,6.527 14.473,2.9 10,2.9ZM10,17.101C6.632,17.101 3.9,14.37 3.9,11.001C3.9,7.632 6.631,4.901 10,4.901C13.369,4.901 16.101,7.632 16.101,11.001C16.101,14.369 13.369,17.101 10,17.101Z" style="fill:rgb(45, 87, 166);fill-rule:nonzero;"/>
-                      </g>
-                  </g>
-                </svg>            
-              </div>
-              <div class="flex flex-col items-center w-[100px]">
-                <div class=" text-[10px] p-0">Task xyz</div>
-                <div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
-              </div>
-              <div class="col-auto flex items-center px-2">
-                <div class="w-8 h-8 ">
-                  <button type="button" onclick="stop(this)">
-                    <svg width="90%" height="90%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-                      <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
-                      <clipPath id="_clip1">
-                          <rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"/>
-                      </clipPath>
-                      <g clip-path="url(#_clip1)">
-                          <g id="stop-circle" transform="matrix(0.403226,0,0,0.403226,-3.22581,-3.22581)">
-                              <path d="M256,8C119,8 8,119 8,256C8,393 119,504 256,504C393,504 504,393 504,256C504,119 393,8 256,8ZM352,336C352,344.8 344.8,352 336,352L176,352C167.2,352 160,344.8 160,336L160,176C160,167.2 167.2,160 176,160L336,160C344.8,160 352,167.2 352,176L352,336Z" style="fill:rgb(45, 87, 166);fill-rule:nonzero;"/>
-                          </g>
-                      </g>
-                  </svg>
-                  </button>
-                </div>
-                <div class="w-8 h-8">
-                  <button type="button" onclick="pause(this)">
-                    <svg width="90%" height="90%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-                      <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
-                      <g id="Tavola-da-disegno11" serif:id="Tavola da disegno1">
-                          <g id="_279-pause" serif:id="279-pause" transform="matrix(12.5,0,0,12.5,3.55271e-15,1.24345e-14)">
-                              <path d="M8,0C3.582,0 0,3.582 0,8C0,12.418 3.582,16 8,16C12.418,16 16,12.418 16,8C16,3.582 12.418,0 8,0ZM8,14.5C4.41,14.5 1.5,11.59 1.5,8C1.5,4.41 4.41,1.5 8,1.5C11.59,1.5 14.5,4.41 14.5,8C14.5,11.59 11.59,14.5 8,14.5ZM5,5L7,5L7,11L5,11L5,5ZM9,5L11,5L11,11L9,11L9,5Z" style="fill:rgb(45, 87, 166);fill-rule:nonzero;"/>
-                          </g>
-                      </g>
-                    </svg>
-                  </button>
-                </div>
-                <div class="w-8 h-8">
-                  <button type="button" th:onclick="start(this)">
-                    <svg width="90%" height="90%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-                      <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
-                      <clipPath id="_clip1">
-                          <rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"/>
-                      </clipPath>
-                      <g clip-path="url(#_clip1)">
-                          <g id="play-circle" transform="matrix(0.403226,0,0,0.403226,-3.22581,-3.22581)">
-                              <path d="M256,8C119,8 8,119 8,256C8,393 119,504 256,504C393,504 504,393 504,256C504,119 393,8 256,8ZM371.7,280L195.7,381C179.9,389.8 160,378.5 160,360L160,152C160,133.6 179.8,122.2 195.7,131L371.7,238C388.1,247.2 388.1,270.9 371.7,280Z" style="fill:rgb(45, 87, 166);fill-rule:nonzero;"/>
-                          </g>
-                      </g>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
+	<li class="max-lg:hidden">
+		<div class="w-full h-fit border-4 border-[#FFE541] bg-white rounded-[30px] p-2 py-1">
+			<div class="flex items-center text-[#0057A5] font-bold">
+				<div class="col-auto w-8 h-8 ms-2">
+					<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg"
+						xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
+						style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+						<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"
+							style="fill:none;" />
+						<clipPath id="_clip1">
+							<rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+								height="200" />
+						</clipPath>
+						<g clip-path="url(#_clip1)">
+							<g id="stopwatch" transform="matrix(10.4707,0,0,10.4707,-10.6128,0)">
+								<path
+									d="M7.376,6.745C6.929,7.02 8.573,10.987 8.974,11.633C9.324,12.202 10.067,12.375 10.632,12.027C11.2,11.675 11.377,10.933 11.027,10.367C10.63,9.719 7.822,6.469 7.376,6.745ZM7.041,2.402C7.969,2.079 8.963,1.9 10,1.9C11.037,1.9 12.031,2.079 12.959,2.402C13.288,2.516 13.724,2.287 13.531,1.791C13.39,1.431 13.254,1.079 13.199,0.936C13.068,0.597 12.599,0.317 12.395,0.271C11.623,0.097 10.823,0 10,0C9.177,0 8.377,0.097 7.604,0.271C7.4,0.317 6.932,0.597 6.801,0.936C6.746,1.079 6.609,1.431 6.469,1.791C6.276,2.287 6.712,2.517 7.041,2.402ZM19.098,3.186C18.906,2.956 18.702,2.731 18.485,2.514C18.269,2.297 18.044,2.094 17.815,1.901C17.662,1.772 17.212,1.667 16.927,1.952C16.643,2.237 15.279,3.599 15.279,3.599C15.681,3.887 16.072,4.204 16.434,4.565C16.796,4.926 17.111,5.317 17.4,5.72C17.4,5.72 18.763,4.358 19.047,4.073C19.333,3.787 19.228,3.338 19.098,3.186ZM10,2.9C5.525,2.9 1.899,6.526 1.899,11C1.899,15.475 5.525,19.101 10,19.101C14.473,19.101 18.1,15.475 18.1,11C18.1,6.527 14.473,2.9 10,2.9ZM10,17.101C6.632,17.101 3.9,14.37 3.9,11.001C3.9,7.632 6.631,4.901 10,4.901C13.369,4.901 16.101,7.632 16.101,11.001C16.101,14.369 13.369,17.101 10,17.101Z"
+									style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+							</g>
+						</g>
+					</svg>
+				</div>
+				<div th:if="${taskInUso == null}" class="flex flex-col items-center w-[100px]">
+					<div th:unless="${contatoreIsTrue}" class=" text-[10px] p-0">...</div>
+					<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}" class=" text-[10px] p-0"></div>
+					<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
+				</div>
+				<a th:unless="${taskInUso == null}" th:href="@{|/Task/${taskInUso.id}|}"
+					class="t-tooltip flex flex-col items-center w-[100px]">
+					<div th:unless="${contatoreIsTrue}" class=" text-[10px] p-0">...</div>
+					<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}" class=" text-[10px] p-0"></div>
+					<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
+					<div
+						class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-40px] mt-[40px]">
+						Dettaglio task
+					</div>
+				</a>
+				<div class="col-auto flex items-center px-2">
+					<div th:if="${taskInUso == null}" class="w-8 h-8">
+						<svg width="90%" height="90%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg"
+							xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
+							xmlns:serif="http://www.serif.com/"
+							style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+							<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"
+								style="fill:none;" />
+							<clipPath id="_clip1">
+								<rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+									height="200" />
+							</clipPath>
+							<g clip-path="url(#_clip1)">
+								<g id="stop-circle" transform="matrix(0.403226,0,0,0.403226,-3.22581,-3.22581)">
+									<path
+										d="M256,8C119,8 8,119 8,256C8,393 119,504 256,504C393,504 504,393 504,256C504,119 393,8 256,8ZM352,336C352,344.8 344.8,352 336,352L176,352C167.2,352 160,344.8 160,336L160,176C160,167.2 167.2,160 176,160L336,160C344.8,160 352,167.2 352,176L352,336Z"
+										style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+								</g>
+							</g>
+						</svg>
+					</div>
+					<div th:unless="${taskInUso == null}" class="w-8 h-8">
+						<button id="stopButtonTop" type="button" class="hover:opacity-75">
+							<svg width="90%" height="90%" viewBox="0 0 200 200" version="1.1"
+								xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+								xml:space="preserve" xmlns:serif="http://www.serif.com/"
+								style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+								<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+									height="200" style="fill:none;" />
+								<clipPath id="_clip1">
+									<rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+										height="200" />
+								</clipPath>
+								<g clip-path="url(#_clip1)">
+									<g id="stop-circle" transform="matrix(0.403226,0,0,0.403226,-3.22581,-3.22581)">
+										<path
+											d="M256,8C119,8 8,119 8,256C8,393 119,504 256,504C393,504 504,393 504,256C504,119 393,8 256,8ZM352,336C352,344.8 344.8,352 336,352L176,352C167.2,352 160,344.8 160,336L160,176C160,167.2 167.2,160 176,160L336,160C344.8,160 352,167.2 352,176L352,336Z"
+											style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+									</g>
+								</g>
+							</svg>
+						</button>
+					</div>
+					<div th:if="${taskInUso == null}" class="w-8 h-8">
+						<svg width="90%" height="90%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg"
+							xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
+							xmlns:serif="http://www.serif.com/"
+							style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+							<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"
+								style="fill:none;" />
+							<g id="Tavola-da-disegno11" serif:id="Tavola da disegno1">
+								<g id="_279-pause" serif:id="279-pause"
+									transform="matrix(12.5,0,0,12.5,3.55271e-15,1.24345e-14)">
+									<path
+										d="M8,0C3.582,0 0,3.582 0,8C0,12.418 3.582,16 8,16C12.418,16 16,12.418 16,8C16,3.582 12.418,0 8,0ZM8,14.5C4.41,14.5 1.5,11.59 1.5,8C1.5,4.41 4.41,1.5 8,1.5C11.59,1.5 14.5,4.41 14.5,8C14.5,11.59 11.59,14.5 8,14.5ZM5,5L7,5L7,11L5,11L5,5ZM9,5L11,5L11,11L9,11L9,5Z"
+										style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+								</g>
+							</g>
+						</svg>
+					</div>
+					<div th:unless="${taskInUso == null}" class="w-8 h-8">
+						<div th:if="${!contatoreIsRun}">
+							<svg width="90%" height="90%" viewBox="0 0 200 200" version="1.1"
+								xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+								xml:space="preserve" xmlns:serif="http://www.serif.com/"
+								style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+								<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+									height="200" style="fill:none;" />
+								<g id="Tavola-da-disegno11" serif:id="Tavola da disegno1">
+									<g id="_279-pause" serif:id="279-pause"
+										transform="matrix(12.5,0,0,12.5,3.55271e-15,1.24345e-14)">
+										<path
+											d="M8,0C3.582,0 0,3.582 0,8C0,12.418 3.582,16 8,16C12.418,16 16,12.418 16,8C16,3.582 12.418,0 8,0ZM8,14.5C4.41,14.5 1.5,11.59 1.5,8C1.5,4.41 4.41,1.5 8,1.5C11.59,1.5 14.5,4.41 14.5,8C14.5,11.59 11.59,14.5 8,14.5ZM5,5L7,5L7,11L5,11L5,5ZM9,5L11,5L11,11L9,11L9,5Z"
+											style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+									</g>
+								</g>
+							</svg>
+						</div>
+						<div th:if="${contatoreIsRun}">
+							<button id="modalPauseTopButton" type="submit" class="hover:opacity-75">
+								<svg width="90%" height="90%" viewBox="0 0 200 200" version="1.1"
+									xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+									xml:space="preserve" xmlns:serif="http://www.serif.com/"
+									style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+									<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+										height="200" style="fill:none;" />
+									<g id="Tavola-da-disegno11" serif:id="Tavola da disegno1">
+										<g id="_279-pause" serif:id="279-pause"
+											transform="matrix(12.5,0,0,12.5,3.55271e-15,1.24345e-14)">
+											<path
+												d="M8,0C3.582,0 0,3.582 0,8C0,12.418 3.582,16 8,16C12.418,16 16,12.418 16,8C16,3.582 12.418,0 8,0ZM8,14.5C4.41,14.5 1.5,11.59 1.5,8C1.5,4.41 4.41,1.5 8,1.5C11.59,1.5 14.5,4.41 14.5,8C14.5,11.59 11.59,14.5 8,14.5ZM5,5L7,5L7,11L5,11L5,5ZM9,5L11,5L11,11L9,11L9,5Z"
+												style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+										</g>
+									</g>
+								</svg>
+							</button>
+						</div>
+					</div>
+					<div th:if="${taskInUso == null}" class="w-8 h-8">
+						<svg width="90%" height="90%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg"
+							xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
+							xmlns:serif="http://www.serif.com/"
+							style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+							<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"
+								style="fill:none;" />
+							<clipPath id="_clip1">
+								<rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+									height="200" />
+							</clipPath>
+							<g clip-path="url(#_clip1)">
+								<g id="play-circle" transform="matrix(0.403226,0,0,0.403226,-3.22581,-3.22581)">
+									<path
+										d="M256,8C119,8 8,119 8,256C8,393 119,504 256,504C393,504 504,393 504,256C504,119 393,8 256,8ZM371.7,280L195.7,381C179.9,389.8 160,378.5 160,360L160,152C160,133.6 179.8,122.2 195.7,131L371.7,238C388.1,247.2 388.1,270.9 371.7,280Z"
+										style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+								</g>
+							</g>
+						</svg>
+					</div>
+					<div th:unless="${taskInUso == null}" class="w-8 h-8">
+						<div th:if="${contatoreIsRun}">
+							<svg width="90%" height="90%" viewBox="0 0 200 200" version="1.1"
+								xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+								xml:space="preserve" xmlns:serif="http://www.serif.com/"
+								style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+								<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+									height="200" style="fill:none;" />
+								<clipPath id="_clip1">
+									<rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+										height="200" />
+								</clipPath>
+								<g clip-path="url(#_clip1)">
+									<g id="play-circle" transform="matrix(0.403226,0,0,0.403226,-3.22581,-3.22581)">
+										<path
+											d="M256,8C119,8 8,119 8,256C8,393 119,504 256,504C393,504 504,393 504,256C504,119 393,8 256,8ZM371.7,280L195.7,381C179.9,389.8 160,378.5 160,360L160,152C160,133.6 179.8,122.2 195.7,131L371.7,238C388.1,247.2 388.1,270.9 371.7,280Z"
+											style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+									</g>
+								</g>
+							</svg>
+						</div>
+						<div th:unless="${contatoreIsRun}">
+							<button id="modalStartTopButton" type="submit" class="hover:opacity-75">
+								<svg width="90%" height="90%" viewBox="0 0 200 200" version="1.1"
+									xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+									xml:space="preserve" xmlns:serif="http://www.serif.com/"
+									style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+									<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+										height="200" style="fill:none;" />
+									<clipPath id="_clip1">
+										<rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+											height="200" />
+									</clipPath>
+									<g clip-path="url(#_clip1)">
+										<g id="play-circle" transform="matrix(0.403226,0,0,0.403226,-3.22581,-3.22581)">
+											<path
+												d="M256,8C119,8 8,119 8,256C8,393 119,504 256,504C393,504 504,393 504,256C504,119 393,8 256,8ZM371.7,280L195.7,381C179.9,389.8 160,378.5 160,360L160,152C160,133.6 179.8,122.2 195.7,131L371.7,238C388.1,247.2 388.1,270.9 371.7,280Z"
+												style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+										</g>
+									</g>
+								</svg>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</li>
         <li class="md:mx-4 py-5 md:py-0">
           <button class=" hover:text-gray-400 cursor-pointer md:hidden" onclick="onToggleOptionsMobile(this)">
             <svg width="28px" height="28px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
@@ -565,119 +701,262 @@
 		       </form>	
 		        </div>		
 		</div> 
-      <div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden">
-        <div class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
-          <div class="flex justify-between items-center text-[#0057A5] font-bold">
-            <div class="col-auto w-10 h-10 ms-2">
-              <svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-                <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
-                <clipPath id="_clip1">
-                    <rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"/>
-                </clipPath>
-                <g clip-path="url(#_clip1)">
-                    <g id="stopwatch" transform="matrix(10.4707,0,0,10.4707,-10.6128,0)">
-                        <path d="M7.376,6.745C6.929,7.02 8.573,10.987 8.974,11.633C9.324,12.202 10.067,12.375 10.632,12.027C11.2,11.675 11.377,10.933 11.027,10.367C10.63,9.719 7.822,6.469 7.376,6.745ZM7.041,2.402C7.969,2.079 8.963,1.9 10,1.9C11.037,1.9 12.031,2.079 12.959,2.402C13.288,2.516 13.724,2.287 13.531,1.791C13.39,1.431 13.254,1.079 13.199,0.936C13.068,0.597 12.599,0.317 12.395,0.271C11.623,0.097 10.823,0 10,0C9.177,0 8.377,0.097 7.604,0.271C7.4,0.317 6.932,0.597 6.801,0.936C6.746,1.079 6.609,1.431 6.469,1.791C6.276,2.287 6.712,2.517 7.041,2.402ZM19.098,3.186C18.906,2.956 18.702,2.731 18.485,2.514C18.269,2.297 18.044,2.094 17.815,1.901C17.662,1.772 17.212,1.667 16.927,1.952C16.643,2.237 15.279,3.599 15.279,3.599C15.681,3.887 16.072,4.204 16.434,4.565C16.796,4.926 17.111,5.317 17.4,5.72C17.4,5.72 18.763,4.358 19.047,4.073C19.333,3.787 19.228,3.338 19.098,3.186ZM10,2.9C5.525,2.9 1.899,6.526 1.899,11C1.899,15.475 5.525,19.101 10,19.101C14.473,19.101 18.1,15.475 18.1,11C18.1,6.527 14.473,2.9 10,2.9ZM10,17.101C6.632,17.101 3.9,14.37 3.9,11.001C3.9,7.632 6.631,4.901 10,4.901C13.369,4.901 16.101,7.632 16.101,11.001C16.101,14.369 13.369,17.101 10,17.101Z" style="fill:rgb(45, 87, 166);fill-rule:nonzero;"/>
-                    </g>
-                </g>
-              </svg>            
-            </div>
-            <div class="flex flex-col items-center">
-              <div class="col-auto text-[14px] p-0">Task xyz</div>
-              <div class="col-auto text-[24px] p-0" id="timerDue">00:00:00</div>
-            </div>
-            <div class="col-auto flex items-center">
-              <div class="w-10 h-10 mx-2">
-                <button type="button" onclick="stop(this)">
-                  <svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-                    <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
-                    <clipPath id="_clip1">
-                        <rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"/>
-                    </clipPath>
-                    <g clip-path="url(#_clip1)">
-                        <g id="stop-circle" transform="matrix(0.403226,0,0,0.403226,-3.22581,-3.22581)">
-                            <path d="M256,8C119,8 8,119 8,256C8,393 119,504 256,504C393,504 504,393 504,256C504,119 393,8 256,8ZM352,336C352,344.8 344.8,352 336,352L176,352C167.2,352 160,344.8 160,336L160,176C160,167.2 167.2,160 176,160L336,160C344.8,160 352,167.2 352,176L352,336Z" style="fill:rgb(45, 87, 166);fill-rule:nonzero;"/>
-                        </g>
-                    </g>
-                </svg>
-                </button>
-              </div>
-              <div class="w-10 h-10 mx-2">
-                <button type="button" onclick="pause(this)">
-                  <svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-                    <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
-                    <g id="Tavola-da-disegno11" serif:id="Tavola da disegno1">
-                        <g id="_279-pause" serif:id="279-pause" transform="matrix(12.5,0,0,12.5,3.55271e-15,1.24345e-14)">
-                            <path d="M8,0C3.582,0 0,3.582 0,8C0,12.418 3.582,16 8,16C12.418,16 16,12.418 16,8C16,3.582 12.418,0 8,0ZM8,14.5C4.41,14.5 1.5,11.59 1.5,8C1.5,4.41 4.41,1.5 8,1.5C11.59,1.5 14.5,4.41 14.5,8C14.5,11.59 11.59,14.5 8,14.5ZM5,5L7,5L7,11L5,11L5,5ZM9,5L11,5L11,11L9,11L9,5Z" style="fill:rgb(45, 87, 166);fill-rule:nonzero;"/>
-                        </g>
-                    </g>
-                  </svg>
-                </button>
-              </div>
-              <div class="w-10 h-10 mx-2">
-                <button type="button" onclick="start(this)">
-                  <svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-                    <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
-                    <clipPath id="_clip1">
-                        <rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"/>
-                    </clipPath>
-                    <g clip-path="url(#_clip1)">
-                        <g id="play-circle" transform="matrix(0.403226,0,0,0.403226,-3.22581,-3.22581)">
-                            <path d="M256,8C119,8 8,119 8,256C8,393 119,504 256,504C393,504 504,393 504,256C504,119 393,8 256,8ZM371.7,280L195.7,381C179.9,389.8 160,378.5 160,360L160,152C160,133.6 179.8,122.2 195.7,131L371.7,238C388.1,247.2 388.1,270.9 371.7,280Z" style="fill:rgb(45, 87, 166);fill-rule:nonzero;"/>
-                        </g>
-                    </g>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+		<div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden">
+			<div class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
+				<div class="flex justify-between items-center text-[#0057A5] font-bold">
+					<div class="col-auto w-10 h-10 ms-2">
+						<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg"
+							xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
+							style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+							<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"
+								style="fill:none;" />
+							<clipPath id="_clip1">
+								<rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+									height="200" />
+							</clipPath>
+							<g clip-path="url(#_clip1)">
+								<g id="stopwatch" transform="matrix(10.4707,0,0,10.4707,-10.6128,0)">
+									<path
+										d="M7.376,6.745C6.929,7.02 8.573,10.987 8.974,11.633C9.324,12.202 10.067,12.375 10.632,12.027C11.2,11.675 11.377,10.933 11.027,10.367C10.63,9.719 7.822,6.469 7.376,6.745ZM7.041,2.402C7.969,2.079 8.963,1.9 10,1.9C11.037,1.9 12.031,2.079 12.959,2.402C13.288,2.516 13.724,2.287 13.531,1.791C13.39,1.431 13.254,1.079 13.199,0.936C13.068,0.597 12.599,0.317 12.395,0.271C11.623,0.097 10.823,0 10,0C9.177,0 8.377,0.097 7.604,0.271C7.4,0.317 6.932,0.597 6.801,0.936C6.746,1.079 6.609,1.431 6.469,1.791C6.276,2.287 6.712,2.517 7.041,2.402ZM19.098,3.186C18.906,2.956 18.702,2.731 18.485,2.514C18.269,2.297 18.044,2.094 17.815,1.901C17.662,1.772 17.212,1.667 16.927,1.952C16.643,2.237 15.279,3.599 15.279,3.599C15.681,3.887 16.072,4.204 16.434,4.565C16.796,4.926 17.111,5.317 17.4,5.72C17.4,5.72 18.763,4.358 19.047,4.073C19.333,3.787 19.228,3.338 19.098,3.186ZM10,2.9C5.525,2.9 1.899,6.526 1.899,11C1.899,15.475 5.525,19.101 10,19.101C14.473,19.101 18.1,15.475 18.1,11C18.1,6.527 14.473,2.9 10,2.9ZM10,17.101C6.632,17.101 3.9,14.37 3.9,11.001C3.9,7.632 6.631,4.901 10,4.901C13.369,4.901 16.101,7.632 16.101,11.001C16.101,14.369 13.369,17.101 10,17.101Z"
+										style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+								</g>
+							</g>
+						</svg>
+					</div>
+					<div th:if="${taskInUso == null}" class="flex flex-col items-center">
+						<div th:unless="${contatoreIsTrue}" class="col-auto text-[14px] p-0">...</div>
+						<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}" class="col-auto text-[14px] p-0"></div>
+						<div class="col-auto text-[24px] p-0" id="timerDue">00:00:00</div>
+					</div>
+					<a th:unless="${taskInUso == null}" th:href="@{|/Task/${taskInUso.id}|}"
+						class="t-tooltip relative flex flex-col items-center">
+						<div th:unless="${contatoreIsTrue}" class="col-auto text-[14px] p-0">...</div>
+						<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}" class="col-auto text-[14px] p-0"></div>
+						<div class="col-auto text-[24px] p-0" id="timerDue">00:00:00</div>
+						<div
+							class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-210px] mt-[40px]">
+							Dettaglio task
+						</div>
+					</a>
+					<div class="col-auto flex items-center">
+						<div th:if="${taskInUso == null}" class="w-10 h-10 mx-2">
+							<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1"
+								xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+								xml:space="preserve" xmlns:serif="http://www.serif.com/"
+								style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+								<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"
+									style="fill:none;" />
+								<clipPath id="_clip1">
+									<rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+										height="200" />
+								</clipPath>
+								<g clip-path="url(#_clip1)">
+									<g id="stop-circle" transform="matrix(0.403226,0,0,0.403226,-3.22581,-3.22581)">
+										<path
+											d="M256,8C119,8 8,119 8,256C8,393 119,504 256,504C393,504 504,393 504,256C504,119 393,8 256,8ZM352,336C352,344.8 344.8,352 336,352L176,352C167.2,352 160,344.8 160,336L160,176C160,167.2 167.2,160 176,160L336,160C344.8,160 352,167.2 352,176L352,336Z"
+											style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+									</g>
+								</g>
+							</svg>
+						</div>
+						<div th:unless="${taskInUso == null}" class="w-10 h-10 mx-2">
+							<button id="stopButtonBottom" type="button" class="hover:opacity-75">
+								<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1"
+									xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+									xml:space="preserve" xmlns:serif="http://www.serif.com/"
+									style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+									<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+										height="200" style="fill:none;" />
+									<clipPath id="_clip1">
+										<rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+											height="200" />
+									</clipPath>
+									<g clip-path="url(#_clip1)">
+										<g id="stop-circle" transform="matrix(0.403226,0,0,0.403226,-3.22581,-3.22581)">
+											<path
+												d="M256,8C119,8 8,119 8,256C8,393 119,504 256,504C393,504 504,393 504,256C504,119 393,8 256,8ZM352,336C352,344.8 344.8,352 336,352L176,352C167.2,352 160,344.8 160,336L160,176C160,167.2 167.2,160 176,160L336,160C344.8,160 352,167.2 352,176L352,336Z"
+												style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+										</g>
+									</g>
+								</svg>
+							</button>
+						</div>
+						<div th:if="${taskInUso == null}" class="w-10 h-10 mx-2">
+							<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1"
+								xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+								xml:space="preserve" xmlns:serif="http://www.serif.com/"
+								style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+								<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"
+									style="fill:none;" />
+								<g id="Tavola-da-disegno11" serif:id="Tavola da disegno1">
+									<g id="_279-pause" serif:id="279-pause"
+										transform="matrix(12.5,0,0,12.5,3.55271e-15,1.24345e-14)">
+										<path
+											d="M8,0C3.582,0 0,3.582 0,8C0,12.418 3.582,16 8,16C12.418,16 16,12.418 16,8C16,3.582 12.418,0 8,0ZM8,14.5C4.41,14.5 1.5,11.59 1.5,8C1.5,4.41 4.41,1.5 8,1.5C11.59,1.5 14.5,4.41 14.5,8C14.5,11.59 11.59,14.5 8,14.5ZM5,5L7,5L7,11L5,11L5,5ZM9,5L11,5L11,11L9,11L9,5Z"
+											style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+									</g>
+								</g>
+							</svg>
+						</div>
+						<div th:unless="${taskInUso == null}" class="w-10 h-10 mx-2">
+							<div th:unless="${contatoreIsRun}">
+								<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1"
+									xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+									xml:space="preserve" xmlns:serif="http://www.serif.com/"
+									style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+									<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+										height="200" style="fill:none;" />
+									<g id="Tavola-da-disegno11" serif:id="Tavola da disegno1">
+										<g id="_279-pause" serif:id="279-pause"
+											transform="matrix(12.5,0,0,12.5,3.55271e-15,1.24345e-14)">
+											<path
+												d="M8,0C3.582,0 0,3.582 0,8C0,12.418 3.582,16 8,16C12.418,16 16,12.418 16,8C16,3.582 12.418,0 8,0ZM8,14.5C4.41,14.5 1.5,11.59 1.5,8C1.5,4.41 4.41,1.5 8,1.5C11.59,1.5 14.5,4.41 14.5,8C14.5,11.59 11.59,14.5 8,14.5ZM5,5L7,5L7,11L5,11L5,5ZM9,5L11,5L11,11L9,11L9,5Z"
+												style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+										</g>
+									</g>
+								</svg>
+							</div>
+							<div th:if="${contatoreIsRun}">
+								<button id="modalPauseBottomButton" type="button" class="hover:opacity-75">
+									<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1"
+										xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+										xml:space="preserve" xmlns:serif="http://www.serif.com/"
+										style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+										<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+											height="200" style="fill:none;" />
+										<g id="Tavola-da-disegno11" serif:id="Tavola da disegno1">
+											<g id="_279-pause" serif:id="279-pause"
+												transform="matrix(12.5,0,0,12.5,3.55271e-15,1.24345e-14)">
+												<path
+													d="M8,0C3.582,0 0,3.582 0,8C0,12.418 3.582,16 8,16C12.418,16 16,12.418 16,8C16,3.582 12.418,0 8,0ZM8,14.5C4.41,14.5 1.5,11.59 1.5,8C1.5,4.41 4.41,1.5 8,1.5C11.59,1.5 14.5,4.41 14.5,8C14.5,11.59 11.59,14.5 8,14.5ZM5,5L7,5L7,11L5,11L5,5ZM9,5L11,5L11,11L9,11L9,5Z"
+													style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+											</g>
+										</g>
+									</svg>
+								</button>
+							</div>
+						</div>
+						<div th:if="${taskInUso == null}" class="w-10 h-10 mx-2">
+							<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1"
+								xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+								xml:space="preserve" xmlns:serif="http://www.serif.com/"
+								style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+								<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"
+									style="fill:none;" />
+								<clipPath id="_clip1">
+									<rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+										height="200" />
+								</clipPath>
+								<g clip-path="url(#_clip1)">
+									<g id="play-circle" transform="matrix(0.403226,0,0,0.403226,-3.22581,-3.22581)">
+										<path
+											d="M256,8C119,8 8,119 8,256C8,393 119,504 256,504C393,504 504,393 504,256C504,119 393,8 256,8ZM371.7,280L195.7,381C179.9,389.8 160,378.5 160,360L160,152C160,133.6 179.8,122.2 195.7,131L371.7,238C388.1,247.2 388.1,270.9 371.7,280Z"
+											style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+									</g>
+								</g>
+							</svg>
+						</div>
+						<div th:unless="${taskInUso == null}" class="w-10 h-10 mx-2">
+							<div th:if="${contatoreIsRun}">
+								<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1"
+									xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+									xml:space="preserve" xmlns:serif="http://www.serif.com/"
+									style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+									<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+										height="200" style="fill:none;" />
+									<clipPath id="_clip1">
+										<rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+											height="200" />
+									</clipPath>
+									<g clip-path="url(#_clip1)">
+										<g id="play-circle" transform="matrix(0.403226,0,0,0.403226,-3.22581,-3.22581)">
+											<path
+												d="M256,8C119,8 8,119 8,256C8,393 119,504 256,504C393,504 504,393 504,256C504,119 393,8 256,8ZM371.7,280L195.7,381C179.9,389.8 160,378.5 160,360L160,152C160,133.6 179.8,122.2 195.7,131L371.7,238C388.1,247.2 388.1,270.9 371.7,280Z"
+												style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+										</g>
+									</g>
+								</svg>
+							</div>
+							<div th:unless="${contatoreIsRun}">
+								<button id="modalStartBottomButton" type="button" class="hover:opacity-75">
+									<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1"
+										xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+										xml:space="preserve" xmlns:serif="http://www.serif.com/"
+										style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+										<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+											height="200" style="fill:none;" />
+										<clipPath id="_clip1">
+											<rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+												height="200" />
+										</clipPath>
+										<g clip-path="url(#_clip1)">
+											<g id="play-circle" transform="matrix(0.403226,0,0,0.403226,-3.22581,-3.22581)">
+												<path
+													d="M256,8C119,8 8,119 8,256C8,393 119,504 256,504C393,504 504,393 504,256C504,119 393,8 256,8ZM371.7,280L195.7,381C179.9,389.8 160,378.5 160,360L160,152C160,133.6 179.8,122.2 195.7,131L371.7,238C388.1,247.2 388.1,270.9 371.7,280Z"
+													style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+											</g>
+										</g>
+									</svg>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
   </div>
 </main>
-
-	<!-- Modale -->
-	<!--
-	<div id="modal" class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
-	  <div class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
-	    <div class=" w-full h-auto">
-	      <div id="modalCloseButton" class="flex justify-end items-center p-2">
-	        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256" width="30px" height="30px" fill-rule="nonzero">
-	          <g fill="#ffe541" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
-	            <g transform="scale(8.53333,8.53333)">
-	              <path d="M7,4c-0.25587,0 -0.51203,0.09747 -0.70703,0.29297l-2,2c-0.391,0.391 -0.391,1.02406 0,1.41406l7.29297,7.29297l-7.29297,7.29297c-0.391,0.391 -0.391,1.02406 0,1.41406l2,2c0.391,0.391 1.02406,0.391 1.41406,0l7.29297,-7.29297l7.29297,7.29297c0.39,0.391 1.02406,0.391 1.41406,0l2,-2c0.391,-0.391 0.391,-1.02406 0,-1.41406l-7.29297,-7.29297l7.29297,-7.29297c0.391,-0.39 0.391,-1.02406 0,-1.41406l-2,-2c-0.391,-0.391 -1.02406,-0.391 -1.41406,0l-7.29297,7.29297l-7.29297,-7.29297c-0.1955,-0.1955 -0.45116,-0.29297 -0.70703,-0.29297z"></path>
-	          </g>
-	        </g>
-	      </svg>
-	    </div>
-	    </div>
-	    <div class="w-full h-auto bg-white rounded-b-lg">
-	      <form th:action="@{'/Task/insert/progetto-{id}'(id=${progetto.id})}"
-		  		th:object="${task}"	
-		  		method="get">
-	        <div class="flex flex-col justify-center p-2 text-center ">
-	          <div class="p-3">
-	            <label for="countries" class="block mb-2 text-lg  text-[#0057A5] font-bold w-full">Seleziona un Progetto per il Task</label>
-	          </div>
-	          <div class="flex justify-center">
-	            <select id="countries" name="id" class="h-8 border border-gray-300  text-[#0057A5] rounded-lg block w-4/5  px-4 focus:outline-none">
-	            	<option th:each="progetto : ${progettiList}" th:text="${progetto.getName()}" th:value="${progetto.id}"></option>
-					
-	            </select>
-	          </div>
-	          <div class="p-6">
-	            <button type="submit" class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
-	          </div>
-	        </div>
-	      </form>
-	    </div>
-	  </div>
+<!-- Modale StartPauseButton-->
+	<div id="modalPauseStartButton"
+		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
+		<div class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
+			<div class=" w-full h-auto">
+				<div id="modalPauseStartCloseButton" class="flex justify-end items-center p-2 cursor-pointer">
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0,0,256,256"
+						width="30px" height="30px" fill-rule="nonzero">
+						<g fill="#ffe541" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+							stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+							font-family="none" font-weight="none" font-size="none" text-anchor="none"
+							style="mix-blend-mode: normal">
+							<g transform="scale(8.53333,8.53333)">
+								<path
+									d="M7,4c-0.25587,0 -0.51203,0.09747 -0.70703,0.29297l-2,2c-0.391,0.391 -0.391,1.02406 0,1.41406l7.29297,7.29297l-7.29297,7.29297c-0.391,0.391 -0.391,1.02406 0,1.41406l2,2c0.391,0.391 1.02406,0.391 1.41406,0l7.29297,-7.29297l7.29297,7.29297c0.39,0.391 1.02406,0.391 1.41406,0l2,-2c0.391,-0.391 0.391,-1.02406 0,-1.41406l-7.29297,-7.29297l7.29297,-7.29297c0.391,-0.39 0.391,-1.02406 0,-1.41406l-2,-2c-0.391,-0.391 -1.02406,-0.391 -1.41406,0l-7.29297,7.29297l-7.29297,-7.29297c-0.1955,-0.1955 -0.45116,-0.29297 -0.70703,-0.29297z">
+								</path>
+							</g>
+						</g>
+					</svg>
+				</div>
+			</div>
+			<div th:unless="${taskInUso == null}" class="w-full h-auto bg-white rounded-b-lg">
+				<form id="form-start-pause" th:object="${contatore}" method="post">
+					<input type="hidden" name="endPoint" th:value="${endPoint}">
+					<div class="flex flex-col justify-center p-2 text-center ">
+						<div class="p-3 text-[#0057A5]">
+							<p>Proseguendo le modifiche non salvate al task <strong
+									th:text="${taskInUso.getName()}"></strong>
+								relativo al progetto <strong th:text="${taskInUso.progetto.getName()}">andranno
+									perse</strong>. Vuoi procedere?</p>
+						</div>
+						<div class="p-6">
+							<button type="submit"
+								class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
-		
-	</div>
-	-->
 			
-	<!-- Script -->		
+	<!-- Script -->
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			let finalTimeSec = /*[[${finaltime}]]*/ null;
+			let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
+			let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean
+			let taskInUsoId = /*[[${taskInUsoId}]]*/ null;			
+			/*]]>*/
+		</script>		
     <script type="text/javascript" th:src="@{/js/timer.js}"></script>
     <script type="text/javascript" th:src="@{/js/layout.js}">
 		
