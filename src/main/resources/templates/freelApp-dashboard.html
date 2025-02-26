@@ -1486,6 +1486,8 @@
 			<div th:if="${taskSelectedId == null}" id="form-task" class="">
 				<form id="form-task-select-orelavorate">
 					<div class="flex flex-col justify-center p-2 text-center pe-6">
+						<h1 class="font-bold text-3xl text-[#0057A5] rounded-lg block w-full text-center"
+																				>ORE LAVORATE</h1>
 						<div class="p-3 text-[#0057A5]">
 	                  		<p class="mb-2">Seleziona il task</p>
 	                  		<select class="border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full  px-4 focus:outline-none" 
@@ -1504,18 +1506,30 @@
 			
 			method="post">
 									
-								<div class="flex flex-col justify-center p-2 text-center pe-6">
-									<div class="p-3 text-[#0057A5]">
-				                  		<p class="mb-2">Inserisci le ore lavorate</p>
+								<div class="flex flex-row justify-center p-2 text-center pe-6">
+									
+									<div class="p-3 text-[#0057A5] basis-1/2 flex-auto">
+				                  		<p class="mb-2">Inserisci la data</p>
 										<input
-										type="date"
-										class="border-red-600 w-full h-8 ps-4 rounded-lg"
-										id="name"
-										th:datetime
-										th:field="*{contatore.start}"
-										th:errorClass="border">
+											type="date"
+											class="text-2xl m-4 p-2 border border-[#0057A5] h-10  text-[#0057A5] rounded-lg block w-full text-center bg-gray-200"
+											id="dataOreLavorate">
 										
-							   		</div>
+										<label for="tempoOreLavorate">Inserisci le ore lavorate</label>
+										<input 
+											type="time"
+											value="01:00"
+											class="m-4 h-10 text-2xl border border-[#0057A5] text-[#0057A5] rounded-lg block w-full text-center	bg-gray-200"
+											id="tempoOreLavorate">
+										
+										
+									</div>
+									
+									<div class="p-3 text-[#0057A5] text-center pe-6 w-1/2 basis-1/2 flex-auto h-10">
+										<p class="mb-2 ml-4 mt-8 bg-gray-200 rounded-lg h-32 border border-[#0057A5]">Guadagno</p>
+										
+									</div>
+									
 								</div>
 							</form>
 							

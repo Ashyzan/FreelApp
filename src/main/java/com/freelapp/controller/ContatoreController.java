@@ -441,6 +441,32 @@ public class ContatoreController {
 	
 	Task task = repositTask.getReferenceById(taskId);
 	
+	// istanzio un nuovo contatore
+	    Contatore contatore = new Contatore();
+
+	    // associo al task il nuovo contatore
+	    task.setContatore(contatore);
+	    
+	 // metto in pausa gli altri contatori
+	contatoreservice.pauseOtherTimers();
+
+	    // eseguo il TIMESTAMP
+	    contatore.setStart(LocalDateTime.now());
+	    contatore.setFinaltime(0l);
+	    contatore.setStop(null);
+
+	    // collego nel modello html il task e il contatore
+	    model.addAttribute("task", task);
+	    model.addAttribute("contatore", contatore);
+	   
+
+	    // salvo il contatore a DB
+	    repositContatore.save(contatore);
+	    // parte per javascript: serve per collegare il finaltime da java a javascript
+	    // sul frontend
+	    contatoreservice.contatoreIsTrue(task, model);
+	    contatoreservice.contatoreIsRun(task, model);
+	
 	return "/Contatore/timer";
     }
 }
