@@ -1500,7 +1500,7 @@
 				</form>	
 			</div>
 							
-			<!-- FORM INSERIMENTO ORE LAVORATE -->
+			<!-- form ore lavorate -->
 			<form id="form-task-inserimento-orelavorate"
 			th:object="${contatore}"
 			
@@ -1516,9 +1516,12 @@
 											id="dataOreLavorate">
 										
 										<label for="tempoOreLavorate">Inserisci le ore lavorate</label>
+										
+										<!--  ${#temporals.second(temporal)} ${#dates.second(date)}  -->
 										<input 
 											type="time"
 											value="01:00"
+											
 											class="m-4 h-10 text-2xl border border-[#0057A5] text-[#0057A5] rounded-lg block w-full text-center	bg-gray-200"
 											id="tempoOreLavorate">
 										
@@ -1534,9 +1537,9 @@
 							</form>
 							
 										                  		
-			<div id="taskResumeTableOreLavorate" class="hidden p-6 text-[#0057A5]">
+			<div id="taskResumeTableOreLavorate" class="hidden p-4 text-[#0057A5]">
 				<div class="p-1 w-[100%] h-auto">
-					<div id="taskResumeTitle" class="flex justify-between mb-3 border-b-2 items-center py-2">
+					<div id="taskResumeTitle" class="flex justify-between mb-3 border-b-2 items-center py-1">
 						<div class="w-8 h-8 flex justify-center items-center me-2 ">
 							<img id="taskLogoPathOre">
 						</div>
@@ -1553,19 +1556,17 @@
 										</g>
 									</g>
 								</svg>
-								<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-									Dettaglio
-								</div>
+								
 							</div>
 						</a>
 				</div>
 				<div id="taskResumeBody" >
-				   <div class="grid   grid-cols-3 mb-2 py-2 px-1">
-				      <div class="col font-bold pe-3 py-3">Cliente</div>
-					    <div id="taskClienteOre" class="col  col-span-2 py-3">
+				   <div class="grid   grid-cols-3 mb-2 py-1 px-1">
+				      <div class="col font-bold pe-1 py-1">Cliente</div>
+					    <div id="taskClienteOre" class="col  col-span-2 py-1">
 					    </div>
-				        <div class="col font-bold pe-3 py-3">Progetto di riferimento</div>
-						<div id="taskProgettoOre" class="col  col-span-2 py-3">
+				        <div class="col font-bold pe-1 py-1">Progetto</div>
+						<div id="taskProgettoOre" class="col  col-span-2 py-1">
 						</div>
 					</div>
 				</div>			
