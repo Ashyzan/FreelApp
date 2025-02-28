@@ -157,15 +157,13 @@ public class ContatoreService {
 			    if (contatoreIsRun == true && restartTime == null) {
 			    	
 			    	task.getContatore().setFinaltime(findTime( task.getContatore().getStart(), timeNow));
-			    	System.out.println("findTime(timeNow, task.getContatore().getStart()) --> " + findTime( task.getContatore().getStart(), timeNow));
-//				
+				
 //			    	timeExeed(bindingresult, task, model);
 
 			    } else if (contatoreIsRun == true && restartTime != null) {
 
 			    	task.getContatore().setFinaltime(FinalTime + findTime(task.getContatore().getRestart(), timeNow));
-			    	System.out.println("findTime(timeNow, task.getContatore().getRestart()) --> " + findTime( task.getContatore().getRestart(), timeNow));
-//				
+				
 //			    	timeExeed(bindingresult, task, model);
 			    }
 

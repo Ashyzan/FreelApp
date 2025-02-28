@@ -33,55 +33,55 @@ public class ContatoreController {
     
     public static Task taskInUso;
 
-    @GetMapping("/Contatore/timer/{id}")
-    public String gestioneTimer(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
-	    Model model, BindingResult bindingresult) {
-    	
-
-	// richiamo l'id del task
-	Task task = repositTask.getReferenceById(taskId);
-
-	if (task.getContatore() != null) {
-	    // parte per javascript: serve per collegare il finaltime da java a javascript
-	    // sul frontend
-	    contatoreservice.contatoreIsTrue(task, model);
-
-	    contatoreservice.contatoreIsRun(task, model);
-	    
-	    
-
-	    boolean contatoreIsRun = contatoreservice.contatoreIsRun(task, model);
-
-	    LocalDateTime restartTime = task.getContatore().getRestart();
-
-	    LocalDateTime timeNow = LocalDateTime.now();
-
-	    Long FinalTime = task.getContatore().getFinaltime();
-	    
-	    contatoreservice.timeExeed(bindingresult, task, model);
-
-	    if (contatoreIsRun == true && restartTime == null) {
-
-		task.getContatore()
-			.setFinaltime((long) (timeNow.getSecond() - task.getContatore().getStart().getSecond()));
-
-    	contatoreservice.timeExeed(bindingresult, task, model);
-
-	    } else if (contatoreIsRun == true && restartTime != null) {
-
-		task.getContatore().setFinaltime(
-			(long) (FinalTime + (timeNow.getSecond() - task.getContatore().getRestart().getSecond())));
-		contatoreservice.timeExeed(bindingresult, task, model);
-	    }
-
-	    model.addAttribute("finaltime", task.getContatore().getFinaltime());
-
-	}
-
-	model.addAttribute("contatore", contatore);
-
-	return "/Contatore/timer";
-    }
+//    @GetMapping("/Contatore/timer/{id}")
+//    public String gestioneTimer(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
+//	    Model model, BindingResult bindingresult) {
+//    	
+//
+//	// richiamo l'id del task
+//	Task task = repositTask.getReferenceById(taskId);
+//
+//	if (task.getContatore() != null) {
+//	    // parte per javascript: serve per collegare il finaltime da java a javascript
+//	    // sul frontend
+//	    contatoreservice.contatoreIsTrue(task, model);
+//
+//	    contatoreservice.contatoreIsRun(task, model);
+//	    
+//	    
+//
+//	    boolean contatoreIsRun = contatoreservice.contatoreIsRun(task, model);
+//
+//	    LocalDateTime restartTime = task.getContatore().getRestart();
+//
+//	    LocalDateTime timeNow = LocalDateTime.now();
+//
+//	    Long FinalTime = task.getContatore().getFinaltime();
+//	    
+//	    contatoreservice.timeExeed(bindingresult, task, model);
+//
+//	    if (contatoreIsRun == true && restartTime == null) {
+//
+//		task.getContatore()
+//			.setFinaltime((long) (timeNow.getSecond() - task.getContatore().getStart().getSecond()));
+//
+//    	contatoreservice.timeExeed(bindingresult, task, model);
+//
+//	    } else if (contatoreIsRun == true && restartTime != null) {
+//
+//		task.getContatore().setFinaltime(
+//			(long) (FinalTime + (timeNow.getSecond() - task.getContatore().getRestart().getSecond())));
+//		contatoreservice.timeExeed(bindingresult, task, model);
+//	    }
+//
+//	    model.addAttribute("finaltime", task.getContatore().getFinaltime());
+//
+//	}
+//
+//	model.addAttribute("contatore", contatore);
+//
+//	return "/Contatore/timer";
+//    }
 
     @PostMapping("/start/{id}")
     public String startContatore(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
