@@ -50,7 +50,6 @@ public class ProgettoController {
 			@GetMapping("/Progetti")
 			public String listaProgetti(Model model) {
 					
-				contatoreservice.importContatoreInGet(model);
 				//passo al model i contatore e task in uso (gli static)
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
@@ -77,11 +76,12 @@ public class ProgettoController {
 					
 					model.addAttribute("totalItems", totalItems);
 					
+					contatoreservice.importContatoreInGet(model);
+					
 					//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
 					if(currentPage != 0) {
 						String endPoint = "/Progetti/page/" + currentPage;
 						
-						contatoreservice.importContatoreInGet(model);
 						model.addAttribute("endPoint", endPoint);						
 					} else {
 						String endPoint = "/Progetti";
@@ -98,7 +98,6 @@ public class ProgettoController {
 			@GetMapping("/progetto-search")
 			public String listaProgettiSearch(@Param("input") String input, Model model) {
 				
-				contatoreservice.importContatoreInGet(model);
 				//passo al model i contatore e task in uso (gli static)
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
@@ -127,6 +126,8 @@ public class ProgettoController {
 						
 					model.addAttribute("list", listaClientiSearch);	
 					
+					contatoreservice.importContatoreInGet(model);
+					
 					//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
 					if(input != null) {
 						String endPoint = "/progetto-search?input=" + input;
@@ -137,7 +138,6 @@ public class ProgettoController {
 						model.addAttribute("endPoint", endPoint);	
 					}
 					
-					contatoreservice.importContatoreInGet(model);
 					//passo al model i contatore e task in uso (gli static)
 					model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 					model.addAttribute("taskInUso", ContatoreController.taskInUso);

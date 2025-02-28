@@ -152,20 +152,21 @@ public class ContatoreService {
 
 			    Long FinalTime = task.getContatore().getFinaltime();
 			    
-			   // contatoreservice.timeExeed(bindingresult, task, model);
+//			    timeExeed(bindingresult, task, model);
 
 			    if (contatoreIsRun == true && restartTime == null) {
-
-				task.getContatore()
-					.setFinaltime((long) (timeNow.getSecond() - task.getContatore().getStart().getSecond()));
-
-		    	//contatoreservice.timeExeed(bindingresult, task, model);
+			    	
+			    	task.getContatore().setFinaltime(findTime( task.getContatore().getStart(), timeNow));
+			    	System.out.println("findTime(timeNow, task.getContatore().getStart()) --> " + findTime( task.getContatore().getStart(), timeNow));
+//				
+//			    	timeExeed(bindingresult, task, model);
 
 			    } else if (contatoreIsRun == true && restartTime != null) {
 
-				task.getContatore().setFinaltime(
-					(long) (FinalTime + (timeNow.getSecond() - task.getContatore().getRestart().getSecond())));
-				//contatoreservice.timeExeed(bindingresult, task, model);
+			    	task.getContatore().setFinaltime(FinalTime + findTime(task.getContatore().getRestart(), timeNow));
+			    	System.out.println("findTime(timeNow, task.getContatore().getRestart()) --> " + findTime( task.getContatore().getRestart(), timeNow));
+//				
+//			    	timeExeed(bindingresult, task, model);
 			    }
 
 			    model.addAttribute("finaltime", task.getContatore().getFinaltime());

@@ -47,7 +47,6 @@ public class TaskController {
     @GetMapping("/Task")
     public String iMieiTask(Model model) {
 
-    	contatoreservice.importContatoreInGet(model);
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
@@ -73,12 +72,13 @@ public class TaskController {
 	model.addAttribute("totalPages", totalPages);
 
 	model.addAttribute("totalItems", totalItems);
+
+	contatoreservice.importContatoreInGet(model);
 	
 	//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
 	if(currentPage != 0) {
 		String endPoint = "/Task/page/" + currentPage;
 		
-		contatoreservice.importContatoreInGet(model);
 		model.addAttribute("endPoint", endPoint);						
 	} else {
 		String endPoint = "/Task";
@@ -95,7 +95,6 @@ public class TaskController {
     @GetMapping("/task-search")
     public String listaTaskSearch(@Param("input") String input, Model model) {
     	
-    	contatoreservice.importContatoreInGet(model);
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
@@ -122,6 +121,8 @@ public class TaskController {
 
 	model.addAttribute("list", listaTaskSearch);
 	
+	contatoreservice.importContatoreInGet(model);
+	
 	//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
 	if(input != null) {
 		String endPoint = "/task-search?input=" + input;
@@ -132,7 +133,6 @@ public class TaskController {
 		model.addAttribute("endPoint", endPoint);	
 	}
 	
-	contatoreservice.importContatoreInGet(model);
 	//passo al model i contatore e task in uso (gli static)
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);

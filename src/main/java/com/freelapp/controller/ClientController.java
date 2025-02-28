@@ -68,7 +68,6 @@ public class ClientController {
 	@GetMapping("/Clienti")
 	public String listaClienti(Model model) {
 		
-		contatoreservice.importContatoreInGet(model);
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
@@ -95,13 +94,14 @@ public class ClientController {
 		model.addAttribute("totalPages", totalPages);
 		
 		model.addAttribute("totalItems", totalItems);
+
+		contatoreservice.importContatoreInGet(model);
 		
 		//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
 		if(currentPage != 0) {
 			String endPoint = "/Clienti/page/" + currentPage;
+			model.addAttribute("endPoint", endPoint);	
 			
-			contatoreservice.importContatoreInGet(model);
-			model.addAttribute("endPoint", endPoint);						
 		} else {
 			String endPoint = "/Clienti";
 			model.addAttribute("endPoint", endPoint);	
@@ -117,7 +117,6 @@ public class ClientController {
 	@GetMapping("/cliente-search")
 	public String listaClientiSearch(@Param("input") String input,Model model) {
 		
-		contatoreservice.importContatoreInGet(model);
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
@@ -153,6 +152,8 @@ public class ClientController {
 				
 				model.addAttribute("list", listaClientiSearch);	
 				
+				contatoreservice.importContatoreInGet(model);
+				
 				//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
 				if(input != null) {
 					String endPoint = "/cliente-search?input=" + input;
@@ -163,7 +164,6 @@ public class ClientController {
 					model.addAttribute("endPoint", endPoint);	
 				}
 				
-				contatoreservice.importContatoreInGet(model);
 				//passo al model i contatore e task in uso (gli static)
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
