@@ -2,7 +2,11 @@ package com.freelapp.model;
 
 import java.time.LocalDate;
 
+
+
 import org.springframework.format.annotation.DateTimeFormat;
+
+
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -22,7 +26,7 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "tasks")
 public class Task{
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "task_id")
@@ -39,8 +43,9 @@ public class Task{
 		
 	@Column(name = "DataInizio", nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@NotNull(message = "data inserimento task obbligatoria")
-	private LocalDate dataInizio;
+
+	@NotNull(message = "Inserimento data di inizio obbligatorio")
+	private LocalDate dataInizio = LocalDate.now();
 	
 	@Column(name = "DataChiusuraStimata")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

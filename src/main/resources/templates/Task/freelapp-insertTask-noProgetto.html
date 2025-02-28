@@ -524,20 +524,6 @@
 		                </div>
 		             </div>
 		            </div>
-					
-					<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">		
-						<div class="col">
-							<label for="dataChiusuraDefinitiva">Chiusura definitiva</label>
-						</div>	  
-						<div class="col md:col-span-2 col-span-3">
-							<input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="dataChiusuraDefinitiva" th:field="*{dataChiusuraDefinitiva}" th:errorClass="border">
-	                		<div th:if="${#fields.hasErrors('dataChiusuraDefinitiva')}" class="text-red-600 text-[12px] text-center w-full">
-                    			<ul>
-                    				<li th:each="err:${#fields.errors('dataChiusuraDefinitiva')}" th:text="${err}"></li>
-                    			</ul>
-	                		</div>
-	             		</div>
-		            </div>
 
 		            <div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
 		             <div class="col">

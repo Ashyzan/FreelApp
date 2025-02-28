@@ -1239,53 +1239,21 @@
 								</div>
 							</div>
 							<div>
-								<div
-									class="grid   grid-cols-3 mb-2 py-2 px-3">
-									<div
-										class="col font-bold pe-3 py-3">
-										Nome</div>
-									<div class="col  col-span-2 py-3"
-										th:text="${task.getName()}">
-									</div>
-									<div
-										class="col font-bold pe-3 py-3">
-										Descrizione</div>
-									<div class="col  col-span-2 py-3"
-										th:text="${task.getDescrizione()}">
-									</div>
-									<div
-										class="col font-bold pe-3 py-3">
-										Data inizio</div>
-									<div class="col  col-span-2 py-3"
-										th:text="${task.getDataInizio()}">
-									</div>
-									<div
-										class="col font-bold pe-3 py-3">
-										Data chiusura
-										stimata</div>
-									<div class="col  col-span-2 py-3"
-										th:text="${task.getDataChiusuraStimata()}">
-									</div>
-									<div
-										class="col font-bold pe-3 py-3">
-										Data chiusura
-										effettiva</div>
-									<div class="col  col-span-2 py-3"
-										th:text="${task.getDataChiusuraDefinitiva()}">
-									</div>
-									<div
-										class="col font-bold pe-3 py-3">
-										Progetto di
-										riferimento</div>
-									<div class="col  col-span-2 py-3"
-										th:text="${task.progetto.getName()}">
-									</div>
-									<div
-										class="col font-bold pe-3 py-3">
-										Stato</div>
-									<div class="col  col-span-2 py-3"
-										th:text="${task.getStato()}">
-									</div>
+
+								<div class="grid   grid-cols-3 mb-2 py-2 px-3">
+									<div class="col font-bold pe-1 py-1">Descrizione</div>
+									<div class="col  col-span-2 py-1" th:text="${task.getDescrizione()}"></div>
+									<div class="col font-bold pe-1 py-1">Data inizio</div>
+									<div class="col  col-span-2 py-1" th:text="${#temporals.format(task.getDataInizio(),'dd MMM yyyy')}"></div>
+									<div class="col font-bold pe-1 py-1">Chiusura stimata</div>
+									<div class="col  col-span-2 py-1" th:text="${#temporals.format(task.getDataChiusuraStimata(),'dd MMM yyyy')}"></div>
+									<div th:if="${task.getContatore().getStop() != null}" class="col font-bold pe-1 py-1">Chiusura effettiva</div>	
+									<div th:if="${task.getContatore().getStop() != null}" class="col  col-span-2 py-1" th:text="${#temporals.format(task.getContatore().getStop(),'dd MMM yyyy')}"></div>	
+									<div class="col font-bold pe-1 py-1">Progetto</div>
+									<div class="col  col-span-2 py-1" th:text="${task.progetto.getName()}"></div>
+									<div class="col font-bold pe-1 py-1">Stato</div>
+									<div class="col  col-span-2 py-1" th:text="${task.getStato()}"></div>
+
 								</div>
 							</div>
 							<div
