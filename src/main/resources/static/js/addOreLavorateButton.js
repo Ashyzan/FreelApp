@@ -53,7 +53,7 @@ function recapTaskOreLavorate(event){
 	event.preventDefault()
 	
 	const valueInput = document.getElementById('form-select-input-ore').value;
-	getJsonTask(valueInput);
+	getJsonTaskOre(valueInput);
 	
 	if(valueInput != 0){
 		taskResumeTableOreLavorate.classList.remove('hidden')
@@ -61,9 +61,13 @@ function recapTaskOreLavorate(event){
 		taskResumeTableOreLavorate.classList.add('hidden')
 	}
 	
-	// assegna endpoint dettaglio task in base al task scelto
-	const taskDetailHrefOre = document.getElementById('taskDetailHrefOre')
-	taskDetailHrefOre.href = `/Task/${valueInput}`;
 
+	// assegna endpoint dettaglio task in base al task scelto
+	const DetailHrefOre = document.getElementById('DetailHrefOre')
+	DetailHrefOre.href = `/Task/${valueInput}`;
+
+	// assegna action avvio contatore in base al task scelto
+	const taskDetailHrefOre = document.getElementById('taskDetailHrefOre');
+	taskDetailHrefOre.action = `/orelavorate/${valueInput}`;
 
 }

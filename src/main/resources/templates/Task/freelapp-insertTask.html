@@ -1147,12 +1147,16 @@
 										</div>
 										<div
 											class="col md:col-span-2 col-span-3">
-											<input
+											
+											
+											<textarea
 												type="text"
+												placeholder="Inserisci una descrizione dettagliata del Task.."
 												class="border-red-600 w-full h-8 ps-4 rounded-lg"
 												id="descrizione"
 												th:field="*{descrizione}"
-												th:errorClass="border">
+												th:errorClass="border"></textarea>
+												
 
 											<div th:if="${#fields.hasErrors('descrizione')}"
 												class="text-red-600 text-[12px] text-center w-full">

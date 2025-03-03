@@ -471,7 +471,7 @@
 		               <label for="name">Nome Task</label>
 		             </div>
 		             <div class=" col md:col-span-2 col-span-3">
-		               <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="name" th:field="*{name}" th:errorClass="border">
+		               <input type="text" placeholder="Titolo del Task.." class="border-red-600 w-full h-8 ps-4 rounded-lg" id="name" th:field="*{name}" th:errorClass="border">
 		               <div th:if="${#fields.hasErrors('name')}" class="text-red-600 text-[12px] text-center w-full">
 		                 <ul>
 		                   <li th:each="err: ${#fields.errors('name')}" th:text="${err}"></li>
@@ -485,7 +485,8 @@
 		               <label for="descrizione">Descrizione</label>
 		             </div>
 		             <div class="col md:col-span-2 col-span-3">
-		               <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="descrizione" th:field="*{descrizione}" th:errorClass="border">
+		             							
+		               <textarea type="text" placeholder="Inserisci una descrizione dettagliata del Task.." class="border-red-600 w-full h-8 ps-4 rounded-lg" id="descrizione" th:field="*{descrizione}" th:errorClass="border"></textarea>
 
 		               <div th:if="${#fields.hasErrors('descrizione')}" class="text-red-600 text-[12px] text-center w-full">
 		                 <ul>

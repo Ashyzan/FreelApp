@@ -37,7 +37,9 @@ public class Task{
 	@NotNull(message = "La denominazione del task è obbligatoria")
 	private String name;
 	
-	@Column(name = "Descrizione")
+	@Column(name = "Descrizione", nullable = false)
+	@NotBlank(message = "La descrizione del task è obbligatoria")
+	@NotNull(message = "La descrizione del task è obbligatoria")
 	@Size(max =500 , message="massimo 500 caratteri")
 	private String descrizione;
 		

@@ -1,5 +1,6 @@
 package com.freelapp.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +37,7 @@ public class DashboardController {
 
 	@GetMapping("/dashboard")
 	public String index( Model model){
-
-
+		
 		List<Cliente> clienteList = new ArrayList<Cliente> ();
 
 		clienteList = clienteRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
