@@ -19,12 +19,16 @@ import com.freelapp.model.Task;
 import com.freelapp.repository.ContatoreRepository;
 import com.freelapp.repository.TaskRepository;
 import com.freelapp.service.ContatoreService;
+import com.freelapp.service.TaskService;
 
 @Controller
 public class ContatoreController {
 
 	@Autowired
 	private ContatoreService contatoreservice;
+	
+	@Autowired
+	private TaskService taskservice;
 
 	@Autowired
 	private TaskRepository repositTask;
@@ -327,13 +331,10 @@ public class ContatoreController {
 
 					contatore.setStop(STOP);
 					
-					// conversioni da localdatetime dello stop a localdate della data di chiusura del task
-					Date NEWSTOP = java.util.Date.from(STOP.atZone(ZoneId.systemDefault()).toInstant());
-					LocalDate NEWSTOP2 = NEWSTOP.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-					task.setDataChiusuraDefinitiva(NEWSTOP2);
-					
-
+					// salvo in automatico la data fine task in corrispondenza dello stop contatore
+			    	taskservice.setStopTaskDate(STOP, taskId);
 					repositTask.save(task);
+					
 					Long FinalTime = contatore.getFinaltime();
 
 					model.addAttribute("finaltime", FinalTime);
@@ -349,12 +350,8 @@ public class ContatoreController {
 
 					contatore.setStop(STOP);
 					
-					// conversioni da localdatetime dello stop a localdate della data di chiusura del task
-					Date NEWSTOP = java.util.Date.from(STOP.atZone(ZoneId.systemDefault()).toInstant());
-					LocalDate NEWSTOP2 = NEWSTOP.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-					task.setDataChiusuraDefinitiva(NEWSTOP2);
-					
-
+					// salvo in automatico la data fine task in corrispondenza dello stop contatore
+			    	taskservice.setStopTaskDate(STOP, taskId);
 					repositTask.save(task);
 
 					repositContatore.save(task.getContatore());
@@ -374,12 +371,8 @@ public class ContatoreController {
 					// setto lo stop a db
 					contatore.setStop(STOP);
 					
-					// conversioni da localdatetime dello stop a localdate della data di chiusura del task
-					Date NEWSTOP = java.util.Date.from(STOP.atZone(ZoneId.systemDefault()).toInstant());
-					LocalDate NEWSTOP2 = NEWSTOP.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-					task.setDataChiusuraDefinitiva(NEWSTOP2);
-					
-
+					// salvo in automatico la data fine task in corrispondenza dello stop contatore
+			    	taskservice.setStopTaskDate(STOP, taskId);
 					repositTask.save(task);
 					
 					// calcolo il tempo trascorso
@@ -404,12 +397,8 @@ public class ContatoreController {
 
 					contatore.setStop(STOP);
 					
-					// conversioni da localdatetime dello stop a localdate della data di chiusura del task
-					Date NEWSTOP = java.util.Date.from(STOP.atZone(ZoneId.systemDefault()).toInstant());
-					LocalDate NEWSTOP2 = NEWSTOP.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-					task.setDataChiusuraDefinitiva(NEWSTOP2);
-					
-
+					// salvo in automatico la data fine task in corrispondenza dello stop contatore
+			    	taskservice.setStopTaskDate(STOP, taskId);
 					repositTask.save(task);
 
 					// metodo che calcola la differenza fra i due timestamp
@@ -434,6 +423,12 @@ public class ContatoreController {
 				contatoreservice.contatoreIsTrue(task, model);
 				contatoreservice.contatoreIsRun(task, model);
 				model.addAttribute("finaltime", FinalTime);
+			}
+			
+			// TERZO IF, SE IL CONTATORE NON ESISTE (CASO DI INSERIMENTO DI ORE LAVORATE)
+			else if(task.getContatore() == null) {
+				
+				
 			}
 
 		}
