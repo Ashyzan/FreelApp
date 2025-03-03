@@ -1,5 +1,8 @@
 package com.freelapp.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,13 @@ public class TaskService {
 		return taskRepository.search(input, pageable);
 		
 	}
-
+	
+	// Metodo che salva la data fine task in corrispondenza di STOP contatore
+	// fa la conversioni da localdatetime dello stop a localdate della data di chiusura del task
+	public void setStopTaskDate(LocalDateTime STOP, int taskId) {
+		java.util.Date NEWSTOP = java.util.Date.from(STOP.atZone(ZoneId.systemDefault()).toInstant());
+		LocalDate NEWSTOP2 = NEWSTOP.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		taskRepository.getReferenceById(taskId).setDataChiusuraDefinitiva(NEWSTOP2);
+	}
 	
 }

@@ -22,12 +22,16 @@ import com.freelapp.repository.ContatoreRepository;
 import com.freelapp.repository.TaskRepository;
 import com.freelapp.service.ContatoreService;
 import com.freelapp.service.OreLavorateService;
+import com.freelapp.service.TaskService;
 
 @Controller
 public class OreLavorateController {
     
     @Autowired
     private TaskRepository repositTask;
+    
+    @Autowired
+    private TaskService taskservice;
     
     @Autowired
     private ContatoreRepository repositContatore;
@@ -57,20 +61,27 @@ public class OreLavorateController {
 	    // calcolo lo stop a partire dallo start e dal finaltime (in secondi) richiamando il metodo perposto dal service
 	    LocalDateTime STOP = orelavorateservice.findStop(START, finalTime);
 	    
-	    if(contatore == null) {
+	    if(task.getContatore() == null) {
 	    	
 	    	contatore = new Contatore();
 	    	task.setContatore(contatore);
-	    	
 	    	task.getContatore().setFinaltime(finalTime); 
 	    	task.getContatore().setStart(START);
 	    	task.getContatore().setStop(STOP);
+	    	
+	    	// salvo in automatico la data fine task in corrispondenza dello stop contatore
+	    	taskservice.setStopTaskDate(STOP, taskId);
+			repositTask.save(task);
 	    }
 	    
 	    else {
 	    	task.getContatore().setFinaltime(finalTime); 
 	    	task.getContatore().setStart(START);
 	    	task.getContatore().setStop(STOP);
+	    	
+	    	// salvo in automatico la data fine task in corrispondenza dello stop contatore
+	    	taskservice.setStopTaskDate(STOP, taskId);
+			repositTask.save(task);
 	    }
 	    
 		model.addAttribute("contatore", contatore);
