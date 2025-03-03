@@ -46,9 +46,9 @@ public class Progetto {
 	@NotNull(message = "Data di inizio obbligatoria")
 	private LocalDate dataInizio = LocalDate.now();
 	
-	@NotNull(message = "Data di fine obbligatoria")
+	
 	@DateTimeFormat(pattern= "yyyy-MM-dd")
-	@Column(name = "DataFine", nullable = true)
+	@Column(name = "DataFine")
 	private LocalDate dataFine;
 	
 	@OneToMany(mappedBy = "progetto")
