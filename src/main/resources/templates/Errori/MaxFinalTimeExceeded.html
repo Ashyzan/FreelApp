@@ -607,9 +607,11 @@
 		<div class="flex flex-col justify-center items-center max-w-[80%] h-[70%] md:h-auto">
 			<img src="/img/errore.png" class="w-[60px] h-auto m-3">
 			<h1 th:text="${errorMaxFileSize}" class="text-xl text-red-600 text-center"></h1>
-			<h1 th:if="${errorMaxFileSize == null}" class="text-xl text-red-600 text-center">Non è possibile fare l'upload di file superiori a 500KB</h1>
+			<h1 th:if="${errorMaxFileSize == null}" class="text-xl text-red-600 text-center">Non è possibile fare l'upload di
+				file superiori a 500KB</h1>
 			<a th:href="@{/dashboard}" class="text-center mt-[50px]">
-				<button class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Torna alla Dashboard</button>				
+				<button class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Torna alla
+					Dashboard</button>
 			</a>
 		</div>
 		<div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden">
