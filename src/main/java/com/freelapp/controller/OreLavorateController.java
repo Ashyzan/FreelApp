@@ -43,7 +43,8 @@ public class OreLavorateController {
     // ricevo i parametri dal modello e salvo i dati del contatore
     @PostMapping("/orelavorate/{id}")
     public String gestioneTimer(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
-    		@ModelAttribute("date") String data, @ModelAttribute("time")String time, Model model, BindingResult bindingresult) {
+    		@ModelAttribute("date") String data, @ModelAttribute("time")String time, Model model, 
+    		BindingResult bindingresult, @ModelAttribute("aggiungiOre") Boolean aggiungiOre) {
     	// richiamo l'id del task
 		
 		Task task = repositTask.getReferenceById(taskId);
@@ -62,7 +63,7 @@ public class OreLavorateController {
 	    LocalDateTime STOP = orelavorateservice.findStop(START, finalTime);
 	    
 	    if(task.getContatore() == null) {
-	    	
+	    	if(!aggiungiOre) { // sovrascrivi e chiudi
 	    	contatore = new Contatore();
 	    	task.setContatore(contatore);
 	    	task.getContatore().setFinaltime(finalTime); 
@@ -72,16 +73,36 @@ public class OreLavorateController {
 	    	// salvo in automatico la data fine task in corrispondenza dello stop contatore
 	    	taskservice.setStopTaskDate(STOP, taskId);
 			repositTask.save(task);
+	    	}
+	    	// aggiungi e lascia aperto
+	    	else {
+	    		contatore = new Contatore();
+		    	task.setContatore(contatore);
+	    		task.getContatore().setFinaltime(finalTime); 
+		    	task.getContatore().setStart(START);
+		    	task.getContatore().setPause(STOP);
+	    		
+	    	}
 	    }
 	    
-	    else {
-	    	task.getContatore().setFinaltime(finalTime); 
-	    	task.getContatore().setStart(START);
-	    	task.getContatore().setStop(STOP);
+	    else if(task.getContatore() != null){
 	    	
-	    	// salvo in automatico la data fine task in corrispondenza dello stop contatore
-	    	taskservice.setStopTaskDate(STOP, taskId);
-			repositTask.save(task);
+	    	if(aggiungiOre) { // aggiungi e lascia aperto
+	    	Long finalTimeAdd	= task.getContatore().getFinaltime() + finalTime;
+	    	task.getContatore().setFinaltime(finalTimeAdd);
+	    	
+			repositTask.save(task); 
+	    	}
+	    	// sovrascrivi e chiudi
+	    	else {
+		    	task.getContatore().setFinaltime(finalTime); 
+		    	task.getContatore().setStart(START);
+		    	task.getContatore().setStop(STOP);
+		    	
+		    	// salvo in automatico la data fine task in corrispondenza dello stop contatore
+		    	taskservice.setStopTaskDate(STOP, taskId);
+				repositTask.save(task); 
+		    	}
 	    }
 	    
 		model.addAttribute("contatore", contatore);
