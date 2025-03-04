@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
+import com.freelapp.controller.ContatoreController;
 import com.freelapp.model.Contatore;
 import com.freelapp.model.Task;
 import com.freelapp.repository.ContatoreRepository;
@@ -143,5 +144,41 @@ public class ContatoreService {
 	});
 
     }
+    public void importContatoreInGet(Model model) {
+		if (ContatoreController.contatoreInUso != null) {
+			
+			Task task =taskrepository.getReferenceById(ContatoreController.taskInUso.getId());
+			 contatoreIsTrue(task, model);
 
+			    contatoreIsRun(task, model);
+			    
+			    
+
+			    boolean contatoreIsRun = contatoreIsRun(task, model);
+
+			    LocalDateTime restartTime = task.getContatore().getRestart();
+
+			    LocalDateTime timeNow = LocalDateTime.now();
+
+			    Long FinalTime = task.getContatore().getFinaltime();
+			    
+//			    timeExeed(bindingresult, task, model);
+
+			    if (contatoreIsRun == true && restartTime == null) {
+			    	
+			    	task.getContatore().setFinaltime(findTime( task.getContatore().getStart(), timeNow));
+				
+//			    	timeExeed(bindingresult, task, model);
+
+			    } else if (contatoreIsRun == true && restartTime != null) {
+
+			    	task.getContatore().setFinaltime(FinalTime + findTime(task.getContatore().getRestart(), timeNow));
+				
+//			    	timeExeed(bindingresult, task, model);
+			    }
+
+			    model.addAttribute("finaltime", task.getContatore().getFinaltime());
+
+			}
+	}
 }

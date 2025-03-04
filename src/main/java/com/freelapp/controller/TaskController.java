@@ -1,5 +1,6 @@
 package com.freelapp.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import com.freelapp.repository.ProgettoRepository;
 //import com.freelapp.model.Stato;
 //import com.freelapp.repository.StatoRepository;
 import com.freelapp.repository.TaskRepository;
+import com.freelapp.service.ContatoreService;
 import com.freelapp.service.TaskService;
 
 import jakarta.validation.Valid;
@@ -35,6 +37,9 @@ public class TaskController {
 
     @Autowired
     private TaskService taskService;
+    
+    @Autowired
+    private ContatoreService contatoreservice;
 
 //	@Autowired
 //	private StatoRepository repositStato;
@@ -42,6 +47,10 @@ public class TaskController {
     @GetMapping("/Task")
     public String iMieiTask(Model model) {
 
+		//passo al model i contatore e task in uso (gli static)
+		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+    	
 	return getOnePage(1, model);
     }
 
@@ -64,11 +73,31 @@ public class TaskController {
 
 	model.addAttribute("totalItems", totalItems);
 
+	contatoreservice.importContatoreInGet(model);
+	
+	//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+	if(currentPage != 0) {
+		String endPoint = "/Task/page/" + currentPage;
+		
+		model.addAttribute("endPoint", endPoint);						
+	} else {
+		String endPoint = "/Task";
+		model.addAttribute("endPoint", endPoint);	
+	}
+	
+	//passo al model i contatore e task in uso (gli static)
+	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+
 	return "/Task/freelApp-listaTask";
     }
 
     @GetMapping("/task-search")
     public String listaTaskSearch(@Param("input") String input, Model model) {
+    	
+		//passo al model i contatore e task in uso (gli static)
+		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+		model.addAttribute("taskInUso", ContatoreController.taskInUso);
 
 	return taskBySearch(1, input, model);
     }
@@ -91,6 +120,22 @@ public class TaskController {
 	model.addAttribute("totalItems", totalItems);
 
 	model.addAttribute("list", listaTaskSearch);
+	
+	contatoreservice.importContatoreInGet(model);
+	
+	//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+	if(input != null) {
+		String endPoint = "/task-search?input=" + input;
+		
+		model.addAttribute("endPoint", endPoint);						
+	} else {
+		String endPoint = "/task-search";
+		model.addAttribute("endPoint", endPoint);	
+	}
+	
+	//passo al model i contatore e task in uso (gli static)
+	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+	model.addAttribute("taskInUso", ContatoreController.taskInUso);
 
 	return "/Task/freelApp-listaTask";
     }
@@ -98,8 +143,20 @@ public class TaskController {
     @GetMapping("/Task/{id}")
     public String descrizioneTask(@PathVariable("id") int taskId, Model model) {
 
+    	
 	model.addAttribute("task", repositTask.getReferenceById(taskId));
 
+//  passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+	String endPoint = "/Task/";
+	
+	model.addAttribute("endPoint", endPoint);
+	
+	contatoreservice.importContatoreInGet(model);
+	
+	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+	
+	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+	
 	return "/Task/freelapp-descrizioneTask";
     }
 
@@ -108,6 +165,7 @@ public class TaskController {
 
 	    Progetto progetto, Model model) {
 
+    	
 	// richiamo il progetto tramite id
 	progetto = repositProgetto.getReferenceById(id);
 
@@ -118,7 +176,26 @@ public class TaskController {
 
 	// riporto nel modello il task
 	model.addAttribute("task", newTask);
+	
+	//riporto al model l'id del progetto in uso
+	model.addAttribute("progettoId", progetto.getId());
 
+	//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+	String endPoint = "/Task/insert/progetto-" ;
+	
+	model.addAttribute("endPoint", endPoint);
+	
+	contatoreservice.importContatoreInGet(model);
+	//passo al model i contatore e task in uso (gli static)
+	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+	//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
+	if(ContatoreController.taskInUso != null) {
+    	model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
+    }else {
+    	model.addAttribute("taskInUsoId",0);
+    }
+	
 	return "/Task/freelapp-insertTask";
     }
 
@@ -138,6 +215,24 @@ public class TaskController {
 	if (bindingResult.hasErrors()) {
 // bindingResult.addError(
 // new ObjectError("Errore", "Huston abbiamo un problema"));
+		//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+		String endPoint = "/Task/insert/progetto-" ;
+		
+		model.addAttribute("endPoint", endPoint);
+		
+		//riporto al model l'id del progetto in uso
+		model.addAttribute("progettoId", progetto.getId());
+		
+		contatoreservice.importContatoreInGet(model);
+		//passo al model i contatore e task in uso (gli static)
+		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
+		if(ContatoreController.taskInUso != null) {
+	    	model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
+	    }else {
+	    	model.addAttribute("taskInUsoId",0);
+	    }
 
 	    return "/Task/freelapp-insertTask";
 	}
@@ -152,6 +247,7 @@ public class TaskController {
 
     @GetMapping("/Task/newTask")
     private String newTaskWithoutProgetto(Model model) {
+    	
 
 	// istanzio un nuovo task
 	Task newTask = new Task();
@@ -162,17 +258,52 @@ public class TaskController {
 	// riporto nel modello l'elenco dei progetti disponibili
 	model.addAttribute("listaProgetti", repositProgetto.findAll());
 
+	//  passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+	String endPoint = "/Task/newTask";
+	model.addAttribute("endPoint", endPoint);
+	
+	contatoreservice.importContatoreInGet(model);
+	
+	//passo al model i contatore e task in uso (gli static)
+	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+	
+	//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
+	if(ContatoreController.taskInUso != null) {
+		model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
+	}else {
+		model.addAttribute("taskInUsoId",0);
+	}
+
 	return "/Task/freelapp-insertTask-noProgetto";
     }
 
-    @PostMapping("Task/newTask")
+    @PostMapping("/Task/newTask")
     private String saveNewTaskWithoutProgetto(@Valid @ModelAttribute("task") Task task, BindingResult bindingResult,
 	    Model model) {
+    	
 
 	if (bindingResult.hasErrors()) {
 
 	    // riporto nel modello l'elenco dei progetti disponibili
 	    model.addAttribute("listaProgetti", repositProgetto.findAll());
+	    
+	//  passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+		String endPoint = "/Task/newTask";
+		model.addAttribute("endPoint", endPoint);
+		
+		contatoreservice.importContatoreInGet(model);
+		
+		//passo al model i contatore e task in uso (gli static)
+		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		
+		//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
+		if(ContatoreController.taskInUso != null) {
+			model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
+		}else {
+			model.addAttribute("taskInUsoId",0);
+		}
 
 	    return "/Task/freelapp-insertTask-noProgetto";
 	}
@@ -189,7 +320,24 @@ public class TaskController {
 
 	Task formTask = repositTask.getReferenceById(id);
 	model.addAttribute("formTask", formTask);
-
+	
+	//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+    String endPoint = "/Task/edit/";
+    model.addAttribute("endPoint", endPoint);
+    
+    contatoreservice.importContatoreInGet(model);
+    
+  //passo al model i contatore e task in uso (gli static)
+  	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+  	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+  	
+  	//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
+  	if(ContatoreController.taskInUso != null) {
+  		model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
+  	}else {
+  		model.addAttribute("taskInUsoId",0);
+  	}
+	
 	return "/Task/freelapp-editTask";
     }
 
@@ -200,6 +348,17 @@ public class TaskController {
 
 	if (bindingResult.hasErrors()) {
 	    bindingResult.addError(new ObjectError("Errore", "c'è un errore nel salvataggio del form"));
+	    
+	  //passo al model i contatore e task in uso (gli static)
+	  	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+	  	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+	  	
+	  	//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
+	  	if(ContatoreController.taskInUso != null) {
+	  		model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
+	  	}else {
+	  		model.addAttribute("taskInUsoId",0);
+	  	}
 
 	    return "/Task/freelapp-editTask";
 	}
