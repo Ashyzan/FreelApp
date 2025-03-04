@@ -464,7 +464,7 @@ public class ContatoreController {
     @PostMapping("/Contatore/reset/{id}")
     public String resetContatore(@PathVariable("id") Integer taskId,
     		// l'endpoint passato dal model serve a far ritornare sulla pagina di partenza dopo aver cliccato su start
-    		@ModelAttribute("endPoint") String endPoint) 
+    		@ModelAttribute("endPoint") String endPoint) {
 
 		// richiamo l'id del task
 		Task task = repositTask.getReferenceById(taskId);
