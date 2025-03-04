@@ -1,6 +1,7 @@
 package com.freelapp.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,8 @@ public class FreelappRestController {
 		String logoCliente = task.getProgetto().getCliente().getLogoPath();
 		
 		LocalDate chiusuraStimata = task.getDataChiusuraStimata();
+		
+		//LocalDateTime stop = task.getContatore().getStop();
 	
 		Optional<RestTask> restTask = Optional.of(new RestTask(nome, progetto, cliente, logoCliente, chiusuraStimata));
 	

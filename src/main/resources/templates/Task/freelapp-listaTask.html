@@ -1121,8 +1121,12 @@
 										</th>
 										<th
 											class="md:px-4 px-2  max-lg:hidden">
-											Data Chiusura
+											Chiusura
 											Stimata </th>
+										<th
+											class="md:px-4 px-2  max-lg:hidden">
+											Chiusura
+											Effettiva </th>
 										<th class="md:px-4 px-2"
 											style="text-align: center;">
 											Progetto Rif.
@@ -1148,6 +1152,9 @@
 											class="p-2 max-lg:hidden">
 										</td>
 										<td th:text=" ${#temporals.format(task.getDataChiusuraStimata(), 'dd MMM yyyy')}"
+											class="p-2 max-lg:hidden">
+										</td>
+										<td th:text=" ${#temporals.format(task.getDataChiusuraDefinitiva(), 'dd MMM yyyy')}"
 											class="p-2 max-lg:hidden">
 										</td>
 										<td

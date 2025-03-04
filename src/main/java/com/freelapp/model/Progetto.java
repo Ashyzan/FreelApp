@@ -38,17 +38,17 @@ public class Progetto {
 	@Size(min = 1, max =500 , message="massimo 500 caratteri")
  	@NotBlank(message = "Inserimento descrizione obbligatorio")
 	@NotNull(message = "Inserimento descrizione obbligatorio")
-	@Column(name = "descrizione", nullable = true)
+	@Column(name = "descrizione", nullable = false)
 	private String descrizione;
 	
 	@Column(name = "DataInizio", nullable = false)
 	@DateTimeFormat(pattern= "yyyy-MM-dd")
 	@NotNull(message = "Data di inizio obbligatoria")
-	private LocalDate dataInizio;
+	private LocalDate dataInizio = LocalDate.now();
 	
-	@NotNull(message = "Data di fine obbligatoria")
+	
 	@DateTimeFormat(pattern= "yyyy-MM-dd")
-	@Column(name = "DataFine", nullable = false)
+	@Column(name = "DataFine")
 	private LocalDate dataFine;
 	
 	@OneToMany(mappedBy = "progetto")
