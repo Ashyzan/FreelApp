@@ -1,6 +1,7 @@
 package com.freelapp.restModel;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class RestTask {
 
@@ -13,6 +14,8 @@ public class RestTask {
 	private String logoCliente;
 	
 	private LocalDate chiusuraStimata;
+
+	private LocalDateTime stop;
 	
 	private Long finalTime;
 	
@@ -27,6 +30,15 @@ public class RestTask {
 		this.chiusuraStimata = chiusuraStimata;
 		this.finalTime = finalTime;
 		this.taskAttualmenteInUso = taskAttualmenteInUso;
+		//this.stop = stop;
+	}
+
+	public LocalDateTime getStop() {
+		return stop;
+	}
+
+	public void setStop(LocalDateTime stop) {
+		this.stop = stop;
 	}
 
 	public String getNome() {

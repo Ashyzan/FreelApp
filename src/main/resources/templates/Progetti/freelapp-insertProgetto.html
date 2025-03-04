@@ -787,13 +787,19 @@
 									<input type="hidden" th:field="*{utente}" id="utente">
 									<div class="grid md:grid-cols-3  grid-cols-4 mb-2 py-2">
 										<div class="col">
-											<label for="name">Nome
-												del
-												progetto</label>
+											<label
+												for="name" >Nome
+												del progetto*</label>
 										</div>
-										<div class=" col md:col-span-2 col-span-3">
-											<input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="name"
-												th:field="*{name}" th:errorClass="border">
+										<div
+											class=" col md:col-span-2 col-span-3">
+											<input
+												type="text"
+												placeholder="titolo progetto.."
+												class="border-red-600 w-full h-8 ps-4 rounded-lg"
+												id="name"
+												th:field="*{name}"
+												th:errorClass="border">
 											<div th:if="${#fields.hasErrors('name')}"
 												class="text-red-600 text-[12px] text-center w-full">
 												<ul>
@@ -806,12 +812,18 @@
 	
 									<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
 										<div class="col">
-											<label for="email">Descrizione</label>
+											<label
+												for="descrizione" >Descrizione*</label>
 										</div>
-										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg"
-												id="descrizione" th:field="*{descrizione}" th:errorClass="border">
-	
+										<div
+											class="col md:col-span-2 col-span-3">
+											<textarea
+												type="text"
+												class="border-red-600 w-full h-8 ps-4 rounded-lg"
+												id="descrizione"
+												placeholder="inserisci descrizione dettagliata.."
+												th:field="*{descrizione}"
+												th:errorClass="border"></textarea>
 											<div th:if="${#fields.hasErrors('descrizione')}"
 												class="text-red-600 text-[12px] text-center w-full">
 												<ul>
@@ -824,8 +836,8 @@
 	
 									<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
 										<div class="col">
-											<label for="telefono">Data
-												inizio</label>
+											<label
+												for="telefono">Data inizio*</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
 											<input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg"
@@ -862,8 +874,9 @@
 	
 									<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
 										<div class="col">
-											<label for="city">Cliente
-												progetto</label>
+											<label
+												for="city">Cliente
+												progetto*</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
 											<select

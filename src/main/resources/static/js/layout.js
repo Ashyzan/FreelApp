@@ -122,6 +122,7 @@ if(modalPauseTopButton != null){
 		formStartPause.action = `/Contatore/pause/${taskInUsoId}`;
 		modalPauseStartButton.classList.remove('scale-0');
 	})	
+
 }
 
 //apertura modale PAUSE-START BUTTON (PAUSE bottom)

@@ -1,5 +1,7 @@
 package com.freelapp.service;
 
+import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -86,6 +88,14 @@ public class ContatoreService {
 	// finalTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
 
 	return FinalTimeSeconds;
+    }
+    
+    // metodo che calcola lo STOP a partire dallo Start e dal finaltime
+    public LocalDateTime findStop(LocalDateTime start_date, Long oreLavorate) {
+    	// .plusSeconds() aggiunge secondi al localdatetime 
+    	LocalDateTime stop_datetime = start_date.plusSeconds(oreLavorate);
+    	
+    	return stop_datetime;
     }
 
     // METODO controlla che il timer non ecceda le ore consentite altrimenti mette
