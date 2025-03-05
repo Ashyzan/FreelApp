@@ -1,9 +1,11 @@
 package com.freelapp.controller;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
@@ -406,7 +412,7 @@ public class ClientController {
 		Cliente cliente = new Cliente();
 		
 		cliente = repositoryCliente.getReferenceById(id);
-		
+			
 		//per poter cancellare i progetti collegati al cliente ho dovuto cancellare i task associati
 		//e per farlo ho creato una lista di progetti associati al cliente, l'ho iterata con il for 
 		//e per ogni progetto della lista vado a cancellare i suoi task. fatto questo esco
@@ -425,6 +431,17 @@ public class ClientController {
 		}
 		
 		repositProgetto.deleteByClienteId(id);
+		
+		// creazione path del logo realitivo al cliente per successiva cancellazione
+		// il numero 1 diventerà userLogged.getId() con implementazione security
+		Path logoPathAndFileToDelete = Paths.get( "upload/images/logo/utentiId/1/" + cliente.getLogo());
+		
+		try {
+			Files.delete(logoPathAndFileToDelete);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 		
 		repositoryCliente.deleteById(id);
 		
