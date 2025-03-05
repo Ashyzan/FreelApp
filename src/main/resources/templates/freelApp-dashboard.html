@@ -1078,7 +1078,7 @@
 				</div>
 			</div>
 			<div class="w-full h-auto bg-white rounded-b-lg">
-				<div th:if="${taskSelectedId == null}" id="form-task" class="">
+				<div id="form-task" class="">
 					<form id="form-task-select">
 						<div class="flex flex-col justify-center p-2 text-center pe-6">
 							<div class="p-3 text-[#0057A5]">
@@ -1292,30 +1292,33 @@
 				</div>
 			</div>
 			<div class="w-full h-auto bg-white rounded-b-lg">
-				<div th:if="${taskSelectedId == null}" id="form-task" class="">
+				<h1 class="font-bold pt-3 text-3xl text-[#0057A5] rounded-lg block w-full text-center">ORE
+					LAVORATE</h1>
+					<div class="p-3 text-[#0057A5] text-center" th:if="${taskListOreLavorate.size == 0} ">Non ci sono task disponibili</div>
+				<div id="form-task" class="" th:if="${taskListOreLavorate.size != 0}">
 					<form id="taskDetailHrefOre" th:object="${contatore}"
 						method="post">
+							
 						<div class="flex flex-col justify-center p-2 text-center pe-6">
-							<h1
-								class="font-bold text-3xl text-[#0057A5] rounded-lg block w-full text-center">ORE
-								LAVORATE</h1>
-							<div class="p-3 text-[#0057A5]">
-								<p class="mb-2">Seleziona il task</p>
+							
+							<div class="p-3 text-[#0057A5]" th:if="${taskList} != 0">
+								<p class="mb-2 text-lg font-bold">Seleziona il task</p>
 								<select
+								
 									class="border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full  px-4 focus:outline-none"
 									id="form-select-input-ore" name="taskId"
 									onchange="getJsonTaskOre(value)">
 									<option value="0">Seleziona Task</option>
-									<option th:each="task : ${taskList}"
+									<option th:each="task : ${taskListOreLavorate}"
 									 th:value="${task.id}"
-									 th:text="${task.getName()}"
-									 th:unless="${task.getContatore() != null and task.getContatore().getStop() != null}">					
+									 th:text="${task.getName()}" 
+									>					
 									</option>
 								</select>
 							</div>
 						</div>
 						
-						<div id="taskResumeTableOreLavorate"
+						<div id="taskResumeTableOreLavorate" 
 					class="hidden p-4 text-[#0057A5]">
 					<div class="p-1 w-[100%] h-auto">
 						<div id="taskResumeTitle"
@@ -1356,22 +1359,21 @@
 					</div>
 				</div>
 						
-						<div class="flex flex-row justify-center p-2 text-center pe-6">
+						<div class="flex flex-row justify-center p-2 text-center pe-6" >
 
 							<div class="p-3 text-[#0057A5] basis-1/2 flex-auto">
-								<p class="mb-2">Inserisci la data</p>
+								<p class="mb-2 text-lg font-bold">Inserisci la data</p>
 								<input type="date" name="date" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
 									class="text-2xl m-4 p-2 border border-[#0057A5] h-10  text-[#0057A5] rounded-lg block w-full text-center bg-gray-200"
 									id="dataOreLavorate" >
 							
-								<label for="tempoOreLavorate">Inserisci ore lavorate</label>
+								<p class="text-lg font-bold">Inserisci ore lavorate</p>
 								
 								<div >
+									<input type="radio" name="aggiungiOre" checked="checked" id="sovrascriviOre" value="0" >
+									<label for="sovrascriviOre">Sovrascrivi e chiudi task</label>
 									<input type="radio" name="aggiungiOre" id="aggiungiOre" value="1" >
-									<label for="aggiungiOre">Aggiungi</label>
-								
-									<input type="radio" name="aggiungiOre" id="sovrascriviOre" value="0" >
-									<label for="sovrascriviOre">Sovrascrivi e chiudi</label>
+									<label for="aggiungiOre">Aggiungi al task attivo</label>
 								</div>
 								
 								<input type="time"  name="time" value="01:00"
@@ -1405,7 +1407,6 @@
 		let finalTimeSec = /*[[${finaltime}]]*/ null;
 		let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
 		let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean
-    //let taskSelectedId = /*[[${taskSelectedId}]]*/ null;
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>

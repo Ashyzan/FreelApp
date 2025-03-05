@@ -5,10 +5,21 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
+import com.freelapp.model.Task;
+import com.freelapp.repository.TaskRepository;
 
 @Service
 public class OreLavorateService {
+	
+	@Autowired
+	ContatoreService contatoreservice;
+	
+	@Autowired
+	TaskRepository taskrepository;
 	
 	// metodo che converte una data in localdatetime
     public LocalDateTime convertToLocalDateTimeViaInstant(Date dataOre) {
@@ -44,5 +55,6 @@ public class OreLavorateService {
     	
     	return stop_datetime;
     }
+    
 
 }

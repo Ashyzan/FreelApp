@@ -88,6 +88,8 @@ public class OreLavorateController {
 	    else if(task.getContatore() != null){
 	    	
 	    	if(aggiungiOre) { // aggiungi e lascia aperto
+	    		task.getContatore().setRestart(START);
+		    	task.getContatore().setPause(STOP);
 	    	Long finalTimeAdd	= task.getContatore().getFinaltime() + finalTime;
 	    	task.getContatore().setFinaltime(finalTimeAdd);
 	    	
@@ -95,9 +97,9 @@ public class OreLavorateController {
 	    	}
 	    	// sovrascrivi e chiudi
 	    	else {
-		    	task.getContatore().setFinaltime(finalTime); 
 		    	task.getContatore().setStart(START);
 		    	task.getContatore().setStop(STOP);
+		    	task.getContatore().setFinaltime(finalTime); 
 		    	
 		    	// salvo in automatico la data fine task in corrispondenza dello stop contatore
 		    	taskservice.setStopTaskDate(STOP, taskId);

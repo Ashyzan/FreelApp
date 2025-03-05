@@ -1,6 +1,8 @@
 package com.freelapp.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +74,25 @@ public class DashboardController {
 		model.addAttribute("taskList", taskList);
 		
 		
+		// lista che restituisce i task per modale delle ore lavorate sulla dashboard
+		List<Task> taskListOreLavorate = new ArrayList<Task> ();
+		taskList = taskRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+		taskList.forEach( task -> {
+			
+			if( task.getContatore() != null) {
+				Boolean contatoreAttivo;
+				contatoreAttivo = contatoreservice.contatoreIsRun(task, model);
+				if(task.getContatore().getStop() == null  && contatoreAttivo == false) {
+					 
+						 taskListOreLavorate.add(task); 
+						 }	
+					}
+			else if( task.getContatore() == null) {
+				taskListOreLavorate.add(task);
+			}
+				} );
+			model.addAttribute("taskListOreLavorate", taskListOreLavorate);
+
 		
 		return "freelApp-dashboard";
 
