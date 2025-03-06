@@ -63,7 +63,7 @@ public class Task{
 	private Progetto progetto;
 	
 	@Column(name = "stato")
-	private String stato;
+	private String stato = "inattivo";
 	
 	@OneToOne(mappedBy = "task", cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
@@ -134,7 +134,6 @@ public class Task{
 
 
 	public void setStato(String stato) {
-	    stato = "in corso";
 	    this.stato = stato;
 	}
 

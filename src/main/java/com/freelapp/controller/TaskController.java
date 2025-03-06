@@ -143,9 +143,16 @@ public class TaskController {
     @GetMapping("/Task/{id}")
     public String descrizioneTask(@PathVariable("id") int taskId, Model model) {
 
-    	
-	model.addAttribute("task", repositTask.getReferenceById(taskId));
-
+    Task task = repositTask.getReferenceById(taskId);
+    model.addAttribute("task", task);
+    
+    // passo il finaltime formattato per la voce "timer" di tipo string sul dettaglio task
+    
+    if (task.getContatore() != null) {
+    	String timeInHHMMSS = taskService.Timer(task);
+    	model.addAttribute("timeInHHMMSS", timeInHHMMSS);
+    	}
+    
 //  passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
 	String endPoint = "/Task/";
 	

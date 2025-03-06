@@ -140,6 +140,7 @@ public class ContatoreController {
 
 		// imposta il valore di restart
 		task.getContatore().setRestart(LocalDateTime.now());
+		task.setStato("in corso");
 
 		Long FinalTime = task.getContatore().getFinaltime();
 
@@ -172,6 +173,7 @@ public class ContatoreController {
 	else if ((task.getContatore() != null) && (task.getContatore().getStart() == null)) {
 	    // imposta il valore di start
 	    task.getContatore().setStart(LocalDateTime.now());
+	    task.setStato("in corso");
 
 	    // collego nel modello html il task e il contatore
 	    model.addAttribute("task", task);
@@ -203,6 +205,7 @@ public class ContatoreController {
 
 	    // eseguo il TIMESTAMP
 	    contatore.setStart(LocalDateTime.now());
+	    task.setStato("in corso");
 	    contatore.setFinaltime(0l);
 
 	    // collego nel modello html il task e il contatore
@@ -257,6 +260,7 @@ public class ContatoreController {
 		PAUSE = LocalDateTime.now();
 
 		contatore.setPause(PAUSE);
+		task.setStato("in pausa");
 
 		// metodo che calcola la differenza fra i due timestamp
 		Long FinalTime1 = contatoreservice.findTime(START, PAUSE);
@@ -289,6 +293,7 @@ public class ContatoreController {
 		    PAUSE = LocalDateTime.now();
 
 		    contatore.setPause(PAUSE);
+		    task.setStato("in pausa");
 
 		    Long timenow = contatoreservice.findTime(RESTART, PAUSE);
 
@@ -352,6 +357,7 @@ public class ContatoreController {
 					STOP = LocalDateTime.now();
 
 					contatore.setStop(STOP);
+					task.setStato("chiuso");
 					
 					// salvo in automatico la data fine task in corrispondenza dello stop contatore
 			    	taskservice.setStopTaskDate(STOP, taskId);
@@ -371,6 +377,7 @@ public class ContatoreController {
 					STOP = LocalDateTime.now();
 
 					contatore.setStop(STOP);
+					task.setStato("chiuso");
 					
 					// salvo in automatico la data fine task in corrispondenza dello stop contatore
 			    	taskservice.setStopTaskDate(STOP, taskId);
@@ -392,6 +399,7 @@ public class ContatoreController {
 					STOP = LocalDateTime.now();
 					// setto lo stop a db
 					contatore.setStop(STOP);
+					task.setStato("chiuso");
 					
 					// salvo in automatico la data fine task in corrispondenza dello stop contatore
 			    	taskservice.setStopTaskDate(STOP, taskId);
@@ -418,6 +426,7 @@ public class ContatoreController {
 					STOP = LocalDateTime.now();
 
 					contatore.setStop(STOP);
+					task.setStato("chiuso");
 					
 					// salvo in automatico la data fine task in corrispondenza dello stop contatore
 			    	taskservice.setStopTaskDate(STOP, taskId);
@@ -454,6 +463,7 @@ public class ContatoreController {
 			}
 
 		}
+		
     contatoreInUso = null;
 	taskInUso = null;//	return "/Contatore/timer";
 	return "redirect:/Task/" + task.getId();

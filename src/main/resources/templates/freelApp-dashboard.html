@@ -1170,7 +1170,7 @@
 										</svg>
 									</div>
 									<div class="flex flex-col items-center">
-										<div class="col-auto text-[24px] p-0" id="timerResumeTask">00:00:00</div>
+										<div  class="col-auto text-[24px] p-0" id="timerResumeTask">00:00:00</div>
 									</div>
 									<div class="col-auto flex items-center">
 										<div class="w-10 h-10 mx-2">
@@ -1369,9 +1369,9 @@
 							
 								<p class="text-lg font-bold">Inserisci ore lavorate</p>
 								
-								<div >
+								<div class="text-left ml-5">
 									<input type="radio" name="aggiungiOre" checked="checked" id="sovrascriviOre" value="0" >
-									<label for="sovrascriviOre">Sovrascrivi e chiudi task</label>
+									<label for="sovrascriviOre">Sovrascrivi e chiudi task</label><br>
 									<input type="radio" name="aggiungiOre" id="aggiungiOre" value="1" >
 									<label for="aggiungiOre">Aggiungi al task attivo</label>
 								</div>
@@ -1407,6 +1407,7 @@
 		let finalTimeSec = /*[[${finaltime}]]*/ null;
 		let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
 		let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean
+		let taskInUsoId = /*[[${taskInUsoId}]]*/ null;
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
