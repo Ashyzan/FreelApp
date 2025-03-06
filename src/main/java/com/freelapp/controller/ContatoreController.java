@@ -39,6 +39,8 @@ public class ContatoreController {
     public static Contatore contatoreInUso;
     
     public static Task taskInUso;
+    
+    public static boolean contatoreAttivato = false;
 
 //    @GetMapping("/Contatore/timer/{id}")
 //    public String gestioneTimer(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
@@ -220,6 +222,7 @@ public class ContatoreController {
 
 	contatoreInUso = contatore;
 	taskInUso = task;
+	contatoreAttivato = true;
 
 //	return "/Contatore/timer";
 	return "redirect:" + endPoint;
@@ -318,7 +321,7 @@ public class ContatoreController {
 	    model.addAttribute("finaltime", FinalTime);
 	}
 
-//	return "/Contatore/timer";
+	contatoreAttivato = false;
 	return "redirect:" + endPoint;
     }
 
@@ -455,7 +458,8 @@ public class ContatoreController {
 
 		}
     contatoreInUso = null;
-	taskInUso = null;//	return "/Contatore/timer";
+	taskInUso = null;
+	contatoreAttivato = false;
 	return "redirect:/Task/" + task.getId();
 	}
 
@@ -489,5 +493,7 @@ public class ContatoreController {
 
 	return "redirect:" + endPoint;
 	}
+    
+}
 
-	}
+

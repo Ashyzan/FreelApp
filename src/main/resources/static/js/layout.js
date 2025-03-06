@@ -31,6 +31,9 @@ const modalPauseBottomButton = document.getElementById('modalPauseBottomButton')
 const modalPauseStartCloseButton = document.getElementById('modalPauseStartCloseButton');
 const formStartPause = document.getElementById('form-start-pause');
 
+//recupero elemento dal DOM per animazione partenza contatore
+const dettaglioContatoreTop = document.getElementById('dettaglio-contatore-top');
+const dettaglioContatoreBottom = document.getElementById('dettaglio-contatore-bottom');
 
 // funzioni per navBar 		
 function onToggleMenu(e){
@@ -150,4 +153,10 @@ function closeModal(){
 	modal.classList.add('scale-0');
 }		  
 		 
+
+//animazione avvio contatore
+if(contatoreAttivato == true){
+	dettaglioContatoreTop.classList.add('animate-scale-once');
+	dettaglioContatoreBottom.classList.add('animate-scale-once')
+}
 

@@ -46,10 +46,16 @@ public class DashboardController {
 		String endPoint = "/dashboard";
 		model.addAttribute("endPoint", endPoint);
 		
-			contatoreservice.importContatoreInGet(model);
-			model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
-			model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		contatoreservice.importContatoreInGet(model);
+		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+		model.addAttribute("taskInUso", ContatoreController.taskInUso);
 
+		//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+		ContatoreController.contatoreAttivato = false;
 
 		List<Cliente> clienteList = new ArrayList<Cliente> ();
 
