@@ -156,7 +156,7 @@ function closeModal(){
 
 //animazione avvio contatore
 if(contatoreAttivato == true){
-	dettaglioContatoreTop.classList.add('animate-scale-once');
-	dettaglioContatoreBottom.classList.add('animate-scale-once')
+	dettaglioContatoreTop.classList.add('animate_animated','animate__bounceIn');
+	dettaglioContatoreBottom.classList.add('animate_animated','animate__bounceIn');
 }
 
