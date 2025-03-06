@@ -17,13 +17,14 @@
 		seconds++;
 		stampacontatore();
 		
-		if (seconds >= 60) {
-			seconds = 0;
+		if (seconds == 59) {
+			seconds = -1;
+			
 			minutes++;
 		}
 
-		if (minutes >= 60) {
-			minutes = 0;
+		if (minutes == 59) {
+			minutes = -1;
 			hours++;
 		}
 		
