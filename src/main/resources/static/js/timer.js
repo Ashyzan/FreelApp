@@ -20,13 +20,16 @@
 		if (seconds == 59) {
 			seconds = -1;
 			
-			minutes++;
+			if(minutes <= 59){
+				minutes++;
+			}
+				else {
+				minutes = 0;
+				seconds = -1;
+				hours++;
+			}
 		}
 
-		if (minutes == 59) {
-			minutes = -1;
-			hours++;
-		}
 		
 
 	}
