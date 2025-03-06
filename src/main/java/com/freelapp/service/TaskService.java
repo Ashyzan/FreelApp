@@ -29,9 +29,6 @@ public class TaskService {
 		Pageable pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending().and(Sort.by("name")));
 		return taskRepository.findAll(pageable);
 		
-		
-			  
-		
 	}
 	
 	public Page<Task> findSearchedPage(int pageNumber, String input){
@@ -46,6 +43,16 @@ public class TaskService {
 		java.util.Date NEWSTOP = java.util.Date.from(STOP.atZone(ZoneId.systemDefault()).toInstant());
 		LocalDate NEWSTOP2 = NEWSTOP.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		taskRepository.getReferenceById(taskId).setDataChiusuraDefinitiva(NEWSTOP2);
+	}
+	
+	// metodo che restituisce il finaltime formattato in HH:MM:SS
+	public String Timer(Task task) {		
+	    Long finaltime = task.getContatore().getFinaltime(); 
+	    Long HH = finaltime / 3600;
+	    Long MM= (finaltime % 3600) / 60;
+	    Long SS = finaltime % 60;  
+	    String timer = String.format("%02d:%02d:%02d", HH, MM, SS);	    
+		return timer;
 	}
 	
 }
