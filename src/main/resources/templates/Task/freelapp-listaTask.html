@@ -293,7 +293,7 @@
 								<a th:unless="${taskInUso == null}" th:href="@{|/Task/${taskInUso.id}|}"  class="t-tooltip flex flex-col items-center w-[100px]">
 									<div th:unless="${contatoreIsTrue}" class=" text-[10px] p-0">...</div>
 									<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
-										class=" text-[10px] p-0"></div>
+										class=" text-[10px] p-0 max-w-[90px] truncate"></div>
 									<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
 									<div class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-40px] mt-[40px]">
 										Dettaglio task
@@ -1249,33 +1249,51 @@
 														</div>
 													</div>
 												</a>
-												<form th:action="@{|/contatore/cambio/${task.id}|}" th:object="${contatore}" method="post">
-													<input type="hidden" name="endPoint" th:value="${endPoint}">
-													<button type="submit" class="t-tooltip w-5 h-5">
-														<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg"
-															xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
-															style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-															<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"
-																style="fill:none;" />
-															<clipPath id="_clip1">
-																<rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200"
-																	height="200" />
-															</clipPath>
-															<g clip-path="url(#_clip1)">
-																<g id="stopwatch" transform="matrix(10.4707,0,0,10.4707,-10.6128,0)">
-																	<path
-																		d="M7.376,6.745C6.929,7.02 8.573,10.987 8.974,11.633C9.324,12.202 10.067,12.375 10.632,12.027C11.2,11.675 11.377,10.933 11.027,10.367C10.63,9.719 7.822,6.469 7.376,6.745ZM7.041,2.402C7.969,2.079 8.963,1.9 10,1.9C11.037,1.9 12.031,2.079 12.959,2.402C13.288,2.516 13.724,2.287 13.531,1.791C13.39,1.431 13.254,1.079 13.199,0.936C13.068,0.597 12.599,0.317 12.395,0.271C11.623,0.097 10.823,0 10,0C9.177,0 8.377,0.097 7.604,0.271C7.4,0.317 6.932,0.597 6.801,0.936C6.746,1.079 6.609,1.431 6.469,1.791C6.276,2.287 6.712,2.517 7.041,2.402ZM19.098,3.186C18.906,2.956 18.702,2.731 18.485,2.514C18.269,2.297 18.044,2.094 17.815,1.901C17.662,1.772 17.212,1.667 16.927,1.952C16.643,2.237 15.279,3.599 15.279,3.599C15.681,3.887 16.072,4.204 16.434,4.565C16.796,4.926 17.111,5.317 17.4,5.72C17.4,5.72 18.763,4.358 19.047,4.073C19.333,3.787 19.228,3.338 19.098,3.186ZM10,2.9C5.525,2.9 1.899,6.526 1.899,11C1.899,15.475 5.525,19.101 10,19.101C14.473,19.101 18.1,15.475 18.1,11C18.1,6.527 14.473,2.9 10,2.9ZM10,17.101C6.632,17.101 3.9,14.37 3.9,11.001C3.9,7.632 6.631,4.901 10,4.901C13.369,4.901 16.101,7.632 16.101,11.001C16.101,14.369 13.369,17.101 10,17.101Z"
-																		style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
-																</g>
+												<div th:if="${task.id == taskInUsoId}" class="opacity-50 w-5 h-5">
+													<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg"
+														xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
+														style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+														<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"
+															style="fill:none;" />
+														<clipPath id="_clip1">
+															<rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" />
+														</clipPath>
+														<g clip-path="url(#_clip1)">
+															<g id="stopwatch" transform="matrix(10.4707,0,0,10.4707,-10.6128,0)">
+																<path
+																	d="M7.376,6.745C6.929,7.02 8.573,10.987 8.974,11.633C9.324,12.202 10.067,12.375 10.632,12.027C11.2,11.675 11.377,10.933 11.027,10.367C10.63,9.719 7.822,6.469 7.376,6.745ZM7.041,2.402C7.969,2.079 8.963,1.9 10,1.9C11.037,1.9 12.031,2.079 12.959,2.402C13.288,2.516 13.724,2.287 13.531,1.791C13.39,1.431 13.254,1.079 13.199,0.936C13.068,0.597 12.599,0.317 12.395,0.271C11.623,0.097 10.823,0 10,0C9.177,0 8.377,0.097 7.604,0.271C7.4,0.317 6.932,0.597 6.801,0.936C6.746,1.079 6.609,1.431 6.469,1.791C6.276,2.287 6.712,2.517 7.041,2.402ZM19.098,3.186C18.906,2.956 18.702,2.731 18.485,2.514C18.269,2.297 18.044,2.094 17.815,1.901C17.662,1.772 17.212,1.667 16.927,1.952C16.643,2.237 15.279,3.599 15.279,3.599C15.681,3.887 16.072,4.204 16.434,4.565C16.796,4.926 17.111,5.317 17.4,5.72C17.4,5.72 18.763,4.358 19.047,4.073C19.333,3.787 19.228,3.338 19.098,3.186ZM10,2.9C5.525,2.9 1.899,6.526 1.899,11C1.899,15.475 5.525,19.101 10,19.101C14.473,19.101 18.1,15.475 18.1,11C18.1,6.527 14.473,2.9 10,2.9ZM10,17.101C6.632,17.101 3.9,14.37 3.9,11.001C3.9,7.632 6.631,4.901 10,4.901C13.369,4.901 16.101,7.632 16.101,11.001C16.101,14.369 13.369,17.101 10,17.101Z"
+																	style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
 															</g>
-														</svg>
-														<div
-															class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-50px] mt-[5px]">
-															Avvia
-															Contatore
-														</div>
-													</button>
-												</form>
+														</g>
+													</svg>
+												</div>
+												<div th:unless="${task.id == taskInUsoId}">
+													<form th:action="@{|/contatore/cambio/${task.id}|}" th:object="${contatore}" method="post">
+														<input type="hidden" name="endPoint" th:value="${endPoint}">
+														<button type="submit" class="t-tooltip w-5 h-5">
+															<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg"
+																xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
+																style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+																<rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200"
+																	style="fill:none;" />
+																<clipPath id="_clip1">
+																	<rect id="Tavola-da-disegno11" serif:id="Tavola da disegno1" x="0" y="0" width="200"
+																		height="200" />
+																</clipPath>
+																<g clip-path="url(#_clip1)">
+																	<g id="stopwatch" transform="matrix(10.4707,0,0,10.4707,-10.6128,0)">
+																		<path
+																			d="M7.376,6.745C6.929,7.02 8.573,10.987 8.974,11.633C9.324,12.202 10.067,12.375 10.632,12.027C11.2,11.675 11.377,10.933 11.027,10.367C10.63,9.719 7.822,6.469 7.376,6.745ZM7.041,2.402C7.969,2.079 8.963,1.9 10,1.9C11.037,1.9 12.031,2.079 12.959,2.402C13.288,2.516 13.724,2.287 13.531,1.791C13.39,1.431 13.254,1.079 13.199,0.936C13.068,0.597 12.599,0.317 12.395,0.271C11.623,0.097 10.823,0 10,0C9.177,0 8.377,0.097 7.604,0.271C7.4,0.317 6.932,0.597 6.801,0.936C6.746,1.079 6.609,1.431 6.469,1.791C6.276,2.287 6.712,2.517 7.041,2.402ZM19.098,3.186C18.906,2.956 18.702,2.731 18.485,2.514C18.269,2.297 18.044,2.094 17.815,1.901C17.662,1.772 17.212,1.667 16.927,1.952C16.643,2.237 15.279,3.599 15.279,3.599C15.681,3.887 16.072,4.204 16.434,4.565C16.796,4.926 17.111,5.317 17.4,5.72C17.4,5.72 18.763,4.358 19.047,4.073C19.333,3.787 19.228,3.338 19.098,3.186ZM10,2.9C5.525,2.9 1.899,6.526 1.899,11C1.899,15.475 5.525,19.101 10,19.101C14.473,19.101 18.1,15.475 18.1,11C18.1,6.527 14.473,2.9 10,2.9ZM10,17.101C6.632,17.101 3.9,14.37 3.9,11.001C3.9,7.632 6.631,4.901 10,4.901C13.369,4.901 16.101,7.632 16.101,11.001C16.101,14.369 13.369,17.101 10,17.101Z"
+																			style="fill:rgb(45, 87, 166);fill-rule:nonzero;" />
+																	</g>
+																</g>
+															</svg>
+															<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-50px] mt-[5px] text-nowrap">
+																Seleziona Contatore
+															</div>
+														</button>
+													</form>
+												</div>
 										</td>
 									</tr>
 								</tbody>
@@ -1367,7 +1385,7 @@
 								<a th:unless="${taskInUso == null}" th:href="@{|/Task/${taskInUso.id}|}" class="t-tooltip flex flex-col items-center relative">
 									<div th:unless="${contatoreIsTrue}" class="col-auto text-[14px] p-0">...</div>
 									<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
-										class="col-auto text-[14px] p-0"></div>
+										class="col-auto text-[14px] p-0 max-w-[80%] md:max-w-[100%] truncate"></div>
 									<div class="col-auto text-[24px] p-0" id="timerDue">00:00:00</div>
 									<div class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-210px] mt-[40px]">
 										Dettaglio task

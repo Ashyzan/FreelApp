@@ -55,6 +55,17 @@ public class TaskController {
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 		
+		//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
+		Integer taskInUsoId = 0;
+		
+		if(ContatoreController.taskInUso != null) {
+			taskInUsoId = ContatoreController.taskInUso.getId();
+		}
+		
+		model.addAttribute("taskInUsoId", taskInUsoId);
+		
+		
     	
 	return getOnePage(1, model);
     }
@@ -94,6 +105,17 @@ public class TaskController {
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);
 	
+	//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
+		Integer taskInUsoId = 0;
+		
+		if(ContatoreController.taskInUso != null) {
+			taskInUsoId = ContatoreController.taskInUso.getId();
+		}
+		
+		model.addAttribute("taskInUsoId", taskInUsoId);
+
+	
 	//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
@@ -117,6 +139,16 @@ public class TaskController {
 		
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
+		
+		//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
+		Integer taskInUsoId = 0;
+		
+		if(ContatoreController.taskInUso != null) {
+			taskInUsoId = ContatoreController.taskInUso.getId();
+		}
+		
+		model.addAttribute("taskInUsoId", taskInUsoId);
 
 	return taskBySearch(1, input, model);
     }
@@ -155,6 +187,16 @@ public class TaskController {
 	//passo al model i contatore e task in uso (gli static)
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+	
+	//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
+		Integer taskInUsoId = 0;
+		
+		if(ContatoreController.taskInUso != null) {
+			taskInUsoId = ContatoreController.taskInUso.getId();
+		}
+		
+		model.addAttribute("taskInUsoId", taskInUsoId);
 	
 	//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
