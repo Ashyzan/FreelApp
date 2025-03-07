@@ -130,6 +130,7 @@ public class ContatoreService {
     public void pauseOtherTimers() {
 
 	List<Contatore> allContatori = repositContatore.findAll();
+	List<Task> listaTask = taskrepository.findAll();
 
 	allContatori.forEach(n -> {
 	    if ((n.getPause() == null) && (n.getStop() == null)){
@@ -137,13 +138,26 @@ public class ContatoreService {
 	    	n.setPause(LocalDateTime.now());
 	    	Long FinalTimeSeconds = n.getStart().until(n.getPause(), ChronoUnit.SECONDS);
 	    	n.setFinaltime(FinalTimeSeconds);
+	    	 
+	    	listaTask.forEach(task -> {	
+	 	    	task.setStato("in pausa");
+	 	    	taskrepository.save(task);
+	 	    });
+	    	
 	    } else if((n.getRestart() != null) && (n.getRestart().isAfter(n.getPause()))){
 	    	n.setPause(LocalDateTime.now());
 	    	Long FinalTimeSeconds = n.getRestart().until(n.getPause(), ChronoUnit.SECONDS);
 	    	Long oldFinalTime = n.getFinaltime();
 	    	n.setFinaltime(oldFinalTime + FinalTimeSeconds);
+	    	 
+	    	listaTask.forEach(task -> {
+	 	    	task.setStato("in pausa");
+	 	    	taskrepository.save(task);
+	 	    });
 	    }
 	    repositContatore.save(n);
+	   
+	    
 
 	});
 

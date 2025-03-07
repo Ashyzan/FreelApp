@@ -526,6 +526,8 @@ public class ContatoreController {
     				System.out.println("taskAttivo: " + taskAttivo.getName());
     				contatoreservice.pauseOtherTimers();
     				
+    				
+    				
     			}
 
     	}
@@ -549,7 +551,7 @@ public class ContatoreController {
 	    contatore.setStart(LocalDateTime.now());
 	    //l'insrimento di una pausa a creazione contatore fa si che il contatore non si avvia 
 	    contatore.setPause(LocalDateTime.now());
-	    task.setStato("in corso");
+	    //task.setStato("in corso");
 	    contatore.setFinaltime(0l);
 
 	    // collego nel modello html il task e il contatore
