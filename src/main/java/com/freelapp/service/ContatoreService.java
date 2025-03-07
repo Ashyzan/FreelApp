@@ -132,14 +132,18 @@ public class ContatoreService {
 	List<Contatore> allContatori = repositContatore.findAll();
 
 	allContatori.forEach(n -> {
-	    if ((n.getPause() == null) && (n.getStop() == null)
-		    || (n.getRestart() != null) && (n.getRestart().isAfter(n.getPause()))) {
-		n.setPause(LocalDateTime.now());
-		Long FinalTimeSeconds = n.getStart().until(n.getPause(), ChronoUnit.SECONDS);
-		n.setFinaltime(FinalTimeSeconds);
-		repositContatore.save(n);
-
+	    if ((n.getPause() == null) && (n.getStop() == null)){
+	    	
+	    	n.setPause(LocalDateTime.now());
+	    	Long FinalTimeSeconds = n.getStart().until(n.getPause(), ChronoUnit.SECONDS);
+	    	n.setFinaltime(FinalTimeSeconds);
+	    } else if((n.getRestart() != null) && (n.getRestart().isAfter(n.getPause()))){
+	    	n.setPause(LocalDateTime.now());
+	    	Long FinalTimeSeconds = n.getRestart().until(n.getPause(), ChronoUnit.SECONDS);
+	    	Long oldFinalTime = n.getFinaltime();
+	    	n.setFinaltime(oldFinalTime + FinalTimeSeconds);
 	    }
+	    repositContatore.save(n);
 
 	});
 

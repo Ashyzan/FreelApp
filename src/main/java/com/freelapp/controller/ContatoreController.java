@@ -511,15 +511,31 @@ public class ContatoreController {
     		@ModelAttribute("endPoint") String endPoint,
 	    Model model) {
     	
-    	Task task = repositTask.getReferenceById(taskId);
+    	if(taskInUso != null) {
+    		
+    		System.out.println("task in uso : " + taskInUso.getName());
+    		
+    			Task taskAttivo = repositTask.getReferenceById(taskInUso.getId());
+    			
+    			boolean contatoreIsRun = contatoreservice.contatoreIsRun(taskAttivo, model);
+    			
+    			System.out.println("contatoreIsRun: " + contatoreIsRun);
+    			
+    			if(contatoreIsRun == true) {
+    				
+    				System.out.println("taskAttivo: " + taskAttivo.getName());
+    				contatoreservice.pauseOtherTimers();
+    				
+    			}
+
+    	}
     	
-    	System.out.println("taskId = " + task.getId());
+    	
+    	
+    	Task task = repositTask.getReferenceById(taskId);
     	
     	Contatore contatoreSelected = task.getContatore();
     	
-    	System.out.println("contatoreSelected = " + contatoreSelected);
-    	
-    	contatoreservice.pauseOtherTimers();
     	
     	if(contatoreSelected == null) {
     		
@@ -528,12 +544,11 @@ public class ContatoreController {
 
 	    // associo al task il nuovo contatore
 	    task.setContatore(contatore);
-	    
-	 // metto in pausa gli altri contatori
-    	contatoreservice.pauseOtherTimers();
 
 	    // eseguo il TIMESTAMP
 	    contatore.setStart(LocalDateTime.now());
+	    //l'insrimento di una pausa a creazione contatore fa si che il contatore non si avvia 
+	    contatore.setPause(LocalDateTime.now());
 	    task.setStato("in corso");
 	    contatore.setFinaltime(0l);
 
