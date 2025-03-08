@@ -116,7 +116,7 @@ public class TaskController {
 		model.addAttribute("taskInUsoId", taskInUsoId);
 
 	
-	//invio al model il booleano del contatore attivato
+		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 		
@@ -198,7 +198,7 @@ public class TaskController {
 		
 		model.addAttribute("taskInUsoId", taskInUsoId);
 	
-	//invio al model il booleano del contatore attivato
+		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 		

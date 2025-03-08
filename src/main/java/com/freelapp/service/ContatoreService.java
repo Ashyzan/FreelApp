@@ -133,31 +133,32 @@ public class ContatoreService {
 	List<Task> listaTask = taskrepository.findAll();
 
 	allContatori.forEach(n -> {
-	    if ((n.getPause() == null) && (n.getStop() == null)){
-	    	
-	    	n.setPause(LocalDateTime.now());
-	    	Long FinalTimeSeconds = n.getStart().until(n.getPause(), ChronoUnit.SECONDS);
-	    	n.setFinaltime(FinalTimeSeconds);
-	    	 
-	    	listaTask.forEach(task -> {	
-	 	    	task.setStato("in pausa");
-	 	    	taskrepository.save(task);
-	 	    });
-	    	
-	    } else if((n.getRestart() != null) && (n.getRestart().isAfter(n.getPause()))){
-	    	n.setPause(LocalDateTime.now());
-	    	Long FinalTimeSeconds = n.getRestart().until(n.getPause(), ChronoUnit.SECONDS);
-	    	Long oldFinalTime = n.getFinaltime();
-	    	n.setFinaltime(oldFinalTime + FinalTimeSeconds);
-	    	 
-	    	listaTask.forEach(task -> {
-	 	    	task.setStato("in pausa");
-	 	    	taskrepository.save(task);
-	 	    });
-	    }
-	    repositContatore.save(n);
-	   
-	    
+		if(n.getTask().getStato() != "chiuso" || n.getTask().getStato() != "inattivo") {
+			
+			if ((n.getPause() == null) && (n.getStop() == null)){
+				
+				n.setPause(LocalDateTime.now());
+				Long FinalTimeSeconds = n.getStart().until(n.getPause(), ChronoUnit.SECONDS);
+				n.setFinaltime(FinalTimeSeconds);
+				
+//				listaTask.forEach(task -> {
+					n.getTask().setStato("in pausa");
+//					taskrepository.save(task);	    			
+//				});
+				
+			} else if((n.getRestart() != null) && (n.getRestart().isAfter(n.getPause()))){
+				n.setPause(LocalDateTime.now());
+				Long FinalTimeSeconds = n.getRestart().until(n.getPause(), ChronoUnit.SECONDS);
+				Long oldFinalTime = n.getFinaltime();
+				n.setFinaltime(oldFinalTime + FinalTimeSeconds);
+				
+//				listaTask.forEach(task -> {	    		
+					n.getTask().setStato("in pausa");
+//					taskrepository.save(task);
+//				});
+			}
+			repositContatore.save(n);
+		}
 
 	});
 
