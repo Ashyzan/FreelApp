@@ -170,8 +170,6 @@ public class ContatoreService {
 
 			    contatoreIsRun(task, model);
 			    
-			    
-
 			    boolean contatoreIsRun = contatoreIsRun(task, model);
 
 			    LocalDateTime restartTime = task.getContatore().getRestart();

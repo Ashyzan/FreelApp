@@ -72,10 +72,10 @@ public class DashboardController {
 		model.addAttribute("progettiList", progettiList);
 		
 		
-		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
 		List<Task> taskList = new ArrayList<Task> ();
 
-		taskList = taskRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+		taskList = taskRepository.findAllNotClosed();
 
 		model.addAttribute("taskList", taskList);
 		

@@ -511,73 +511,77 @@ public class ContatoreController {
     		@ModelAttribute("endPoint") String endPoint,
 	    Model model) {
     	
-    	if(taskInUso != null) {
-    		
-    		System.out.println("task in uso : " + taskInUso.getName());
-    		
-    			Task taskAttivo = repositTask.getReferenceById(taskInUso.getId());
-    			
-    			boolean contatoreIsRun = contatoreservice.contatoreIsRun(taskAttivo, model);
-    			
-    			System.out.println("contatoreIsRun: " + contatoreIsRun);
-    			
-    			if(contatoreIsRun == true) {
-    				
-    				System.out.println("taskAttivo: " + taskAttivo.getName());
-    				contatoreservice.pauseOtherTimers();
-    				
-    				
-    				
-    			}
+		Task task = repositTask.getReferenceById(taskId);
 
-    	}
-    	
-    	
-    	
-    	Task task = repositTask.getReferenceById(taskId);
-    	
-    	Contatore contatoreSelected = task.getContatore();
-    	
-    	
-    	if(contatoreSelected == null) {
-    		
-    		 // istanzio un nuovo contatore
-	    contatore = new Contatore();
+		Contatore contatoreSelected = task.getContatore();
 
-	    // associo al task il nuovo contatore
-	    task.setContatore(contatore);
+		if (task.getStato() != "chiuso") {
 
-	    // eseguo il TIMESTAMP
-	    contatore.setStart(LocalDateTime.now());
-	    //l'insrimento di una pausa a creazione contatore fa si che il contatore non si avvia 
-	    contatore.setPause(LocalDateTime.now());
-	    //task.setStato("in corso");
-	    contatore.setFinaltime(0l);
+			//se il task non è stato chiuso ed è diverso dal taskInUso
+			if (taskInUso != null && taskInUso.getId() != taskId) {
 
-	    // collego nel modello html il task e il contatore
-	    model.addAttribute("task", task);
-	    model.addAttribute("contatore", contatore);
+				Task taskAttivo = repositTask.getReferenceById(taskInUso.getId());
 
-	    // salvo il contatore a DB
-	    repositContatore.save(contatore);
-	    // parte per javascript: serve per collegare il finaltime da java a javascript
-	    // sul frontend
-	    contatoreservice.contatoreIsTrue(task, model);
-	    contatoreservice.contatoreIsRun(task, model);
-	    
-	    contatoreSelected = contatore;
-    		
-    	} 	
-    		
-    	contatoreInUso = contatoreSelected;
-    		
-    	taskInUso = task;
-    	
-    	
-    	contatoreAttivato = true;
-    	
-    	return "redirect:" + endPoint;
-    }
+				boolean contatoreIsRun = contatoreservice.contatoreIsRun(taskAttivo, model);
+ 
+				//se prima della selezione del nuovo task il precedente Task aveva un contatore in run
+				//qeusto viene messo in pausa e il suo stato cambiato in pausa
+				if (contatoreIsRun == true) {
+					
+					contatoreservice.pauseOtherTimers();
+					
+					taskAttivo.setStato("in pausa");
+
+				}
+
+			}
+
+			//se il task selezionato non ha il contatore assegnato
+			if (contatoreSelected == null) {
+
+				// istanzio un nuovo contatore
+				contatore = new Contatore();
+
+				// associo al task il nuovo contatore
+				task.setContatore(contatore);
+
+				// eseguo il TIMESTAMP
+				contatore.setStart(LocalDateTime.now());
+				// l'insrimento di una pausa a creazione contatore fa si che il contatore non si
+				// avvia
+				contatore.setPause(LocalDateTime.now());
+
+				// task.setStato("in corso");
+
+				task.setStato("in pausa");
+				contatore.setFinaltime(0l);
+
+				// collego nel modello html il task e il contatore
+				model.addAttribute("task", task);
+				model.addAttribute("contatore", contatore);
+
+				// salvo il contatore a DB
+				repositContatore.save(contatore);
+				// parte per javascript: serve per collegare il finaltime da java a javascript
+				// sul frontend
+				contatoreservice.contatoreIsTrue(task, model);
+				contatoreservice.contatoreIsRun(task, model);
+
+				contatoreSelected = contatore;
+
+			}
+
+			//riassegno con il nuovo task e contatore quelli in uso
+			contatoreInUso = contatoreSelected;
+
+			taskInUso = task;
+
+			//valore booleano che serve per l'animazione
+			contatoreAttivato = true;
+		}
+
+		return "redirect:" + endPoint;
+	}
 }
 
 
