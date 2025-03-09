@@ -163,18 +163,10 @@ public class ContatoreService {
     public void importContatoreInGet(Model model) {
 		if (ContatoreController.contatoreInUso != null) {
 			
-			Task task =taskrepository.getReferenceById(ContatoreController.taskInUso.getId());
-			 
-
-			 
-			    contatoreIsRun(task);
-			    
+				Task task =taskrepository.getReferenceById(ContatoreController.taskInUso.getId());    
 			    boolean contatoreIsRun = contatoreIsRun(task);
-
 			    LocalDateTime restartTime = task.getContatore().getRestart();
-
 			    LocalDateTime timeNow = LocalDateTime.now();
-
 			    Long FinalTime = task.getContatore().getFinaltime();
 			    
 //			    timeExeed(bindingresult, task, model);

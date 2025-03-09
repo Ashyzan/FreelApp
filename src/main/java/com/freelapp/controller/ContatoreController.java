@@ -555,7 +555,7 @@ public class ContatoreController {
 
 				// task.setStato("in corso");
 
-				task.setStato("in pausa");
+				task.setStato("inattivo");
 				contatore.setFinaltime(0l);
 
 				// collego nel modello html il task e il contatore
@@ -567,7 +567,7 @@ public class ContatoreController {
 				// parte per javascript: serve per collegare il finaltime da java a javascript
 				// sul frontend
 				model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
-				 model.addAttribute("contatoreIsRun", contatoreservice.contatoreIsRun(task));
+				model.addAttribute("contatoreIsRun", contatoreservice.contatoreIsRun(task));
 
 				contatoreSelected = contatore;
 

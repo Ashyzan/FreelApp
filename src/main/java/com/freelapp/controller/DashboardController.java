@@ -92,9 +92,8 @@ public class DashboardController {
 				
 				else if( task.getContatore() != null) {
 					Boolean contatoreAttivo;
-					
 					contatoreAttivo = contatoreservice.contatoreIsRun(task);
-						model.addAttribute("testtaskdatestare", task.getId());
+		
 					if(task.getContatore().getStop() == null  && contatoreAttivo == false) {
 					
 							 taskListOreLavorate.add(task); 
