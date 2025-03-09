@@ -49,7 +49,6 @@ public class DashboardController {
 		contatoreservice.importContatoreInGet(model);
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
-
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
@@ -82,26 +81,32 @@ public class DashboardController {
 		
 		// lista che restituisce i task per modale delle ore lavorate sulla dashboard
 		List<Task> taskListOreLavorate = new ArrayList<Task> ();
-		taskList = taskRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+		taskList = taskRepository.findAll(Sort.by(Sort.Direction.DESC, "Name"));
 		taskList.forEach( task -> {
 			
-			if( task.getContatore() != null) {
-				Boolean contatoreAttivo;
-				contatoreAttivo = contatoreservice.contatoreIsRun(task, model);
-				if(task.getContatore().getStop() == null  && contatoreAttivo == false) {
-					 
-						 taskListOreLavorate.add(task); 
-						 }	
-					}
-			else if( task.getContatore() == null) {
+			
+				if( task.getContatore() == null) {
 				taskListOreLavorate.add(task);
-			}
-				} );
+				
+						}
+				
+				else if( task.getContatore() != null) {
+					Boolean contatoreAttivo;
+					
+					contatoreAttivo = contatoreservice.contatoreIsRun(task);
+						model.addAttribute("testtaskdatestare", task.getId());
+					if(task.getContatore().getStop() == null  && contatoreAttivo == false) {
+					
+							 taskListOreLavorate.add(task); 
+									
+							 }	
+						}
 			model.addAttribute("taskListOreLavorate", taskListOreLavorate);
+				} );
 
 		
 		return "freelApp-dashboard";
 
-	}
+			}
 	
 }

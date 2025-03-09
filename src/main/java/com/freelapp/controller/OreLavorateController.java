@@ -40,7 +40,7 @@ public class OreLavorateController {
     private OreLavorateService orelavorateservice;
     
 
-    // ricevo i parametri dal modello e salvo i dati del contatore
+    
     @PostMapping("/orelavorate/{id}")
     public String gestioneTimer(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
     		@ModelAttribute("date") String data, @ModelAttribute("time")String time, Model model, 
