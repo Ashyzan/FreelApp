@@ -105,6 +105,13 @@ public class TaskController {
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);
 	
+	//invio al model il booleano del contatore attivato
+	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+	model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+	
+	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+	ContatoreController.contatoreAttivato = false;
+	
 	//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
 		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
 		Integer taskInUsoId = 0;
@@ -116,12 +123,6 @@ public class TaskController {
 		model.addAttribute("taskInUsoId", taskInUsoId);
 
 	
-		//invio al model il booleano del contatore attivato
-		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
-		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
-		
-		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
-		ContatoreController.contatoreAttivato = false;
 
 	return "/Task/freelApp-listaTask";
     }
@@ -137,9 +138,6 @@ public class TaskController {
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 		
-		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
-		ContatoreController.contatoreAttivato = false;
-		
 		//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
 		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
 		Integer taskInUsoId = 0;
@@ -149,6 +147,14 @@ public class TaskController {
 		}
 		
 		model.addAttribute("taskInUsoId", taskInUsoId);
+		
+		//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+//		ContatoreController.contatoreAttivato = false;
+
 
 	return taskBySearch(1, input, model);
     }
@@ -181,7 +187,7 @@ public class TaskController {
 		model.addAttribute("endPoint", endPoint);						
 	} else {
 		String endPoint = "/task-search";
-		model.addAttribute("endPoint", endPoint);	
+		model.addAttribute("endPoint", endPoint);
 	}
 	
 	//passo al model i contatore e task in uso (gli static)
@@ -222,7 +228,7 @@ public class TaskController {
     	}
     
 //  passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
-	String endPoint = "/Task/";
+	String endPoint = "/Task/" + task.getId();
 	
 	model.addAttribute("endPoint", endPoint);
 	
@@ -231,6 +237,13 @@ public class TaskController {
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+	
+	//invio al model il booleano del contatore attivato
+	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+	model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+	
+	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+	ContatoreController.contatoreAttivato = false;
 	
 	return "/Task/freelapp-descrizioneTask";
     }
@@ -270,6 +283,13 @@ public class TaskController {
     }else {
     	model.addAttribute("taskInUsoId",0);
     }
+	
+	//invio al model il booleano del contatore attivato
+	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+	model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+	ContatoreController.contatoreAttivato = false;
 	
 	return "/Task/freelapp-insertTask";
     }
@@ -350,6 +370,13 @@ public class TaskController {
 		model.addAttribute("taskInUsoId",0);
 	}
 
+	//invio al model il booleano del contatore attivato
+	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+	model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+	ContatoreController.contatoreAttivato = false;
+	
 	return "/Task/freelapp-insertTask-noProgetto";
     }
 
@@ -412,6 +439,13 @@ public class TaskController {
   	}else {
   		model.addAttribute("taskInUsoId",0);
   	}
+  	
+  	//invio al model il booleano del contatore attivato
+	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+	model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+	
+	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+	ContatoreController.contatoreAttivato = false;
 	
 	return "/Task/freelapp-editTask";
     }

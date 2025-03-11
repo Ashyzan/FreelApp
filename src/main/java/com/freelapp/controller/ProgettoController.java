@@ -118,7 +118,7 @@ public class ProgettoController {
 				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 		
 				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
-				ContatoreController.contatoreAttivato = false;
+//				ContatoreController.contatoreAttivato = false;
 				
 				return progettoBySearch(1, input, model);
 			} 
@@ -184,6 +184,13 @@ public class ProgettoController {
 				//passo al model i contatore e task in uso (gli static)
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
+				
+				//invio al model il booleano del contatore attivato
+				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+				ContatoreController.contatoreAttivato = false;
 	
 				return "/Progetti/freelapp-descrizioneProgetto";
 		   }
@@ -205,7 +212,7 @@ public class ProgettoController {
 				
 				
 				//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
-				String endPoint = "/Task/insert/progetto-" + utente.getId();
+				String endPoint = "/Progetti/insert/" + utente.getId();
 				
 				model.addAttribute("endPoint", endPoint);
 				
@@ -219,6 +226,13 @@ public class ProgettoController {
 			    }else {
 			    	model.addAttribute("taskInUsoId",0);
 			    }
+				
+				//invio al model il booleano del contatore attivato
+				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+				ContatoreController.contatoreAttivato = false;
 				
 				return "/Progetti/freelapp-insertProgetto";
 			}
@@ -292,6 +306,13 @@ public class ProgettoController {
 			    }else {
 			    	model.addAttribute("taskInUsoId",0);
 			    }
+				
+				//invio al model il booleano del contatore attivato
+				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+				ContatoreController.contatoreAttivato = false;
 				
 				return "/Progetti/freelapp-editProgetto";
 			}

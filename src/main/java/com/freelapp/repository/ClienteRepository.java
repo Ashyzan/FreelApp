@@ -14,6 +14,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer>, Pagi
 	
 
     @Query("SELECT c FROM Cliente c WHERE c.name LIKE '%'||:input||'%' OR "
+    		+ "c.labelCliente LIKE '%'||:input||'%' OR "
     		+ "c.ragioneSociale LIKE '%'||:input||'%' OR "
     		+ "c.email LIKE '%'||:input||'%' OR "
     		+ "c.telefono LIKE '%'||:input||'%' OR "
