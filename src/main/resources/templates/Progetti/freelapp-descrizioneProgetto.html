@@ -447,8 +447,8 @@
 															</div>
 														</div>
 													</a>
-													<div th:if="${task.id == taskInUsoId or task.getStato() == 'chiuso'}" class="opacity-50 w-5 h-5">
-														<img src="/img/sources/icons/contatore-blue.svg">
+													<div th:if="${task.id == taskInUsoId or task.getStato() == 'chiuso'}" class="w-5 h-5">
+														<img src="/img/sources/icons/contatore-blue-inattivo.svg">
 													</div>
 													<div th:unless="${task.id == taskInUsoId or task.getStato() == 'chiuso'}">
 														<form th:action="@{|/contatore/cambio/${task.id}|}" th:object="${contatore}" method="post">
