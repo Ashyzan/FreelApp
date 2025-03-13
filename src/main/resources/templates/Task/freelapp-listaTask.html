@@ -335,47 +335,42 @@
 								</tr>
 								</th>
 							<tbody>
-
-
+							
+							
 								<tr th:each="task : ${list}" class="border-b-2 h-6 text-center max-sm:text-[10px]">
 									<td th:text="${task.getName()}">
 									</td>
-
-									<td th:text="${#temporals.format(task.getDataInizio(), 'dd MMM yyyy')}"
-										class="p-2 max-lg:hidden">
+							
+									<td th:text="${#temporals.format(task.getDataInizio(), 'dd MMM yyyy')}" class="p-2 max-lg:hidden">
 									</td>
-									<td th:text=" ${#temporals.format(task.getDataChiusuraStimata(), 'dd MMM yyyy')}"
-										class="p-2 max-lg:hidden">
+									<td th:text=" ${#temporals.format(task.getDataChiusuraStimata(), 'dd MMM yyyy')}" class="p-2 max-lg:hidden">
 									</td>
-									<td th:text=" ${#temporals.format(task.getDataChiusuraDefinitiva(), 'dd MMM yyyy')}"
-										class="p-2 max-lg:hidden">
+									<td th:text=" ${#temporals.format(task.getDataChiusuraDefinitiva(), 'dd MMM yyyy')}" class="p-2 max-lg:hidden">
 									</td>
 									<td th:text="${task.getProgetto.name}">
 									</td>
 									<td>
 										<div class="flex items-center justify-center gap-1">
-											<img th:if="${task.getStato() == 'in corso'}" id="semaforo-start"
-												class="h-5" src="/img/sources/icons/contatore-on-start.svg"
-												alt="contatore in start">
-
-											<img th:if="${task.getStato() == 'in pausa'}" id="semaforo-pausa"
-												class="h-5" src="/img/sources/icons/contatore-on-pause.svg"
-												alt="contatore in pausa">
-
+											<img th:if="${task.getStato() == 'in corso'}" id="semaforo-start" class="h-5"
+												src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start">
+							
+											<img th:if="${task.getStato() == 'in pausa'}" id="semaforo-pausa" class="h-5"
+												src="/img/sources/icons/contatore-on-pause.svg" alt="contatore in pausa">
+							
 											<img th:if="${task.getStato() == 'chiuso'}" id="semaforo-stop" class="h-5"
 												src="/img/sources/icons/contatore-on-stop.svg" alt="contatore in stop">
-
-											<img th:if="${task.getStato() == 'inattivo'}" id="semaforo-inattivo"
-												class="h-5" src="/img/sources/icons/contatore-inattivo.svg"
-												alt="contatore inattivo">
-
+							
+											<img th:if="${task.getStato() == 'inattivo'}" id="semaforo-inattivo" class="h-5"
+												src="/img/sources/icons/contatore-inattivo.svg" alt="contatore inattivo">
+							
 										</div>
 									</td>
 									<td>
 										<div class="flex justify-center items-center gap-4 md:px-6 px-2">
 											<a th:href="@{|/Task/${task.id}|}">
 												<div class="t-tooltip w-5 h-5">
-													<img class="h-[100%] w-[100%]" src="/img/sources/icons/board-tabloid-blue.svg" alt="dettaglio task">
+													<img class="h-[100%] w-[100%]" src="/img/sources/icons/board-tabloid-blue.svg"
+														alt="dettaglio task">
 													<div
 														class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
 														Dettaglio
@@ -391,18 +386,16 @@
 													</div>
 												</div>
 											</a>
-											<div th:if="${task.id == taskInUsoId or task.getStato() == 'chiuso'}"
-												class="opacity-50 w-5 h-5">
-												<img src="/img/sources/icons/contatore-blue.svg">
+											<div th:if="${task.id == taskInUsoId or task.getStato() == 'chiuso'}" class="w-5 h-5">
+												<img src="/img/sources/icons/contatore-blue-inattivo.svg">
 											</div>
 											<div th:unless="${task.id == taskInUsoId or task.getStato() == 'chiuso'}">
-												<form th:action="@{|/contatore/cambio/${task.id}|}"
-													th:object="${contatore}" method="post">
+												<form th:action="@{|/contatore/cambio/${task.id}|}" th:object="${contatore}" method="post">
 													<input type="hidden" name="endPoint" th:value="${endPoint}">
 													<button type="submit" class="t-tooltip w-5 h-5">
 														<img src="/img/sources/icons/contatore-blue.svg">
 														<div
-															class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-50px] mt-[5px] text-nowrap">
+															class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-50px] mt-[5px] text-nowrap ">
 															Seleziona Contatore
 														</div>
 													</button>
