@@ -386,13 +386,15 @@
 							        </div>
 							        <div class="p-4">
 							            <div th:text="${progetto.cliente.labelCliente}"  class="uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta cliente</div>
-							            <a th:href="@{/Progetti/{id}(id=${progetto.getId()})}" th:text="${progetto.name}"  class="truncate line-clamp-1  block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome progetto
+							            <a th:href="@{/Progetti/{id}(id=${progetto.getId()})}" th:text="${progetto.name}"  class="line-clamp-1  block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome progetto
 							            </a>
 							            <p th:text="${progetto.descrizione}" class="mt-2 text-slate-500 line-clamp-2">descrizione progetto
 							            </p>
-							            <button class="mt-4 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
+							            <a th:href="@{/Progetti/{id}(id=${progetto.getId()})}" class="block w-48 text-center mt-4 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
 							  vai al dettaglio
-							</button>
+							</a>
+							
+							
 							        </div>
 							    </div>
 							</div>
