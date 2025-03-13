@@ -368,104 +368,36 @@
 					</a>
 				</div>
 				<div id="main-section"
-					class="flex w-full flex-wrap h-full justify-center items-center overflow-y-auto">
+					class="w-full flex-wrap h-full m-auto overflow-y-auto">
 					<div
-						class="flex flex-col-reverse md:flex-col w-11/12 2xl:w-4/5">
-						<section>
+						class=" md:flex-col px-4">
+						<section class="flex flex-col">
 							<div
 								class="h-12 text-center text-[#0057A5] font-bold items-center m-3">
-								<h1>ELENCO PROGETTI</h1>
+								<h1 class="text-xl">ELENCO PROGETTI</h1>
 							</div>
-							<table
-								class="text-[#0057A5] w-full  m-auto">
-								<thead
-									class="border border-[#0057A5] md:h-12 h-8 bg-[#0057A5] text-white max-sm:text-[12px]">
-									<tr>
-										<th
-											class="lg:px-8 px-4">
-											Nome</th>
-										<th
-											class="lg:px-8 px-4">
-											Descrizione</th>
-										<th
-											class="lg:px-8 px-4 max-lg:hidden">
-											Data inizio</th>
-										<th
-											class="lg:px-8 px-4 max-lg:hidden">
-											Data fine</th>
-										<th
-											class="lg:px-8 px-4">
-											Cliente</th>
-										<th
-											class="lg:px-8 px-4">
-										</th>
-										<!--
-								
-							<th class="lg:px-8 px-4 max-lg:hidden"></th>
-							-->
-									</tr>
-								</thead>
-
-								<tbody>
-									<tr th:each="progetto : ${list}"
-										class="border-b-2 h-6 text-center max-sm:text-[10px]">
-										<td th:text="${progetto.name}"
-											class="p-2 ">
-										</td>
-										<td th:text="${progetto.descrizione}"
-											class="p-2">
-										</td>
-										<td th:text="${#temporals.format(progetto.dataInizio, 'dd MMM yyyy')}"
-											class="p-2 max-lg:hidden">
-										</td>
-										<td th:text="${#temporals.format(progetto.dataFine, 'dd MM yyyy')}"
-											class="p-2 max-lg:hidden">
-										</td>
-										<td th:text="${progetto.cliente.labelCliente}"
-											class="p-2">
-										</td>
-										<td>
-											<div
-												class="flex justify-center items-center gap-4 md:px-6 px-2">
-												<a
-													th:href="@{/Progetti/{id}(id=${progetto.getId()})}">
-													<div
-														class="t-tooltip w-5 h-5">
-														<img class="h-[100%] w-[100%]" src="/img/sources/icons/board-tabloid-blue.svg" alt="dettaglio task">
-														<div
-															class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-															Dettaglio
-														</div>
-													</div>
-												</a>
-												<a th:href="@{/Progetti/edit/{id}(id=${progetto.getId()})}"
-													class="max-lg:hidden">
-													<div
-														class="t-tooltip w-5 h-5">
-														<img class="h-[100%] w-[100%]" src="/img/sources/icons/modify-blue.svg" alt="modifica task">
-														<div
-															class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-															Modifica
-														</div>
-													</div>
-												</a>
-												<a th:href="@{/Task/insert/progetto-{id}(id=${progetto.getId()})}"
-													class="max-lg:hidden">
-													<div
-														class="t-tooltip w-5 h-5">
-														<img class="h-[100%] w-[100%]" src="/img/sources/icons/add-task-blue.svg" alt="aggiungi task">
-														<div
-															class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-35px] mt-[5px]">
-															Nuovo
-															Task
-														</div>
-													</div>
-												</a>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+							
+							
+							<div class="grid grid-cols-2 gap-4 p-4 gap-8 flex justify-between w-full">
+							<div th:each="progetto : ${list}" class="mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+							    <div class="md:flex">
+							        <div class="md:shrink-0">
+							            <img class="aspect-square h-48 w-full object-cover md:w-48" th:src="@{${progetto.cliente.LogoPath}}" alt="logo-cliente">
+							        </div>
+							        <div class="p-4">
+							            <div th:text="${progetto.cliente.labelCliente}"  class="uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta cliente</div>
+							            <a th:href="@{/Progetti/{id}(id=${progetto.getId()})}" th:text="${progetto.name}"  class="truncate line-clamp-1  block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome progetto
+							            </a>
+							            <p th:text="${progetto.descrizione}" class="mt-2 text-slate-500 line-clamp-2">descrizione progetto
+							            </p>
+							            <button class="mt-4 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
+							  vai al dettaglio
+							</button>
+							        </div>
+							    </div>
+							</div>
+							</div>
+							
 							<div th:if="${list.isEmpty()}">
 								<div
 									class="text-center text-[#0057A5] p-4">
