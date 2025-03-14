@@ -440,7 +440,7 @@
 								<select
 									class="border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full  px-4 focus:outline-none"
 									id="form-select-input" name="taskId" onchange="getJsonTask(value)">
-									<option value="0">Seleziona Task</option>
+									<option value="">Seleziona Task</option>
 									<option th:each="task : ${taskList}" th:value="${task.id}"
 										th:text="${task.getName()}"></option>
 								</select>
