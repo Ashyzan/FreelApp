@@ -39,17 +39,20 @@ document.getElementById('form-select-input').addEventListener("change", (event) 
 //}
 
 async function getJsonTask(id){
-	const response = await fetch(api_url+id);
-	const data = await response.json();
+	if(id != 0){
+		const response = await fetch(api_url+id);
+		const data = await response.json();
+			
+		document.getElementById('taskNome').textContent = data.nome;	
+		document.getElementById('taskProgetto').textContent = data.progetto;	
+		document.getElementById('taskCliente').textContent = data.cliente;	
+		document.getElementById('taskLogoPath').src = data.logoCliente;	
+		document.getElementById('taskChiusuraStimata').textContent = data.chiusuraStimata;
+		//taskAttualmenteInUso = data.taskAttualmenteInUso;	
 		
-	document.getElementById('taskNome').textContent = data.nome;	
-	document.getElementById('taskProgetto').textContent = data.progetto;	
-	document.getElementById('taskCliente').textContent = data.cliente;	
-	document.getElementById('taskLogoPath').src = data.logoCliente;	
-	document.getElementById('taskChiusuraStimata').textContent = data.chiusuraStimata;
-	//taskAttualmenteInUso = data.taskAttualmenteInUso;	
-	
-		stampaContatore(data.finalTime, data.taskAttualmenteInUso)
+			stampaContatore(data.finalTime, data.taskAttualmenteInUso)
+		
+	}
 			
 	//document.getElementById('timerResumeTask').textContent = data.finalTime;
 }
@@ -58,10 +61,10 @@ function recapTask(event){
 	event.preventDefault()
 	
 	const valueInput = document.getElementById('form-select-input').value;
-	getJsonTask(valueInput);
 	
 	if(valueInput != 0){
 		taskResumeTable.classList.remove('hidden')
+		getJsonTask(valueInput);		
 	} else if(valueInput == 0){
 		taskResumeTable.classList.add('hidden')
 	}
