@@ -302,7 +302,7 @@
 										<label for="name">Nome del progetto*</label>
 									</div>
 									<div class=" col md:col-span-2 col-span-3">
-										<input placeholder="Titolo Progetto.." type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="name"
+										<input placeholder="Titolo Progetto.." type="text" class="border-red-600 w-full h-8 px-4 rounded-lg" id="name"
 											th:field="*{name}" th:errorClass="border">
 										<div th:if="${#fields.hasErrors('name')}"
 											class="text-red-600 text-[12px] text-center w-full">
@@ -319,7 +319,7 @@
 										<label for="email">Descrizione*</label>
 									</div>
 									<div class="col md:col-span-2 col-span-3">
-										<textarea placeholder="Descrizione Progetto.." type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg"
+										<textarea placeholder="Descrizione Progetto.." type="text" class="border-red-600 w-full h-24 px-4 rounded-lg"
 											id="descrizione" th:field="*{descrizione}" th:errorClass="border"></textarea>
 
 										<div th:if="${#fields.hasErrors('descrizione')}"
@@ -337,7 +337,7 @@
 										<label for="telefono">Data inizio*</label>
 									</div>
 									<div class="col md:col-span-2 col-span-3">
-										<input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg"
+										<input type="date" class="border-red-600 w-full h-8 px-4 rounded-lg"
 											id="dataInizio" th:field="*{dataInizio}" th:errorClass="border">
 
 										<div th:if="${#fields.hasErrors('dataInizio')}"
@@ -356,7 +356,7 @@
 											fine</label>
 									</div>
 									<div class="col md:col-span-2 col-span-3">
-										<input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg"
+										<input type="date" class="border-red-600 w-full h-8 px-4 rounded-lg"
 											id="dataFine" th:field="*{dataFine}" th:errorClass="border">
 
 										<div th:if="${#fields.hasErrors('dataFine')}"

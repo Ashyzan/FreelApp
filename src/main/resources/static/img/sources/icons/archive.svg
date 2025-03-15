@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
+    <g id="archive" transform="matrix(0.390625,0,0,0.390625,-5.32907e-15,4.61853e-14)">
+        <path d="M32,448C32,465.7 46.3,480 64,480L448,480C465.7,480 480,465.7 480,448L480,160L32,160L32,448ZM192,236C192,229.4 197.4,224 204,224L308,224C314.6,224 320,229.4 320,236L320,244C320,250.6 314.6,256 308,256L204,256C197.4,256 192,250.6 192,244L192,236ZM480,32L32,32C14.3,32 0,46.3 0,64L0,112C0,120.8 7.2,128 16,128L496,128C504.8,128 512,120.8 512,112L512,64C512,46.3 497.7,32 480,32Z" style="fill:rgb(122,122,122);fill-rule:nonzero;"/>
+    </g>
+</svg>

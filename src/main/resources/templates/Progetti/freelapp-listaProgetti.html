@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport"
-			content="width=device-width, initial-scale=1.0">
-		<!--
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
 		<link rel="stylesheet" th:href="@{/main.css}">
     -->
-		<link rel="stylesheet" href="/animate.css">	
-		<script src="https://cdn.tailwindcss.com"></script>
-		<script>
+<link rel="stylesheet" href="/animate.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
 			tailwind.config = {
 				theme: {
 					extend: {
@@ -21,7 +20,7 @@
 				}
 			}
 		</script>
-		<style type="text/tailwindcss">
+<style type="text/tailwindcss">
 			@layer utilities {
 	          .content-auto {
 	            content-visibility: auto;
@@ -33,145 +32,163 @@
 	        }
 	      </style>
 
-		<title id="timerTitolo">FreelApp</title>
-	</head>
+<title id="timerTitolo">FreelApp</title>
+</head>
 
-	<body class="font-sans"
-		style="width: 100vw; height: 100vh;" onload="timerstart()">
-		<header>
-			<nav id="navbar"
-				class="flex justify-between items-center w-full h-fit md:px-1 md:py-0 p-2 mb-[2px] bg-[#0057A5] font-bold  text-sm text-white">
-				<div id="icona" class="col-auto">
-					<img class=" max-h-9"
-						src="/img/logo-with-white.png"
-						alt="logo FreelApp">
-				</div>
-				<div
-					class="nav-bar md:static absolute bg-[#0057A5] min-h-[60vh] md:min-h-fit md:w-auto w-full left-0 top-[-100%] flex items-center">
-					<ul
-						class="flex flex-col md:flex-row p-3 md:items-center">
-						<li
-							class="md:mx-4 py-5 md:py-0 hover:text-gray-400">
-							<a class="flex items-center"
-								th:href="@{/dashboard}">
-								<span class="px-2">
-									<img class="h-[30px] w-[30px]" src="/img/sources/icons/dashboard.svg" alt="dashboard">
-								</span>
-								<span
-									class="pt-1">DASHBOARD</span>
-							</a>
-						</li>
-						<li
-							class="md:mx-4 py-5 md:py-0 hover:text-gray-400">
-							<a class="flex items-center"
-								th:href="@{/Clienti}">
-								<span class="px-2">
-									<img class="h-[25px] w-[25px]" src="/img/sources/icons/clients.svg" alt="clienti">
-								</span>
-								<span
-									class="pt-1">CLIENTI</span>
-							</a>
-						</li>
-						<li
-							class="md:mx-4 py-5 md:py-0 text-[#FFE541]">
-							<a
-								class="flex items-center pointer-events-none">
-								<span class="px-2">
-									<img class="h-[28px] w-[28px]" src="/img/sources/icons/folders.svg" alt="progetti">
-								</span>
-								<span
-									class="pt-1">PROGETTI</span>
-							</a>
-						</li>
-						<li
-							class="md:mx-4 py-5 md:py-0 hover:text-gray-400">
-							<a class="flex items-center"
-								th:href="@{/Task}">
-								<span class="px-2">
-									<img class="h-[28px] w-[28px]" src="/img/sources/icons/folders.svg" alt="progetti">
-								</span>
-								<span class="pt-1">I MIEI
-									TASK</span>
-							</a>
-						</li>
-						<li
-							class="md:mx-4 py-5 md:py-0 hover:text-gray-400 md:hidden">
-							<a class="flex items-center"
-								href="#">
-								<span class="px-2">
-									<img class="h-[25px] w-[25px]" src="/img/sources/icons/exit.svg" alt="logout">
-								</span>
-								<span
-									class="pt-1">ESCI</span>
-							</a>
-						</li>
-						<li class="max-lg:hidden" id="dettaglio-contatore-top">
-						<div class="w-full h-fit border-4 border-[#FFE541] bg-white rounded-[30px] p-2 py-1">
+<body class="font-sans" style="width: 100vw; height: 100vh;"
+	onload="timerstart()">
+	<header>
+		<nav id="navbar"
+			class="flex justify-around items-center w-full h-fit md:px-1 md:py-0 p-2 bg-[#0057A5] font-bold  text-sm text-white">
+			<div id="icona" class="col-auto">
+				<img class=" max-h-9" src="/img/logo-with-white.png"
+					alt="logo FreelApp">
+			</div>
+			<div
+				class="nav-bar md:static absolute bg-[#0057A5] min-h-[60vh] md:min-h-fit md:w-auto w-full left-0 top-[-100%] flex items-center">
+				<ul class="flex flex-col md:flex-row p-3 md:items-center">
+					<li class="md:mx-4 py-5 md:py-0 hover:text-gray-400"><a
+						class="flex items-center" th:href="@{/dashboard}"> <span
+							class="px-2"> <img class="h-[30px] w-[30px]"
+								src="/img/sources/icons/dashboard.svg" alt="dashboard">
+						</span> <span class="pt-1">DASHBOARD</span>
+					</a></li>
+					<li class="md:mx-4 py-5 md:py-0 hover:text-gray-400"><a
+						class="flex items-center" th:href="@{/Task}"> <span
+							class="px-2"> <img class="h-[28px] w-[28px]"
+								src="/img/sources/icons/folders.svg" alt="progetti">
+						</span> <span class="pt-1">I MIEI TASK</span>
+					</a></li>
+
+					<li class="md:mx-4 py-5 md:py-0 text-[#FFE541]"><a
+						class="flex items-center pointer-events-none"> <span
+							class="px-2"> <img class="h-[28px] w-[28px]"
+								src="/img/sources/icons/folders.svg" alt="progetti">
+						</span> <span class="pt-1">PROGETTI</span>
+					</a></li>
+					<li class="md:mx-4 py-5 md:py-0 hover:text-gray-400"><a
+						class="flex items-center" th:href="@{/Clienti}"> <span
+							class="px-2"> <img class="h-[25px] w-[25px]"
+								src="/img/sources/icons/clients.svg" alt="clienti">
+						</span> <span class="pt-1">CLIENTI</span>
+					</a></li>
+
+					<li class="md:mx-4 py-5 md:py-0 hover:text-gray-400 md:hidden">
+						<a class="flex items-center" href="#"> <span class="px-2">
+								<img class="h-[25px] w-[25px]" src="/img/sources/icons/exit.svg"
+								alt="logout">
+						</span> <span class="pt-1">ESCI</span>
+					</a>
+					</li>
+<!-- 					<li class=" max-lg:hidden" id="dettaglio-contatore-top"> -->
+
+<!-- 					</li> -->
+					<li class="md:mx-4 py-5 md:py-0">
+						<button class=" hover:text-gray-400 cursor-pointer md:hidden"
+							onclick="onToggleOptionsMobile(this)">
+							<img class="h-[28px] w-[28px]"
+								src="/img/sources/icons/options.svg" alt="opzioni">
+						</button>
+						<div id="options-button-mobile" class="hidden">
+							<ul class="ps-6 pt-2">
+								<li class="p-2 hover:text-gray-400 "><a
+									class="flex items-center" href="#"> <span class="px-2">
+											<img class="h-[25px] w-[25px]"
+											src="/img/sources/icons/user.svg" alt="profilo">
+									</span> <span class="pt-1">PROFILO</span>
+								</a></li>
+								<li class="p-2 hover:text-gray-400 "><a
+									class="flex items-center" href="#"> <span class="px-2">
+											<img class="h-[25px] w-[25px]"
+											src="/img/sources/icons/elenco.svg" alt="dati fiscali">
+									</span> <span class="pt-1">DATI FISCALI</span>
+								</a></li>
+								<li class="p-2 hover:text-gray-400 "><a
+									class="flex items-center" href="#"> <span class="px-2">
+											<img class="h-[25px] w-[25px]"
+											src="/img/sources/icons/help-ticket-doc.svg" alt="assistenza">
+									</span> <span class="pt-1">ASSISTENZA</span>
+								</a></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+		<!-- CONTATORE --><div
+							class="h-fit border-4 border-[#FFE541] bg-white rounded-[30px] mt-2 mb-2 p-2 py-1">
 							<div class="flex items-center text-[#0057A5] font-bold">
 								<div class="col-auto w-8 h-8 ms-2">
-									<img src="/img/sources/icons/contatore-blue.svg" alt="contatore">
+									<img src="/img/sources/icons/contatore-blue.svg"
+										alt="contatore">
 								</div>
-								<div th:if="${taskInUso == null}" class="flex flex-col items-center w-[100px]">
+								<div th:if="${taskInUso == null}"
+									class="flex flex-col items-center w-[100px]">
 									<div th:unless="${contatoreIsTrue}" class=" text-[10px] p-0">...</div>
-									<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
-										class=" text-[10px] p-0"></div>
+									<div th:if="${contatoreIsTrue}"
+										th:text="${taskInUso.getName()}" class=" text-[10px] p-0"></div>
 									<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
 								</div>
-								<a th:unless="${taskInUso == null}" th:href="@{|/Task/${taskInUso.id}|}"
+								<a th:unless="${taskInUso == null}"
+									th:href="@{|/Task/${taskInUso.id}|}"
 									class="t-tooltip flex flex-col items-center w-[100px]">
 									<div th:unless="${contatoreIsTrue}" class=" text-[10px] p-0">...</div>
-									<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
+									<div th:if="${contatoreIsTrue}"
+										th:text="${taskInUso.getName()}"
 										class=" text-[10px] p-0 max-w-[90px] truncate"></div>
 									<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
 									<div
 										class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-40px] mt-[40px]">
-										Dettaglio task
-									</div>
+										Dettaglio task</div>
 								</a>
 								<div class="col-auto flex items-center px-2">
 									<div th:if="${taskInUso == null}" class="w-8 h-8 ">
-										<img class="h-[29px] w-[29px]" src="/img/sources/icons/stop-blue.svg" alt="stop">
+										<img class="h-[29px] w-[29px]"
+											src="/img/sources/icons/stop-blue.svg" alt="stop">
 									</div>
 									<div th:unless="${taskInUso == null}" class="w-8 h-8">
-										<button id="stopButtonTop" type="button" class="hover:opacity-75">
-											<img class="h-[29px] w-[29px]" src="/img/sources/icons/stop-blue.svg"
-												alt="stop">
+										<button id="stopButtonTop" type="button"
+											class="hover:opacity-75">
+											<img class="h-[29px] w-[29px]"
+												src="/img/sources/icons/stop-blue.svg" alt="stop">
 										</button>
 									</div>
 									<div th:if="${taskInUso == null}" class="w-8 h-8">
-										<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
+										<img class="h-[29px] w-[29px]"
+											src="/img/sources/icons/pause-blue.svg" alt="pause">
 									</div>
 									<div th:unless="${taskInUso == null}" class="w-8 h-8">
 										<div th:if="${!contatoreIsRun}">
-											<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg"
-												alt="pause">
+											<img class="h-[29px] w-[29px]"
+												src="/img/sources/icons/pause-blue.svg" alt="pause">
 										</div>
 										<div th:if="${contatoreIsRun}">
 											<form th:action="@{|/Contatore/pause/${taskInUso.id}|}"
 												th:object="${contatore}" method="post">
 												<input type="hidden" name="endPoint" th:value="${endPoint}">
 												<button type="submit" class="hover:opacity-75 ">
-													<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg"
-														alt="pause">
+													<img class="h-[29px] w-[29px]"
+														src="/img/sources/icons/pause-blue.svg" alt="pause">
 												</button>
 											</form>
 										</div>
 									</div>
 									<div th:if="${taskInUso == null}" class="w-8 h-8">
-										<img class="h-[29px] w-[29px]" src="/img/sources/icons/play-blue.svg" alt="start">
+										<img class="h-[29px] w-[29px]"
+											src="/img/sources/icons/play-blue.svg" alt="start">
 									</div>
 									<div th:unless="${taskInUso == null}" class="w-8 h-8">
 										<div th:if="${contatoreIsRun}">
-											<img class="h-[29px] w-[29px]" src="/img/sources/icons/play-blue.svg"
-												alt="start">
+											<img class="h-[29px] w-[29px]"
+												src="/img/sources/icons/play-blue.svg" alt="start">
 										</div>
 										<div th:unless="${contatoreIsRun}">
-											<form th:action="@{|/start/${taskInUso.id}|}" th:object="${contatore}"
-												method="post">
+											<form th:action="@{|/start/${taskInUso.id}|}"
+												th:object="${contatore}" method="post">
 												<input type="hidden" name="endPoint" th:value="${endPoint}">
 												<button type="submit" class="hover:opacity-75">
-													<img class="h-[29px] w-[29px]" src="/img/sources/icons/play-blue.svg"
-														alt="start">
+													<img class="h-[29px] w-[29px]"
+														src="/img/sources/icons/play-blue.svg" alt="start">
 												</button>
 											</form>
 										</div>
@@ -179,350 +196,301 @@
 								</div>
 							</div>
 						</div>
-					</li>
-						<li class="md:mx-4 py-5 md:py-0">
-							<button
-								class=" hover:text-gray-400 cursor-pointer md:hidden"
-								onclick="onToggleOptionsMobile(this)">
-								<img class="h-[28px] w-[28px]" src="/img/sources/icons/options.svg" alt="opzioni">
-							</button>
-							<div id="options-button-mobile"
-								class="hidden">
-								<ul class="ps-6 pt-2">
-									<li
-										class="p-2 hover:text-gray-400 ">
-										<a class="flex items-center"
-											href="#">
-											<span
-												class="px-2">
-												<img class="h-[25px] w-[25px]" src="/img/sources/icons/user.svg" alt="profilo">
-											</span>
-											<span
-												class="pt-1">PROFILO</span>
-										</a>
-									</li>
-									<li
-										class="p-2 hover:text-gray-400 ">
-										<a class="flex items-center"
-											href="#">
-											<span
-												class="px-2">
-												<img class="h-[25px] w-[25px]" src="/img/sources/icons/elenco.svg" alt="dati fiscali">
-											</span>
-											<span
-												class="pt-1">DATI
-												FISCALI</span>
-										</a>
-									</li>
-									<li
-										class="p-2 hover:text-gray-400 ">
-										<a class="flex items-center"
-											href="#">
-											<span
-												class="px-2">
-												<img class="h-[25px] w-[25px]" src="/img/sources/icons/help-ticket-doc.svg" alt="assistenza">
-											</span>
-											<span
-												class="pt-1">ASSISTENZA</span>
-										</a>
-									</li>
-								</ul>
+			
+			<div>
+				<button class="px-1 rounded cursor-pointer md:hidden"
+					onclick="onToggleMenu(this)" name="menu">
+					<img class="h-[30px] w-[30px]"
+						src="/img/sources/icons/hamburger-menu.svg" alt="menu">
+				</button>
+			</div>
+			<div class="max-md:hidden flex items-center">
+				<button class="  hover:text-gray-400 cursor-pointer"
+					onclick="onToggleOptionsDesktop(this)">
+					<img class="h-[28px] w-[28px]" src="/img/sources/icons/options.svg"
+						alt="opzioni">
+				</button>
+				<div
+					class="nav-option-desktop absolute right-0 top-[-100%] bg-[#0057A5]">
+					<ul class="pr-2 pt-2 m-3">
+						<li class="p-2 hover:text-gray-400 "><a
+							class="flex items-center" href="#"> <span class="px-2">
+									<img class="h-[25px] w-[25px]"
+									src="/img/sources/icons/user.svg" alt="profilo">
+							</span> <span class="pt-1">PROFILO</span>
+						</a></li>
+						<li class="p-2 hover:text-gray-400 "><a
+							class="flex items-center" href="#"> <span class="px-2">
+									<img class="h-[25px] w-[25px]"
+									src="/img/sources/icons/elenco.svg" alt="dati fiscali">
+							</span> <span class="pt-1">DATI FISCALI</span>
+						</a></li>
+						<li class="p-2 hover:text-gray-400 "><a
+							class="flex items-center" href="#"> <span class="px-2">
+									<img class="h-[25px] w-[25px]"
+									src="/img/sources/icons/help-ticket-doc.svg" alt="assistenza">
+							</span> <span class="pt-1">ASSISTENZA</span>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<main class="bg-[#f2f1f1]">
+		<div class="flex flex-col-reverse md:flex-row w-screen max-md-"
+			style="height: calc(100vh - 12vh);">
+			<div id="side-bar"
+				class="fixed md:relative md:basis-16 bottom-0 flex md:flex-col md:justify-between justify-around items-center md:p-2 p-1 h-fit md:h-full w-full text-[#FFE541] font-bold border-t-2 bg-[#0057A5]">
+				<div class="flex w-full justify-around">
+					<ul class="flex md:flex-col items-end justify-around w-full">
+						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
+							<div
+								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[65px] sm:h-[65px] w-[45px] h-[45px]">
+								<a th:href="@{/dashboard}"> <img class="h-[30px] w-[30px]"
+									src="/img/sources/icons/dashboard.svg" alt="dashboard">
+								</a>
+								<div class="pt-1 text-[8px]">DASHBOARD</div>
+							</div>
+						</li>
+						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
+							<div
+								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
+								<a th:href="@{/Task/newTask}"> <img
+									class="h-[30px] w-[30px]" src="/img/sources/icons/add-task.svg"
+									alt="nuovo task">
+								</a>
+								<div class="pt-1 text-[8px]">TASK</div>
+							</div>
+						</li>
+						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
+							<div
+								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
+								<!-- th:href="@{/Progetti/insert/1} diventera poi th:href="@{'/Progetti/insert/{id}'(id=${userLogged.getId()})'} quando sara implementata autentizazione-->
+								<a th:href="@{/Progetti/insert/1}"> <img
+									class="h-[30px] w-[30px]"
+									src="/img/sources/icons/add-project.svg" alt="nuovo progetto">
+								</a>
+								<div class="pt-1 text-[8px]">PROGETTO</div>
+							</div>
+						</li>
+						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
+							<div
+								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
+								<a th:href="@{/Clienti/insert}"> <img
+									class="h-[30px] w-[30px]"
+									src="/img/sources/icons/add-client.svg" alt="nuovo cliente">
+								</a>
+								<div class="pt-1 text-[8px]">CLIENTE</div>
+							</div>
+						</li>
+						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
+							<div
+								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
+								<a href="#"> <img class="h-[30px] w-[30px]"
+									src="/img/sources/icons/stats.svg" alt="statistiche">
+								</a>
+								<div class="pt-1 text-[8px]">STATISTICHE</div>
 							</div>
 						</li>
 					</ul>
 				</div>
-				<div>
-					<button
-						class="px-1 rounded cursor-pointer md:hidden"
-						onclick="onToggleMenu(this)"
-						name="menu">
-						<img class="h-[30px] w-[30px]" src="/img/sources/icons/hamburger-menu.svg" alt="menu">
-					</button>
-				</div>
-				<div
-					class="max-md:hidden flex items-center">
-					<button
-						class="  hover:text-gray-400 cursor-pointer"
-						onclick="onToggleOptionsDesktop(this)">
-						<img class="h-[28px] w-[28px]" src="/img/sources/icons/options.svg" alt="opzioni">
-					</button>
-					<div
-						class="nav-option-desktop absolute right-0 top-[-100%] bg-[#0057A5]">
-						<ul class="pr-2 pt-2 m-3">
-							<li
-								class="p-2 hover:text-gray-400 ">
-								<a class="flex items-center"
-									href="#">
-									<span class="px-2">
-										<img class="h-[25px] w-[25px]" src="/img/sources/icons/user.svg" alt="profilo">
-									</span>
-									<span
-										class="pt-1">PROFILO</span>
-								</a>
-							</li>
-							<li
-								class="p-2 hover:text-gray-400 ">
-								<a class="flex items-center"
-									href="#">
-									<span class="px-2">
-										<img class="h-[25px] w-[25px]" src="/img/sources/icons/elenco.svg" alt="dati fiscali">
-									</span>
-									<span class="pt-1">DATI
-										FISCALI</span>
-								</a>
-							</li>
-							<li
-								class="p-2 hover:text-gray-400 ">
-								<a class="flex items-center"
-									href="#">
-									<span class="px-2">
-										<img class="h-[25px] w-[25px]" src="/img/sources/icons/help-ticket-doc.svg" alt="assistenza">
-									</span>
-									<span
-										class="pt-1">ASSISTENZA</span>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-		</header>
-		<main>
-			<div class="flex flex-col-reverse md:flex-row w-screen max-md-"
-				style="height: calc(100vh - 12vh);">
-				<div id="side-bar"
-					class="fixed md:relative md:basis-16 bottom-0 flex md:flex-col md:justify-between justify-around items-center md:p-2 p-1 h-fit md:h-full w-full text-[#FFE541] font-bold  bg-[#0057A5]">
-					<div class="flex w-full justify-around">
-						<ul
-							class="flex md:flex-col items-end justify-around w-full">
-							<li
-								class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
-								<div
-									class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[65px] sm:h-[65px] w-[45px] h-[45px]">
-									<a
-										th:href="@{/dashboard}">
-										<img class="h-[30px] w-[30px]" src="/img/sources/icons/dashboard.svg" alt="dashboard">
-									</a>
-									<div
-										class="pt-1 text-[8px]">
-										DASHBOARD</div>
-								</div>
-							</li>
-							<li
-								class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
-								<div
-									class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
-									<a
-										th:href="@{/Task/newTask}">
-										<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-task.svg" alt="nuovo task">
-									</a>
-									<div
-										class="pt-1 text-[8px]">
-										TASK</div>
-								</div>
-							</li>
-							<li
-								class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
-								<div
-									class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
-									<!-- th:href="@{/Progetti/insert/1} diventera poi th:href="@{'/Progetti/insert/{id}'(id=${userLogged.getId()})'} quando sara implementata autentizazione-->
-									<a
-										th:href="@{/Progetti/insert/1}">
-										<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-project.svg" alt="nuovo progetto">
-									</a>
-									<div
-										class="pt-1 text-[8px]">
-										PROGETTO</div>
-								</div>
-							</li>
-							<li
-								class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
-								<div
-									class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
-									<a
-										th:href="@{/Clienti/insert}">
-										<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-client.svg" alt="nuovo cliente">
-									</a>
-									<div
-										class="pt-1 text-[8px]">
-										CLIENTE</div>
-								</div>
-							</li>
-							<li
-								class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
-								<div
-									class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
-									<a href="#">
-										<img class="h-[30px] w-[30px]" src="/img/sources/icons/stats.svg" alt="statistiche">
-									</a>
-									<div
-										class="pt-1 text-[8px]">
-										STATISTICHE</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-					<a class="col-auto py-2 max-md:hidden cursor-pointer"
-						href="#">
-						<img class="h-[35px] w-[35px]" src="/img/sources/icons/exit.svg" alt="logout">
-					</a>
-				</div>
-				<div id="main-section"
-					class="w-full flex-wrap h-full m-auto overflow-y-auto">
-					<div
-						class=" md:flex-col px-4">
-						<section class="flex flex-col">
-							<div
-								class="h-12 text-center text-[#0057A5] font-bold items-center m-3">
-								<h1 class="text-xl">ELENCO PROGETTI</h1>
-							</div>
-							
-							
-							<div class="grid grid-cols-2 gap-4 p-4 gap-8 flex justify-between w-full">
-							<div th:each="progetto : ${list}" class="mx-auto bg-white rounded-xl shadow-md overflow-hidden">
-							    <div class="md:flex">
-							        <div class="md:shrink-0">
-							            <img class="aspect-square h-48 w-full object-cover md:w-48" th:src="@{${progetto.cliente.LogoPath}}" alt="logo-cliente">
-							        </div>
-							        <div class="p-4">
-							            <div th:text="${progetto.cliente.labelCliente}"  class="uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta cliente</div>
-							            <a th:href="@{/Progetti/{id}(id=${progetto.getId()})}" th:text="${progetto.name}"  class="line-clamp-1  block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome progetto
-							            </a>
-							            <p th:text="${progetto.descrizione}" class="mt-2 text-slate-500 line-clamp-2">descrizione progetto
-							            </p>
-							            <a th:href="@{/Progetti/{id}(id=${progetto.getId()})}" class="block w-48 text-center mt-4 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
-							  vai al dettaglio
-							</a>
-							
-							
-							        </div>
-							    </div>
-							</div>
-							</div>
-							
-							<div th:if="${list.isEmpty()}">
-								<div
-									class="text-center text-[#0057A5] p-4">
-									<h1>La ricerca non ha
-										prodotto risultati
-									</h1>
-								</div>
-							</div>
-							<div class="py-4 mb-10">
-								<div
-									class="flex justify-between text-center">
-									<div class="col"
-										th:text="|Progetti Totali: ${totalItems} - Pagina ${currentPage} di ${totalPages}|">
+				<a class="col-auto py-2 max-md:hidden cursor-pointer" href="#">
+					<img class="h-[35px] w-[35px]" src="/img/sources/icons/exit.svg"
+					alt="logout">
+				</a>
+			</div>
+			<div id="main-section"
+				class="w-full flex-wrap h-full m-auto overflow-y-auto">
+				<div class=" md:flex-col px-4">
+					
+<!-- 			section elenco progetti main		 -->
+					<section class="flex flex-col">
+						<div
+							class="h-12 text-center text-[#0057A5] font-bold items-center m-3">
+							<h1 class="text-xl">ELENCO PROGETTI</h1>
+						</div>
+
+
+						<div
+							class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-between w-full">
+							<div th:each="progetto : ${list}"
+								class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
+								<div class="md:flex">
+									<div class="md:shrink-0">
+										<img class="aspect-square h-48 w-full object-cover md:w-48"
+											th:src="@{${progetto.cliente.LogoPath}}" alt="logo-cliente">
 									</div>
-									<div class="col">
-										<span
-											class=" justify-center"
-											th:each="i : ${#numbers.sequence(1, totalPages)}">
-											<a class="p-[3px] text-[#0057A5]"
-												style="border: 1px solid #0057A5; border-radius: 5px;"
-												th:href="@{'/Progetti/page/'+${i}}"
-												th:text="${i}"></a>
-										</span>
+									<div class="p-4">
+										<div th:text="${progetto.cliente.labelCliente}"
+											class="uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
+											cliente</div>
+										<a th:href="@{/Progetti/{id}(id=${progetto.getId()})}"
+											th:text="${progetto.name}"
+											class="line-clamp-1  block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome
+											progetto </a>
+										<p th:text="${progetto.descrizione}"
+											class="mt-2 text-slate-500 line-clamp-2">descrizione
+											progetto</p>
+											
+											<div >
+						
+												<span>
+												
+													<ul>
+															
+														<li class="flex flex-col md:flex-row float-left">
+															<a th:href="@{/Progetti/{id}(id=${progetto.getId()})}"
+																class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
+																	vai al dettaglio </a>
+														</li>
+														<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
+														 <a th:href="@{/Progetti/edit/{id}(id=${progetto.getId()})}"><img th:src="@{/img/sources/icons/modify-grey.svg}" alt="progetto-attivo" class="size-5 inline"></a>
+														</li>
+														
+														<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
+														 <a ><img th:src="@{/img/sources/icons/archive.svg}" alt="archivia" class="size-5 inline"></a>
+														</li>
+														
+														<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
+															<a><img th:if="${progetto.getDataFine} == null" th:src="@{/img/sources/icons/contatore-on-start.svg}" alt="progetto-attivo" class="size-5 inline"></a>
+															<a><img th:if="${progetto.getDataFine} != null" th:src="@{/img/sources/icons/contatore-on-stop.svg}" alt="progetto-chiuso" class="size-5 inline"></a>
+														</li>
+														
+													</ul>
+												</span>
+											</div>
+										
+
+
 									</div>
 								</div>
 							</div>
-						</section>
-						<section>
-							<div class="mt-5">
-								<div
-									class="text-center mb-5">
-									<form
-										class="mx-auto w-50"
-										role="search"
-										method="get"
-										th:object="${progett}"
-										th:action="@{/progetto-search}">
-										<label
-											for="ticket-search"
-											class="text-[#0057A5]">Ricerca
-											Progetto</label>
-										<input type="text"
-											class="border-2 border-[#0057A5] p-1 my-3 rounded-md"
-											name="input"
-											placeholder="Ricerca..."
-											aria-label="Search">
-										<button
-											class="border-2 border-[#0057A5] bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
-											type="submit">Search</button>
-										<a class="border-2 border-[#0057A5] bg-[#FFE541] text-[#0057A5] font-bold px-3 py-2 rounded-[35px]"
-											th:href="@{/Progetti}">Annulla</a>
-									</form>
+						</div>
+
+						<div th:if="${list.isEmpty()}">
+							<div class="text-center text-[#0057A5] p-4">
+								<h1>La ricerca non ha prodotto risultati</h1>
+							</div>
+						</div>
+						<div class="py-4 mb-10">
+							<div class="flex justify-between text-center">
+								<div class="col"
+									th:text="|Progetti Totali: ${totalItems} - Pagina ${currentPage} di ${totalPages}|">
+								</div>
+								<div class="col">
+									<span class=" justify-center"
+										th:each="i : ${#numbers.sequence(1, totalPages)}"> <a
+										class="p-[3px] text-[#0057A5]"
+										style="border: 1px solid #0057A5; border-radius: 5px;"
+										th:href="@{'/Progetti/page/'+${i}}" th:text="${i}"></a>
+									</span>
 								</div>
 							</div>
-						</section>
-					</div>
-					<div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden" id="dettaglio-contatore-bottom">
-					<div class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
-						<div class="flex justify-between items-center text-[#0057A5] font-bold">
+						</div>
+					</section>
+					<section>
+						<div class="mt-5">
+							<div class="text-center mb-5">
+								<form class="mx-auto w-50" role="search" method="get"
+									th:object="${progett}" th:action="@{/progetto-search}">
+									<label for="ticket-search" class="text-[#0057A5]">Ricerca
+										Progetto</label> <input type="text"
+										class="border-2 border-[#0057A5] p-1 my-3 rounded-md"
+										name="input" placeholder="Ricerca..." aria-label="Search">
+									<button
+										class="border-2 border-[#0057A5] bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+										type="submit">Search</button>
+									<a
+										class="border-2 border-[#0057A5] bg-[#FFE541] text-[#0057A5] font-bold px-3 py-2 rounded-[35px]"
+										th:href="@{/Progetti}">Annulla</a>
+								</form>
+							</div>
+						</div>
+					</section>
+				</div>
+				<div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 m-auto lg:hidden"
+					id="dettaglio-contatore-bottom">
+					<div
+						class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
+						<div
+							class="flex justify-between items-center text-[#0057A5] font-bold">
 							<div class="col-auto ps-3">
-								<img class="h-[45px] w-[45px]" src="/img/sources/icons/contatore-blue.svg" alt="contatore">
+								<img class="h-[45px] w-[45px]"
+									src="/img/sources/icons/contatore-blue.svg" alt="contatore">
 							</div>
-							<div th:if="${taskInUso == null}" class="flex flex-col items-center">
-								<div th:unless="${contatoreIsTrue}" class="col-auto text-[14px] p-0">...</div>
+							<div th:if="${taskInUso == null}"
+								class="flex flex-col items-center">
+								<div th:unless="${contatoreIsTrue}"
+									class="col-auto text-[14px] p-0">...</div>
 								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
 									class="col-auto text-[14px] p-0"></div>
 								<div class="col-auto text-[24px] p-0" id="timerDue">00:00:00</div>
 							</div>
-							<a th:unless="${taskInUso == null}" th:href="@{|/Task/${taskInUso.id}|}"
+							<a th:unless="${taskInUso == null}"
+								th:href="@{|/Task/${taskInUso.id}|}"
 								class="t-tooltip flex flex-col items-center relative">
-								<div th:unless="${contatoreIsTrue}" class="col-auto text-[14px] p-0">...</div>
+								<div th:unless="${contatoreIsTrue}"
+									class="col-auto text-[14px] p-0">...</div>
 								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
 									class="col-auto text-[14px] p-0 max-w-[80%] md:max-w-[100%] truncate"></div>
 								<div class="col-auto text-[24px] p-0" id="timerDue">00:00:00</div>
 								<div
 									class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-210px] mt-[40px]">
-									Dettaglio task
-								</div>
+									Dettaglio task</div>
 							</a>
 							<div class="col-auto flex items-center">
 								<div th:if="${taskInUso == null}" class="mx-2 flex items-center">
-									<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg" alt="stop">
+									<img class="h-[45px] w-[45px]"
+										src="/img/sources/icons/stop-blue.svg" alt="stop">
 								</div>
-								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
-									<button id="stopButtonBottom" type="button" class="hover:opacity-75">
-										<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg"
-											alt="stop">
+								<div th:unless="${taskInUso == null}"
+									class="mx-2 flex items-center">
+									<button id="stopButtonBottom" type="button"
+										class="hover:opacity-75">
+										<img class="h-[45px] w-[45px]"
+											src="/img/sources/icons/stop-blue.svg" alt="stop">
 									</button>
 								</div>
 								<div th:if="${taskInUso == null}" class="mx-2 flex items-center">
-									<img class="h-[45px] w-[45px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
+									<img class="h-[45px] w-[45px]"
+										src="/img/sources/icons/pause-blue.svg" alt="pause">
 								</div>
-								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
+								<div th:unless="${taskInUso == null}"
+									class="mx-2 flex items-center">
 									<div th:unless="${contatoreIsRun}">
-										<img class="h-[45px] w-[45px]" src="/img/sources/icons/pause-blue.svg"
-											alt="pause">
+										<img class="h-[45px] w-[45px]"
+											src="/img/sources/icons/pause-blue.svg" alt="pause">
 									</div>
 									<div th:if="${contatoreIsRun}">
-										<form th:action="@{|/Contatore/pause/${taskInUso.id}|}" th:object="${contatore}"
-											method="post">
+										<form th:action="@{|/Contatore/pause/${taskInUso.id}|}"
+											th:object="${contatore}" method="post">
 											<input type="hidden" name="endPoint" th:value="${endPoint}">
-											<button type="submit" class="hover:opacity-75 flex items-center">
-												<img class="h-[45px] w-[45px]" src="/img/sources/icons/pause-blue.svg"
-													alt="pause">
+											<button type="submit"
+												class="hover:opacity-75 flex items-center">
+												<img class="h-[45px] w-[45px]"
+													src="/img/sources/icons/pause-blue.svg" alt="pause">
 											</button>
 										</form>
 									</div>
 								</div>
 								<div th:if="${taskInUso == null}" class="mx-2 flex items-center">
-									<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg" alt="start">
+									<img class="h-[45px] w-[45px]"
+										src="/img/sources/icons/play-blue.svg" alt="start">
 								</div>
-								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
+								<div th:unless="${taskInUso == null}"
+									class="mx-2 flex items-center">
 									<div th:if="${contatoreIsRun}">
-										<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg"
-											alt="start">
+										<img class="h-[45px] w-[45px]"
+											src="/img/sources/icons/play-blue.svg" alt="start">
 									</div>
 									<div th:unless="${contatoreIsRun}">
-										<form th:action="@{|/start/${taskInUso.id}|}" th:object="${contatore}"
-											method="post">
+										<form th:action="@{|/start/${taskInUso.id}|}"
+											th:object="${contatore}" method="post">
 											<input type="hidden" name="endPoint" th:value="${endPoint}">
-											<button type="submit" class="hover:opacity-75 flex items-center">
-												<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg"
-													alt="start">
+											<button type="submit"
+												class="hover:opacity-75 flex items-center">
+												<img class="h-[45px] w-[45px]"
+													src="/img/sources/icons/play-blue.svg" alt="start">
 											</button>
 										</form>
 									</div>
@@ -531,44 +499,49 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+
+		</div>
+		</div>
+	</main>
+
+	<!-- Modale StopButton-->
+	<div id="modalStopButton"
+		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
+		<div
+			class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
+			<div class=" w-full h-auto">
+				<div id="modalStopCloseButton"
+					class="flex justify-end items-center p-2 cursor-pointer">
+					<img class="h-[30px] w-[30px]"
+						src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
 				</div>
 			</div>
-
-			</div>
-			</div>
-		</main>
-		
-		<!-- Modale StopButton-->
-			<div id="modalStopButton"
-						class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
-						<div
-							class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
-							<div class=" w-full h-auto">
-								<div id="modalStopCloseButton"
-									class="flex justify-end items-center p-2 cursor-pointer">
-									<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
-								</div>
-							</div>
-							<div th:unless="${taskInUso == null}" class="w-full h-auto bg-white rounded-b-lg">
-								<form th:action="@{|/Contatore/stop/${taskInUso.id}|}" 
-									th:object="${contatore}" 
-									method="post">
-									<div class="flex flex-col justify-center p-2 text-center ">
-										<div class="p-3 text-[#0057A5]">
-											<p>Stai per terminare definitivamente il task <strong th:text="${taskInUso.getName()}"></strong>
-												 relativo al progetto <strong th:text="${taskInUso.progetto.getName()}"></strong>. Vuoi procedere?</p>
-										</div>
-										<div class="p-6">
-											<button type="submit"
-												class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
-										</div>
-									</div>
-								</form>
-							</div>
+			<div th:unless="${taskInUso == null}"
+				class="w-full h-auto bg-white rounded-b-lg">
+				<form th:action="@{|/Contatore/stop/${taskInUso.id}|}"
+					th:object="${contatore}" method="post">
+					<div class="flex flex-col justify-center p-2 text-center ">
+						<div class="p-3 text-[#0057A5]">
+							<p>
+								Stai per terminare definitivamente il task <strong
+									th:text="${taskInUso.getName()}"></strong> relativo al progetto
+								<strong th:text="${taskInUso.progetto.getName()}"></strong>.
+								Vuoi procedere?
+							</p>
+						</div>
+						<div class="p-6">
+							<button type="submit"
+								class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
 						</div>
 					</div>
-					<!-- Script -->
-						<script th:inline="javascript">
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Script -->
+	<script th:inline="javascript">
 							/*<![CDATA[*/
 							let finalTimeSec = /*[[${finaltime}]]*/ null;
 							let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
@@ -576,9 +549,9 @@
 							let taskInUsoId = /*[[${taskInUsoId}]]*/ null;	
 							let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
 							/*]]>*/
-						</script>	
-					    <script type="text/javascript" th:src="@{/js/timer.js}"></script>
-					    <script type="text/javascript" th:src="@{/js/layout.js}"></script>
-	</body>
+						</script>
+	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
+	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
+</body>
 
 </html>
