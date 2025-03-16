@@ -33,195 +33,203 @@
 
 <body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart()">
 	<header>
-		<nav id="navbar" class="flex justify-between items-center w-full h-fit md:px-1 md:py-0 p-2 mb-[2px] bg-[#0057A5] font-bold  text-sm text-white">
-    <div id="icona" class="col-auto">
-        <img class=" max-h-9" src="/img/logo-with-white.png" alt="logo FreelApp">
-    </div>
-    <div class="nav-bar md:static absolute bg-[#0057A5] min-h-[60vh] md:min-h-fit md:w-auto w-full left-0 top-[-100%] flex items-center">
-      <ul class="flex flex-col md:flex-row p-3 md:items-center">
-        <li class="md:mx-4 py-5 md:py-0 hover:text-gray-400">
-          <a class="flex items-center" th:href="@{/dashboard}">
-            <span class="px-2">
-              <img class="h-[30px] w-[30px]" src="/img/sources/icons/dashboard.svg" alt="dashboard">
-            </span>
-            <span class="pt-1">DASHBOARD</span>
-          </a>
-        </li>
-        <li class="md:mx-4 py-5 md:py-0 hover:text-gray-400">
-          <a class="flex items-center" th:href="@{/Clienti}">
-            <span class="px-2">
-              <img class="h-[25px] w-[25px]" src="/img/sources/icons/clients.svg" alt="clienti">
-            </span>
-            <span class="pt-1">CLIENTI</span>
-          </a>
-        </li>
-        <li class="md:mx-4 py-5 md:py-0 hover:text-gray-400">
-          <a class="flex items-center" th:href="@{/Progetti}">
-            <span class="px-2">
-				<img class="h-[28px] w-[28px]" src="/img/sources/icons/folders.svg" alt="progetti">
-            </span>
-            <span class="pt-1">PROGETTI</span>
-          </a>
-        </li>
-        <li class="md:mx-4 py-5 md:py-0 hover:text-gray-400">
-          <a class="flex items-center"  th:href="@{/Task}">
-			<span class="px-2">
-				<img class="h-[28px] w-[28px]" src="/img/sources/icons/check.svg" alt="progetti">
-            </span>
-            <span class="pt-1">I MIEI TASK</span>
-          </a>
-        </li>
-        <li class="md:mx-4 py-5 md:py-0 hover:text-gray-400 md:hidden">
-          <a class="flex items-center" href="#">
-            <span class="px-2">
-              <img class="h-[25px] w-[25px]" src="/img/sources/icons/exit.svg" alt="logout">          
-            </span>
-            <span class="pt-1">ESCI</span>
-          </a>
-        </li>
-		<li class="max-lg:hidden" id="dettaglio-contatore-top">
-						<div class="w-full h-fit border-4 border-[#FFE541] bg-white rounded-[30px] p-2 py-1">
+		<nav id="navbar"
+			class="flex justify-around items-center w-full h-fit md:px-1 md:py-0 p-2 bg-[#0057A5] font-bold  text-sm text-white">
+			<div id="icona" class="col-auto">
+				<img class=" max-h-9" src="/img/logo-with-white.png"
+					alt="logo FreelApp">
+			</div>
+			<div
+				class="nav-bar md:static absolute bg-[#0057A5] min-h-[60vh] md:min-h-fit md:w-auto w-full left-0 top-[-100%] flex items-center">
+				<ul class="flex flex-col md:flex-row p-3 md:items-center">
+					<li class="md:mx-4 py-5 md:py-0 hover:text-gray-400"><a
+						class="flex items-center" th:href="@{/dashboard}"> <span
+							class="px-2"> <img class="h-[30px] w-[30px]"
+								src="/img/sources/icons/dashboard.svg" alt="dashboard">
+						</span> <span class="pt-1">DASHBOARD</span>
+					</a></li>
+					<li class="md:mx-4 py-5 md:py-0 hover:text-gray-400"><a
+						class="flex items-center" th:href="@{/Task}"> <span
+							class="px-2"> <img class="h-[28px] w-[28px]"
+								src="/img/sources/icons/check.svg" alt="task">
+						</span> <span class="pt-1">I MIEI TASK</span>
+					</a></li>
+
+					<li class="md:mx-4 py-5 md:py-0 hover:text-gray-400"><a
+						class="flex items-center" th:href="@{/Progetti}"> <span
+							class="px-2"> <img class="h-[28px] w-[28px]"
+								src="/img/sources/icons/folders.svg" alt="progetti">
+						</span> <span class="pt-1">PROGETTI</span>
+					</a></li>
+					<li class="md:mx-4 py-5 md:py-0 hover:text-gray-400"><a
+						class="flex items-center" th:href="@{/Clienti}"> <span
+							class="px-2"> <img class="h-[25px] w-[25px]"
+								src="/img/sources/icons/clients.svg" alt="clienti">
+						</span> <span class="pt-1">CLIENTI</span>
+					</a></li>
+
+					<li class="md:mx-4 py-5 md:py-0 hover:text-gray-400 md:hidden">
+						<a class="flex items-center" href="#"> <span class="px-2">
+								<img class="h-[25px] w-[25px]" src="/img/sources/icons/exit.svg"
+								alt="logout">
+						</span> <span class="pt-1">ESCI</span>
+					</a>
+					</li>
+<!-- 					<li class=" max-lg:hidden" id="dettaglio-contatore-top"> -->
+
+<!-- 					</li> -->
+					<li class="md:mx-4 py-5 md:py-0">
+						<button class=" hover:text-gray-400 cursor-pointer md:hidden"
+							onclick="onToggleOptionsMobile(this)">
+							<img class="h-[28px] w-[28px]"
+								src="/img/sources/icons/options.svg" alt="opzioni">
+						</button>
+						<div id="options-button-mobile" class="hidden">
+							<ul class="ps-6 pt-2">
+								<li class="p-2 hover:text-gray-400 "><a
+									class="flex items-center" href="#"> <span class="px-2">
+											<img class="h-[25px] w-[25px]"
+											src="/img/sources/icons/user.svg" alt="profilo">
+									</span> <span class="pt-1">PROFILO</span>
+								</a></li>
+								<li class="p-2 hover:text-gray-400 "><a
+									class="flex items-center" href="#"> <span class="px-2">
+											<img class="h-[25px] w-[25px]"
+											src="/img/sources/icons/elenco.svg" alt="dati fiscali">
+									</span> <span class="pt-1">DATI FISCALI</span>
+								</a></li>
+								<li class="p-2 hover:text-gray-400 "><a
+									class="flex items-center" href="#"> <span class="px-2">
+											<img class="h-[25px] w-[25px]"
+											src="/img/sources/icons/help-ticket-doc.svg" alt="assistenza">
+									</span> <span class="pt-1">ASSISTENZA</span>
+								</a></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+		<!-- CONTATORE --><div id="dettaglio-contatore-top"
+							class="max-lg:hidden h-fit border-4 border-[#FFE541] bg-white rounded-[30px] mt-2 mb-2 p-2 py-1">
 							<div class="flex items-center text-[#0057A5] font-bold">
-								<div class="col-auto w-8 h-8 ms-2">
-									<img src="/img/sources/icons/contatore-blue.svg" alt="contatore">
+								<div class="col-auto w-8 h-8 mx-2">
+									<img src="/img/sources/icons/contatore-blue.svg"
+										alt="contatore">
 								</div>
-								<div th:if="${taskInUso == null}" class="flex flex-col items-center w-[100px]">
+								<div th:if="${taskInUso == null}"
+									class="flex flex-col items-center w-[100px]">
 									<div th:unless="${contatoreIsTrue}" class=" text-[10px] p-0">...</div>
-									<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
-										class=" text-[10px] p-0"></div>
+									<div th:if="${contatoreIsTrue}"
+										th:text="${taskInUso.getName()}" class=" text-[10px] p-0"></div>
 									<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
 								</div>
-								<a th:unless="${taskInUso == null}" th:href="@{|/Task/${taskInUso.id}|}"
+								<a th:unless="${taskInUso == null}"
+									th:href="@{|/Task/${taskInUso.id}|}"
 									class="t-tooltip flex flex-col items-center w-[100px]">
 									<div th:unless="${contatoreIsTrue}" class=" text-[10px] p-0">...</div>
-									<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
-										class=" text-[10px] p-0"></div>
+									<div th:if="${contatoreIsTrue}"
+										th:text="${taskInUso.getName()}"
+										class=" text-[10px] p-0 max-w-[90px] truncate"></div>
 									<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
 									<div
 										class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-40px] mt-[40px]">
-										Dettaglio task
-									</div>
+										Dettaglio task</div>
 								</a>
 								<div class="col-auto flex items-center px-2">
-									<div th:if="${taskInUso == null}" class="w-8 h-8">
-										<img class="h-[29px] w-[29px]" src="/img/sources/icons/stop-blue.svg" alt="stop">
+									<div th:if="${taskInUso == null}" class="w-8 h-8 ">
+										<img class="h-[29px] w-[29px]"
+											src="/img/sources/icons/stop-blue.svg" alt="stop">
 									</div>
 									<div th:unless="${taskInUso == null}" class="w-8 h-8">
-										<button id="stopButtonTop" type="button" class="hover:opacity-75">
-											<img class="h-[29px] w-[29px]" src="/img/sources/icons/stop-blue.svg"
-												alt="stop">
+										<button id="stopButtonTop" type="button"
+											class="hover:opacity-75">
+											<img class="h-[29px] w-[29px]"
+												src="/img/sources/icons/stop-blue.svg" alt="stop">
 										</button>
 									</div>
 									<div th:if="${taskInUso == null}" class="w-8 h-8">
-										<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg"
-											alt="pause">
+										<img class="h-[29px] w-[29px]"
+											src="/img/sources/icons/pause-blue.svg" alt="pause">
 									</div>
 									<div th:unless="${taskInUso == null}" class="w-8 h-8">
 										<div th:if="${!contatoreIsRun}">
-											<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg"
-												alt="pause">
+											<img class="h-[29px] w-[29px]"
+												src="/img/sources/icons/pause-blue.svg" alt="pause">
 										</div>
 										<div th:if="${contatoreIsRun}">
-											<button id="modalPauseTopButton" type="submit" class="hover:opacity-75">
-												<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg"
-													alt="pause">
-											</button>
+											<form th:action="@{|/Contatore/pause/${taskInUso.id}|}"
+												th:object="${contatore}" method="post">
+												<input type="hidden" name="endPoint" th:value="${endPoint}">
+												<button type="submit" class="hover:opacity-75 ">
+													<img class="h-[29px] w-[29px]"
+														src="/img/sources/icons/pause-blue.svg" alt="pause">
+												</button>
+											</form>
 										</div>
 									</div>
 									<div th:if="${taskInUso == null}" class="w-8 h-8">
-										<img class="h-[29px] w-[29px]" src="/img/sources/icons/play-blue.svg" alt="start">
+										<img class="h-[29px] w-[29px]"
+											src="/img/sources/icons/play-blue.svg" alt="start">
 									</div>
 									<div th:unless="${taskInUso == null}" class="w-8 h-8">
 										<div th:if="${contatoreIsRun}">
-											<img class="h-[29px] w-[29px]" src="/img/sources/icons/play-blue.svg"
-												alt="start">
+											<img class="h-[29px] w-[29px]"
+												src="/img/sources/icons/play-blue.svg" alt="start">
 										</div>
 										<div th:unless="${contatoreIsRun}">
-											<button id="modalStartTopButton" type="submit" class="hover:opacity-75">
-												<img class="h-[29px] w-[29px]" src="/img/sources/icons/play-blue.svg"
-													alt="start">
-											</button>
+											<form th:action="@{|/start/${taskInUso.id}|}"
+												th:object="${contatore}" method="post">
+												<input type="hidden" name="endPoint" th:value="${endPoint}">
+												<button type="submit" class="hover:opacity-75">
+													<img class="h-[29px] w-[29px]"
+														src="/img/sources/icons/play-blue.svg" alt="start">
+												</button>
+											</form>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</li>
-        <li class="md:mx-4 py-5 md:py-0">
-          <button class=" hover:text-gray-400 cursor-pointer md:hidden" onclick="onToggleOptionsMobile(this)">
-            <img class="h-[28px] w-[28px]" src="/img/sources/icons/options.svg" alt="opzioni">
-          </button>
-          <div id="options-button-mobile" class="hidden">
-            <ul class="ps-6 pt-2">
-              <li class="p-2 hover:text-gray-400 ">
-                <a class="flex items-center" href="#">
-                  <span class="px-2">
-                    <img class="h-[25px] w-[25px]" src="/img/sources/icons/user.svg" alt="profilo">
-                  </span>
-                  <span class="pt-1">PROFILO</span>
-                </a>
-              </li>
-              <li class="p-2 hover:text-gray-400 ">
-                <a class="flex items-center" href="#">
-                  <span class="px-2">
-                    <img class="h-[25px] w-[25px]" src="/img/sources/icons/elenco.svg" alt="dati fiscali">
-                  </span>
-                  <span class="pt-1">DATI FISCALI</span>
-                </a>
-              </li>
-              <li class="p-2 hover:text-gray-400 ">
-                <a class="flex items-center" href="#">
-                  <span class="px-2">
-                    <img class="h-[25px] w-[25px]" src="/img/sources/icons/help-ticket-doc.svg" alt="assistenza">
-                  </span>
-                  <span class="pt-1">ASSISTENZA</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div>
-      <button class="px-1 rounded cursor-pointer md:hidden"
-          onclick="onToggleMenu(this)" name="menu">
-        <img class="h-[30px] w-[30px]" src="/img/sources/icons/hamburger-menu.svg" alt="menu">
-      </button>
-    </div>
-    <div class="max-md:hidden flex items-center">
-      <button class="  hover:text-gray-400 cursor-pointer" onclick="onToggleOptionsDesktop(this)">
-        <img class="h-[28px] w-[28px]" src="/img/sources/icons/options.svg" alt="opzioni">
-      </button>
-      <div class="nav-option-desktop absolute right-0 top-[-100%] bg-[#0057A5]">
-        <ul class="pr-2 pt-2 m-3">
-          <li class="p-2 hover:text-gray-400 ">
-            <a class="flex items-center" href="#">
-              <span class="px-2">
-                <img class="h-[25px] w-[25px]" src="/img/sources/icons/user.svg" alt="profilo">
-              </span>
-              <span class="pt-1">PROFILO</span>
-            </a>
-          </li>
-          <li class="p-2 hover:text-gray-400 ">
-            <a class="flex items-center" href="#">
-              <span class="px-2">
-                <img class="h-[25px] w-[25px]" src="/img/sources/icons/elenco.svg" alt="dati fiscali">
-              </span>
-              <span class="pt-1">DATI FISCALI</span>
-            </a>
-          </li>
-          <li class="p-2 hover:text-gray-400 ">
-            <a class="flex items-center" href="#">
-              <span class="px-2">
-                <img class="h-[25px] w-[25px]" src="/img/sources/icons/help-ticket-doc.svg" alt="assistenza">
-              </span>
-              <span class="pt-1">ASSISTENZA</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+			
+			<div>
+				<button class="px-1 rounded cursor-pointer md:hidden"
+					onclick="onToggleMenu(this)" name="menu">
+					<img class="h-[30px] w-[30px]"
+						src="/img/sources/icons/hamburger-menu.svg" alt="menu">
+				</button>
+			</div>
+			<div class="max-md:hidden flex items-center">
+				<button class="  hover:text-gray-400 cursor-pointer"
+					onclick="onToggleOptionsDesktop(this)">
+					<img class="h-[28px] w-[28px]" src="/img/sources/icons/options.svg"
+						alt="opzioni">
+				</button>
+				<div
+					class="nav-option-desktop absolute right-0 top-[-100%] bg-[#0057A5]">
+					<ul class="pr-2 pt-2 m-3">
+						<li class="p-2 hover:text-gray-400 "><a
+							class="flex items-center" href="#"> <span class="px-2">
+									<img class="h-[25px] w-[25px]"
+									src="/img/sources/icons/user.svg" alt="profilo">
+							</span> <span class="pt-1">PROFILO</span>
+						</a></li>
+						<li class="p-2 hover:text-gray-400 "><a
+							class="flex items-center" href="#"> <span class="px-2">
+									<img class="h-[25px] w-[25px]"
+									src="/img/sources/icons/elenco.svg" alt="dati fiscali">
+							</span> <span class="pt-1">DATI FISCALI</span>
+						</a></li>
+						<li class="p-2 hover:text-gray-400 "><a
+							class="flex items-center" href="#"> <span class="px-2">
+									<img class="h-[25px] w-[25px]"
+									src="/img/sources/icons/help-ticket-doc.svg" alt="assistenza">
+							</span> <span class="pt-1">ASSISTENZA</span>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 	</header>
 	<main>
 		<div class="flex flex-col-reverse md:flex-row w-screen max-md-" style="height: calc(100vh - 12vh);">
