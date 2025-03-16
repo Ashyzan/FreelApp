@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
+import com.freelapp.model.Task;
 import com.freelapp.model.User;
 import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
