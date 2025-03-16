@@ -56,7 +56,7 @@
 					<li class="md:mx-4 py-5 md:py-0 hover:text-gray-400"><a
 						class="flex items-center" th:href="@{/Task}"> <span
 							class="px-2"> <img class="h-[28px] w-[28px]"
-								src="/img/sources/icons/folders.svg" alt="progetti">
+								src="/img/sources/icons/check.svg" alt="progetti">
 						</span> <span class="pt-1">I MIEI TASK</span>
 					</a></li>
 
@@ -115,8 +115,8 @@
 				</ul>
 			</div>
 			
-		<!-- CONTATORE --><div
-							class="h-fit border-4 border-[#FFE541] bg-white rounded-[30px] mt-2 mb-2 p-2 py-1">
+		<!-- CONTATORE --><div id="dettaglio-contatore-top"
+							class="max-lg:hidden h-fit border-4 border-[#FFE541] bg-white rounded-[30px] mt-2 mb-2 p-2 py-1">
 							<div class="flex items-center text-[#0057A5] font-bold">
 								<div class="col-auto w-8 h-8 ms-2">
 									<img src="/img/sources/icons/contatore-blue.svg"
@@ -322,7 +322,7 @@
 									</div>
 									<div class="p-4">
 										<div th:text="${progetto.cliente.labelCliente}"
-											class="uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
+											class="line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
 											cliente</div>
 										<a th:href="@{/Progetti/{id}(id=${progetto.getId()})}"
 											th:text="${progetto.name}"
@@ -408,89 +408,73 @@
 						</div>
 					</section>
 				</div>
-				<div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 m-auto lg:hidden"
-					id="dettaglio-contatore-bottom">
-					<div
-						class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
-						<div
-							class="flex justify-between items-center text-[#0057A5] font-bold">
-							<div class="col-auto ps-3">
-								<img class="h-[45px] w-[45px]"
-									src="/img/sources/icons/contatore-blue.svg" alt="contatore">
+				<div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden" id="dettaglio-contatore-bottom">
+					<div class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
+						<div class="flex justify-between items-center text-[#0057A5] font-bold">
+							<div id="icona-contatore" class="col-auto ps-3 w-[15%]">
+								<img class="h-[45px] w-[45px]" src="/img/sources/icons/contatore-blue.svg" alt="contatore">
 							</div>
-							<div th:if="${taskInUso == null}"
-								class="flex flex-col items-center">
-								<div th:unless="${contatoreIsTrue}"
-									class="col-auto text-[14px] p-0">...</div>
+							<div th:if="${taskInUso == null}" class="flex flex-col items-center">
+								<div th:unless="${contatoreIsTrue}" class="col-auto text-[14px] p-0">...</div>
 								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
 									class="col-auto text-[14px] p-0"></div>
 								<div class="col-auto text-[24px] p-0" id="timerDue">00:00:00</div>
 							</div>
-							<a th:unless="${taskInUso == null}"
-								th:href="@{|/Task/${taskInUso.id}|}"
-								class="t-tooltip flex flex-col items-center relative">
-								<div th:unless="${contatoreIsTrue}"
-									class="col-auto text-[14px] p-0">...</div>
+							<a th:unless="${taskInUso == null}" th:href="@{|/Task/${taskInUso.id}|}"
+								class="t-tooltip flex flex-col items-center relative w-[45%]">
+								<div th:unless="${contatoreIsTrue}" class="col-auto text-[14px] p-0">...</div>
 								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
-									class="col-auto text-[14px] p-0 max-w-[80%] md:max-w-[100%] truncate"></div>
+									class="col-auto text-[14px] text-left p-0 w-full ml-4 truncate"></div>
 								<div class="col-auto text-[24px] p-0" id="timerDue">00:00:00</div>
 								<div
 									class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-210px] mt-[40px]">
-									Dettaglio task</div>
-							</a>
-							<div class="col-auto flex items-center">
-								<div th:if="${taskInUso == null}" class="mx-2 flex items-center">
-									<img class="h-[45px] w-[45px]"
-										src="/img/sources/icons/stop-blue.svg" alt="stop">
+									Dettaglio task
 								</div>
-								<div th:unless="${taskInUso == null}"
-									class="mx-2 flex items-center">
-									<button id="stopButtonBottom" type="button"
-										class="hover:opacity-75">
-										<img class="h-[45px] w-[45px]"
-											src="/img/sources/icons/stop-blue.svg" alt="stop">
+							</a>
+							<div class="col-auto flex items-center w-[40%]">
+								<div th:if="${taskInUso == null}" class="mx-2 flex items-center">
+									<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg" alt="stop">
+								</div>
+								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
+									<button id="stopButtonBottom" type="button" class="hover:opacity-75">
+										<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg"
+											alt="stop">
 									</button>
 								</div>
 								<div th:if="${taskInUso == null}" class="mx-2 flex items-center">
-									<img class="h-[45px] w-[45px]"
-										src="/img/sources/icons/pause-blue.svg" alt="pause">
+									<img class="h-[45px] w-[45px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
 								</div>
-								<div th:unless="${taskInUso == null}"
-									class="mx-2 flex items-center">
+								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
 									<div th:unless="${contatoreIsRun}">
-										<img class="h-[45px] w-[45px]"
-											src="/img/sources/icons/pause-blue.svg" alt="pause">
+										<img class="h-[45px] w-[45px]" src="/img/sources/icons/pause-blue.svg"
+											alt="pause">
 									</div>
 									<div th:if="${contatoreIsRun}">
-										<form th:action="@{|/Contatore/pause/${taskInUso.id}|}"
-											th:object="${contatore}" method="post">
+										<form th:action="@{|/Contatore/pause/${taskInUso.id}|}" th:object="${contatore}"
+											method="post">
 											<input type="hidden" name="endPoint" th:value="${endPoint}">
-											<button type="submit"
-												class="hover:opacity-75 flex items-center">
-												<img class="h-[45px] w-[45px]"
-													src="/img/sources/icons/pause-blue.svg" alt="pause">
+											<button type="submit" class="hover:opacity-75 flex items-center">
+												<img class="h-[45px] w-[45px]" src="/img/sources/icons/pause-blue.svg"
+													alt="pause">
 											</button>
 										</form>
 									</div>
 								</div>
 								<div th:if="${taskInUso == null}" class="mx-2 flex items-center">
-									<img class="h-[45px] w-[45px]"
-										src="/img/sources/icons/play-blue.svg" alt="start">
+									<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg" alt="start">
 								</div>
-								<div th:unless="${taskInUso == null}"
-									class="mx-2 flex items-center">
+								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
 									<div th:if="${contatoreIsRun}">
-										<img class="h-[45px] w-[45px]"
-											src="/img/sources/icons/play-blue.svg" alt="start">
+										<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg"
+											alt="start">
 									</div>
 									<div th:unless="${contatoreIsRun}">
-										<form th:action="@{|/start/${taskInUso.id}|}"
-											th:object="${contatore}" method="post">
+										<form th:action="@{|/start/${taskInUso.id}|}" th:object="${contatore}"
+											method="post">
 											<input type="hidden" name="endPoint" th:value="${endPoint}">
-											<button type="submit"
-												class="hover:opacity-75 flex items-center">
-												<img class="h-[45px] w-[45px]"
-													src="/img/sources/icons/play-blue.svg" alt="start">
+											<button type="submit" class="hover:opacity-75 flex items-center">
+												<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg"
+													alt="start">
 											</button>
 										</form>
 									</div>
