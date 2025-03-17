@@ -24,7 +24,7 @@ public class ProgettoService {
 	}
 	
 	public Page<Progetto> orderByDataInizio(int pageNumber){
-		Pageable pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending().and(Sort.by("name")));
+		Pageable pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").ascending());
 		
 		return progettoRepository.findAll(pageable1);
 		
@@ -32,7 +32,7 @@ public class ProgettoService {
 	}
 	
 	public Page<Progetto> orderByClient(int pageNumber){
-		Pageable pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente").descending().and(Sort.by("name")));
+		Pageable pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").ascending());
 		
 		return progettoRepository.findAll(pageable2);
 		

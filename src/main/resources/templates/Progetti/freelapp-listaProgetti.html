@@ -308,15 +308,17 @@
 							<h1 class="text-xl">ELENCO PROGETTI</h1>
 						</div>
 						<div id="filtra-per-clienti" class="flex items-center p-4 m-3 w-full gap-2">
-							<p class="text-[#0057A5]">Filtra per: </p>
+							<p class="text-[#0057A5]">Ordina per: </p>
 							<button th:onclick="attivaPaginazione1()" id="filtra-per-clienti-button" class=""><img src="/img/sources/icons/clients-blu.svg" class="inline size-8 float-left">	</button>
 							<button th:onclick="attivaPaginazione2()" id="filtra-per-data-button" class="opacity-50 pointer-events-none"><img src="/img/sources/icons/calendar-blue.svg" class="inline size-8 float-left">	</button>						
 																			
 						</div>
 
-						<div  class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-between w-full">						
+												
 		<!------------------ card per data     --------------------->
-							<div th:if="paginazioneAttivaData" id="list-data-inizio" th:each="progettoPerData : ${listProgettiByDataInizio}"
+							<div id="list-data-inizio" th:if="paginazioneAttivaData" class="">
+							<div  class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-between w-full">
+							<div  th:each="progettoPerData : ${listProgettiByDataInizio}"
 								class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
 								<div class="md:flex">
 									<div class="md:shrink-0">
@@ -381,11 +383,15 @@
 
 									</div>
 								</div>
+							 </div>
+							 </div>
 							</div>
 <!-----------------------	card per clienti -------------------->
-							<div th:if="paginazioneAttivaCliente" id="list-cliente" th:each="progettoCliente : ${listProgettiByCliente}"
-								class="hidden mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
-								<div class="md:flex">
+							<div id="list-cliente" th:if="paginazioneAttivaCliente" class="hidden"> 
+							<div  class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-between w-full">
+							<div th:each="progettoCliente : ${listProgettiByCliente}" class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
+														
+							<div class="md:flex" >
 									<div class="md:shrink-0">
 										<img class="aspect-square h-48 w-full object-cover md:w-48" th:src="@{${progettoCliente.cliente.LogoPath}}"
 											alt="logo-cliente">
@@ -441,8 +447,10 @@
 							
 									</div>
 								</div>
+							</div>	
 							</div>
-						</div>
+							</div>
+						
 <!--paginazione lista per data-->
 						
 						<div th:if="paginazioneAttivaData">
@@ -454,7 +462,7 @@
 						</div>
 						
 						<div th:if="paginazioneAttivaData" id="paginazione-data" class="p-4 mb-10">
-							<h1>CIAO SONO IOOOOO DATA TRUE</h1>
+							
 							<div class="flex justify-between text-center">
 								<div  class="col"
 									th:text="|Progetti totali ordinati per data inizio: ${totalItemByDatainizio} - Pagina ${currentPage} di ${totalPageByDataInizio}|">
@@ -479,7 +487,7 @@
 						</div>
 					</div>
 					<div th:if="paginazioneAttivaCliente" id="paginazione-clienti" class="hidden p-4 mb-10">
-						<h1>CIAO SONO IOOOOO CLIENTE TRUE</h1>
+						
 						<div class="flex justify-between text-center">
 							<div  class="col"
 								th:text="|Progetti totali ordinati per cliente: ${totalItemByCliente} - Pagina ${currentPage} di ${totalPageByCliente}|">
@@ -516,7 +524,7 @@
 						</div>
 					</section>
 				</div>
-				<div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden"
+				<div class="m-auto pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden"
 					id="dettaglio-contatore-bottom">
 					<div
 						class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
