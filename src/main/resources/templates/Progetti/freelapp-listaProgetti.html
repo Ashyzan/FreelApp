@@ -311,12 +311,8 @@
 							<p class="text-[#0057A5]">Ordina per: </p>
 							<button th:onclick="attivaPaginazione1()" id="filtra-per-clienti-button" class=""><img src="/img/sources/icons/clients-blu.svg" class="inline size-8 float-left">	</button>
 							<button th:onclick="attivaPaginazione2()" id="filtra-per-data-button" class="opacity-50 pointer-events-none"><img src="/img/sources/icons/calendar-blue.svg" class="inline size-8 float-left">	</button>						
-																			
-						</div>
-<!-- 						RICERCA -->
-						<div class="">
-							<div class="text-center">
-								<form class="mx-auto w-50" role="search" method="get"
+							
+							<form class="mx-auto w-50" role="search" method="get"
 									th:object="${progetto}" th:action="@{/progetto-search}">
 									<label for="ticket-search" class="text-[#0057A5]">Ricerca
 										Progetto</label> <input type="text"
@@ -328,8 +324,7 @@
 									<a
 										class="border-2 border-[#0057A5] bg-[#FFE541] text-[#0057A5] font-bold px-3 py-2 rounded-[35px]"
 										th:href="@{/Progetti}">Annulla</a>
-								</form>
-							</div>
+								</form>											
 						</div>
 
 												
