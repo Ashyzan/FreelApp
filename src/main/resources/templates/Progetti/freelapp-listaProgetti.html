@@ -307,37 +307,41 @@
 							class="h-12 text-center text-[#0057A5] font-bold items-center m-3">
 							<h1 class="text-xl">ELENCO PROGETTI</h1>
 						</div>
-
-
-						<div
-							class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-between w-full">
-							<div th:each="progetto : ${list}"
+						<div id="filtra-per-clienti" class="flex items-center m-3 w-full gap-2">
+							<p class="text-[#0057A5]">Filtra per: </p>
+							<button id="filtra-per-clienti-button" class=""><img src="/img/sources/icons/clients-blu.svg" class="inline size-8 float-left">	</button>
+							<button id="filtra-per-data-button" class="opacity-50 pointer-events-none"><img src="/img/sources/icons/list-blu.svg" class="inline size-8 float-left">	</button>						
+																			
+						</div>
+<!--card per data     -------------------                          -->
+						<div class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-between w-full">
+							<div id="list-data-inizio" th:each="progettoPerData : ${listProgettiByDataInizio}"
 								class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
 								<div class="md:flex">
 									<div class="md:shrink-0">
 										<img class="aspect-square h-48 w-full object-cover md:w-48"
-											th:src="@{${progetto.cliente.LogoPath}}" alt="logo-cliente">
+											th:src="@{${progettoPerData.cliente.LogoPath}}" alt="logo-cliente">
 									</div>
 
 									<div class="p-4 w-full">
 										<div>
-											<img th:if="${progetto.getDataFine} == null"
+											<img th:if="${progettoPerData.getDataFine} == null"
 												th:src="@{/img/sources/icons/contatore-on-start.svg}"
 												alt="progetto-attivo" class="size-5 inline float-right">
-											<img th:if="${progetto.getDataFine} != null"
+											<img th:if="${progettoPerData.getDataFine} != null"
 												th:src="@{/img/sources/icons/contatore-on-stop.svg}"
 												alt="progetto-chiuso" class="size-5 inline float-right">
 
 										</div>
-										<div th:text="${progetto.cliente.labelCliente}"
+										<div th:text="${progettoPerData.cliente.labelCliente}"
 											class="line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
 											cliente</div>
 
-										<a th:href="@{/Progetti/{id}(id=${progetto.getId()})}"
-											th:text="${progetto.name}"
+										<a th:href="@{/Progetti/{id}(id=${progettoPerData.getId()})}"
+											th:text="${progettoPerData.name}"
 											class="line-clamp-1  block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome
 											progetto </a>
-										<p th:text="${progetto.descrizione}"
+										<p th:text="${progettoPerData.descrizione}"
 											class="mt-2 text-slate-500 line-clamp-2">descrizione
 											progetto</p>
 
@@ -348,13 +352,13 @@
 												<ul>
 
 													<li class="flex flex-col md:flex-row float-left"><a
-														th:href="@{/Progetti/{id}(id=${progetto.getId()})}"
+														th:href="@{/Progetti/{id}(id=${progettoPerData.getId()})}"
 														class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
 															vai al dettaglio </a></li>
 
 													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
 														<a
-														th:href="@{/Progetti/edit/{id}(id=${progetto.getId()})}"><img
+														th:href="@{/Progetti/edit/{id}(id=${progettoPerData.getId()})}"><img
 															th:src="@{/img/sources/icons/modify-grey.svg}"
 															alt="progetto-attivo" class="size-5 inline"></a>
 													</li>
@@ -363,7 +367,7 @@
 														<a><img th:src="@{/img/sources/icons/archive.svg}"
 															alt="archivia" class="size-5 inline"></a>
 													</li>
-													<li th:text="'n. task ' + ${progetto.getElencoTask().size()}"
+													<li th:text="'n. task ' + ${progettoPerData.getElencoTask().size()}"
 														class="flex flex-col md:flex-row px-2 mt-6 float-right text-[#0057A5]">
 													</li>
                                                     
@@ -377,21 +381,82 @@
 									</div>
 								</div>
 							</div>
+<!--							card per clienti-->
+							<div id="list-cliente" th:each="progetto : ${listProgettiByCliente}"
+								class="hidden mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
+								<div class="md:flex">
+									<div class="md:shrink-0">
+										<img class="aspect-square h-48 w-full object-cover md:w-48" th:src="@{${progetto.cliente.LogoPath}}"
+											alt="logo-cliente">
+									</div>
+							
+									<div class="p-4 w-full">
+										<div>
+											<img th:if="${progetto.getDataFine} == null" th:src="@{/img/sources/icons/contatore-on-start.svg}"
+												alt="progetto-attivo" class="size-5 inline float-right">
+											<img th:if="${progetto.getDataFine} != null" th:src="@{/img/sources/icons/contatore-on-stop.svg}"
+												alt="progetto-chiuso" class="size-5 inline float-right">
+							
+										</div>
+										<div th:text="${progetto.cliente.labelCliente}"
+											class="line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
+											cliente</div>
+							
+										<a th:href="@{/Progetti/{id}(id=${progetto.getId()})}" th:text="${progetto.name}"
+											class="line-clamp-1  block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome
+											progetto </a>
+										<p th:text="${progetto.descrizione}" class="mt-2 text-slate-500 line-clamp-2">descrizione
+											progetto</p>
+							
+										<div>
+							
+											<span>
+							
+												<ul>
+							
+													<li class="flex flex-col md:flex-row float-left"><a
+															th:href="@{/Progetti/{id}(id=${progetto.getId()})}"
+															class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
+															vai al dettaglio </a></li>
+							
+													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
+														<a th:href="@{/Progetti/edit/{id}(id=${progetto.getId()})}"><img
+																th:src="@{/img/sources/icons/modify-grey.svg}" alt="progetto-attivo"
+																class="size-5 inline"></a>
+													</li>
+							
+													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
+														<a><img th:src="@{/img/sources/icons/archive.svg}" alt="archivia" class="size-5 inline"></a>
+													</li>
+													<li th:text="'n. task ' + ${progetto.getElencoTask().size()}"
+														class="flex flex-col md:flex-row px-2 mt-6 float-right text-[#0057A5]">
+													</li>
+							
+							
+												</ul>
+											</span>
+										</div>
+							
+							
+							
+									</div>
+								</div>
+							</div>
 						</div>
-
-						<div th:if="${list.isEmpty()}">
-							<div class="text-center text-[#0057A5] p-4">
+<!--paginazione lista per data-->
+						<div th:if="${listProgettiByDataInizio.isEmpty()}" id="ricerca-vuota-data" class="text-center text-[#0057A5] p-4">
+							<div>
 								<h1>La ricerca non ha prodotto risultati</h1>
 							</div>
 						</div>
-						<div class="py-4 mb-10">
+						<div id="paginazione-data" class="py-4 mb-10">
 							<div class="flex justify-between text-center">
 								<div class="col"
-									th:text="|Progetti Totali: ${totalItems} - Pagina ${currentPage} di ${totalPages}|">
+									th:text="|Progetti totali ordinati per data inizio: ${totalItemByDatainizio} - Pagina ${currentPage} di ${totalPageByDataInizio}|">
 								</div>
 								<div class="col">
 									<span class=" justify-center"
-										th:each="i : ${#numbers.sequence(1, totalPages)}"> <a
+										th:each="i : ${#numbers.sequence(1, totalPageByDataInizio)}"> <a
 										class="p-[3px] text-[#0057A5]"
 										style="border: 1px solid #0057A5; border-radius: 5px;"
 										th:href="@{'/Progetti/page/'+${i}}" th:text="${i}"></a>
@@ -399,12 +464,31 @@
 								</div>
 							</div>
 						</div>
+<!--						paginazione lista per clienti-->
+					<div th:if="${listProgettiByCliente.isEmpty()}" id="ricerca-vuota-clienti" class="hidden text-center text-[#0057A5] p-4">
+						<div>
+							<h1>La ricerca non ha prodotto risultati</h1>
+						</div>
+					</div>
+					<div id="paginazione-clienti" class="hidden py-4 mb-10">
+						<div class="flex justify-between text-center">
+							<div class="col"
+								th:text="|Progetti totali ordinati per cliente: ${totalItemByCliente} - Pagina ${currentPage} di ${totalPageByCliente}|">
+							</div>
+							<div class="col">
+								<span class=" justify-center" th:each="i : ${#numbers.sequence(1, totalPageByCliente)}"> <a
+										class="p-[3px] text-[#0057A5]" style="border: 1px solid #0057A5; border-radius: 5px;"
+										th:href="@{'/Progetti/page/'+${i}}" th:text="${i}"></a>
+								</span>
+							</div>
+						</div>
+					</div>
 					</section>
 					<section>
 						<div class="mt-5">
 							<div class="text-center mb-5">
 								<form class="mx-auto w-50" role="search" method="get"
-									th:object="${progett}" th:action="@{/progetto-search}">
+									th:object="${progetto}" th:action="@{/progetto-search}">
 									<label for="ticket-search" class="text-[#0057A5]">Ricerca
 										Progetto</label> <input type="text"
 										class="border-2 border-[#0057A5] p-1 my-3 rounded-md"

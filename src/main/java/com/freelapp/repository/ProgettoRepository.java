@@ -23,7 +23,10 @@ public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, Pa
 	    
 	    public List<Progetto> findAll();
 	    
+	    // transitional usato per modifica e cancellazione
 	    @Transactional
 	    void deleteByClienteId(Integer id);
+	    
+	  
 	    
 }

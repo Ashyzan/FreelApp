@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,22 +65,29 @@ public class ProgettoController {
 			
 			@GetMapping("/Progetti/page/{pageNumber}")
 			public String getOnePage(@PathVariable("pageNumber") int currentPage, Model model ) {
-				
-					Page<Progetto> page = progettoService.findPage(currentPage);
 					
-					int totalPages = page.getTotalPages();
+					// ordina i progetti per data di inizio
+					Page<Progetto> pageByDataInizio = progettoService.orderByDataInizio(currentPage);
+					int totalPageByDataInizio = pageByDataInizio.getTotalPages();	
+					long totalItemByDatainizio = pageByDataInizio.getTotalElements();		
+					List<Progetto> listProgettiByDataInizio = pageByDataInizio.getContent();
 					
-					long totalItems = page.getTotalElements();
+					//ordina i progetti per cliente
+					Page<Progetto> pageByCliente = progettoService.orderByClient(currentPage);
+					int totalPageByCliente = pageByCliente.getTotalPages();	
+					long totalItemByCliente = pageByCliente.getTotalElements();		
+					List<Progetto> listProgettiByCliente = pageByCliente.getContent();
 					
-					List<Progetto> listProgetti = page.getContent();
-					
-					model.addAttribute("list", listProgetti);
-					
+						
 					model.addAttribute("currentPage", currentPage);
-				
-					model.addAttribute("totalPages", totalPages);
-					
-					model.addAttribute("totalItems", totalItems);
+					// passaggio al model delle liste per data inizio
+					model.addAttribute("listProgettiByDataInizio", listProgettiByDataInizio);					
+					model.addAttribute("totalPageByDataInizio", totalPageByDataInizio);					
+					model.addAttribute("totalItemByDatainizio", totalItemByDatainizio);
+					// passaggio al model delle liste per cliente
+					model.addAttribute("listProgettiByCliente", listProgettiByCliente);					
+					model.addAttribute("totalPageByCliente", totalPageByCliente);					
+					model.addAttribute("totalItemByCliente", totalItemByCliente);
 					
 					contatoreservice.importContatoreInGet(model);
 					

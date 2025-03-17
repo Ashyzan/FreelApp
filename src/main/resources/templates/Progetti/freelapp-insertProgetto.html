@@ -334,7 +334,7 @@
 										<label for="descrizione">Descrizione*</label>
 									</div>
 									<div class="col md:col-span-2 col-span-3">
-										<textarea type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg"
+										<textarea type="text" class="border-red-600 w-full h-full ps-4 rounded-lg"
 											id="descrizione" placeholder="inserisci descrizione dettagliata.."
 											th:field="*{descrizione}" th:errorClass="border"></textarea>
 										<div th:if="${#fields.hasErrors('descrizione')}"
@@ -359,25 +359,6 @@
 											class="text-red-600 text-[12px] text-center w-full">
 											<ul>
 												<li th:each="err:${#fields.errors('dataInizio')}" th:text="${err}">
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-
-								<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
-									<div class="col">
-										<label for="indirizzo">Data
-											fine</label>
-									</div>
-									<div class="col md:col-span-2 col-span-3">
-										<input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg"
-											id="dataFine" th:field="*{dataFine}" th:errorClass="border">
-
-										<div th:if="${#fields.hasErrors('dataFine')}"
-											class="text-red-600 text-[12px] text-center w-full">
-											<ul>
-												<li th:each="err:${#fields.errors('dataFine')}" th:text="${err}">
 												</li>
 											</ul>
 										</div>

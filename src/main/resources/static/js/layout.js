@@ -1,3 +1,12 @@
+// recupero elementi DOM per lista progetti ordinati per cliente o datainizio
+const filtraPerClientiButton = document.getElementById('filtra-per-clienti-button');
+const filtraPerDataButton = document.getElementById('filtra-per-data-button');
+const listCliente = document.getElementById('list-cliente');
+const listDataInizio = document.getElementById('list-data-inizio');
+const ricercaVuotaData = document.getElementById('ricerca-vuota-data');
+const ricercaVuotaClienti = document.getElementById('ricerca-vuota-clienti');
+const paginazioneData = document.getElementById('paginazione-data');
+const paginazioneClienti = document.getElementById('paginazione-clienti');
 
 // recupero elementi dal DOM per navBar	
 const navBar = document.querySelector('.nav-bar');
@@ -160,3 +169,45 @@ if(contatoreAttivato == true){
 	dettaglioContatoreBottom.classList.add('animate_animated','animate__bounceIn');
 }
 
+// funzione bottone filtro pagina progetti per cliente
+if(filtraPerClientiButton != null){
+	filtraPerClientiButton.addEventListener('click', function(){
+	if((listCliente != null) && (paginazioneClienti != null)){
+		listCliente.classList.remove('hidden');
+		paginazioneClienti.classList.remove('hidden');
+	}
+	filtraPerClientiButton.classList.add('opacity-50', 'pointer-events-none');
+	filtraPerDataButton.classList.remove('opacity-50', 'pointer-events-none');
+	if(listDataInizio != null){
+		listDataInizio.classList.add('hidden');
+		paginazioneData.classList.add('hidden'); 
+		 
+	}
+	// mostra "non ci sono progetti""
+	if((ricercaVuotaClienti != null) && (ricercaVuotaData != null)){
+		ricercaVuotaClienti.classList.remove('hidden');
+		ricercaVuotaData.classList.add('hidden');
+	}
+})	
+}
+
+// funzione bottone filtro pagina progetti per data inizio
+if(filtraPerDataButton != null){
+	filtraPerDataButton.addEventListener('click', function(){
+	if((listDataInizio != null) && (paginazioneData != null)){
+		listDataInizio.classList.remove('hidden');
+		paginazioneData .classList.remove('hidden');
+	}
+	filtraPerDataButton.classList.add('opacity-50', 'pointer-events-none');
+	filtraPerClientiButton.classList.remove('opacity-50', 'pointer-events-none');
+	if(listCliente != null){
+		listCliente.classList.add('hidden');		 
+		paginazioneClienti.classList.add('hidden');
+	}
+	// mostra "non ci sono progetti"
+	if((ricercaVuotaData != null) && (ricercaVuotaClienti != null)){
+		ricercaVuotaData.classList.remove('hidden');
+		ricercaVuotaClienti.classList.add('hidden');
+	}
+})	
+}
