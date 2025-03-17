@@ -304,14 +304,32 @@
 					<!-- 			section elenco progetti main		 -->
 					<section class="flex flex-col">
 						<div
-							class="h-12 text-center text-[#0057A5] font-bold items-center m-3">
-							<h1 class="text-xl">ELENCO PROGETTI</h1>
+							class="h-12 text-center text-[#0057A5] font-bold items-center">
+							<h1 class="mt-3 text-xl">ELENCO PROGETTI</h1>
 						</div>
-						<div id="filtra-per-clienti" class="flex items-center p-4 m-3 w-full gap-2">
+						<div id="filtra-per-clienti" class="flex items-center p-4 mx-3 w-full gap-2">
 							<p class="text-[#0057A5]">Ordina per: </p>
 							<button th:onclick="attivaPaginazione1()" id="filtra-per-clienti-button" class=""><img src="/img/sources/icons/clients-blu.svg" class="inline size-8 float-left">	</button>
 							<button th:onclick="attivaPaginazione2()" id="filtra-per-data-button" class="opacity-50 pointer-events-none"><img src="/img/sources/icons/calendar-blue.svg" class="inline size-8 float-left">	</button>						
 																			
+						</div>
+<!-- 						RICERCA -->
+						<div class="">
+							<div class="text-center">
+								<form class="mx-auto w-50" role="search" method="get"
+									th:object="${progetto}" th:action="@{/progetto-search}">
+									<label for="ticket-search" class="text-[#0057A5]">Ricerca
+										Progetto</label> <input type="text"
+										class="border-2 border-[#0057A5] p-1 my-3 rounded-md"
+										name="input" placeholder="Ricerca..." aria-label="Search">
+									<button
+										class="border-2 border-[#0057A5] bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+										type="submit">Search</button>
+									<a
+										class="border-2 border-[#0057A5] bg-[#FFE541] text-[#0057A5] font-bold px-3 py-2 rounded-[35px]"
+										th:href="@{/Progetti}">Annulla</a>
+								</form>
+							</div>
 						</div>
 
 												
@@ -503,26 +521,7 @@
 					
 					</section>
 					
-					
-					<section>
-						<div class="mt-5">
-							<div class="text-center mb-5">
-								<form class="mx-auto w-50" role="search" method="get"
-									th:object="${progetto}" th:action="@{/progetto-search}">
-									<label for="ticket-search" class="text-[#0057A5]">Ricerca
-										Progetto</label> <input type="text"
-										class="border-2 border-[#0057A5] p-1 my-3 rounded-md"
-										name="input" placeholder="Ricerca..." aria-label="Search">
-									<button
-										class="border-2 border-[#0057A5] bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
-										type="submit">Search</button>
-									<a
-										class="border-2 border-[#0057A5] bg-[#FFE541] text-[#0057A5] font-bold px-3 py-2 rounded-[35px]"
-										th:href="@{/Progetti}">Annulla</a>
-								</form>
-							</div>
-						</div>
-					</section>
+				
 				</div>
 				<div class="m-auto pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden"
 					id="dettaglio-contatore-bottom">

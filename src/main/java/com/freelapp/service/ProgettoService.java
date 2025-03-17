@@ -24,7 +24,7 @@ public class ProgettoService {
 	}
 	
 	public Page<Progetto> orderByDataInizio(int pageNumber){
-		Pageable pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").ascending());
+		Pageable pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
 		
 		return progettoRepository.findAll(pageable1);
 		
