@@ -24,17 +24,17 @@ public class ProgettoService {
 	}
 	
 	public Page<Progetto> orderByDataInizio(int pageNumber){
-		Pageable pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+		Pageable pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending().and(Sort.by("name")));
 		
-		return progettoRepository.findAll(pageable);
+		return progettoRepository.findAll(pageable1);
 		
 		
 	}
 	
 	public Page<Progetto> orderByClient(int pageNumber){
-		Pageable pageable = PageRequest.of(pageNumber -1, 12, Sort.by("cliente").descending().and(Sort.by("name")));
+		Pageable pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente").descending().and(Sort.by("name")));
 		
-		return progettoRepository.findAll(pageable);
+		return progettoRepository.findAll(pageable2);
 		
 		
 	}

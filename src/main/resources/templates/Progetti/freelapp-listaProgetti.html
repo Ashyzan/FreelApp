@@ -307,15 +307,16 @@
 							class="h-12 text-center text-[#0057A5] font-bold items-center m-3">
 							<h1 class="text-xl">ELENCO PROGETTI</h1>
 						</div>
-						<div id="filtra-per-clienti" class="flex items-center m-3 w-full gap-2">
+						<div id="filtra-per-clienti" class="flex items-center p-4 m-3 w-full gap-2">
 							<p class="text-[#0057A5]">Filtra per: </p>
-							<button id="filtra-per-clienti-button" class=""><img src="/img/sources/icons/clients-blu.svg" class="inline size-8 float-left">	</button>
-							<button id="filtra-per-data-button" class="opacity-50 pointer-events-none"><img src="/img/sources/icons/list-blu.svg" class="inline size-8 float-left">	</button>						
+							<button th:onclick="attivaPaginazione1()" id="filtra-per-clienti-button" class=""><img src="/img/sources/icons/clients-blu.svg" class="inline size-8 float-left">	</button>
+							<button th:onclick="attivaPaginazione2()" id="filtra-per-data-button" class="opacity-50 pointer-events-none"><img src="/img/sources/icons/calendar-blue.svg" class="inline size-8 float-left">	</button>						
 																			
 						</div>
-<!--card per data     -------------------                          -->
-						<div class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-between w-full">
-							<div id="list-data-inizio" th:each="progettoPerData : ${listProgettiByDataInizio}"
+
+						<div  class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-between w-full">						
+		<!------------------ card per data     --------------------->
+							<div th:if="paginazioneAttivaData" id="list-data-inizio" th:each="progettoPerData : ${listProgettiByDataInizio}"
 								class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
 								<div class="md:flex">
 									<div class="md:shrink-0">
@@ -381,31 +382,31 @@
 									</div>
 								</div>
 							</div>
-<!--							card per clienti-->
-							<div id="list-cliente" th:each="progetto : ${listProgettiByCliente}"
+<!-----------------------	card per clienti -------------------->
+							<div th:if="paginazioneAttivaCliente" id="list-cliente" th:each="progettoCliente : ${listProgettiByCliente}"
 								class="hidden mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
 								<div class="md:flex">
 									<div class="md:shrink-0">
-										<img class="aspect-square h-48 w-full object-cover md:w-48" th:src="@{${progetto.cliente.LogoPath}}"
+										<img class="aspect-square h-48 w-full object-cover md:w-48" th:src="@{${progettoCliente.cliente.LogoPath}}"
 											alt="logo-cliente">
 									</div>
 							
 									<div class="p-4 w-full">
 										<div>
-											<img th:if="${progetto.getDataFine} == null" th:src="@{/img/sources/icons/contatore-on-start.svg}"
+											<img th:if="${progettoCliente.getDataFine} == null" th:src="@{/img/sources/icons/contatore-on-start.svg}"
 												alt="progetto-attivo" class="size-5 inline float-right">
-											<img th:if="${progetto.getDataFine} != null" th:src="@{/img/sources/icons/contatore-on-stop.svg}"
+											<img th:if="${progettoCliente.getDataFine} != null" th:src="@{/img/sources/icons/contatore-on-stop.svg}"
 												alt="progetto-chiuso" class="size-5 inline float-right">
 							
 										</div>
-										<div th:text="${progetto.cliente.labelCliente}"
+										<div th:text="${progettoCliente.cliente.labelCliente}"
 											class="line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
 											cliente</div>
 							
-										<a th:href="@{/Progetti/{id}(id=${progetto.getId()})}" th:text="${progetto.name}"
+										<a th:href="@{/Progetti/{id}(id=${progettoCliente.getId()})}" th:text="${progettoCliente.name}"
 											class="line-clamp-1  block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome
 											progetto </a>
-										<p th:text="${progetto.descrizione}" class="mt-2 text-slate-500 line-clamp-2">descrizione
+										<p th:text="${progettoCliente.descrizione}" class="mt-2 text-slate-500 line-clamp-2">descrizione
 											progetto</p>
 							
 										<div>
@@ -415,12 +416,12 @@
 												<ul>
 							
 													<li class="flex flex-col md:flex-row float-left"><a
-															th:href="@{/Progetti/{id}(id=${progetto.getId()})}"
+															th:href="@{/Progetti/{id}(id=${progettoCliente.getId()})}"
 															class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
 															vai al dettaglio </a></li>
 							
 													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
-														<a th:href="@{/Progetti/edit/{id}(id=${progetto.getId()})}"><img
+														<a th:href="@{/Progetti/edit/{id}(id=${progettoCliente.getId()})}"><img
 																th:src="@{/img/sources/icons/modify-grey.svg}" alt="progetto-attivo"
 																class="size-5 inline"></a>
 													</li>
@@ -428,11 +429,10 @@
 													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
 														<a><img th:src="@{/img/sources/icons/archive.svg}" alt="archivia" class="size-5 inline"></a>
 													</li>
-													<li th:text="'n. task ' + ${progetto.getElencoTask().size()}"
+													<li th:text="'n. task ' + ${progettoCliente.getElencoTask().size()}"
 														class="flex flex-col md:flex-row px-2 mt-6 float-right text-[#0057A5]">
 													</li>
-							
-							
+												
 												</ul>
 											</span>
 										</div>
@@ -444,14 +444,19 @@
 							</div>
 						</div>
 <!--paginazione lista per data-->
-						<div th:if="${listProgettiByDataInizio.isEmpty()}" id="ricerca-vuota-data" class="text-center text-[#0057A5] p-4">
+						
+						<div th:if="paginazioneAttivaData">
+							<div th:if="${listProgettiByDataInizio.isEmpty()}" id="ricerca-vuota-data" class="text-center text-[#0057A5] p-4">
 							<div>
 								<h1>La ricerca non ha prodotto risultati</h1>
 							</div>
 						</div>
-						<div id="paginazione-data" class="py-4 mb-10">
+						</div>
+						
+						<div th:if="paginazioneAttivaData" id="paginazione-data" class="p-4 mb-10">
+							<h1>CIAO SONO IOOOOO DATA TRUE</h1>
 							<div class="flex justify-between text-center">
-								<div class="col"
+								<div  class="col"
 									th:text="|Progetti totali ordinati per data inizio: ${totalItemByDatainizio} - Pagina ${currentPage} di ${totalPageByDataInizio}|">
 								</div>
 								<div class="col">
@@ -464,15 +469,19 @@
 								</div>
 							</div>
 						</div>
+
 <!--						paginazione lista per clienti-->
-					<div th:if="${listProgettiByCliente.isEmpty()}" id="ricerca-vuota-clienti" class="hidden text-center text-[#0057A5] p-4">
-						<div>
-							<h1>La ricerca non ha prodotto risultati</h1>
+					<div th:if="paginazioneAttivaCliente">
+						<div th:if="${listProgettiByCliente.isEmpty()}" id="ricerca-vuota-clienti" class="hidden text-center text-[#0057A5] p-4">
+							<div>
+								<h1>La ricerca non ha prodotto risultati</h1>
+							</div>
 						</div>
 					</div>
-					<div id="paginazione-clienti" class="hidden py-4 mb-10">
+					<div th:if="paginazioneAttivaCliente" id="paginazione-clienti" class="hidden p-4 mb-10">
+						<h1>CIAO SONO IOOOOO CLIENTE TRUE</h1>
 						<div class="flex justify-between text-center">
-							<div class="col"
+							<div  class="col"
 								th:text="|Progetti totali ordinati per cliente: ${totalItemByCliente} - Pagina ${currentPage} di ${totalPageByCliente}|">
 							</div>
 							<div class="col">
@@ -483,7 +492,10 @@
 							</div>
 						</div>
 					</div>
+					
 					</section>
+					
+					
 					<section>
 						<div class="mt-5">
 							<div class="text-center mb-5">
@@ -643,7 +655,7 @@
 							let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
 							let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean
 							let taskInUsoId = /*[[${taskInUsoId}]]*/ null;	
-							let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
+							let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean	
 							/*]]>*/
 						</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>

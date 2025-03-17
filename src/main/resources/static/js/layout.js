@@ -7,6 +7,8 @@ const ricercaVuotaData = document.getElementById('ricerca-vuota-data');
 const ricercaVuotaClienti = document.getElementById('ricerca-vuota-clienti');
 const paginazioneData = document.getElementById('paginazione-data');
 const paginazioneClienti = document.getElementById('paginazione-clienti');
+let paginazioneAttivaCliente = new Boolean(false);
+let paginazioneAttivaData = new Boolean(true);
 
 // recupero elementi dal DOM per navBar	
 const navBar = document.querySelector('.nav-bar');
@@ -169,45 +171,63 @@ if(contatoreAttivato == true){
 	dettaglioContatoreBottom.classList.add('animate_animated','animate__bounceIn');
 }
 
-// funzione bottone filtro pagina progetti per cliente
-if(filtraPerClientiButton != null){
-	filtraPerClientiButton.addEventListener('click', function(){
-	if((listCliente != null) && (paginazioneClienti != null)){
-		listCliente.classList.remove('hidden');
-		paginazioneClienti.classList.remove('hidden');
+
+
+function attivaPaginazione1() {
+	paginazioneAttivaCliente = true;
+	console.log('paginazioneAttivaCliente ' + paginazioneAttivaCliente);
+	paginazioneAttivaData = false;
+	console.log('paginazioneAttivaData ' + paginazioneAttivaData);
+
+	// funzione bottone filtro pagina progetti per cliente
+	if (filtraPerClientiButton != null) {
+		filtraPerClientiButton.addEventListener('click', function() {
+			if ((listCliente != null) && (paginazioneClienti != null)) {
+				listCliente.classList.remove('hidden');
+				paginazioneClienti.classList.remove('hidden');
+				listDataInizio.classList.add('hidden');
+				paginazioneData.classList.add('hidden');
+			}
+
+			filtraPerClientiButton.classList.add('opacity-50', 'pointer-events-none');
+			filtraPerDataButton.classList.remove('opacity-50', 'pointer-events-none');
+
+			// mostra "non ci sono progetti""
+			if ((ricercaVuotaClienti != null) && (ricercaVuotaData != null)) {
+				ricercaVuotaClienti.classList.remove('hidden');
+				ricercaVuotaData.classList.add('hidden');
+			}
+		})
 	}
-	filtraPerClientiButton.classList.add('opacity-50', 'pointer-events-none');
-	filtraPerDataButton.classList.remove('opacity-50', 'pointer-events-none');
-	if(listDataInizio != null){
-		listDataInizio.classList.add('hidden');
-		paginazioneData.classList.add('hidden'); 
-		 
-	}
-	// mostra "non ci sono progetti""
-	if((ricercaVuotaClienti != null) && (ricercaVuotaData != null)){
-		ricercaVuotaClienti.classList.remove('hidden');
-		ricercaVuotaData.classList.add('hidden');
-	}
-})	
+
 }
 
-// funzione bottone filtro pagina progetti per data inizio
-if(filtraPerDataButton != null){
-	filtraPerDataButton.addEventListener('click', function(){
-	if((listDataInizio != null) && (paginazioneData != null)){
-		listDataInizio.classList.remove('hidden');
-		paginazioneData .classList.remove('hidden');
+function attivaPaginazione2() {
+	paginazioneAttivaCliente = false;
+	console.log('paginazioneAttivaCliente ' + paginazioneAttivaCliente);
+	paginazioneAttivaData = true;
+	console.log('paginazioneAttivaData ' + paginazioneAttivaData);
+
+	// funzione bottone filtro pagina progetti per data inizio
+	if (filtraPerDataButton != null) {
+		filtraPerDataButton.addEventListener('click', function() {
+			if ((listDataInizio != null) && (paginazioneData != null)) {
+				listDataInizio.classList.remove('hidden');
+				paginazioneData.classList.remove('hidden');
+				listCliente.classList.add('hidden');
+				paginazioneClienti.classList.add('hidden');
+			}
+			filtraPerDataButton.classList.add('opacity-50', 'pointer-events-none');
+			filtraPerClientiButton.classList.remove('opacity-50', 'pointer-events-none');
+
+			// mostra "non ci sono progetti"
+			if ((ricercaVuotaData != null) && (ricercaVuotaClienti != null)) {
+				ricercaVuotaData.classList.remove('hidden');
+				ricercaVuotaClienti.classList.add('hidden');
+			}
+		})
 	}
-	filtraPerDataButton.classList.add('opacity-50', 'pointer-events-none');
-	filtraPerClientiButton.classList.remove('opacity-50', 'pointer-events-none');
-	if(listCliente != null){
-		listCliente.classList.add('hidden');		 
-		paginazioneClienti.classList.add('hidden');
-	}
-	// mostra "non ci sono progetti"
-	if((ricercaVuotaData != null) && (ricercaVuotaClienti != null)){
-		ricercaVuotaData.classList.remove('hidden');
-		ricercaVuotaClienti.classList.add('hidden');
-	}
-})	
 }
+
+
+

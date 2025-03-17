@@ -66,6 +66,8 @@ public class ProgettoController {
 			@GetMapping("/Progetti/page/{pageNumber}")
 			public String getOnePage(@PathVariable("pageNumber") int currentPage, Model model ) {
 					
+					
+					
 					// ordina i progetti per data di inizio
 					Page<Progetto> pageByDataInizio = progettoService.orderByDataInizio(currentPage);
 					int totalPageByDataInizio = pageByDataInizio.getTotalPages();	
@@ -79,6 +81,7 @@ public class ProgettoController {
 					List<Progetto> listProgettiByCliente = pageByCliente.getContent();
 					
 						
+					
 					model.addAttribute("currentPage", currentPage);
 					// passaggio al model delle liste per data inizio
 					model.addAttribute("listProgettiByDataInizio", listProgettiByDataInizio);					
