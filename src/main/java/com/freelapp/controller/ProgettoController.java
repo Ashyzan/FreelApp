@@ -139,22 +139,27 @@ public class ProgettoController {
 			 public String progettoBySearch(@PathVariable("pageNumber") int currentPage, String input,
 					 	Model model) {
 
-						 
-					Page<Progetto> page = progettoService.findSearchedPage(currentPage,input);
-
-					int totalPages = page.getTotalPages();
-						 
-					long totalItems = page.getTotalElements();
-						 
-					List<Progetto> listaClientiSearch = page.getContent();
-						
-					model.addAttribute("currentPage", currentPage);
+				 // ordina i progetti per data di inizio
+					Page<Progetto> pageByDataInizio = progettoService.findSearchedPageByDataInizio(currentPage,input);
+					int totalPageByDataInizio = pageByDataInizio.getTotalPages();	
+					long totalItemByDatainizio = pageByDataInizio.getTotalElements();		
+					List<Progetto> listProgettiByDataInizio = pageByDataInizio.getContent();
 					
-					model.addAttribute("totalPages", totalPages);
-						
-					model.addAttribute("totalItems", totalItems);
-						
-					model.addAttribute("list", listaClientiSearch);	
+					//ordina i progetti per cliente
+					Page<Progetto> pageByCliente = progettoService.findSearchedPageByClient(currentPage,input);
+					int totalPageByCliente = pageByCliente.getTotalPages();	
+					long totalItemByCliente = pageByCliente.getTotalElements();		
+					List<Progetto> listProgettiByCliente = pageByCliente.getContent();
+					
+					model.addAttribute("currentPage", currentPage);
+					// passaggio al model delle liste per data inizio
+					model.addAttribute("listProgettiByDataInizio", listProgettiByDataInizio);					
+					model.addAttribute("totalPageByDataInizio", totalPageByDataInizio);					
+					model.addAttribute("totalItemByDatainizio", totalItemByDatainizio);
+					// passaggio al model delle liste per cliente
+					model.addAttribute("listProgettiByCliente", listProgettiByCliente);					
+					model.addAttribute("totalPageByCliente", totalPageByCliente);					
+					model.addAttribute("totalItemByCliente", totalItemByCliente);
 					
 					contatoreservice.importContatoreInGet(model);
 					

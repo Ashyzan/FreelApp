@@ -22,6 +22,12 @@ public interface TaskRepository extends JpaRepository<Task, Integer>, PagingAndS
     
     public List<Task> findAll();
     
+    @Query("SELECT t FROM Task t WHERE t.name LIKE '%'||:input||'%' OR "
+    		+ "t.descrizione LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.name LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.labelCliente LIKE '%'||:input||'%'")
+    public List<Task> searchOreLavorate(String input);
+    
     @Query("SELECT t FROM Task t WHERE t.stato !='chiuso'")
     public List<Task> findAllNotClosed();
 	

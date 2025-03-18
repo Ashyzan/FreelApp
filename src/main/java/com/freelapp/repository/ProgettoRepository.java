@@ -15,9 +15,8 @@ import jakarta.transaction.Transactional;
 public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, PagingAndSortingRepository<Progetto, Integer>{
 
 	 @Query("SELECT p FROM Progetto p WHERE p.name LIKE '%'||:input||'%' OR "
-	    		+ "p.descrizione LIKE '%'||:input||'%' ")
-//	    		+ "p.DataInizio LIKE '%'||:intInput||'%' OR "
-//	    		+ "p.DataFine LIKE '%'||:intInput||'%' OR ")
+	    		+ "p.descrizione LIKE '%'||:input||'%' OR "
+	    		+ "p.cliente.labelCliente LIKE '%'||:input||'%'")
 	 
 	    public Page<Progetto> search( String input, Pageable pageable);
 	    

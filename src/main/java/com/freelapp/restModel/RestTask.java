@@ -9,11 +9,13 @@ public class RestTask {
 	
 	private String progetto;
 	
+	private Integer progettoId;
+	
 	private String cliente;
 	
-	private String logoCliente;
+	private Integer clienteId;
 	
-	private LocalDate chiusuraStimata;
+	private String logoCliente;
 
 	private LocalDateTime stop;
 	
@@ -21,16 +23,25 @@ public class RestTask {
 	
 	private Integer taskAttualmenteInUso;
 	
-	public RestTask(String nome, String progetto, String cliente, String logoCliente, LocalDate chiusuraStimata, Long finalTime, Integer taskAttualmenteInUso) {
+	private Integer id;
+	
+	private String stato;
+	
+	public RestTask(String nome, String progetto, Integer progettoId, String cliente, 
+			Integer clienteId, String logoCliente, Long finalTime, Integer taskAttualmenteInUso, 
+			Integer id, String stato) {
 		super();
 		this.nome = nome;
 		this.progetto = progetto;
+		this.progettoId = progettoId;
 		this.cliente = cliente;
+		this.clienteId = clienteId;
 		this.logoCliente = logoCliente;
-		this.chiusuraStimata = chiusuraStimata;
 		this.finalTime = finalTime;
 		this.taskAttualmenteInUso = taskAttualmenteInUso;
-		//this.stop = stop;
+		this.id = id;
+		this.stato = stato;
+		
 	}
 
 	public LocalDateTime getStop() {
@@ -56,6 +67,14 @@ public class RestTask {
 	public void setProgetto(String progetto) {
 		this.progetto = progetto;
 	}
+	
+	public Integer getProgettoId() {
+		return progettoId;
+	}
+
+	public void setProgettoId(Integer progettoId) {
+		this.progettoId = progettoId;
+	}
 
 	public String getCliente() {
 		return cliente;
@@ -65,20 +84,20 @@ public class RestTask {
 		this.cliente = cliente;
 	}
 
+	public Integer getClienteId() {
+		return clienteId;
+	}
+
+	public void setClienteId(Integer clienteId) {
+		this.clienteId = clienteId;
+	}
+
 	public String getLogoCliente() {
 		return logoCliente;
 	}
 
 	public void setLogoCliente(String logoCliente) {
 		this.logoCliente = logoCliente;
-	}
-
-	public LocalDate getChiusuraStimata() {
-		return chiusuraStimata;
-	}
-
-	public void setChiusuraStimata(LocalDate chiusuraStimata) {
-		this.chiusuraStimata = chiusuraStimata;
 	}
 
 	public Long getFinalTime() {
@@ -96,5 +115,22 @@ public class RestTask {
 	public void setTaskAttualmenteInUso(Integer taskAttualmenteInUso) {
 		this.taskAttualmenteInUso = taskAttualmenteInUso;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
+	
 	
 }
