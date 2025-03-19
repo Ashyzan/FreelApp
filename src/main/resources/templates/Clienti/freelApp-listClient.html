@@ -290,7 +290,30 @@
 			<section>
 				<div class="h-12 text-center text-[#0057A5] font-bold items-center m-3">
 		            <h1>ELENCO CLIENTI</h1>
-		        </div>	
+		        </div>
+		        
+<!-- 		        cards clienti	 -->
+<div class="flex justify-between gap-4 pb-4 flex-wrap sm:flex-row sm:items-center">
+<div th:each="cliente : ${list}">
+<div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+    <div class="flex justify-end p-4 ">
+    </div>
+    <div class="flex flex-col w-64 items-center pb-10">
+        <img class="w-24 h-24 mb-3 rounded-full shadow-lg" th:src="@{${cliente.LogoPath}}" alt="logo"/>
+        <h5 th:text="${cliente.labelCliente}" class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Etichetta cliente</h5>
+        <span th:if="${cliente.tipologia} == azienda" th:text="${cliente.ragioneSociale}" class="text-sm text-gray-500 dark:text-gray-400">Ragione sociale</span>
+        <span th:if="${cliente.tipologia} == privato" th:text="Privato" class="text-sm text-gray-500 dark:text-gray-400">Ragione sociale</span>
+       
+        <div class="flex mt-4 md:mt-6">
+            <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Dettaglio</a>
+              </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+
 				<table class="text-[#0057A5] w-full m-auto">
 					<thead class="border border-[#0057A5] md:h-12 h-8 bg-[#0057A5] text-white max-sm:text-[12px]">
 						<tr>

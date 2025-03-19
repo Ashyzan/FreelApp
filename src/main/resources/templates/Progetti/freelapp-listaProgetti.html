@@ -371,12 +371,31 @@
 														th:href="@{/Progetti/{id}(id=${progettoPerData.getId()})}"
 														class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
 															vai al dettaglio </a></li>
+												
+												<li class="flex flex-col md:flex-row px-2 mt-6 float-left">
+														<a
+														th:href="@{/Task/insert/progetto-{id}(id=${progettoPerData.getId()})}">
+														
+															<div class=" t-tooltip col-auto w-8 h-8 ms-2">
+															
+															<img th:src="@{/img/sources/icons/add-task-blue.svg}"
+																		alt="aggiungi-task" class=" size-8 ml-3 -mt-1 inline">
+																<div class=" relative hidden -left-4 bottom-20 t-box w-24 text-center text-nowrap border border-[#0057A5] text-[#0057A5] bg-gray-100 rounded-lg p-1">
+																	Avvia Task
+																</div>
+															</div>
+															</a>
+															
+															
+															
+																
+													</li>
 
 													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
 														<a
 														th:href="@{/Progetti/edit/{id}(id=${progettoPerData.getId()})}"><img
 															th:src="@{/img/sources/icons/modify-grey.svg}"
-															alt="progetto-attivo" class="size-5 inline"></a>
+															alt="modifica-progetto" class="size-5 inline"></a>
 													</li>
 
 													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
@@ -386,8 +405,7 @@
 													<li th:text="'n. task ' + ${progettoPerData.getElencoTask().size()}"
 														class="flex flex-col md:flex-row px-2 mt-6 float-right text-[#0057A5]">
 													</li>
-                                                    
-
+                 
 												</ul>
 											</span>
 										</div>
