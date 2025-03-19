@@ -402,8 +402,12 @@
 														<a><img th:src="@{/img/sources/icons/archive.svg}"
 															alt="archivia" class="size-5 inline"></a>
 													</li>
-													<li th:text="'n. task ' + ${progettoPerData.getElencoTask().size()}"
-														class="flex flex-col md:flex-row px-2 mt-6 float-right text-[#0057A5]">
+													
+													<li >
+														<a th:href="@{/Task}"
+														th:text="'n. task ' + ${progettoPerData.getElencoTask().size()}"
+														class="hover:underline flex flex-col md:flex-row px-2 mt-7 float-right text-[#0057A5]">
+														</a>
 													</li>
                  
 												</ul>
