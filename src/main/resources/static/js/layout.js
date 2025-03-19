@@ -30,6 +30,7 @@ const modalDeleteCloseButton = document.getElementById('modalDeleteCloseButton')
 const modalStopButton = document.getElementById('modalStopButton');
 const stopButtonBottom = document.getElementById('stopButtonBottom');
 const stopButtonTop = document.getElementById('stopButtonTop');
+const stopButtonTaskRapid = document.getElementById('stopButtonTaskRapid');
 const modalStopCloseButton = document.getElementById('modalStopCloseButton')
   
 
@@ -102,6 +103,13 @@ if(stopButtonTop != null){
 //apertura modale STOP BUTTON bottom
 if(stopButtonBottom != null){
 	stopButtonBottom.addEventListener('click', function(){
+		modalStopButton.classList.remove('scale-0');
+	})	
+}
+
+//apertura modale STOP BUTTON task rapid
+if(stopButtonTaskRapid != null){
+	stopButtonTaskRapid.addEventListener('click', function(){
 		modalStopButton.classList.remove('scale-0');
 	})	
 }

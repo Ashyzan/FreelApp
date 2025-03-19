@@ -43,7 +43,7 @@
 		<button
 			class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5] ">
 			<div class="t-tooltip col-auto w-8 h-8 ms-2">
-				<img class="h-[100%] w-[100%]" src="/img/sources/icons/contatore-blue.svg" alt="avvio rapido task">
+				<img class="h-[100%] w-[100%]" src="/img/sources/icons/speed-up-blue.svg" alt="avvio rapido task">
 				<div class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-80px] mt-[10px]">
 					Avvio rapido
 				</div>
@@ -344,14 +344,14 @@
 							<div id="icona-contatore" class="col-auto ps-3 w-[15%]">
 								<img class="h-[45px] w-[45px]" src="/img/sources/icons/contatore-blue.svg" alt="contatore">
 							</div>
-							<div th:if="${taskInUso == null}" class="flex flex-col items-center">
+							<div th:if="${taskInUso == null}" class="flex flex-col justify-center items-center">
 								<div th:unless="${contatoreIsTrue}" class="col-auto text-[14px] p-0">...</div>
 								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
 									class="col-auto text-[14px] p-0"></div>
 								<div class="col-auto text-[24px] p-0" id="timerDue">00:00:00</div>
 							</div>
 							<a th:unless="${taskInUso == null}" th:href="@{|/Task/${taskInUso.id}|}"
-								class="t-tooltip flex flex-col items-center relative w-[45%]">
+								class="t-tooltip flex flex-col justify-center items-center relative w-[45%]">
 								<div th:unless="${contatoreIsTrue}" class="col-auto text-[14px] p-0">...</div>
 								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
 									class="col-auto text-[14px] text-left p-0 w-full ml-4 truncate"></div>
@@ -420,40 +420,39 @@
 	<!-- Modale TimerRapidButton -->
 	<div id="modalTimerRapidButton" class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
 		<div class="w-11/12 md:w-[550px] h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
-			<div class="flex justify-between items-center w-full h-auto ">
-				<div class="p-2 text-white font-bold">GESTIONE RAPIDA TASK</div>
-				<div id="modalTimerRapidCloseButton" class=" p-2 cursor-pointer">
-					<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
+			<div class="grid grid-cols-12 p-1">
+				<div class="col-span-11 flex justify-center items-center text-white font-bold">GESTIONE RAPIDA TASK</div>
+				<div class="col-span-1">
+					<div id="modalTimerRapidCloseButton" class=" p-1 cursor-pointer text-center">
+						<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
+					</div>
 				</div>
 			</div>
 			<div class="w-full h-auto bg-white rounded-b-lg">
 				<div id="rapid-task" class="">
 						<div class="flex flex-col justify-center p-2 text-center">
 							<div class="px-3 text-[#0057A5]">
-								<h2 class="my-3 font-semibold">Ricerca o seleziona il task su cui lavorare:</h2>
-								<div class="flex justify-around mb-2">
+								<h2 id="search-and-select-title" class="mt-3 mb-4 font-bold">Ricerca o seleziona il task su cui lavorare:</h2>
+								<div id="search-and-select-buttons-container" class="flex justify-around mb-2">
 									<button type="button" id="search-task-button"
-										class="w-[45%] px-3 shadow-md bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">
+										class="w-[45%] shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
 										<img class="h-[25px] w-[25px] inline" src="/img/sources/icons/search-blue.svg">
 										<span class="">Ricerca il tuo task</span>
 									</button>
 									<button type="button" id="select-task-button"
-										class="w-[45%] px-3 shadow-md bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">
+										class="w-[45%] shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
 										<img class="h-[30px] w-[30px] inline" src="/img/sources/icons/list-blue.svg">
 										<span class="">Seleziona da elenco</span>
 									</button>
 								</div>
-								<div class="hidden">
+								<div id="back-task-rapid-button-container" class="hidden mt-4">
 									<button type="button" id="back-task-rapid-button"
-										class="w-[45%] px-3 shadow-md bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">
-										<img class="h-[25px] w-[25px] inline" src="/img/sources/icons/search-blue.svg">
-										<span class="">Back</span>
+										class="w-auto shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
+										<img class="h-[25px] w-[25px] inline" src="/img/sources/icons/arrow-left-blue.svg">
+										<span class="text-center text-nowrap">Torna alla ricerca/selezione Task</span>
 									</button>
 								</div>
-								<div>
-									
-								</div>
-								<div id="select-mode" class="hidden w-full overflow-y-auto border border-[#0057A5] rounded-l-lg">
+								<div id="select-mode" class="hidden w-full overflow-y-auto border border-[#0057A5] rounded-l-lg mb-2">
 									<div class="w-full h-32 ">
 											<div class="w-full h-8 border-b border-[#0057A5] bg-gray-100 grid grid-cols-8">
 												<span class="border-r col-span-3 text-center text-[#0057A5]">Cliente</span>
@@ -488,12 +487,10 @@
 											</button>
 									</div>
 								</div>
-								<div id="search-mode" class="hidden w-full">
+								<div id="search-mode" class="hidden w-full mb-2">
 									<input type="text" placeholder="Ricerca per Cliente/Progetto/Task..."
 										class="w-full mb-2 border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-[70%]  px-4 focus:outline-none"
-										id="form-search-input" name="input" oninput
-										
-										="getJsonTaskListOreLavorate(value)">
+										id="form-search-input" name="input" oninput="getJsonTaskListOreLavorate(value)">
 									</input>
 									<div class="w-full h-32 overflow-y-auto border border-[#0057A5] rounded-l-lg">
 										<div class="w-full h-8 border-b border-[#0057A5] bg-gray-100 grid grid-cols-8">
@@ -509,29 +506,48 @@
 							</div>
 						</div>
 				</div>
-				<div id="taskResumeTable" class="hidden text-[#0057A5]">
+				<div id="taskResumeTable" class="hidden text-[#0057A5] mb-2">
 					<div class="w-full h-auto">
-						<div id="taskResumeTitle" class="flex justify-center mb-3 border-b-2 items-center py-2">
-							<div class="w-8 h-8 flex gap-2 justify-center items-center me-2 ">
-								<img id="task-stato" class="h-5">
-								<h3 id="taskNome" class="font-bold"></h3>
-							</div>
-						</div>
 						<div id="taskResumeBody" class="p-3 text-center">
-							<div class="grid grid-cols-3 mb-2 p-1">
-								<div class="col font-bold pe-3 py-3">Cliente</div>
-								<a id="taskCliente" class="col  col-span-2 py-3 hover:text-gray-300">
-								</a>
-								<div class="col font-bold pe-3 py-3">Progetto di riferimento</div>
-								<div class="flex justify-center">
-									<img id="taskLogoPath" class="h-8">
-									<a id="taskProgetto" class="col  col-span-2 py-3 hover:text-gray-300">									
-									</a>
-								</div>
+							<div class="mx-auto max-w-md bg-white rounded-xl shadow-md shadow-blue-500/50 overflow-hidden min-w-full p-2">
+								<div class="grid grid-cols-12 h-full mb-2 p-1 border-b">
+									<div class="col-span-11 flex justify-center">
+										<h3 id="taskNome" class="w-4/5 text-[#FFE541] font-bold truncate"></h3>										
+									</div>
+									<div class="col-span-1">
+										<div class="flex justify-center items-center">
+											<img id="task-stato" class="h-5">
+										</div>										
+									</div>
+								</div>	
+								<div class="grid grid-cols-12 h-2/3">
+									<div class=" col-span-3 h-20 flex justify-center items-center">
+										<img id="taskLogoPath" class="max-h-16 w-auto">
+									</div>
+									<div class="col-span-9">
+										<div class="grid grid-cols-6 flex items-center">
+											<div class="col-span-2 font-bold ps-3 py-1 text-start">Cliente</div>
+											<a id="taskCliente" class="col-span-4 py-1 hover:text-[#FFE541] text-start truncate">
+											</a>										
+										</div>
+										<div class="grid grid-cols-6 flex items-center">
+											<div class="col-span-2 font-bold ps-3 py-1 text-start">Progetto</div>
+											<a id="taskProgetto" class="col-span-4 py-1 hover:text-[#FFE541] text-start truncate">									
+											</a>
+										</div>
+										<div class="grid grid-cols-6 flex items-center">
+											<div class="col-span-2 font-bold ps-3 py-1 text-start">WorkTime</div>
+											<div id="work-time" class="col-span-4 py-1 text-start truncate">
+												00:00:00
+											</div>
+										</div>
+									</div>
+								</div>							
+									
 							</div>
 						</div>
-						<div>
-							<div class="hidden w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
+						<div class="flex justify-center p-3 mb-3">
+							<div id="contatore-task-rapid" class="hidden w-4/5 h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] py-1 px-3">
 								<div class="flex justify-between items-center text-[#0057A5] font-bold">
 									<div class="col-auto w-10 h-10 ms-2">
 										<img class="h-[100%] w-[100%]" src="/img/sources/icons/contatore-blue.svg" alt="contatore">
@@ -540,11 +556,25 @@
 										<div  class="col-auto text-[24px] p-0" id="timerResumeTask">00:00:00</div>
 									</div>
 									<div class="col-auto flex items-center">
-										<div class="w-10 h-10 mx-2">
-											<form class="mx-auto w-50 mb-4" id="form-start-contatore"
-												th:object="${contatore}" method="post">
+										<div id="contatore-rapid-button-stop" class="w-10 h-10 mx-2">
+											<div class="mx-auto w-50 mb-4">
+												<button id="stopButtonTaskRapid" type="button" class="hover:opacity-75">
+													<img class="h-[100%] w-[100%]" src="/img/sources/icons/stop-blue.svg" alt="stop">
+												</button>												
+											</div>
+										</div>
+										<div id="contatore-rapid-button-pause" class="w-10 h-10 mx-2">
+											<form class="mx-auto w-50 mb-4" id="form-pause-contatore" th:object="${contatore}" method="post">
 												<input type="hidden" name="endPoint" th:value="${endPoint}">
-												<button type="submit" class="hover:opacity-75">
+												<button id="pause-button" type="submit" class="hover:opacity-75">
+													<img class="h-[100%] w-[100%]" src="/img/sources/icons/pause-blue.svg" alt="start">
+												</button>
+											</form>
+										</div>
+										<div id="contatore-rapid-button-start" class="w-10 h-10 mx-2">
+											<form class="mx-auto w-50 mb-4" id="form-start-contatore" th:object="${contatore}" method="post">
+												<input type="hidden" name="endPoint" th:value="${endPoint}">
+												<button id="start-button" type="submit" class="hover:opacity-75">
 													<img class="h-[100%] w-[100%]" src="/img/sources/icons/play-blue.svg" alt="start">
 												</button>
 											</form>
@@ -556,17 +586,17 @@
 						<div id="options-buttons" class="flex justify-around items-center bg-[#0057A5] p-3 w-full rounded-b-lg">
 							<button type="button" id="contatore-task-rapid-button"
 								class="flex flex-col justify-center items-center w-1/5 text-[#FFE541] font-bold ">
-								<img class="h-[30px] w-[30px]" src="/img/sources/icons/contatore-yellow.svg">
+								<img class="h-[30px] w-[30px] mb-1" src="/img/sources/icons/contatore-yellow.svg">
 								<span class="text-[8px]">CONTATORE</span>
 							</button>
 							<button type="button" id="ore-lavorate-task-rapid-button"
 								class="flex flex-col justify-center items-center w-1/5 text-[#FFE541] font-bold ">
-								<img class="h-[30px] w-[30px]" src="/img/sources/icons/orelavorate.svg">
+								<img class="h-[30px] w-[30px] mb-1" src="/img/sources/icons/orelavorate.svg">
 								<span class="text-[8px]">ORE LAVORATE</span>
 							</button>
 							<a id="taskDetailHref"
 								class="flex flex-col justify-center items-center w-1/5 text-[#FFE541] font-bold text-[8px]">
-								<img class=" h-[30px] w-[30px]" src="/img/sources/icons/board-tabloid-yellow.svg">
+								<img class=" h-[30px] w-[30px] mb-1" src="/img/sources/icons/board-tabloid-yellow.svg">
 								<span class="">DETTAGLIO</span>
 							</a>
 						</div>

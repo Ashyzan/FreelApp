@@ -44,14 +44,6 @@ public class RestTask {
 		
 	}
 
-	public LocalDateTime getStop() {
-		return stop;
-	}
-
-	public void setStop(LocalDateTime stop) {
-		this.stop = stop;
-	}
-
 	public String getNome() {
 		return nome;
 	}
