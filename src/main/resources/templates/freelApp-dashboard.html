@@ -39,7 +39,7 @@
 </head>
 
 <body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart()">
-	<section id="timerRapidButton" class=" fixed md:top-[80%] top-[65%] right-0">
+	<section id="rapidButton" class=" fixed md:top-[80%] top-[65%] right-0">
 		<button
 			class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5] ">
 			<div class="t-tooltip col-auto w-8 h-8 ms-2">
@@ -274,15 +274,6 @@
 								<div class="pt-1 text-[8px]">
 									TASK</div>
 							</div>
-              <li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
-							<div
-								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
-								<button id="oreLavorateButton" type="submit">
-									<img class="h-[30px] w-[30px]" src="/img/sources/icons/orelavorate.svg" alt="ore lavorate">
-								</button>
-								<div class="pt-1 text-[8px] text-center">ORE LAVORATE</div>
-							</div>
-						</li>
 						</li>
 						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
 							<div
@@ -418,12 +409,12 @@
 	</main>
 
 	<!-- Modale TimerRapidButton -->
-	<div id="modalTimerRapidButton" class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
+	<div id="modalRapidButton" class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
 		<div class="w-11/12 md:w-[550px] h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
 			<div class="grid grid-cols-12 p-1">
 				<div class="col-span-11 flex justify-center items-center text-white font-bold">GESTIONE RAPIDA TASK</div>
 				<div class="col-span-1">
-					<div id="modalTimerRapidCloseButton" class=" p-1 cursor-pointer text-center">
+					<div id="modalRapidCloseButton" class=" p-1 cursor-pointer text-center">
 						<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
 					</div>
 				</div>
@@ -433,7 +424,7 @@
 						<div class="flex flex-col justify-center p-2 text-center">
 							<div class="px-3 text-[#0057A5]">
 								<h2 id="search-and-select-title" class="mt-3 mb-4 font-bold">Ricerca o seleziona il task su cui lavorare:</h2>
-								<div id="search-and-select-buttons-container" class="flex justify-around mb-2">
+								<div id="search-and-select-buttons-container" class="flex justify-around mb-6">
 									<button type="button" id="search-task-button"
 										class="w-[45%] shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
 										<img class="h-[25px] w-[25px] inline" src="/img/sources/icons/search-blue.svg">
@@ -445,7 +436,7 @@
 										<span class="">Seleziona da elenco</span>
 									</button>
 								</div>
-								<div id="back-task-rapid-button-container" class="hidden mt-4">
+								<div id="back-task-rapid-button-container" class="hidden m-4">
 									<button type="button" id="back-task-rapid-button"
 										class="w-auto shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
 										<img class="h-[25px] w-[25px] inline" src="/img/sources/icons/arrow-left-blue.svg">
@@ -488,10 +479,12 @@
 									</div>
 								</div>
 								<div id="search-mode" class="hidden w-full mb-2">
-									<input type="text" placeholder="Ricerca per Cliente/Progetto/Task..."
-										class="w-full mb-2 border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-[70%]  px-4 focus:outline-none"
-										id="form-search-input" name="input" oninput="getJsonTaskListSearch(value)">
-									</input>
+									<div class="flex justify-center">
+										<input type="text" placeholder="Ricerca per Cliente/Progetto/Task..."
+											class="w-[300px] mb-2 border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-[70%]  px-4 focus:outline-none"
+											id="form-search-input" name="input" oninput="getJsonTaskListSearch(value)">
+										</input>										
+									</div>
 									<div class="w-full h-32 overflow-y-auto border border-[#0057A5] rounded-l-lg">
 										<div class="w-full h-8 border-b border-[#0057A5] bg-gray-100 grid grid-cols-8">
 											<span class="border-r col-span-3 text-center text-[#0057A5]">Cliente</span>
@@ -499,16 +492,16 @@
 											<span class="border-r col-span-2 text-center text-[#0057A5]">Task</span>
 											<span class="border-r col text-center text-[#0057A5]">Stato</span>
 										</div>
-										<div id="items-ore-lavorate">											
+										<div id="items-from-search">											
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 				</div>
-				<div id="taskResumeTable" class="hidden text-[#0057A5] mb-2">
+				<div id="taskResumeTable" class="hidden text-[#0057A5]">
 					<div class="w-full h-auto">
-						<div id="taskResumeBody" class="p-3 text-center">
+						<div id="taskResumeBody" class="p-3 text-center mx-2">
 							<div class="mx-auto max-w-md bg-white rounded-xl shadow-md shadow-blue-500/50 overflow-hidden min-w-full p-2">
 								<div class="grid grid-cols-12 h-full mb-2 p-1 border-b">
 									<div class="col-span-11 flex justify-center">
@@ -527,12 +520,12 @@
 									<div class="col-span-9">
 										<div class="grid grid-cols-6 flex items-center">
 											<div class="col-span-2 font-bold ps-3 py-1 text-start">Cliente</div>
-											<a id="taskCliente" class="col-span-4 py-1 hover:text-[#FFE541] text-start truncate">
+											<a id="taskCliente" class="col-span-4 py-1 hover:underline text-start truncate">
 											</a>										
 										</div>
 										<div class="grid grid-cols-6 flex items-center">
 											<div class="col-span-2 font-bold ps-3 py-1 text-start">Progetto</div>
-											<a id="taskProgetto" class="col-span-4 py-1 hover:text-[#FFE541] text-start truncate">									
+											<a id="taskProgetto" class="col-span-4 py-1 hover:underline text-start truncate">									
 											</a>
 										</div>
 										<div class="grid grid-cols-6 flex items-center">
@@ -546,7 +539,7 @@
 									
 							</div>
 						</div>
-						<div class="flex justify-center p-3 mb-3">
+						<div class="flex justify-center p-3">
 							<div id="contatore-task-rapid" class="hidden w-4/5 h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] py-1 px-3">
 								<div class="flex justify-between items-center text-[#0057A5] font-bold">
 									<div class="col-auto w-10 h-10 ms-2">
@@ -580,6 +573,44 @@
 											</form>
 										</div>
 									</div>
+								</div>
+							</div>
+							<div id="ore-lavorate-task-rapid-container" class="hidden w-[90%] h-fit">
+								<div class="flex flex-row justify-center p-2 pe-6">
+									<form id="taskDetailHrefOre" th:object="${contatore}"
+											method="post">
+										<h2 class="text-center font-bold mb-3">Inserimento ore lavorate</h2>
+										<div class="p-1">
+											<div class="grid grid-cols-2 flex items-center mb-2">
+												<p class="col mb-2 font-semibold">Inserisci la data</p>
+												<input type="date" name="date" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+													class=" col text-xl p-2 border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-[#ffe541]/50"
+													id="dataOreLavorate">												
+											</div>
+											<div class="grid grid-cols-2 flex items-center mb-2">
+												<p class="col font-semibold">Inserisci ore</p>
+												<input type="time" name="time" value="01:00"
+													class="col h-8 text-xl border border-[#0057A5] text-[#0057A5] rounded-lg block w-full text-center	bg-[#ffe541]/50"
+													id="tempoOreLavorate">												
+											</div>
+											<div class="grid grid-cols-2 flex items-center mb-2">
+												<div class="col text-left">
+													<input type="radio" name="aggiungiOre" checked="checked" id="sovrascriviOre" value="0">
+													<label for="sovrascriviOre" class="ps-1">Sovrascrivi e chiudi task</label><br>														
+												</div>
+												<div class="col text-end">
+													<input type="radio" name="aggiungiOre" id="aggiungiOre" value="1">
+													<label for="aggiungiOre" class="pe-1" >Aggiungi al task attivo</label>														
+												</div>
+											</div>
+											<div class="text-center">
+												<button class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]" 
+													type="submit">
+														Aggiungi
+												</button>													
+											</div>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -636,7 +667,7 @@
 				</div>
 			</div>
 
-	<!--  MODALE ORE LAVORATE -->
+	<!--  MODALE ORE LAVORATE 
 	<div id="modaleOreLavorate"
 		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
 		<div
@@ -733,6 +764,7 @@
 			</div>
 		</div>
 	</div>
+	-->
 	<!-- FINE MODALE ORE LAVORATE-->
 
   <!-- Script -->
@@ -748,7 +780,7 @@
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
 	<script type="text/javascript" th:src="@{/js/timerRapidButton.js}"></script>
-	<script type="text/javascript" th:src="@{/js/addOreLavorateButton.js}"></script>
+	<!-- <script type="text/javascript" th:src="@{/js/addOreLavorateButton.js}"></script> -->
 
 
 </body>

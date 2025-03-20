@@ -98,6 +98,9 @@ public class ContatoreController {
     		@ModelAttribute("endPoint") String endPoint,
 	    Model model, BindingResult bindingresult) {
     	
+    	// metto in pausa gli altri contatori
+	    	contatoreservice.pauseOtherTimers();
+    	
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
 
@@ -110,8 +113,8 @@ public class ContatoreController {
 	    // CONTATORE IS RUN
 	    if (contatoreservice.contatoreIsRun(task) != false) {
 
-	    	// metto in pausa gli altri contatori
-	    	contatoreservice.pauseOtherTimers();
+//	    	// metto in pausa gli altri contatori
+//	    	contatoreservice.pauseOtherTimers();
 	    	
 	    	boolean contatoreIsRun = contatoreservice.contatoreIsRun(task);
 

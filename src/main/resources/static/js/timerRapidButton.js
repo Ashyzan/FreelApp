@@ -1,8 +1,8 @@
 
 // recupero elementi dal DOM per modalTimerRapidButton
-const modalTimerRapidButton =document.getElementById('modalTimerRapidButton');
-const timerRapidButton = document.getElementById('timerRapidButton');
-const modalTimerRapidCloseButton = document.getElementById('modalTimerRapidCloseButton');
+const modalRapidButton =document.getElementById('modalRapidButton');
+const rapidButton = document.getElementById('rapidButton');
+const modalRapidCloseButton = document.getElementById('modalRapidCloseButton');
 const taskResumeTable = document.getElementById('taskResumeTable');		
 const formTask = document.getElementById('rapid-task');
 const timerResumeTask = document.getElementById('timerResumeTask');
@@ -18,6 +18,9 @@ const searchAndSelectButtonsContainer = document.getElementById('search-and-sele
 const contatoreTaskRapid = document.getElementById('contatore-task-rapid');
 const searchAndSelectTitle = document.getElementById('search-and-select-title');
 
+const oreLavorateTaskRapidContainer = document.getElementById('ore-lavorate-task-rapid-container');
+const oreLavorateTaskRapidButton = document.getElementById('ore-lavorate-task-rapid-button');
+
 //id del task in uso
 let taskAttualmenteInUso = 0;
 
@@ -26,13 +29,13 @@ const api_urlTaskSelected = 'http://localhost:8080/api/task/'
 const api_urlTaskListSearch = 'http://localhost:8080/api/searchMode/taskList?input='
 
 // apertura modale timerRapidButton
-timerRapidButton.addEventListener('click', function(){
-	modalTimerRapidButton.classList.remove('scale-0');
+rapidButton.addEventListener('click', function(){
+	modalRapidButton.classList.remove('scale-0');
 })
 
 //chiusure modale timerRapidButton
-modalTimerRapidCloseButton.addEventListener('click', function(){
-	modalTimerRapidButton.classList.add('scale-0');
+modalRapidCloseButton.addEventListener('click', function(){
+	modalRapidButton.classList.add('scale-0');
 })
 
 //funzione che dalla modalità select passa a quella di ricerca
@@ -91,7 +94,7 @@ async function getJsonTaskListSearch(input){
 		
 		list.forEach(item =>{
 			const statoItem = assegnaSvgStatoItem(item.stato);
-			document.getElementById('items-ore-lavorate').innerHTML += 
+			document.getElementById('items-from-search').innerHTML += 
 			`<button type="button" value="${item.id}" onclick="recapSelectedTask(${item.id})"
 					class="border-b-1 shadow-md grid grid-cols-8 p-1 w-full hover:bg-[#FFE541]/50">
 				<span class="col flex items-center justify-center">
@@ -137,6 +140,10 @@ function recapSelectedTask(id){
 	//assegna action pausa contatore in baseal task scelto
 	const formPauseContatore = document.getElementById('form-pause-contatore');
 	formPauseContatore.action = `/Contatore/pause/${valueInput}`;
+	
+	// assegna action avvio contatore in base al task scelto
+	const taskDetailHrefOre = document.getElementById('taskDetailHrefOre');
+		taskDetailHrefOre.action = `/orelavorate/${valueInput}`;
 
 }
 
@@ -200,23 +207,27 @@ function recapSearchedTaskList(id){
 	//assegna action pausa contatore in baseal task scelto
 	const formPauseContatore = document.getElementById('form-pause-contatore');
 		formPauseContatore.action = `/Contatore/pause/${valueInput}`;
+	
+	// assegna action avvio contatore in base al task scelto
+	const taskDetailHrefOre = document.getElementById('taskDetailHrefOre');
+		taskDetailHrefOre.action = `/orelavorate/${valueInput}`;
 
 }
 
 //funzione che assegna l'svg dello stato all'item
 function assegnaSvgStatoItem(stato){
 	let svg = "";
-	if(stato == "in corso"){
-		svg = "/img/sources/icons/contatore-on-start.svg";
-	} else if(stato == "in pausa"){
-		svg = "/img/sources/icons/contatore-on-pause.svg";
-	}else if(stato == "chiuso"){
-		svg = "/img/sources/icons/contatore-on-stop.svg";
-	} else {
-		svg = "/img/sources/icons/contatore-inattivo.svg";
-	}
-	
-	return svg
+
+		if(stato == "in corso" ){
+				svg = "/img/sources/icons/contatore-on-start.svg";
+			} else if(stato == "in pausa" ){
+				svg = "/img/sources/icons/contatore-on-pause.svg";
+			}else if(stato == "chiuso"){
+				svg = "/img/sources/icons/contatore-on-stop.svg";
+			} else {
+				svg = "/img/sources/icons/contatore-inattivo.svg";
+			}
+		return svg				
 }
 
 //attivazione del pulsante back
@@ -236,8 +247,26 @@ if(contatoreTaskRapidButton != null){
 		
 		contatoreTaskRapid.classList.remove('hidden');
 		
+		if(oreLavorateTaskRapidContainer.display != "none"){
+			oreLavorateTaskRapidContainer.classList.add('hidden');
+		}
+		
 	});
 }
+
+//attivazione del pulsante ore lavorate
+if(oreLavorateTaskRapidButton != null){
+	oreLavorateTaskRapidButton.addEventListener('click', function(){
+		
+		clickOnContatoreOrOreLavorate()
+		oreLavorateTaskRapidContainer.classList.remove('hidden');
+		
+		if(contatoreTaskRapid.display != "none"){
+			contatoreTaskRapid.classList.add('hidden');
+		}
+	});
+}
+
 
 //funzione che al click dell'icona contatore o oreLavorate fa sparire
 //la sezione di ricerca selezione e apparire il pulsante back
@@ -268,6 +297,8 @@ function clickOnBackButton(){
 	searchAndSelectTitle.classList.remove('hidden');
 	searchAndSelectButtonsContainer.classList.remove('hidden');
 	backTaskRapidButtonContainer.classList.add('hidden');
+	contatoreTaskRapid.classList.add('hidden');
+	oreLavorateTaskRapidContainer.classList.add('hidden');
 				
 	
 
