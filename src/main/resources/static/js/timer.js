@@ -7,10 +7,10 @@
 	const timerDue = document.getElementById('timerDue');
 	
 	
-	console.log("finalTimeSec iniziale: " + finalTimeSec)
-	console.log("ore iniziali: " + hours);
-	console.log("minuti iniziali: " + minutes);
-	console.log("secndi iniziali: " + seconds);
+	//console.log("finalTimeSec iniziale: " + finalTimeSec)
+	//console.log("ore iniziali: " + hours);
+	//console.log("minuti iniziali: " + minutes);
+	//console.log("secndi iniziali: " + seconds);
 				
 	function tempochescorre() {
 	

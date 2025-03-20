@@ -1,30 +1,40 @@
 
-// recupero elementi dal DOM per modalTimerRapidButton
+// recupero elementi dal DOM per modalRapidButton
 const modalRapidButton =document.getElementById('modalRapidButton');
 const rapidButton = document.getElementById('rapidButton');
 const modalRapidCloseButton = document.getElementById('modalRapidCloseButton');
-const taskResumeTable = document.getElementById('taskResumeTable');		
-const formTask = document.getElementById('rapid-task');
-const timerResumeTask = document.getElementById('timerResumeTask');
+
+//recupero elementi dal DOM per sezione pulsanti di ricerca/selezione/back
 const searchTaskButton = document.getElementById('search-task-button');
-const selectTaskButton = document.getElementById('select-task-button')
-const selectMode = document.getElementById('select-mode');
-const searchMode = document.getElementById('search-mode');
-let selectTaskList = document.querySelectorAll('form-select-input').value, selectTaskListValues = [];
+const selectTaskButton = document.getElementById('select-task-button');
 const backTaskRapidButton = document.getElementById('back-task-rapid-button')
-const contatoreTaskRapidButton = document.getElementById('contatore-task-rapid-button');
 const backTaskRapidButtonContainer = document.getElementById('back-task-rapid-button-container')
 const searchAndSelectButtonsContainer = document.getElementById('search-and-select-buttons-container');
-const contatoreTaskRapid = document.getElementById('contatore-task-rapid');
+const selectMode = document.getElementById('select-mode');
+const searchMode = document.getElementById('search-mode');
 const searchAndSelectTitle = document.getElementById('search-and-select-title');
+let selectTaskList = document.querySelectorAll('form-select-input').value, selectTaskListValues = [];
 
+//recupero elementi dal DOM per sezione contatore 
+const contatoreTaskRapidButton = document.getElementById('contatore-task-rapid-button');
+const contatoreTaskRapidContainer = document.getElementById('contatore-task-rapid');
+const timerResumeTask = document.getElementById('timerResumeTask');
+
+
+//recupero elementi dal DOM per sezione ore lavorate
 const oreLavorateTaskRapidContainer = document.getElementById('ore-lavorate-task-rapid-container');
 const oreLavorateTaskRapidButton = document.getElementById('ore-lavorate-task-rapid-button');
+
+
+//recupero elementi dal DOM per sezione dati riassuntivi task
+const taskResumeTable = document.getElementById('taskResumeTable');		
+const formTask = document.getElementById('rapid-task');
+
 
 //id del task in uso
 let taskAttualmenteInUso = 0;
 
-//da cambiare con url definitivi
+//API da cambiare con url definitivi
 const api_urlTaskSelected = 'http://localhost:8080/api/task/'
 const api_urlTaskListSearch = 'http://localhost:8080/api/searchMode/taskList?input='
 
@@ -56,17 +66,10 @@ selectTaskButton.addEventListener('click', function(){
 	
 })
 
-
-// funzione che fa l'autosubmit sul form di ricerca
-
-document.getElementById('form-search-input').addEventListener("change", (event) =>{
-			//document.getElementById('form-task-select').submit()
-			
-			recapSearchedTaskList(event)
-		});
-
+//funzione che richiama api del task selezionato
 async function getJsonTask(id){
-	if(id != 0){
+	
+	if(id != 0 && id != null){
 		const response = await fetch(api_urlTaskSelected+id);
 		const data = await response.json();
 			
@@ -77,17 +80,15 @@ async function getJsonTask(id){
 		document.getElementById('taskCliente').href = `/Clienti/${data.clienteId}` ;	
 		document.getElementById('taskLogoPath').src = data.logoCliente;	
 		document.getElementById('task-stato').src = assegnaSvgStatoItem(data.stato);	
-		
-		
-		stampaContatore(data.finalTime, data.taskAttualmenteInUso, id)
-		
+
+		stampaContatore(data.finalTime, data.taskAttualmenteInUso, id)		
 	}
 }
 
+//funzione che richiama api per lista task by search e genera lista
 async function getJsonTaskListSearch(input){
-	console.log("input: " + input)
 	
-	document.getElementById('items-ore-lavorate').innerHTML =` `;
+	document.getElementById('items-from-search').innerHTML =` `;
 	if(input != "" || input != " "){
 		const response = await fetch(api_urlTaskListSearch+input);
 		const list = await response.json();
@@ -115,8 +116,9 @@ async function getJsonTaskListSearch(input){
 	
 }
 
+//funzione che visualizza la card riassuntiva del task selezionato
 function recapSelectedTask(id){
-	//event.preventDefault()
+
 	getJsonTask(id);
 	valueInput = id;
 	
@@ -147,6 +149,7 @@ function recapSelectedTask(id){
 
 }
 
+//funzione di stampa contatore
 function stampaContatore(finalTime,taskAttualmenteInUso, id){
 	//const valueInput = document.getElementById('form-select-input').value;
 	const valueInput = id;
@@ -172,7 +175,7 @@ function stampaContatore(finalTime,taskAttualmenteInUso, id){
 	}
 }
 
-//funzione che stampa il contatore e il resoconto del tempo del task selezionato
+//funzione che personalizza la stampa contatore e il resoconto del tempo del task selezionato
 //se lo stato è in corso
 function stampaTaskSelezionatoInRun(){
 	document.getElementById('work-time').textContent = "Task in corso";
@@ -245,7 +248,7 @@ if(contatoreTaskRapidButton != null){
 		
 		clickOnContatoreOrOreLavorate()
 		
-		contatoreTaskRapid.classList.remove('hidden');
+		contatoreTaskRapidContainer.classList.remove('hidden');
 		
 		if(oreLavorateTaskRapidContainer.display != "none"){
 			oreLavorateTaskRapidContainer.classList.add('hidden');
@@ -261,8 +264,8 @@ if(oreLavorateTaskRapidButton != null){
 		clickOnContatoreOrOreLavorate()
 		oreLavorateTaskRapidContainer.classList.remove('hidden');
 		
-		if(contatoreTaskRapid.display != "none"){
-			contatoreTaskRapid.classList.add('hidden');
+		if(contatoreTaskRapidContainer.display != "none"){
+			contatoreTaskRapidContainer.classList.add('hidden');
 		}
 	});
 }
@@ -297,7 +300,7 @@ function clickOnBackButton(){
 	searchAndSelectTitle.classList.remove('hidden');
 	searchAndSelectButtonsContainer.classList.remove('hidden');
 	backTaskRapidButtonContainer.classList.add('hidden');
-	contatoreTaskRapid.classList.add('hidden');
+	contatoreTaskRapidContainer.classList.add('hidden');
 	oreLavorateTaskRapidContainer.classList.add('hidden');
 				
 	
