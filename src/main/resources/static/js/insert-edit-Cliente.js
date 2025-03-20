@@ -8,6 +8,7 @@ const aziendaInput = document.getElementById('aziendaInput');
 const privatoInput = document.getElementById('privatoInput');
 const contattiAzienda = document.getElementById('contattiAzienda');
 const tipologiaEdit = document.getElementById('tipologia');
+const ragioneSociale = document.getElementById('ragioneSociale');
 
 //funzione per accordion
 function toggleAccordion(index) {
@@ -22,6 +23,7 @@ if(tipologiaEdit.value == "azienda"){
 	aziendaInput.classList.remove('hidden');
 	contattiAzienda.classList.remove('hidden');
 	privatoInput.classList.add('hidden');
+	ragioneSociale.classList.add('required');
 }
 	
 // funzione per cambiare input fatturazione cliente in base alla tipologia

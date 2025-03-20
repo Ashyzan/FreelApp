@@ -322,8 +322,12 @@
 			                       <label for="labelCliente">Etichetta cliente<span> *</span></label>
 			                     </div>
 			                     <div class=" col md:col-span-2 col-span-3">
-			                       <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="labelCliente" th:field="*{labelCliente}" th:errorClass="border">
-			                       <div th:if="${#fields.hasErrors('labelCliente')}" class="text-red-600 text-[12px] text-center w-full">
+			                       <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" 
+			                       		id="labelCliente" 
+			                       		th:field="*{labelCliente}" 
+			                       		th:errorClass="border">
+			                       <div th:if="${#fields.hasErrors('labelCliente')}" 
+			                       		class="text-red-600 text-[12px] text-center w-full">
 			                         <ul>
 			                           <li th:each="err: ${#fields.errors('labelCliente')}" th:text="${err}"></li>
 			                         </ul>
@@ -372,7 +376,7 @@
 			                </div>
 			                <div class="accordion-item mb-4 border-b-2">
 			                   <button type="button" onclick="toggleAccordion(2)" class="w-full flex justify-between items-center py-2 hover:underline hover:underline-offset-2">
-			                     <div  class="font-bold">Dati di fatturazione</div>
+			                     <div  class="font-bold">Dati di fatturazione*</div>
 			                     <div>
 			                       <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">
 			                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -385,35 +389,39 @@
 			                       <div id="aziendaInput" class="hidden">
 			                         <div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">		
 			                           <div class="col">
-			                             <label for="ragioneSociale">Ragione sociale</label>
+			                             <label for="ragioneSociale">Ragione sociale*</label>
 			                           </div>	
 			                           <div class="col md:col-span-2 col-span-3">
-			                             <input type="text" class="w-full h-8 ps-4 rounded-lg" id="ragioneSociale" th:field="*{ragioneSociale}">
+			                             <input type="text" class="w-full h-8 ps-4 rounded-lg" id="ragioneSociale" 
+			                             		th:field="*{ragioneSociale}"
+			                             		required>
 			                           </div>  
 			                         </div>	
 			   
 			                         <div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">	
 			                           <div class="col">
-			                             <label for="ragioneSociale">Partita Iva</label>
+			                             <label for="ragioneSociale">Partita Iva*</label>
 			                           </div>	
 			                           <div class="col md:col-span-2 col-span-3">
-			                             <input type="text" class="w-full h-8 ps-4 rounded-lg" id="PartitaIva" th:field="*{partitaIva}">
+			                             <input type="text" class="w-full h-8 ps-4 rounded-lg" 
+			                             		id="PartitaIva" th:field="*{partitaIva}">
 			                           </div>	  
 			                           </div>	
 			                       </div>
 			                       <div id="privatoInput" class="">
 			                         <div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">	
 			                           <div class="col">
-			                             <label for="nome">Nome</label>
+			                             <label for="nome">Nome*</label>
 			                           </div>	
 			                           <div class="col md:col-span-2 col-span-3">
-			                             <input type="text" class="w-full h-8 ps-4 rounded-lg" id="nome" th:field="*{name}">
+			                             <input type="text" class="w-full h-8 ps-4 rounded-lg" 
+			                             		id="nome" th:field="*{name}">
 			                           </div>	  
 			                           </div>	
 			                           
 			                           <div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">	
 			                             <div class="col">
-			                               <label for="cognome">Cognome</label>
+			                               <label for="cognome">Cognome*</label>
 			                             </div>	
 			                             <div class="col md:col-span-2 col-span-3">
 			                               <input type="text" class="w-full h-8 ps-4 rounded-lg" id="cognome" th:field="*{surname}">

@@ -22,13 +22,13 @@ public class ClienteService {
 	}
 	
 	public Page<Cliente> findPage(int pageNumber){
-		Pageable pageable = PageRequest.of(pageNumber -1, 4);
+		Pageable pageable = PageRequest.of(pageNumber -1, 12);
 		return clienteRepository.findAll(pageable);
 		
 	}
 	
 	public Page<Cliente> findSearchedPage(int pageNumber, String input){
-		Pageable pageable = PageRequest.of(pageNumber -1, 4);
+		Pageable pageable = PageRequest.of(pageNumber -1, 12);
 		return clienteRepository.search(input, pageable);
 		
 	}

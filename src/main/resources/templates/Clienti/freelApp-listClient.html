@@ -293,26 +293,51 @@
 		        </div>
 		        
 <!-- 		        cards clienti	 -->
-<div class="flex justify-between gap-4 pb-4 flex-wrap sm:flex-row sm:items-center">
+<div class="grid grid-cols-4 gap-4 pb-4 sm:flex-row sm:items-center">
 <div th:each="cliente : ${list}">
-<div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-    <div class="flex justify-end p-4 ">
-    </div>
-    <div class="flex flex-col w-64 items-center pb-10">
-        <img class="w-24 h-24 mb-3 rounded-full shadow-lg" th:src="@{${cliente.LogoPath}}" alt="logo"/>
-        <h5 th:text="${cliente.labelCliente}" class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Etichetta cliente</h5>
-        <span th:if="${cliente.tipologia} == azienda" th:text="${cliente.ragioneSociale}" class="text-sm text-gray-500 dark:text-gray-400">Ragione sociale</span>
-        <span th:if="${cliente.tipologia} == privato" th:text="Privato" class="text-sm text-gray-500 dark:text-gray-400">Ragione sociale</span>
-       
-        <div class="flex mt-4 md:mt-6">
-            <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Dettaglio</a>
-              </div>
+<div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm">
+    <div class="w-64 pb-10 m-auto">
+        <img class="w-24 h-24 m-auto mb-3 rounded-full object-cover shadow-lg" th:src="@{${cliente.LogoPath}}" alt="logo"/>
+        <h5 th:text="${cliente.labelCliente}" class="text-center mb-1 text-xl font-medium text-[#0057A5]">Etichetta cliente</h5>
+        <span th:if="${cliente.tipologia} == azienda" th:text="${cliente.ragioneSociale}" class="px-4 text-center line-clamp-1 text-sm text-gray-500 dark:text-gray-400">Ragione sociale</span>
+        <span th:if="${cliente.tipologia} == privato" th:text="${cliente.name + ' ' + cliente.surname}" class="px-4 text-center line-clamp-1 text-sm text-gray-500 dark:text-gray-400">Ragione sociale</span>
+       <a th:href="@{/Clienti/{id}(id=${cliente.getId()})}" class="block mt-4 md:mt-6 w-32 m-auto px-4 py-2 text-sm font-medium text-center text-white bg-[#0057A5] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Dettaglio</a>
+            
     </div>
 </div>
 </div>
 </div>
-
-
+<!-- SUPER FLIP CARD -->
+<div class="grid grid-cols-4 gap-4 pb-4">
+<div th:each="cliente : ${list}">
+<div class="w-full">
+  <div class="group h-48 w-full [perspective:1000px]">
+    <div class="relative h-full w-full rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+      <div class="absolute inset-0">
+     
+      <div class="w-64 pb-10 m-auto">
+        <img class="w-24 h-24 m-auto mb-3 rounded-full object-cover shadow-lg" th:src="@{${cliente.LogoPath}}" alt="logo"/>
+        <h5 th:text="${cliente.labelCliente}" class="text-center mb-1 text-xl font-medium text-[#0057A5]">Etichetta cliente</h5>
+        <span th:if="${cliente.tipologia} == azienda" th:text="${cliente.ragioneSociale}" class="px-4 text-center line-clamp-1 text-sm text-gray-500 dark:text-gray-400">Ragione sociale</span>
+        <span th:if="${cliente.tipologia} == privato" th:text="${cliente.name + ' ' + cliente.surname}" class="px-4 text-center line-clamp-1 text-sm text-gray-500">Nome e cognome</span>
+       <a th:href="@{/Clienti/{id}(id=${cliente.getId()})}" class="block mt-4 md:mt-6 w-32 m-auto px-4 py-2 text-sm font-medium text-center text-white bg-[#0057A5] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Dettaglio</a>
+            
+    </div>
+    
+          </div>
+      <div class="absolute inset-0 h-full w-full rounded-xl bg-black/80 px-12 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+        <div class="flex min-h-full flex-col items-center justify-center">
+          <h1 class="text-3xl font-bold">Jane Doe</h1>
+          <p class="text-lg">Photographer & Art</p>
+          <p class="text-base">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
+          <button class="mt-2 rounded-md bg-neutral-800 py-1 px-2 text-sm hover:bg-neutral-900">Read More</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ </div>
+</div>
 
 				<table class="text-[#0057A5] w-full m-auto">
 					<thead class="border border-[#0057A5] md:h-12 h-8 bg-[#0057A5] text-white max-sm:text-[12px]">
