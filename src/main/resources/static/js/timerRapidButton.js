@@ -23,7 +23,7 @@ let taskAttualmenteInUso = 0;
 
 //da cambiare con url definitivi
 const api_urlTaskSelected = 'http://localhost:8080/api/task/'
-const api_urlTaskListOreLavorate = 'http://localhost:8080/api/oreLavorate/taskList?input='
+const api_urlTaskListSearch = 'http://localhost:8080/api/searchMode/taskList?input='
 
 // apertura modale timerRapidButton
 timerRapidButton.addEventListener('click', function(){
@@ -81,12 +81,12 @@ async function getJsonTask(id){
 	}
 }
 
-async function getJsonTaskListOreLavorate(input){
+async function getJsonTaskListSearch(input){
 	console.log("input: " + input)
 	
 	document.getElementById('items-ore-lavorate').innerHTML =` `;
 	if(input != "" || input != " "){
-		const response = await fetch(api_urlTaskListOreLavorate+input);
+		const response = await fetch(api_urlTaskListSearch+input);
 		const list = await response.json();
 		
 		list.forEach(item =>{

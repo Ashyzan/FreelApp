@@ -490,7 +490,7 @@
 								<div id="search-mode" class="hidden w-full mb-2">
 									<input type="text" placeholder="Ricerca per Cliente/Progetto/Task..."
 										class="w-full mb-2 border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-[70%]  px-4 focus:outline-none"
-										id="form-search-input" name="input" oninput="getJsonTaskListOreLavorate(value)">
+										id="form-search-input" name="input" oninput="getJsonTaskListSearch(value)">
 									</input>
 									<div class="w-full h-32 overflow-y-auto border border-[#0057A5] rounded-l-lg">
 										<div class="w-full h-8 border-b border-[#0057A5] bg-gray-100 grid grid-cols-8">
@@ -550,7 +550,7 @@
 							<div id="contatore-task-rapid" class="hidden w-4/5 h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] py-1 px-3">
 								<div class="flex justify-between items-center text-[#0057A5] font-bold">
 									<div class="col-auto w-10 h-10 ms-2">
-										<img class="h-[100%] w-[100%]" src="/img/sources/icons/contatore-blue.svg" alt="contatore">
+										<img class="w-10 h-10" src="/img/sources/icons/contatore-blue.svg" alt="contatore">
 									</div>
 									<div class="flex flex-col items-center">
 										<div  class="col-auto text-[24px] p-0" id="timerResumeTask">00:00:00</div>
@@ -559,7 +559,7 @@
 										<div id="contatore-rapid-button-stop" class="w-10 h-10 mx-2">
 											<div class="mx-auto w-50 mb-4">
 												<button id="stopButtonTaskRapid" type="button" class="hover:opacity-75">
-													<img class="h-[100%] w-[100%]" src="/img/sources/icons/stop-blue.svg" alt="stop">
+													<img class="w-10 h-10" src="/img/sources/icons/stop-blue.svg" alt="stop">
 												</button>												
 											</div>
 										</div>
@@ -567,7 +567,7 @@
 											<form class="mx-auto w-50 mb-4" id="form-pause-contatore" th:object="${contatore}" method="post">
 												<input type="hidden" name="endPoint" th:value="${endPoint}">
 												<button id="pause-button" type="submit" class="hover:opacity-75">
-													<img class="h-[100%] w-[100%]" src="/img/sources/icons/pause-blue.svg" alt="start">
+													<img class="w-10 h-10" src="/img/sources/icons/pause-blue.svg" alt="start">
 												</button>
 											</form>
 										</div>
@@ -575,7 +575,7 @@
 											<form class="mx-auto w-50 mb-4" id="form-start-contatore" th:object="${contatore}" method="post">
 												<input type="hidden" name="endPoint" th:value="${endPoint}">
 												<button id="start-button" type="submit" class="hover:opacity-75">
-													<img class="h-[100%] w-[100%]" src="/img/sources/icons/play-blue.svg" alt="start">
+													<img class="w-10 h-10" src="/img/sources/icons/play-blue.svg" alt="start">
 												</button>
 											</form>
 										</div>

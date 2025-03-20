@@ -74,7 +74,7 @@ public class FreelappRestController {
 		return restTask;
 	}
 	
-	@GetMapping("/oreLavorate/taskList")
+	@GetMapping("/searchMode/taskList")
 	public List<RestTask> searchListOreLavorate(@RequestParam String input) {
 		
 		List<RestTask> taskListOreLavorate = new ArrayList<RestTask> ();
