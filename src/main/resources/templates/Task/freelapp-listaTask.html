@@ -302,7 +302,7 @@
 				</a>
 			</div>
 			<div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center overflow-y-auto">
-				<div class="flex flex-col-reverse md:flex-col w-11/12 2xl:w-4/5">
+				<div th:if="${areTasksOnDb == true}" class="flex flex-col-reverse md:flex-col w-11/12 2xl:w-4/5">
 					<section>
 						<div class="h-12 text-center text-[#0057A5] font-bold items-center m-3">
 							<h1>ELENCO TASK</h1>
@@ -551,6 +551,15 @@
 							</div>
 						</div>
 					</section>
+				</div>
+				<div th:if="${areTasksOnDb == false}">
+					<h2 class="text-[#0057A5] font-bold m-auto py-10">NESSUN TASK ANCORA REGISTRATO</h2>
+					<a th:href="@{/Task/newTask}" class="text-center flex justify-center">
+						<button
+							class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
+							Aggiungi Task
+						</button>
+					</a>
 				</div>
 				<div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden" id="dettaglio-contatore-bottom">
 					<div class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">

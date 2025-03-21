@@ -299,7 +299,7 @@
 			</div>
 			<div id="main-section"
 				class="w-full flex-wrap h-full m-auto overflow-y-auto">
-				<div class=" md:flex-col px-4">
+				<div th:if="${areProjectsOnDb == true}" class=" md:flex-col px-4">
 
 					<!-- 			section elenco progetti main		 -->
 					<section class="flex flex-col">
@@ -553,6 +553,16 @@
 					</section>
 					
 				
+				</div>
+				<div th:if="${areProjectsOnDb == false}" class="flex flex-col items-center justify-center text-center h-full">
+					<h2 class="text-[#0057A5] font-bold py-10 ">NESSUN PROGETTO ANCORA REGISTRATO</h2>
+					<!-- th:href="@{/Progetti/insert/1} diventera poi th:href="@{'/Progetti/insert/{id}'(id=${userLogged.getId()})'} quando sara implementata autentizazione-->
+					<a th:href="@{/Progetti/insert/1}" class="text-center flex justify-center">
+						<button
+							class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
+							Aggiungi Progetto
+						</button>
+					</a>
 				</div>
 				<div class="m-auto pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden"
 					id="dettaglio-contatore-bottom">

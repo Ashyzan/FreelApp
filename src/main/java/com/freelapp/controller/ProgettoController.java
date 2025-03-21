@@ -60,6 +60,14 @@ public class ProgettoController {
 				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 				
+				//restituisce al model questo valore booleano false se non ci sono progetti a db
+				//e restituisce true se ci sono progetti a db
+				boolean areProjectsOnDb = false;
+				if(!repositProgetto.findAll().isEmpty()) {
+			areProjectsOnDb = true;
+		}
+		model.addAttribute("areProjectsOnDb", areProjectsOnDb);
+				
 				return getOnePage(1, model);
 			}
 			

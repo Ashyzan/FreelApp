@@ -65,8 +65,14 @@ public class TaskController {
 		
 		model.addAttribute("taskInUsoId", taskInUsoId);
 		
-		
-    	
+		// restituisce al model questo valore booleano false se non ci sono progetti a db
+		// e restituisce true se ci sono progetti a db
+		boolean areTasksOnDb = false;
+		if (!repositTask.findAll().isEmpty()) {
+			areTasksOnDb = true;
+		}
+		model.addAttribute("areTasksOnDb", areTasksOnDb);
+
 	return getOnePage(1, model);
     }
 
