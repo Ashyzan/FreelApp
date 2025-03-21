@@ -359,15 +359,21 @@
 													<span th:if="${cliente.tipologia} == azienda"
 														th:text="${cliente.ragioneSociale}"
 														class="pt-4 mt-12 text-center line-clamp-1 text-xl font-bold font-medium text-[#fff]">Ragione
-														sociale</span> <span th:if="${cliente.tipologia} == azienda"
+														sociale</span> 
+														<span th:if="${cliente.tipologia} == azienda"
 														th:text="${'Cliente dal ' + cliente.dataInserimentoCliente}"
 														class="mt-4 text-center line-clamp-1 text-sm font-medium text-[#fff]">cliente
-														dal..</span> <span th:if="${cliente.tipologia} == privato"
+														dal..</span> 
+														
+														<span th:if="${cliente.tipologia} == privato"
 														th:text="${cliente.name + ' ' + cliente.surname}"
-														class="p-4 text-center line-clamp-1 text-xl font-medium text-[#0057A5]">Nome
-														e cognome</span> <a
+														class="pt-4 mt-12 text-center line-clamp-1 text-xl font-bold font-medium text-[#fff]">Nome
+														e cognome</span> 														<span th:if="${cliente.tipologia} == privato"
+																												th:text="${'Cliente dal ' + cliente.dataInserimentoCliente}"
+																												class="mt-4 text-center line-clamp-1 text-sm font-medium text-[#fff]">cliente
+																												dal..</span> <a
 														th:href="@{/Clienti/{id}(id=${cliente.getId()})}"
-														class="block mt-4 md:mt-6 w-32 m-auto px-4 py-2 text-sm font-medium text-center text-white bg-blue-800 rounded-lg hover:bg-[#084173] focus:ring-4 focus:outline-none focus:ring-blue-300">Dettaglio</a>
+														class="block mt-4 md:mt-6 w-32 m-auto px-4 py-2 text-sm font-medium text-center text-white bg-blue-800 rounded-full hover:bg-[#084173] focus:ring-4 focus:outline-none focus:ring-blue-300">Dettaglio</a>
 												</div>
 											</div>
 										</div>
