@@ -305,6 +305,7 @@
 								th:action="@{/Clienti/insert}" 
 								method="post"
 								enctype="multipart/form-data">
+							<input type="hidden" th:field="*{dataInserimentoCliente}" >
 			                <div class="accordion-item mb-4 border-b-2">
 			                 <button type="button" onclick="toggleAccordion(1)" class=" w-full flex justify-between items-center py-2 hover:underline hover:underline-offset-2">
 			                   <div  class="font-bold ">Generalità cliente<span> *</span></div>

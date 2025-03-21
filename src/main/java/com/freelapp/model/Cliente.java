@@ -1,5 +1,6 @@
 package com.freelapp.model;
 
+import java.time.LocalDate;
 import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -89,10 +90,24 @@ public class Cliente {
 	@Column(name = "cognomeContatto")
 	private String surnameContatto;
 	
-	
+	@Column(name= "dataInserimentoCliente")
+	private LocalDate dataInserimentoCliente = LocalDate.now();
+
 	
 	@OneToMany(mappedBy = "cliente")
 	private List<Progetto> progetti;
+
+
+
+	public LocalDate getDataInserimentoCliente() {
+		return dataInserimentoCliente;
+	}
+
+
+
+	public void setDataInserimentoCliente(LocalDate dataInserimentoCliente) {
+		this.dataInserimentoCliente = dataInserimentoCliente;
+	}
 
 
 
