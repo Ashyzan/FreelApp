@@ -64,9 +64,9 @@ public class ProgettoController {
 				//e restituisce true se ci sono progetti a db
 				boolean areProjectsOnDb = false;
 				if(!repositProgetto.findAll().isEmpty()) {
-			areProjectsOnDb = true;
-		}
-		model.addAttribute("areProjectsOnDb", areProjectsOnDb);
+					areProjectsOnDb = true;
+				}
+				model.addAttribute("areProjectsOnDb", areProjectsOnDb);
 				
 				return getOnePage(1, model);
 			}
