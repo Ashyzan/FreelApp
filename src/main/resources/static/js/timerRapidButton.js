@@ -49,23 +49,25 @@ modalRapidCloseButton.addEventListener('click', function(){
 })
 
 //funzione che dalla modalità select passa a quella di ricerca
-searchTaskButton.addEventListener('click', function(){
+if(searchTaskButton != null){
+	searchTaskButton.addEventListener('click', function(){
 	selectMode.classList.add('hidden');
 	searchMode.classList.remove('hidden');
 	searchTaskButton.classList.add('opacity-50', 'pointer-events-none')
 	selectTaskButton.classList.remove('opacity-50', 'pointer-events-none')
 	
-})
-
+	})
+}
 //funzione che dalla modalità di ricerca passa a quella select
-selectTaskButton.addEventListener('click', function(){
+if(selectTaskButton != null){
+	selectTaskButton.addEventListener('click', function(){
 	selectMode.classList.remove('hidden');
 	selectTaskButton.classList.add('opacity-50', 'pointer-events-none')
 	searchMode.classList.add('hidden');
 	searchTaskButton.classList.remove('opacity-50', 'pointer-events-none')
 	
-})
-
+	})
+}
 //funzione che richiama api del task selezionato
 async function getJsonTask(id){
 	

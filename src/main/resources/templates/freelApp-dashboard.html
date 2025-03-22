@@ -420,7 +420,7 @@
 				</div>
 			</div>
 			<div class="w-full h-auto bg-white rounded-b-lg">
-				<div id="rapid-task" class="">
+				<div th:unless="${taskList.isEmpty()}" id="rapid-task" class="">
 						<div class="flex flex-col justify-center p-2 text-center">
 							<div class=" text-[#0057A5]">
 								<h2 id="search-and-select-title" class=" md:mx-4 font-bold max-md:text-sm mb-2 md:mb-3">Ricerca o seleziona il task su cui lavorare:</h2>
@@ -499,6 +499,7 @@
 							</div>
 						</div>
 				</div>
+				<div th:if="${taskList.isEmpty()}" class="text-center text-[#0057A5] font-bold p-10">Nessun Task inserito</div>
 				<div id="taskResumeTable" class="hidden text-[#0057A5]">
 					<div class="w-full h-auto">
 						<div id="taskResumeBody" class="p-3 text-center mx-2">

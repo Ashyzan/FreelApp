@@ -299,7 +299,7 @@
 		     <div class="h-12 text-center font-bold items-center m-3">
 		       <h1>INSERIMENTO NUOVO CLIENTE</h1>
 		     </div>		
-			 <div class="w-11/12 md:w-3/5 h-auto lg:max-w-[600px] border border-[#0057A5] rounded-[8px] bg-gray-100 p-3 mb-6">
+			 <div class="w-11/12 md:w-3/5 h-auto lg:max-w-[600px] border border-[#0057A5] rounded-[8px] bg-white shadow-md shadow-blue-500/50 p-3 mb-6">
 			              <form class="" id="formCliente" 
 						  		th:object="${formCliente}" 
 								th:action="@{/Clienti/insert}" 
@@ -323,10 +323,11 @@
 			                       <label for="labelCliente">Etichetta cliente<span> *</span></label>
 			                     </div>
 			                     <div class=" col md:col-span-2 col-span-3">
-			                       <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" 
+			                       <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
 			                       		id="labelCliente" 
 			                       		th:field="*{labelCliente}" 
 			                       		th:errorClass="border">
+									<div id="labelClienteError" class="text-red-600 text-[12px] text-center w-full"></div>	
 			                       <div th:if="${#fields.hasErrors('labelCliente')}" 
 			                       		class="text-red-600 text-[12px] text-center w-full">
 			                         <ul>
@@ -340,7 +341,8 @@
 			                       <label for="tipologia">Tipologia</label>
 			                     </div>
 			                     <div class="col md:col-span-2 col-span-3">
-			                       <select onchange="tipologiaSelect(value)" class="select border-red-600 w-full h-8 ps-4 rounded-lg" id="tipologia" th:field="*{tipologia}" name="tipologia" th:errorClass="border">
+			                       <select onchange="tipologiaSelect(value)" class="select border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+								   		id="tipologia" th:field="*{tipologia}" name="tipologia" th:errorClass="border">
 			                         <option value="privato" class="bg-white text-[#0057a5]">Privato</option>
 			                         <option value="azienda" class="bg-white text-[#0057a5]">Azienda</option>
 			                       </select>
@@ -365,7 +367,7 @@
 										</div>										
 									</div>
 									<div>
-				                       <input type="file" onchange="previewUploadFile(event)" class="border-red-600 w-full rounded-lg bg-white block h-8 file:h-full file:rounded-s-md file:bg-[#0057A5]  file:text-white" id="urlLogo" name="file">
+				                       <input type="file" onchange="previewUploadFile(event)" class="border-red-600 w-full rounded-lg block h-8 file:h-full file:rounded-s-md file:bg-[#0057A5]  file:text-white shadow-md shadow-blue-500/50 bg-gray-100" id="urlLogo" name="file">
 									   <div th:text="${errorFormatImageMessage}" class="text-red-600 text-[12px] text-center w-full"></div>
 									   <div id="errorMaxFileSize" class="text-red-600 text-[12px] text-center w-full"></div>	
 									</div>
@@ -393,19 +395,20 @@
 			                             <label for="ragioneSociale">Ragione sociale*</label>
 			                           </div>	
 			                           <div class="col md:col-span-2 col-span-3">
-			                             <input type="text" class="w-full h-8 ps-4 rounded-lg" id="ragioneSociale" 
-			                             		th:field="*{ragioneSociale}"
-			                             		>
+			                             <input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="ragioneSociale" 
+			                             		th:field="*{ragioneSociale}">
+											<div id="ragioneSocialeError" class="text-red-600 text-[12px] text-center w-full"></div>	
 			                           </div>  
 			                         </div>	
 			   
 			                         <div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">	
 			                           <div class="col">
-			                             <label for="ragioneSociale">Partita Iva*</label>
+			                             <label for="PartitaIva">Partita Iva*</label>
 			                           </div>	
 			                           <div class="col md:col-span-2 col-span-3">
-			                             <input type="text" class="w-full h-8 ps-4 rounded-lg" 
+			                             <input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
 			                             		id="PartitaIva" th:field="*{partitaIva}">
+											<div id="partitaIvaError" class="text-red-600 text-[12px] text-center w-full"></div>	
 			                           </div>	  
 			                           </div>	
 			                       </div>
@@ -415,8 +418,9 @@
 			                             <label for="nome">Nome*</label>
 			                           </div>	
 			                           <div class="col md:col-span-2 col-span-3">
-			                             <input type="text" class="w-full h-8 ps-4 rounded-lg" 
+			                             <input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
 			                             		id="nome" th:field="*{name}">
+												<div id="nomeError" class="text-red-600 text-[12px] text-center w-full"></div>	
 			                           </div>	  
 			                           </div>	
 			                           
@@ -425,7 +429,9 @@
 			                               <label for="cognome">Cognome*</label>
 			                             </div>	
 			                             <div class="col md:col-span-2 col-span-3">
-			                               <input type="text" class="w-full h-8 ps-4 rounded-lg" id="cognome" th:field="*{surname}">
+			                               <input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+										   		id="cognome" th:field="*{surname}">
+												<div id="cognomeError" class="text-red-600 text-[12px] text-center w-full"></div>	
 			                             </div>	  
 			                           </div>	
 			                       </div>
@@ -435,7 +441,8 @@
 			                             <label for="codiceFiscale">Codice Fiscale</label>
 			                           </div>	
 			                           <div class="col md:col-span-2 col-span-3">
-			                             <input type="text" class="w-full h-8 ps-4 rounded-lg" id="codiceFiscale" th:field="*{codiceFiscale}">
+			                             <input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+										 	id="codiceFiscale" th:field="*{codiceFiscale}">
 			                           </div>	  
 			                         </div>	
 
@@ -444,7 +451,8 @@
 			                               <label for="pec">Indirizzo Pec</label>
 			                             </div>	
 			                             <div class="col md:col-span-2 col-span-3">
-			                               <input type="text" class="w-full h-8 ps-4 rounded-lg" id="pec" th:field="*{pec}">
+			                               <input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+										   		id="pec" th:field="*{pec}">
 			                             </div>	  
 			                             </div>	
 			                       
@@ -453,7 +461,8 @@
 			                             <label for="indirizzo">Indirizzo</label>
 			                           </div>	  
 			                           <div class="col md:col-span-2 col-span-3">
-			                             <input type="text" class="w-full h-8 ps-4 rounded-lg" id="indirizzo" th:field="*{indirizzo}">
+			                             <input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+										 		id="indirizzo" th:field="*{indirizzo}">
 			                           </div>
 			                          </div>
 
@@ -462,7 +471,8 @@
 			                             <label for="civico">Civico</label>
 			                           </div>	  
 			                           <div class="col md:col-span-2 col-span-3">
-			                             <input type="text" class="w-full h-8 ps-4 rounded-lg" id="civico" th:field="*{civico}">
+			                             <input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+										 		id="civico" th:field="*{civico}">
 			                           </div>
 			                          </div>
 			          
@@ -471,7 +481,8 @@
 			                             <label for="city">Città</label>
 			                           </div>
 			                           <div class="col md:col-span-2 col-span-3">
-			                             <input type="text" class="w-full h-8 ps-4 rounded-lg" id="city" th:field="*{city}">
+			                             <input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+										 		id="city" th:field="*{city}">
 			                              </div>
 			                           </div>			  
 
@@ -480,7 +491,8 @@
 			                             <label for="cap">CAP</label>
 			                           </div>
 			                           <div class="col md:col-span-2 col-span-3">
-			                             <input type="text" class="w-full h-8 ps-4 rounded-lg" id="cap" th:field="*{cap}">
+			                             <input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+										 		id="cap" th:field="*{cap}">
 			                           </div>			  
 			                          </div>
 
@@ -489,7 +501,8 @@
 			                             <label for="nazionalita">Nazione</label>
 			                           </div>
 			                           <div class="col md:col-span-2 col-span-3">
-			                             <select class="w-full h-8 ps-4 rounded-lg" id="nazionalita" th:field="*{nazionalita}">
+			                             <select class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+										 		id="nazionalita" th:field="*{nazionalita}">
 			                               <option value="">Seleziona nazionalità</option>
 										   <option value="AT">Austria</option>
 			                               <option value="BE">Belgium</option>
@@ -544,7 +557,8 @@
 			                         <label for="nomeContatto">Nome</label>
 			                       </div>	
 			                       <div class="col md:col-span-2 col-span-3">
-			                         <input type="text" class="w-full h-8 ps-4 rounded-lg" id="nomeContatto" th:field="*{nameContatto}">
+			                         <input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+									 		id="nomeContatto" th:field="*{nameContatto}">
 			                           </div>
 			                       </div>	  
 			                       
@@ -553,7 +567,8 @@
 			                           <label for="cognomeContatto">Cognome</label>
 			                         </div>	
 			                         <div class="col md:col-span-2 col-span-3">
-			                           <input type="text" class="w-full h-8 ps-4 rounded-lg" id="cognomeContatto" th:field="*{surnameContatto}">
+			                           <input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+									   		id="cognomeContatto" th:field="*{surnameContatto}">
 			                         </div>	  
 			                         </div>	
 								</div>
@@ -564,7 +579,9 @@
 			                             <label for="email">Email<span> *</span></label>
 			                           </div>
 			                           <div class="col md:col-span-2 col-span-3">
-			                             <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="email" th:field="*{email}" th:errorClass="border">
+			                             <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+										 		id="email" th:field="*{email}" th:errorClass="border">
+												<div id="emailError" class="text-red-600 text-[12px] text-center w-full"></div>	
 			                             <div th:if="${#fields.hasErrors('email')}" class="text-red-600 text-[12px] text-center w-full">
 			                               <ul>
 			                                 <li th:each="err : ${#fields.errors('email')}" th:text="${err}"></li>
@@ -578,7 +595,9 @@
 			                             <label for="telefono">Telefono<span> *</span></label>
 			                           </div>
 			                           <div class="col md:col-span-2 col-span-3">
-			                             <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="telefono" th:field="*{telefono}" th:errorClass="border">
+			                             <input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+										 		id="telefono" th:field="*{telefono}" th:errorClass="border">
+										<div id="telefonoError" class="text-red-600 text-[12px] text-center w-full"></div>	
 			                             <div th:if="${#fields.hasErrors('telefono')}" class="text-red-600 text-[12px] text-center w-full">
 			                               <ul>
 			                                 <li th:each="err : ${#fields.errors('telefono')}" th:text="${err}"></li>
@@ -592,13 +611,14 @@
 			                             <label for="sito">Sito web</label>
 			                           </div>
 			                           <div class="col md:col-span-2 col-span-3">
-			                             <input type="text" class="w-full h-8 ps-4 rounded-lg" id="sito" th:field="*{sito}">                 
+			                             <input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+										 		id="sito" th:field="*{sito}">                 
 			                           </div>
 			                          </div>	
 			                     </div>
 			              </div>
-			                 <div class="text-center mt-3">
-			                   <button type="submit" class="border-2 border-[#0057A5] bg-[#ffe541] rounded-[35px] px-3 py-1 shadow-slate-400 shadow-md"> Aggiungi </button>		  					
+			                 <div class="text-center mt-3 p-3">
+			                   <button type="submit" class="shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"> Aggiungi </button>		  					
 			                 </div> 
 							 <div class="text-[12px]"><span> *</span>Campi obbligatori</div>            
 			                 </form>	
