@@ -78,8 +78,14 @@ public class ContatoreService {
 	return contatoreIsRun;
     }
 
-    
-    
+  // converte i secondi in stringa leggibile (orologio)  
+// public String convertWorkTime(Long seconds) {
+//		Long hours = seconds / 3600;
+//		Long minutes = (seconds % 3600) / 60;
+//		Long secondi = seconds % 60;
+//		String finalTime = String.format("%02d:%02d:%02d", hours, minutes, secondi);
+//	return finalTime;
+// }   
     
 // function time difference start e stop
     public Long findTime(LocalDateTime start_date, LocalDateTime end_date) {

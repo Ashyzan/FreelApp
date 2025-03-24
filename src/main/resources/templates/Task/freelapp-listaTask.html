@@ -317,9 +317,10 @@
 								<div
 									class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
 									<div class="md:flex">
-										<div class="md:shrink-0">
-											<img class="aspect-square object-cover h-40 w-full md:w-40"
+										<div class="md:shrink-0 content-center">
+											<img class="mx-[40px] aspect-square object-cover h-20 w-full md:w-20 rounded-[200px]"
 												th:src="@{${task.progetto.cliente.LogoPath}}" alt="logo">
+												
 										</div>
 
 										<div class="p-3 w-full">
@@ -343,9 +344,9 @@
 													id="semaforo-inattivo" class="size-5 inline float-right"
 													src="/img/sources/icons/contatore-inattivo.svg"
 													alt="contatore inattivo">
-
-
+												
 											</div>
+											<p  th:text="${timeInHHMMSS}" class="mx-4 inline float-right text-[#0057A5]"></p>
 											<div th:text="${task.progetto.getName()}"
 												class="line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
 												cliente</div>
@@ -381,13 +382,14 @@
 																<form th:action="@{|/contatore/cambio/${task.id}|}"
 																		th:object="${contatore}" method="post">
 																<input type="hidden" name="endPoint" th:value="${endPoint}">
+															
 																<button type="submit" class="t-tooltip size-10 text-[#0057A5]">
 																	<img src="/img/sources/icons/contatore-blue.svg">
-															<div
-															class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-50px] mt-[5px] text-nowrap ">
-															Seleziona Contatore</div>
 																</button>
 																</form>
+																<div
+																				class="text-[#0057A5] t-box  border border-[#0057A5] bg-gray-100 rounded-lg relative hidden p-2 ms-[-60px] mt-[-100px] text-nowrap ">
+																								Seleziona Contatore</div>
 															</div>
 														</li>
 

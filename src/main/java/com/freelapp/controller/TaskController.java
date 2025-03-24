@@ -46,7 +46,7 @@ public class TaskController {
 
     @GetMapping("/Task")
     public String iMieiTask(Model model) {
-
+    	
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
@@ -72,6 +72,13 @@ public class TaskController {
 			areTasksOnDb = true;
 		}
 		model.addAttribute("areTasksOnDb", areTasksOnDb);
+		
+		List<Task> listaTask = repositTask.findAll();
+    	//foreach
+        for (Task task : listaTask) {
+        	String timeInHHMMSS = taskService.Timer(task);
+        	model.addAttribute("timeInHHMMSS", timeInHHMMSS);
+        }
 
 	return getOnePage(1, model);
     }
@@ -141,8 +148,8 @@ public class TaskController {
 
     @GetMapping("/task-search")
     public String listaTaskSearch(@Param("input") String input, Model model) {
-    	
-		//passo al model i contatore e task in uso (gli static)
+  
+    	//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
 		
