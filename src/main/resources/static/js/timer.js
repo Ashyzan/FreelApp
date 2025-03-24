@@ -35,7 +35,7 @@ let iterazioni = 0;
 				hours++;
 			}
 		}
-		
+		//verifica ogni secondo se il timer ha raggiuno il massimo consentito
 		timeExceed(iterazioni);
 
 	}
@@ -84,7 +84,9 @@ let iterazioni = 0;
 			}
 		
 	}
-	
+
+//funzione che se il finaltime ha raggiunto il massimo assegna al form precompilato sul contatoreTop 
+//un action e lo manda al backend per la validazione e la generazione del template di errore
 function timeExceed(iterazioni){
 	
 			if((finalTimeSec + iterazioni) >= 31557600){
