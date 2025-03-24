@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!--
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--
 		<link rel="stylesheet" th:href="@{/main.css}">
     -->
-	<link rel="stylesheet" href="/animate.css">
-	<script src="https://cdn.tailwindcss.com"></script>
-	<script>
+<link rel="stylesheet" href="/animate.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
 		tailwind.config = {
 			theme: {
 				extend: {
@@ -23,7 +23,7 @@
 			}
 		}
 	</script>
-	<style type="text/tailwindcss">
+<style type="text/tailwindcss">
 		@layer utilities {
 	          .content-auto {
 	            content-visibility: auto;
@@ -35,10 +35,11 @@
 	        }
 	      </style>
 
-	<title id="timerTitolo">FreelApp</title>
+<title id="timerTitolo">FreelApp</title>
 </head>
 
-<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart()">
+<body class="font-sans" style="width: 100vw; height: 100vh;"
+	onload="timerstart()">
 	<header>
 		<nav id="navbar"
 			class="flex justify-around items-center w-full h-fit md:px-1 md:py-0 p-2 bg-[#0057A5] font-bold  text-sm text-white">
@@ -82,9 +83,9 @@
 						</span> <span class="pt-1">ESCI</span>
 					</a>
 					</li>
-<!-- 					<li class=" max-lg:hidden" id="dettaglio-contatore-top"> -->
+					<!-- 					<li class=" max-lg:hidden" id="dettaglio-contatore-top"> -->
 
-<!-- 					</li> -->
+					<!-- 					</li> -->
 					<li class="md:mx-4 py-5 md:py-0">
 						<button class=" hover:text-gray-400 cursor-pointer md:hidden"
 							onclick="onToggleOptionsMobile(this)">
@@ -116,89 +117,87 @@
 					</li>
 				</ul>
 			</div>
-			
-		<!-- CONTATORE --><div id="dettaglio-contatore-top"
-							class="max-lg:hidden h-fit border-4 border-[#FFE541] bg-white rounded-[30px] mt-2 mb-2 p-2 py-1">
-							<div class="flex items-center text-[#0057A5] font-bold">
-								<div class="col-auto w-8 h-8 mx-2">
-									<img src="/img/sources/icons/contatore-blue.svg"
-										alt="contatore">
-								</div>
-								<div th:if="${taskInUso == null}"
-									class="flex flex-col items-center w-[100px]">
-									<div th:unless="${contatoreIsTrue}" class=" text-[10px] p-0">...</div>
-									<div th:if="${contatoreIsTrue}"
-										th:text="${taskInUso.getName()}" class=" text-[10px] p-0"></div>
-									<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
-								</div>
-								<a th:unless="${taskInUso == null}"
-									th:href="@{|/Task/${taskInUso.id}|}"
-									class="t-tooltip flex flex-col items-center w-[100px]">
-									<div th:unless="${contatoreIsTrue}" class=" text-[10px] p-0">...</div>
-									<div th:if="${contatoreIsTrue}"
-										th:text="${taskInUso.getName()}"
-										class=" text-[10px] p-0 max-w-[90px] truncate"></div>
-									<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
-									<div
-										class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-40px] mt-[40px]">
-										Dettaglio task</div>
-								</a>
-								<div class="col-auto flex items-center px-2">
-									<div th:if="${taskInUso == null}" class="w-8 h-8 ">
-										<img class="h-[29px] w-[29px]"
-											src="/img/sources/icons/stop-blue.svg" alt="stop">
-									</div>
-									<div th:unless="${taskInUso == null}" class="w-8 h-8">
-										<button id="stopButtonTop" type="button"
-											class="hover:opacity-75">
-											<img class="h-[29px] w-[29px]"
-												src="/img/sources/icons/stop-blue.svg" alt="stop">
-										</button>
-									</div>
-									<div th:if="${taskInUso == null}" class="w-8 h-8">
+
+			<!-- CONTATORE -->
+			<div id="dettaglio-contatore-top"
+				class="max-lg:hidden h-fit border-4 border-[#FFE541] bg-white rounded-[30px] mt-2 mb-2 p-2 py-1">
+				<div class="flex items-center text-[#0057A5] font-bold">
+					<div class="col-auto w-8 h-8 mx-2">
+						<img src="/img/sources/icons/contatore-blue.svg" alt="contatore">
+					</div>
+					<div th:if="${taskInUso == null}"
+						class="flex flex-col items-center w-[100px]">
+						<div th:unless="${contatoreIsTrue}" class=" text-[10px] p-0">...</div>
+						<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
+							class=" text-[10px] p-0"></div>
+						<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
+					</div>
+					<a th:unless="${taskInUso == null}"
+						th:href="@{|/Task/${taskInUso.id}|}"
+						class="t-tooltip flex flex-col items-center w-[100px]">
+						<div th:unless="${contatoreIsTrue}" class=" text-[10px] p-0">...</div>
+						<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
+							class=" text-[10px] p-0 max-w-[90px] truncate"></div>
+						<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
+						<div
+							class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-40px] mt-[40px]">
+							Dettaglio task</div>
+					</a>
+					<div class="col-auto flex items-center px-2">
+						<div th:if="${taskInUso == null}" class="w-8 h-8 ">
+							<img class="h-[29px] w-[29px]"
+								src="/img/sources/icons/stop-blue.svg" alt="stop">
+						</div>
+						<div th:unless="${taskInUso == null}" class="w-8 h-8">
+							<button id="stopButtonTop" type="button" class="hover:opacity-75">
+								<img class="h-[29px] w-[29px]"
+									src="/img/sources/icons/stop-blue.svg" alt="stop">
+							</button>
+						</div>
+						<div th:if="${taskInUso == null}" class="w-8 h-8">
+							<img class="h-[29px] w-[29px]"
+								src="/img/sources/icons/pause-blue.svg" alt="pause">
+						</div>
+						<div th:unless="${taskInUso == null}" class="w-8 h-8">
+							<div th:if="${!contatoreIsRun}">
+								<img class="h-[29px] w-[29px]"
+									src="/img/sources/icons/pause-blue.svg" alt="pause">
+							</div>
+							<div th:if="${contatoreIsRun}">
+								<form th:action="@{|/Contatore/pause/${taskInUso.id}|}"
+									th:object="${contatore}" method="post">
+									<input type="hidden" name="endPoint" th:value="${endPoint}">
+									<button type="submit" class="hover:opacity-75 ">
 										<img class="h-[29px] w-[29px]"
 											src="/img/sources/icons/pause-blue.svg" alt="pause">
-									</div>
-									<div th:unless="${taskInUso == null}" class="w-8 h-8">
-										<div th:if="${!contatoreIsRun}">
-											<img class="h-[29px] w-[29px]"
-												src="/img/sources/icons/pause-blue.svg" alt="pause">
-										</div>
-										<div th:if="${contatoreIsRun}">
-											<form th:action="@{|/Contatore/pause/${taskInUso.id}|}"
-												th:object="${contatore}" method="post">
-												<input type="hidden" name="endPoint" th:value="${endPoint}">
-												<button type="submit" class="hover:opacity-75 ">
-													<img class="h-[29px] w-[29px]"
-														src="/img/sources/icons/pause-blue.svg" alt="pause">
-												</button>
-											</form>
-										</div>
-									</div>
-									<div th:if="${taskInUso == null}" class="w-8 h-8">
-										<img class="h-[29px] w-[29px]"
-											src="/img/sources/icons/play-blue.svg" alt="start">
-									</div>
-									<div th:unless="${taskInUso == null}" class="w-8 h-8">
-										<div th:if="${contatoreIsRun}">
-											<img class="h-[29px] w-[29px]"
-												src="/img/sources/icons/play-blue.svg" alt="start">
-										</div>
-										<div th:unless="${contatoreIsRun}">
-											<form th:action="@{|/start/${taskInUso.id}|}"
-												th:object="${contatore}" method="post">
-												<input type="hidden" name="endPoint" th:value="${endPoint}">
-												<button type="submit" class="hover:opacity-75">
-													<img class="h-[29px] w-[29px]"
-														src="/img/sources/icons/play-blue.svg" alt="start">
-												</button>
-											</form>
-										</div>
-									</div>
-								</div>
+									</button>
+								</form>
 							</div>
 						</div>
-			
+						<div th:if="${taskInUso == null}" class="w-8 h-8">
+							<img class="h-[29px] w-[29px]"
+								src="/img/sources/icons/play-blue.svg" alt="start">
+						</div>
+						<div th:unless="${taskInUso == null}" class="w-8 h-8">
+							<div th:if="${contatoreIsRun}">
+								<img class="h-[29px] w-[29px]"
+									src="/img/sources/icons/play-blue.svg" alt="start">
+							</div>
+							<div th:unless="${contatoreIsRun}">
+								<form th:action="@{|/start/${taskInUso.id}|}"
+									th:object="${contatore}" method="post">
+									<input type="hidden" name="endPoint" th:value="${endPoint}">
+									<button type="submit" class="hover:opacity-75">
+										<img class="h-[29px] w-[29px]"
+											src="/img/sources/icons/play-blue.svg" alt="start">
+									</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div>
 				<button class="px-1 rounded cursor-pointer md:hidden"
 					onclick="onToggleMenu(this)" name="menu">
@@ -239,7 +238,8 @@
 		</nav>
 	</header>
 	<main class="bg-[#f2f1f1]">
-		<div class="flex flex-col-reverse md:flex-row w-screen max-md-" style="height: calc(100vh - 10vh);">
+		<div class="flex flex-col-reverse md:flex-row w-screen max-md-"
+			style="height: calc(100vh - 10vh);">
 			<div id="side-bar"
 				class="fixed md:relative md:basis-16 bottom-0 flex md:flex-col md:justify-between justify-around items-center md:p-2 p-1 h-fit md:h-full w-full text-[#FFE541] font-bold border-t-2 bg-[#0057A5]">
 				<div class="flex w-full justify-around">
@@ -247,263 +247,267 @@
 						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[65px] sm:h-[65px] w-[45px] h-[45px]">
-								<a th:href="@{/dashboard}">
-									<img class="h-[30px] w-[30px]" src="/img/sources/icons/dashboard.svg" alt="dashboard">
+								<a th:href="@{/dashboard}"> <img class="h-[30px] w-[30px]"
+									src="/img/sources/icons/dashboard.svg" alt="dashboard">
 								</a>
-								<div class="pt-1 text-[8px]">
-									DASHBOARD</div>
+								<div class="pt-1 text-[8px]">DASHBOARD</div>
 							</div>
 						</li>
 						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
-								<a th:href="@{/Task/newTask}">
-									<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-task.svg" alt="nuovo task">
+								<a th:href="@{/Task/newTask}"> <img
+									class="h-[30px] w-[30px]" src="/img/sources/icons/add-task.svg"
+									alt="nuovo task">
 								</a>
-								<div class="pt-1 text-[8px]">
-									TASK</div>
+								<div class="pt-1 text-[8px]">TASK</div>
 							</div>
 						</li>
 						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
 								<!-- th:href="@{/Progetti/insert/1} diventera poi th:href="@{'/Progetti/insert/{id}'(id=${userLogged.getId()})'} quando sara implementata autentizazione-->
-								<a th:href="@{/Progetti/insert/1}">
-									<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-project.svg" alt="nuovo progetto">
+								<a th:href="@{/Progetti/insert/1}"> <img
+									class="h-[30px] w-[30px]"
+									src="/img/sources/icons/add-project.svg" alt="nuovo progetto">
 								</a>
-								<div class="pt-1 text-[8px]">
-									PROGETTO</div>
+								<div class="pt-1 text-[8px]">PROGETTO</div>
 							</div>
 						</li>
 						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
-								<a th:href="@{/Clienti/insert}">
-									<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-client.svg" alt="nuovo cliente">
+								<a th:href="@{/Clienti/insert}"> <img
+									class="h-[30px] w-[30px]"
+									src="/img/sources/icons/add-client.svg" alt="nuovo cliente">
 								</a>
-								<div class="pt-1 text-[8px]">
-									CLIENTE</div>
+								<div class="pt-1 text-[8px]">CLIENTE</div>
 							</div>
 						</li>
 						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
-								<a href="#">
-									<img class="h-[30px] w-[30px]" src="/img/sources/icons/stats.svg" alt="statistiche">
+								<a href="#"> <img class="h-[30px] w-[30px]"
+									src="/img/sources/icons/stats.svg" alt="statistiche">
 								</a>
-								<div class="pt-1 text-[8px]">
-									STATISTICHE</div>
+								<div class="pt-1 text-[8px]">STATISTICHE</div>
 							</div>
 						</li>
 					</ul>
 				</div>
 				<a class="col-auto py-2 max-md:hidden cursor-pointer" href="#">
-					<img class="h-[35px] w-[35px]" src="/img/sources/icons/exit.svg" alt="logout">
+					<img class="h-[35px] w-[35px]" src="/img/sources/icons/exit.svg"
+					alt="logout">
 				</a>
 			</div>
-			<div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center overflow-y-auto">
-				<div th:if="${areTasksOnDb == true}" class="flex flex-col-reverse md:flex-col w-11/12 2xl:w-4/5">
+			<div id="main-section"
+				class="flex w-full flex-wrap h-full justify-center items-center overflow-y-auto">
+				<div th:if="${areTasksOnDb == true}"
+					class="flex flex-col-reverse md:flex-col w-11/12 2xl:w-4/5">
 					<section>
-						<div class="h-12 text-center text-[#0057A5] font-bold items-center m-3">
+						<div
+							class="h-12 text-center text-[#0057A5] font-bold items-center m-3">
 							<h1>ELENCO TASK</h1>
 						</div>
-						
-<!--						ELENCO TASK CON CARD-->
-<div th:each="task : ${list}" id="" class="">
-							<div  class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-between w-full">
-							<div 
-								class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
-								<div class="md:flex">
-									<div class="md:shrink-0">
-										<img class="aspect-square h-48 w-full object-cover md:w-48"
-											th:src="@{${task.progetto.cliente.LogoPath}}" alt="logo">
-									</div>
 
-									<div class="p-4 w-full">
-										<div>
-											<img th:if="${task.getStato() == 'in corso'}" id="semaforo-start" class="h-5"
-																							src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start">
-																		
-																						<img th:if="${task.getStato() == 'in pausa'}" id="semaforo-pausa" class="size-5 inline float-right"
-																							src="/img/sources/icons/contatore-on-pause.svg" alt="contatore in pausa">
-																		
-																						<img th:if="${task.getStato() == 'chiuso'}" id="semaforo-stop" class="size-5 inline float-right"
-																							src="/img/sources/icons/contatore-on-stop.svg" alt="contatore in stop">
-																		
-																						<img th:if="${task.getStato() == 'inattivo'}" id="semaforo-inattivo" class="size-5 inline float-right"
-																							src="/img/sources/icons/contatore-inattivo.svg" alt="contatore inattivo">
-
-										</div>
-										<div th:text="${task.progetto.getName()}"
-											class="line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
-											cliente</div>
-
-										<a th:href="@{|/Task/${task.id}|}"
-											th:text="${task.getName()}"
-											class="line-clamp-1 block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome
-											progetto </a>
-										<p th:text="${task.descrizione}"
-											class="mt-2 text-slate-500 line-clamp-2">descrizione
-											progetto</p>
-
-										<div>
-
-											<span>
-
-												<ul>
-
-													<li class="flex flex-col md:flex-row float-left"><a
-														th:href="@{|/Task/${task.id}|}"
-														class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
-															vai al dettaglio </a></li>
-												
-												<li class="flex flex-col md:flex-row px-2 mt-6 float-left">
-<!--														<a-->
-<!--														th:href="@{/Task/insert/progetto-{id}(id=${progettoPerData.getId()})}">-->
-														
-<!--															<div class=" t-tooltip col-auto w-8 h-8 ms-2">-->
-															
-<!--															<img th:src="@{/img/sources/icons/add-task-blue.svg}"-->
-<!--																		alt="aggiungi-task" class=" size-8 ml-3 -mt-1 inline">-->
-<!--																<div class=" relative hidden -left-4 bottom-20 t-box w-32 text-center text-nowrap border border-[#0057A5] text-[#0057A5] bg-gray-100 rounded-lg p-1">-->
-<!--																	Aggiungi Task-->
-<!--																</div>-->
-<!--															</div>-->
-<!--															</a>	-->
-													</li>
-
-													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
-														<a
-														th:href="@{|/Task/edit/${task.id}|}"><img
-															th:src="@{/img/sources/icons/modify-grey.svg}"
-															alt="modifica-task" class="size-5 inline"></a>
-													</li>
-													
-													<li>
-														<div th:if="${task.id == taskInUsoId or task.getStato() == 'chiuso'}" class="w-5 h-5">
-																										<img src="/img/sources/icons/contatore-blue-inattivo.svg">
-																									</div>
-																									<div th:unless="${task.id == taskInUsoId or task.getStato() == 'chiuso'}">
-																										<form th:action="@{|/contatore/cambio/${task.id}|}" th:object="${contatore}" method="post">
-																											<input type="hidden" name="endPoint" th:value="${endPoint}">
-<!--																											<button type="submit" class="t-tooltip w-5 h-5">-->
-<!--																												<img src="/img/sources/icons/contatore-blue.svg">-->
-<!--																												<div-->
-<!--																													class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-50px] mt-[5px] text-nowrap ">-->
-<!--																													Seleziona Contatore-->
-<!--																												</div>-->
-<!--																											</button>-->
-																										</form>
-																									</div>	
-														
-													</li>
-													
-													<li >
-														<a th:href="@{/Progetti/{id}(id=${task.progetto.getId()})}"
-														th:text="Progetto"
-														class="hover:underline flex flex-col md:flex-row px-2 mt-7 float-right text-[#0057A5]">
-														</a>
-													</li>
-                 
-												</ul>
-											</span>
+						<!--						ELENCO TASK CON CARD-->
+						<div th:each="task : ${list}" id="" class="">
+							<div
+								class="grid lg:grid-cols-1 sm:grid-cols-1 gap-4 p-2 flex justify-between w-full">
+								<div
+									class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
+									<div class="md:flex">
+										<div class="md:shrink-0">
+											<img class="aspect-square object-cover h-40 w-full md:w-40"
+												th:src="@{${task.progetto.cliente.LogoPath}}" alt="logo">
 										</div>
 
+										<div class="p-3 w-full">
+											<div>
+												<img th:if="${task.getStato() == 'in corso'}"
+													id="semaforo-start" class="size-5 inline float-right"
+													src="/img/sources/icons/contatore-on-start.svg"
+													alt="contatore in start"> 
+												<img
+													th:if="${task.getStato() == 'in pausa'}"
+													id="semaforo-pausa" class="size-5 inline float-right"
+													src="/img/sources/icons/contatore-on-pause.svg"
+													alt="contatore in pausa"> 
+												<img
+													th:if="${task.getStato() == 'chiuso'}" id="semaforo-stop"
+													class="size-5 inline float-right"
+													src="/img/sources/icons/contatore-on-stop.svg"
+													alt="contatore in stop"> 
+												<img
+													th:if="${task.getStato() == 'inattivo'}"
+													id="semaforo-inattivo" class="size-5 inline float-right"
+													src="/img/sources/icons/contatore-inattivo.svg"
+													alt="contatore inattivo">
 
 
+											</div>
+											<div th:text="${task.progetto.getName()}"
+												class="line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
+												cliente</div>
+
+											<h3 class="line-clamp-1"><a th:href="@{|/Task/${task.id}|}"
+												th:text="${task.getName()}"
+												class="block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome
+												progetto </a></h3>
+											<p th:text="${task.descrizione}"
+												class="text-slate-500 line-clamp-1">descrizione
+												progetto</p>
+
+											<div>
+
+												<span>
+
+													<ul>
+
+														<li class="flex flex-col md:flex-row float-left"><a
+															th:href="@{|/Task/${task.id}|}"
+															class="inline text-center mt-4 mb-2 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
+																vai al dettaglio </a></li>
+
+														<li class="flex flex-col md:flex-row px-2 mt-4 ml-6 float-left">
+												<!-- 				SELEZIONA IL CONTATORE -->
+															<div
+																th:if="${task.id == taskInUsoId or task.getStato() == 'chiuso'}"
+																class="size-10">
+															<img src="/img/sources/icons/contatore-blue-inattivo.svg">
+															</div>
+															<div class=""
+																th:unless="${task.id == taskInUsoId or task.getStato() == 'chiuso'}">
+																<form th:action="@{|/contatore/cambio/${task.id}|}"
+																		th:object="${contatore}" method="post">
+																<input type="hidden" name="endPoint" th:value="${endPoint}">
+																<button type="submit" class="t-tooltip size-10 text-[#0057A5]">
+																	<img src="/img/sources/icons/contatore-blue.svg">
+															<div
+															class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-50px] mt-[5px] text-nowrap ">
+															Seleziona Contatore</div>
+																</button>
+																</form>
+															</div>
+														</li>
+
+														
+
+														<li
+															class="flex flex-col md:flex-row px-2 mt-6 float-right">
+															<a th:href="@{|/Task/edit/${task.id}|}"><img
+																th:src="@{/img/sources/icons/modify-grey.svg}"
+																alt="modifica-task" class="size-5 inline"></a>
+														</li>
+
+														
+
+														<li><a
+															th:href="@{/Progetti/{id}(id=${task.progetto.getId()})}"
+															th:text="Progetto"
+															class="hover:underline flex flex-col md:flex-row px-2 mt-7 float-right text-[#0057A5]">
+														</a></li>
+
+													</ul>
+												</span>
+											</div>
+
+
+
+										</div>
 									</div>
 								</div>
-							 </div>
-							 </div>
 							</div>
-<!--						ELENCO TASK CON TABELLA-->
+						</div>
+						<!--						ELENCO TASK CON TABELLA-->
 						<table class="text-[#0057A5] w-full m-auto">
 							<thead
 								class="border border-[#0057A5] md:h-12 h-8 bg-[#0057A5] text-white max-sm:text-[12px]">
 								<tr>
-									<th class="md:px-4 px-2">
-										Nome </th>
-									<th class="md:px-4 px-2  max-lg:hidden">
-										Data Inizio
+									<th class="md:px-4 px-2">Nome</th>
+									<th class="md:px-4 px-2  max-lg:hidden">Data Inizio</th>
+									<th class="md:px-4 px-2  max-lg:hidden">Chiusura Stimata</th>
+									<th class="md:px-4 px-2  max-lg:hidden">Chiusura Effettiva
 									</th>
-									<th class="md:px-4 px-2  max-lg:hidden">
-										Chiusura
-										Stimata </th>
-									<th class="md:px-4 px-2  max-lg:hidden">
-										Chiusura
-										Effettiva </th>
 									<th class="md:px-4 px-2" style="text-align: center;">
-										Progetto Rif.
-									</th>
-									<th class="md:px-4 px-2">
-										Stato </th>
+										Progetto Rif.</th>
+									<th class="md:px-4 px-2">Stato</th>
 									<th></th>
 								</tr>
 								</th>
 							<tbody>
-							
-							
-								<tr th:each="task : ${list}" class="border-b-2 h-6 text-center max-sm:text-[10px]">
-									<td th:text="${task.getName()}">
-									</td>
-							
-									<td th:text="${#temporals.format(task.getDataInizio(), 'dd MMM yyyy')}" class="p-2 max-lg:hidden">
-									</td>
-									<td th:text=" ${#temporals.format(task.getDataChiusuraStimata(), 'dd MMM yyyy')}" class="p-2 max-lg:hidden">
-									</td>
-									<td th:text=" ${#temporals.format(task.getDataChiusuraDefinitiva(), 'dd MMM yyyy')}" class="p-2 max-lg:hidden">
-									</td>
-									<td th:text="${task.getProgetto.name}">
-									</td>
+
+
+								<tr th:each="task : ${list}"
+									class="border-b-2 h-6 text-center max-sm:text-[10px]">
+									<td th:text="${task.getName()}"></td>
+
+									<td
+										th:text="${#temporals.format(task.getDataInizio(), 'dd MMM yyyy')}"
+										class="p-2 max-lg:hidden"></td>
+									<td
+										th:text=" ${#temporals.format(task.getDataChiusuraStimata(), 'dd MMM yyyy')}"
+										class="p-2 max-lg:hidden"></td>
+									<td
+										th:text=" ${#temporals.format(task.getDataChiusuraDefinitiva(), 'dd MMM yyyy')}"
+										class="p-2 max-lg:hidden"></td>
+									<td th:text="${task.getProgetto.name}"></td>
 									<td>
 										<div class="flex items-center justify-center gap-1">
-											<img th:if="${task.getStato() == 'in corso'}" id="semaforo-start" class="h-5"
-												src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start">
-							
-											<img th:if="${task.getStato() == 'in pausa'}" id="semaforo-pausa" class="h-5"
-												src="/img/sources/icons/contatore-on-pause.svg" alt="contatore in pausa">
-							
-											<img th:if="${task.getStato() == 'chiuso'}" id="semaforo-stop" class="h-5"
-												src="/img/sources/icons/contatore-on-stop.svg" alt="contatore in stop">
-							
-											<img th:if="${task.getStato() == 'inattivo'}" id="semaforo-inattivo" class="h-5"
-												src="/img/sources/icons/contatore-inattivo.svg" alt="contatore inattivo">
-							
+											<img th:if="${task.getStato() == 'in corso'}"
+												id="semaforo-start" class="h-5"
+												src="/img/sources/icons/contatore-on-start.svg"
+												alt="contatore in start"> <img
+												th:if="${task.getStato() == 'in pausa'}" id="semaforo-pausa"
+												class="h-5" src="/img/sources/icons/contatore-on-pause.svg"
+												alt="contatore in pausa"> <img
+												th:if="${task.getStato() == 'chiuso'}" id="semaforo-stop"
+												class="h-5" src="/img/sources/icons/contatore-on-stop.svg"
+												alt="contatore in stop"> <img
+												th:if="${task.getStato() == 'inattivo'}"
+												id="semaforo-inattivo" class="h-5"
+												src="/img/sources/icons/contatore-inattivo.svg"
+												alt="contatore inattivo">
+
 										</div>
 									</td>
 									<td>
-										<div class="flex justify-center items-center gap-4 md:px-6 px-2">
+										<div
+											class="flex justify-center items-center gap-4 md:px-6 px-2">
 											<a th:href="@{|/Task/${task.id}|}">
 												<div class="t-tooltip w-5 h-5">
-													<img class="h-[100%] w-[100%]" src="/img/sources/icons/board-tabloid-blue.svg"
+													<img class="h-[100%] w-[100%]"
+														src="/img/sources/icons/board-tabloid-blue.svg"
 														alt="dettaglio task">
 													<div
 														class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-														Dettaglio
-													</div>
+														Dettaglio</div>
 												</div>
-											</a>
-											<a th:href="@{|/Task/edit/${task.id}|}">
+											</a> <a th:href="@{|/Task/edit/${task.id}|}">
 												<div class="t-tooltip w-5 h-5">
-													<img class="h-[100%] w-[100%]" src="/img/sources/icons/modify-blue.svg" alt="modifica task">
+													<img class="h-[100%] w-[100%]"
+														src="/img/sources/icons/modify-blue.svg"
+														alt="modifica task">
 													<div
 														class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-														Modifica
-													</div>
+														Modifica</div>
 												</div>
 											</a>
-											<div th:if="${task.id == taskInUsoId or task.getStato() == 'chiuso'}" class="w-5 h-5">
+											<div
+												th:if="${task.id == taskInUsoId or task.getStato() == 'chiuso'}"
+												class="w-5 h-5">
 												<img src="/img/sources/icons/contatore-blue-inattivo.svg">
 											</div>
-											<div th:unless="${task.id == taskInUsoId or task.getStato() == 'chiuso'}">
-												<form th:action="@{|/contatore/cambio/${task.id}|}" th:object="${contatore}" method="post">
+											<div
+												th:unless="${task.id == taskInUsoId or task.getStato() == 'chiuso'}">
+												<form th:action="@{|/contatore/cambio/${task.id}|}"
+													th:object="${contatore}" method="post">
 													<input type="hidden" name="endPoint" th:value="${endPoint}">
 													<button type="submit" class="t-tooltip w-5 h-5">
 														<img src="/img/sources/icons/contatore-blue.svg">
 														<div
 															class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-50px] mt-[5px] text-nowrap ">
-															Seleziona Contatore
-														</div>
+															Seleziona Contatore</div>
 													</button>
 												</form>
 											</div>
@@ -513,9 +517,7 @@
 						</table>
 						<div th:if="${list.isEmpty()}">
 							<div class="text-center text-[#0057A5] p-4">
-								<h1>La ricerca non ha
-									prodotto risultati
-								</h1>
+								<h1>La ricerca non ha prodotto risultati</h1>
 							</div>
 						</div>
 						<div class="py-4 mb-10">
@@ -524,10 +526,11 @@
 									th:text="|Task Totali: ${totalItems} - Pagina ${currentPage} di ${totalPages}|">
 								</div>
 								<div class="col">
-									<span class=" justify-center" th:each="i : ${#numbers.sequence(1, totalPages)}">
-										<a class="p-[3px] text-[#0057A5]"
-											style="border: 1px solid #0057A5; border-radius: 5px;"
-											th:href="@{'/Task/page/'+${i}}" th:text="${i}"></a>
+									<span class=" justify-center"
+										th:each="i : ${#numbers.sequence(1, totalPages)}"> <a
+										class="p-[3px] text-[#0057A5]"
+										style="border: 1px solid #0057A5; border-radius: 5px;"
+										th:href="@{'/Task/page/'+${i}}" th:text="${i}"></a>
 									</span>
 								</div>
 							</div>
@@ -536,16 +539,17 @@
 					<section>
 						<div class="mt-5">
 							<div class="text-center mb-5">
-								<form class="mx-auto w-50" role="search" method="get" th:object="${Task}"
-									th:action="@{/task-search}">
+								<form class="mx-auto w-50" role="search" method="get"
+									th:object="${Task}" th:action="@{/task-search}">
 									<label for="ticket-search" class="text-[#0057A5]">Ricerca
-										Task</label>
-									<input type="text" class="border-2 border-[#0057A5] p-1 my-3 rounded-md"
+										Task</label> <input type="text"
+										class="border-2 border-[#0057A5] p-1 my-3 rounded-md"
 										name="input" placeholder="Ricerca..." aria-label="Search">
 									<button
 										class="border-2 border-[#0057A5] bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
 										type="submit">Search</button>
-									<a class="border-2 border-[#0057A5] bg-[#FFE541] text-[#0057A5] font-bold px-3 py-2 rounded-[35px]"
+									<a
+										class="border-2 border-[#0057A5] bg-[#FFE541] text-[#0057A5] font-bold px-3 py-2 rounded-[35px]"
 										th:href="@{/Task}">Annulla</a>
 								</form>
 							</div>
@@ -553,81 +557,98 @@
 					</section>
 				</div>
 				<div th:if="${areTasksOnDb == false}">
-					<h2 class="text-[#0057A5] font-bold m-auto py-10">NESSUN TASK ANCORA REGISTRATO</h2>
-					<a th:href="@{/Task/newTask}" class="text-center flex justify-center">
+					<h2 class="text-[#0057A5] font-bold m-auto py-10">NESSUN TASK
+						ANCORA REGISTRATO</h2>
+					<a th:href="@{/Task/newTask}"
+						class="text-center flex justify-center">
 						<button
 							class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
-							Aggiungi Task
-						</button>
+							Aggiungi Task</button>
 					</a>
 				</div>
-				<div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden" id="dettaglio-contatore-bottom">
-					<div class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
-						<div class="flex justify-between items-center text-[#0057A5] font-bold">
+				<div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden"
+					id="dettaglio-contatore-bottom">
+					<div
+						class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
+						<div
+							class="flex justify-between items-center text-[#0057A5] font-bold">
 							<div id="icona-contatore" class="col-auto ps-3 w-[15%]">
-								<img class="h-[45px] w-[45px]" src="/img/sources/icons/contatore-blue.svg" alt="contatore">
+								<img class="h-[45px] w-[45px]"
+									src="/img/sources/icons/contatore-blue.svg" alt="contatore">
 							</div>
-							<div th:if="${taskInUso == null}" class="flex flex-col items-center">
-								<div th:unless="${contatoreIsTrue}" class="col-auto text-[14px] p-0">...</div>
+							<div th:if="${taskInUso == null}"
+								class="flex flex-col items-center">
+								<div th:unless="${contatoreIsTrue}"
+									class="col-auto text-[14px] p-0">...</div>
 								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
 									class="col-auto text-[14px] p-0"></div>
 								<div class="col-auto text-[24px] p-0" id="timerDue">00:00:00</div>
 							</div>
-							<a th:unless="${taskInUso == null}" th:href="@{|/Task/${taskInUso.id}|}"
+							<a th:unless="${taskInUso == null}"
+								th:href="@{|/Task/${taskInUso.id}|}"
 								class="t-tooltip flex flex-col items-center relative w-[45%]">
-								<div th:unless="${contatoreIsTrue}" class="col-auto text-[14px] p-0">...</div>
+								<div th:unless="${contatoreIsTrue}"
+									class="col-auto text-[14px] p-0">...</div>
 								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
 									class="col-auto text-[14px] text-left p-0 w-full ml-4 truncate"></div>
 								<div class="col-auto text-[24px] p-0" id="timerDue">00:00:00</div>
 								<div
 									class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-210px] mt-[40px]">
-									Dettaglio task
-								</div>
+									Dettaglio task</div>
 							</a>
 							<div class="col-auto flex items-center w-[40%]">
 								<div th:if="${taskInUso == null}" class="mx-2 flex items-center">
-									<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg" alt="stop">
+									<img class="h-[45px] w-[45px]"
+										src="/img/sources/icons/stop-blue.svg" alt="stop">
 								</div>
-								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
-									<button id="stopButtonBottom" type="button" class="hover:opacity-75">
-										<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg"
-											alt="stop">
+								<div th:unless="${taskInUso == null}"
+									class="mx-2 flex items-center">
+									<button id="stopButtonBottom" type="button"
+										class="hover:opacity-75">
+										<img class="h-[45px] w-[45px]"
+											src="/img/sources/icons/stop-blue.svg" alt="stop">
 									</button>
 								</div>
 								<div th:if="${taskInUso == null}" class="mx-2 flex items-center">
-									<img class="h-[45px] w-[45px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
+									<img class="h-[45px] w-[45px]"
+										src="/img/sources/icons/pause-blue.svg" alt="pause">
 								</div>
-								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
+								<div th:unless="${taskInUso == null}"
+									class="mx-2 flex items-center">
 									<div th:unless="${contatoreIsRun}">
-										<img class="h-[45px] w-[45px]" src="/img/sources/icons/pause-blue.svg"
-											alt="pause">
+										<img class="h-[45px] w-[45px]"
+											src="/img/sources/icons/pause-blue.svg" alt="pause">
 									</div>
 									<div th:if="${contatoreIsRun}">
-										<form th:action="@{|/Contatore/pause/${taskInUso.id}|}" th:object="${contatore}"
-											method="post">
+										<form th:action="@{|/Contatore/pause/${taskInUso.id}|}"
+											th:object="${contatore}" method="post">
 											<input type="hidden" name="endPoint" th:value="${endPoint}">
-											<button type="submit" class="hover:opacity-75 flex items-center">
-												<img class="h-[45px] w-[45px]" src="/img/sources/icons/pause-blue.svg"
-													alt="pause">
+											<button type="submit"
+												class="hover:opacity-75 flex items-center">
+												<img class="h-[45px] w-[45px]"
+													src="/img/sources/icons/pause-blue.svg" alt="pause">
 											</button>
 										</form>
 									</div>
 								</div>
 								<div th:if="${taskInUso == null}" class="mx-2 flex items-center">
-									<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg" alt="start">
+									<img class="h-[45px] w-[45px]"
+										src="/img/sources/icons/play-blue.svg" alt="start">
 								</div>
-								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
+								<div th:unless="${taskInUso == null}"
+									class="mx-2 flex items-center">
 									<div th:if="${contatoreIsRun}">
-										<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg"
-											alt="start">
+										<img class="h-[45px] w-[45px]"
+											src="/img/sources/icons/play-blue.svg" alt="start">
 									</div>
 									<div th:unless="${contatoreIsRun}">
-										<form th:action="@{|/start/${taskInUso.id}|}" th:object="${contatore}"
-											method="post">
+										<form th:action="@{|/start/${taskInUso.id}|}"
+											th:object="${contatore}" method="post">
 											<input type="hidden" name="endPoint" th:value="${endPoint}">
-											<button type="submit" class="hover:opacity-75 flex items-center">
-												<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg"
-													alt="start">
+											<button type="submit"
+												class="hover:opacity-75 flex items-center">
+												<img class="h-[45px] w-[45px]"
+													src="/img/sources/icons/play-blue.svg" alt="start">
 											</button>
 										</form>
 									</div>
@@ -646,21 +667,28 @@
 	<!-- Modale StopButton-->
 	<div id="modalStopButton"
 		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
-		<div class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
+		<div
+			class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
 			<div class=" w-full h-auto">
-				<div id="modalStopCloseButton" class="flex justify-end items-center p-2 cursor-pointer">
-					<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
+				<div id="modalStopCloseButton"
+					class="flex justify-end items-center p-2 cursor-pointer">
+					<img class="h-[30px] w-[30px]"
+						src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
 
 				</div>
 			</div>
-			<div th:unless="${taskInUso == null}" class="w-full h-auto bg-white rounded-b-lg">
-				<form th:action="@{|/Contatore/stop/${taskInUso.id}|}" th:object="${contatore}" method="post">
+			<div th:unless="${taskInUso == null}"
+				class="w-full h-auto bg-white rounded-b-lg">
+				<form th:action="@{|/Contatore/stop/${taskInUso.id}|}"
+					th:object="${contatore}" method="post">
 					<div class="flex flex-col justify-center p-2 text-center ">
 						<div class="p-3 text-[#0057A5]">
-							<p>Stai per terminare definitivamente il task <strong
-									th:text="${taskInUso.getName()}"></strong>
-								relativo al progetto <strong th:text="${taskInUso.progetto.getName()}"></strong>. Vuoi
-								procedere?</p>
+							<p>
+								Stai per terminare definitivamente il task <strong
+									th:text="${taskInUso.getName()}"></strong> relativo al progetto
+								<strong th:text="${taskInUso.progetto.getName()}"></strong>.
+								Vuoi procedere?
+							</p>
 						</div>
 						<div class="p-6">
 							<button type="submit"
