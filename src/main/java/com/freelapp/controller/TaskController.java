@@ -1,10 +1,13 @@
 package com.freelapp.controller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -75,12 +78,8 @@ public class TaskController {
 		}
 		model.addAttribute("areTasksOnDb", areTasksOnDb);
 		
-		List<Task> listaTask = repositTask.findAll();
-    	//foreach
-        for (Task task : listaTask) {
-        	String timeInHHMMSS = taskService.Timer(task);
-        	model.addAttribute("timeInHHMMSS", timeInHHMMSS);
-        }
+		
+    	
 
 	return getOnePage(1, model);
     }
@@ -96,7 +95,46 @@ public class TaskController {
 
 	List<Task> listTask = page.getContent();
 	
-	model.addAttribute("list", listTask);
+	//****************
+	//passa al model la lista di tutti i task esclusi quelli chiusi
+	List<Task> listaTask = repositTask.findAll();		
+	List<Task> timerOk = new ArrayList<Task> ();
+			
+	listaTask.forEach( task -> {
+				
+				
+					if( task.getContatore() == null) {
+						
+					
+							}
+					
+					else if( task.getContatore() != null) {
+						//taskList.add(task);
+						//String timeInHHMMSS = taskService.Timer(task);
+				    	//model.addAttribute("timeInHHMMSS", timeInHHMMSS);
+				    	
+				    	HashMap<Integer,String> timer = new HashMap<Integer,String>();
+				    	  timer.put(task.getId(), taskService.Timer(task));
+				    	   
+				    	 
+				    	  for(Integer key : timer.keySet()) {
+				    			System.out.println("**************************" + task.getId() + "_" + timer.get(key));
+				    			
+				    			//model.addAttribute("timeInHHMMSS", timer.get(key));
+				    	  }
+							}
+					//model.addAttribute("timeInHHMMSS", timer.get);
+				model.addAttribute("list", listTask);
+					} );
+	//****************
+	
+	//foreach
+//    for (Task task : listTask) {
+//    	String timeInHHMMSS = taskService.Timer(task);
+//    	model.addAttribute("timeInHHMMSS", timeInHHMMSS);
+//    	 }
+//	
+//	model.addAttribute("list", listTask);
 
 	model.addAttribute("currentPage", currentPage);
 
