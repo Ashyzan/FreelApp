@@ -1,3 +1,8 @@
+
+
+const formContatoreErroreFinalSecond = document.getElementById('formContatoreErroreFinalsecond');
+let iterazioni = 0;
+
 	let hours = finalTimeSec / 3600;
 	let minutes = (finalTimeSec % 3600) / 60;
 	let seconds = finalTimeSec % 60;
@@ -10,10 +15,11 @@
 	//console.log("finalTimeSec iniziale: " + finalTimeSec)
 	//console.log("ore iniziali: " + hours);
 	//console.log("minuti iniziali: " + minutes);
-	//console.log("secndi iniziali: " + seconds);
+	//console.log("secondi iniziali: " + seconds);
 				
 	function tempochescorre() {
-	
+		iterazioni ++;
+		
 		seconds++;
 		stampacontatore();
 		
@@ -29,8 +35,8 @@
 				hours++;
 			}
 		}
-
 		
+		timeExceed(iterazioni);
 
 	}
 
@@ -78,3 +84,14 @@
 			}
 		
 	}
+	
+function timeExceed(iterazioni){
+	
+			if((finalTimeSec + iterazioni) >= 31557600){
+				
+				formContatoreErroreFinalSecond.action = `/task/timeExceed/${taskInUsoId}`
+				formContatoreErroreFinalSecond.submit(); 					
+			}
+}
+	
+	

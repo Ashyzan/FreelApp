@@ -298,11 +298,15 @@
 	<div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto">
 		<div class="flex flex-col justify-center items-center max-w-[80%] h-[70%] md:h-auto">
 			<img src="/img/errore.png" class="w-[60px] h-auto m-3">
-			<h1 th:text="${errorMaxFileSize}" class="text-xl text-red-600 text-center"></h1>
-			<h1 th:if="${errorMaxFileSize == null}" class="text-xl text-red-600 text-center">Non è possibile fare l'upload di file superiori a 500KB</h1>
-			<a th:href="@{/dashboard}" class="text-center mt-[50px]">
-				<button class="shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px] ">Torna alla Dashboard</button>				
-			</a>
+			<h1 th:text="${errorTimeExeedmessage}" class="text-xl text-red-600 text-center"></h1>
+			<div class="flex justify-center items-center gap-4 p-10">
+				<a th:href="@{/dashboard}" class="text-center">
+					<button class="shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Torna alla Dashboard</button>				
+				</a>
+				<a th:href="@{/Task/newTask}" class="text-center">
+					<button class="shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Aggiungi nuovo Task</button>
+				</a>				
+			</div>
 		</div>
 		<div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden" id="dettaglio-contatore-bottom">
 					<div class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">

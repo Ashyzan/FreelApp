@@ -110,10 +110,21 @@ public class ContatoreService {
 
     // METODO controlla che il timer non ecceda le ore consentite altrimenti mette
     // in stop
-    public void timeExeed(BindingResult bindingresult, Task task, Model model) {
+    public void timeExeed(BindingResult bindingResult, Task task, Model model) {
 	// (8766 sono le ore presenti in un anno)
 
-	LocalDateTime START = task.getContatore().getStart();
+//	LocalDateTime START = task.getContatore().getStart();
+    	
+    //calcolo del nuovo finaltime
+	boolean contatoreIsRun = contatoreIsRun(task);
+	LocalDateTime restartTime = task.getContatore().getRestart();
+	LocalDateTime timeNow = LocalDateTime.now();
+	Long FinalTime = task.getContatore().getFinaltime();
+	if (contatoreIsRun == true && restartTime == null) {
+		task.getContatore().setFinaltime(findTime( task.getContatore().getStart(), timeNow));
+	} else if (contatoreIsRun == true && restartTime != null) {
+	   	task.getContatore().setFinaltime(FinalTime + findTime(task.getContatore().getRestart(), timeNow));
+	}
 
 	if (task.getContatore().getFinaltime() >= 31557600l) {
 
@@ -121,16 +132,21 @@ public class ContatoreService {
 
 	    task.getContatore().setFinaltime(31557600l);
 
+
 	    repositContatore.save(task.getContatore());
+	    
+	    task.setStato("chiuso");
+
+	    taskrepository.save(task);
 
 	    ObjectError errorTimeExeed = new ObjectError("errorTimeExeed",
 		    "Il task eccede le dimensioni consentite ed è stato messo in stop. "
 			    + "Avviane uno nuovo per continuare.");
 
-	    bindingresult.addError(errorTimeExeed);
+	    bindingResult.addError(errorTimeExeed);
 
 	    String errorTimeExeedmessage = errorTimeExeed.getDefaultMessage();
-
+	    
 	    model.addAttribute("errorTimeExeedmessage", errorTimeExeedmessage);
 
 	}

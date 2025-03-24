@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.freelapp.model.Contatore;
 import com.freelapp.model.Progetto;
 import com.freelapp.model.Task;
 import com.freelapp.repository.ProgettoRepository;
@@ -520,4 +522,22 @@ public class TaskController {
 	return "redirect:/Task";
     }
 
+    
+    @PostMapping("/task/timeExceed/{id}")
+	public String timeExceedError(@PathVariable("id")Integer id,
+			@Valid @ModelAttribute("formContatoreErroreFinalsecond")Contatore contatore,
+			BindingResult bindingResult, Model model) {
+		
+		Task taskInUso = repositTask.getReferenceById(id);
+
+		ContatoreController.contatoreInUso = null;
+		
+		ContatoreController.taskInUso = null;
+		
+		contatoreservice.timeExeed(bindingResult, taskInUso, model);
+		
+		
+		
+		return "Errori/timeExceeded";
+	}
 }
