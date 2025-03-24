@@ -346,7 +346,13 @@
 													alt="contatore inattivo">
 												
 											</div>
-											<p th:text="${timeInHHMMSS}" class="mx-4 inline float-right text-[#0057A5]"></p>
+
+											   <p th:if="${task.getContatore() == null}" class="mx-4 inline float-right text-[#0057A5]">timer</p>
+           											<p th:unless="${task.getContatore() == null}" 
+             												th:with="hours=${task.contatore.getFinaltime()/3600},
+             													 minutes=${(task.contatore.getFinaltime()%3600)/60},
+             													 seconds=${task.contatore.getFinaltime()%60}"
+            														 th:text="|${hours}h:${minutes}m:${seconds}s|" class="mx-4 inline float-right text-[#0057A5]"></p>
 											
 											<div th:text="${task.progetto.getName()}"
 												class="line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta

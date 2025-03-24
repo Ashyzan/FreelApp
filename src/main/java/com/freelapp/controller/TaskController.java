@@ -95,46 +95,8 @@ public class TaskController {
 
 	List<Task> listTask = page.getContent();
 	
-	//****************
-	//passa al model la lista di tutti i task esclusi quelli chiusi
-	List<Task> listaTask = repositTask.findAll();		
-	List<Task> timerOk = new ArrayList<Task> ();
-			
-	listaTask.forEach( task -> {
-				
-				
-					if( task.getContatore() == null) {
-						
-					
-							}
-					
-					else if( task.getContatore() != null) {
-						//taskList.add(task);
-						//String timeInHHMMSS = taskService.Timer(task);
-				    	//model.addAttribute("timeInHHMMSS", timeInHHMMSS);
-				    	
-				    	HashMap<Integer,String> timer = new HashMap<Integer,String>();
-				    	  timer.put(task.getId(), taskService.Timer(task));
-				    	   
-				    	 
-				    	  for(Integer key : timer.keySet()) {
-				    			System.out.println("**************************" + task.getId() + "_" + timer.get(key));
-				    			
-				    			//model.addAttribute("timeInHHMMSS", timer.get(key));
-				    	  }
-							}
-					//model.addAttribute("timeInHHMMSS", timer.get);
-				model.addAttribute("list", listTask);
-					} );
-	//****************
-	
-	//foreach
-//    for (Task task : listTask) {
-//    	String timeInHHMMSS = taskService.Timer(task);
-//    	model.addAttribute("timeInHHMMSS", timeInHHMMSS);
-//    	 }
-//	
-//	model.addAttribute("list", listTask);
+
+	model.addAttribute("list", listTask);
 
 	model.addAttribute("currentPage", currentPage);
 
