@@ -47,6 +47,12 @@ const formStartPause = document.getElementById('form-start-pause');
 const dettaglioContatoreTop = document.getElementById('dettaglio-contatore-top');
 const dettaglioContatoreBottom = document.getElementById('dettaglio-contatore-bottom');
 
+//recupero elementi dal DOM per errore numero massimo caratteri textArea
+const contatoreCaratteriCinquecento = document.getElementById('contatore-caratteri-cinquecento');
+const textAreaDescrizioneCinquecento = document.getElementById('textarea-cinquecento');
+const tectAreaCinquecentoError = document.getElementById('textarea-cinquecento-error');
+const contatoreCaratteriCinquecentoContainer = document.getElementById('contatore-caratteri-cinquecento-container')
+
 // funzioni per navBar 		
 function onToggleMenu(e){
 	navBar.classList.toggle('top-[-100%]')
@@ -240,3 +246,30 @@ if ((listDataInizio != null) && (paginazioneData != null)) {
 	}
 
 
+// funzione per il countdown di caratteri nelle textarea di max 500 caratteri
+if((contatoreCaratteriCinquecento != null) && (textAreaDescrizioneCinquecento != null)
+		 && (tectAreaCinquecentoError!= null)){
+
+		let textAreaCharsLength = textAreaDescrizioneCinquecento.value.length;
+		const maxChar = 500;
+		if(textAreaCharsLength != maxChar){
+			contatoreCaratteriCinquecento.innerHTML = maxChar - textAreaCharsLength;
+		}else {
+			contatoreCaratteriCinquecento.innerHTML = maxChar;			
+		}
+			
+			textAreaDescrizioneCinquecento.addEventListener('keyup', function() {
+		  	
+			textAreaCharsLength = textAreaDescrizioneCinquecento.value.length;
+		  	if (textAreaCharsLength == maxChar){
+				contatoreCaratteriCinquecentoContainer.classList.add('hidden');
+				tectAreaCinquecentoError.innerHTML = " Hai raggiunto il limite massimo di " + maxChar + " caratteri!";
+		  	} else {
+		   		let charRemained = maxChar - textAreaCharsLength;
+				contatoreCaratteriCinquecentoContainer.classList.remove('hidden');
+		    	contatoreCaratteriCinquecento.innerHTML = charRemained;
+				tectAreaCinquecentoError.innerHTML = "";
+		  		}
+			});
+	
+}

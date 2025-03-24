@@ -134,6 +134,14 @@ public class ClientController {
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
 		
+		//restituisce al model questo valore booleano false se non ci sono clienti a db
+		//e restituisce true se ci sono clienti a db
+		boolean areClientsOnDb = false;
+		if(!repositoryCliente.findAll().isEmpty()) {
+			areClientsOnDb = true;
+		}
+		model.addAttribute("areClientsOnDb", areClientsOnDb);
+		
 		return "/Clienti/freelApp-listClient";
 	} 
 	
@@ -147,6 +155,14 @@ public class ClientController {
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//restituisce al model questo valore booleano false se non ci sono clienti a db
+		//e restituisce true se ci sono clienti a db
+		boolean areClientsOnDb = false;
+		if(!repositoryCliente.findAll().isEmpty()) {
+			areClientsOnDb = true;
+		}
+		model.addAttribute("areClientsOnDb", areClientsOnDb);
 		
 		return clienteBySearch(1, input, model);
 	} 
@@ -193,6 +209,14 @@ public class ClientController {
 		
 				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 				ContatoreController.contatoreAttivato = false;
+				
+				//restituisce al model questo valore booleano false se non ci sono clienti a db
+				//e restituisce true se ci sono clienti a db
+				boolean areClientsOnDb = false;
+				if(!repositoryCliente.findAll().isEmpty()) {
+					areClientsOnDb = true;
+				}
+				model.addAttribute("areClientsOnDb", areClientsOnDb);
 				
 				return "Clienti/freelApp-listClient";
 		 

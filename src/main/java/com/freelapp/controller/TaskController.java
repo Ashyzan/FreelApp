@@ -128,7 +128,13 @@ public class TaskController {
 		
 		model.addAttribute("taskInUsoId", taskInUsoId);
 
-	
+		// restituisce al model questo valore booleano false se non ci sono progetti a db
+		// e restituisce true se ci sono progetti a db
+		boolean areTasksOnDb = false;
+		if (!repositTask.findAll().isEmpty()) {
+			areTasksOnDb = true;
+		}
+		model.addAttribute("areTasksOnDb", areTasksOnDb);
 
 	return "/Task/freelApp-listaTask";
     }
@@ -161,6 +167,13 @@ public class TaskController {
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 //		ContatoreController.contatoreAttivato = false;
 
+		// restituisce al model questo valore booleano false se non ci sono progetti a db
+		// e restituisce true se ci sono progetti a db
+		boolean areTasksOnDb = false;
+		if (!repositTask.findAll().isEmpty()) {
+			areTasksOnDb = true;
+		}
+		model.addAttribute("areTasksOnDb", areTasksOnDb);
 
 	return taskBySearch(1, input, model);
     }
@@ -216,6 +229,14 @@ public class TaskController {
 		
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
+		
+		// restituisce al model questo valore booleano false se non ci sono progetti a db
+		// e restituisce true se ci sono progetti a db
+		boolean areTasksOnDb = false;
+		if (!repositTask.findAll().isEmpty()) {
+			areTasksOnDb = true;
+		}
+		model.addAttribute("areTasksOnDb", areTasksOnDb);
 
 	return "/Task/freelApp-listaTask";
     }

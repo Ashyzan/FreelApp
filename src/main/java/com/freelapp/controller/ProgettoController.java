@@ -122,6 +122,14 @@ public class ProgettoController {
 		
 					//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 					ContatoreController.contatoreAttivato = false;
+					
+					//restituisce al model questo valore booleano false se non ci sono progetti a db
+					//e restituisce true se ci sono progetti a db
+					boolean areProjectsOnDb = false;
+					if(!repositProgetto.findAll().isEmpty()) {
+						areProjectsOnDb = true;
+					}
+					model.addAttribute("areProjectsOnDb", areProjectsOnDb);
 				
 				return "/Progetti/freelApp-listaProgetti";
 			} 
@@ -139,6 +147,14 @@ public class ProgettoController {
 		
 				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 //				ContatoreController.contatoreAttivato = false;
+				
+				//restituisce al model questo valore booleano false se non ci sono progetti a db
+				//e restituisce true se ci sono progetti a db
+				boolean areProjectsOnDb = false;
+				if(!repositProgetto.findAll().isEmpty()) {
+					areProjectsOnDb = true;
+				}
+				model.addAttribute("areProjectsOnDb", areProjectsOnDb);
 				
 				return progettoBySearch(1, input, model);
 			} 
@@ -191,6 +207,14 @@ public class ProgettoController {
 		
 					//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 					ContatoreController.contatoreAttivato = false;
+					
+					//restituisce al model questo valore booleano false se non ci sono progetti a db
+					//e restituisce true se ci sono progetti a db
+					boolean areProjectsOnDb = false;
+					if(!repositProgetto.findAll().isEmpty()) {
+						areProjectsOnDb = true;
+					}
+					model.addAttribute("areProjectsOnDb", areProjectsOnDb);
 						
 				return "/Progetti/freelApp-listaProgetti";
 			}

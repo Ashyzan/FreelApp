@@ -300,7 +300,7 @@
 			<div class="h-12 text-center font-bold items-center m-3">
 				<h1 th:text="|MODIFICA TASK: ${formTask.getName()}|"></h1>
 		    </div>					
-		     <div class="w-11/12 md:w-3/5 h-auto lg:max-w-[600px] border border-[#0057A5] rounded-[8px] bg-gray-100 p-3 mb-6">
+		     <div class="w-11/12 md:w-3/5 h-auto lg:max-w-[600px] border border-[#0057A5] rounded-[8px] bg-white shadow-md shadow-blue-500/50 p-3 mb-6">
 		       <form class="py-3" id="task" th:object="${formTask}" th:action="@{|/Task/edit/${id}|}" method="post">
 				
 				<input type="hidden" th:field="*{progetto}" name="progetto" th:value="${progetto}">
@@ -310,7 +310,8 @@
 		               <label for="name">Nome Task*</label>
 		             </div>
 		             <div class=" col md:col-span-2 col-span-3">
-		               <input placeholder="Titolo Task.." type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="name" th:field="*{name}" th:errorClass="border">
+		               <input placeholder="Titolo Task.." type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+					   id="name" th:field="*{name}" th:errorClass="border">
 		               <div th:if="${#fields.hasErrors('name')}" class="text-red-600 text-[12px] text-center w-full">
 		                 <ul>
 		                   <li th:each="err: ${#fields.errors('name')}" th:text="${err}"></li>
@@ -321,11 +322,15 @@
 
 		           <div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2"> 
 		             <div class="col">
-		               <label for="descrizione">Descrizione*</label>
+		               <label for="textarea-cinquecento">Descrizione*</label>
 		             </div>
-		             <div class="col md:col-span-2 col-span-3">
-		               <textarea placeholder="Descrizione Task.." type="text" class="border-red-600 w-full h-full ps-4 rounded-lg" id="descrizione" th:field="*{descrizione}" th:errorClass="border"></textarea>
-
+		             <div class="col md:col-span-2 col-span-3 mb-2">
+		               <textarea placeholder="Descrizione Task.." type="text" class="border-red-600 w-full h-full ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+					   id="textarea-cinquecento" th:field="*{descrizione}" th:errorClass="border"></textarea>
+					<div class="text-xs text-end px-2" id="contatore-caratteri-cinquecento-container">
+						Numero di caratteri rimasti: <span id="contatore-caratteri-cinquecento">00</span>
+					</div>
+					<div id="textarea-cinquecento-error" class="text-red-600 text-[12px] text-center w-full"></div>
 		               <div th:if="${#fields.hasErrors('descrizione')}" class="text-red-600 text-[12px] text-center w-full">
 		                 <ul>
 		                   <li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}"></li>
@@ -336,11 +341,11 @@
 
 		           <div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">	
 		             <div class="col">
-		               <label for="telefono">Data inizio*</label>
+		               <label for="dataInizio">Data inizio*</label>
 		             </div>		  
 		             <div class="col md:col-span-2 col-span-3">
-		               <input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="dataInizio" th:field="*{dataInizio}" th:errorClass="border">
-
+		               <input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+					   id="dataInizio" th:field="*{dataInizio}" th:errorClass="border">
 		               <div th:if="${#fields.hasErrors('dataInizio')}" class="text-red-600 text-[12px] text-center w-full">
 		                  <ul>
 		                    <li th:each="err:${#fields.errors('dataInizio')}" th:text="${err}"></li>
@@ -354,8 +359,8 @@
 		               <label for="dataChiusuraStimata">Chiusura stimata</label>
 		             </div>	  
 		             <div class="col md:col-span-2 col-span-3">
-		               <input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg" id="dataChiusuraStimata" th:field="*{dataChiusuraStimata}" th:errorClass="border">
-
+		               <input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+					   id="dataChiusuraStimata" th:field="*{dataChiusuraStimata}" th:errorClass="border">
 		                <div th:if="${#fields.hasErrors('dataChiusuraStimata')}" class="text-red-600 text-[12px] text-center w-full">
 		                   <ul>
 		                      <li th:each="err:${#fields.errors('dataChiusuraStimata')}" th:text="${err}"></li>
@@ -365,10 +370,10 @@
 		            </div>
 		            </div>	    	 
 					<div class="flex justify-around md:justify-center items-center md:gap-16">
-						<button class="border-2 border-[#0057A5] bg-[#ffe541] rounded-[35px] px-3 py-1 shadow-slate-400 shadow-md">
+						<button class="shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
 							<a th:href="@{/Task}">Annulla</a>
 						</button>		  					
-						<button type="submit" class="border-2 border-[#0057A5] bg-[#ffe541] rounded-[35px] px-3 py-1 shadow-slate-400 shadow-md"> Modifica</button>
+						<button type="submit" class="shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"> Modifica</button>
 					</div>            
 		       </form>	
 		        </div>		
