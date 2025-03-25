@@ -331,8 +331,9 @@
 								class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
 								<div class="md:flex">
 									<div class="md:shrink-0">
-										<img class="filter grayscale aspect-square h-48 w-full object-cover md:w-48"
-											th:src="@{${progetti.cliente.LogoPath}}" alt="logo-cliente">
+										<a th:href="@{/Clienti/{id}(id=${progetti.cliente.getId()})}"><img class="filter grayscale aspect-square h-48 w-full object-cover md:w-48"
+											th:src="@{${progetti.cliente.LogoPath}}" alt="logo-cliente"
+											></a>
 									</div>
 
 									<div class="p-4 w-full">
@@ -351,7 +352,7 @@
 
 										<a th:href="@{/Progetti/{id}(id=${progetti.getId()})}"
 											th:text="${progetti.name}"
-											class="line-clamp-1 block mt-1 text-lg leading-tight font-medium text-gray-500 hover:underline">nome
+											class="line-clamp-1 block mt-1 text-lg leading-tight font-medium text-gray-500 hover:underline hover:text-[#0057A5]">nome
 											progetto </a>
 										<p th:text="${progetti.descrizione}"
 											class="mt-2 text-slate-500 line-clamp-2">descrizione
@@ -365,7 +366,7 @@
 
 													<li class="flex flex-col md:flex-row float-left"><a
 														th:href="@{/Progetti/{id}(id=${progetti.getId()})}"
-														class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-gray-300 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded-full">
+														class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-gray-300 hover:bg-yellow-300 text-white font-bold py-2 px-4 rounded-full">
 															vai al dettaglio </a></li>
 												
 				
@@ -373,14 +374,16 @@
 														<form th:action="@{/Progetti/de-archivia/{id}(id=${progetti.getId()})}"
 														th:object="${progetto}" method="post">
 														<button type="submit">
-														<img th:src="@{/img/sources/icons/de-archive.svg}" alt="archivia" class="size-5 inline"></button>
+														<div class="mt-1 bg-[url(/img/sources/icons/de-archive.svg)] size-5 hover:bg-[url(/img/sources/icons/de-archive-blue.svg)]"></div>
+													
+														</button>
 														</form>
 													</li>
-													
+														
 													<li >
 														<a th:href="@{/Task}"
 														th:text="'task ' + ${progetti.getElencoTask().size()}"
-														class="hover:underline flex flex-col md:flex-row sm:visible lg:visible md:invisible px-2 mt-7 float-right text-gray-500">
+														class="hover:text-[#0057A5] hover:underline flex flex-col md:flex-row sm:visible lg:visible md:invisible px-2 mt-7 float-right text-gray-500">
 														</a>
 													</li>
                  
