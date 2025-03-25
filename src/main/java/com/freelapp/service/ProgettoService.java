@@ -31,6 +31,14 @@ public class ProgettoService {
 		
 	}
 	
+	public Page<Progetto> orderByArchivio(int pageNumber){
+		Pageable pageableArchive = PageRequest.of(pageNumber -1, 12, Sort.by("archivia").descending());
+		
+		return progettoRepository.findAll(pageableArchive);
+		
+		
+	}
+	
 	public Page<Progetto> orderByClient(int pageNumber){
 		Pageable pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").ascending());
 		
@@ -38,6 +46,7 @@ public class ProgettoService {
 		
 		
 	}
+	
 	
 	public Page<Progetto> findSearchedPageByDataInizio(int pageNumber, String input){
 		Pageable pageable = PageRequest.of(pageNumber -1, 4, Sort.by("dataInizio").descending());
@@ -50,5 +59,13 @@ public class ProgettoService {
 		return progettoRepository.search(input, pageable);
 		
 	}
+	
+	public Page<Progetto> findSearchedPageByArchiviati(int pageNumber, String input){
+		Pageable pageableArch = PageRequest.of(pageNumber -1, 4, Sort.by("archivia").descending());
+		return progettoRepository.searchArchiviati(input, pageableArch);
+		
+	}
+	
+
 
 }

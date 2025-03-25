@@ -19,13 +19,14 @@ public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, Pa
 	    		+ "p.cliente.labelCliente LIKE '%'||:input||'%'")
 	 
 	    public Page<Progetto> search( String input, Pageable pageable);
+	 
+	 @Query("SELECT p FROM Progetto p WHERE p.archivia IS 'true'")
+	 	public Page<Progetto> searchArchiviati( String input, Pageable pageable);
 	    
 	    public List<Progetto> findAll();
 	    
 	    // transitional usato per modifica e cancellazione
 	    @Transactional
 	    void deleteByClienteId(Integer id);
-	    
-	  
 	    
 }

@@ -60,8 +60,8 @@
 						</span> <span class="pt-1">I MIEI TASK</span>
 					</a></li>
 
-					<li class="md:mx-4 py-5 md:py-0 text-[#FFE541]"><a
-						class="flex items-center pointer-events-none"> <span
+					<li class="md:mx-4 py-5 md:py-0 hover:text-gray-40"><a
+						class="flex items-center" th:href="@{/Progetti}"> <span
 							class="px-2"> <img class="h-[28px] w-[28px]"
 								src="/img/sources/icons/folders.svg" alt="progetti">
 						</span> <span class="pt-1">PROGETTI</span>
@@ -308,21 +308,18 @@
 							<h1 class="mt-3 text-xl">ARCHIVIO PROGETTI</h1>
 						</div>
 						<div id="filtra-per-clienti" class="flex items-center p-4 mx-3 w-full gap-2">
-							<p class="text-[#0057A5]">Ordina per: </p>
-							<button th:onclick="attivaPaginazione1()" id="filtra-per-clienti-button" class=""><img src="/img/sources/icons/clients-blu.svg" class="inline size-8 float-left">	</button>
-							<button th:onclick="attivaPaginazione2()" id="filtra-per-data-button" class="opacity-50 pointer-events-none"><img src="/img/sources/icons/calendar-blue.svg" class="inline size-8 float-left">	</button>						
 							
 							<form class="mx-auto w-50" role="search" method="get"
-									th:object="${progetto}" th:action="@{/progetto-search}">
+									th:object="${progetto}" th:action="@{/progetto-archivio-search}">
 									<input type="text"
 										class="border-2 border-[#0057A5] p-1 my-3 rounded-md"
-										name="input" placeholder="Ricerca progetti..." aria-label="Search">
+										name="input" placeholder="Ricerca progetti archiviati..." aria-label="Search">
 									<button
 										class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
 										type="submit">Search</button>
 									<a
 										class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-2 rounded-[35px]"
-										th:href="@{/Progetti}">Annulla</a>
+										th:href="@{/Progetti/archivio}">Annulla</a>
 								</form>											
 						</div>
 
@@ -334,7 +331,7 @@
 								class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
 								<div class="md:flex">
 									<div class="md:shrink-0">
-										<img class="aspect-square h-48 w-full object-cover md:w-48"
+										<img class="filter grayscale aspect-square h-48 w-full object-cover md:w-48"
 											th:src="@{${progetti.cliente.LogoPath}}" alt="logo-cliente">
 									</div>
 
@@ -349,12 +346,12 @@
 
 										</div>
 										<div th:text="${progetti.cliente.labelCliente}"
-											class="line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
+											class="line-clamp-1 uppercase tracking-wide text-sm text-gray-400 font-semibold">etichetta
 											cliente</div>
 
 										<a th:href="@{/Progetti/{id}(id=${progetti.getId()})}"
 											th:text="${progetti.name}"
-											class="line-clamp-1 block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome
+											class="line-clamp-1 block mt-1 text-lg leading-tight font-medium text-gray-500 hover:underline">nome
 											progetto </a>
 										<p th:text="${progetti.descrizione}"
 											class="mt-2 text-slate-500 line-clamp-2">descrizione
@@ -368,43 +365,22 @@
 
 													<li class="flex flex-col md:flex-row float-left"><a
 														th:href="@{/Progetti/{id}(id=${progetti.getId()})}"
-														class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
+														class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-gray-300 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded-full">
 															vai al dettaglio </a></li>
 												
-												<li class="flex flex-col md:flex-row px-2 mt-6 float-left">
-														<a
-														th:href="@{/Task/insert/progetto-{id}(id=${progetti.getId()})}">
-														
-															<div class=" t-tooltip col-auto w-8 h-8 ms-2">
-															
-															<img th:src="@{/img/sources/icons/add-task-blue.svg}"
-																		alt="aggiungi-task" class=" size-8 ml-3 -mt-1 inline">
-																<div class=" relative hidden -left-4 bottom-20 t-box w-32 text-center text-nowrap border border-[#0057A5] text-[#0057A5] bg-gray-100 rounded-lg p-1">
-																	Aggiungi Task
-																</div>
-															</div>
-															</a>	
-													</li>
-
+				
 													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
-														<a
-														th:href="@{/Progetti/edit/{id}(id=${progetti.getId()})}"><img
-															th:src="@{/img/sources/icons/modify-grey.svg}"
-															alt="modifica-progetto" class="size-5 inline"></a>
-													</li>
-
-													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
-														<form th:action="@{/Progetti/archivia/{id}(id=${progetti.getId()})}"
+														<form th:action="@{/Progetti/de-archivia/{id}(id=${progetti.getId()})}"
 														th:object="${progetto}" method="post">
 														<button type="submit">
-														<img th:src="@{/img/sources/icons/archive.svg}" alt="archivia" class="size-5 inline"></button>
+														<img th:src="@{/img/sources/icons/de-archive.svg}" alt="archivia" class="size-5 inline"></button>
 														</form>
 													</li>
 													
 													<li >
 														<a th:href="@{/Task}"
 														th:text="'task ' + ${progetti.getElencoTask().size()}"
-														class="hover:underline flex flex-col md:flex-row sm:visible lg:visible md:invisible px-2 mt-7 float-right text-[#0057A5]">
+														class="hover:underline flex flex-col md:flex-row sm:visible lg:visible md:invisible px-2 mt-7 float-right text-gray-500">
 														</a>
 													</li>
                  
@@ -419,99 +395,11 @@
 							 </div>
 							 </div>
 							</div>
-<!-----------------------	card per clienti -------------------->
-							<div id="list-cliente" th:if="paginazioneAttivaCliente" class="hidden"> 
-							<div  class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-between w-full">
-							<div th:each="progettoCliente : ${listProgettiByCliente}" class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
-														
-							<div class="md:flex" >
-									<div class="md:shrink-0">
-										<img class="aspect-square h-48 w-full object-cover md:w-48" th:src="@{${progettoCliente.cliente.LogoPath}}"
-											alt="logo-cliente">
-									</div>
-							
-									<div class="p-4 w-full">
-										<div>
-											<img th:if="${progettoCliente.getDataFine} == null" th:src="@{/img/sources/icons/contatore-on-start.svg}"
-												alt="progetto-attivo" class="size-5 inline float-right">
-											<img th:if="${progettoCliente.getDataFine} != null" th:src="@{/img/sources/icons/contatore-on-stop.svg}"
-												alt="progetto-chiuso" class="size-5 inline float-right">
-							
-										</div>
-										<div th:text="${progettoCliente.cliente.labelCliente}"
-											class="line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
-											cliente</div>
-							
-										<a th:href="@{/Progetti/{id}(id=${progettoCliente.getId()})}" th:text="${progettoCliente.name}"
-											class="line-clamp-1  block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome
-											progetto </a>
-										<p th:text="${progettoCliente.descrizione}" class="mt-2 text-slate-500 line-clamp-2">descrizione
-											progetto</p>
-							
-										<div>
-							
-											<span>
-							
-												<ul>
-							
-													<li class="flex flex-col md:flex-row float-left"><a
-															th:href="@{/Progetti/{id}(id=${progettoCliente.getId()})}"
-															class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
-															vai al dettaglio </a>
-															</li>
-													<li class="flex flex-col md:flex-row px-2 mt-6 float-left">
-														<a
-														th:href="@{/Task/insert/progetto-{id}(id=${progettoCliente.getId()})}">
-														
-															<div class=" t-tooltip col-auto w-8 h-8 ms-2">
-															
-															<img th:src="@{/img/sources/icons/add-task-blue.svg}"
-																		alt="aggiungi-task" class=" size-8 ml-3 -mt-1 inline">
-																<div class=" relative hidden -left-4 bottom-20 t-box w-32 text-center text-nowrap border border-[#0057A5] text-[#0057A5] bg-gray-100 rounded-lg p-1">
-																	Aggiungi Task
-																</div>
-															</div>
-															</a>	
-													</li>
-							
-													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
-														<a th:href="@{/Progetti/edit/{id}(id=${progettoCliente.getId()})}"><img
-																th:src="@{/img/sources/icons/modify-grey.svg}" alt="progetto-attivo"
-																class="size-5 inline"></a>
-													</li>
-							
-													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
-														<form th:action="@{/Progetti/archivia/{id}(id=${progettoCliente.getId()})}"
-														th:object="${progetto}" method="post">
-														<button type="submit">
-														<img th:src="@{/img/sources/icons/archive.svg}" alt="archivia" class="size-5 inline"></button>
-														</form>
-														
-													</li>
-													
-													<li>
-													<a th:href="@{/Task}"
-													th:text="'task ' + ${progettoCliente.getElencoTask().size()}"
-														class="hover:underline flex flex-col md:flex-row px-2 mt-7 float-right text-[#0057A5]">
-														</a>
-														</li>
-												
-												</ul>
-											</span>
-										</div>
-							
-							
-							
-									</div>
-								</div>
-							</div>	
-							</div>
-							</div>
 						
 <!--paginazione lista per data-->
 						
 						<div th:if="paginazioneAttivaData">
-							<div th:if="${listProgettiByDataInizio.isEmpty()}" id="ricerca-vuota-data" class="text-center text-[#0057A5] p-4">
+							<div th:if="${progettiArchiviati.isEmpty()}" id="ricerca-vuota-data" class="text-center text-[#0057A5] p-4">
 							<div>
 								<h1>La ricerca non ha prodotto risultati</h1>
 							</div>
@@ -522,53 +410,31 @@
 							
 							<div class="flex justify-between text-center">
 								<div  class="col"
-									th:text="|Progetti totali ordinati per data inizio: ${totalItemByDatainizio} - Pagina ${currentPage} di ${totalPageByDataInizio}|">
+									th:text="|Progetti totali ordinati per data inizio: ${totalItemByArchivio} - Pagina ${currentPage} di ${totalPageByArchivio}|">
 								</div>
 								<div class="col">
 									<span class=" justify-center"
-										th:each="i : ${#numbers.sequence(1, totalPageByDataInizio)}"> <a
+										th:each="i : ${#numbers.sequence(1, totalPageByArchivio)}"> <a
 										class="p-[3px] text-[#0057A5]"
 										style="border: 1px solid #0057A5; border-radius: 5px;"
-										th:href="@{'/Progetti/page/'+${i}}" th:text="${i}"></a>
+										th:href="@{'/Progetti/archivio/page/'+${i}}" th:text="${i}"></a>
 									</span>
 								</div>
 							</div>
 						</div>
 
-<!--						paginazione lista per clienti-->
-					<div th:if="paginazioneAttivaCliente">
-						<div th:if="${listProgettiByCliente.isEmpty()}" id="ricerca-vuota-clienti" class="hidden text-center text-[#0057A5] p-4">
-							<div>
-								<h1>La ricerca non ha prodotto risultati</h1>
-							</div>
-						</div>
-					</div>
-					<div th:if="paginazioneAttivaCliente" id="paginazione-clienti" class="hidden p-4 mb-10">
-						
-						<div class="flex justify-between text-center">
-							<div  class="col"
-								th:text="|Progetti totali ordinati per cliente: ${totalItemByCliente} - Pagina ${currentPage} di ${totalPageByCliente}|">
-							</div>
-							<div class="col">
-								<span class=" justify-center" th:each="i : ${#numbers.sequence(1, totalPageByCliente)}"> <a
-										class="p-[3px] text-[#0057A5]" style="border: 1px solid #0057A5; border-radius: 5px;"
-										th:href="@{'/Progetti/page/'+${i}}" th:text="${i}"></a>
-								</span>
-							</div>
-						</div>
-					</div>
 					
 					</section>
 					
 				
 				</div>
 				<div th:if="${areProjectsOnDb == false}" class="flex flex-col items-center justify-center text-center h-full">
-					<h2 class="text-[#0057A5] font-bold py-10 ">NESSUN PROGETTO ANCORA REGISTRATO</h2>
+					<h2 class="text-[#0057A5] font-bold py-10 ">NESSUN PROGETTO IN ARCHIVIO</h2>
 					<!-- th:href="@{/Progetti/insert/1} diventera poi th:href="@{'/Progetti/insert/{id}'(id=${userLogged.getId()})'} quando sara implementata autentizazione-->
-					<a th:href="@{/Progetti/insert/1}" class="text-center flex justify-center">
+					<a th:href="@{/Progetti}" class="text-center flex justify-center">
 						<button
 							class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
-							Aggiungi Progetto
+							Archivia un Progetto
 						</button>
 					</a>
 				</div>
