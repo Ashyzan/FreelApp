@@ -21,10 +21,19 @@ public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, Pa
 	    public Page<Progetto> search( String input, Pageable pageable);
 	 
 	 
-	 @Query(
-			  value = "SELECT * FROM Progetti p WHERE p.archivia = 1", 
+	// @Query(
+		//	  value = "SELECT * FROM Progetti p WHERE p.archivia = 1", 
+			// value = "SELECT * FROM Progetti p WHERE p.archivia = 1 AND p.name LIKE '%'||:input||'%' ", 
+		//	  nativeQuery = true)
+	
+	 @Query(value = "SELECT p.*"
+			  + " from progetti p "
+			  + " where p.archivia=1 "
+			  + " and p.denominazione_progetto LIKE '%'||:input||'%' OR  "
+			  + "p.descrizione LIKE '%'||:input||'%' OR " 
+			  + "p.cliente_rif LIKE '%'||:input||'%'",
 			  nativeQuery = true)
-	// @Query("SELECT p FROM Progetto p WHERE p.archivia IS 'true'")
+	
 	 	public Page<Progetto> searchArchiviati( String input, Pageable pageable);
 	    
 	    public List<Progetto> findAll();
