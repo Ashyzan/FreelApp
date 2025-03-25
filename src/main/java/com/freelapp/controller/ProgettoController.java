@@ -480,13 +480,13 @@ public class ProgettoController {
 				
 				model.addAttribute("progettiArchiviati",progettiArchiviati);
 				
-				// ordina i progetti per data di inizio
+				
 				Page<Progetto> pageByArchivio = progettoService.orderByArchivio(currentPage);
 				int totalPageByArchivio = pageByArchivio.getTotalPages();	
 				long totalItemByArchivio = pageByArchivio.getTotalElements();		
 				List<Progetto> listProgettiByArchivio = pageByArchivio.getContent();
 				model.addAttribute("currentPage", currentPage);
-				// passaggio al model delle liste per data inizio
+				
 				model.addAttribute("totalPageByArchivio", totalPageByArchivio);					
 				model.addAttribute("totalItemByArchivio", totalItemByArchivio);					
 				model.addAttribute("listProgettiByArchivio", listProgettiByArchivio);
@@ -572,14 +572,15 @@ public class ProgettoController {
 						model.addAttribute("endPoint", endPoint);	
 					}
 
+					ContatoreController.contatoreAttivato = false;
 					model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 					model.addAttribute("taskInUso", ContatoreController.taskInUso);
 					model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 		
-					ContatoreController.contatoreAttivato = false;
+					
 					
 					boolean areProjectsOnDb = false;
-					if(!repositProgetto.findAll().isEmpty()) {
+					if(!pageByArchivio.isEmpty()) {
 						areProjectsOnDb = true;
 					}
 					model.addAttribute("areProjectsOnDb", areProjectsOnDb);

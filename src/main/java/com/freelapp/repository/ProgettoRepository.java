@@ -26,7 +26,7 @@ public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, Pa
 			// value = "SELECT * FROM Progetti p WHERE p.archivia = 1 AND p.name LIKE '%'||:input||'%' ", 
 		//	  nativeQuery = true)
 	
-	 @Query(value = "SELECT p.*"
+	 @Query(value = "SELECT *"
 			  + " from progetti p "
 			  + " where p.archivia=1 "
 			  + " and p.denominazione_progetto LIKE '%'||:input||'%' OR  "
