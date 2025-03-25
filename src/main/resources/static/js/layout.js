@@ -1,3 +1,9 @@
+// elementi DOM per animazione lista task al click su contatore
+let taskCardList = document.getElementById('task-card');
+let buttontest = document.getElementById('buttontest');
+
+
+
 // recupero elementi DOM per lista progetti ordinati per cliente o datainizio
 const filtraPerClientiButton = document.getElementById('filtra-per-clienti-button');
 const filtraPerDataButton = document.getElementById('filtra-per-data-button');
@@ -186,6 +192,19 @@ if(contatoreAttivato == true){
 }
 
 
+// animazione cambio task in lista task
+
+	if(contatoreAttivato == true){
+	taskCardList.classList.add('animate_animated','animate__slideOutUp', 'animate__delay-2s');
+	console.log("ho avviato l'animazione");}
+	
+	function taskAnimation(){
+		buttontest.classList.add('animate_animated','animate__slideOutUp', 'animate__delay-2s');
+			console.log("ho avviato la funzione taskAnimation()");
+			console.log(buttontest.style);
+			console.log(buttontest.classList);
+		
+	}
 
 function attivaPaginazione1() {
 	paginazioneAttivaCliente = true;

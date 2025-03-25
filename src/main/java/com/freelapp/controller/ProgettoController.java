@@ -1,5 +1,6 @@
 package com.freelapp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -405,6 +406,50 @@ public class ProgettoController {
 			    repositProgetto.deleteById(id);
 			
 			    return "redirect:/Progetti";
+			}
+			
+			@PostMapping("/Progetti/archivia/{id}")
+			public String archiviaProgetto(@PathVariable("id") Integer id, Model model) {
+				
+				Progetto progetto = repositProgetto.findById(id).get();
+				
+				progetto.setArchivia(true);
+				model.addAttribute("progetto",progetto);
+				repositProgetto.save(progetto);
+				
+				return "redirect:/Progetti";
+				
+			}
+			
+			@GetMapping("/Progetti/archivio")
+			public String progettiArchivio(Model model) {
+				
+				List<Progetto> progettiAll = repositProgetto.findAll();
+				List<Progetto> progettiArchiviati = new ArrayList<Progetto>();
+				
+				for (Progetto progetto : progettiAll) {
+					
+					if(progetto.getArchivia() == null) {
+						progetto.setArchivia(false);
+						repositProgetto.save(progetto);
+					}
+					if(progetto.getArchivia() == true) {
+						progettiArchiviati.add(progetto);
+						
+					}
+				}
+				
+				model.addAttribute("progettiArchiviati",progettiArchiviati);
+				
+				// se non ci sono progetti
+				boolean areProjectsOnDb = false;
+				if(!repositProgetto.findAll().isEmpty()) {
+					areProjectsOnDb = true;
+				}
+				model.addAttribute("areProjectsOnDb", areProjectsOnDb);
+				
+				return "/Progetti/freelApp-archivioProgetti";
+				
 			}
 			
 }

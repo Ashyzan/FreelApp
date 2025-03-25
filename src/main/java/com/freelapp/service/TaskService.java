@@ -23,11 +23,11 @@ public class TaskService {
 	private TaskRepository taskRepository;
 
 	public List<Task> findAll(){
-		return taskRepository.findAll(Sort.by(Sort.Direction.DESC, "dataInizio"));
+		return taskRepository.findAll(Sort.by(Sort.Direction.DESC, "dataModifica"));
 	}
 	
 	public Page<Task> findPage(int pageNumber){
-		Pageable pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending().and(Sort.by("name")));
+		Pageable pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
 		return taskRepository.findAll(pageable);
 		
 	}

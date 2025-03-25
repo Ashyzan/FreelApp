@@ -329,8 +329,8 @@
 												
 		<!------------------ card per data     --------------------->
 							<div id="list-data-inizio" th:if="paginazioneAttivaData" class="">
-							<div  class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-between w-full">
-							<div  th:each="progettoPerData : ${listProgettiByDataInizio}"
+							<div  class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-between w-full">
+							<div th:unless="${progettoPerData.getArchivia()} == true" th:each="progettoPerData : ${listProgettiByDataInizio}"
 								class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
 								<div class="md:flex">
 									<div class="md:shrink-0">
@@ -394,14 +394,17 @@
 													</li>
 
 													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
-														<a><img th:src="@{/img/sources/icons/archive.svg}"
-															alt="archivia" class="size-5 inline"></a>
+														<form th:action="@{/Progetti/archivia/{id}(id=${progettoPerData.getId()})}"
+														th:object="${progetto}" method="post">
+														<button type="submit">
+														<img th:src="@{/img/sources/icons/archive.svg}" alt="archivia" class="size-5 inline"></button>
+														</form>
 													</li>
 													
 													<li >
 														<a th:href="@{/Task}"
-														th:text="'n. task ' + ${progettoPerData.getElencoTask().size()}"
-														class="hover:underline flex flex-col md:flex-row px-2 mt-7 float-right text-[#0057A5]">
+														th:text="'task ' + ${progettoPerData.getElencoTask().size()}"
+														class="hover:underline flex flex-col md:flex-row sm:visible lg:visible md:invisible px-2 mt-7 float-right text-[#0057A5]">
 														</a>
 													</li>
                  
@@ -419,7 +422,7 @@
 <!-----------------------	card per clienti -------------------->
 							<div id="list-cliente" th:if="paginazioneAttivaCliente" class="hidden"> 
 							<div  class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-between w-full">
-							<div th:each="progettoCliente : ${listProgettiByCliente}" class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
+							<div th:unless="${progettoCliente.getArchivia()} == true" th:each="progettoCliente : ${listProgettiByCliente}" class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
 														
 							<div class="md:flex" >
 									<div class="md:shrink-0">
@@ -478,12 +481,17 @@
 													</li>
 							
 													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
-														<a><img th:src="@{/img/sources/icons/archive.svg}" alt="archivia" class="size-5 inline"></a>
+														<form th:action="@{/Progetti/archivia/{id}(id=${progettoCliente.getId()})}"
+														th:object="${progetto}" method="post">
+														<button type="submit">
+														<img th:src="@{/img/sources/icons/archive.svg}" alt="archivia" class="size-5 inline"></button>
+														</form>
+														
 													</li>
 													
 													<li>
 													<a th:href="@{/Task}"
-													th:text="'n. task ' + ${progettoCliente.getElencoTask().size()}"
+													th:text="'task ' + ${progettoCliente.getElencoTask().size()}"
 														class="hover:underline flex flex-col md:flex-row px-2 mt-7 float-right text-[#0057A5]">
 														</a>
 														</li>

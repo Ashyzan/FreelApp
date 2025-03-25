@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!--
@@ -11,21 +10,18 @@
 <link rel="stylesheet" href="/animate.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
-		tailwind.config = {
-			theme: {
-				extend: {
-					animation: {
-						'scale-once': 'scale-once 1s '
-					},
-					colors: {
-						clifford: '#da373d',
-					},
+			tailwind.config = {
+				theme: {
+					extend: {
+						colors: {
+							clifford: '#da373d',
+						}
+					}
 				}
 			}
-		}
-	</script>
+		</script>
 <style type="text/tailwindcss">
-		@layer utilities {
+			@layer utilities {
 	          .content-auto {
 	            content-visibility: auto;
 	          }
@@ -57,15 +53,15 @@
 								src="/img/sources/icons/dashboard.svg" alt="dashboard">
 						</span> <span class="pt-1">DASHBOARD</span>
 					</a></li>
-					<li class="md:mx-4 py-5 md:py-0 text-[#FFE541]"><a
-						class="flex items-center pointer-events-none"> <span
+					<li class="md:mx-4 py-5 md:py-0 hover:text-gray-400"><a
+						class="flex items-center" th:href="@{/Task}"> <span
 							class="px-2"> <img class="h-[28px] w-[28px]"
 								src="/img/sources/icons/check.svg" alt="task">
 						</span> <span class="pt-1">I MIEI TASK</span>
 					</a></li>
 
-					<li class="md:mx-4 py-5 md:py-0 hover:text-gray-400"><a
-						class="flex items-center" th:href="@{/Progetti}"> <span
+					<li class="md:mx-4 py-5 md:py-0 text-[#FFE541]"><a
+						class="flex items-center pointer-events-none"> <span
 							class="px-2"> <img class="h-[28px] w-[28px]"
 								src="/img/sources/icons/folders.svg" alt="progetti">
 						</span> <span class="pt-1">PROGETTI</span>
@@ -302,292 +298,281 @@
 				</a>
 			</div>
 			<div id="main-section"
-				class="flex w-full flex-wrap h-full justify-center items-center overflow-y-auto">
-				<div th:if="${areTasksOnDb == true}"
-					class="flex flex-col-reverse md:flex-col w-11/12 2xl:w-4/5">
-					<section>
+				class="w-full flex-wrap h-full m-auto overflow-y-auto">
+				<div th:if="${areProjectsOnDb == true}" class=" md:flex-col px-4">
+
+					<!-- 			section elenco progetti main		 -->
+					<section class="flex flex-col">
 						<div
-							class="h-12 text-center text-[#0057A5] font-bold items-center mt-3">
-							<h1 class="mt-3 text-xl">ELENCO TASK</h1>
+							class="h-12 text-center text-[#0057A5] font-bold items-center">
+							<h1 class="mt-3 text-xl">ARCHIVIO PROGETTI</h1>
 						</div>
-						<!-- RICERCA -->
-						<section>
-							<div class="">
-								<div class="text-center mb-5">
-									<form class="mx-auto w-50" role="search" method="get"
-										th:object="${Task}" th:action="@{/task-search}">
-										<label for="ticket-search" class="text-[#0057A5]"></label> <input type="text"
-											class="border-2 border-[#0057A5] p-1 my-3 rounded-md"
-											name="input" placeholder="Ricerca task..." aria-label="Search">
-										<button
-											class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
-											type="submit">Search</button>
-										<a
-											class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-2 rounded-[35px]"
-											th:href="@{/Task}">Annulla</a>
-									</form>
-								</div>
-							</div>
-						</section>
-						
-						<!-- 													TEST -->
-													<button id="buttontest" onclick="taskAnimation()" type="button" 
-													class="size-10 text-[#0057A5]">
-													cliccami
-													</button>
-						<!--						ELENCO TASK CON CARD-->
-						<div th:each="task : ${list}" class="">
-							<div
-								class="grid lg:grid-cols-1 sm:grid-cols-1 gap-4 p-2 flex justify-between w-full">
-								
-								
-								<div  id="task-card"
-									class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
-									<div class="md:flex">
-										<div class="md:shrink-0 content-center">
-											<img class="lg:mx-[40px] md:mx-[40px] aspect-square object-cover h-20 w-full md:w-20 lg:rounded-[200px] md:rounded-[200px]"
-												th:src="@{${task.progetto.cliente.LogoPath}}" alt="logo">
+						<div id="filtra-per-clienti" class="flex items-center p-4 mx-3 w-full gap-2">
+							<p class="text-[#0057A5]">Ordina per: </p>
+							<button th:onclick="attivaPaginazione1()" id="filtra-per-clienti-button" class=""><img src="/img/sources/icons/clients-blu.svg" class="inline size-8 float-left">	</button>
+							<button th:onclick="attivaPaginazione2()" id="filtra-per-data-button" class="opacity-50 pointer-events-none"><img src="/img/sources/icons/calendar-blue.svg" class="inline size-8 float-left">	</button>						
+							
+							<form class="mx-auto w-50" role="search" method="get"
+									th:object="${progetto}" th:action="@{/progetto-search}">
+									<input type="text"
+										class="border-2 border-[#0057A5] p-1 my-3 rounded-md"
+										name="input" placeholder="Ricerca progetti..." aria-label="Search">
+									<button
+										class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+										type="submit">Search</button>
+									<a
+										class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-2 rounded-[35px]"
+										th:href="@{/Progetti}">Annulla</a>
+								</form>											
+						</div>
+
 												
+		<!------------------ card per data     --------------------->
+							<div id="list-data-inizio" th:if="paginazioneAttivaData" class="">
+							<div  class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-between w-full">
+							<div th:each="progetti : ${progettiArchiviati}"
+								class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
+								<div class="md:flex">
+									<div class="md:shrink-0">
+										<img class="aspect-square h-48 w-full object-cover md:w-48"
+											th:src="@{${progetti.cliente.LogoPath}}" alt="logo-cliente">
+									</div>
+
+									<div class="p-4 w-full">
+										<div>
+											<img th:if="${progetti.getDataFine} == null"
+												th:src="@{/img/sources/icons/contatore-on-start.svg}"
+												alt="progetto-attivo" class="size-5 inline float-right">
+											<img th:if="${progetti.getDataFine} != null"
+												th:src="@{/img/sources/icons/contatore-on-stop.svg}"
+												alt="progetto-chiuso" class="size-5 inline float-right">
+
 										</div>
+										<div th:text="${progetti.cliente.labelCliente}"
+											class="line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
+											cliente</div>
 
-										<div class="p-3 w-full">
-											<div>
-												<img th:if="${task.getStato() == 'in corso'}"
-													id="semaforo-start" class="size-5 inline float-right"
-													src="/img/sources/icons/contatore-on-start.svg"
-													alt="contatore in start"> 
-												<img
-													th:if="${task.getStato() == 'in pausa'}"
-													id="semaforo-pausa" class="size-5 inline float-right"
-													src="/img/sources/icons/contatore-on-pause.svg"
-													alt="contatore in pausa"> 
-												<img
-													th:if="${task.getStato() == 'chiuso'}" id="semaforo-stop"
-													class="size-5 inline float-right"
-													src="/img/sources/icons/contatore-on-stop.svg"
-													alt="contatore in stop"> 
-												<img
-													th:if="${task.getStato() == 'inattivo'}"
-													id="semaforo-inattivo" class="size-5 inline float-right"
-													src="/img/sources/icons/contatore-inattivo.svg"
-													alt="contatore inattivo">
+										<a th:href="@{/Progetti/{id}(id=${progetti.getId()})}"
+											th:text="${progetti.name}"
+											class="line-clamp-1 block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome
+											progetto </a>
+										<p th:text="${progetti.descrizione}"
+											class="mt-2 text-slate-500 line-clamp-2">descrizione
+											progetto</p>
+
+										<div>
+
+											<span>
+
+												<ul>
+
+													<li class="flex flex-col md:flex-row float-left"><a
+														th:href="@{/Progetti/{id}(id=${progetti.getId()})}"
+														class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
+															vai al dettaglio </a></li>
 												
-											</div>
-
-											   <p th:if="${task.getContatore() == null}" class="mx-4 inline float-right text-[#0057A5]">timer</p>
-           											<p th:unless="${task.getContatore() == null}" 
-             												th:with="hours=${task.contatore.getFinaltime()/3600},
-             													 minutes=${(task.contatore.getFinaltime()%3600)/60},
-             													 seconds=${task.contatore.getFinaltime()%60}"
-            														 th:text="|${#numbers.formatInteger(hours,2)}:${#numbers.formatInteger(minutes,2)}:${#numbers.formatInteger(seconds,2)}|" class="mx-4 inline float-right text-[#0057A5]"></p>
-											
-											<div th:text="${task.progetto.getName()}"
-												class="line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
-												cliente</div>
-
-											<h3 class="line-clamp-1"><a th:href="@{|/Task/${task.id}|}"
-												th:text="${task.getName()}"
-												class="block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome
-												progetto </a></h3>
-											<p th:text="${task.descrizione}"
-												class="text-slate-500 line-clamp-1">descrizione
-												progetto</p>
-
-											<div>
-
-												<span>
-
-													<ul>
-
-														<li class="flex flex-col md:flex-row float-left"><a
-															th:href="@{|/Task/${task.id}|}"
-															class="inline text-center mt-4 mb-2 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
-																vai al dettaglio </a></li>
-													
-
-
-														<li class="flex flex-col md:flex-row px-2 mt-4 ml-6 float-left">
-												<!-- 				SELEZIONA IL CONTATORE -->
-															<div
-																th:if="${task.id == taskInUsoId or task.getStato() == 'chiuso'}"
-																class="size-10">
-															<img src="/img/sources/icons/contatore-blue-inattivo.svg">
-															</div>
-															<div class=""
-																th:unless="${task.id == taskInUsoId or task.getStato() == 'chiuso'}">
-																<form th:action="@{|/contatore/cambio/${task.id}|}"
-																		th:object="${contatore}" method="post">
-																<input type="hidden" name="endPoint" th:value="${endPoint}">
+												<li class="flex flex-col md:flex-row px-2 mt-6 float-left">
+														<a
+														th:href="@{/Task/insert/progetto-{id}(id=${progetti.getId()})}">
+														
+															<div class=" t-tooltip col-auto w-8 h-8 ms-2">
 															
-																<button type="submit" class="t-tooltip size-10 text-[#0057A5]">
-																	<img src="/img/sources/icons/contatore-blue.svg">
-																</button>
-																
-																</form>
-																<div
-																				class="text-[#0057A5] t-box  border border-[#0057A5] bg-gray-100 rounded-lg relative hidden p-2 ms-[-60px] mt-[-100px] text-nowrap ">
-																								Seleziona Contatore</div>
+															<img th:src="@{/img/sources/icons/add-task-blue.svg}"
+																		alt="aggiungi-task" class=" size-8 ml-3 -mt-1 inline">
+																<div class=" relative hidden -left-4 bottom-20 t-box w-32 text-center text-nowrap border border-[#0057A5] text-[#0057A5] bg-gray-100 rounded-lg p-1">
+																	Aggiungi Task
+																</div>
 															</div>
-														</li>
+															</a>	
+													</li>
 
-														
+													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
+														<a
+														th:href="@{/Progetti/edit/{id}(id=${progetti.getId()})}"><img
+															th:src="@{/img/sources/icons/modify-grey.svg}"
+															alt="modifica-progetto" class="size-5 inline"></a>
+													</li>
 
-														<li
-															class="flex flex-col md:flex-row px-2 mt-6 float-right">
-															<a th:href="@{|/Task/edit/${task.id}|}"><img
-																th:src="@{/img/sources/icons/modify-grey.svg}"
-																alt="modifica-task" class="size-5 inline"></a>
-														</li>
-
-														
-
-														<li><a
-															th:href="@{/Progetti/{id}(id=${task.progetto.getId()})}"
-															th:text="Progetto"
-															class="hover:underline flex flex-col md:flex-row px-2 mt-7 float-right text-[#0057A5]">
-														</a></li>
-
-													</ul>
-												</span>
-											</div>
-
-
-
+													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
+														<form th:action="@{/Progetti/archivia/{id}(id=${progetti.getId()})}"
+														th:object="${progetto}" method="post">
+														<button type="submit">
+														<img th:src="@{/img/sources/icons/archive.svg}" alt="archivia" class="size-5 inline"></button>
+														</form>
+													</li>
+													
+													<li >
+														<a th:href="@{/Task}"
+														th:text="'task ' + ${progetti.getElencoTask().size()}"
+														class="hover:underline flex flex-col md:flex-row sm:visible lg:visible md:invisible px-2 mt-7 float-right text-[#0057A5]">
+														</a>
+													</li>
+                 
+												</ul>
+											</span>
 										</div>
+
+
+
 									</div>
 								</div>
+							 </div>
+							 </div>
 							</div>
-						</div>
-						<!--						ELENCO TASK CON TABELLA-->
-						<table class="text-[#0057A5] w-full m-auto">
-							<thead
-								class="border border-[#0057A5] md:h-12 h-8 bg-[#0057A5] text-white max-sm:text-[12px]">
-								<tr>
-									<th class="md:px-4 px-2">Nome</th>
-									<th class="md:px-4 px-2  max-lg:hidden">Data Inizio</th>
-									<th class="md:px-4 px-2  max-lg:hidden">Chiusura Stimata</th>
-									<th class="md:px-4 px-2  max-lg:hidden">Chiusura Effettiva
-									</th>
-									<th class="md:px-4 px-2" style="text-align: center;">
-										Progetto Rif.</th>
-									<th class="md:px-4 px-2">Stato</th>
-									<th></th>
-								</tr>
-								</th>
-							<tbody>
-
-
-								<tr th:each="task : ${list}"
-									class="border-b-2 h-6 text-center max-sm:text-[10px]">
-									<td th:text="${task.getName()}"></td>
-
-									<td
-										th:text="${#temporals.format(task.getDataInizio(), 'dd MMM yyyy')}"
-										class="p-2 max-lg:hidden"></td>
-									<td
-										th:text=" ${#temporals.format(task.getDataChiusuraStimata(), 'dd MMM yyyy')}"
-										class="p-2 max-lg:hidden"></td>
-									<td
-										th:text=" ${#temporals.format(task.getDataChiusuraDefinitiva(), 'dd MMM yyyy')}"
-										class="p-2 max-lg:hidden"></td>
-									<td th:text="${task.getProgetto.name}"></td>
-									<td>
-										<div class="flex items-center justify-center gap-1">
-											<img th:if="${task.getStato() == 'in corso'}"
-												id="semaforo-start" class="h-5"
-												src="/img/sources/icons/contatore-on-start.svg"
-												alt="contatore in start"> <img
-												th:if="${task.getStato() == 'in pausa'}" id="semaforo-pausa"
-												class="h-5" src="/img/sources/icons/contatore-on-pause.svg"
-												alt="contatore in pausa"> <img
-												th:if="${task.getStato() == 'chiuso'}" id="semaforo-stop"
-												class="h-5" src="/img/sources/icons/contatore-on-stop.svg"
-												alt="contatore in stop"> <img
-												th:if="${task.getStato() == 'inattivo'}"
-												id="semaforo-inattivo" class="h-5"
-												src="/img/sources/icons/contatore-inattivo.svg"
-												alt="contatore inattivo">
-
+<!-----------------------	card per clienti -------------------->
+							<div id="list-cliente" th:if="paginazioneAttivaCliente" class="hidden"> 
+							<div  class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-between w-full">
+							<div th:each="progettoCliente : ${listProgettiByCliente}" class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
+														
+							<div class="md:flex" >
+									<div class="md:shrink-0">
+										<img class="aspect-square h-48 w-full object-cover md:w-48" th:src="@{${progettoCliente.cliente.LogoPath}}"
+											alt="logo-cliente">
+									</div>
+							
+									<div class="p-4 w-full">
+										<div>
+											<img th:if="${progettoCliente.getDataFine} == null" th:src="@{/img/sources/icons/contatore-on-start.svg}"
+												alt="progetto-attivo" class="size-5 inline float-right">
+											<img th:if="${progettoCliente.getDataFine} != null" th:src="@{/img/sources/icons/contatore-on-stop.svg}"
+												alt="progetto-chiuso" class="size-5 inline float-right">
+							
 										</div>
-									</td>
-									<td>
-										<div
-											class="flex justify-center items-center gap-4 md:px-6 px-2">
-											<a th:href="@{|/Task/${task.id}|}">
-												<div class="t-tooltip w-5 h-5">
-													<img class="h-[100%] w-[100%]"
-														src="/img/sources/icons/board-tabloid-blue.svg"
-														alt="dettaglio task">
-													<div
-														class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-														Dettaglio</div>
-												</div>
-											</a> <a th:href="@{|/Task/edit/${task.id}|}">
-												<div class="t-tooltip w-5 h-5">
-													<img class="h-[100%] w-[100%]"
-														src="/img/sources/icons/modify-blue.svg"
-														alt="modifica task">
-													<div
-														class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-														Modifica</div>
-												</div>
-											</a>
-											<div
-												th:if="${task.id == taskInUsoId or task.getStato() == 'chiuso'}"
-												class="w-5 h-5">
-												<img src="/img/sources/icons/contatore-blue-inattivo.svg">
-											</div>
-											<div
-												th:unless="${task.id == taskInUsoId or task.getStato() == 'chiuso'}">
-												<form th:action="@{|/contatore/cambio/${task.id}|}"
-													th:object="${contatore}" method="post">
-													<input type="hidden" name="endPoint" th:value="${endPoint}">
-													<button type="submit" class="t-tooltip w-5 h-5">
-														<img src="/img/sources/icons/contatore-blue.svg">
-														<div
-															class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-50px] mt-[5px] text-nowrap ">
-															Seleziona Contatore</div>
-													</button>
-												</form>
-											</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						<div th:if="${list.isEmpty()}">
-							<div class="text-center text-[#0057A5] p-4">
+										<div th:text="${progettoCliente.cliente.labelCliente}"
+											class="line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
+											cliente</div>
+							
+										<a th:href="@{/Progetti/{id}(id=${progettoCliente.getId()})}" th:text="${progettoCliente.name}"
+											class="line-clamp-1  block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome
+											progetto </a>
+										<p th:text="${progettoCliente.descrizione}" class="mt-2 text-slate-500 line-clamp-2">descrizione
+											progetto</p>
+							
+										<div>
+							
+											<span>
+							
+												<ul>
+							
+													<li class="flex flex-col md:flex-row float-left"><a
+															th:href="@{/Progetti/{id}(id=${progettoCliente.getId()})}"
+															class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
+															vai al dettaglio </a>
+															</li>
+													<li class="flex flex-col md:flex-row px-2 mt-6 float-left">
+														<a
+														th:href="@{/Task/insert/progetto-{id}(id=${progettoCliente.getId()})}">
+														
+															<div class=" t-tooltip col-auto w-8 h-8 ms-2">
+															
+															<img th:src="@{/img/sources/icons/add-task-blue.svg}"
+																		alt="aggiungi-task" class=" size-8 ml-3 -mt-1 inline">
+																<div class=" relative hidden -left-4 bottom-20 t-box w-32 text-center text-nowrap border border-[#0057A5] text-[#0057A5] bg-gray-100 rounded-lg p-1">
+																	Aggiungi Task
+																</div>
+															</div>
+															</a>	
+													</li>
+							
+													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
+														<a th:href="@{/Progetti/edit/{id}(id=${progettoCliente.getId()})}"><img
+																th:src="@{/img/sources/icons/modify-grey.svg}" alt="progetto-attivo"
+																class="size-5 inline"></a>
+													</li>
+							
+													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
+														<form th:action="@{/Progetti/archivia/{id}(id=${progettoCliente.getId()})}"
+														th:object="${progetto}" method="post">
+														<button type="submit">
+														<img th:src="@{/img/sources/icons/archive.svg}" alt="archivia" class="size-5 inline"></button>
+														</form>
+														
+													</li>
+													
+													<li>
+													<a th:href="@{/Task}"
+													th:text="'task ' + ${progettoCliente.getElencoTask().size()}"
+														class="hover:underline flex flex-col md:flex-row px-2 mt-7 float-right text-[#0057A5]">
+														</a>
+														</li>
+												
+												</ul>
+											</span>
+										</div>
+							
+							
+							
+									</div>
+								</div>
+							</div>	
+							</div>
+							</div>
+						
+<!--paginazione lista per data-->
+						
+						<div th:if="paginazioneAttivaData">
+							<div th:if="${listProgettiByDataInizio.isEmpty()}" id="ricerca-vuota-data" class="text-center text-[#0057A5] p-4">
+							<div>
 								<h1>La ricerca non ha prodotto risultati</h1>
 							</div>
 						</div>
-						<div class="py-4 mb-10">
+						</div>
+						
+						<div th:if="paginazioneAttivaData" id="paginazione-data" class="p-4 mb-10">
+							
 							<div class="flex justify-between text-center">
-								<div class="col"
-									th:text="|Task Totali: ${totalItems} - Pagina ${currentPage} di ${totalPages}|">
+								<div  class="col"
+									th:text="|Progetti totali ordinati per data inizio: ${totalItemByDatainizio} - Pagina ${currentPage} di ${totalPageByDataInizio}|">
 								</div>
 								<div class="col">
 									<span class=" justify-center"
-										th:each="i : ${#numbers.sequence(1, totalPages)}"> <a
+										th:each="i : ${#numbers.sequence(1, totalPageByDataInizio)}"> <a
 										class="p-[3px] text-[#0057A5]"
 										style="border: 1px solid #0057A5; border-radius: 5px;"
-										th:href="@{'/Task/page/'+${i}}" th:text="${i}"></a>
+										th:href="@{'/Progetti/page/'+${i}}" th:text="${i}"></a>
 									</span>
 								</div>
 							</div>
 						</div>
+
+<!--						paginazione lista per clienti-->
+					<div th:if="paginazioneAttivaCliente">
+						<div th:if="${listProgettiByCliente.isEmpty()}" id="ricerca-vuota-clienti" class="hidden text-center text-[#0057A5] p-4">
+							<div>
+								<h1>La ricerca non ha prodotto risultati</h1>
+							</div>
+						</div>
+					</div>
+					<div th:if="paginazioneAttivaCliente" id="paginazione-clienti" class="hidden p-4 mb-10">
+						
+						<div class="flex justify-between text-center">
+							<div  class="col"
+								th:text="|Progetti totali ordinati per cliente: ${totalItemByCliente} - Pagina ${currentPage} di ${totalPageByCliente}|">
+							</div>
+							<div class="col">
+								<span class=" justify-center" th:each="i : ${#numbers.sequence(1, totalPageByCliente)}"> <a
+										class="p-[3px] text-[#0057A5]" style="border: 1px solid #0057A5; border-radius: 5px;"
+										th:href="@{'/Progetti/page/'+${i}}" th:text="${i}"></a>
+								</span>
+							</div>
+						</div>
+					</div>
+					
 					</section>
 					
+				
 				</div>
-				<div th:if="${areTasksOnDb == false}">
-					<h2 class="text-[#0057A5] font-bold m-auto py-10">NESSUN TASK
-						ANCORA REGISTRATO</h2>
-					<a th:href="@{/Task/newTask}"
-						class="text-center flex justify-center">
+				<div th:if="${areProjectsOnDb == false}" class="flex flex-col items-center justify-center text-center h-full">
+					<h2 class="text-[#0057A5] font-bold py-10 ">NESSUN PROGETTO ANCORA REGISTRATO</h2>
+					<!-- th:href="@{/Progetti/insert/1} diventera poi th:href="@{'/Progetti/insert/{id}'(id=${userLogged.getId()})'} quando sara implementata autentizazione-->
+					<a th:href="@{/Progetti/insert/1}" class="text-center flex justify-center">
 						<button
 							class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
-							Aggiungi Task</button>
+							Aggiungi Progetto
+						</button>
 					</a>
 				</div>
-				<div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden"
+				<div class="m-auto pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden"
 					id="dettaglio-contatore-bottom">
 					<div
 						class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
@@ -695,7 +680,6 @@
 					class="flex justify-end items-center p-2 cursor-pointer">
 					<img class="h-[30px] w-[30px]"
 						src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
-
 				</div>
 			</div>
 			<div th:unless="${taskInUso == null}"
@@ -722,16 +706,14 @@
 	</div>
 	<!-- Script -->
 	<script th:inline="javascript">
-		/*<![CDATA[*/
-		let finalTimeSec = /*[[${finaltime}]]*/ null;
-		let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
-		let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean
-		let taskInUsoId = /*[[${taskInUsoId}]]*/ null;
-		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
-		
-		console.log("contatoreAttivato: " + contatoreAttivato);
-		/*]]>*/
-	</script>
+							/*<![CDATA[*/
+							let finalTimeSec = /*[[${finaltime}]]*/ null;
+							let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
+							let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean
+							let taskInUsoId = /*[[${taskInUsoId}]]*/ null;	
+							let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean	
+							/*]]>*/
+						</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
 </body>
