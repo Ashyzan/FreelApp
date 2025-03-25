@@ -139,7 +139,9 @@
 						<div th:unless="${contatoreIsTrue}" class=" text-[10px] p-0">...</div>
 						<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
 							class=" text-[10px] p-0 max-w-[90px] truncate"></div>
-						<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
+							<form id="formContatoreErroreFinalsecond" th:object="${contatore}" method="post">
+								<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
+							</form>
 						<div
 							class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-40px] mt-[40px]">
 							Dettaglio task</div>
