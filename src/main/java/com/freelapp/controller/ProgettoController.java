@@ -1,9 +1,11 @@
 package com.freelapp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
+import com.freelapp.model.Task;
 import com.freelapp.model.User;
 import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
@@ -54,27 +57,49 @@ public class ProgettoController {
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
 				
+				//invio al model il booleano del contatore attivato
+				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+				
+				//restituisce al model questo valore booleano false se non ci sono progetti a db
+				//e restituisce true se ci sono progetti a db
+				boolean areProjectsOnDb = false;
+				if(!repositProgetto.findAll().isEmpty()) {
+					areProjectsOnDb = true;
+				}
+				model.addAttribute("areProjectsOnDb", areProjectsOnDb);
+				
 				return getOnePage(1, model);
 			}
 			
 			@GetMapping("/Progetti/page/{pageNumber}")
 			public String getOnePage(@PathVariable("pageNumber") int currentPage, Model model ) {
-				
-					Page<Progetto> page = progettoService.findPage(currentPage);
 					
-					int totalPages = page.getTotalPages();
 					
-					long totalItems = page.getTotalElements();
 					
-					List<Progetto> listProgetti = page.getContent();
+					// ordina i progetti per data di inizio
+					Page<Progetto> pageByDataInizio = progettoService.orderByDataInizio(currentPage);
+					int totalPageByDataInizio = pageByDataInizio.getTotalPages();	
+					long totalItemByDatainizio = pageByDataInizio.getTotalElements();		
+					List<Progetto> listProgettiByDataInizio = pageByDataInizio.getContent();
 					
-					model.addAttribute("list", listProgetti);
+					//ordina i progetti per cliente
+					Page<Progetto> pageByCliente = progettoService.orderByClient(currentPage);
+					int totalPageByCliente = pageByCliente.getTotalPages();	
+					long totalItemByCliente = pageByCliente.getTotalElements();		
+					List<Progetto> listProgettiByCliente = pageByCliente.getContent();
+					
+						
 					
 					model.addAttribute("currentPage", currentPage);
-				
-					model.addAttribute("totalPages", totalPages);
-					
-					model.addAttribute("totalItems", totalItems);
+					// passaggio al model delle liste per data inizio
+					model.addAttribute("listProgettiByDataInizio", listProgettiByDataInizio);					
+					model.addAttribute("totalPageByDataInizio", totalPageByDataInizio);					
+					model.addAttribute("totalItemByDatainizio", totalItemByDatainizio);
+					// passaggio al model delle liste per cliente
+					model.addAttribute("listProgettiByCliente", listProgettiByCliente);					
+					model.addAttribute("totalPageByCliente", totalPageByCliente);					
+					model.addAttribute("totalItemByCliente", totalItemByCliente);
 					
 					contatoreservice.importContatoreInGet(model);
 					
@@ -91,6 +116,21 @@ public class ProgettoController {
 					//passo al model i contatore e task in uso (gli static)
 					model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 					model.addAttribute("taskInUso", ContatoreController.taskInUso);
+					
+					//invio al model il booleano del contatore attivato
+					//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+					model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+					//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+					ContatoreController.contatoreAttivato = false;
+					
+					//restituisce al model questo valore booleano false se non ci sono progetti a db
+					//e restituisce true se ci sono progetti a db
+					boolean areProjectsOnDb = false;
+					if(!repositProgetto.findAll().isEmpty()) {
+						areProjectsOnDb = true;
+					}
+					model.addAttribute("areProjectsOnDb", areProjectsOnDb);
 				
 				return "/Progetti/freelApp-listaProgetti";
 			} 
@@ -102,6 +142,21 @@ public class ProgettoController {
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
 				
+				//invio al model il booleano del contatore attivato
+				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+//				ContatoreController.contatoreAttivato = false;
+				
+				//restituisce al model questo valore booleano false se non ci sono progetti a db
+				//e restituisce true se ci sono progetti a db
+				boolean areProjectsOnDb = false;
+				if(!repositProgetto.findAll().isEmpty()) {
+					areProjectsOnDb = true;
+				}
+				model.addAttribute("areProjectsOnDb", areProjectsOnDb);
+				
 				return progettoBySearch(1, input, model);
 			} 
 				 
@@ -109,22 +164,27 @@ public class ProgettoController {
 			 public String progettoBySearch(@PathVariable("pageNumber") int currentPage, String input,
 					 	Model model) {
 
-						 
-					Page<Progetto> page = progettoService.findSearchedPage(currentPage,input);
-
-					int totalPages = page.getTotalPages();
-						 
-					long totalItems = page.getTotalElements();
-						 
-					List<Progetto> listaClientiSearch = page.getContent();
-						
-					model.addAttribute("currentPage", currentPage);
+				 // ordina i progetti per data di inizio
+					Page<Progetto> pageByDataInizio = progettoService.findSearchedPageByDataInizio(currentPage,input);
+					int totalPageByDataInizio = pageByDataInizio.getTotalPages();	
+					long totalItemByDatainizio = pageByDataInizio.getTotalElements();		
+					List<Progetto> listProgettiByDataInizio = pageByDataInizio.getContent();
 					
-					model.addAttribute("totalPages", totalPages);
-						
-					model.addAttribute("totalItems", totalItems);
-						
-					model.addAttribute("list", listaClientiSearch);	
+					//ordina i progetti per cliente
+					Page<Progetto> pageByCliente = progettoService.findSearchedPageByClient(currentPage,input);
+					int totalPageByCliente = pageByCliente.getTotalPages();	
+					long totalItemByCliente = pageByCliente.getTotalElements();		
+					List<Progetto> listProgettiByCliente = pageByCliente.getContent();
+					
+					model.addAttribute("currentPage", currentPage);
+					// passaggio al model delle liste per data inizio
+					model.addAttribute("listProgettiByDataInizio", listProgettiByDataInizio);					
+					model.addAttribute("totalPageByDataInizio", totalPageByDataInizio);					
+					model.addAttribute("totalItemByDatainizio", totalItemByDatainizio);
+					// passaggio al model delle liste per cliente
+					model.addAttribute("listProgettiByCliente", listProgettiByCliente);					
+					model.addAttribute("totalPageByCliente", totalPageByCliente);					
+					model.addAttribute("totalItemByCliente", totalItemByCliente);
 					
 					contatoreservice.importContatoreInGet(model);
 					
@@ -141,6 +201,21 @@ public class ProgettoController {
 					//passo al model i contatore e task in uso (gli static)
 					model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 					model.addAttribute("taskInUso", ContatoreController.taskInUso);
+					
+					//invio al model il booleano del contatore attivato
+					//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+					model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+					//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+					ContatoreController.contatoreAttivato = false;
+					
+					//restituisce al model questo valore booleano false se non ci sono progetti a db
+					//e restituisce true se ci sono progetti a db
+					boolean areProjectsOnDb = false;
+					if(!repositProgetto.findAll().isEmpty()) {
+						areProjectsOnDb = true;
+					}
+					model.addAttribute("areProjectsOnDb", areProjectsOnDb);
 						
 				return "/Progetti/freelApp-listaProgetti";
 			}
@@ -159,6 +234,13 @@ public class ProgettoController {
 				//passo al model i contatore e task in uso (gli static)
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
+				
+				//invio al model il booleano del contatore attivato
+				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+				ContatoreController.contatoreAttivato = false;
 	
 				return "/Progetti/freelapp-descrizioneProgetto";
 		   }
@@ -180,7 +262,7 @@ public class ProgettoController {
 				
 				
 				//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
-				String endPoint = "/Task/insert/progetto-" + utente.getId();
+				String endPoint = "/Progetti/insert/" + utente.getId();
 				
 				model.addAttribute("endPoint", endPoint);
 				
@@ -194,6 +276,13 @@ public class ProgettoController {
 			    }else {
 			    	model.addAttribute("taskInUsoId",0);
 			    }
+				
+				//invio al model il booleano del contatore attivato
+				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+				ContatoreController.contatoreAttivato = false;
 				
 				return "/Progetti/freelapp-insertProgetto";
 			}
@@ -268,6 +357,13 @@ public class ProgettoController {
 			    	model.addAttribute("taskInUsoId",0);
 			    }
 				
+				//invio al model il booleano del contatore attivato
+				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+				ContatoreController.contatoreAttivato = false;
+				
 				return "/Progetti/freelapp-editProgetto";
 			}
 			
@@ -310,6 +406,50 @@ public class ProgettoController {
 			    repositProgetto.deleteById(id);
 			
 			    return "redirect:/Progetti";
+			}
+			
+			@PostMapping("/Progetti/archivia/{id}")
+			public String archiviaProgetto(@PathVariable("id") Integer id, Model model) {
+				
+				Progetto progetto = repositProgetto.findById(id).get();
+				
+				progetto.setArchivia(true);
+				model.addAttribute("progetto",progetto);
+				repositProgetto.save(progetto);
+				
+				return "redirect:/Progetti";
+				
+			}
+			
+			@GetMapping("/Progetti/archivio")
+			public String progettiArchivio(Model model) {
+				
+				List<Progetto> progettiAll = repositProgetto.findAll();
+				List<Progetto> progettiArchiviati = new ArrayList<Progetto>();
+				
+				for (Progetto progetto : progettiAll) {
+					
+					if(progetto.getArchivia() == null) {
+						progetto.setArchivia(false);
+						repositProgetto.save(progetto);
+					}
+					if(progetto.getArchivia() == true) {
+						progettiArchiviati.add(progetto);
+						
+					}
+				}
+				
+				model.addAttribute("progettiArchiviati",progettiArchiviati);
+				
+				// se non ci sono progetti
+				boolean areProjectsOnDb = false;
+				if(!repositProgetto.findAll().isEmpty()) {
+					areProjectsOnDb = true;
+				}
+				model.addAttribute("areProjectsOnDb", areProjectsOnDb);
+				
+				return "/Progetti/freelApp-archivioProgetti";
+				
 			}
 			
 }

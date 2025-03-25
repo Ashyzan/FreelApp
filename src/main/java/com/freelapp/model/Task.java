@@ -1,8 +1,7 @@
 package com.freelapp.model;
 
 import java.time.LocalDate;
-
-
+import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -56,6 +55,19 @@ public class Task{
 	@Column(name = "DataChiusuraDefinitiva")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataChiusuraDefinitiva;
+	
+	@Column(name = "DataModifica")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDateTime dataModifica ;
+
+	public LocalDateTime getDataModifica() {
+		return dataModifica;
+	}
+
+	public void setDataModifica(LocalDateTime dataModifica) {
+		this.dataModifica = dataModifica;
+		
+	}
 
 	@ManyToOne
 	@NotNull(message = "La scelta del progetto è obbligatoria")
@@ -63,7 +75,7 @@ public class Task{
 	private Progetto progetto;
 	
 	@Column(name = "stato")
-	private String stato;
+	private String stato = "inattivo";
 	
 	@OneToOne(mappedBy = "task", cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn
@@ -134,7 +146,6 @@ public class Task{
 
 
 	public void setStato(String stato) {
-	    stato = "in corso";
 	    this.stato = stato;
 	}
 

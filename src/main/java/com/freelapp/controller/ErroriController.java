@@ -26,6 +26,12 @@ public class ErroriController {
 			model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 			model.addAttribute("taskInUso", ContatoreController.taskInUso);
 
+			//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+		ContatoreController.contatoreAttivato = false;
 		
 		return "/Errori/MaxUploadSizeExceeded";
 		

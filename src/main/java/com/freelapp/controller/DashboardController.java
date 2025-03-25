@@ -46,10 +46,19 @@ public class DashboardController {
 		String endPoint = "/dashboard";
 		model.addAttribute("endPoint", endPoint);
 		
-			contatoreservice.importContatoreInGet(model);
-			model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
-			model.addAttribute("taskInUso", ContatoreController.taskInUso);
-
+		contatoreservice.importContatoreInGet(model);
+		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		if(ContatoreController.taskInUso != null) {
+			model.addAttribute("taskInUsoId", ContatoreController.taskInUso.getId());			
+		}
+		
+		//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+		ContatoreController.contatoreAttivato = false;
 
 		List<Cliente> clienteList = new ArrayList<Cliente> ();
 
@@ -66,36 +75,41 @@ public class DashboardController {
 		model.addAttribute("progettiList", progettiList);
 		
 		
-		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
 		List<Task> taskList = new ArrayList<Task> ();
 
-		taskList = taskRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+		taskList = taskRepository.findAllNotClosed();
 
 		model.addAttribute("taskList", taskList);
 		
 		
 		// lista che restituisce i task per modale delle ore lavorate sulla dashboard
 		List<Task> taskListOreLavorate = new ArrayList<Task> ();
-		taskList = taskRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+		taskList = taskRepository.findAll(Sort.by(Sort.Direction.DESC, "Name"));
 		taskList.forEach( task -> {
 			
-			if( task.getContatore() != null) {
-				Boolean contatoreAttivo;
-				contatoreAttivo = contatoreservice.contatoreIsRun(task, model);
-				if(task.getContatore().getStop() == null  && contatoreAttivo == false) {
-					 
-						 taskListOreLavorate.add(task); 
-						 }	
-					}
-			else if( task.getContatore() == null) {
+			
+				if( task.getContatore() == null) {
 				taskListOreLavorate.add(task);
-			}
-				} );
+				
+						}
+				
+				else if( task.getContatore() != null) {
+					Boolean contatoreAttivo;
+					contatoreAttivo = contatoreservice.contatoreIsRun(task);
+		
+					if(task.getContatore().getStop() == null  && contatoreAttivo == false) {
+					
+							 taskListOreLavorate.add(task); 
+									
+							 }	
+						}
 			model.addAttribute("taskListOreLavorate", taskListOreLavorate);
+				} );
 
 		
 		return "freelApp-dashboard";
 
-	}
+			}
 	
 }

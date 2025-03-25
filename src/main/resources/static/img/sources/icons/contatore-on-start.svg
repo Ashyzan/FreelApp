@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <rect id="Tavola-da-disegno1" serif:id="Tavola da disegno1" x="0" y="0" width="200" height="200" style="fill:none;"/>
+    <g transform="matrix(3.28043,0,0,3.28043,-63.8502,-45.4622)">
+        <g>
+            <g transform="matrix(1.013,0,0,1.013,-1.7777,-8.82953)">
+                <g transform="matrix(0.399503,0,0,0.399503,11.6881,12.3078)">
+                    <path d="M98.981,158.688C78.97,158.688 61.267,148.619 50.672,133.28C69.201,92.264 103.639,66.517 139.369,57.489C150.628,68.186 157.657,83.294 157.657,100.013C157.657,132.366 131.335,158.688 98.981,158.688Z" style="fill:rgb(47,179,0);"/>
+                </g>
+                <g transform="matrix(0.537379,0,0,0.502873,6.12289,14.4961)">
+                    <g>
+                        <clipPath id="_clip1">
+                            <path d="M48.027,101.532C43.169,94.016 40.321,84.908 40.321,75.103C40.321,49.4 59.889,28.49 83.941,28.49C95.564,28.49 106.14,33.373 113.967,41.32C87.404,48.492 61.802,68.947 48.027,101.532Z"/>
+                        </clipPath>
+                        <g clip-path="url(#_clip1)">
+                            <rect x="39.617" y="28.062" width="74.938" height="74.938" style="fill:rgb(105,210,13);"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+            <g transform="matrix(0.640526,0,0,0.640526,-27.9551,-1.0656)">
+                <path d="M121.892,23.569C148.01,23.569 169.215,44.774 169.215,70.892C169.215,97.01 148.01,118.215 121.892,118.215C95.774,118.215 74.569,97.01 74.569,70.892C74.569,44.774 95.774,23.569 121.892,23.569ZM121.892,34.497C101.805,34.497 85.498,50.805 85.498,70.892C85.498,90.979 101.805,107.286 121.892,107.286C141.979,107.286 158.287,90.979 158.287,70.892C158.287,50.805 141.979,34.497 121.892,34.497Z" style="fill:rgb(166,166,166);"/>
+            </g>
+        </g>
+    </g>
+</svg>

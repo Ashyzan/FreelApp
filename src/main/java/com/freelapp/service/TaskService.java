@@ -3,6 +3,7 @@ package com.freelapp.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +23,12 @@ public class TaskService {
 	private TaskRepository taskRepository;
 
 	public List<Task> findAll(){
-		return taskRepository.findAll(Sort.by(Sort.Direction.DESC, "dataInizio"));
+		return taskRepository.findAll(Sort.by(Sort.Direction.DESC, "dataModifica"));
 	}
 	
 	public Page<Task> findPage(int pageNumber){
-		Pageable pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending().and(Sort.by("name")));
+		Pageable pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
 		return taskRepository.findAll(pageable);
-		
-		
-			  
 		
 	}
 	
@@ -47,5 +45,16 @@ public class TaskService {
 		LocalDate NEWSTOP2 = NEWSTOP.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		taskRepository.getReferenceById(taskId).setDataChiusuraDefinitiva(NEWSTOP2);
 	}
+	
+	// metodo che restituisce il finaltime formattato in HH:MM:SS
+	public String Timer(Task task) {		
+	    Long finaltime = task.getContatore().getFinaltime(); 
+	    Long HH = finaltime / 3600;
+	    Long MM= (finaltime % 3600) / 60;
+	    Long SS = finaltime % 60;  
+	    String timer = String.format("%02d:%02d:%02d", HH, MM, SS);	    
+		return timer;
+	}
+	
 	
 }

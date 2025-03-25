@@ -20,17 +20,33 @@ public class ProgettoService {
 
 	public List<Progetto> findAll(){
 		return progettoRepository.findAll();
-	}
-	
-	public Page<Progetto> findPage(int pageNumber){
-		Pageable pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending().and(Sort.by("name")));
-		
-		return progettoRepository.findAll(pageable);
 		
 	}
 	
-	public Page<Progetto> findSearchedPage(int pageNumber, String input){
-		Pageable pageable = PageRequest.of(pageNumber -1, 4);
+	public Page<Progetto> orderByDataInizio(int pageNumber){
+		Pageable pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+		
+		return progettoRepository.findAll(pageable1);
+		
+		
+	}
+	
+	public Page<Progetto> orderByClient(int pageNumber){
+		Pageable pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").ascending());
+		
+		return progettoRepository.findAll(pageable2);
+		
+		
+	}
+	
+	public Page<Progetto> findSearchedPageByDataInizio(int pageNumber, String input){
+		Pageable pageable = PageRequest.of(pageNumber -1, 4, Sort.by("dataInizio").descending());
+		return progettoRepository.search(input, pageable);
+		
+	}
+	
+	public Page<Progetto> findSearchedPageByClient(int pageNumber, String input){
+		Pageable pageable = PageRequest.of(pageNumber -1, 4, Sort.by("cliente.labelCliente").ascending());
 		return progettoRepository.search(input, pageable);
 		
 	}

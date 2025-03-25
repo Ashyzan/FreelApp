@@ -25,6 +25,10 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
 import com.freelapp.model.User;
@@ -72,6 +76,18 @@ public class ClientController {
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
 		
+		//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//restituisce al model questo valore booleano false se non ci sono clienti a db
+		//e restituisce true se ci sono clienti a db
+		boolean areClientsOnDb = false;
+		if(!repositoryCliente.findAll().isEmpty()) {
+			areClientsOnDb = true;
+		}
+		model.addAttribute("areClientsOnDb", areClientsOnDb);
+		
 		return getOnePage(1, model );
 	} 
 	
@@ -111,6 +127,21 @@ public class ClientController {
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
 		
+		//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+		ContatoreController.contatoreAttivato = false;
+		
+		//restituisce al model questo valore booleano false se non ci sono clienti a db
+		//e restituisce true se ci sono clienti a db
+		boolean areClientsOnDb = false;
+		if(!repositoryCliente.findAll().isEmpty()) {
+			areClientsOnDb = true;
+		}
+		model.addAttribute("areClientsOnDb", areClientsOnDb);
+		
 		return "/Clienti/freelApp-listClient";
 	} 
 	
@@ -121,20 +152,24 @@ public class ClientController {
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
 		
+		//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//restituisce al model questo valore booleano false se non ci sono clienti a db
+		//e restituisce true se ci sono clienti a db
+		boolean areClientsOnDb = false;
+		if(!repositoryCliente.findAll().isEmpty()) {
+			areClientsOnDb = true;
+		}
+		model.addAttribute("areClientsOnDb", areClientsOnDb);
+		
 		return clienteBySearch(1, input, model);
 	} 
 		 
 	 @GetMapping("/cliente-search/page/{numberPage}")
 	 public String clienteBySearch(@PathVariable("pageNumber") int currentPage, String input,
 			 	Model model) {
-
-//		 		List<Cliente> list = new ArrayList<Cliente>();
-//
-//				 if(!input.isEmpty()) {
-//					 
-//					 list = repositoryCliente.search(input);
-//					 
-//				 } 
 				 
 				 Page<Cliente> page = clienteService.findSearchedPage(currentPage,input);
 
@@ -168,6 +203,21 @@ public class ClientController {
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
 				
+				//invio al model il booleano del contatore attivato
+				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+				ContatoreController.contatoreAttivato = false;
+				
+				//restituisce al model questo valore booleano false se non ci sono clienti a db
+				//e restituisce true se ci sono clienti a db
+				boolean areClientsOnDb = false;
+				if(!repositoryCliente.findAll().isEmpty()) {
+					areClientsOnDb = true;
+				}
+				model.addAttribute("areClientsOnDb", areClientsOnDb);
+				
 				return "Clienti/freelApp-listClient";
 		 
 		 
@@ -179,7 +229,7 @@ public class ClientController {
 		model.addAttribute("cliente", repositoryCliente.getReferenceById(clienteId));
 		
 		//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
-		String endPoint = "/Progetti/" + repositoryCliente.getReferenceById(clienteId).getId();
+		String endPoint = "/Clienti/" + repositoryCliente.getReferenceById(clienteId).getId();
 		
 		model.addAttribute("endPoint", endPoint);
 		
@@ -187,6 +237,13 @@ public class ClientController {
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		
+		//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+		ContatoreController.contatoreAttivato = false;
 	
 		return "/Clienti/freelapp-descrizioneCliente";
 	  }
@@ -215,6 +272,13 @@ public class ClientController {
 		}else {
 			model.addAttribute("taskInUsoId",0);
 		}
+		
+		//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+		ContatoreController.contatoreAttivato = false;
 	    
 	    return "/Clienti/freelapp-insertClient"; 
 	}
@@ -318,6 +382,12 @@ public class ClientController {
 	    	model.addAttribute("taskInUsoId",0);
 	    }
 		
+		//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+		ContatoreController.contatoreAttivato = false;
 		return "/Clienti/freelapp-editClient";
 	}
 	
@@ -406,7 +476,7 @@ public class ClientController {
 		Cliente cliente = new Cliente();
 		
 		cliente = repositoryCliente.getReferenceById(id);
-		
+			
 		//per poter cancellare i progetti collegati al cliente ho dovuto cancellare i task associati
 		//e per farlo ho creato una lista di progetti associati al cliente, l'ho iterata con il for 
 		//e per ogni progetto della lista vado a cancellare i suoi task. fatto questo esco
@@ -425,6 +495,17 @@ public class ClientController {
 		}
 		
 		repositProgetto.deleteByClienteId(id);
+		
+		// creazione path del logo realitivo al cliente per successiva cancellazione
+		// il numero 1 diventerà userLogged.getId() con implementazione security
+		Path logoPathAndFileToDelete = Paths.get( "upload/images/logo/utentiId/1/" + cliente.getLogo());
+		
+		try {
+			Files.delete(logoPathAndFileToDelete);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 		
 		repositoryCliente.deleteById(id);
 		

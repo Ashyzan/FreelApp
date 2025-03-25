@@ -46,7 +46,17 @@ public class Progetto {
 	@NotNull(message = "Data di inizio obbligatoria")
 	private LocalDate dataInizio = LocalDate.now();
 	
+	@Column(name = "archivia")
+	private Boolean archivia;
 	
+	public Boolean getArchivia() {
+		return archivia;
+	}
+
+	public void setArchivia(Boolean archivia) {
+		this.archivia = archivia;
+	}
+
 	@DateTimeFormat(pattern= "yyyy-MM-dd")
 	@Column(name = "DataFine")
 	private LocalDate dataFine;

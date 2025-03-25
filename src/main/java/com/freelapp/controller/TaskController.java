@@ -1,11 +1,15 @@
 package com.freelapp.controller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.freelapp.model.Contatore;
 import com.freelapp.model.Progetto;
 import com.freelapp.model.Task;
 import com.freelapp.repository.ProgettoRepository;
@@ -46,11 +51,36 @@ public class TaskController {
 
     @GetMapping("/Task")
     public String iMieiTask(Model model) {
-
+    	
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		
+		//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
+		Integer taskInUsoId = 0;
+		
+		if(ContatoreController.taskInUso != null) {
+			taskInUsoId = ContatoreController.taskInUso.getId();
+		}
+		
+		model.addAttribute("taskInUsoId", taskInUsoId);
+		
+		// restituisce al model questo valore booleano false se non ci sono progetti a db
+		// e restituisce true se ci sono progetti a db
+		boolean areTasksOnDb = false;
+		if (!repositTask.findAll().isEmpty()) {
+			areTasksOnDb = true;
+		}
+		model.addAttribute("areTasksOnDb", areTasksOnDb);
+		
+		
     	
+
 	return getOnePage(1, model);
     }
 
@@ -65,6 +95,7 @@ public class TaskController {
 
 	List<Task> listTask = page.getContent();
 	
+
 	model.addAttribute("list", listTask);
 
 	model.addAttribute("currentPage", currentPage);
@@ -88,16 +119,70 @@ public class TaskController {
 	//passo al model i contatore e task in uso (gli static)
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+	
+	//invio al model il booleano del contatore attivato
+	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+	model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+	
+	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+	ContatoreController.contatoreAttivato = false;
+	
+	//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
+		Integer taskInUsoId = 0;
+		
+		if(ContatoreController.taskInUso != null) {
+			taskInUsoId = ContatoreController.taskInUso.getId();
+		}
+		
+		model.addAttribute("taskInUsoId", taskInUsoId);
+
+		// restituisce al model questo valore booleano false se non ci sono progetti a db
+		// e restituisce true se ci sono progetti a db
+		boolean areTasksOnDb = false;
+		if (!repositTask.findAll().isEmpty()) {
+			areTasksOnDb = true;
+		}
+		model.addAttribute("areTasksOnDb", areTasksOnDb);
 
 	return "/Task/freelApp-listaTask";
     }
 
     @GetMapping("/task-search")
     public String listaTaskSearch(@Param("input") String input, Model model) {
-    	
-		//passo al model i contatore e task in uso (gli static)
+  
+    	//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		
+		//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
+		Integer taskInUsoId = 0;
+		
+		if(ContatoreController.taskInUso != null) {
+			taskInUsoId = ContatoreController.taskInUso.getId();
+		}
+		
+		model.addAttribute("taskInUsoId", taskInUsoId);
+		
+		//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+//		ContatoreController.contatoreAttivato = false;
+
+		// restituisce al model questo valore booleano false se non ci sono progetti a db
+		// e restituisce true se ci sono progetti a db
+		boolean areTasksOnDb = false;
+		if (!repositTask.findAll().isEmpty()) {
+			areTasksOnDb = true;
+		}
+		model.addAttribute("areTasksOnDb", areTasksOnDb);
 
 	return taskBySearch(1, input, model);
     }
@@ -130,12 +215,37 @@ public class TaskController {
 		model.addAttribute("endPoint", endPoint);						
 	} else {
 		String endPoint = "/task-search";
-		model.addAttribute("endPoint", endPoint);	
+		model.addAttribute("endPoint", endPoint);
 	}
 	
 	//passo al model i contatore e task in uso (gli static)
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+	
+	//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
+		Integer taskInUsoId = 0;
+		
+		if(ContatoreController.taskInUso != null) {
+			taskInUsoId = ContatoreController.taskInUso.getId();
+		}
+		
+		model.addAttribute("taskInUsoId", taskInUsoId);
+	
+		//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+		ContatoreController.contatoreAttivato = false;
+		
+		// restituisce al model questo valore booleano false se non ci sono progetti a db
+		// e restituisce true se ci sono progetti a db
+		boolean areTasksOnDb = false;
+		if (!repositTask.findAll().isEmpty()) {
+			areTasksOnDb = true;
+		}
+		model.addAttribute("areTasksOnDb", areTasksOnDb);
 
 	return "/Task/freelApp-listaTask";
     }
@@ -143,11 +253,18 @@ public class TaskController {
     @GetMapping("/Task/{id}")
     public String descrizioneTask(@PathVariable("id") int taskId, Model model) {
 
-    	
-	model.addAttribute("task", repositTask.getReferenceById(taskId));
-
+    Task task = repositTask.getReferenceById(taskId);
+    model.addAttribute("task", task);
+    
+    // passo il finaltime formattato per la voce "timer" di tipo string sul dettaglio task
+    
+    if (task.getContatore() != null) {
+    	String timeInHHMMSS = taskService.Timer(task);
+    	model.addAttribute("timeInHHMMSS", timeInHHMMSS);
+    	}
+    
 //  passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
-	String endPoint = "/Task/";
+	String endPoint = "/Task/" + task.getId();
 	
 	model.addAttribute("endPoint", endPoint);
 	
@@ -156,6 +273,13 @@ public class TaskController {
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+	
+	//invio al model il booleano del contatore attivato
+	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+	model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+	
+	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+	ContatoreController.contatoreAttivato = false;
 	
 	return "/Task/freelapp-descrizioneTask";
     }
@@ -195,6 +319,13 @@ public class TaskController {
     }else {
     	model.addAttribute("taskInUsoId",0);
     }
+	
+	//invio al model il booleano del contatore attivato
+	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+	model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+	ContatoreController.contatoreAttivato = false;
 	
 	return "/Task/freelapp-insertTask";
     }
@@ -275,6 +406,13 @@ public class TaskController {
 		model.addAttribute("taskInUsoId",0);
 	}
 
+	//invio al model il booleano del contatore attivato
+	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+	model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+	ContatoreController.contatoreAttivato = false;
+	
 	return "/Task/freelapp-insertTask-noProgetto";
     }
 
@@ -337,6 +475,13 @@ public class TaskController {
   	}else {
   		model.addAttribute("taskInUsoId",0);
   	}
+  	
+  	//invio al model il booleano del contatore attivato
+	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+	model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+	
+	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+	ContatoreController.contatoreAttivato = false;
 	
 	return "/Task/freelapp-editTask";
     }
@@ -377,4 +522,22 @@ public class TaskController {
 	return "redirect:/Task";
     }
 
+    
+    @PostMapping("/task/timeExceed/{id}")
+	public String timeExceedError(@PathVariable("id")Integer id,
+			@Valid @ModelAttribute("formContatoreErroreFinalsecond")Contatore contatore,
+			BindingResult bindingResult, Model model) {
+		
+		Task taskInUso = repositTask.getReferenceById(id);
+
+		ContatoreController.contatoreInUso = null;
+		
+		ContatoreController.taskInUso = null;
+		
+		contatoreservice.timeExeed(bindingResult, taskInUso, model);
+		
+		
+		
+		return "Errori/timeExceeded";
+	}
 }
