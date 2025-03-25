@@ -1,5 +1,6 @@
 package com.freelapp.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -391,6 +392,7 @@ public class ProgettoController {
 					return  "/Progetti/freelapp-editProgetto";
 				}
  
+				formProgetto.setDataModifica(LocalDateTime.now());
 				repositProgetto.save(formProgetto);
 				
 				return "redirect:/Progetti"; 
@@ -414,6 +416,7 @@ public class ProgettoController {
 				
 				progetto.setArchivia(true);
 				model.addAttribute("progetto",progetto);
+				progetto.setDataModifica(LocalDateTime.now());
 				repositProgetto.save(progetto);
 				
 				return "redirect:/Progetti";
@@ -427,6 +430,7 @@ public class ProgettoController {
 				
 				progetto.setArchivia(false);
 				model.addAttribute("progetto",progetto);
+				progetto.setDataModifica(LocalDateTime.now());
 				repositProgetto.save(progetto);
 				
 				return "redirect:/Progetti/archivio";
