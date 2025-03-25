@@ -194,9 +194,11 @@ if(contatoreAttivato == true){
 
 // animazione cambio task in lista task
 
-	if(contatoreAttivato == true){
-	taskCardList.classList.add('animate_animated','animate__slideOutUp', 'animate__delay-2s');
-	console.log("ho avviato l'animazione");}
+//	if(contatoreAttivato == true){
+//	taskCardList.classList.add('animate_animated','animate__slideOutUp', 'animate__delay-2s');
+//	console.log("ho avviato l'animazione");
+//	
+//}
 	
 	function taskAnimation(){
 		buttontest.classList.add('animate_animated','animate__slideOutUp', 'animate__delay-2s');
