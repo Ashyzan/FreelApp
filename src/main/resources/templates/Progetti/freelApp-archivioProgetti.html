@@ -299,7 +299,7 @@
 			</div>
 			<div id="main-section"
 				class="w-full flex-wrap h-full m-auto overflow-y-auto">
-				<div th:if="${areProjectsOnDb == true}" class=" md:flex-col px-4">
+				<div th:if="${areProjectsArchivedOnDb == true}" class=" md:flex-col px-4">
 
 					<!-- 			section elenco progetti main		 -->
 					<section class="flex flex-col">
@@ -309,11 +309,11 @@
 						</div>
 						<div id="filtra-per-clienti" class="flex items-center p-4 mx-3 w-full gap-2">
 							
-							<form class="mx-auto w-50" role="search" method="get"
+							<form class="mx-auto w-3xs" role="search" method="get"
 									th:object="${progetto}" th:action="@{/progetto-archivio-search}">
 									<input type="text"
-										class="border-2 border-[#0057A5] p-1 my-3 rounded-md"
-										name="input" placeholder="Ricerca progetti archiviati..." aria-label="Search">
+										class="border-2 border-[#0057A5] p-1 my-3 rounded-md w-auto"
+										name="input" placeholder="Ricerca archiviati..." aria-label="Search">
 									<button
 										class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
 										type="submit">Search</button>
@@ -413,7 +413,7 @@
 							
 							<div class="flex justify-between text-center">
 								<div  class="col"
-									th:text="|Progetti totali ordinati per data inizio: ${totalItemByArchivio} - Pagina ${currentPage} di ${totalPageByArchivio}|">
+									th:text="|Progetti totali archiviati: ${totalItemByArchivio} - Pagina ${currentPage} di ${totalPageByArchivio}|">
 								</div>
 								<div class="col">
 									<span class=" justify-center"
@@ -431,7 +431,7 @@
 					
 				
 				</div>
-				<div th:if="${areProjectsOnDb == false}" class="flex flex-col items-center justify-center text-center h-full">
+				<div th:if="${areProjectsArchivedOnDb == false}" class="flex flex-col items-center justify-center text-center h-full">
 					<h2 class="text-[#0057A5] font-bold py-10 ">NESSUN PROGETTO IN ARCHIVIO</h2>
 					<!-- th:href="@{/Progetti/insert/1} diventera poi th:href="@{'/Progetti/insert/{id}'(id=${userLogged.getId()})'} quando sara implementata autentizazione-->
 					<a th:href="@{/Progetti}" class="text-center flex justify-center">

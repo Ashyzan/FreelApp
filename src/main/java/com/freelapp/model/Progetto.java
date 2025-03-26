@@ -48,7 +48,7 @@ public class Progetto {
 	private LocalDate dataInizio = LocalDate.now();
 	
 	@Column(name = "archivia")
-	private Boolean archivia;
+	private Boolean archivia = false;
 	
 	@DateTimeFormat(pattern= "yyyy-MM-dd")
 	@Column(name = "dataModifica")

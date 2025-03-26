@@ -59,10 +59,10 @@ public class ProgettoService {
 		
 	}
 	
-	public Page<Progetto> findSearchedPageByArchiviati(int pageNumber, String input){
+	public Page<Progetto> findSearchedPageByArchiviati(Boolean isArchived, int pageNumber, String input){
 		//Pageable pageableArch = PageRequest.of(pageNumber -1, 4, Sort.by("dataModifica").descending());
 		Pageable pageableArch = PageRequest.of(pageNumber -1, 4);
-		return progettoRepository.searchArchiviati(input, pageableArch);
+		return progettoRepository.searchArchiviati(isArchived, input, pageableArch);
 		
 	}
 	
