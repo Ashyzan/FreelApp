@@ -28,7 +28,7 @@ public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, Pa
 	
 	 @Query(value = "SELECT *"
 			  + " from progetti p "
-			  + " where p.archivia=1 "
+			  + " where p.archivia=true "
 			  + " and p.denominazione_progetto LIKE '%'||:input||'%' OR  "
 			  + "p.descrizione LIKE '%'||:input||'%' OR " 
 			  + "p.cliente_rif LIKE '%'||:input||'%'",
@@ -41,5 +41,8 @@ public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, Pa
 	    // transitional usato per modifica e cancellazione
 	    @Transactional
 	    void deleteByClienteId(Integer id);
+
+
+		public Page<Progetto> findByArchivia(boolean i, Pageable pageable2);
 	    
 }

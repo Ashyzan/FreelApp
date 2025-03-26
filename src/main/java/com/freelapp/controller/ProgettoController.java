@@ -481,7 +481,7 @@ public class ProgettoController {
 				model.addAttribute("progettiArchiviati",progettiArchiviati);
 				
 				
-				Page<Progetto> pageByArchivio = progettoService.orderByArchivio(currentPage);
+				Page<Progetto> pageByArchivio = progettoService.findByArchivio(currentPage);
 				int totalPageByArchivio = pageByArchivio.getTotalPages();	
 				long totalItemByArchivio = pageByArchivio.getTotalElements();		
 				List<Progetto> listProgettiByArchivio = pageByArchivio.getContent();
@@ -522,22 +522,6 @@ public class ProgettoController {
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
 				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 
-				List<Progetto> progettiAll = repositProgetto.findAll();
-				List<Progetto> progettiArchiviati = new ArrayList<Progetto>();
-				
-				for (Progetto progetto : progettiAll) {
-					
-					if(progetto.getArchivia() == null) {
-						progetto.setArchivia(false);
-						repositProgetto.save(progetto);
-					}
-					if(progetto.getArchivia() == true) {
-						progettiArchiviati.add(progetto);
-						
-					}
-				}
-				
-				model.addAttribute("progettiArchiviati",progettiArchiviati);
 				
 				boolean areProjectsOnDb = false;
 				if(!repositProgetto.findAll().isEmpty()) {
@@ -557,7 +541,7 @@ public class ProgettoController {
 					List<Progetto> listProgettiByArchivio = pageByArchivio.getContent();
 					
 					model.addAttribute("currentPage", currentPage);
-					model.addAttribute("listProgettiByArchivio", listProgettiByArchivio);					
+					model.addAttribute("progettiArchiviati", listProgettiByArchivio);					
 					model.addAttribute("totalPageByArchivio", totalPageByArchivio);					
 					model.addAttribute("totalItemByArchivio", totalItemByArchivio);
 									

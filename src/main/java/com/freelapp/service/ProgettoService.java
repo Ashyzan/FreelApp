@@ -31,22 +31,21 @@ public class ProgettoService {
 		
 	}
 	
-	public Page<Progetto> orderByArchivio(int pageNumber){
-		Pageable pageableArchive = PageRequest.of(pageNumber -1, 12, Sort.by("archivia").descending());
-		
-		return progettoRepository.findAll(pageableArchive);
-		
-		
-	}
-	
 	public Page<Progetto> orderByClient(int pageNumber){
 		Pageable pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").ascending());
 		
-		return progettoRepository.findAll(pageable2);
+		return progettoRepository.findAll(pageable2);		
+		
+	}
+
+	
+	public Page<Progetto> findByArchivio(int pageNumber){
+		Pageable pageableArchive = PageRequest.of(pageNumber -1, 12, Sort.by("archivia").descending());
+		
+		return progettoRepository.findByArchivia(true,pageableArchive);
 		
 		
 	}
-	
 	
 	public Page<Progetto> findSearchedPageByDataInizio(int pageNumber, String input){
 		Pageable pageable = PageRequest.of(pageNumber -1, 4, Sort.by("dataInizio").descending());
