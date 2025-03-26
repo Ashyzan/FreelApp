@@ -295,6 +295,7 @@ public class TaskController {
 
 	// istanzio un nuovo task
 	Task newTask = new Task();
+	System.out.println(" STAMPO ID DEL NewTASK ****************** " + newTask.getId());
 	// attribuisco il task al progetto
 	newTask.setProgetto(progetto);
 
@@ -330,18 +331,20 @@ public class TaskController {
 	return "/Task/freelapp-insertTask";
     }
 
-    @PostMapping("/Task/insert/{id}")
-    public String storeTask(@PathVariable("id") Integer id, @Valid @ModelAttribute("task") Task task,
+    @PostMapping("/Task/insert/progetto")
+    public String storeTask(@Valid @ModelAttribute("task") Task task,
 	    BindingResult bindingResult, Model model) {
 
 //// richiamo il progetto tramite id
-	Progetto progetto = repositProgetto.getReferenceById(id);
+//	Progetto progetto = repositProgetto.getReferenceById(id);
 
 //// attribuisco il task passato dal modello al progetto (progettoRif)
-	task.setProgetto(progetto);
-
+	//task.setProgetto(progetto);
+	
+	//System.out.println(" STAMPO ID DEL PROGETTO ****************** " + progetto.getId());
+	System.out.println(" STAMPO ID DEL TASK ****************** " + task.getId());
 	// restituisco il task al modello
-	model.addAttribute("task", task);
+	//model.addAttribute("task", task);
 
 	if (bindingResult.hasErrors()) {
 // bindingResult.addError(
@@ -352,7 +355,7 @@ public class TaskController {
 		model.addAttribute("endPoint", endPoint);
 		
 		//riporto al model l'id del progetto in uso
-		model.addAttribute("progettoId", progetto.getId());
+		//model.addAttribute("progettoId", progetto.getId());
 		
 		contatoreservice.importContatoreInGet(model);
 		//passo al model i contatore e task in uso (gli static)
