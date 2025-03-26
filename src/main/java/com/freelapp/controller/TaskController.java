@@ -295,7 +295,7 @@ public class TaskController {
 
 	// istanzio un nuovo task
 	Task newTask = new Task();
-	System.out.println(" STAMPO ID DEL NewTASK ****************** " + newTask.getId());
+	
 	// attribuisco il task al progetto
 	newTask.setProgetto(progetto);
 
@@ -335,27 +335,17 @@ public class TaskController {
     public String storeTask(@Valid @ModelAttribute("task") Task task,
 	    BindingResult bindingResult, Model model) {
 
-//// richiamo il progetto tramite id
-//	Progetto progetto = repositProgetto.getReferenceById(id);
 
-//// attribuisco il task passato dal modello al progetto (progettoRif)
-	//task.setProgetto(progetto);
+	Progetto progetto = task.getProgetto();
 	
-	//System.out.println(" STAMPO ID DEL PROGETTO ****************** " + progetto.getId());
-	System.out.println(" STAMPO ID DEL TASK ****************** " + task.getId());
-	// restituisco il task al modello
-	//model.addAttribute("task", task);
-
 	if (bindingResult.hasErrors()) {
-// bindingResult.addError(
-// new ObjectError("Errore", "Huston abbiamo un problema"));
+		
+		model.addAttribute("progetto", progetto);
+
 		//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
-		String endPoint = "/Task/insert/progetto-" ;
+		String endPoint = "/Task/insert/progetto" ;
 		
 		model.addAttribute("endPoint", endPoint);
-		
-		//riporto al model l'id del progetto in uso
-		//model.addAttribute("progettoId", progetto.getId());
 		
 		contatoreservice.importContatoreInGet(model);
 		//passo al model i contatore e task in uso (gli static)
