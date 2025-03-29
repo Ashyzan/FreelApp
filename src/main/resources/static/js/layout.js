@@ -174,15 +174,7 @@ if(modalPauseStartCloseButton != null){
 	})	
 }
 
-//funzione per aprire la modale
-function openModal(){
-	modal.classList.remove('scale-0');
-}
-
-//funzione per chiudere la modale
-function closeModal(){
-	modal.classList.add('scale-0');
-}		  
+		  
 		 
 
 //animazione avvio contatore
@@ -294,3 +286,18 @@ if((contatoreCaratteriCinquecento != null) && (textAreaDescrizioneCinquecento !=
 			});
 	
 }
+
+if(openModalButton != null){
+	openModalButton.addEventListener('click', function(){
+		openModal()
+	})	
+}
+
+if(closeModalButton != null){
+	closeModalButton.addEventListener('click', function(){
+		closeModal()
+	})	
+}
+
+
+

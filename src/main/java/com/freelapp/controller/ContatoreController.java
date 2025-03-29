@@ -484,13 +484,13 @@ public class ContatoreController {
 	
 
     @PostMapping("/Contatore/reset/{id}")
-    public String resetContatore(@PathVariable("id") Integer taskId,
+    public String resetContatore(@PathVariable("id") Integer taskId, Model model,
     		// l'endpoint passato dal model serve a far ritornare sulla pagina di partenza dopo aver cliccato su start
     		@ModelAttribute("endPoint") String endPoint) {
 
 		// richiamo l'id del task
 		Task task = repositTask.getReferenceById(taskId);
-
+		
 		// verifica che il contatore esista
 		if (task.getContatore() != null) {
 
@@ -506,12 +506,22 @@ public class ContatoreController {
 
 			// salvo il contatore
 			repositContatore.save(task.getContatore());
+			// parte per javascript: serve per collegare il finaltime da java a javascript
+			// sul frontend
+			model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
+			model.addAttribute("contatoreIsRun", contatoreservice.contatoreIsRun(task));
+//			Contatore contatoreSelected = task.getContatore();
+			//riassegno con il nuovo task e contatore quelli in uso
+//			contatoreInUso = contatoreSelected;
+//			taskInUso = task;
+		
+			//valore booleano che serve per l'animazione
+//			contatoreAttivato = true;
 
 		}
 
-		//return "/Contatore/timer";
 
-	return "redirect:" + endPoint;
+		return "redirect:/Task";
 	}
     
     
