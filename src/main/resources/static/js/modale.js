@@ -1,14 +1,4 @@
-const modaleOreLavorate = document.getElementById('modale');
-
-function apriModale() {
-	modaleOreLavorate.classList.remove('scale-0');
-console.log("ho aperto la modale");
-	
-}
-
-function chiudiModale() {
-	modaleOreLavorate.classList.add('scale-0');	
-}
+console.log("leggo il file modale.js");
 
 // per attivare la modale è necessario inserire nell'html le seguenti funzioni al click:
 //onclick="apriModale()" per aprire la modale

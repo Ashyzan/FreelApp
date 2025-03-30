@@ -79,6 +79,31 @@ public class TaskController {
 		model.addAttribute("areTasksOnDb", areTasksOnDb);
 		
 		
+		// lista che restituisce i task per modale delle ore lavorate
+				List<Task> taskListOreLavorate = new ArrayList<Task> ();
+				List<Task> taskList = repositTask.findAll(Sort.by(Sort.Direction.DESC, "Name"));
+				taskList.forEach( task -> {
+					
+					
+						if( task.getContatore() == null) {
+						taskListOreLavorate.add(task);
+						
+								}
+						
+						else if( task.getContatore() != null) {
+							Boolean contatoreAttivo;
+							contatoreAttivo = contatoreservice.contatoreIsRun(task);
+				
+							if(task.getContatore().getStop() == null  && contatoreAttivo == false) {
+							
+									 taskListOreLavorate.add(task); 
+											
+									 }	
+								}
+					model.addAttribute("taskListOreLavorate", taskListOreLavorate);
+						} );
+
+		
     	
 
 	return getOnePage(1, model);

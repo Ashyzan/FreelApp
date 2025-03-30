@@ -12,6 +12,8 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 <link rel="stylesheet" href="/animate.css">
 <script src="https://cdn.tailwindcss.com"></script>
+
+
 <script>
 		tailwind.config = {
 			theme: {
@@ -26,9 +28,9 @@
 			}
 		}
 		
-		// modale aggiungi ore lavorate su lista task
+// modale aggiungi ore lavorate su lista task
 
-const modaleOreLavorate = document.getElementById('modale');
+const modaleOreLavorate = document.getElementById('modaleOreLavorate');modaleResetTask
 
 function apriModale() {
 	modaleOreLavorate.classList.remove('scale-0');
@@ -42,6 +44,7 @@ function chiudiModale() {
 
 	</script>
 
+	
 <title id="timerTitolo">FreelApp</title>
 </head>
 <body class="font-sans" style="width: 100vw; height: 100vh;"
@@ -388,7 +391,7 @@ function chiudiModale() {
 
 
 											<p th:if="${task.getContatore() == null}"
-												class="mx-4 inline float-right text-[#0057A5]">timer</p>
+												class="mx-4 inline float-right text-[#0057A5]">00:00:00</p>
 											<p th:unless="${task.getContatore() == null}"
 												th:with="hours=${task.contatore.getFinaltime()/3600},
              													 minutes=${(task.contatore.getFinaltime()%3600)/60},
@@ -438,7 +441,7 @@ function chiudiModale() {
 															</div>
 															<div class=""
 																th:unless="${task.id == taskInUsoId or task.getStato() == 'chiuso'}">
-																<form th:action="@{|/contatore/cambio/${task.id}|}">
+																<form th:action="@{|/contatore/cambio/${task.id}|}" method="post">
 																	<input type="hidden" name="endPoint"
 																		th:value="${endPoint}">
 
@@ -642,8 +645,8 @@ function chiudiModale() {
 	</main>
 
 <!-- MODALE RESET: SEI SICURO? -->
-	<div id=""
-		class="modale scale-0 fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0">
+	<div id="modaleResetTask"
+		class="scale-0 fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0">
 		
 		<div
 			class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
@@ -719,6 +722,8 @@ function chiudiModale() {
 	</div>
 
 	<!--  MODALE ORE LAVORATE 	-->
+	
+	
 		<div id="modaleOreLavorate"
 			class="scale-0 fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0">
 			<div
@@ -817,7 +822,7 @@ function chiudiModale() {
 			</div>
 		</div>
 
-	FINE MODALE ORE LAVORATE
+<!-- 	FINE MODALE ORE LAVORATE -->
 
 	<!-- Script -->
 	<script th:inline="javascript">

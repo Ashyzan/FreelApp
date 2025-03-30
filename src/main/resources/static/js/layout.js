@@ -1,3 +1,4 @@
+console.log("leggo il file layout.js");
 // elementi DOM per animazione lista task al click su contatore
 let taskCardList = document.getElementById('task-card');
 let buttontest = document.getElementById('buttontest');
