@@ -35,8 +35,8 @@ const modalDeleteCloseButton = document.getElementById('modalDeleteCloseButton')
 
 //recupero elementi dal DOM per modalSTOP
 const modalStopButton = document.getElementById('modalStopButton');
-const stopButtonBottom = document.getElementById('stopButtonBottom');
-const stopButtonTop = document.getElementById('stopButtonTop');
+//const stopButtonBottom = document.getElementById('stopButtonBottom');
+//const stopButtonTop = document.getElementById('stopButtonTop');
 const stopButtonTaskRapid = document.getElementById('stopButtonTaskRapid');
 const modalStopCloseButton = document.getElementById('modalStopCloseButton')
   
@@ -108,31 +108,31 @@ if(nuovoProgettoButton != null){
 }
 
 //apertura modale STOP BUTTON top
-if(stopButtonTop != null){
-	stopButtonTop.addEventListener('click', function(){
-		modalStopButton.classList.remove('scale-0');
-	})
-}
+//if(stopButtonTop != null){
+//	stopButtonTop.addEventListener('click', function(){
+//		modalStopButton.classList.remove('scale-0');
+//	})
+//}
 //apertura modale STOP BUTTON bottom
-if(stopButtonBottom != null){
-	stopButtonBottom.addEventListener('click', function(){
-		modalStopButton.classList.remove('scale-0');
-	})	
-}
+//if(stopButtonBottom != null){
+//	stopButtonBottom.addEventListener('click', function(){
+//		modalStopButton.classList.remove('scale-0');
+//	})	
+//}
 
 //apertura modale STOP BUTTON task rapid
-if(stopButtonTaskRapid != null){
-	stopButtonTaskRapid.addEventListener('click', function(){
-		modalStopButton.classList.remove('scale-0');
-	})	
-}
+//if(stopButtonTaskRapid != null){
+//	stopButtonTaskRapid.addEventListener('click', function(){
+//		modalStopButton.classList.remove('scale-0');
+//	})	
+//}
 
 //chiusura modale STOP BUTTON
-if(modalStopCloseButton != null){
-	modalStopCloseButton.addEventListener('click', function(){
-		modalStopButton.classList.add('scale-0')
-	})	
-}
+//if(modalStopCloseButton != null){
+//	modalStopCloseButton.addEventListener('click', function(){
+//		modalStopButton.classList.add('scale-0')
+//	})	
+//}
 
 //apertura modale PAUSE-START BUTTON (START top)
 if(modalStartTopButton != null){
@@ -288,17 +288,17 @@ if((contatoreCaratteriCinquecento != null) && (textAreaDescrizioneCinquecento !=
 	
 }
 
-if(openModalButton != null){
-	openModalButton.addEventListener('click', function(){
-		openModal()
-	})	
-}
+//if(openModalButton != null){
+//	openModalButton.addEventListener('click', function(){
+//		openModal()
+//	})	
+//}
 
-if(closeModalButton != null){
-	closeModalButton.addEventListener('click', function(){
-		closeModal()
-	})	
-}
+//if(closeModalButton != null){
+//	closeModalButton.addEventListener('click', function(){
+//		closeModal()
+//	})	
+//}
 
 
 

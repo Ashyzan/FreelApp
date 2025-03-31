@@ -520,6 +520,9 @@ public class ContatoreController {
 
 		}
 
+		contatoreInUso = null;
+		taskInUso = null;
+		contatoreAttivato = false;
 
 		return "redirect:/Task";
 	}
@@ -550,7 +553,7 @@ public class ContatoreController {
 					
 					contatoreservice.pauseOtherTimers();
 					
-					taskAttivo.setStato("in pausa");
+//					taskAttivo.setStato("in pausa");
 					
 
 				}

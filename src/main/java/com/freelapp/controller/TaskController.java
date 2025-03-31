@@ -60,15 +60,21 @@ public class TaskController {
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 		
-		//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+		//passa al model l'id, il nome e il progetto del taskInUso se diverso da null e serve per inibire se necessario
 		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
 		Integer taskInUsoId = 0;
+		String taskInUsoName = null;
+		String taskInUsoProgetto = null;
 		
 		if(ContatoreController.taskInUso != null) {
 			taskInUsoId = ContatoreController.taskInUso.getId();
+			taskInUsoName = ContatoreController.taskInUso.getName();
+			taskInUsoProgetto = ContatoreController.taskInUso.getProgetto().getName();
 		}
 		
 		model.addAttribute("taskInUsoId", taskInUsoId);
+		model.addAttribute("taskInUsoName", taskInUsoName);
+		model.addAttribute("taskInUsoProgetto", taskInUsoProgetto);
 		
 		// restituisce al model questo valore booleano false se non ci sono progetti a db
 		// e restituisce true se ci sono progetti a db
@@ -152,15 +158,21 @@ public class TaskController {
 	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 	ContatoreController.contatoreAttivato = false;
 	
-	//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+	//passa al model l'id, il nome e il progetto del taskInUso se diverso da null e serve per inibire se necessario
 		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
 		Integer taskInUsoId = 0;
+		String taskInUsoName = null;
+		String taskInUsoProgetto = null;
 		
 		if(ContatoreController.taskInUso != null) {
 			taskInUsoId = ContatoreController.taskInUso.getId();
+			taskInUsoName = ContatoreController.taskInUso.getName();
+			taskInUsoProgetto = ContatoreController.taskInUso.getProgetto().getName();
 		}
 		
 		model.addAttribute("taskInUsoId", taskInUsoId);
+		model.addAttribute("taskInUsoName", taskInUsoName);
+		model.addAttribute("taskInUsoProgetto", taskInUsoProgetto);
 
 		// restituisce al model questo valore booleano false se non ci sono progetti a db
 		// e restituisce true se ci sono progetti a db
@@ -184,15 +196,21 @@ public class TaskController {
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 		
-		//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+		//passa al model l'id, il nome e il progetto del taskInUso se diverso da null e serve per inibire se necessario
 		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
 		Integer taskInUsoId = 0;
+		String taskInUsoName = null;
+		String taskInUsoProgetto = null;
 		
 		if(ContatoreController.taskInUso != null) {
 			taskInUsoId = ContatoreController.taskInUso.getId();
+			taskInUsoName = ContatoreController.taskInUso.getName();
+			taskInUsoProgetto = ContatoreController.taskInUso.getProgetto().getName();
 		}
 		
 		model.addAttribute("taskInUsoId", taskInUsoId);
+		model.addAttribute("taskInUsoName", taskInUsoName);
+		model.addAttribute("taskInUsoProgetto", taskInUsoProgetto);
 		
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -247,15 +265,21 @@ public class TaskController {
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);
 	
-	//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+	//passa al model l'id, il nome e il progetto del taskInUso se diverso da null e serve per inibire se necessario
 		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
 		Integer taskInUsoId = 0;
+		String taskInUsoName = null;
+		String taskInUsoProgetto = null;
 		
 		if(ContatoreController.taskInUso != null) {
 			taskInUsoId = ContatoreController.taskInUso.getId();
+			taskInUsoName = ContatoreController.taskInUso.getName();
+			taskInUsoProgetto = ContatoreController.taskInUso.getProgetto().getName();
 		}
 		
 		model.addAttribute("taskInUsoId", taskInUsoId);
+		model.addAttribute("taskInUsoName", taskInUsoName);
+		model.addAttribute("taskInUsoProgetto", taskInUsoProgetto);
 	
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;

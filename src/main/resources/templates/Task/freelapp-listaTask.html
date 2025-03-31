@@ -28,21 +28,7 @@
 			}
 		}
 		
-// modale aggiungi ore lavorate su lista task
-
-const modaleOreLavorate = document.getElementById('modaleOreLavorate');modaleResetTask
-
-function apriModale() {
-	modaleOreLavorate.classList.remove('scale-0');
-console.log("ho aperto la modale");
-	
-}
-
-function chiudiModale() {
-	modaleOreLavorate.classList.add('scale-0');	
-}
-
-	</script>
+ </script>
 
 	
 <title id="timerTitolo">FreelApp</title>
@@ -321,7 +307,7 @@ function chiudiModale() {
 				</a>
 			</div>
 			<div id="main-section"
-				class="flex w-full flex-wrap h-full justify-center items-center overflow-y-auto">
+				class="flex w-full flex-wrap h-full justify-center items-center overflow-y-auto scroll-smooth">
 				<div th:if="${areTasksOnDb == true}"
 					class="flex flex-col-reverse md:flex-col w-11/12 2xl:w-4/5">
 					<section>
@@ -330,7 +316,7 @@ function chiudiModale() {
 							<h1 class="mt-3 text-xl">ELENCO TASK</h1>
 						</div>
 						<!-- RICERCA -->
-						<section>
+						<section id="search">
 							<div class="">
 								<div class="text-center mb-5">
 									<form class="mx-auto w-50" role="search" method="get"
@@ -353,7 +339,8 @@ function chiudiModale() {
 
 
 						<!--						ELENCO TASK CON CARD-->
-						<div th:each="task : ${list}" class="">
+						<!-- ${taskStat.index} è una sintassi thymeleaf che serve a recuperare dall'elemento dati accesori all'interno dell'elenco come l'index-->
+						<div th:each="task : ${list}" class="container" th:id="${taskStat.index}"> 
 							<div
 								class="grid lg:grid-cols-1 sm:grid-cols-1 gap-4 p-2 flex justify-between w-full">
 
@@ -441,13 +428,15 @@ function chiudiModale() {
 															</div>
 															<div class=""
 																th:unless="${task.id == taskInUsoId or task.getStato() == 'chiuso'}">
-																<form th:action="@{|/contatore/cambio/${task.id}|}" method="post">
+																<form th:action="@{'/contatore/cambio/{id}'(id=${task.getId()})}" method="post" 
+																	th:id="|form-${taskStat.index}|" class="form-cambio-contatore">
 																	<input type="hidden" name="endPoint"
 																		th:value="${endPoint}">
-
-																	<button type="submit" class="size-10 text-[#0057A5]">
-																		<img src="/img/sources/icons/contatore-blue.svg">
-																	</button>
+																	<a href="javascript:moveSlowlyToTop('#search')">
+																		<button type="button" class="size-10 text-[#0057A5]" th:onclick="moveUp([[${taskStat.index}]])">
+																			<img src="/img/sources/icons/contatore-blue.svg">
+																		</button>																		
+																	</a>
 
 																</form>
 
@@ -459,9 +448,10 @@ function chiudiModale() {
 														<li
 															class="tooltip-top flex flex-col md:flex-row px-2 mt-4 ml-3 float-left">
 															<span class="tooltiptext-top">Aggiungi Ore</span>
-															<button onclick="apriModale()" type="button" id="ore-lavorate-task-rapid-button">
-																<img class="size-10"
-																	src="/img/sources/icons/orelavorate-blue.svg">
+															<button th:onclick="creaApriModaleOreLavorate([[${task.id}]] ,[[ ${task.getName()}]])"
+																	 type="button">
+																<img class="size-10" src="/img/sources/icons/orelavorate-blue.svg">
+																
 
 															</button>
 
@@ -472,22 +462,13 @@ function chiudiModale() {
 														<li
 															class="tooltip-top flex flex-col md:flex-row px-2 mt-4 ml-3 float-left">
 															<span class="tooltiptext-top">Reset Timer</span>
-															<form th:action="@{|/Contatore/reset/${task.id}|}"
-																th:object="${contatore}" method="post">
-
 																<button type="button"
-																	onclick="apriModale()"
-																	id="">
+																	th:onclick="creaApriModaleReset([[${task.id}]] ,[[ ${task.getName()}]], [[ ${task.progetto.getName()}]])">
 																	<img class="size-10"
 																		src="/img/sources/icons/reset-blue.svg">
 
 																</button>
-															</form>
 														</li>
-
-
-
-
 														<li
 															class="flex flex-col md:flex-row px-2 mt-6 float-right">
 															<a th:href="@{|/Task/edit/${task.id}|}"><img
@@ -645,6 +626,7 @@ function chiudiModale() {
 	</main>
 
 <!-- MODALE RESET: SEI SICURO? -->
+<!--
 	<div id="modaleResetTask"
 		class="scale-0 fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0">
 		
@@ -683,47 +665,31 @@ function chiudiModale() {
 			
 		</div>
 	</div>
+	
+-->
 
-	<!-- Modale StopButton-->
-	<div id="modalStopButton"
+	<!-- Modale -->
+	<div id="modale"
 		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
 		<div
 			class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
 			<div class=" w-full h-auto">
-				<div id="modalStopCloseButton"
+				<div id="modale-close-button" onclick="chiudiModale()"
 					class="flex justify-end items-center p-2 cursor-pointer">
 					<img class="h-[30px] w-[30px]"
 						src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
-
 				</div>
 			</div>
-			<div th:unless="${taskInUso == null}"
-				class="w-full h-auto bg-white rounded-b-lg">
-				<form th:action="@{|/Contatore/stop/${taskInUso.id}|}"
-					th:object="${contatore}" method="post">
-					<div class="flex flex-col justify-center p-2 text-center ">
-						<div class="p-3 text-[#0057A5]">
-							<p>
-								Stai per terminare definitivamente il task <strong
-									th:text="${taskInUso.getName()}"></strong> relativo al progetto
-								<strong th:text="${taskInUso.progetto.getName()}"></strong>.
-								Vuoi procedere?
-							</p>
-						</div>
-						<div class="p-6">
-							<button type="submit"
-								class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">
-								Conferma</button>
-						</div>
-					</div>
-				</form>
+			<div id="contenuto-modale" class="w-full h-auto bg-white rounded-b-lg">		
 			</div>
 		</div>
 	</div>
 
+	<!-- Fine Modale -->
+	
 	<!--  MODALE ORE LAVORATE 	-->
 	
-	
+	<!--
 		<div id="modaleOreLavorate"
 			class="scale-0 fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0">
 			<div
@@ -821,6 +787,8 @@ function chiudiModale() {
 				</div>
 			</div>
 		</div>
+		
+	-->
 
 <!-- 	FINE MODALE ORE LAVORATE -->
 
@@ -831,14 +799,16 @@ function chiudiModale() {
 		let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
 		let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean
 		let taskInUsoId = /*[[${taskInUsoId}]]*/ null;
+		let taskInUsoName = /*[[${taskInUsoName}]]*/ null;
+		let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
 		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
 		
-		console.log("contatoreAttivato: " + contatoreAttivato);
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
 	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
+	<script type="text/javascript" th:src="@{/js/animazione-lista-task.js}"></script>
 	
 </body>
 
