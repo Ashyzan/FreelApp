@@ -349,9 +349,10 @@
 									class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
 									<div class="md:flex">
 										<div class="md:shrink-0 content-center">
-											<img
+											<a th:href="@{|/Clienti/${task.progetto.cliente.id}|}"><img
 												class="lg:mx-[40px] md:mx-[40px] aspect-square object-cover h-20 w-full md:w-20 lg:rounded-[200px] md:rounded-[200px]"
-												th:src="@{${task.progetto.cliente.LogoPath}}" alt="logo">
+												th:src="@{${task.progetto.cliente.LogoPath}}" alt="logo"
+												></a>
 
 										</div>
 
