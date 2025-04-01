@@ -1,5 +1,6 @@
 package com.freelapp.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +90,6 @@ public class ProgettoController {
 					long totalItemByCliente = pageByCliente.getTotalElements();		
 					List<Progetto> listProgettiByCliente = pageByCliente.getContent();
 					
-						
 					
 					model.addAttribute("currentPage", currentPage);
 					// passaggio al model delle liste per data inizio
@@ -392,6 +392,7 @@ public class ProgettoController {
 					return  "/Progetti/freelapp-editProgetto";
 				}
  
+				formProgetto.setDataModifica(LocalDateTime.now());
 				repositProgetto.save(formProgetto);
 				
 				return "redirect:/Progetti"; 
@@ -415,41 +416,169 @@ public class ProgettoController {
 				
 				progetto.setArchivia(true);
 				model.addAttribute("progetto",progetto);
+				progetto.setDataModifica(LocalDateTime.now());
 				repositProgetto.save(progetto);
 				
 				return "redirect:/Progetti";
 				
 			}
 			
+			@PostMapping("/Progetti/de-archivia/{id}")
+			public String deArchiviaProgetto(@PathVariable("id") Integer id, Model model) {
+				
+				Progetto progetto = repositProgetto.findById(id).get();
+				
+				progetto.setArchivia(false);
+				model.addAttribute("progetto",progetto);
+				progetto.setDataModifica(LocalDateTime.now());
+				repositProgetto.save(progetto);
+				
+				return "redirect:/Progetti/archivio";
+				
+			}
+			
 			@GetMapping("/Progetti/archivio")
 			public String progettiArchivio(Model model) {
 				
-				List<Progetto> progettiAll = repositProgetto.findAll();
-				List<Progetto> progettiArchiviati = new ArrayList<Progetto>();
+				//passo al model i contatore e task in uso (gli static)
+				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+				model.addAttribute("taskInUso", ContatoreController.taskInUso);
 				
-				for (Progetto progetto : progettiAll) {
-					
-					if(progetto.getArchivia() == null) {
-						progetto.setArchivia(false);
-						repositProgetto.save(progetto);
-					}
-					if(progetto.getArchivia() == true) {
-						progettiArchiviati.add(progetto);
-						
-					}
-				}
+				//invio al model il booleano del contatore attivato
+				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 				
+				//restituisce al model questo valore booleano false se non ci sono progetti archiviati a db
+				//e restituisce true se ci sono progetti a db
+				boolean areProjectsArchivedOnDb = false;
+					if(!repositProgetto.findByArchivia(true).isEmpty()) {
+						areProjectsArchivedOnDb = true;
+					}
+				
+				model.addAttribute("areProjectsArchivedOnDb", areProjectsArchivedOnDb);
+				
+			
+				return progettiArchivioPagination(1, model);
+			}
+			
+			@GetMapping("/Progetti/archivio/page/{pageNumber}")
+			public String progettiArchivioPagination(@PathVariable("pageNumber") int currentPage, Model model) {
+				
+				//passaggio al model della lista dei progetti archiviati
+				List<Progetto> progettiArchiviati = repositProgetto.findByArchivia(true);
 				model.addAttribute("progettiArchiviati",progettiArchiviati);
 				
-				// se non ci sono progetti
-				boolean areProjectsOnDb = false;
-				if(!repositProgetto.findAll().isEmpty()) {
-					areProjectsOnDb = true;
+				
+				Page<Progetto> pageByArchivio = progettoService.findByArchivio(currentPage);
+				int totalPageByArchivio = pageByArchivio.getTotalPages();	
+				long totalItemByArchivio = pageByArchivio.getTotalElements();		
+				List<Progetto> listProgettiByArchivio = pageByArchivio.getContent();
+				model.addAttribute("currentPage", currentPage);
+				
+				model.addAttribute("totalPageByArchivio", totalPageByArchivio);					
+				model.addAttribute("totalItemByArchivio", totalItemByArchivio);					
+				model.addAttribute("listProgettiByArchivio", listProgettiByArchivio);
+				
+				contatoreservice.importContatoreInGet(model);
+
+				//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+				if(currentPage != 0) {
+					String endPoint = "/Progetti/archivio/page/" + currentPage;
+					
+					model.addAttribute("endPoint", endPoint);						
+				} else {
+					String endPoint = "/Progetti/archivio";
+					model.addAttribute("endPoint", endPoint);	
 				}
-				model.addAttribute("areProjectsOnDb", areProjectsOnDb);
+				
+				//passo al model i contatore e task in uso (gli static)
+				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+				model.addAttribute("taskInUso", ContatoreController.taskInUso);
+					
+				//invio al model il booleano del contatore attivato
+				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+				ContatoreController.contatoreAttivato = false;
+				
+				//restituisce al model questo valore booleano false se non ci sono progetti a db
+				//e restituisce true se ci sono progetti archiviati a db
+				boolean areProjectsArchivedOnDb = false;
+					if(!repositProgetto.findByArchivia(true).isEmpty()) {
+						areProjectsArchivedOnDb = true;
+					}
+				model.addAttribute("areProjectsArchivedOnDb", areProjectsArchivedOnDb);
 				
 				return "/Progetti/freelApp-archivioProgetti";
 				
+			}
+			
+			// FILTRO DI RICERCA PER PROGETTI ARCHIVIATI
+			
+			@GetMapping("/progetto-archivio-search")
+			public String listaProgettiArchiviatiSearch(@Param("input") String input, Model model) {
+				
+				//passo al model i contatore e task in uso (gli static)
+				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+				model.addAttribute("taskInUso", ContatoreController.taskInUso);
+				
+				//invio al model il booleano del contatore attivato
+				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+
+				
+				//restituisce al model questo valore booleano false se non ci sono progetti a db
+				//e restituisce true se ci sono progetti archiviati a db
+				boolean areProjectsArchivedOnDb = false;
+					if(!repositProgetto.findByArchivia(true).isEmpty()) {
+						areProjectsArchivedOnDb = true;
+					}
+				model.addAttribute("areProjectsArchivedOnDb", areProjectsArchivedOnDb);
+				
+				return progettoBySearchArchiviati(1, input, model);
+			} 
+				 
+			 @GetMapping("/progetto-archivio-search/page/{numberPage}")
+			 public String progettoBySearchArchiviati(@PathVariable("pageNumber") int currentPage, String input,
+					 	Model model) {
+				 
+					Page<Progetto> pageByArchivio = progettoService.findSearchedPageByArchiviati(true, currentPage,input);
+					int totalPageByArchivio = pageByArchivio.getTotalPages();	
+					long totalItemByArchivio = pageByArchivio.getTotalElements();		
+					List<Progetto> listProgettiByArchivio = pageByArchivio.getContent();
+					
+					model.addAttribute("currentPage", currentPage);
+					model.addAttribute("progettiArchiviati", listProgettiByArchivio);					
+					model.addAttribute("totalPageByArchivio", totalPageByArchivio);					
+					model.addAttribute("totalItemByArchivio", totalItemByArchivio);
+									
+					contatoreservice.importContatoreInGet(model);
+
+					if(input != null) {
+						String endPoint = "/progetto-archivio-search?input=" + input;
+						
+						model.addAttribute("endPoint", endPoint);						
+					} else {
+						String endPoint = "/progetto-archivio-search";
+						model.addAttribute("endPoint", endPoint);	
+					}
+
+					ContatoreController.contatoreAttivato = false;
+					model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+					model.addAttribute("taskInUso", ContatoreController.taskInUso);
+					model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+					
+					
+					boolean areProjectsArchivedOnDb = false;
+					if(!repositProgetto.findByArchivia(true).isEmpty()) {
+						areProjectsArchivedOnDb = true;
+					}
+				
+					model.addAttribute("areProjectsArchivedOnDb", areProjectsArchivedOnDb);
+						
+				return "/Progetti/freelApp-archivioProgetti";
 			}
 			
 }

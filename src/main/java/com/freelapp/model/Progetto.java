@@ -1,6 +1,7 @@
 package com.freelapp.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -47,15 +48,11 @@ public class Progetto {
 	private LocalDate dataInizio = LocalDate.now();
 	
 	@Column(name = "archivia")
-	private Boolean archivia;
+	private Boolean archivia = false;
 	
-	public Boolean getArchivia() {
-		return archivia;
-	}
-
-	public void setArchivia(Boolean archivia) {
-		this.archivia = archivia;
-	}
+	@DateTimeFormat(pattern= "yyyy-MM-dd")
+	@Column(name = "dataModifica")
+	private LocalDateTime dataModifica;
 
 	@DateTimeFormat(pattern= "yyyy-MM-dd")
 	@Column(name = "DataFine")
@@ -137,6 +134,22 @@ public class Progetto {
 
 	public void setElencoTask(List<Task> elencoTask) {
 		this.elencoTask = elencoTask;
+	}
+	
+	public LocalDateTime getDataModifica() {
+		return dataModifica;
+	}
+
+	public void setDataModifica(LocalDateTime localDateTime) {
+		this.dataModifica = localDateTime;
+	}
+
+	public Boolean getArchivia() {
+		return archivia;
+	}
+
+	public void setArchivia(Boolean archivia) {
+		this.archivia = archivia;
 	}
 }
 

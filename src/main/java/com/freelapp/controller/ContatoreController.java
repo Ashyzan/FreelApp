@@ -484,34 +484,48 @@ public class ContatoreController {
 	
 
     @PostMapping("/Contatore/reset/{id}")
-    public String resetContatore(@PathVariable("id") Integer taskId,
+    public String resetContatore(@PathVariable("id") Integer taskId, Model model,
     		// l'endpoint passato dal model serve a far ritornare sulla pagina di partenza dopo aver cliccato su start
     		@ModelAttribute("endPoint") String endPoint) {
 
 		// richiamo l'id del task
 		Task task = repositTask.getReferenceById(taskId);
-
+		
 		// verifica che il contatore esista
 		if (task.getContatore() != null) {
 
 			// eseguo il RESET
 			task.getContatore().setStop(null);
-			task.getContatore().setStart(null);
-			task.getContatore().setPause(null);
+			task.getContatore().setStart(LocalDateTime.now());
+			task.getContatore().setPause(LocalDateTime.now());
 			task.getContatore().setFinaltime(0l);
 			task.getContatore().setStop_numbers(0);
 			task.getContatore().setRestart(null);
 			// salvo nuova data di modifica
 			task.setDataModifica(LocalDateTime.now());
+			task.setStato("inattivo");
 
 			// salvo il contatore
 			repositContatore.save(task.getContatore());
+			// parte per javascript: serve per collegare il finaltime da java a javascript
+			// sul frontend
+			model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
+			model.addAttribute("contatoreIsRun", contatoreservice.contatoreIsRun(task));
+//			Contatore contatoreSelected = task.getContatore();
+			//riassegno con il nuovo task e contatore quelli in uso
+//			contatoreInUso = contatoreSelected;
+//			taskInUso = task;
+		
+			//valore booleano che serve per l'animazione
+//			contatoreAttivato = true;
 
 		}
 
-		//return "/Contatore/timer";
+		contatoreInUso = null;
+		taskInUso = null;
+		contatoreAttivato = false;
 
-	return "redirect:" + endPoint;
+		return "redirect:/Task";
 	}
     
     
@@ -530,6 +544,7 @@ public class ContatoreController {
 			//se il task non è stato chiuso ed è diverso dal taskInUso
 			if (taskInUso != null && taskInUso.getId() != taskId) {
 
+				// il taskattivo è il task già selezionato che deve andare sostituito dal nuovo task
 				Task taskAttivo = repositTask.getReferenceById(taskInUso.getId());
 				
 				boolean contatoreIsRun = contatoreservice.contatoreIsRun(taskAttivo);
@@ -540,7 +555,7 @@ public class ContatoreController {
 					
 					contatoreservice.pauseOtherTimers();
 					
-					taskAttivo.setStato("in pausa");
+//					taskAttivo.setStato("in pausa");
 					
 
 				}
@@ -582,6 +597,8 @@ public class ContatoreController {
 				contatoreSelected = contatore;
 
 			}
+			
+			
 			
 			task.setDataModifica(LocalDateTime.now());
 			repositTask.save(task);

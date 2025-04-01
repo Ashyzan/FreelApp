@@ -8,6 +8,7 @@
 		<link rel="stylesheet" th:href="@{/main.css}">
     -->
 <link rel="stylesheet" href="/animate.css">
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 			tailwind.config = {
@@ -286,6 +287,16 @@
 						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
+								<a th:href="@{/Progetti/archivio}">
+									<img class="h-[30px] w-[30px]" src="/img/sources/icons/archive-yellow.svg" alt="statistiche">
+								</a>
+								<div class="pt-1 text-[8px]">
+									ARCHIVIO</div>
+							</div>
+						</li>
+						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
+							<div
+								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
 								<a href="#"> <img class="h-[30px] w-[30px]"
 									src="/img/sources/icons/stats.svg" alt="statistiche">
 								</a>
@@ -374,28 +385,28 @@
 															vai al dettaglio </a></li>
 												
 												<li class="flex flex-col md:flex-row px-2 mt-6 float-left">
+														
 														<a
 														th:href="@{/Task/insert/progetto-{id}(id=${progettoPerData.getId()})}">
 														
-															<div class=" t-tooltip col-auto w-8 h-8 ms-2">
-															
+															<div class="tooltip-top col-auto w-8 h-8 ms-2">
+															<span class="tooltiptext-top">Aggiungi task</span>
 															<img th:src="@{/img/sources/icons/add-task-blue.svg}"
-																		alt="aggiungi-task" class=" size-8 ml-3 -mt-1 inline">
-																<div class=" relative hidden -left-4 bottom-20 t-box w-32 text-center text-nowrap border border-[#0057A5] text-[#0057A5] bg-gray-100 rounded-lg p-1">
-																	Aggiungi Task
-																</div>
+																		alt="aggiungi-task" class="size-8 ml-3 -mt-1 inline">
+																
 															</div>
 															</a>	
 													</li>
 
-													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
+													<li class="flex flex-col md:flex-row px-2 mt-6 mr-4 float-right">
 														<a
 														th:href="@{/Progetti/edit/{id}(id=${progettoPerData.getId()})}"><img
 															th:src="@{/img/sources/icons/modify-grey.svg}"
 															alt="modifica-progetto" class="size-5 inline"></a>
 													</li>
-
-													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
+														
+													<li class="tooltip-top flex flex-col md:flex-row px-2 mt-6 float-right">
+														<span class="tooltiptext-top">Archivia progetto</span>
 														<form th:action="@{/Progetti/archivia/{id}(id=${progettoPerData.getId()})}"
 														th:object="${progetto}" method="post">
 														<button type="submit">

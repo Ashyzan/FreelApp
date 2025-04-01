@@ -1,4 +1,4 @@
-
+console.log("leggo il file timer.js");
 
 const formContatoreErroreFinalSecond = document.getElementById('formContatoreErroreFinalsecond');
 let iterazioni = 0;

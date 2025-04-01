@@ -60,15 +60,6 @@ public class Task{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDateTime dataModifica ;
 
-	public LocalDateTime getDataModifica() {
-		return dataModifica;
-	}
-
-	public void setDataModifica(LocalDateTime dataModifica) {
-		this.dataModifica = dataModifica;
-		
-	}
-
 	@ManyToOne
 	@NotNull(message = "La scelta del progetto è obbligatoria")
 	@JoinColumn(name = "ProgettoRif", nullable = false)
@@ -158,7 +149,14 @@ public class Task{
 	    this.contatore.setTask(this); // setting the parent class as the value for the child instance
 	}
 	
-	
+	public LocalDateTime getDataModifica() {
+		return dataModifica;
+	}
+
+	public void setDataModifica(LocalDateTime dataModifica) {
+		this.dataModifica = dataModifica;
+		
+	}
 	
 	
 

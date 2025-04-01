@@ -17,7 +17,22 @@ import jakarta.transaction.Transactional;
 public interface TaskRepository extends JpaRepository<Task, Integer>, PagingAndSortingRepository<Task, Integer> {
 
 	@Query("SELECT t FROM Task t WHERE t.name LIKE '%'||:input||'%' OR "
-    		+ "t.descrizione LIKE '%'||:input||'%' ")
+    		+ "t.descrizione LIKE '%'||:input||'%' OR "
+			+ "t.progetto.name LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.descrizione LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.labelCliente LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.ragioneSociale LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.email LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.telefono LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.indirizzo LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.city LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.partitaIva LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.name LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.surname LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.codiceFiscale LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.sito LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.nameContatto LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.surnameContatto LIKE '%'||:input||'%'")
     public Page<Task> search( String input, Pageable pageable);
     
     public List<Task> findAll();
@@ -25,7 +40,20 @@ public interface TaskRepository extends JpaRepository<Task, Integer>, PagingAndS
     @Query("SELECT t FROM Task t WHERE t.name LIKE '%'||:input||'%' OR "
     		+ "t.descrizione LIKE '%'||:input||'%' OR "
     		+ "t.progetto.name LIKE '%'||:input||'%' OR "
-    		+ "t.progetto.cliente.labelCliente LIKE '%'||:input||'%'")
+    		+ "t.progetto.descrizione LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.labelCliente LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.ragioneSociale LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.email LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.telefono LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.indirizzo LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.city LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.partitaIva LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.name LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.surname LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.codiceFiscale LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.sito LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.nameContatto LIKE '%'||:input||'%' OR "
+    		+ "t.progetto.cliente.surnameContatto LIKE '%'||:input||'%'")
     public List<Task> searchOreLavorate(String input);
     
     @Query("SELECT t FROM Task t WHERE t.stato !='chiuso'")

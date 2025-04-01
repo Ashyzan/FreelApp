@@ -192,12 +192,14 @@ public class ContatoreService {
 			    Long FinalTime = task.getContatore().getFinaltime();
 			    
 //			    timeExeed(bindingresult, task, model);
+			    
 
 			    if (contatoreIsRun == true && restartTime == null) {
 			    	
 			    	task.getContatore().setFinaltime(findTime( task.getContatore().getStart(), timeNow));
 				
 //			    	timeExeed(bindingresult, task, model);
+			    
 
 			    } else if (contatoreIsRun == true && restartTime != null) {
 

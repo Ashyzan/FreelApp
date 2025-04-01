@@ -1,3 +1,4 @@
+console.log("leggo il file layout.js");
 // elementi DOM per animazione lista task al click su contatore
 let taskCardList = document.getElementById('task-card');
 let buttontest = document.getElementById('buttontest');
@@ -34,8 +35,8 @@ const modalDeleteCloseButton = document.getElementById('modalDeleteCloseButton')
 
 //recupero elementi dal DOM per modalSTOP
 const modalStopButton = document.getElementById('modalStopButton');
-const stopButtonBottom = document.getElementById('stopButtonBottom');
-const stopButtonTop = document.getElementById('stopButtonTop');
+//const stopButtonBottom = document.getElementById('stopButtonBottom');
+//const stopButtonTop = document.getElementById('stopButtonTop');
 const stopButtonTaskRapid = document.getElementById('stopButtonTaskRapid');
 const modalStopCloseButton = document.getElementById('modalStopCloseButton')
   
@@ -107,31 +108,31 @@ if(nuovoProgettoButton != null){
 }
 
 //apertura modale STOP BUTTON top
-if(stopButtonTop != null){
-	stopButtonTop.addEventListener('click', function(){
-		modalStopButton.classList.remove('scale-0');
-	})
-}
+//if(stopButtonTop != null){
+//	stopButtonTop.addEventListener('click', function(){
+//		modalStopButton.classList.remove('scale-0');
+//	})
+//}
 //apertura modale STOP BUTTON bottom
-if(stopButtonBottom != null){
-	stopButtonBottom.addEventListener('click', function(){
-		modalStopButton.classList.remove('scale-0');
-	})	
-}
+//if(stopButtonBottom != null){
+//	stopButtonBottom.addEventListener('click', function(){
+//		modalStopButton.classList.remove('scale-0');
+//	})	
+//}
 
 //apertura modale STOP BUTTON task rapid
-if(stopButtonTaskRapid != null){
-	stopButtonTaskRapid.addEventListener('click', function(){
-		modalStopButton.classList.remove('scale-0');
-	})	
-}
+//if(stopButtonTaskRapid != null){
+//	stopButtonTaskRapid.addEventListener('click', function(){
+//		modalStopButton.classList.remove('scale-0');
+//	})	
+//}
 
 //chiusura modale STOP BUTTON
-if(modalStopCloseButton != null){
-	modalStopCloseButton.addEventListener('click', function(){
-		modalStopButton.classList.add('scale-0')
-	})	
-}
+//if(modalStopCloseButton != null){
+//	modalStopCloseButton.addEventListener('click', function(){
+//		modalStopButton.classList.add('scale-0')
+//	})	
+//}
 
 //apertura modale PAUSE-START BUTTON (START top)
 if(modalStartTopButton != null){
@@ -174,15 +175,7 @@ if(modalPauseStartCloseButton != null){
 	})	
 }
 
-//funzione per aprire la modale
-function openModal(){
-	modal.classList.remove('scale-0');
-}
-
-//funzione per chiudere la modale
-function closeModal(){
-	modal.classList.add('scale-0');
-}		  
+		  
 		 
 
 //animazione avvio contatore
@@ -294,3 +287,18 @@ if((contatoreCaratteriCinquecento != null) && (textAreaDescrizioneCinquecento !=
 			});
 	
 }
+
+//if(openModalButton != null){
+//	openModalButton.addEventListener('click', function(){
+//		openModal()
+//	})	
+//}
+
+//if(closeModalButton != null){
+//	closeModalButton.addEventListener('click', function(){
+//		closeModal()
+//	})	
+//}
+
+
+

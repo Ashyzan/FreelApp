@@ -60,15 +60,21 @@ public class TaskController {
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 		
-		//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+		//passa al model l'id, il nome e il progetto del taskInUso se diverso da null e serve per inibire se necessario
 		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
 		Integer taskInUsoId = 0;
+		String taskInUsoName = null;
+		String taskInUsoProgetto = null;
 		
 		if(ContatoreController.taskInUso != null) {
 			taskInUsoId = ContatoreController.taskInUso.getId();
+			taskInUsoName = ContatoreController.taskInUso.getName();
+			taskInUsoProgetto = ContatoreController.taskInUso.getProgetto().getName();
 		}
 		
 		model.addAttribute("taskInUsoId", taskInUsoId);
+		model.addAttribute("taskInUsoName", taskInUsoName);
+		model.addAttribute("taskInUsoProgetto", taskInUsoProgetto);
 		
 		// restituisce al model questo valore booleano false se non ci sono progetti a db
 		// e restituisce true se ci sono progetti a db
@@ -78,6 +84,31 @@ public class TaskController {
 		}
 		model.addAttribute("areTasksOnDb", areTasksOnDb);
 		
+		
+		// lista che restituisce i task per modale delle ore lavorate
+				List<Task> taskListOreLavorate = new ArrayList<Task> ();
+				List<Task> taskList = repositTask.findAll(Sort.by(Sort.Direction.DESC, "Name"));
+				taskList.forEach( task -> {
+					
+					
+						if( task.getContatore() == null) {
+						taskListOreLavorate.add(task);
+						
+								}
+						
+						else if( task.getContatore() != null) {
+							Boolean contatoreAttivo;
+							contatoreAttivo = contatoreservice.contatoreIsRun(task);
+				
+							if(task.getContatore().getStop() == null  && contatoreAttivo == false) {
+							
+									 taskListOreLavorate.add(task); 
+											
+									 }	
+								}
+					model.addAttribute("taskListOreLavorate", taskListOreLavorate);
+						} );
+
 		
     	
 
@@ -127,15 +158,21 @@ public class TaskController {
 	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 	ContatoreController.contatoreAttivato = false;
 	
-	//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+	//passa al model l'id, il nome e il progetto del taskInUso se diverso da null e serve per inibire se necessario
 		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
 		Integer taskInUsoId = 0;
+		String taskInUsoName = null;
+		String taskInUsoProgetto = null;
 		
 		if(ContatoreController.taskInUso != null) {
 			taskInUsoId = ContatoreController.taskInUso.getId();
+			taskInUsoName = ContatoreController.taskInUso.getName();
+			taskInUsoProgetto = ContatoreController.taskInUso.getProgetto().getName();
 		}
 		
 		model.addAttribute("taskInUsoId", taskInUsoId);
+		model.addAttribute("taskInUsoName", taskInUsoName);
+		model.addAttribute("taskInUsoProgetto", taskInUsoProgetto);
 
 		// restituisce al model questo valore booleano false se non ci sono progetti a db
 		// e restituisce true se ci sono progetti a db
@@ -159,15 +196,21 @@ public class TaskController {
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 		
-		//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+		//passa al model l'id, il nome e il progetto del taskInUso se diverso da null e serve per inibire se necessario
 		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
 		Integer taskInUsoId = 0;
+		String taskInUsoName = null;
+		String taskInUsoProgetto = null;
 		
 		if(ContatoreController.taskInUso != null) {
 			taskInUsoId = ContatoreController.taskInUso.getId();
+			taskInUsoName = ContatoreController.taskInUso.getName();
+			taskInUsoProgetto = ContatoreController.taskInUso.getProgetto().getName();
 		}
 		
 		model.addAttribute("taskInUsoId", taskInUsoId);
+		model.addAttribute("taskInUsoName", taskInUsoName);
+		model.addAttribute("taskInUsoProgetto", taskInUsoProgetto);
 		
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -222,15 +265,21 @@ public class TaskController {
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);
 	
-	//passa al model l'id del taskInUso se diverso da null e serve per inibire se necessario
+	//passa al model l'id, il nome e il progetto del taskInUso se diverso da null e serve per inibire se necessario
 		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
 		Integer taskInUsoId = 0;
+		String taskInUsoName = null;
+		String taskInUsoProgetto = null;
 		
 		if(ContatoreController.taskInUso != null) {
 			taskInUsoId = ContatoreController.taskInUso.getId();
+			taskInUsoName = ContatoreController.taskInUso.getName();
+			taskInUsoProgetto = ContatoreController.taskInUso.getProgetto().getName();
 		}
 		
 		model.addAttribute("taskInUsoId", taskInUsoId);
+		model.addAttribute("taskInUsoName", taskInUsoName);
+		model.addAttribute("taskInUsoProgetto", taskInUsoProgetto);
 	
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -295,6 +344,7 @@ public class TaskController {
 
 	// istanzio un nuovo task
 	Task newTask = new Task();
+	
 	// attribuisco il task al progetto
 	newTask.setProgetto(progetto);
 
@@ -330,29 +380,21 @@ public class TaskController {
 	return "/Task/freelapp-insertTask";
     }
 
-    @PostMapping("/Task/insert/{id}")
-    public String storeTask(@PathVariable("id") Integer id, @Valid @ModelAttribute("task") Task task,
+    @PostMapping("/Task/insert/progetto")
+    public String storeTask(@Valid @ModelAttribute("task") Task task,
 	    BindingResult bindingResult, Model model) {
 
-//// richiamo il progetto tramite id
-	Progetto progetto = repositProgetto.getReferenceById(id);
 
-//// attribuisco il task passato dal modello al progetto (progettoRif)
-	task.setProgetto(progetto);
-
-	// restituisco il task al modello
-	model.addAttribute("task", task);
-
+	Progetto progetto = task.getProgetto();
+	
 	if (bindingResult.hasErrors()) {
-// bindingResult.addError(
-// new ObjectError("Errore", "Huston abbiamo un problema"));
+		
+		model.addAttribute("progetto", progetto);
+
 		//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
-		String endPoint = "/Task/insert/progetto-" ;
+		String endPoint = "/Task/insert/progetto" ;
 		
 		model.addAttribute("endPoint", endPoint);
-		
-		//riporto al model l'id del progetto in uso
-		model.addAttribute("progettoId", progetto.getId());
 		
 		contatoreservice.importContatoreInGet(model);
 		//passo al model i contatore e task in uso (gli static)
