@@ -2,14 +2,12 @@ package com.freelapp.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,21 +58,8 @@ public class TaskController {
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 		
-		//passa al model l'id, il nome e il progetto del taskInUso se diverso da null e serve per inibire se necessario
-		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
-		Integer taskInUsoId = 0;
-		String taskInUsoName = null;
-		String taskInUsoProgetto = null;
-		
-		if(ContatoreController.taskInUso != null) {
-			taskInUsoId = ContatoreController.taskInUso.getId();
-			taskInUsoName = ContatoreController.taskInUso.getName();
-			taskInUsoProgetto = ContatoreController.taskInUso.getProgetto().getName();
-		}
-		
-		model.addAttribute("taskInUsoId", taskInUsoId);
-		model.addAttribute("taskInUsoName", taskInUsoName);
-		model.addAttribute("taskInUsoProgetto", taskInUsoProgetto);
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+		taskService.informationFromTaskInUsoToModel(model);
 		
 		// restituisce al model questo valore booleano false se non ci sono progetti a db
 		// e restituisce true se ci sono progetti a db
@@ -158,21 +143,8 @@ public class TaskController {
 	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 	ContatoreController.contatoreAttivato = false;
 	
-	//passa al model l'id, il nome e il progetto del taskInUso se diverso da null e serve per inibire se necessario
-		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
-		Integer taskInUsoId = 0;
-		String taskInUsoName = null;
-		String taskInUsoProgetto = null;
-		
-		if(ContatoreController.taskInUso != null) {
-			taskInUsoId = ContatoreController.taskInUso.getId();
-			taskInUsoName = ContatoreController.taskInUso.getName();
-			taskInUsoProgetto = ContatoreController.taskInUso.getProgetto().getName();
-		}
-		
-		model.addAttribute("taskInUsoId", taskInUsoId);
-		model.addAttribute("taskInUsoName", taskInUsoName);
-		model.addAttribute("taskInUsoProgetto", taskInUsoProgetto);
+	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+	taskService.informationFromTaskInUsoToModel(model);
 
 		// restituisce al model questo valore booleano false se non ci sono progetti a db
 		// e restituisce true se ci sono progetti a db
@@ -196,21 +168,8 @@ public class TaskController {
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 		
-		//passa al model l'id, il nome e il progetto del taskInUso se diverso da null e serve per inibire se necessario
-		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
-		Integer taskInUsoId = 0;
-		String taskInUsoName = null;
-		String taskInUsoProgetto = null;
-		
-		if(ContatoreController.taskInUso != null) {
-			taskInUsoId = ContatoreController.taskInUso.getId();
-			taskInUsoName = ContatoreController.taskInUso.getName();
-			taskInUsoProgetto = ContatoreController.taskInUso.getProgetto().getName();
-		}
-		
-		model.addAttribute("taskInUsoId", taskInUsoId);
-		model.addAttribute("taskInUsoName", taskInUsoName);
-		model.addAttribute("taskInUsoProgetto", taskInUsoProgetto);
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+		taskService.informationFromTaskInUsoToModel(model);
 		
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -265,21 +224,8 @@ public class TaskController {
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);
 	
-	//passa al model l'id, il nome e il progetto del taskInUso se diverso da null e serve per inibire se necessario
-		//il pulsante di selezione contatore se  taskInUsoId == task.id (task è il task corrispondente al pulsante)
-		Integer taskInUsoId = 0;
-		String taskInUsoName = null;
-		String taskInUsoProgetto = null;
-		
-		if(ContatoreController.taskInUso != null) {
-			taskInUsoId = ContatoreController.taskInUso.getId();
-			taskInUsoName = ContatoreController.taskInUso.getName();
-			taskInUsoProgetto = ContatoreController.taskInUso.getProgetto().getName();
-		}
-		
-		model.addAttribute("taskInUsoId", taskInUsoId);
-		model.addAttribute("taskInUsoName", taskInUsoName);
-		model.addAttribute("taskInUsoProgetto", taskInUsoProgetto);
+	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+	taskService.informationFromTaskInUsoToModel(model);
 	
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -330,6 +276,9 @@ public class TaskController {
 	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 	ContatoreController.contatoreAttivato = false;
 	
+	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+	taskService.informationFromTaskInUsoToModel(model);
+	
 	return "/Task/freelapp-descrizioneTask";
     }
 
@@ -363,12 +312,9 @@ public class TaskController {
 	//passo al model i contatore e task in uso (gli static)
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);
-	//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
-	if(ContatoreController.taskInUso != null) {
-    	model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
-    }else {
-    	model.addAttribute("taskInUsoId",0);
-    }
+	
+	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+	taskService.informationFromTaskInUsoToModel(model);
 	
 	//invio al model il booleano del contatore attivato
 	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -400,16 +346,17 @@ public class TaskController {
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
-		//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
-		if(ContatoreController.taskInUso != null) {
-	    	model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
-	    }else {
-	    	model.addAttribute("taskInUsoId",0);
-	    }
+		
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+		taskService.informationFromTaskInUsoToModel(model);
 
 	    return "/Task/freelapp-insertTask";
 	}
 
+	//aggiungo gruppo dataOra di ultima modifica che coincide con la creazione per visualizzare task in alto 
+	//negli elenchi ordinati per data di modifica
+	task.setDataModifica(LocalDateTime.now());
+	
 	// salvo il task
 	repositTask.save(task);
 
@@ -441,12 +388,8 @@ public class TaskController {
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);
 	
-	//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
-	if(ContatoreController.taskInUso != null) {
-		model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
-	}else {
-		model.addAttribute("taskInUsoId",0);
-	}
+	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+	taskService.informationFromTaskInUsoToModel(model);
 
 	//invio al model il booleano del contatore attivato
 	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -478,16 +421,16 @@ public class TaskController {
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
 		
-		//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
-		if(ContatoreController.taskInUso != null) {
-			model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
-		}else {
-			model.addAttribute("taskInUsoId",0);
-		}
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+		taskService.informationFromTaskInUsoToModel(model);
 
 	    return "/Task/freelapp-insertTask-noProgetto";
 	}
 
+	//aggiungo gruppo dataOra di ultima modifica che coincide con la creazione per visualizzare task in alto 
+	//negli elenchi ordinati per data di modifica
+	task.setDataModifica(LocalDateTime.now());
+	
 	// salvo il task
 	repositTask.save(task);
 
@@ -511,12 +454,8 @@ public class TaskController {
   	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
   	model.addAttribute("taskInUso", ContatoreController.taskInUso);
   	
-  	//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
-  	if(ContatoreController.taskInUso != null) {
-  		model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
-  	}else {
-  		model.addAttribute("taskInUsoId",0);
-  	}
+  	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+	taskService.informationFromTaskInUsoToModel(model);
   	
   	//invio al model il booleano del contatore attivato
 	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -540,12 +479,8 @@ public class TaskController {
 	  	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	  	model.addAttribute("taskInUso", ContatoreController.taskInUso);
 	  	
-	  	//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
-	  	if(ContatoreController.taskInUso != null) {
-	  		model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
-	  	}else {
-	  		model.addAttribute("taskInUsoId",0);
-	  	}
+	  	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+		taskService.informationFromTaskInUsoToModel(model);
 
 	    return "/Task/freelapp-editTask";
 	}
@@ -578,7 +513,8 @@ public class TaskController {
 		
 		contatoreservice.timeExeed(bindingResult, taskInUso, model);
 		
-		
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP	
+		taskService.informationFromTaskInUsoToModel(model);
 		
 		return "Errori/timeExceeded";
 	}

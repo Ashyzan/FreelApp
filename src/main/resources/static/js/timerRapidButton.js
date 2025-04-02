@@ -31,8 +31,9 @@ const taskResumeTable = document.getElementById('taskResumeTable');
 const formTask = document.getElementById('rapid-task');
 
 
-//id del task in uso
-let taskAttualmenteInUso = 0;
+//inizializzazione id r finalTime del task in uso
+let taskAttualmenteSelezionato = 0;
+let finalTimeTaskSelezionato = 0;
 
 //API da cambiare con url definitivi
 const api_urlTaskSelected = 'http://localhost:8080/api/task/'
@@ -70,6 +71,7 @@ if(selectTaskButton != null){
 }
 //funzione che richiama api del task selezionato
 async function getJsonTask(id){
+	console.log("sono in getJsonTask")
 	
 	if(id != 0 && id != null){
 		const response = await fetch(api_urlTaskSelected+id);
@@ -81,9 +83,14 @@ async function getJsonTask(id){
 		document.getElementById('taskCliente').textContent = data.cliente;	
 		document.getElementById('taskCliente').href = `/Clienti/${data.clienteId}` ;	
 		document.getElementById('taskLogoPath').src = data.logoCliente;	
-		document.getElementById('task-stato').src = assegnaSvgStatoItem(data.stato);	
+		document.getElementById('task-stato').src = assegnaSvgStatoItem(data.stato);
+		finalTimeTaskSelezionato = data.finalTime;
+		console.log("finalTime task selezionato: " + finalTimeTaskSelezionato)
+		console.log("task attualmente in uso: " + data.taskAttualmenteInUso)
+			
 
-		stampaContatore(data.finalTime, data.taskAttualmenteInUso, id)		
+		stampaContatore(data.finalTime, data.taskAttualmenteInUso, id)
+		creaModaleStopRapidButton(id, data.nome, data.progetto)
 	}
 }
 
@@ -159,13 +166,11 @@ function stampaContatore(finalTime,taskAttualmenteInUso, id){
 	if(taskAttualmenteInUso == valueInput && contatoreIsRun == true){
 		stampaTaskSelezionatoInRun();
 		
-	} else if((taskAttualmenteInUso != valueInput && contatoreIsRun != true)||(taskAttualmenteInUso != valueInput && contatoreIsRun == true)) {
+	} else {
 		if(document.getElementById('start-button').pointerEvents == "none"){
 			document.getElementById('start-button').classList.remove('pointer-events-none');
 		}
-		if(document.getElementById('stopButtonTaskRapid').pointerEvents != "none"){
-			document.getElementById('stopButtonTaskRapid').classList.add('pointer-events-none')
-		}
+		
 		if(document.getElementById('pause-button').pointerEvents != "none"){
 			document.getElementById('pause-button').classList.add('pointer-events-none')
 		}			
@@ -307,5 +312,25 @@ function clickOnBackButton(){
 				
 	
 
+}
+
+//funzione creazione modale STOP da RAPID-BUTTON
+function creaModaleStopRapidButton(idTaskSelezionato, nomeTaskSelezionato, nomeProgettoTaskSelezionato){
+	contenutoModale.innerHTML = `<form action="/Contatore/stop/${idTaskSelezionato}" 
+					 method="post">
+				<div class="flex flex-col justify-center p-2 text-center ">
+					<div class="p-3 text-[#0057A5]">
+						<p>Stai per terminare definitivamente il task <strong>${nomeTaskSelezionato}</strong> relativo al progetto
+							<strong>${nomeProgettoTaskSelezionato}</strong>.
+							Vuoi procedere?
+						</p>
+					</div>
+					<div class="p-6">
+						<button type="submit"
+							class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">
+							Conferma</button>
+					</div>
+				</div>
+			</form>`
 }
 

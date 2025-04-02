@@ -148,7 +148,7 @@
 									</div>
 									<div th:unless="${taskInUso == null}" class="w-8 h-8">
 										<button id="stopButtonTop" type="button"
-											class="hover:opacity-75">
+											class="hover:opacity-75" onclick="creaModaleStop()">
 											<img class="h-[29px] w-[29px]"
 												src="/img/sources/icons/stop-blue.svg" alt="stop">
 										</button>
@@ -166,7 +166,8 @@
 											<form th:action="@{|/Contatore/pause/${taskInUso.id}|}"
 												th:object="${contatore}" method="post">
 												<input type="hidden" name="endPoint" th:value="${endPoint}">
-												<button type="submit" class="hover:opacity-75 ">
+												<button type="button" class="hover:opacity-75 " 
+														th:onclick="creaApriModalePauseInInsertEditMode([[ ${formCliente.getLabelCliente()}]])">
 													<img class="h-[29px] w-[29px]"
 														src="/img/sources/icons/pause-blue.svg" alt="pause">
 												</button>
@@ -186,7 +187,8 @@
 											<form th:action="@{|/start/${taskInUso.id}|}"
 												th:object="${contatore}" method="post">
 												<input type="hidden" name="endPoint" th:value="${endPoint}">
-												<button type="submit" class="hover:opacity-75">
+												<button type="button" class="hover:opacity-75"
+														th:onclick="creaApriModaleStartInInsertEditMode([[ ${formCliente.getLabelCliente()}]])">
 													<img class="h-[29px] w-[29px]"
 														src="/img/sources/icons/play-blue.svg" alt="start">
 												</button>
@@ -312,7 +314,7 @@
 			<div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto">
 				<div class="flex flex-col justify-center items-center w-full">
 					<div class="h-12 text-center font-bold items-center m-3">
-						<h1 th:text="|MODIFICA CLIENTE: ${formCliente.getName()}|"></h1>
+						<h1 th:text="|MODIFICA CLIENTE: ${formCliente.getLabelCliente()}|"></h1>
 					</div>
 
 					<div
@@ -340,7 +342,7 @@
 											<label for="labelCliente">Etichetta cliente<span> *</span></label>
 										</div>
 										<div class=" col md:col-span-2 col-span-3">
-											<input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100"
+											<input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
 												id="labelCliente" th:field="*{labelCliente}" th:errorClass="border">
 												<div id="labelClienteError" class="text-red-600 text-[12px] text-center w-full"></div>
 											<div th:if="${#fields.hasErrors('labelCliente')}"
@@ -358,7 +360,7 @@
 										</div>
 										<div class="col md:col-span-2 col-span-3">
 											<select onchange="tipologiaSelect(value)"
-												class="select border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="tipologia"
+												class="select border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100" id="tipologia"
 												th:field="*{tipologia}" name="tipologia" th:errorClass="border">
 												<option value="privato" class="bg-white text-[#0057a5]">Privato</option>
 												<option value="azienda" class="bg-white text-[#0057a5]">Azienda</option>
@@ -401,7 +403,7 @@
 											</div>
 											<div>
 												<input type="file" onchange="previewUploadFile(event)"
-													class="border-red-600 w-full rounded-lg shadow-md shadow-blue-500/50 bg-gray-100 block h-8 file:h-full file:rounded-s-md file:bg-[#0057A5]  file:text-white"
+													class="border-red-600 w-full rounded-lg bg-gray-100 block h-8 file:h-full file:rounded-s-md file:bg-[#0057A5]  file:text-white"
 													id="urlLogo" name="file">
 												<div th:text="${errorFormatImageMessage}"
 													class="text-red-600 text-[12px] text-center w-full"></div>
@@ -434,7 +436,7 @@
 												<label for="ragioneSociale">Ragione sociale*</label>
 											</div>
 											<div class="col md:col-span-2 col-span-3">
-												<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100"
+												<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100"
 													id="ragioneSociale" th:field="*{ragioneSociale}">
 													<div id="ragioneSocialeError" class="text-red-600 text-[12px] text-center w-full"></div>	
 											</div>
@@ -445,7 +447,7 @@
 												<label for="ragioneSociale">Partita Iva*</label>
 											</div>
 											<div class="col md:col-span-2 col-span-3">
-												<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="PartitaIva"
+												<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="PartitaIva"
 													th:field="*{partitaIva}">
 													<div id="partitaIvaError" class="text-red-600 text-[12px] text-center w-full"></div>	
 											</div>
@@ -457,7 +459,7 @@
 												<label for="nome">Nome*</label>
 											</div>
 											<div class="col md:col-span-2 col-span-3">
-												<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="nome"
+												<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="nome"
 													th:field="*{name}">
 													<div id="nomeError" class="text-red-600 text-[12px] text-center w-full"></div>	
 											</div>
@@ -468,7 +470,7 @@
 												<label for="cognome">Cognome*</label>
 											</div>
 											<div class="col md:col-span-2 col-span-3">
-												<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="cognome"
+												<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="cognome"
 													th:field="*{surname}">
 													<div id="cognomeError" class="text-red-600 text-[12px] text-center w-full"></div>	
 											</div>
@@ -480,7 +482,7 @@
 											<label for="codiceFiscale">Codice Fiscale</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="codiceFiscale"
+											<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="codiceFiscale"
 												th:field="*{codiceFiscale}">
 										</div>
 									</div>
@@ -490,7 +492,7 @@
 											<label for="pec">Indirizzo Pec</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="pec"
+											<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="pec"
 												th:field="*{pec}">
 										</div>
 									</div>
@@ -500,7 +502,7 @@
 											<label for="indirizzo">Indirizzo</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="indirizzo"
+											<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="indirizzo"
 												th:field="*{indirizzo}">
 										</div>
 									</div>
@@ -510,7 +512,7 @@
 											<label for="civico">Civico</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="civico"
+											<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="civico"
 												th:field="*{civico}">
 										</div>
 									</div>
@@ -520,7 +522,7 @@
 											<label for="city">Città</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="city"
+											<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="city"
 												th:field="*{city}">
 										</div>
 									</div>
@@ -530,7 +532,7 @@
 											<label for="cap">CAP</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="cap"
+											<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="cap"
 												th:field="*{cap}">
 										</div>
 									</div>
@@ -540,7 +542,7 @@
 											<label for="nazionalita">Nazione</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<select class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="nazionalita"
+											<select class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="nazionalita"
 												th:field="*{nazionalita}">
 												<option value="">Seleziona nazionalità</option>
 												<option value="AT">Austria</option>
@@ -599,7 +601,7 @@
 												<label for="nomeContatto">Nome</label>
 											</div>
 											<div class="col md:col-span-2 col-span-3">
-												<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="nomeContatto"
+												<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="nomeContatto"
 													th:field="*{nameContatto}">
 											</div>
 										</div>
@@ -609,7 +611,7 @@
 												<label for="cognomeContatto">Cognome</label>
 											</div>
 											<div class="col md:col-span-2 col-span-3">
-												<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100"
+												<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100"
 													id="cognomeContatto" th:field="*{surnameContatto}">
 											</div>
 										</div>
@@ -621,7 +623,7 @@
 											<label for="email">Email<span> *</span></label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100"
+											<input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
 												id="email" th:field="*{email}" th:errorClass="border">
 												<div id="emailError" class="text-red-600 text-[12px] text-center w-full"></div>	
 											<div th:if="${#fields.hasErrors('email')}"
@@ -639,7 +641,7 @@
 											<label for="telefono">Telefono<span> *</span></label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100"
+											<input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
 												id="telefono" th:field="*{telefono}" th:errorClass="border">
 												<div id="telefonoError" class="text-red-600 text-[12px] text-center w-full"></div>	
 											<div th:if="${#fields.hasErrors('telefono')}"
@@ -657,7 +659,7 @@
 											<label for="sito">Sito web</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="sito"
+											<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="sito"
 												th:field="*{sito}">
 										</div>
 									</div>
@@ -704,7 +706,8 @@
 									<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg" alt="stop">
 								</div>
 								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
-									<button id="stopButtonBottom" type="button" class="hover:opacity-75">
+									<button id="stopButtonBottom" type="button" class="hover:opacity-75"
+												onclick="creaModaleStop()">
 										<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg"
 											alt="stop">
 									</button>
@@ -721,7 +724,8 @@
 										<form th:action="@{|/Contatore/pause/${taskInUso.id}|}" th:object="${contatore}"
 											method="post">
 											<input type="hidden" name="endPoint" th:value="${endPoint}">
-											<button type="submit" class="hover:opacity-75 flex items-center">
+											<button type="button" class="hover:opacity-75 flex items-center"
+													th:onclick="creaApriModalePauseInInsertEditMode([[ ${formCliente.getLabelCliente()}]])">
 												<img class="h-[45px] w-[45px]" src="/img/sources/icons/pause-blue.svg"
 													alt="pause">
 											</button>
@@ -740,7 +744,8 @@
 										<form th:action="@{|/start/${taskInUso.id}|}" th:object="${contatore}"
 											method="post">
 											<input type="hidden" name="endPoint" th:value="${endPoint}">
-											<button type="submit" class="hover:opacity-75 flex items-center">
+											<button type="button" class="hover:opacity-75 flex items-center"
+													th:onclick="creaApriModaleStartInInsertEditMode([[ ${formCliente.getLabelCliente()}]])">
 												<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg"
 													alt="start">
 											</button>
@@ -754,62 +759,24 @@
 			</div>
 	</main>
 
-	<!-- Modale StopButton-->
-	<div id="modalStopButton"
+	<!-- Modale -->
+	<div id="modale"
 		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
-		<div class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
+		<div
+			class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
 			<div class=" w-full h-auto">
-				<div id="modalStopCloseButton" class="flex justify-end items-center p-2 cursor-pointer">
-					<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
+				<div id="modale-close-button" onclick="chiudiModale()"
+					class="flex justify-end items-center p-2 cursor-pointer">
+					<img class="h-[30px] w-[30px]"
+						src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
 				</div>
 			</div>
-			<div th:unless="${taskInUso == null}" class="w-full h-auto bg-white rounded-b-lg">
-				<form th:action="@{|/Contatore/stop/${taskInUso.id}|}" th:object="${contatore}" method="post">
-					<div class="flex flex-col justify-center p-2 text-center ">
-						<div class="p-3 text-[#0057A5]">
-							<p>Stai per terminare definitivamente il task <strong
-									th:text="${taskInUso.getName()}"></strong>
-								relativo al progetto <strong th:text="${taskInUso.progetto.getName()}"></strong>. Vuoi
-								procedere?</p>
-						</div>
-						<div class="p-6">
-							<button type="submit"
-								class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
-						</div>
-					</div>
-				</form>
+			<div id="contenuto-modale" class="w-full h-auto bg-white rounded-b-lg">		
 			</div>
 		</div>
 	</div>
-
-	<!-- Modale StartPauseButton-->
-	<div id="modalPauseStartButton"
-		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
-		<div class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
-			<div class=" w-full h-auto">
-				<div id="modalPauseStartCloseButton" class="flex justify-end items-center p-2 cursor-pointer">
-					<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
-				</div>
-			</div>
-			<div th:unless="${taskInUso == null}" class="w-full h-auto bg-white rounded-b-lg">
-				<form id="form-start-pause" th:object="${contatore}" method="post">
-					<input type="hidden" name="endPoint" th:value="${endPoint}">
-					<div class="flex flex-col justify-center p-2 text-center ">
-						<div class="p-3 text-[#0057A5]">
-							<p>Proseguendo le modifiche non salvate al task <strong
-									th:text="${taskInUso.getName()}"></strong>
-								relativo al progetto <strong th:text="${taskInUso.progetto.getName()}">andranno
-									perse</strong>. Vuoi procedere?</p>
-						</div>
-						<div class="p-6">
-							<button type="submit"
-								class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+	
+	
 	<!-- Script -->
 	<script th:inline="javascript">
 		/*<![CDATA[*/
@@ -817,12 +784,16 @@
 		let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
 		let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean
 		let taskInUsoId = /*[[${taskInUsoId}]]*/ null;
+		let taskInUsoName = /*[[${taskInUsoName}]]*/ null;
+		let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
 		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
+		let endPoint =/*[[${endPoint}]]*/null; //String
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
 	<script type="text/javascript" th:src="@{/js/insert-edit-Cliente.js}"></script>
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
+	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 	<script th:inline="javascript">
 		const contentTreError = document.getElementById('content-3');
 		const inputFile = document.getElementById('urlLogo');

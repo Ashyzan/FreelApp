@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.freelapp.service.ContatoreService;
+import com.freelapp.service.TaskService;
 
 @Controller
 @RequestMapping("/Errori")
@@ -15,6 +16,9 @@ public class ErroriController {
 	@Autowired 
 	private ContatoreService contatoreservice;
 	
+	@Autowired
+	private TaskService taskService;
+	
 	@GetMapping("/MaxUploadSizeExceeded")
 	public String MaxUploadSizeExceeded(Model model) {
 		
@@ -22,9 +26,12 @@ public class ErroriController {
 		String endPoint = "/Errori/MaxUploadSizeExceeded";
 		model.addAttribute("endPoint", endPoint);
 		
-			contatoreservice.importContatoreInGet(model);
-			model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
-			model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		contatoreservice.importContatoreInGet(model);
+		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP	
+		taskService.informationFromTaskInUsoToModel(model);
 
 			//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;

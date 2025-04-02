@@ -12,7 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import com.freelapp.controller.ContatoreController;
 import com.freelapp.model.Task;
 import com.freelapp.repository.TaskRepository;
 
@@ -56,5 +58,23 @@ public class TaskService {
 		return timer;
 	}
 	
+	//passa al model l'id, il nome e il progetto del taskInUso se diverso da null
+	//impegato per la modale di stop
+	public void informationFromTaskInUsoToModel(Model model) {
+		
+		Integer taskInUsoId = 0;
+		String taskInUsoName = null;
+		String taskInUsoProgetto = null;
+		
+		if(ContatoreController.taskInUso != null) {
+			taskInUsoId = ContatoreController.taskInUso.getId();
+			taskInUsoName = ContatoreController.taskInUso.getName();
+			taskInUsoProgetto = ContatoreController.taskInUso.getProgetto().getName();
+		}
+		
+		model.addAttribute("taskInUsoId", taskInUsoId);
+		model.addAttribute("taskInUsoName", taskInUsoName);
+		model.addAttribute("taskInUsoProgetto", taskInUsoProgetto);
+	}
 	
 }

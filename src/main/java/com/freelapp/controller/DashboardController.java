@@ -20,6 +20,7 @@ import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.repository.TaskRepository;
 import com.freelapp.service.ContatoreService;
+import com.freelapp.service.TaskService;
 
 
 @Controller
@@ -38,6 +39,9 @@ public class DashboardController {
 	@Autowired
 	private ContatoreService contatoreservice;
 	
+	@Autowired
+	private TaskService taskService;
+	
 
 	@GetMapping("/dashboard")
 	public String index( Model model){
@@ -49,9 +53,10 @@ public class DashboardController {
 		contatoreservice.importContatoreInGet(model);
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
-		if(ContatoreController.taskInUso != null) {
-			model.addAttribute("taskInUsoId", ContatoreController.taskInUso.getId());			
-		}
+	
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+		taskService.informationFromTaskInUsoToModel(model);
+		
 		
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;

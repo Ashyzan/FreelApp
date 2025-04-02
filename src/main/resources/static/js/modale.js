@@ -11,31 +11,6 @@ const modaleCloseButton = document.getElementById('modale-close-button');
 const contenutoModale = document.getElementById('contenuto-modale');
 
 
-//recupero dal DOM e attivazione buttons di apertura modale
-// ------- Stop ---------
-const stopButtonBottom = document.getElementById('stopButtonBottom');
-if(stopButtonBottom != null){
-	stopButtonBottom.addEventListener('click', function(){
-		creaModaleStop();
-		apriModale();
-	})
-}
-const stopButtonTop = document.getElementById('stopButtonTop');
-if(stopButtonTop != null){
-	stopButtonTop.addEventListener('click',function(){
-		creaModaleStop();
-		apriModale();
-	})
-}
-
-
-
-
-
-
-
-
-
 //------- funzione apertura modale -------
 function apriModale(){
 	modale.classList.remove('scale-0');
@@ -67,8 +42,10 @@ function creaModaleStop(){
 			</div>
 		</form>`
 	
-	
+		apriModale()
 }
+
+
 
 
 //funzione creazione e apertura modale ORE LAVORATE
@@ -152,4 +129,178 @@ function creaApriModaleReset(idTaskselected, taskName, progettoName){
 						</div>
 					</form>`;
 	apriModale();
+}
+
+//funzione creazione e aprtura modale DELETE CLIENTE
+function creaApriModaleDeleteCliente(idClienteSelected, clienteLabel){
+	contenutoModale.innerHTML = `	<form action="/Clienti/delete/${idClienteSelected}" method="post">
+							<div class="flex flex-col justify-center p-2 text-center ">
+								<div class="p-3 text-[#0057A5]">
+									<p>Stai per cancellare il
+										cliente <strong>${clienteLabel}</strong>
+										e tutto ciò che ad esso
+										è collegato. Vuoi
+										procedere?</p>
+								</div>
+								<div class="p-6">
+									<button type="submit"
+										class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
+								</div>
+							</div>
+						</form>`;
+				
+						apriModale();	
+				
+}
+
+//funzione creazione e aprtura modale DELETE PROGETTO
+function creaApriModaleDeleteProgetto(idProgetto, progettoSelectedName, progettoSelectedClienteName){
+	contenutoModale.innerHTML = `	<form action="/Progetti/delete/${idProgetto}" method="post">
+							<div class="flex flex-col justify-center p-2 text-center ">
+								<div class="p-3 text-[#0057A5]">
+									<p>Stai per cancellare il
+										Progetto <strong>${progettoSelectedName}</strong>
+										 relativo al cliente
+										<strong> ${progettoSelectedClienteName} </strong>
+										con tutti i relativi
+										Task. Vuoi procedere?
+									</p>
+								</div>
+								<div class="p-6">
+									<button type="submit"
+										class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
+								</div>
+							</div>
+						</form>`
+					
+					apriModale();
+}
+
+//funzione creazione e apertuta modale DELETE TASK	
+function creaApriModaleDeleteTask(idTask, taskSelectedName, taskSelectedProgettoName){
+	contenutoModale.innerHTML = `	<form action="/Task/delete/${idTask}" method="post">
+							<div class="flex flex-col justify-center p-2 text-center ">
+								<div class="p-3 text-[#0057A5]">
+									<p>Stai per cancellare il task <strong>${taskSelectedName} </strong>
+										relativo al progetto <strong>${taskSelectedProgettoName} </strong>.
+										Vuoi procedere?</p>
+								</div>
+								<div class="p-6">
+									<button type="submit"
+										class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
+								</div>
+							</div>
+						</form>`;
+						
+				apriModale();
+}
+
+//funzione creazione e apertura modale START CLIENTE in edit e insert
+function creaApriModaleStartInInsertEditMode(clienteSelectedLabel){
+	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/start/${taskInUsoId}" method="post">
+						<input type="hidden" name="endPoint" value="${endPoint}">
+						<div class="flex flex-col justify-center p-2 text-center ">
+							<div class="p-3 text-[#0057A5]">
+								<p>Proseguendo le modifiche non salvate al Cliente 
+								<strong> ${clienteSelectedLabel}</strong> andranno perse. Vuoi procedere?</p>
+							</div>
+							<div class="p-6">
+								<button type="submit"
+									class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
+							</div>
+						</div>
+					</form>`;
+				apriModale();
+}
+
+//funzione creazione e apertura modale START PROGETTO in edit e insert
+function creaApriModaleStartInInsertEditProgettoMode(progettoSelectedLabel){
+	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/start/${taskInUsoId}" method="post">
+						<input type="hidden" name="endPoint" value="${endPoint}">
+						<div class="flex flex-col justify-center p-2 text-center ">
+							<div class="p-3 text-[#0057A5]">
+								<p>Proseguendo le modifiche non salvate al Progetto 
+								<strong> ${progettoSelectedLabel}</strong> andranno perse. Vuoi procedere?</p>
+							</div>
+							<div class="p-6">
+								<button type="submit"
+									class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
+							</div>
+						</div>
+					</form>`;
+				apriModale();
+}
+
+//funzione creazione e apertura modale START TASK in edit
+function creaApriModaleStartInEditTaskMode(taskSelectedId,taskSelectedName, taskSelectedProgettoName){
+	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/start/${taskInUsoId}" method="post">
+											<input type="hidden" name="endPoint" value=${endPoint}${taskSelectedId}>
+											<div class="flex flex-col justify-center p-2 text-center ">
+												<div class="p-3 text-[#0057A5]">
+													<p>Proseguendo le modifiche non salvate al task <strong>${taskSelectedName} </strong>
+														 relativo al progetto <strong>${taskSelectedProgettoName} </strong> andranno perse. Vuoi procedere?</p>
+												</div>
+												<div class="p-6">
+													<button type="submit"
+														class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
+												</div>
+											</div>
+										</form>`;
+										
+							apriModale();
+}
+
+//funzione creazione e apertura modale PAUSE CLIENTE in edit e insert
+function creaApriModalePauseInInsertEditMode(clienteSelectedLabel){
+	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/Contatore/pause/${taskInUsoId}" method="post">
+						<input type="hidden" name="endPoint" value="${endPoint}">
+						<div class="flex flex-col justify-center p-2 text-center ">
+							<div class="p-3 text-[#0057A5]">
+							<p>Proseguendo le modifiche non salvate al Cliente 
+							<strong> ${clienteSelectedLabel}</strong> andranno perse. Vuoi procedere?</p>
+							</div>
+							<div class="p-6">
+								<button type="submit"
+									class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
+							</div>
+						</div>
+					</form>`;
+				apriModale();
+}
+
+//funzione creazione e apertura modale PAUSE PROGETTO in edit e insert
+function creaApriModalePauseInInsertEditProgettoMode(progettoSelectedLabel){
+	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/Contatore/pause/${taskInUsoId}" method="post">
+						<input type="hidden" name="endPoint" value="${endPoint}">
+						<div class="flex flex-col justify-center p-2 text-center ">
+							<div class="p-3 text-[#0057A5]">
+							<p>Proseguendo le modifiche non salvate al Progetto
+							<strong> ${progettoSelectedLabel}</strong> andranno perse. Vuoi procedere?</p>
+							</div>
+							<div class="p-6">
+								<button type="submit"
+									class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
+							</div>
+						</div>
+					</form>`;
+				apriModale();
+}
+
+//funzione creazione e apertura modale PAUSE TASK in edit
+function creaApriModalePauseInEditTaskMode(taskSelectedId, taskSelectedName, taskSelectedProgettoName){
+	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/Contatore/pause/${taskInUsoId}" method="post">
+											<input type="hidden" name="endPoint" value=${endPoint}${taskSelectedId}>
+											<div class="flex flex-col justify-center p-2 text-center ">
+												<div class="p-3 text-[#0057A5]">
+													<p>Proseguendo le modifiche non salvate al task <strong>${taskSelectedName} </strong>
+														 relativo al Progetto <strong>${taskSelectedProgettoName} </strong> andranno perse. Vuoi procedere?</p>
+												</div>
+												<div class="p-6">
+													<button type="submit"
+														class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
+												</div>
+											</div>
+										</form>`;
+										
+									apriModale();
 }

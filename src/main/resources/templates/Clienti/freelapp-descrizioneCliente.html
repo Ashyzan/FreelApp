@@ -149,7 +149,7 @@
 									</div>
 									<div th:unless="${taskInUso == null}" class="w-8 h-8">
 										<button id="stopButtonTop" type="button"
-											class="hover:opacity-75">
+											class="hover:opacity-75" onclick="creaModaleStop()">
 											<img class="h-[29px] w-[29px]"
 												src="/img/sources/icons/stop-blue.svg" alt="stop">
 										</button>
@@ -330,7 +330,7 @@
 										</div>
 									</div>
 								</a>
-								<button type="button" id="deleteButton">
+								<button type="button" id="deleteButton" th:onclick="creaApriModaleDeleteCliente([[${cliente.id}]] ,[[ ${cliente.getLabelCliente()}]])">
 									<div class="t-tooltip w-5 h-5">
 										<img class="h-[100%] w-[100%]" src="/img/sources/icons/garbage-red.svg" alt="elimina">
 										<div
@@ -403,7 +403,8 @@
 									<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg" alt="stop">
 								</div>
 								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
-									<button id="stopButtonBottom" type="button" class="hover:opacity-75">
+									<button id="stopButtonBottom" type="button" class="hover:opacity-75"
+										onclick="creaModaleStop()">
 										<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg"
 											alt="stop">
 									</button>
@@ -453,64 +454,23 @@
 			</div>
 	</main>
 
-	<!-- Modale cancellazione Cliente-->
-	<div id="modalDelete"
+	<!-- Modale -->
+	<div id="modale"
 		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
-		<div class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
+		<div
+			class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
 			<div class=" w-full h-auto">
-				<div id="modalDeleteCloseButton" class="flex justify-end items-center p-2 cursor-pointer">
-					<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
+				<div id="modale-close-button" onclick="chiudiModale()"
+					class="flex justify-end items-center p-2 cursor-pointer">
+					<img class="h-[30px] w-[30px]"
+						src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
 				</div>
 			</div>
-			<div class="w-full h-auto bg-white rounded-b-lg">
-				<form th:action="@{|/Clienti/delete/${cliente.id}|}" th:object="${cliente}" method="post">
-					<div class="flex flex-col justify-center p-2 text-center ">
-						<div class="p-3 text-[#0057A5]">
-							<p>Stai per cancellare il
-								cliente <strong th:text="${cliente.getLabelCliente()}"></strong>
-								e tutto ciò che ad esso
-								è collegato. Vuoi
-								procedere?</p>
-						</div>
-						<div class="p-6">
-							<button type="submit"
-								class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
-						</div>
-					</div>
-				</form>
+			<div id="contenuto-modale" class="w-full h-auto bg-white rounded-b-lg">		
 			</div>
 		</div>
 	</div>
-
-	</div>
-
-	<!-- Modale StopButton-->
-	<div id="modalStopButton"
-		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
-		<div class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
-			<div class=" w-full h-auto">
-				<div id="modalStopCloseButton" class="flex justify-end items-center p-2 cursor-pointer">
-					<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
-				</div>
-			</div>
-			<div th:unless="${taskInUso == null}" class="w-full h-auto bg-white rounded-b-lg">
-				<form th:action="@{|/Contatore/stop/${taskInUso.id}|}" th:object="${contatore}" method="post">
-					<div class="flex flex-col justify-center p-2 text-center ">
-						<div class="p-3 text-[#0057A5]">
-							<p>Stai per terminare definitivamente il task <strong
-									th:text="${taskInUso.getName()}"></strong>
-								relativo al progetto <strong th:text="${taskInUso.progetto.getName()}"></strong>. Vuoi
-								procedere?</p>
-						</div>
-						<div class="p-6">
-							<button type="submit"
-								class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+	
 	<!-- Script -->
 	<script th:inline="javascript">
 		/*<![CDATA[*/
@@ -518,10 +478,14 @@
 		let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
 		let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean
 		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
+		let taskInUsoId = /*[[${taskInUsoId}]]*/ null;
+		let taskInUsoName = /*[[${taskInUsoName}]]*/ null;
+		let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
+	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 </body>
 
 </html>
