@@ -146,7 +146,7 @@
 									</div>
 									<div th:unless="${taskInUso == null}" class="w-8 h-8">
 										<button id="stopButtonTop" type="button"
-											class="hover:opacity-75">
+											class="hover:opacity-75" onclick="creaModaleStop()">
 											<img class="h-[29px] w-[29px]"
 												src="/img/sources/icons/stop-blue.svg" alt="stop">
 										</button>
@@ -164,7 +164,8 @@
 											<form th:action="@{|/Contatore/pause/${taskInUso.id}|}"
 												th:object="${contatore}" method="post">
 												<input type="hidden" name="endPoint" th:value="${endPoint}">
-												<button type="submit" class="hover:opacity-75 ">
+												<button type="button" class="hover:opacity-75 "
+													th:onclick="creaApriModalePauseInEditTaskMode([[${formTask.getId()}]], [[${formTask.getName()}]], [[${formTask.progetto.getName()}]])">
 													<img class="h-[29px] w-[29px]"
 														src="/img/sources/icons/pause-blue.svg" alt="pause">
 												</button>
@@ -184,7 +185,8 @@
 											<form th:action="@{|/start/${taskInUso.id}|}"
 												th:object="${contatore}" method="post">
 												<input type="hidden" name="endPoint" th:value="${endPoint}">
-												<button type="submit" class="hover:opacity-75">
+												<button type="button" class="hover:opacity-75"
+													th:onclick="creaApriModaleStartInEditTaskMode([[${formTask.getId()}]], [[${formTask.getName()}]], [[${formTask.progetto.getName()}]])">
 													<img class="h-[29px] w-[29px]"
 														src="/img/sources/icons/play-blue.svg" alt="start">
 												</button>
@@ -322,7 +324,7 @@
 		               <label for="name">Nome Task*</label>
 		             </div>
 		             <div class=" col md:col-span-2 col-span-3">
-		               <input placeholder="Titolo Task.." type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+		               <input placeholder="Titolo Task.." type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg inset-shadow-sm inset-shadow-blue-50 bg-gray-100" 
 					   id="name" th:field="*{name}" th:errorClass="border">
 		               <div th:if="${#fields.hasErrors('name')}" class="text-red-600 text-[12px] text-center w-full">
 		                 <ul>
@@ -337,7 +339,7 @@
 		               <label for="textarea-cinquecento">Descrizione*</label>
 		             </div>
 		             <div class="col md:col-span-2 col-span-3 mb-2">
-		               <textarea placeholder="Descrizione Task.." type="text" class="border-red-600 w-full h-full ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+		               <textarea placeholder="Descrizione Task.." type="text" class="border-red-600 w-full h-full ps-4 rounded-lg bg-gray-100" 
 					   id="textarea-cinquecento" th:field="*{descrizione}" th:errorClass="border"></textarea>
 					<div class="text-xs text-end px-2" id="contatore-caratteri-cinquecento-container">
 						Numero di caratteri rimasti: <span id="contatore-caratteri-cinquecento">00</span>
@@ -356,7 +358,7 @@
 		               <label for="dataInizio">Data inizio*</label>
 		             </div>		  
 		             <div class="col md:col-span-2 col-span-3">
-		               <input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+		               <input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100" 
 					   id="dataInizio" th:field="*{dataInizio}" th:errorClass="border">
 		               <div th:if="${#fields.hasErrors('dataInizio')}" class="text-red-600 text-[12px] text-center w-full">
 		                  <ul>
@@ -371,7 +373,7 @@
 		               <label for="dataChiusuraStimata">Chiusura stimata</label>
 		             </div>	  
 		             <div class="col md:col-span-2 col-span-3">
-		               <input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" 
+		               <input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100" 
 					   id="dataChiusuraStimata" th:field="*{dataChiusuraStimata}" th:errorClass="border">
 		                <div th:if="${#fields.hasErrors('dataChiusuraStimata')}" class="text-red-600 text-[12px] text-center w-full">
 		                   <ul>
@@ -418,7 +420,8 @@
 									<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg" alt="stop">
 								</div>
 								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
-									<button id="stopButtonBottom" type="button" class="hover:opacity-75">
+									<button id="stopButtonBottom" type="button" class="hover:opacity-75"
+											onclick="creaModaleStop()">
 										<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg"
 											alt="stop">
 									</button>
@@ -435,7 +438,8 @@
 										<form th:action="@{|/Contatore/pause/${taskInUso.id}|}" th:object="${contatore}"
 											method="post">
 											<input type="hidden" name="endPoint" th:value="${endPoint}">
-											<button type="submit" class="hover:opacity-75 flex items-center">
+											<button type="button" class="hover:opacity-75 flex items-center"
+												th:onclick="creaApriModalePauseInEditTaskMode([[${formTask.getId()}]], [[${formTask.getName()}]], [[${formTask.progetto.getName()}]])">
 												<img class="h-[45px] w-[45px]" src="/img/sources/icons/pause-blue.svg"
 													alt="pause">
 											</button>
@@ -454,7 +458,8 @@
 										<form th:action="@{|/start/${taskInUso.id}|}" th:object="${contatore}"
 											method="post">
 											<input type="hidden" name="endPoint" th:value="${endPoint}">
-											<button type="submit" class="hover:opacity-75 flex items-center">
+											<button type="button" class="hover:opacity-75 flex items-center"
+												th:onclick="creaApriModaleStartInEditTaskMode([[${formTask.getId()}]], [[${formTask.getName()}]], [[${formTask.progetto.getName()}]])">
 												<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg"
 													alt="start">
 											</button>
@@ -469,77 +474,38 @@
   </div>
 </main>
 
-<!-- Modale StopButton-->
-	<div id="modalStopButton"
-				class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
-				<div
-					class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
-					<div class=" w-full h-auto">
-						<div id="modalStopCloseButton"
-							class="flex justify-end items-center p-2 cursor-pointer">
-							<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
-						</div>
-					</div>
-					<div th:unless="${taskInUso == null}" class="w-full h-auto bg-white rounded-b-lg">
-						<form th:action="@{|/Contatore/stop/${taskInUso.id}|}" 
-							th:object="${contatore}" 
-							method="post">
-							<div class="flex flex-col justify-center p-2 text-center ">
-								<div class="p-3 text-[#0057A5]">
-									<p>Stai per terminare definitivamente il task <strong th:text="${taskInUso.getName()}"></strong>
-										 relativo al progetto <strong th:text="${taskInUso.progetto.getName()}"></strong>. Vuoi procedere?</p>
-								</div>
-								<div class="p-6">
-									<button type="submit"
-										class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
-								</div>
-							</div>
-						</form>
-					</div>
+<!-- Modale -->
+	<div id="modale"
+		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
+		<div
+			class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
+			<div class=" w-full h-auto">
+				<div id="modale-close-button" onclick="chiudiModale()"
+					class="flex justify-end items-center p-2 cursor-pointer">
+					<img class="h-[30px] w-[30px]"
+						src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
 				</div>
 			</div>
-			
-			<!-- Modale StartPauseButton-->
-				<div id="modalPauseStartButton"
-							class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
-							<div
-								class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
-								<div class=" w-full h-auto">
-									<div id="modalPauseStartCloseButton"
-										class="flex justify-end items-center p-2 cursor-pointer">
-										<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
-									</div>
-								</div>
-								<div th:unless="${taskInUso == null}" class="w-full h-auto bg-white rounded-b-lg">
-									<form id="form-start-pause"  
-										th:object="${contatore}" 
-										method="post">
-										<input type="hidden" name="endPoint" th:value="|${endPoint}${taskInUsoId}|">
-										<div class="flex flex-col justify-center p-2 text-center ">
-											<div class="p-3 text-[#0057A5]">
-												<p>Proseguendo le modifiche non salvate al task <strong th:text="${taskInUso.getName()}"></strong>
-													 relativo al progetto <strong th:text="${taskInUso.progetto.getName()}">andranno perse</strong>. Vuoi procedere?</p>
-											</div>
-											<div class="p-6">
-												<button type="submit"
-													class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
+			<div id="contenuto-modale" class="w-full h-auto bg-white rounded-b-lg">		
+			</div>
+		</div>
+	</div>
+
 	<!-- Script -->
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 		let finalTimeSec = /*[[${finaltime}]]*/ null;
 		let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
 		let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean
-		let taskInUsoId = /*[[${taskInUsoId}]]*/ null;	
+		let taskInUsoId = /*[[${taskInUsoId}]]*/ null;
+		let taskInUsoName = /*[[${taskInUsoName}]]*/ null;
+		let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
 		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
+		let endPoint =/*[[${endPoint}]]*/null; //String
 		/*]]>*/
 	</script>	
     <script type="text/javascript" th:src="@{/js/timer.js}"></script>
     <script type="text/javascript" th:src="@{/js/layout.js}"></script>
+	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 </body>
 </html>

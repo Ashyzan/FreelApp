@@ -302,6 +302,9 @@ public class TaskController {
 	
 	//riporto al model l'id del progetto in uso
 	model.addAttribute("progettoId", progetto.getId());
+	
+	//riporta al model il nome del progetto in uso
+	model.addAttribute("taskProgettoName", progetto.getName());
 
 	//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
 	String endPoint = "/Task/insert/progetto-" ;
@@ -346,6 +349,13 @@ public class TaskController {
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		
+		//riporto al model l'id del progetto in uso
+		model.addAttribute("progettoId", progetto.getId());
+	
+		//riporta al model il nome del progetto in uso
+		model.addAttribute("taskProgettoName", progetto.getName());
+
 		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);

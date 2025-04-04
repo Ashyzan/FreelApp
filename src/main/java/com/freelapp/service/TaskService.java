@@ -3,7 +3,6 @@ package com.freelapp.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +23,15 @@ public class TaskService {
 	@Autowired
 	private TaskRepository taskRepository;
 
-	public List<Task> findAll(){
-		return taskRepository.findAll(Sort.by(Sort.Direction.DESC, "dataModifica"));
+	public List<Task> findAllNotClosed(){
+		//restituisce la lista dei task attivi(non chiusi)
+		return taskRepository.findAllNotClosed();
 	}
 	
 	public Page<Task> findPage(int pageNumber){
 		Pageable pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
-		return taskRepository.findAll(pageable);
+		//restituisce la lista dei task attivi(non chiusi)
+		return taskRepository.findAllNotClosed(pageable);
 		
 	}
 	

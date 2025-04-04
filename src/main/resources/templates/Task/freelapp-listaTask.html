@@ -465,12 +465,17 @@
 														<li
 															class="tooltip-top flex flex-col md:flex-row px-2 mt-4 ml-3 float-left">
 															<span class="tooltiptext-top">Reset Timer</span>
-																<button type="button"
-																	th:onclick="creaApriModaleReset([[${task.id}]] ,[[ ${task.getName()}]], [[ ${task.progetto.getName()}]])">
-																	<img class="size-10"
-																		src="/img/sources/icons/reset-blue.svg">
-
-																</button>
+																<div th:if="${task.getStato() == 'inattivo'}">
+																	<img class="size-10 opacity-[0.4]" src="/img/sources/icons/reset-blue.svg">
+																</div>
+																<div th:unless="${task.getStato() == 'inattivo'}">
+																	 <button type="button"
+																		th:onclick="creaApriModaleReset([[${task.id}]] ,[[ ${task.getName()}]], [[ ${task.progetto.getName()}]])">
+																		<img class="size-10"
+																			src="/img/sources/icons/reset-blue.svg">
+	
+																	</button>																	
+																</div>
 														</li>
 														<li
 															class="flex flex-col md:flex-row px-2 mt-6 float-right">
@@ -658,7 +663,6 @@
 		let taskInUsoName = /*[[${taskInUsoName}]]*/ null;
 		let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
 		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
-		
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
