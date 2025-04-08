@@ -69,6 +69,11 @@ public class ProgettoController {
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
 				
+				//passa al model la lista di tutti i task esclusi quelli chiusi
+				List<Task> taskList = new ArrayList<Task> ();
+				taskList = repositTask.findAllNotClosed();
+				model.addAttribute("taskList", taskList);
+				
 				//restituisce al model questo valore booleano false se non ci sono progetti a db
 				//e restituisce true se ci sono progetti a db
 				boolean areProjectsOnDb = false;
@@ -134,6 +139,11 @@ public class ProgettoController {
 					//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 					taskService.informationFromTaskInUsoToModel(model);
 					
+					//passa al model la lista di tutti i task esclusi quelli chiusi
+					List<Task> taskList = new ArrayList<Task> ();
+					taskList = repositTask.findAllNotClosed();
+					model.addAttribute("taskList", taskList);
+					
 					//restituisce al model questo valore booleano false se non ci sono progetti a db
 					//e restituisce true se ci sono progetti a db
 					boolean areProjectsOnDb = false;
@@ -161,6 +171,11 @@ public class ProgettoController {
 				
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
+				
+				//passa al model la lista di tutti i task esclusi quelli chiusi
+				List<Task> taskList = new ArrayList<Task> ();
+				taskList = repositTask.findAllNotClosed();
+				model.addAttribute("taskList", taskList);
 				
 				//restituisce al model questo valore booleano false se non ci sono progetti a db
 				//e restituisce true se ci sono progetti a db
@@ -225,6 +240,11 @@ public class ProgettoController {
 					//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 					taskService.informationFromTaskInUsoToModel(model);
 					
+					//passa al model la lista di tutti i task esclusi quelli chiusi
+					List<Task> taskList = new ArrayList<Task> ();
+					taskList = repositTask.findAllNotClosed();
+					model.addAttribute("taskList", taskList);
+					
 					//restituisce al model questo valore booleano false se non ci sono progetti a db
 					//e restituisce true se ci sono progetti a db
 					boolean areProjectsOnDb = false;
@@ -261,6 +281,11 @@ public class ProgettoController {
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
 				
+				//passa al model la lista di tutti i task esclusi quelli chiusi
+				List<Task> taskList = new ArrayList<Task> ();
+				taskList = repositTask.findAllNotClosed();
+				model.addAttribute("taskList", taskList);
+				
 				return "/Progetti/freelapp-descrizioneProgetto";
 		   }
 	
@@ -292,6 +317,11 @@ public class ProgettoController {
 				
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
+				
+				//passa al model la lista di tutti i task esclusi quelli chiusi
+				List<Task> taskList = new ArrayList<Task> ();
+				taskList = repositTask.findAllNotClosed();
+				model.addAttribute("taskList", taskList);
 				
 				//invio al model il booleano del contatore attivato
 				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -327,6 +357,11 @@ public class ProgettoController {
 						
 						//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 						taskService.informationFromTaskInUsoToModel(model);
+						
+						//passa al model la lista di tutti i task esclusi quelli chiusi
+						List<Task> taskList = new ArrayList<Task> ();
+						taskList = repositTask.findAllNotClosed();
+						model.addAttribute("taskList", taskList);
 					
 			    	    return "/Progetti/freelapp-insertProgetto";
 					
@@ -367,6 +402,11 @@ public class ProgettoController {
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
 				
+				//passa al model la lista di tutti i task esclusi quelli chiusi
+				List<Task> taskList = new ArrayList<Task> ();
+				taskList = repositTask.findAllNotClosed();
+				model.addAttribute("taskList", taskList);
+				
 				//invio al model il booleano del contatore attivato
 				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
@@ -395,6 +435,11 @@ public class ProgettoController {
 					
 					//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 					taskService.informationFromTaskInUsoToModel(model);
+					
+					//passa al model la lista di tutti i task esclusi quelli chiusi
+					List<Task> taskList = new ArrayList<Task> ();
+					taskList = repositTask.findAllNotClosed();
+					model.addAttribute("taskList", taskList);
 					
 					return  "/Progetti/freelapp-editProgetto";
 				}
@@ -458,6 +503,11 @@ public class ProgettoController {
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
 				
+				//passa al model la lista di tutti i task esclusi quelli chiusi
+				List<Task> taskList = new ArrayList<Task> ();
+				taskList = repositTask.findAllNotClosed();
+				model.addAttribute("taskList", taskList);
+				
 				//restituisce al model questo valore booleano false se non ci sono progetti archiviati a db
 				//e restituisce true se ci sono progetti a db
 				boolean areProjectsArchivedOnDb = false;
@@ -515,6 +565,11 @@ public class ProgettoController {
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
 				
+				//passa al model la lista di tutti i task esclusi quelli chiusi
+				List<Task> taskList = new ArrayList<Task> ();
+				taskList = repositTask.findAllNotClosed();
+				model.addAttribute("taskList", taskList);
+				
 				//restituisce al model questo valore booleano false se non ci sono progetti a db
 				//e restituisce true se ci sono progetti archiviati a db
 				boolean areProjectsArchivedOnDb = false;
@@ -542,6 +597,11 @@ public class ProgettoController {
 
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
+				
+				//passa al model la lista di tutti i task esclusi quelli chiusi
+				List<Task> taskList = new ArrayList<Task> ();
+				taskList = repositTask.findAllNotClosed();
+				model.addAttribute("taskList", taskList);
 				
 				//restituisce al model questo valore booleano false se non ci sono progetti a db
 				//e restituisce true se ci sono progetti archiviati a db
@@ -586,6 +646,11 @@ public class ProgettoController {
 		
 					//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 					taskService.informationFromTaskInUsoToModel(model);
+					
+					//passa al model la lista di tutti i task esclusi quelli chiusi
+					List<Task> taskList = new ArrayList<Task> ();
+					taskList = repositTask.findAllNotClosed();
+					model.addAttribute("taskList", taskList);
 					
 					boolean areProjectsArchivedOnDb = false;
 					if(!repositProgetto.findByArchivia(true).isEmpty()) {

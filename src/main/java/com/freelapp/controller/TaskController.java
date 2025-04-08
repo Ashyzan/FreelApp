@@ -279,6 +279,11 @@ public class TaskController {
 	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 	taskService.informationFromTaskInUsoToModel(model);
 	
+	//passa al model la lista di tutti i task esclusi quelli chiusi
+	List<Task> taskList = new ArrayList<Task> ();
+	taskList = repositTask.findAllNotClosed();
+	model.addAttribute("taskList", taskList);
+	
 	return "/Task/freelapp-descrizioneTask";
     }
 
@@ -318,6 +323,11 @@ public class TaskController {
 	
 	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 	taskService.informationFromTaskInUsoToModel(model);
+	
+	//passa al model la lista di tutti i task esclusi quelli chiusi
+	List<Task> taskList = new ArrayList<Task> ();
+	taskList = repositTask.findAllNotClosed();
+	model.addAttribute("taskList", taskList);
 	
 	//invio al model il booleano del contatore attivato
 	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -359,6 +369,11 @@ public class TaskController {
 		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
+		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
 
 	    return "/Task/freelapp-insertTask";
 	}
@@ -400,6 +415,11 @@ public class TaskController {
 	
 	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 	taskService.informationFromTaskInUsoToModel(model);
+	
+	//passa al model la lista di tutti i task esclusi quelli chiusi
+	List<Task> taskList = new ArrayList<Task> ();
+	taskList = repositTask.findAllNotClosed();
+	model.addAttribute("taskList", taskList);
 
 	//invio al model il booleano del contatore attivato
 	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -433,6 +453,11 @@ public class TaskController {
 		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
+		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
 
 	    return "/Task/freelapp-insertTask-noProgetto";
 	}
@@ -466,6 +491,11 @@ public class TaskController {
   	
   	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 	taskService.informationFromTaskInUsoToModel(model);
+	
+	//passa al model la lista di tutti i task esclusi quelli chiusi
+	List<Task> taskList = new ArrayList<Task> ();
+	taskList = repositTask.findAllNotClosed();
+	model.addAttribute("taskList", taskList);
   	
   	//invio al model il booleano del contatore attivato
 	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -491,6 +521,11 @@ public class TaskController {
 	  	
 	  	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
+		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
 
 	    return "/Task/freelapp-editTask";
 	}
@@ -525,6 +560,11 @@ public class TaskController {
 		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP	
 		taskService.informationFromTaskInUsoToModel(model);
+		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
 		
 		return "Errori/timeExceeded";
 	}

@@ -2,6 +2,7 @@ package com.freelapp.controller;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ import java.nio.file.Paths;
 
 import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
+import com.freelapp.model.Task;
 import com.freelapp.model.User;
 import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
@@ -86,6 +88,11 @@ public class ClientController {
 		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
+		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
 		
 		//restituisce al model questo valore booleano false se non ci sono clienti a db
 		//e restituisce true se ci sono clienti a db
@@ -144,6 +151,11 @@ public class ClientController {
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
 		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
+		
 		//restituisce al model questo valore booleano false se non ci sono clienti a db
 		//e restituisce true se ci sono clienti a db
 		boolean areClientsOnDb = false;
@@ -168,6 +180,11 @@ public class ClientController {
 		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
+		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
 		
 		//restituisce al model questo valore booleano false se non ci sono clienti a db
 		//e restituisce true se ci sono clienti a db
@@ -226,6 +243,11 @@ public class ClientController {
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
 				
+				//passa al model la lista di tutti i task esclusi quelli chiusi
+				List<Task> taskList = new ArrayList<Task> ();
+				taskList = repositTask.findAllNotClosed();
+				model.addAttribute("taskList", taskList);
+				
 				//restituisce al model questo valore booleano false se non ci sono clienti a db
 				//e restituisce true se ci sono clienti a db
 				boolean areClientsOnDb = false;
@@ -263,6 +285,11 @@ public class ClientController {
 		
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
+		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
 	
 		return "/Clienti/freelapp-descrizioneCliente";
 	  }
@@ -294,6 +321,11 @@ public class ClientController {
 		
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
+		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
 	    
 	    return "/Clienti/freelapp-insertClient"; 
 	}
@@ -338,6 +370,11 @@ public class ClientController {
 			
 			//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 			taskService.informationFromTaskInUsoToModel(model);
+			
+			//passa al model la lista di tutti i task esclusi quelli chiusi
+			List<Task> taskList = new ArrayList<Task> ();
+			taskList = repositTask.findAllNotClosed();
+			model.addAttribute("taskList", taskList);
 			
 
 			return "/Clienti/freelapp-insertClient";
@@ -396,6 +433,12 @@ public class ClientController {
 		
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
+		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
+		
 		return "/Clienti/freelapp-editClient";
 	}
 	
@@ -445,6 +488,11 @@ public class ClientController {
 			
 			//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 			taskService.informationFromTaskInUsoToModel(model);
+			
+			//passa al model la lista di tutti i task esclusi quelli chiusi
+			List<Task> taskList = new ArrayList<Task> ();
+			taskList = repositTask.findAllNotClosed();
+			model.addAttribute("taskList", taskList);
 			
 			return "/Clienti/freelapp-editClient";
 		}
