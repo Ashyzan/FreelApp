@@ -36,11 +36,11 @@ function moveUp(id){
         setTimeout(function(){
             containerSelected.classList.remove('scale-[1.1]')
 			
-        }, 1800)
+        }, 1500)
 
 		setTimeout(function(){
 			formSelected.submit()
-		 }, 4300)
+		 }, 2500)
 
     } else {
         setTimeout(function(){
@@ -56,6 +56,6 @@ function moveUp(id){
 
 //funzione che porta lentamente al top seguendo animazione
 function moveSlowlyToTop(url){
-	 setTimeout( function() { window.location = url }, (1300) );
+	 setTimeout( function() { window.location = url }, (1000) );
 	
 }
