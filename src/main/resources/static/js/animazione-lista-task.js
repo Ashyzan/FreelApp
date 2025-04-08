@@ -45,7 +45,7 @@ function moveUp(id){
     } else {
         setTimeout(function(){
 			 containerSelected.classList.remove('scale-[1.1]')
-        }, 400)
+        }, 200)
 		
 		setTimeout(function(){
 			formSelected.submit()
