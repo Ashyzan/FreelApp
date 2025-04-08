@@ -21,35 +21,35 @@ function moveUp(id){
     if(id != 0){
         setTimeout(function(){
             containerSelected.classList.remove('duration-250')
-            containerSelected.classList.add( `translate-y-[-${distance}px]`, 'duration-[2.5s]', 'delay-200')
+            containerSelected.classList.add( `translate-y-[-${distance}px]`, 'duration-[2s]', 'delay-200')
 
             for( i = 0 ; i < containers.length ; i++){
                 let currentId = containers[i].id;
                 let currentContainer = containers[i];
                 if((id-currentId)>0){
                  
-                    currentContainer.classList.add('translate-y-[171px]', 'duration-[2.5s]', 'delay-200')
+                    currentContainer.classList.add('translate-y-[171px]', 'duration-[2s]', 'delay-200')
                 }     
             }
 			
-        }, 500)
+        }, 400)
         setTimeout(function(){
             containerSelected.classList.remove('scale-[1.1]')
 			
-        }, 2500)
+        }, 2200)
 
 		setTimeout(function(){
 			formSelected.submit()
-		 }, 5200)
+		 }, 4800)
 
     } else {
         setTimeout(function(){
 			 containerSelected.classList.remove('scale-[1.1]')
-        }, 500)
+        }, 400)
 		
 		setTimeout(function(){
 			formSelected.submit()
-		}, 600)
+		}, 500)
 			
     }
 }
