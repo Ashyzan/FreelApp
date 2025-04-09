@@ -56,9 +56,11 @@ public interface TaskRepository extends JpaRepository<Task, Integer>, PagingAndS
     		+ "t.progetto.cliente.surnameContatto LIKE '%'||:input||'%'")
     public List<Task> searchOreLavorate(String input);
     
-    @Query("SELECT t FROM Task t WHERE t.stato !='chiuso'")
-    public List<Task> findAllNotClosed();
+    @Query("SELECT t FROM Task t WHERE t.stato !='chiuso' ORDER BY t.dataModifica DESC")
+    public Page<Task> findAllNotClosed(Pageable pageable);
 	
+     @Query("SELECT t FROM Task t WHERE t.stato !='chiuso' ORDER BY t.dataModifica DESC")
+    public List<Task> findAllNotClosed();
     @Transactional
     void deleteByProgettoId(Integer id);
     

@@ -1,8 +1,5 @@
 package com.freelapp.controller;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.freelapp.model.Cliente;
@@ -20,6 +16,7 @@ import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.repository.TaskRepository;
 import com.freelapp.service.ContatoreService;
+import com.freelapp.service.TaskService;
 
 
 @Controller
@@ -38,6 +35,9 @@ public class DashboardController {
 	@Autowired
 	private ContatoreService contatoreservice;
 	
+	@Autowired
+	private TaskService taskService;
+	
 
 	@GetMapping("/dashboard")
 	public String index( Model model){
@@ -49,9 +49,10 @@ public class DashboardController {
 		contatoreservice.importContatoreInGet(model);
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
-		if(ContatoreController.taskInUso != null) {
-			model.addAttribute("taskInUsoId", ContatoreController.taskInUso.getId());			
-		}
+	
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+		taskService.informationFromTaskInUsoToModel(model);
+		
 		
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -77,35 +78,33 @@ public class DashboardController {
 		
 		//passa al model la lista di tutti i task esclusi quelli chiusi
 		List<Task> taskList = new ArrayList<Task> ();
-
 		taskList = taskRepository.findAllNotClosed();
-
 		model.addAttribute("taskList", taskList);
 		
 		
-		// lista che restituisce i task per modale delle ore lavorate sulla dashboard
-		List<Task> taskListOreLavorate = new ArrayList<Task> ();
-		taskList = taskRepository.findAll(Sort.by(Sort.Direction.DESC, "Name"));
-		taskList.forEach( task -> {
-			
-			
-				if( task.getContatore() == null) {
-				taskListOreLavorate.add(task);
-				
-						}
-				
-				else if( task.getContatore() != null) {
-					Boolean contatoreAttivo;
-					contatoreAttivo = contatoreservice.contatoreIsRun(task);
-		
-					if(task.getContatore().getStop() == null  && contatoreAttivo == false) {
-					
-							 taskListOreLavorate.add(task); 
-									
-							 }	
-						}
-			model.addAttribute("taskListOreLavorate", taskListOreLavorate);
-				} );
+//		// lista che restituisce i task per modale delle ore lavorate sulla dashboard
+//		List<Task> taskListOreLavorate = new ArrayList<Task> ();
+//		taskList = taskRepository.findAll(Sort.by(Sort.Direction.DESC, "Name"));
+//		taskList.forEach( task -> {
+//			
+//			
+//				if( task.getContatore() == null) {
+//				taskListOreLavorate.add(task);
+//				
+//						}
+//				
+//				else if( task.getContatore() != null) {
+//					Boolean contatoreAttivo;
+//					contatoreAttivo = contatoreservice.contatoreIsRun(task);
+//		
+//					if(task.getContatore().getStop() == null  && contatoreAttivo == false) {
+//					
+//							 taskListOreLavorate.add(task); 
+//									
+//							 }	
+//						}
+//			model.addAttribute("taskListOreLavorate", taskListOreLavorate);
+//				} );
 
 		
 		return "freelApp-dashboard";

@@ -35,6 +35,17 @@
 </head>
 
 <body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart()">
+	<section id="rapidButton" class=" fixed md:top-[80%] top-[65%] right-0">
+			<button
+				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5] ">
+				<div class="t-tooltip col-auto w-8 h-8 ms-2">
+					<img class="h-[100%] w-[100%]" src="/img/sources/icons/speed-up-blue.svg" alt="avvio rapido task">
+					<div class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-80px] mt-[10px]">
+						Avvio rapido
+					</div>
+				</div>
+			</button>
+		</section>
 	<header>
 		<nav id="navbar"
 			class="flex justify-around items-center w-full h-fit md:px-1 md:py-0 p-2 bg-[#0057A5] font-bold  text-sm text-white">
@@ -148,7 +159,7 @@
 									</div>
 									<div th:unless="${taskInUso == null}" class="w-8 h-8">
 										<button id="stopButtonTop" type="button"
-											class="hover:opacity-75">
+											class="hover:opacity-75" onclick="creaModaleStop()">
 											<img class="h-[29px] w-[29px]"
 												src="/img/sources/icons/stop-blue.svg" alt="stop">
 										</button>
@@ -166,7 +177,8 @@
 											<form th:action="@{|/Contatore/pause/${taskInUso.id}|}"
 												th:object="${contatore}" method="post">
 												<input type="hidden" name="endPoint" th:value="${endPoint}">
-												<button type="submit" class="hover:opacity-75 ">
+												<button type="button" class="hover:opacity-75 " 
+														th:onclick="creaApriModalePauseInInsertEditMode([[ ${formCliente.getLabelCliente()}]])">
 													<img class="h-[29px] w-[29px]"
 														src="/img/sources/icons/pause-blue.svg" alt="pause">
 												</button>
@@ -186,7 +198,8 @@
 											<form th:action="@{|/start/${taskInUso.id}|}"
 												th:object="${contatore}" method="post">
 												<input type="hidden" name="endPoint" th:value="${endPoint}">
-												<button type="submit" class="hover:opacity-75">
+												<button type="button" class="hover:opacity-75"
+														th:onclick="creaApriModaleStartInInsertEditMode([[ ${formCliente.getLabelCliente()}]])">
 													<img class="h-[29px] w-[29px]"
 														src="/img/sources/icons/play-blue.svg" alt="start">
 												</button>
@@ -312,7 +325,7 @@
 			<div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto">
 				<div class="flex flex-col justify-center items-center w-full">
 					<div class="h-12 text-center font-bold items-center m-3">
-						<h1 th:text="|MODIFICA CLIENTE: ${formCliente.getName()}|"></h1>
+						<h1 th:text="|MODIFICA CLIENTE: ${formCliente.getLabelCliente()}|"></h1>
 					</div>
 
 					<div
@@ -340,7 +353,7 @@
 											<label for="labelCliente">Etichetta cliente<span> *</span></label>
 										</div>
 										<div class=" col md:col-span-2 col-span-3">
-											<input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100"
+											<input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
 												id="labelCliente" th:field="*{labelCliente}" th:errorClass="border">
 												<div id="labelClienteError" class="text-red-600 text-[12px] text-center w-full"></div>
 											<div th:if="${#fields.hasErrors('labelCliente')}"
@@ -358,7 +371,7 @@
 										</div>
 										<div class="col md:col-span-2 col-span-3">
 											<select onchange="tipologiaSelect(value)"
-												class="select border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="tipologia"
+												class="select border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100" id="tipologia"
 												th:field="*{tipologia}" name="tipologia" th:errorClass="border">
 												<option value="privato" class="bg-white text-[#0057a5]">Privato</option>
 												<option value="azienda" class="bg-white text-[#0057a5]">Azienda</option>
@@ -401,7 +414,7 @@
 											</div>
 											<div>
 												<input type="file" onchange="previewUploadFile(event)"
-													class="border-red-600 w-full rounded-lg shadow-md shadow-blue-500/50 bg-gray-100 block h-8 file:h-full file:rounded-s-md file:bg-[#0057A5]  file:text-white"
+													class="border-red-600 w-full rounded-lg bg-gray-100 block h-8 file:h-full file:rounded-s-md file:bg-[#0057A5]  file:text-white"
 													id="urlLogo" name="file">
 												<div th:text="${errorFormatImageMessage}"
 													class="text-red-600 text-[12px] text-center w-full"></div>
@@ -434,7 +447,7 @@
 												<label for="ragioneSociale">Ragione sociale*</label>
 											</div>
 											<div class="col md:col-span-2 col-span-3">
-												<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100"
+												<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100"
 													id="ragioneSociale" th:field="*{ragioneSociale}">
 													<div id="ragioneSocialeError" class="text-red-600 text-[12px] text-center w-full"></div>	
 											</div>
@@ -445,7 +458,7 @@
 												<label for="ragioneSociale">Partita Iva*</label>
 											</div>
 											<div class="col md:col-span-2 col-span-3">
-												<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="PartitaIva"
+												<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="PartitaIva"
 													th:field="*{partitaIva}">
 													<div id="partitaIvaError" class="text-red-600 text-[12px] text-center w-full"></div>	
 											</div>
@@ -457,7 +470,7 @@
 												<label for="nome">Nome*</label>
 											</div>
 											<div class="col md:col-span-2 col-span-3">
-												<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="nome"
+												<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="nome"
 													th:field="*{name}">
 													<div id="nomeError" class="text-red-600 text-[12px] text-center w-full"></div>	
 											</div>
@@ -468,7 +481,7 @@
 												<label for="cognome">Cognome*</label>
 											</div>
 											<div class="col md:col-span-2 col-span-3">
-												<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="cognome"
+												<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="cognome"
 													th:field="*{surname}">
 													<div id="cognomeError" class="text-red-600 text-[12px] text-center w-full"></div>	
 											</div>
@@ -480,7 +493,7 @@
 											<label for="codiceFiscale">Codice Fiscale</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="codiceFiscale"
+											<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="codiceFiscale"
 												th:field="*{codiceFiscale}">
 										</div>
 									</div>
@@ -490,7 +503,7 @@
 											<label for="pec">Indirizzo Pec</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="pec"
+											<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="pec"
 												th:field="*{pec}">
 										</div>
 									</div>
@@ -500,7 +513,7 @@
 											<label for="indirizzo">Indirizzo</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="indirizzo"
+											<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="indirizzo"
 												th:field="*{indirizzo}">
 										</div>
 									</div>
@@ -510,7 +523,7 @@
 											<label for="civico">Civico</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="civico"
+											<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="civico"
 												th:field="*{civico}">
 										</div>
 									</div>
@@ -520,7 +533,7 @@
 											<label for="city">Città</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="city"
+											<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="city"
 												th:field="*{city}">
 										</div>
 									</div>
@@ -530,7 +543,7 @@
 											<label for="cap">CAP</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="cap"
+											<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="cap"
 												th:field="*{cap}">
 										</div>
 									</div>
@@ -540,7 +553,7 @@
 											<label for="nazionalita">Nazione</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<select class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="nazionalita"
+											<select class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="nazionalita"
 												th:field="*{nazionalita}">
 												<option value="">Seleziona nazionalità</option>
 												<option value="AT">Austria</option>
@@ -599,7 +612,7 @@
 												<label for="nomeContatto">Nome</label>
 											</div>
 											<div class="col md:col-span-2 col-span-3">
-												<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="nomeContatto"
+												<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="nomeContatto"
 													th:field="*{nameContatto}">
 											</div>
 										</div>
@@ -609,7 +622,7 @@
 												<label for="cognomeContatto">Cognome</label>
 											</div>
 											<div class="col md:col-span-2 col-span-3">
-												<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100"
+												<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100"
 													id="cognomeContatto" th:field="*{surnameContatto}">
 											</div>
 										</div>
@@ -621,7 +634,7 @@
 											<label for="email">Email<span> *</span></label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100"
+											<input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
 												id="email" th:field="*{email}" th:errorClass="border">
 												<div id="emailError" class="text-red-600 text-[12px] text-center w-full"></div>	
 											<div th:if="${#fields.hasErrors('email')}"
@@ -639,7 +652,7 @@
 											<label for="telefono">Telefono<span> *</span></label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100"
+											<input type="text" class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
 												id="telefono" th:field="*{telefono}" th:errorClass="border">
 												<div id="telefonoError" class="text-red-600 text-[12px] text-center w-full"></div>	
 											<div th:if="${#fields.hasErrors('telefono')}"
@@ -657,7 +670,7 @@
 											<label for="sito">Sito web</label>
 										</div>
 										<div class="col md:col-span-2 col-span-3">
-											<input type="text" class="w-full h-8 ps-4 rounded-lg shadow-md shadow-blue-500/50 bg-gray-100" id="sito"
+											<input type="text" class="w-full h-8 ps-4 rounded-lg bg-gray-100" id="sito"
 												th:field="*{sito}">
 										</div>
 									</div>
@@ -704,7 +717,8 @@
 									<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg" alt="stop">
 								</div>
 								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
-									<button id="stopButtonBottom" type="button" class="hover:opacity-75">
+									<button id="stopButtonBottom" type="button" class="hover:opacity-75"
+												onclick="creaModaleStop()">
 										<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg"
 											alt="stop">
 									</button>
@@ -721,7 +735,8 @@
 										<form th:action="@{|/Contatore/pause/${taskInUso.id}|}" th:object="${contatore}"
 											method="post">
 											<input type="hidden" name="endPoint" th:value="${endPoint}">
-											<button type="submit" class="hover:opacity-75 flex items-center">
+											<button type="button" class="hover:opacity-75 flex items-center"
+													th:onclick="creaApriModalePauseInInsertEditMode([[ ${formCliente.getLabelCliente()}]])">
 												<img class="h-[45px] w-[45px]" src="/img/sources/icons/pause-blue.svg"
 													alt="pause">
 											</button>
@@ -740,7 +755,8 @@
 										<form th:action="@{|/start/${taskInUso.id}|}" th:object="${contatore}"
 											method="post">
 											<input type="hidden" name="endPoint" th:value="${endPoint}">
-											<button type="submit" class="hover:opacity-75 flex items-center">
+											<button type="button" class="hover:opacity-75 flex items-center"
+													th:onclick="creaApriModaleStartInInsertEditMode([[ ${formCliente.getLabelCliente()}]])">
 												<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg"
 													alt="start">
 											</button>
@@ -753,63 +769,270 @@
 				</div>
 			</div>
 	</main>
-
-	<!-- Modale StopButton-->
-	<div id="modalStopButton"
-		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
-		<div class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
-			<div class=" w-full h-auto">
-				<div id="modalStopCloseButton" class="flex justify-end items-center p-2 cursor-pointer">
-					<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
-				</div>
-			</div>
-			<div th:unless="${taskInUso == null}" class="w-full h-auto bg-white rounded-b-lg">
-				<form th:action="@{|/Contatore/stop/${taskInUso.id}|}" th:object="${contatore}" method="post">
-					<div class="flex flex-col justify-center p-2 text-center ">
-						<div class="p-3 text-[#0057A5]">
-							<p>Stai per terminare definitivamente il task <strong
-									th:text="${taskInUso.getName()}"></strong>
-								relativo al progetto <strong th:text="${taskInUso.progetto.getName()}"></strong>. Vuoi
-								procedere?</p>
-						</div>
-						<div class="p-6">
-							<button type="submit"
-								class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
+	
+	<!-- Modale TimerRapidButton -->
+		<div id="modalRapidButton" class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
+			<div class="w-11/12 md:w-[550px] h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
+				<div class="grid grid-cols-12 p-1">
+					<div class="col-span-11 flex justify-center items-center text-white font-bold">GESTIONE RAPIDA TASK</div>
+					<div class="col-span-1">
+						<div id="modalRapidCloseButton" class=" p-1 cursor-pointer text-center">
+							<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
 						</div>
 					</div>
-				</form>
+				</div>
+				<div class="w-full h-auto bg-white rounded-b-lg">
+					<div th:unless="${taskList.isEmpty()}" id="rapid-task" class="">
+							<div class="flex flex-col justify-center p-2 text-center">
+								<div class=" text-[#0057A5]">
+									<h2 id="search-and-select-title" class=" md:mx-4 font-bold max-md:text-sm mb-2 md:mb-3">Ricerca o seleziona il task su cui lavorare:</h2>
+									<div id="search-and-select-buttons-container" class="flex flex-col md:flex-row justify-around px-3 mb-3 md:mb-6">
+										<button type="button" id="search-task-button"
+											class="w-full md:w-[45%] shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px] max-md:mb-2">
+											<img class="h-[20px] w-[20px] md:h-[25px] md:w-[25px] inline" src="/img/sources/icons/search-blue.svg">
+											<span class="max-md:text-sm">Ricerca il tuo task</span>
+										</button>
+										<button type="button" id="select-task-button"
+											class="w-full md:w-[45%] shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
+											<img class="h-[20px] w-[20px] md:h-[25px] md:w-[25px] inline" src="/img/sources/icons/list-blue.svg">
+											<span class="max-md:text-sm">Seleziona da elenco</span>
+										</button>
+									</div>
+									<div id="back-task-rapid-button-container" class="hidden m-4">
+										<button type="button" id="back-task-rapid-button"
+											class="w-auto shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
+											<img class="h-[20px] w-[20px] md:h-[25px] md:w-[25px] inline" src="/img/sources/icons/arrow-left-blue.svg">
+											<span class="text-center text-nowrap max-md:text-sm">Torna alla ricerca/selezione</span>
+										</button>
+									</div>
+									<!-- Inizio selectMode del rapid button -->
+									<div id="select-mode" class="hidden w-full overflow-y-auto border border-[#0057A5] rounded-l-lg mb-2">
+										<div class="w-full h-32 ">
+												<div class="w-full h-8 border-b border-[#0057A5] bg-gray-100 grid grid-cols-8">
+													<span class="border-r col-span-3 text-center text-[#0057A5]">Cliente</span>
+													<span class="border-r col-span-2 text-center text-[#0057A5]">Progetto</span>
+													<span class="border-r col-span-2 text-center text-[#0057A5]">Task</span>
+													<span class="border-r col text-center text-[#0057A5]">Stato</span>
+												</div>
+												<button type="button" th:each="task : ${taskList}" th:value="${task.id}"
+													class="form-select-input border-b-1 shadow-md grid grid-cols-8 p-1 w-full hover:bg-[#FFE541]/50" name="taskId"
+													onclick="recapSelectedTask(value)">
+													<span class="col flex items-center justify-center">
+														<img th:src="${task.progetto.cliente.getLogoPath()}" class="h-5 w-auto">
+													</span>
+													<span class="border-r col-span-2 text-center text-[#0057A5] px-1 truncate"
+														th:text="${task.progetto.cliente.getLabelCliente()}"></span>
+													<span class="border-r col-span-2 text-center text-[#0057A5] px-1 truncate"
+														th:text="${task.progetto.getName()}"></span>
+													<span class="border-r col-span-2 text-center text-[#0057A5] px-1 truncate" th:text="${task.getName()}"></span>
+													<span class="col text-center text-[#0057A5] flex items-center justify-center">
+														<img th:if="${task.getStato() == 'in corso'}" id="semaforo-start" class="h-5"
+															src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start">
+												
+														<img th:if="${task.getStato() == 'in pausa'}" id="semaforo-pausa" class="h-5"
+															src="/img/sources/icons/contatore-on-pause.svg" alt="contatore in pausa">
+												
+														<img th:if="${task.getStato() == 'chiuso'}" id="semaforo-stop" class="h-5"
+															src="/img/sources/icons/contatore-on-stop.svg" alt="contatore in stop">
+												
+														<img th:if="${task.getStato() == 'inattivo'}" id="semaforo-inattivo" class="h-5"
+															src="/img/sources/icons/contatore-inattivo.svg" alt="contatore inattivo">
+													</span>
+												</button>
+										</div>
+									</div>
+									<!-- Fine selectMode del rapid button -->
+									
+									<!-- Inizio searchMode del rapid button -->
+									<div id="search-mode" class="hidden w-full mb-2">
+										<div class="flex justify-center">
+											<input type="text" placeholder="Ricerca per Cliente/Progetto/Task..."
+												class="w-[300px] mb-2 border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-[70%]  px-4 focus:outline-none"
+												id="form-search-input" name="input" oninput="getJsonTaskListSearch(value)">
+											</input>										
+										</div>
+										<div class="w-full h-32 overflow-y-auto border border-[#0057A5] rounded-l-lg">
+											<div class="w-full h-8 border-b border-[#0057A5] bg-gray-100 grid grid-cols-8">
+												<span class="border-r col-span-3 text-center text-[#0057A5]">Cliente</span>
+												<span class="border-r col-span-2 text-center text-[#0057A5]">Progetto</span>
+												<span class="border-r col-span-2 text-center text-[#0057A5]">Task</span>
+												<span class="border-r col text-center text-[#0057A5]">Stato</span>
+											</div>
+											<div id="items-from-search">											
+											</div>
+										</div>
+									</div>
+									<!-- Fine searchMode del rapid button -->
+								</div>
+							</div>
+					</div>
+					<div th:if="${taskList.isEmpty()}" class="text-center text-[#0057A5] font-bold p-10">Nessun Task inserito</div>
+					<!-- Inizio sezione resume task -->
+					<div id="taskResumeTable" class="hidden text-[#0057A5]">
+						<div class="w-full h-auto">
+							<div id="taskResumeBody" class="p-3 text-center mx-2">
+								<div class="mx-auto max-w-md bg-white rounded-xl shadow-md shadow-blue-500/50 overflow-hidden min-w-full p-2">
+									<div class="grid grid-cols-12 h-full mb-2 p-1 border-b">
+										<div class="col-span-11 flex justify-center">
+											<h3 id="taskNome" class="w-4/5 text-[#FFE541] font-bold truncate"></h3>										
+										</div>
+										<div class="col-span-1">
+											<div class="flex justify-center items-center">
+												<img id="task-stato" class="h-5">
+											</div>										
+										</div>
+									</div>	
+									<div class="grid grid-cols-12 h-2/3 ps-1">
+										<div class="col-span-2 md:col-span-3 h-20 flex justify-center items-center">
+											<img id="taskLogoPath" class="max-h-16 w-auto">
+										</div>
+										<div class="col-span-10 md:col-span-9">
+											<div class="grid grid-cols-7 flex items-center max-md:text-sm">
+												<div class="col-span-3 md:col-span-2 font-bold ps-1 md:ps-3 py-1 text-start">Cliente</div>
+												<a id="taskCliente" class="col-span-4 md:col-span-4 py-1 hover:underline text-start truncate">
+												</a>										
+											</div>
+											<div class="grid grid-cols-7 flex items-center max-md:text-sm">
+												<div class="col-span-3 md:col-span-2 font-bold ps-1 md:ps-3 py-1 text-start">Progetto</div>
+												<a id="taskProgetto" class="col-span-4 md:col-span-4 py-1 hover:underline text-start truncate">									
+												</a>
+											</div>
+											<div class="grid grid-cols-7 flex items-center max-md:text-sm">
+												<div class="col-span-3 md:col-span-2 font-bold ps-1 md:ps-3 py-1 text-start">WorkTime</div>
+												<div id="work-time" class="col-span-4 md:col-span-4 py-1 text-start truncate">
+													00:00:00
+												</div>
+											</div>
+										</div>
+									</div>							
+										
+								</div>
+							</div>
+							<div class="flex justify-center p-3">
+								<!-- Inizio sezione contatore -->
+								<div id="contatore-task-rapid" class="hidden w-full md:w-4/5 h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] py-1 px-1 md:px-3">
+									<div class="flex justify-between items-center text-[#0057A5] font-bold">
+										<div class="col-auto md:ms-2">
+											<img class="h-9 w-9 md:w-10 md:h-10" src="/img/sources/icons/contatore-blue.svg" alt="contatore">
+										</div>
+										<div class="flex flex-col items-center">
+											<div  class="col-auto text-[18px] md:text-[24px] p-0" id="timerResumeTask">00:00:00</div>
+										</div>
+										<div class="col-auto flex items-center">
+											<div id="contatore-rapid-button-stop" class=" md:mx-1 lg:mx-2">
+												<div class="mx-1 w-50">
+													<button id="stopButtonTaskRapid" type="button" 
+													 		class="flex justify-center items-center hover:opacity-75"
+															onclick="apriModale()">
+														<img class="h-9 w-9 md:w-10 md:h-10" src="/img/sources/icons/stop-blue.svg" alt="stop">
+													</button>												
+												</div>
+											</div>
+											<div id="contatore-rapid-button-pause" class="md:mx-1 lg:mx-2">
+												<form class="mx-1 w-50 " id="form-pause-contatore" th:object="${contatore}" method="post">
+													<input type="hidden" name="endPoint" th:value="${endPoint}">
+													<button id="pause-button" type="submit" class="flex justify-center items-center hover:opacity-75">
+														<img class="h-9 w-9 md:w-10 md:h-10" src="/img/sources/icons/pause-blue.svg" alt="start">
+													</button>
+												</form>
+											</div>
+											<div id="contatore-rapid-button-start" class="md:mx-1 lg:mx-2">
+												<form class="mx-1 w-50" id="form-start-contatore" th:object="${contatore}" method="post">
+													<input type="hidden" name="endPoint" th:value="${endPoint}">
+													<button id="start-button" type="submit" class="flex justify-center items-center hover:opacity-75">
+														<img class="h-9 w-9 md:w-10 md:h-10" src="/img/sources/icons/play-blue.svg" alt="start">
+													</button>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- fine sezione contatore -->
+								<!-- Inizio sezione ore lavorate -->
+								<div id="ore-lavorate-task-rapid-container" class="hidden w-[90%] h-fit">
+									<div class="flex flex-row justify-center p-2">
+										<form id="taskDetailHrefOre" th:object="${contatore}"
+												method="post">
+											<h2 class="text-center font-bold mb-3">Inserimento ore lavorate</h2>
+											<div class="p-1">
+												<div class="grid grid-cols-2 flex items-center mb-2">
+													<p class="col mb-2 font-semibold">Inserisci la data</p>
+													<input type="date" name="date" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+														class=" col md:text-xl p-2 border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-[#ffe541]/50"
+														id="dataOreLavorate">												
+												</div>
+												<div class="grid grid-cols-2 flex items-center mb-2">
+													<p class="col font-semibold">Inserisci ore</p>
+													<input type="time" name="time" value="01:00"
+														class="col h-8 md:text-xl border border-[#0057A5] text-[#0057A5] rounded-lg block w-full text-center	bg-[#ffe541]/50"
+														id="tempoOreLavorate">												
+												</div>
+												<div class="grid grid-cols-1  md:grid-cols-2 flex items-center mb-3">
+													<div class="col text-left  flex items-center justify-start max-md:py-1">
+														<input type="radio" name="aggiungiOre" checked="checked" id="sovrascriviOre" value="0">
+														<label for="sovrascriviOre" class="ps-1">Sovrascrivi e chiudi task</label><br>														
+													</div>
+													<div class="col flex items-center justify-start md:justify-end max-md:py-1">
+														<input type="radio" name="aggiungiOre" id="aggiungiOre" value="1">
+														<label for="aggiungiOre" class="pe-1" >Aggiungi al task attivo</label>														
+													</div>
+												</div>
+												<div class="text-center">
+													<button class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]" 
+														type="submit">
+															Aggiungi
+													</button>													
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+								<!-- fine sezione ore lavorate -->
+							</div>
+							<!-- Inizio sezione pulsanti opzione -->
+							<div id="options-buttons" class="flex justify-around items-center bg-[#0057A5] p-3 w-full rounded-b-lg">
+								<button type="button" id="contatore-task-rapid-button"
+									class="flex flex-col justify-center items-center w-1/5 text-[#FFE541] font-bold ">
+									<img class="h-[30px] w-[30px] mb-1" src="/img/sources/icons/contatore-yellow.svg">
+									<span class="text-[8px]">CONTATORE</span>
+								</button>
+								<button type="button" id="ore-lavorate-task-rapid-button"
+									class="flex flex-col justify-center items-center w-1/5 text-[#FFE541] font-bold ">
+									<img class="h-[30px] w-[30px] mb-1" src="/img/sources/icons/orelavorate.svg">
+									<span class="text-[8px]">ORE LAVORATE</span>
+								</button>
+								<a id="taskDetailHref"
+									class="flex flex-col justify-center items-center w-1/5 text-[#FFE541] font-bold text-[8px]">
+									<img class=" h-[30px] w-[30px] mb-1" src="/img/sources/icons/board-tabloid-yellow.svg">
+									<span class="">DETTAGLIO</span>
+								</a>
+							</div>
+							<!-- fine sezione pulsanti opzione -->
+						</div>
+					</div>
+					<!-- fine sezione resume task -->
+				</div>
+			</div>
+		</div>
+
+	<!-- Modale -->
+	<div id="modale"
+		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
+		<div
+			class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
+			<div class=" w-full h-auto">
+				<div id="modale-close-button" onclick="chiudiModale()"
+					class="flex justify-end items-center p-2 cursor-pointer">
+					<img class="h-[30px] w-[30px]"
+						src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
+				</div>
+			</div>
+			<div id="contenuto-modale" class="w-full h-auto bg-white rounded-b-lg">		
 			</div>
 		</div>
 	</div>
-
-	<!-- Modale StartPauseButton-->
-	<div id="modalPauseStartButton"
-		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
-		<div class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
-			<div class=" w-full h-auto">
-				<div id="modalPauseStartCloseButton" class="flex justify-end items-center p-2 cursor-pointer">
-					<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
-				</div>
-			</div>
-			<div th:unless="${taskInUso == null}" class="w-full h-auto bg-white rounded-b-lg">
-				<form id="form-start-pause" th:object="${contatore}" method="post">
-					<input type="hidden" name="endPoint" th:value="${endPoint}">
-					<div class="flex flex-col justify-center p-2 text-center ">
-						<div class="p-3 text-[#0057A5]">
-							<p>Proseguendo le modifiche non salvate al task <strong
-									th:text="${taskInUso.getName()}"></strong>
-								relativo al progetto <strong th:text="${taskInUso.progetto.getName()}">andranno
-									perse</strong>. Vuoi procedere?</p>
-						</div>
-						<div class="p-6">
-							<button type="submit"
-								class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+	
+	
 	<!-- Script -->
 	<script th:inline="javascript">
 		/*<![CDATA[*/
@@ -817,12 +1040,17 @@
 		let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
 		let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean
 		let taskInUsoId = /*[[${taskInUsoId}]]*/ null;
+		let taskInUsoName = /*[[${taskInUsoName}]]*/ null;
+		let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
 		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
+		let endPoint =/*[[${endPoint}]]*/null; //String
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
 	<script type="text/javascript" th:src="@{/js/insert-edit-Cliente.js}"></script>
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
+	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
+	<script type="text/javascript" th:src="@{/js/timerRapidButton.js}"></script>
 	<script th:inline="javascript">
 		const contentTreError = document.getElementById('content-3');
 		const inputFile = document.getElementById('urlLogo');

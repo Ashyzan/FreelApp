@@ -164,7 +164,7 @@
 									</div>
 									<div th:unless="${taskInUso == null}" class="w-8 h-8">
 										<button id="stopButtonTop" type="button"
-											class="hover:opacity-75">
+											onclick="creaModaleStop()" class="hover:opacity-75">
 											<img class="h-[29px] w-[29px]"
 												src="/img/sources/icons/stop-blue.svg" alt="stop">
 										</button>
@@ -370,7 +370,8 @@
 									<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg" alt="stop">
 								</div>
 								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
-									<button id="stopButtonBottom" type="button" class="hover:opacity-75">
+									<button id="stopButtonBottom" type="button" 
+										 	onclick="creaModaleStop()" class="hover:opacity-75">
 										<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg"
 											alt="stop">
 									</button>
@@ -456,6 +457,7 @@
 										<span class="text-center text-nowrap max-md:text-sm">Torna alla ricerca/selezione</span>
 									</button>
 								</div>
+								<!-- Inizio selectMode del rapid button -->
 								<div id="select-mode" class="hidden w-full overflow-y-auto border border-[#0057A5] rounded-l-lg mb-2">
 									<div class="w-full h-32 ">
 											<div class="w-full h-8 border-b border-[#0057A5] bg-gray-100 grid grid-cols-8">
@@ -491,6 +493,9 @@
 											</button>
 									</div>
 								</div>
+								<!-- Fine selectMode del rapid button -->
+								
+								<!-- Inizio searchMode del rapid button -->
 								<div id="search-mode" class="hidden w-full mb-2">
 									<div class="flex justify-center">
 										<input type="text" placeholder="Ricerca per Cliente/Progetto/Task..."
@@ -509,10 +514,12 @@
 										</div>
 									</div>
 								</div>
+								<!-- Fine searchMode del rapid button -->
 							</div>
 						</div>
 				</div>
 				<div th:if="${taskList.isEmpty()}" class="text-center text-[#0057A5] font-bold p-10">Nessun Task inserito</div>
+				<!-- Inizio sezione resume task -->
 				<div id="taskResumeTable" class="hidden text-[#0057A5]">
 					<div class="w-full h-auto">
 						<div id="taskResumeBody" class="p-3 text-center mx-2">
@@ -554,6 +561,7 @@
 							</div>
 						</div>
 						<div class="flex justify-center p-3">
+							<!-- Inizio sezione contatore -->
 							<div id="contatore-task-rapid" class="hidden w-full md:w-4/5 h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] py-1 px-1 md:px-3">
 								<div class="flex justify-between items-center text-[#0057A5] font-bold">
 									<div class="col-auto md:ms-2">
@@ -565,7 +573,9 @@
 									<div class="col-auto flex items-center">
 										<div id="contatore-rapid-button-stop" class=" md:mx-1 lg:mx-2">
 											<div class="mx-1 w-50">
-												<button id="stopButtonTaskRapid" type="button" class="flex justify-center items-center hover:opacity-75">
+												<button id="stopButtonTaskRapid" type="button" 
+												 		class="flex justify-center items-center hover:opacity-75"
+														onclick="apriModale()">
 													<img class="h-9 w-9 md:w-10 md:h-10" src="/img/sources/icons/stop-blue.svg" alt="stop">
 												</button>												
 											</div>
@@ -589,6 +599,8 @@
 									</div>
 								</div>
 							</div>
+							<!-- fine sezione contatore -->
+							<!-- Inizio sezione ore lavorate -->
 							<div id="ore-lavorate-task-rapid-container" class="hidden w-[90%] h-fit">
 								<div class="flex flex-row justify-center p-2">
 									<form id="taskDetailHrefOre" th:object="${contatore}"
@@ -627,7 +639,9 @@
 									</form>
 								</div>
 							</div>
+							<!-- fine sezione ore lavorate -->
 						</div>
+						<!-- Inizio sezione pulsanti opzione -->
 						<div id="options-buttons" class="flex justify-around items-center bg-[#0057A5] p-3 w-full rounded-b-lg">
 							<button type="button" id="contatore-task-rapid-button"
 								class="flex flex-col justify-center items-center w-1/5 text-[#FFE541] font-bold ">
@@ -645,141 +659,32 @@
 								<span class="">DETTAGLIO</span>
 							</a>
 						</div>
+						<!-- fine sezione pulsanti opzione -->
 					</div>
 				</div>
+				<!-- fine sezione resume task -->
 			</div>
 		</div>
 	</div>
 	
-	<!-- Modale StopButton-->
-	<div id="modalStopButton"
-				class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
-				<div
-					class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
-					<div class=" w-full h-auto">
-						<div id="modalStopCloseButton"
-							class="flex justify-end items-center p-2 cursor-pointer">
-							<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
-						</div>
-					</div>
-					<div th:unless="${taskInUso == null}" class="w-full h-auto bg-white rounded-b-lg">
-						<form th:action="@{|/Contatore/stop/${taskInUso.id}|}" 
-							th:object="${contatore}" 
-							method="post">
-							<div class="flex flex-col justify-center p-2 text-center ">
-								<div class="p-3 text-[#0057A5]">
-									<p>Stai per terminare definitivamente il task <strong th:text="${taskInUso.getName()}"></strong>
-										 relativo al progetto <strong th:text="${taskInUso.progetto.getName()}"></strong>. Vuoi procedere?</p>
-								</div>
-								<div class="p-6">
-									<button type="submit"
-										class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg p-2 text-[#0057A5] font-bold ">Conferma</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-
-	<!--  MODALE ORE LAVORATE 
-	<div id="modaleOreLavorate"
+	<!-- Modale -->
+	<div id="modale"
 		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
 		<div
-			class="w-11/12 md:w-[550px] h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
+			class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
 			<div class=" w-full h-auto">
-				<div id="modaleOreLavorateCloseButton"
+				<div id="modale-close-button" onclick="chiudiModale()"
 					class="flex justify-end items-center p-2 cursor-pointer">
-					<img class="h-[30px] w-[30px]" src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
+					<img class="h-[30px] w-[30px]"
+						src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
 				</div>
 			</div>
-			<div class="w-full h-auto bg-white rounded-b-lg">
-				<h1 class="font-bold pt-3 text-3xl text-[#0057A5] rounded-lg block w-full text-center">ORE
-					LAVORATE</h1>
-					<div class="p-3 text-[#0057A5] text-center" th:if="${taskListOreLavorate.size == 0} ">Non ci sono task disponibili</div>
-				<div id="form-task" class="" th:if="${taskListOreLavorate.size != 0}">
-					<form id="taskDetailHrefOre" th:object="${contatore}"
-						method="post">
-							
-						<div class="flex flex-col justify-center p-2 text-center pe-6">
-							
-							<div class="p-3 text-[#0057A5]" th:if="${taskList} != 0">
-								<p class="mb-2 text-lg font-bold">Seleziona il task</p>
-								<select
-								
-									class="border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full  px-4 focus:outline-none"
-									id="form-select-input-ore" name="taskId"
-									onchange="getJsonTaskOre(value)">
-									<option value="0">Seleziona Task</option>
-									<option th:each="task : ${taskListOreLavorate}"
-									 th:value="${task.id}"
-									 th:text="${task.getName()}" 
-									>					
-									</option>
-								</select>
-							</div>
-						</div>
-						
-						<div id="taskResumeTableOreLavorate" 
-					class="hidden p-4 text-[#0057A5]">
-					<div class="p-1 w-[100%] h-auto">
-						<div id="taskResumeTitle"
-							class="flex justify-between mb-3 border-b-2 items-center py-1">
-							<div class="w-8 h-8 flex justify-center items-center me-2 ">
-								<img id="taskLogoPathOre">
-							</div>
-							<h3 id="taskNomeOre" class="font-bold"></h3>
-							<a id="DetailHrefOre">
-								<div class="t-tooltip w-5 h-5">
-									<img class="h-[100%] w-[100%]" src="/img/sources/icons/board-tabloid-blue.svg" alt="dettaglio task">
-
-								</div>
-							</a>
-						</div>
-						<div id="taskResumeBody">
-							<div class="grid   grid-cols-3 mb-2 py-1 px-1">
-								<div class="col font-bold pe-1 py-1">Cliente</div>
-								<div id="taskClienteOre" class="col  col-span-2 py-1"></div>
-								<div class="col font-bold pe-1 py-1">Progetto</div>
-								<div id="taskProgettoOre" class="col  col-span-2 py-1"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-						
-						<div class="flex flex-row justify-center p-2 text-center pe-6" >
-
-							<div class="p-3 text-[#0057A5] basis-1/2 flex-auto">
-								<p class="mb-2 text-lg font-bold">Inserisci la data</p>
-								<input type="date" name="date" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
-									class="text-2xl m-4 p-2 border border-[#0057A5] h-10  text-[#0057A5] rounded-lg block w-full text-center bg-gray-200"
-									id="dataOreLavorate" >
-							
-								<p class="text-lg font-bold">Inserisci ore lavorate</p>
-								
-								<div class="text-left ml-5">
-									<input type="radio" name="aggiungiOre" checked="checked" id="sovrascriviOre" value="0" >
-									<label for="sovrascriviOre">Sovrascrivi e chiudi task</label><br>
-									<input type="radio" name="aggiungiOre" id="aggiungiOre" value="1" >
-									<label for="aggiungiOre">Aggiungi al task attivo</label>
-								</div>
-								
-								<input type="time"  name="time" value="01:00"
-									class="m-4 h-10 text-2xl border border-[#0057A5] text-[#0057A5] rounded-lg block w-full text-center	bg-gray-200"
-									id="tempoOreLavorate">
-								<button class="rounded-md px-2 py-1 border border-[#0057A5]" 
-									type="submit"> 
-									INVIA
-									</button>
-											
-							</div>
-						</div>
-					</form>
-				</div>
+			<div id="contenuto-modale" class="w-full h-auto bg-white rounded-b-lg">		
 			</div>
 		</div>
 	</div>
-	-->
-	<!-- FINE MODALE ORE LAVORATE-->
+
+	<!-- Fine Modale -->
 
   <!-- Script -->
 	<script th:inline="javascript">
@@ -789,12 +694,14 @@
 		let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean		
 		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
 		let taskInUsoId = /*[[${taskInUsoId}]]*/ null;
+		let taskInUsoName = /*[[${taskInUsoName}]]*/ null;
+		let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
+	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 	<script type="text/javascript" th:src="@{/js/timerRapidButton.js}"></script>
-	<!-- <script type="text/javascript" th:src="@{/js/addOreLavorateButton.js}"></script> -->
 
 
 </body>

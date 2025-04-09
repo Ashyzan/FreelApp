@@ -2,6 +2,7 @@ package com.freelapp.controller;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ import java.nio.file.Paths;
 
 import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
+import com.freelapp.model.Task;
 import com.freelapp.model.User;
 import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
@@ -38,6 +40,7 @@ import com.freelapp.repository.TaskRepository;
 import com.freelapp.repository.UserRepository;
 import com.freelapp.service.ClienteService;
 import com.freelapp.service.ContatoreService;
+import com.freelapp.service.TaskService;
 import com.freelapp.service.UploadFileService;
 
 import jakarta.validation.Valid;
@@ -62,6 +65,9 @@ public class ClientController {
 	private TaskRepository repositTask;
 	
 	@Autowired
+	private TaskService taskService;
+	
+	@Autowired
 	private UploadFileService uploadFileService;
 	
 	@Autowired
@@ -79,6 +85,14 @@ public class ClientController {
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+		taskService.informationFromTaskInUsoToModel(model);
+		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
 		
 		//restituisce al model questo valore booleano false se non ci sono clienti a db
 		//e restituisce true se ci sono clienti a db
@@ -134,6 +148,14 @@ public class ClientController {
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
 		
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+		taskService.informationFromTaskInUsoToModel(model);
+		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
+		
 		//restituisce al model questo valore booleano false se non ci sono clienti a db
 		//e restituisce true se ci sono clienti a db
 		boolean areClientsOnDb = false;
@@ -155,6 +177,14 @@ public class ClientController {
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+		taskService.informationFromTaskInUsoToModel(model);
+		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
 		
 		//restituisce al model questo valore booleano false se non ci sono clienti a db
 		//e restituisce true se ci sono clienti a db
@@ -210,6 +240,14 @@ public class ClientController {
 				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 				ContatoreController.contatoreAttivato = false;
 				
+				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+				taskService.informationFromTaskInUsoToModel(model);
+				
+				//passa al model la lista di tutti i task esclusi quelli chiusi
+				List<Task> taskList = new ArrayList<Task> ();
+				taskList = repositTask.findAllNotClosed();
+				model.addAttribute("taskList", taskList);
+				
 				//restituisce al model questo valore booleano false se non ci sono clienti a db
 				//e restituisce true se ci sono clienti a db
 				boolean areClientsOnDb = false;
@@ -238,12 +276,20 @@ public class ClientController {
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
 		
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+		taskService.informationFromTaskInUsoToModel(model);
+		
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 		
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
+		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
 	
 		return "/Clienti/freelapp-descrizioneCliente";
 	  }
@@ -266,12 +312,8 @@ public class ClientController {
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
 		
-		//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
-		if(ContatoreController.taskInUso != null) {
-			model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
-		}else {
-			model.addAttribute("taskInUsoId",0);
-		}
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+		taskService.informationFromTaskInUsoToModel(model);
 		
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -279,6 +321,11 @@ public class ClientController {
 		
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
+		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
 	    
 	    return "/Clienti/freelapp-insertClient"; 
 	}
@@ -321,12 +368,13 @@ public class ClientController {
 			model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 			model.addAttribute("taskInUso", ContatoreController.taskInUso);
 			
-			//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
-			if(ContatoreController.taskInUso != null) {
-				model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
-			}else {
-				model.addAttribute("taskInUsoId",0);
-			}
+			//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+			taskService.informationFromTaskInUsoToModel(model);
+			
+			//passa al model la lista di tutti i task esclusi quelli chiusi
+			List<Task> taskList = new ArrayList<Task> ();
+			taskList = repositTask.findAllNotClosed();
+			model.addAttribute("taskList", taskList);
 			
 
 			return "/Clienti/freelapp-insertClient";
@@ -375,12 +423,9 @@ public class ClientController {
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
-		//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
-		if(ContatoreController.taskInUso != null) {
-	    	model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
-	    }else {
-	    	model.addAttribute("taskInUsoId",0);
-	    }
+		
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+		taskService.informationFromTaskInUsoToModel(model);
 		
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -388,6 +433,12 @@ public class ClientController {
 		
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
+		
+		//passa al model la lista di tutti i task esclusi quelli chiusi
+		List<Task> taskList = new ArrayList<Task> ();
+		taskList = repositTask.findAllNotClosed();
+		model.addAttribute("taskList", taskList);
+		
 		return "/Clienti/freelapp-editClient";
 	}
 	
@@ -434,12 +485,14 @@ public class ClientController {
 			//passo al model i contatore e task in uso (gli static)
 			model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 			model.addAttribute("taskInUso", ContatoreController.taskInUso);
-			//passp al model taskInUsoId che serve alla modale di controllo start e pause in edit e insert
-			if(ContatoreController.taskInUso != null) {
-		    	model.addAttribute("taskInUsoId",ContatoreController.taskInUso.getId());
-		    }else {
-		    	model.addAttribute("taskInUsoId",0);
-		    }
+			
+			//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+			taskService.informationFromTaskInUsoToModel(model);
+			
+			//passa al model la lista di tutti i task esclusi quelli chiusi
+			List<Task> taskList = new ArrayList<Task> ();
+			taskList = repositTask.findAllNotClosed();
+			model.addAttribute("taskList", taskList);
 			
 			return "/Clienti/freelapp-editClient";
 		}

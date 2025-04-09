@@ -3,7 +3,6 @@ package com.freelapp.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import com.freelapp.controller.ContatoreController;
 import com.freelapp.model.Task;
 import com.freelapp.repository.TaskRepository;
 
@@ -22,13 +23,15 @@ public class TaskService {
 	@Autowired
 	private TaskRepository taskRepository;
 
-	public List<Task> findAll(){
-		return taskRepository.findAll(Sort.by(Sort.Direction.DESC, "dataModifica"));
+	public List<Task> findAllNotClosed(){
+		//restituisce la lista dei task attivi(non chiusi)
+		return taskRepository.findAllNotClosed();
 	}
 	
 	public Page<Task> findPage(int pageNumber){
 		Pageable pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
-		return taskRepository.findAll(pageable);
+		//restituisce la lista dei task attivi(non chiusi)
+		return taskRepository.findAllNotClosed(pageable);
 		
 	}
 	
@@ -56,5 +59,23 @@ public class TaskService {
 		return timer;
 	}
 	
+	//passa al model l'id, il nome e il progetto del taskInUso se diverso da null
+	//impegato per la modale di stop
+	public void informationFromTaskInUsoToModel(Model model) {
+		
+		Integer taskInUsoId = 0;
+		String taskInUsoName = null;
+		String taskInUsoProgetto = null;
+		
+		if(ContatoreController.taskInUso != null) {
+			taskInUsoId = ContatoreController.taskInUso.getId();
+			taskInUsoName = ContatoreController.taskInUso.getName();
+			taskInUsoProgetto = ContatoreController.taskInUso.getProgetto().getName();
+		}
+		
+		model.addAttribute("taskInUsoId", taskInUsoId);
+		model.addAttribute("taskInUsoName", taskInUsoName);
+		model.addAttribute("taskInUsoProgetto", taskInUsoProgetto);
+	}
 	
 }
