@@ -62,6 +62,21 @@ public class Progetto {
 	@Column(name = "DataFine")
 	private LocalDate dataFine;
 	
+	@Column(name = "Tipologia", nullable = false)
+	private String tipologia;
+	
+	@Column(name = "Budget_monetario")
+	private double budgetMonetario;
+	
+	@Column(name = "Tariffa_oraria")
+	private double tariffaOraria;
+	
+	@Column(name = "Budget_ore")
+	private int budgetOre;
+	
+	@Column(name = "Guadagno_effettivo")
+	private double guadagnoEffettivo;
+	
 	@OneToMany(mappedBy = "progetto")
 	@JsonManagedReference
 	@JsonIgnore
@@ -76,10 +91,47 @@ public class Progetto {
 	@JoinColumn(name = "UtenteRif", nullable = false)
 	private User utente;
 	
-	@OneToOne(mappedBy = "progetto", cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn
-	private StatisticaProgetto statisticaProgetto;
 	
+	public String getTipologia() {
+		return tipologia;
+	}
+
+	public void setTipologia(String tipologia) {
+		this.tipologia = tipologia;
+	}
+
+	public double getBudgetMonetario() {
+		return budgetMonetario;
+	}
+
+	public void setBudgetMonetario(double budgetMonetario) {
+		this.budgetMonetario = budgetMonetario;
+	}
+
+	public double getTariffaOraria() {
+		return tariffaOraria;
+	}
+
+	public void setTariffaOraria(double tariffaOraria) {
+		this.tariffaOraria = tariffaOraria;
+	}
+
+	public int getBudgetOre() {
+		return budgetOre;
+	}
+
+	public void setBudgetOre(int budgetOre) {
+		this.budgetOre = budgetOre;
+	}
+
+	public double getGuadagnoEffettivo() {
+		return guadagnoEffettivo;
+	}
+
+	public void setGuadagnoEffettivo(double guadagnoEffettivo) {
+		this.guadagnoEffettivo = guadagnoEffettivo;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -88,14 +140,7 @@ public class Progetto {
 		this.id = id;
 	}
 
-	public StatisticaProgetto getStatisticaProgetto() {
-		return statisticaProgetto;
-	}
 
-	public void setStatisticaProgetto(StatisticaProgetto statisticaProgetto) {
-		this.statisticaProgetto = statisticaProgetto;
-		this.statisticaProgetto.setProgetto(this);
-	}
 
 	public String getName() {
 		return name;
