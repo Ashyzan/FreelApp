@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +19,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,6 +32,7 @@ public class Progetto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "progetto_id")
 	private int id;
 	
 	@Column(name = "DenominazioneProgetto", nullable = false)
@@ -72,12 +76,25 @@ public class Progetto {
 	@JoinColumn(name = "UtenteRif", nullable = false)
 	private User utente;
 	
+	@OneToOne(mappedBy = "progetto", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	private StatisticaProgetto statisticaProgetto;
+	
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public StatisticaProgetto getStatisticaProgetto() {
+		return statisticaProgetto;
+	}
+
+	public void setStatisticaProgetto(StatisticaProgetto statisticaProgetto) {
+		this.statisticaProgetto = statisticaProgetto;
+		this.statisticaProgetto.setProgetto(this);
 	}
 
 	public String getName() {

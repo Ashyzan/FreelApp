@@ -322,7 +322,7 @@
 					<img class="h-[35px] w-[35px]" src="/img/sources/icons/exit.svg" alt="logout">
 				</a>
 			</div>
-			<div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5]">
+			<div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto">
 				<div class="flex flex-col justify-center items-center w-full">
 					<div class="h-12 text-center font-bold items-center m-3">
 						<h1>INSERIMENTO NUOVO PROGETTO
@@ -420,8 +420,24 @@
 												</li>
 											</ul>
 										</div>
-
 									</div>
+								</div>
+									<div class="grid md:grid-cols-3 grid-cols-4 mb-4 py-2">
+										<div class="col">
+											<label for="tipologia-select">Tipologia*</label>
+										</div>
+										<div class="col md:col-span-2 col-span-3">
+											<select onchange="tipologiaStatisticaSelect(value)"
+												class="select w-full h-8 ps-4 rounded-lg bg-gray-100" id="tipologia-select" name="tipologia">
+												<option value="">Seleziona tipologia</option>
+												<option value="budget">Budget</option>
+												<option value="limite-tempo">Limite di tempo</option>
+												<option value="tariffa-oraria">Tariffa oraria</option>
+											</select>
+										</div>
+									</div>
+								<div id="contenuto-form-statistiche">
+									
 								</div>
 							</div>
 							<div class="text-center mt-3 p-3">
@@ -429,6 +445,7 @@
 									class="shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
 									Aggiungi </button>
 							</div>
+							<div class="text-[12px]"><span> *</span>Campi obbligatori</div>
 						</form>
 					</div>
 				</div>
@@ -791,6 +808,7 @@
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
 	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 	<script type="text/javascript" th:src="@{/js/timerRapidButton.js}"></script>
+	<script type="text/javascript" th:src="@{/js/insert-edit-Progetto.js}"></script>
 </body>
 
 </html>
