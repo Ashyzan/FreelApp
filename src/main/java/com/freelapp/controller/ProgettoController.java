@@ -258,8 +258,9 @@ public class ProgettoController {
 	
 			@GetMapping("/Progetti/{id}")
 			public String descrizioneProgetto(@PathVariable("id") int progettoId, Model model) {
-		
-				model.addAttribute("progetto", repositProgetto.getReferenceById(progettoId));
+				Progetto progetto = repositProgetto.getReferenceById(progettoId);
+				
+				model.addAttribute("progetto", progetto);
 				
 				//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
 				String endPoint = "/Progetti/" + repositProgetto.getReferenceById(progettoId).getId();
@@ -285,6 +286,10 @@ public class ProgettoController {
 				List<Task> taskList = new ArrayList<Task> ();
 				taskList = repositTask.findAllNotClosed();
 				model.addAttribute("taskList", taskList);
+				
+				//passa a modello nel caso in base alla tipologia i risultati delle statistiche
+				progettoService.calcoloStatisticheTipologiaFromProgettoToModel(progetto, model);
+				
 				
 				return "/Progetti/freelapp-descrizioneProgetto";
 		   }
@@ -330,6 +335,9 @@ public class ProgettoController {
 				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 				ContatoreController.contatoreAttivato = false;
 				
+				//metodo che passa al model i valori inerenti la tipologia progetto per le statistiche
+				progettoService.tipologiaFromProgettoToModel(formProgetto, model);
+				
 				return "/Progetti/freelapp-insertProgetto";
 			}
 	
@@ -362,6 +370,9 @@ public class ProgettoController {
 						List<Task> taskList = new ArrayList<Task> ();
 						taskList = repositTask.findAllNotClosed();
 						model.addAttribute("taskList", taskList);
+						
+						//metodo che passa al model i valori inerenti la tipologia progetto per le statistiche
+						progettoService.tipologiaFromProgettoToModel(formProgetto, model);
 					
 			    	    return "/Progetti/freelapp-insertProgetto";
 					
@@ -414,6 +425,9 @@ public class ProgettoController {
 				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 				ContatoreController.contatoreAttivato = false;
 				
+				//metodo che passa al model i valori inerenti la tipologia progetto per le statistiche
+				progettoService.tipologiaFromProgettoToModel(formProgetto, model);
+				
 				return "/Progetti/freelapp-editProgetto";
 			}
 			
@@ -440,6 +454,9 @@ public class ProgettoController {
 					List<Task> taskList = new ArrayList<Task> ();
 					taskList = repositTask.findAllNotClosed();
 					model.addAttribute("taskList", taskList);
+					
+					//metodo che passa al model i valori inerenti la tipologia progetto per le statistiche
+					progettoService.tipologiaFromProgettoToModel(formProgetto, model);
 					
 					return  "/Progetti/freelapp-editProgetto";
 				}

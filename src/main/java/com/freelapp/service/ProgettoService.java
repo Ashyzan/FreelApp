@@ -8,8 +8,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.freelapp.model.Progetto;
+import com.freelapp.model.Task;
 import com.freelapp.repository.ProgettoRepository;
 
 @Service
@@ -66,6 +68,53 @@ public class ProgettoService {
 		
 	}
 	
+	//metodo che passa al model tutti i dati relativi alla tipologia di progetto ai fini statistici
+	public void tipologiaFromProgettoToModel(Progetto progetto, Model model) {
+		
+		model.addAttribute("tipologia", progetto.getTipologia());
+		model.addAttribute("budgetMonetario", progetto.getBudgetMonetario());
+		model.addAttribute("tariffaOraria", progetto.getTariffaOraria());
+		model.addAttribute("budgetOre", progetto.getBudgetOre());
+		
+	}
 
-
+	//metodo che verifica la tipologia del progetto e passa i dati al modello per il calcolo delle statistiche
+	public void calcoloStatisticheTipologiaFromProgettoToModel(Progetto progetto, Model model) {
+		
+		if(progetto.getTipologia().contains("budget")) {
+					double oreTotaliProgetto = progetto.getBudgetMonetario() / progetto.getTariffaOraria();
+					double oreRimanenti = oreTotaliProgetto;
+					//valore (finalTimeProgetto) che deriva dalla somma di tutti i finalTime di progetti
+					int finalTimeProgetto = 0;
+					for(Task task : progetto.getElencoTask()) {
+						finalTimeProgetto += task.getContatore().getFinaltime();
+					}
+					
+					oreRimanenti = oreTotaliProgetto - (finalTimeProgetto/3600);
+					model.addAttribute("oreRimanenti", Math.round(oreRimanenti));
+				}
+		if(progetto.getTipologia().contains("limite-tempo")) {
+			double guadagnoStimato = progetto.getBudgetOre() * progetto.getTariffaOraria();
+			double guadagnoProvvisorio = 0;
+			for(Task task : progetto.getElencoTask()) {
+				//trasformo il finalTime di ogni task in ore e lo moltiplico per la tariffa oraria e poi lo sommo agli altri
+						guadagnoProvvisorio += ((task.getContatore().getFinaltime())/3600)* progetto.getTariffaOraria();
+					}
+			double percentualeGuadagno = (guadagnoProvvisorio / guadagnoStimato) * 100;
+			model.addAttribute("guadagnoStimato", guadagnoStimato);
+			model.addAttribute("guadagnoProvvisorio", guadagnoProvvisorio);
+			model.addAttribute("percentualeGuadagno", percentualeGuadagno);
+		}
+		
+		if(progetto.getTipologia().contains("tariffa-oraria")) {
+			double guadagnoProvvisorio = 0;
+			for(Task task : progetto.getElencoTask()) {
+				//trasformo il finalTime di ogni task in ore e lo moltiplico per la tariffa oraria e poi lo sommo agli altri
+						guadagnoProvvisorio += ((task.getContatore().getFinaltime())/3600)* progetto.getTariffaOraria();
+						System.out.println("guadagno provvosorio: " + guadagnoProvvisorio);
+					}
+			model.addAttribute("guadagnoProvvisorio", guadagnoProvvisorio);
+		}
+		
+	}
 }

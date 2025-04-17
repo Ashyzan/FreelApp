@@ -63,16 +63,17 @@ public class Progetto {
 	private LocalDate dataFine;
 	
 	@Column(name = "Tipologia", nullable = false)
+	@NotNull(message = "Scelta tipologia obbligatoria")
 	private String tipologia;
 	
 	@Column(name = "Budget_monetario")
-	private double budgetMonetario;
+	private double budgetMonetario = 0.00;
 	
 	@Column(name = "Tariffa_oraria")
-	private double tariffaOraria;
+	private double tariffaOraria = 0.00;
 	
 	@Column(name = "Budget_ore")
-	private int budgetOre;
+	private int budgetOre = 0;
 	
 	@Column(name = "Guadagno_effettivo")
 	private double guadagnoEffettivo;

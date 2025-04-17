@@ -391,6 +391,32 @@
 										Cliente</div>
 									<div class="col  col-span-2 py-3" th:text="${progetto.cliente.labelCliente}">
 									</div>
+									<div class="col font-bold pe-3 py-3">
+										Tipologia</div>
+									<div class="col  col-span-2 py-3" th:text="${progetto.getTipologia()}">
+									</div>
+								</div>
+								<div th:if="${progetto.getTipologia() == 'budget'}">
+									<div class="grid grid-cols-2">
+										<div class="col" th:text="|Budget progetto: ${progetto.getBudgetMonetario()} €|"></div>	
+										<div class="col" th:text="|Tariffa oraria: ${progetto.getTariffaOraria()} €|"></div>	
+									</div>
+									<p th:text="|Per questo progetto hai ancora a disposizione ${oreRimanenti} ore.|"></p>
+								</div>
+								<div th:if="${progetto.getTipologia() == 'limite-tempo'}">
+									<div class="grid grid-cols-2">
+										<div class="col" th:text="|Budget orario: ${progetto.getBudgetOre()} ore|"></div>
+										<div class="col" th:text="|Tariffa oraria: ${progetto.getTariffaOraria()} €|"></div>
+									</div>
+									<p th:text="|Per questo progetto il guadagno stimato è di ${guadagnoStimato} €.
+											Attualmente hai raggiunto il ${percentualeGuadagno}% del guadagno stimato
+											 ossia ${guadagnoProvvisorio}€|"></p>
+								</div>
+								<div th:if="${progetto.getTipologia() == 'tariffa-oraria'}">
+									<div class="grid grid-cols-2">
+										<div class="col" th:text="|Tariffa oraria: ${progetto.getTariffaOraria()} €|"></div>
+									</div>
+									<p th:text="|Per questo progetto il guadagno attuale è di ${guadagnoProvvisorio} €.|"></p>
 								</div>
 							</div>
 							<div class="text-center mt-5 p-4">
