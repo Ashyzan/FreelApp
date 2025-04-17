@@ -103,6 +103,9 @@ public class OreLavorateController {
 		    	
 		    	// salvo in automatico la data fine task in corrispondenza dello stop contatore
 		    	taskservice.setStopTaskDate(STOP, taskId);
+		    	
+		    	//setto lo stato in chiuso
+		    	task.setStato("chiuso");
 				repositTask.save(task); 
 		    	}
 	    }
