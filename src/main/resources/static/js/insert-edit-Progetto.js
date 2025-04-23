@@ -17,14 +17,11 @@ const nomeProgetto = document.getElementById('name');
 const nomeProgettoError = document.getElementById('nomeProgettoError');
 const descrizioneProgetto = document.getElementById('textarea-cinquecento');
 const descrizioneProgettoError = document.getElementById('textarea-cinquecento-error');
-//const dataInizioProgetto = document.getElementById('dataInizio');
-//const dataInizioProgettoError = document.getElementById('dataInizioProgettoError');
 const clienteProgetto = document.getElementById('cliente');
 const clienteProgettoError = document.getElementById('clienteProgettoError');
 
 
 
-let valueTemporaneoDaCancellare = "left-[${tariffaOraria}%]";
 let tariffaOrariaInserita = 0;
 let tettoMaxOreInserito = 0;
 let risultatoBudget = 0;
@@ -37,6 +34,7 @@ formProgetto.addEventListener('submit', validation);
 
 function validation(e){
 	e.preventDefault()
+	let hasProgettoErrors = false;
 	let hasBudgetErrors = false;
 	let hasLimiteTempoErrors = false;
 	let hasTariffaOrariaErrors = false;
@@ -45,9 +43,11 @@ function validation(e){
 		if(nomeProgetto.value.trim().length === 0){
 			nomeProgettoError.innerHTML = "Inserimento nome progetto obbligatorio";
 			nomeProgetto.classList.add('border');
+			hasProgettoErrors = true;
 		}else {
 			nomeProgettoError.innerHTML = "";
 			nomeProgetto.classList.remove('border');
+			hasProgettoErrors = false;
 		}
 		
 	//anticipazione validazione descrizioneProgetto
@@ -55,26 +55,33 @@ function validation(e){
 			descrizioneProgettoError.innerHTML = "Inserimento descrizione obbligatorio";
 			descrizioneProgetto.style.height = "100px";
 			descrizioneProgetto.classList.add('border');
+			hasProgettoErrors = true;
 		}else {
 			descrizioneProgettoError.innerHTML = "";
 			descrizioneProgetto.classList.remove('border');
+			hasProgettoErrors = false;
 		}
 	
 	//anticipazione validazione clienteProgetto
 		if(clienteProgetto.value === ""){
 			clienteProgettoError.innerHTML = "Selezione cliente obbligatoria";
 			clienteProgetto.classList.add('border');
+			hasProgettoErrors = true;
 		}else {
 			clienteProgettoError.innerHTML = "";
 			clienteProgetto.classList.remove('border');
+			hasProgettoErrors = false;
 		}
 	
 	//validazione selezione tipologia
 	if(inputSelectTipologia.value === ""){
 		inputSelectTipologiaError.innerHTML = "Selezione tipologia obbligatoria"
 		inputSelectTipologia.classList.add('border');
+		hasProgettoErrors = true;
 	} else{
+		inputSelectTipologiaError.innerHTML = "";
 		inputSelectTipologia.classList.remove('border');
+		hasProgettoErrors = false;
 	}
 	
 	//validazione tipologia budget
@@ -93,14 +100,14 @@ function validation(e){
 			hasBudgetErrors = false;
 		}
 		if(selectionTariffaOraria.value == 0){
-			selectionTariffaOraria.classList.remove('accent-[#FFE641]');
-			selectionTariffaOraria.classList.add('accent-[#DC2626]');
+			//selectionTariffaOraria.classList.remove('accent-[#FFE641]');
+			selectionTariffaOraria.classList.add('border');
 			inputTariffaOrariaError.innerHTML = "Scegliere la tariffa oraria";
 			hasBudgetErrors = true;
 		}else{
 			inputTariffaOrariaError.innerHTML = "";
-			selectionTariffaOraria.classList.remove('accent-[#DC2626]');
-			selectionTariffaOraria.classList.add('accent-[#FFE641]');
+			selectionTariffaOraria.classList.remove('border');
+			//selectionTariffaOraria.classList.add('accent-[#FFE641]');
 			hasBudgetErrors = false;
 		}
 	}
@@ -121,14 +128,14 @@ function validation(e){
 				hasLimiteTempoErrors = false;
 			}
 			if(selectionTariffaOraria.value == 0){
-				selectionTariffaOraria.classList.remove('accent-[#FFE641]');
-				selectionTariffaOraria.classList.add('accent-[#DC2626]');
+				//selectionTariffaOraria.classList.remove('accent-[#FFE641]');
+				selectionTariffaOraria.classList.add('border');
 				inputTariffaOrariaError.innerHTML = "Scegliere la tariffa oraria";
 				hasLimiteTempoErrors = true;
 			}else{
 				inputTariffaOrariaError.innerHTML = "";
-				selectionTariffaOraria.classList.remove('accent-[#DC2626]');
-				selectionTariffaOraria.classList.add('accent-[#FFE641]');
+				selectionTariffaOraria.classList.remove('border');
+				//selectionTariffaOraria.classList.add('accent-[#FFE641]');
 				hasLimiteTempoErrors = false;
 			}
 		}
@@ -138,19 +145,20 @@ function validation(e){
 			const selectionTariffaOraria = document.getElementById('selectionTariffaOraria');
 			const inputTariffaOrariaError = document.getElementById('inputTariffaOrariaError');
 			if(selectionTariffaOraria.value == 0){
-				selectionTariffaOraria.classList.remove('accent-[#FFE641]');
-				selectionTariffaOraria.classList.add('accent-[#DC2626]');
+				//selectionTariffaOraria.classList.remove('accent-[#FFE641]');
+				selectionTariffaOraria.classList.add('border');
 				inputTariffaOrariaError.innerHTML = "Scegliere la tariffa oraria";
 				hasLimiteTempoErrors = true;
 			}else{
 				inputTariffaOrariaError.innerHTML = "";
-				selectionTariffaOraria.classList.remove('accent-[#DC2626]');
-				selectionTariffaOraria.classList.add('accent-[#FFE641]');
+				selectionTariffaOraria.classList.remove('border');
+				//selectionTariffaOraria.classList.add('accent-[#FFE641]');
 				hasLimiteTempoErrors = false;
 				}
 			}
 	//verifico se il form non ha errori il submit prosegue
-		if(hasBudgetErrors == false && hasLimiteTempoErrors == false && hasTariffaOrariaErrors == false){
+		if(hasBudgetErrors == false && hasLimiteTempoErrors == false && 
+				hasTariffaOrariaErrors == false && hasProgettoErrors == false){
 		formProgetto.submit();
 		}
 }	 
@@ -198,16 +206,16 @@ function creaContenutoBudget(){
 				</div>
 
 			</div>
-			<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-3">
+			<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
 				<div class="col">
 					<label for="valore-tariffa-oraria">Tariffa oraria</label>
 				</div>
 				<div class="col relative md:col-span-2 col-span-3">
-					<input type="range" name="tariffaOraria" class="w-full accent-[#FFE641]" id="selectionTariffaOraria"
-						th:field="*{tariffaOraria}" value="${tariffaOraria}" min="0" max="100" oninput="eventListenerTariffaOraria(value)">
-					<span id="input-range-value"
-						class="absolute left-[${tariffaOraria}%] p-[3px] mt-[-32px] ms-[-20px] bg-white border-2 border-[#0057A5] rounded-lg text-[12px]">${tariffaOraria}€</span>
-					<div id="inputTariffaOrariaError" class="text-red-600 text-[12px] text-center w-full"></div>
+				<input type="number" name="tariffaOraria" class="border-red-600 h-8 h-8  text-[#0057A5] rounded-lg bg-gray-100 ps-4"	
+					 id="selectionTariffaOraria"
+						th:field="*{tariffaOraria}" value="${tariffaOraria}" min="0" step="0.01"  oninput="eventListenerTariffaOraria(value)">
+						<span> €</span>
+					<div id="inputTariffaOrariaError" class="text-red-600 text-[12px] w-full"></div>
 				</div>
 			</div>
 			<div class="text-center p-3">Per questo progetto sono diponibili: <strong><span id="risultato-ore-da-budget">--
@@ -235,10 +243,6 @@ function eventListenerTariffaOraria(value){
 	const risultatoMinutiDaBudget = document.getElementById('risultato-minuti-da-budget');
 	const inputRangeValue = document.getElementById('input-range-value');
 	tariffaOrariaInserita = Number(value);
-	inputRangeValue.classList.remove(valueTemporaneoDaCancellare);
-	inputRangeValue.classList.add(`left-[${tariffaOrariaInserita}%]`);
-	valueTemporaneoDaCancellare = "left-["+ tariffaOrariaInserita +"%]";
-	inputRangeValue.innerHTML = tariffaOrariaInserita + "€";
 	if(tariffaOrariaInserita != 0){
 		risultatoBudget = budgetInseritoValore / tariffaOrariaInserita;
 		risultatoOreDaBudget.innerHTML = parseInt(risultatoBudget);
@@ -254,17 +258,17 @@ function eventListenerTariffaOraria(value){
 function creaContenutoTariffaOraria(){
 	contenutoFormStatistiche.innerHTML = `<hr>
 			<div class="text-center font-bold py-2 mb-3">Inserire la tariffa oraria :</div>
-			<div class="grid md:grid-cols-3 grid-cols-4 mb-4 py-3">
-				<div class="col">
-					<label for="valore-tariffa-oraria">Tariffa oraria</label>
-				</div>
-				<div class="col relative md:col-span-2 col-span-3">
-					<input type="range" name="tariffaOraria" class="w-full accent-[#FFE641]" id="selectionTariffaOraria"
-						 th:field="*{tariffaOraria}" value="${tariffaOraria}" min="0" max="100" oninput="selezioneTariffaOraria(value)">
-						 <span id="input-range-value"
-						 	class="absolute left-[${tariffaOraria}%] p-[3px] mt-[-32px] ms-[-20px] bg-white border-2 border-[#0057A5] rounded-lg text-[12px]">${tariffaOraria}€</span>
-					<div id="inputTariffaOrariaError" class="text-red-600 text-[12px] text-center w-full"></div>
-				</div>
+			<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
+					<div class="col">
+						<label for="valore-tariffa-oraria">Tariffa oraria</label>
+					</div>
+					<div class="col relative md:col-span-2 col-span-3">
+					<input type="number" name="tariffaOraria" class="border-red-600 h-8 h-8  text-[#0057A5] rounded-lg bg-gray-100 ps-4"	
+						 id="selectionTariffaOraria"
+							th:field="*{tariffaOraria}" value="${tariffaOraria}" min="0" step="0.01"  oninput="eventListenerTariffaOraria(value)">
+							<span> €</span>
+						<div id="inputTariffaOrariaError" class="text-red-600 text-[12px] w-full"></div>
+					</div>
 			</div>
 			<div class="text-center p-3">Per questo progetto sarà impiegata una tariffa oraria di €: <strong>
 					<span id="tariffa-oraria-selezionata-per-progetto">00</span></strong>
@@ -275,10 +279,6 @@ function selezioneTariffaOraria(value){
 	const inputRangeValue = document.getElementById('input-range-value');
 	const tariffaOrariaSelezionataPerProgetto = document.getElementById('tariffa-oraria-selezionata-per-progetto');
 	tariffaOrariaInserita = Number(value);
-	inputRangeValue.classList.remove(valueTemporaneoDaCancellare);
-	inputRangeValue.classList.add(`left-[${tariffaOrariaInserita}%]`);
-	valueTemporaneoDaCancellare = "left-["+ tariffaOrariaInserita +"%]";
-	inputRangeValue.innerHTML = tariffaOrariaInserita + "€";
 	tariffaOrariaSelezionataPerProgetto.innerHTML = tariffaOrariaInserita;
 }
 
@@ -292,22 +292,22 @@ function creaContenutoLimiteTempo(){
 						<label for="limite-ore-input">Ore</label>
 					</div>
 					<div class="col md:col-span-2 col-span-3">
-						<input type="number" name="budgetOre" class="h-8  text-[#0057A5] rounded-lg bg-gray-100 ps-4"
+						<input type="number" name="budgetOre" class="border-red-600 h-8  text-[#0057A5] rounded-lg bg-gray-100 ps-4"
 							th:field="*{budgetOre}" step="1" min="0" value="${budgetOre}" id="limite-ore-input" oninput="eventLIstenerInputOreMax(value)">
 								<span> €</span>
 						<div id="limiteOreInputError" class="text-red-600 text-[12px]  w-full"></div>	
 					</div>
 				</div>
-				<div class="grid md:grid-cols-3 grid-cols-4 mb-4 py-3">
+				<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
 					<div class="col">
 						<label for="valore-tariffa-oraria">Tariffa oraria</label>
 					</div>
 					<div class="col relative md:col-span-2 col-span-3">
-						<input type="range" name="tariffaOraria" class="w-full accent-[#FFE641]" id="selectionTariffaOraria"
-							th:field="*{tariffaOraria}" value="${tariffaOraria}" min="0" max="100" oninput="selezioneTariffaOrariaMaxOre(value)">
-							<span id="input-range-value"
-								class="absolute left-[${tariffaOraria}%] p-[3px] mt-[-32px] ms-[-20px] bg-white border-2 border-[#0057A5] rounded-lg text-[12px]">${tariffaOraria}€</span>
-						<div id="inputTariffaOrariaError" class="text-red-600 text-[12px] text-center w-full"></div>
+						<input type="number" name="tariffaOraria" class="border-red-600 h-8 h-8  text-[#0057A5] rounded-lg bg-gray-100 ps-4"	
+							 id="selectionTariffaOraria"
+							th:field="*{tariffaOraria}" value="${tariffaOraria}" min="0" step="0.01"  oninput="eventListenerTariffaOraria(value)">
+							<span> €</span>
+						<div id="inputTariffaOrariaError" class="text-red-600 text-[12px] w-full"></div>
 					</div>
 				</div>
 				<div class="text-center p-3">Per questo progetto il guadagno massimo sarà di €: <strong>
@@ -328,10 +328,6 @@ function selezioneTariffaOrariaMaxOre(value){
 	const guadagnoMaxPerProgetto = document.getElementById('guadagno-max-per-progetto');
 	const inputRangeValue = document.getElementById('input-range-value');
 	tariffaOrariaInserita = Number(value);
-	inputRangeValue.classList.remove(valueTemporaneoDaCancellare);
-	inputRangeValue.classList.add(`left-[${tariffaOrariaInserita}%]`);
-	valueTemporaneoDaCancellare = "left-["+ tariffaOrariaInserita +"%]";
-	inputRangeValue.innerHTML = tariffaOrariaInserita + "€";
 	guadagnoMaxPerProgetto.innerHTML = tettoMaxOreInserito * tariffaOrariaInserita;
 }
 
