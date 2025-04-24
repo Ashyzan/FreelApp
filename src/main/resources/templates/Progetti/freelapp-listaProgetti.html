@@ -414,7 +414,7 @@
 														<span class="tooltiptext-top">Chiudi progetto</span>
 														<form th:action="@{/Progetti/chiudi/{id}(id=${progettoPerData.getId()})}" th:object="${progetto}" method="post" class="size-6 flex items-end">
 															<button type="submit" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
-																hover:bg-[url(/img/sources/icons/power-red.svg)]">
+																hover:bg-[url(/img/sources/icons/power-red.svg)]"></button>
 														</form>
 													</li>
 													<li th:unless="${progettoPerData.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
@@ -422,7 +422,7 @@
 														<form th:action="@{/Progetti/apri/{id}(id=${progettoPerData.getId()})}" th:object="${progetto}" method="post"
 															class="size-6 flex items-end">
 															<button type="submit" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
-																hover:bg-[url(/img/sources/icons/power-green.svg)]">
+																hover:bg-[url(/img/sources/icons/power-green.svg)]"></button>															
 														</form>
 													</li>
 													<li class="flex flex-col md:flex-row px-2 mt-6 mr-2 float-right">
@@ -517,7 +517,7 @@
 														<form th:action="@{/Progetti/chiudi/{id}(id=${progettoCliente.getId()})}" th:object="${progetto}" method="post"
 															class="size-6 flex items-end">
 															<button type="submit" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
-															hover:bg-[url(/img/sources/icons/power-red.svg)]">
+															hover:bg-[url(/img/sources/icons/power-red.svg)]"></button>															
 														</form>
 													</li>
 													<li th:unless="${progettoCliente.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
@@ -525,7 +525,7 @@
 														<form th:action="@{/Progetti/apri/{id}(id=${progettoCliente.getId()})}" th:object="${progetto}" method="post"
 															class="size-6 flex items-end">
 															<button type="submit" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
-																																										hover:bg-[url(/img/sources/icons/power-green.svg)]">
+																hover:bg-[url(/img/sources/icons/power-green.svg)]"></button>
 														</form>
 													</li>
 													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
