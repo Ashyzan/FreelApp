@@ -1,5 +1,6 @@
 package com.freelapp.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,8 @@ import jakarta.validation.Valid;
 @Controller
 public class ProgettoController {
 
+
+	private static final boolean Task = false;
 
 	@Autowired
 	private ProgettoRepository repositProgetto;
@@ -677,6 +680,54 @@ public class ProgettoController {
 					model.addAttribute("areProjectsArchivedOnDb", areProjectsArchivedOnDb);
 						
 				return "/Progetti/freelApp-archivioProgetti";
+			}
+			 
+			 
+			@PostMapping("/Progetti/chiudi/{id}")
+			public String chiudiProgetto(@PathVariable("id") Integer id, Model model) {
+				
+				Progetto progetto = repositProgetto.findById(id).get();
+				
+				
+				//Creo una lista di tutti i task del progetto
+				List<Task> taskProgettoList = new ArrayList<Task>();
+				taskProgettoList = repositTask.findByProgettoId(id);
+				
+				//metodo del service che mette in pausa e in stop tutti i contatori attivi 
+				//del progetto da chiudere
+				contatoreservice.pauseAndStopTimersForClosingProject(taskProgettoList);
+				
+				//per ogni task del progetto da chiudere viene settato lo stato in chiuso e la data di 
+				//chiusura definitiva
+				taskProgettoList.forEach(task -> {
+					task.setStato("chiuso");
+					task.setDataChiusuraDefinitiva(LocalDate.now());
+					repositTask.save(task);
+				});
+				
+				progetto.setDataFine(LocalDate.now());
+				progetto.setDataModifica(LocalDateTime.now());
+				repositProgetto.save(progetto);
+				
+				//tolgo dallo static il task/contatore che erano in uso se appartenenti al progetto chiuso
+				ContatoreController.contatoreInUso = null;
+				ContatoreController.taskInUso = null;
+				
+				return "redirect:/Progetti";
+				
+			}
+			
+			@PostMapping("/Progetti/apri/{id}")
+			public String apriProgetto(@PathVariable("id") Integer id, Model model) {
+				
+				Progetto progetto = repositProgetto.findById(id).get();
+				//setta la data di fine progetto = null così da essere aperto di nuovo
+				progetto.setDataFine(null);
+				progetto.setDataModifica(LocalDateTime.now());
+				repositProgetto.save(progetto);
+				
+				return "redirect:/Progetti";
+				
 			}
 			
 }

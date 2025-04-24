@@ -373,8 +373,9 @@
 
 										</div>
 										<div th:text="${progettoPerData.cliente.labelCliente}"
-											class="line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
+											class="inline line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
 											cliente</div>
+											<span th:text="|  -  progetto a ${progettoPerData.getTipologia()}" class=" text-slate-500"></span>
 
 										<a th:href="@{/Progetti/{id}(id=${progettoPerData.getId()})}"
 											th:text="${progettoPerData.name}"
@@ -409,7 +410,22 @@
 															</a>	
 													</li>
 
-													<li class="flex flex-col md:flex-row px-2 mt-6 mr-4 float-right">
+													<li th:if="${progettoPerData.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
+														<span class="tooltiptext-top">Chiudi progetto</span>
+														<form th:action="@{/Progetti/chiudi/{id}(id=${progettoPerData.getId()})}" th:object="${progetto}" method="post" class="size-6 flex items-end">
+															<button type="submit" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
+																hover:bg-[url(/img/sources/icons/power-red.svg)]">
+														</form>
+													</li>
+													<li th:unless="${progettoPerData.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
+														<span class="tooltiptext-top">Apri progetto</span>
+														<form th:action="@{/Progetti/apri/{id}(id=${progettoPerData.getId()})}" th:object="${progetto}" method="post"
+															class="size-6 flex items-end">
+															<button type="submit" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
+																hover:bg-[url(/img/sources/icons/power-green.svg)]">
+														</form>
+													</li>
+													<li class="flex flex-col md:flex-row px-2 mt-6 mr-2 float-right">
 														<a
 														th:href="@{/Progetti/edit/{id}(id=${progettoPerData.getId()})}"><img
 															th:src="@{/img/sources/icons/modify-grey.svg}"
@@ -424,7 +440,6 @@
 														<img th:src="@{/img/sources/icons/archive.svg}" alt="archivia" class="size-5 inline"></button>
 														</form>
 													</li>
-													
 													<li >
 														<a th:href="@{/Task}"
 														th:text="'task ' + ${progettoPerData.getElencoTask().size()}"
@@ -497,7 +512,22 @@
 															</div>
 															</a>	
 													</li>
-							
+													<li th:if="${progettoCliente.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
+														<span class="tooltiptext-top">Chiudi progetto</span>
+														<form th:action="@{/Progetti/chiudi/{id}(id=${progettoCliente.getId()})}" th:object="${progetto}" method="post"
+															class="size-6 flex items-end">
+															<button type="submit" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
+															hover:bg-[url(/img/sources/icons/power-red.svg)]">
+														</form>
+													</li>
+													<li th:unless="${progettoCliente.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
+														<span class="tooltiptext-top">Apri progetto</span>
+														<form th:action="@{/Progetti/apri/{id}(id=${progettoCliente.getId()})}" th:object="${progetto}" method="post"
+															class="size-6 flex items-end">
+															<button type="submit" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
+																																										hover:bg-[url(/img/sources/icons/power-green.svg)]">
+														</form>
+													</li>
 													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
 														<a th:href="@{/Progetti/edit/{id}(id=${progettoCliente.getId()})}"><img
 																th:src="@{/img/sources/icons/modify-grey.svg}" alt="progetto-attivo"

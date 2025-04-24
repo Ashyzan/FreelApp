@@ -265,7 +265,7 @@ function creaContenutoTariffaOraria(){
 					<div class="col relative md:col-span-2 col-span-3">
 					<input type="number" name="tariffaOraria" class="border-red-600 h-8 h-8  text-[#0057A5] rounded-lg bg-gray-100 ps-4"	
 						 id="selectionTariffaOraria"
-							th:field="*{tariffaOraria}" value="${tariffaOraria}" min="0" step="0.01"  oninput="eventListenerTariffaOraria(value)">
+							th:field="*{tariffaOraria}" value="${tariffaOraria}" min="0" step="0.01"  oninput="selezioneTariffaOraria(value)">
 							<span> €</span>
 						<div id="inputTariffaOrariaError" class="text-red-600 text-[12px] w-full"></div>
 					</div>
@@ -276,7 +276,7 @@ function creaContenutoTariffaOraria(){
 }
 //funzione che stampa e aggiorna la tariffa oraria selezionata nella tipologia TARIFFA ORARIA
 function selezioneTariffaOraria(value){
-	const inputRangeValue = document.getElementById('input-range-value');
+	//const inputRangeValue = document.getElementById('input-range-value');
 	const tariffaOrariaSelezionataPerProgetto = document.getElementById('tariffa-oraria-selezionata-per-progetto');
 	tariffaOrariaInserita = Number(value);
 	tariffaOrariaSelezionataPerProgetto.innerHTML = tariffaOrariaInserita;
@@ -294,7 +294,6 @@ function creaContenutoLimiteTempo(){
 					<div class="col md:col-span-2 col-span-3">
 						<input type="number" name="budgetOre" class="border-red-600 h-8  text-[#0057A5] rounded-lg bg-gray-100 ps-4"
 							th:field="*{budgetOre}" step="1" min="0" value="${budgetOre}" id="limite-ore-input" oninput="eventLIstenerInputOreMax(value)">
-								<span> €</span>
 						<div id="limiteOreInputError" class="text-red-600 text-[12px]  w-full"></div>	
 					</div>
 				</div>
@@ -326,7 +325,7 @@ function eventLIstenerInputOreMax(value){
 //funzione che genera il guadagno massimo del progetto in tipologia LIMITE-TEMPO al cambiare della tariffa oraria
 function selezioneTariffaOrariaMaxOre(value){
 	const guadagnoMaxPerProgetto = document.getElementById('guadagno-max-per-progetto');
-	const inputRangeValue = document.getElementById('input-range-value');
+	//const inputRangeValue = document.getElementById('input-range-value');
 	tariffaOrariaInserita = Number(value);
 	guadagnoMaxPerProgetto.innerHTML = tettoMaxOreInserito * tariffaOrariaInserita;
 }

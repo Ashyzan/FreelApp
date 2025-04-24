@@ -4,6 +4,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,6 +177,38 @@ public class ContatoreService {
 				n.getTask().setStato("in pausa");
 
 			}
+			repositContatore.save(n);
+		}
+
+		});
+    }
+	// metodo che mette in pausa tutti i contatori attivi di un progetto selezionato prima della sua chiusura
+    public void pauseAndStopTimersForClosingProject(List<Task> taskProgettoList) {
+
+	List<Contatore> allContatoriForClosingProject = new ArrayList<Contatore>();
+	taskProgettoList.forEach(task -> {
+		allContatoriForClosingProject.add(task.getContatore());
+	});
+
+	allContatoriForClosingProject.forEach(n -> {
+		if(n.getTask().getStato() != "chiuso" || n.getTask().getStato() != "inattivo") {
+			
+			if ((n.getPause() == null) && (n.getStop() == null)){
+				
+				n.setPause(LocalDateTime.now());
+				Long FinalTimeSeconds = n.getStart().until(n.getPause(), ChronoUnit.SECONDS);
+				n.setFinaltime(FinalTimeSeconds);
+				n.getTask().setStato("in pausa");
+
+			} else if((n.getRestart() != null) && (n.getRestart().isAfter(n.getPause()))){
+				n.setPause(LocalDateTime.now());
+				Long FinalTimeSeconds = n.getRestart().until(n.getPause(), ChronoUnit.SECONDS);
+				Long oldFinalTime = n.getFinaltime();
+				n.setFinaltime(oldFinalTime + FinalTimeSeconds);   		
+				n.getTask().setStato("in pausa");
+
+			}
+			n.setStop(LocalDateTime.now());
 			repositContatore.save(n);
 		}
 
