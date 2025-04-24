@@ -187,11 +187,19 @@ public class ContatoreService {
 
 	List<Contatore> allContatoriForClosingProject = new ArrayList<Contatore>();
 	taskProgettoList.forEach(task -> {
+		
+		//se un task non ha il contatore ne viene crato uno per il calcolo delle statistiche finali del progetto
+		if(task.getContatore() == null) {
+			Contatore contatore = new Contatore();
+			contatore.setStart(LocalDateTime.now());
+			task.setContatore(contatore);
+			repositContatore.save(contatore);
+		}
 		allContatoriForClosingProject.add(task.getContatore());
 	});
 
 	allContatoriForClosingProject.forEach(n -> {
-		if(n.getTask().getStato() != "chiuso" || n.getTask().getStato() != "inattivo") {
+			if(n.getTask().getStato() != "chiuso" || n.getTask().getStato() != "inattivo") {
 			
 			if ((n.getPause() == null) && (n.getStop() == null)){
 				
@@ -208,13 +216,15 @@ public class ContatoreService {
 				n.getTask().setStato("in pausa");
 
 			}
-			n.setStop(LocalDateTime.now());
-			repositContatore.save(n);
+		
+		n.setStop(LocalDateTime.now());
+		repositContatore.save(n);
 		}
 
 	});
 
     }
+	
     public void importContatoreInGet(Model model) {
 		if (ContatoreController.contatoreInUso != null) {
 			
