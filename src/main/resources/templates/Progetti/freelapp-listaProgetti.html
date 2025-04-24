@@ -412,10 +412,10 @@
 
 													<li th:if="${progettoPerData.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
 														<span class="tooltiptext-top">Chiudi progetto</span>
-														<form th:action="@{/Progetti/chiudi/{id}(id=${progettoPerData.getId()})}" th:object="${progetto}" method="post" class="size-6 flex items-end">
-															<button type="submit" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
-																hover:bg-[url(/img/sources/icons/power-red.svg)]"></button>
-														</form>
+														<div class="size-6 flex items-end">
+															<button type="button" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
+																hover:bg-[url(/img/sources/icons/power-red.svg)]" th:onclick="creaModaleChiudiProgetto([[${progettoPerData.getId()}]], [[${progettoPerData.getName()}]])"></button>
+														</div>
 													</li>
 													<li th:unless="${progettoPerData.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
 														<span class="tooltiptext-top">Apri progetto</span>
@@ -514,11 +514,11 @@
 													</li>
 													<li th:if="${progettoCliente.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
 														<span class="tooltiptext-top">Chiudi progetto</span>
-														<form th:action="@{/Progetti/chiudi/{id}(id=${progettoCliente.getId()})}" th:object="${progetto}" method="post"
-															class="size-6 flex items-end">
-															<button type="submit" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
-															hover:bg-[url(/img/sources/icons/power-red.svg)]"></button>															
-														</form>
+														<div class="size-6 flex items-end">
+															<button type="button" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
+																hover:bg-[url(/img/sources/icons/power-red.svg)]"
+																th:onclick="creaModaleChiudiProgetto([[${progettoCliente.getId()}]], [[${progettoCliente.getName()}]])"></button>
+														</div>
 													</li>
 													<li th:unless="${progettoCliente.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
 														<span class="tooltiptext-top">Apri progetto</span>

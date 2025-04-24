@@ -398,3 +398,19 @@ function creaApriModalePauseInInsertTaskMode_fromProgetto(){
 	
 }
 
+//************************************* FUNZIONE MODALE CHIUSURA PROGETTO ************************ */
+function creaModaleChiudiProgetto(progettoId, progettoName){
+	contenutoModale.innerHTML = `	<form action="/Progetti/chiudi/${progettoId}"  method="post" >							
+							<div class="flex flex-col justify-center p-2 text-center ">
+								<div class="p-3 text-[#0057A5]">
+									<p>Stai per chiudere il progetto <strong> ${progettoName}</strong>, tutti i task ad esso associati 
+									saranno chiusi. Vuoi procedere?</p>
+								</div>
+								<div class="p-6">
+									<button type="submit"
+										class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
+								</div>
+							</div>
+						</form>`;
+					apriModale();
+}
