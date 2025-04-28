@@ -398,7 +398,7 @@
 												
 												<li class="flex flex-col md:flex-row px-2 mt-6 float-left">
 														
-														<a
+														<a th:if="${progettoPerData.dataFine == null}"
 														th:href="@{/Task/insert/progetto-{id}(id=${progettoPerData.getId()})}">
 														
 															<div class="tooltip-top col-auto w-8 h-8 ms-2">
@@ -407,7 +407,8 @@
 																		alt="aggiungi-task" class="size-8 ml-3 -mt-1 inline">
 																
 															</div>
-															</a>	
+															</a>
+														<img class="col-auto w-8 h-8 ms-2" th:unless="${progettoPerData.dataFine == null}" th:src="@{/img/sources/icons/add-task-blue-opacity.svg}">	
 													</li>
 
 													<li th:if="${progettoPerData.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
@@ -499,7 +500,7 @@
 															vai al dettaglio </a>
 															</li>
 													<li class="flex flex-col md:flex-row px-2 mt-6 float-left">
-														<a
+														<a th:if="${progettoCliente.dataFine == null}"
 														th:href="@{/Task/insert/progetto-{id}(id=${progettoCliente.getId()})}">
 														
 															<div class=" t-tooltip col-auto w-8 h-8 ms-2">
@@ -510,7 +511,8 @@
 																	Aggiungi Task
 																</div>
 															</div>
-															</a>	
+															</a>
+															<img class="col-auto w-8 h-8 ms-2" th:unless="${progettoCliente.dataFine == null}" th:src="@{/img/sources/icons/add-task-blue-opacity.svg}">		
 													</li>
 													<li th:if="${progettoCliente.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
 														<span class="tooltiptext-top">Chiudi progetto</span>

@@ -400,8 +400,8 @@ public class TaskController {
 	// riporto nel modello il task
 	model.addAttribute("task", newTask);
 
-	// riporto nel modello l'elenco dei progetti disponibili
-	model.addAttribute("listaProgetti", repositProgetto.findAll());
+	// riporto nel modello l'elenco dei progetti attivi
+	model.addAttribute("listaProgetti", repositProgetto.findByActiveProject());
 
 	//  passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
 	String endPoint = "/Task/newTask";
