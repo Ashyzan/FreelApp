@@ -319,122 +319,145 @@
 				</a>
 			</div>
 			<div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center text-[#0057A5]">
-				<div class="flex flex-col justify-center items-center w-full">
-					<div class="h-12 text-center font-bold items-center m-3">
-						<h1>INSERIMENTO NUOVO TASK</h1>
-					</div>
-					<div
-						class="w-11/12 md:w-3/5 h-auto lg:max-w-[600px] border border-[#0057A5] rounded-[8px] bg-white shadow-md shadow-blue-500/50 p-3 mb-6">
-						<form class="py-3" id="task" th:object="${task}" th:action="@{/Task/newTask}" method="post">
-
-							<div class="mb-4">
-								<div class="grid md:grid-cols-3  grid-cols-4 mb-2 py-2">
-									<div class="col">
-										<label for="name">Nome Task*</label>
-									</div>
-									<div class=" col md:col-span-2 col-span-3">
-										<input type="text" placeholder="Titolo del Task.."
-											class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100" id="name"
-											th:field="*{name}" th:errorClass="border">
-										<div th:if="${#fields.hasErrors('name')}"
-											class="text-red-600 text-[12px] text-center w-full">
-											<ul>
-												<li th:each="err: ${#fields.errors('name')}" th:text="${err}"></li>
-											</ul>
+				<div th:if="${areProjectsOnDb == true}" class="w-full">
+					<div class="flex flex-col justify-center items-center w-full">
+						<div class="h-12 text-center font-bold items-center m-3">
+							<h1>INSERIMENTO NUOVO TASK</h1>
+						</div>
+						<div
+							class="w-11/12 md:w-3/5 h-auto lg:max-w-[600px] border border-[#0057A5] rounded-[8px] bg-white shadow-md shadow-blue-500/50 p-3 mb-6">
+							<form class="py-3" id="task" th:object="${task}" th:action="@{/Task/newTask}" method="post">
+	
+								<div class="mb-4">
+									<div class="grid md:grid-cols-3  grid-cols-4 mb-2 py-2">
+										<div class="col">
+											<label for="name">Nome Task*</label>
 										</div>
-									</div>
-								</div>
-
-								<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
-									<div class="col">
-										<label for="textarea-cinquecento">Descrizione*</label>
-									</div>
-									<div class="col md:col-span-2 col-span-3 mb-2">
-
-										<textarea type="text"
-											placeholder="Inserisci una descrizione dettagliata del Task.."
-											class="border-red-600 w-full h-full ps-4 rounded-lg bg-gray-100" 
-											id="textarea-cinquecento" th:field="*{descrizione}" th:errorClass="border"></textarea>
-											<div class="text-xs text-end px-2" id="contatore-caratteri-cinquecento-container">
-												Numero di caratteri rimasti: <span id="contatore-caratteri-cinquecento">00</span>
+										<div class=" col md:col-span-2 col-span-3">
+											<input type="text" placeholder="Titolo del Task.."
+												class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100" id="name"
+												th:field="*{name}" th:errorClass="border">
+											<div th:if="${#fields.hasErrors('name')}"
+												class="text-red-600 text-[12px] text-center w-full">
+												<ul>
+													<li th:each="err: ${#fields.errors('name')}" th:text="${err}"></li>
+												</ul>
 											</div>
-											<div id="textarea-cinquecento-error" class="text-red-600 text-[12px] text-center w-full"></div>
-										<div th:if="${#fields.hasErrors('descrizione')}"
-											class="text-red-600 text-[12px] text-center w-full">
-											<ul>
-												<li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}">
-												</li>
-											</ul>
+										</div>
+									</div>
+	
+									<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
+										<div class="col">
+											<label for="textarea-cinquecento">Descrizione*</label>
+										</div>
+										<div class="col md:col-span-2 col-span-3 mb-2">
+	
+											<textarea type="text"
+												placeholder="Inserisci una descrizione dettagliata del Task.."
+												class="border-red-600 w-full h-full ps-4 rounded-lg bg-gray-100" 
+												id="textarea-cinquecento" th:field="*{descrizione}" th:errorClass="border"></textarea>
+												<div class="text-xs text-end px-2" id="contatore-caratteri-cinquecento-container">
+													Numero di caratteri rimasti: <span id="contatore-caratteri-cinquecento">00</span>
+												</div>
+												<div id="textarea-cinquecento-error" class="text-red-600 text-[12px] text-center w-full"></div>
+											<div th:if="${#fields.hasErrors('descrizione')}"
+												class="text-red-600 text-[12px] text-center w-full">
+												<ul>
+													<li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}">
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+	
+									<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
+										<div class="col">
+											<label for="dataInizio">Data inizio*</label>
+										</div>
+										<div class="col md:col-span-2 col-span-3">
+											<input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
+												id="dataInizio" th:field="*{dataInizio}" th:errorClass="border">
+	
+											<div th:if="${#fields.hasErrors('dataInizio')}"
+												class="text-red-600 text-[12px] text-center w-full">
+												<ul>
+													<li th:each="err:${#fields.errors('dataInizio')}" th:text="${err}"></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+	
+									<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
+										<div class="col">
+											<label for="dataChiusuraStimata">Chiusura stimata</label>
+										</div>
+										<div class="col md:col-span-2 col-span-3">
+											<input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
+												id="dataChiusuraStimata" th:field="*{dataChiusuraStimata}"
+												th:errorClass="border">
+	
+											<div th:if="${#fields.hasErrors('dataChiusuraStimata')}"
+												class="text-red-600 text-[12px] text-center w-full">
+												<ul>
+													<li th:each="err:${#fields.errors('dataChiusuraStimata')}"
+														th:text="${err}"></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+	
+									<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
+										<div class="col">
+											<label for="progetto">Progetto*</label>
+										</div>
+										<div class="col md:col-span-2 col-span-3">
+											<select
+												class="border-red-600 h-8  text-[#0057A5] rounded-lg bg-gray-100 
+														block w-full  px-4 focus:outline-none"
+												id="progetto" th:field="*{progetto}" th:errorClass="border">
+												<option value="">Seleziona Progetto</option>
+												<option th:each="progetto : ${listaProgetti}" th:value="${progetto.id}"
+													th:text="${progetto.getName()}"></option>
+											</select>
+											<div th:if="${#fields.hasErrors('progetto')}"
+												class="text-red-600 text-[12px] text-center w-full">
+												<ul>
+													<li th:each="err : ${#fields.errors('progetto')}" th:text="${err}"></li>
+												</ul>
+											</div>
+	
 										</div>
 									</div>
 								</div>
-
-								<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
-									<div class="col">
-										<label for="dataInizio">Data inizio*</label>
-									</div>
-									<div class="col md:col-span-2 col-span-3">
-										<input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
-											id="dataInizio" th:field="*{dataInizio}" th:errorClass="border">
-
-										<div th:if="${#fields.hasErrors('dataInizio')}"
-											class="text-red-600 text-[12px] text-center w-full">
-											<ul>
-												<li th:each="err:${#fields.errors('dataInizio')}" th:text="${err}"></li>
-											</ul>
-										</div>
-									</div>
+								<div class="text-center mt-3 p-3">
+									<button type="submit"
+										class="shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
+										Aggiungi </button>
 								</div>
-
-								<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
-									<div class="col">
-										<label for="dataChiusuraStimata">Chiusura stimata</label>
-									</div>
-									<div class="col md:col-span-2 col-span-3">
-										<input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
-											id="dataChiusuraStimata" th:field="*{dataChiusuraStimata}"
-											th:errorClass="border">
-
-										<div th:if="${#fields.hasErrors('dataChiusuraStimata')}"
-											class="text-red-600 text-[12px] text-center w-full">
-											<ul>
-												<li th:each="err:${#fields.errors('dataChiusuraStimata')}"
-													th:text="${err}"></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-
-								<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
-									<div class="col">
-										<label for="progetto">Progetto*</label>
-									</div>
-									<div class="col md:col-span-2 col-span-3">
-										<select
-											class="border-red-600 h-8  text-[#0057A5] rounded-lg bg-gray-100 
-													block w-full  px-4 focus:outline-none"
-											id="progetto" th:field="*{progetto}" th:errorClass="border">
-											<option value="">Seleziona Progetto</option>
-											<option th:each="progetto : ${listaProgetti}" th:value="${progetto.id}"
-												th:text="${progetto.getName()}"></option>
-										</select>
-										<div th:if="${#fields.hasErrors('progetto')}"
-											class="text-red-600 text-[12px] text-center w-full">
-											<ul>
-												<li th:each="err : ${#fields.errors('progetto')}" th:text="${err}"></li>
-											</ul>
-										</div>
-
-									</div>
-								</div>
-							</div>
-							<div class="text-center mt-3 p-3">
-								<button type="submit"
-									class="shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
-									Aggiungi </button>
-							</div>
-						</form>
-					</div>
+							</form>
+						</div>
+					</div>	
+				</div>	
+				<div th:if="${areClientsOnDb == false}">
+					<h2 class="text-[#0057A5] font-bold m-auto py-10">NON E' POSSIBILE CREARE UN NUOVO TASK PERCHE' NESSUN CLIENTE ANCORA
+						REGISTRATO</h2>
+					<a th:href="@{/Clienti/insert}" class="text-center flex justify-center">
+						<button
+							class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
+							Aggiunti Cliente
+						</button>
+					</a>
+				</div>
+				<div th:if="${areClientsOnDb == true and !areProjectsOnDb == true}">
+					<h2 class="text-[#0057A5] font-bold m-auto py-10">NON E' POSSIBILE CREARE UN NUOVO TASK PERCHE' NESSUN PROGETTO ANCORA
+						REGISTRATO</h2>
+					<!-- th:href="@{/Progetti/insert/1} diventera poi th:href="@{'/Progetti/insert/{id}'(id=${userLogged.getId()})'} quando sara implementata autentizazione-->
+					<a th:href="@{/Progetti/insert/1}" class="text-center flex justify-center">
+						<button
+							class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
+							Aggiungi Progetto
+						</button>
+					</a>
 				</div>
 				<div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden" id="dettaglio-contatore-bottom">
 					<div class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">

@@ -341,6 +341,14 @@ public class ProgettoController {
 				//metodo che passa al model i valori inerenti la tipologia progetto per le statistiche
 				progettoService.tipologiaFromProgettoToModel(formProgetto, model);
 				
+				//restituisce al model questo valore booleano false se non ci sono clienti a db
+				//e restituisce true se ci sono clienti a db
+				boolean areClientsOnDb = false;
+				if(!repositClient.findAll().isEmpty()) {
+					areClientsOnDb = true;
+				}
+				model.addAttribute("areClientsOnDb", areClientsOnDb);
+				
 				return "/Progetti/freelapp-insertProgetto";
 			}
 	

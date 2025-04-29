@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.freelapp.model.Contatore;
 import com.freelapp.model.Progetto;
 import com.freelapp.model.Task;
+import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
 //import com.freelapp.model.Stato;
 //import com.freelapp.repository.StatoRepository;
@@ -37,6 +38,9 @@ public class TaskController {
 
     @Autowired
     private ProgettoRepository repositProgetto;
+    
+    @Autowired
+    private ClienteRepository repositoryCliente;
 
     @Autowired
     private TaskService taskService;
@@ -64,7 +68,7 @@ public class TaskController {
 		// restituisce al model questo valore booleano false se non ci sono progetti a db
 		// e restituisce true se ci sono progetti a db
 		boolean areTasksOnDb = false;
-		if (!repositTask.findAll().isEmpty()) {
+		if (!repositTask.findAllNotClosed().isEmpty()) {
 			areTasksOnDb = true;
 		}
 		model.addAttribute("areTasksOnDb", areTasksOnDb);
@@ -149,7 +153,7 @@ public class TaskController {
 		// restituisce al model questo valore booleano false se non ci sono progetti a db
 		// e restituisce true se ci sono progetti a db
 		boolean areTasksOnDb = false;
-		if (!repositTask.findAll().isEmpty()) {
+		if (!repositTask.findAllNotClosed().isEmpty()) {
 			areTasksOnDb = true;
 		}
 		model.addAttribute("areTasksOnDb", areTasksOnDb);
@@ -181,7 +185,7 @@ public class TaskController {
 		// restituisce al model questo valore booleano false se non ci sono progetti a db
 		// e restituisce true se ci sono progetti a db
 		boolean areTasksOnDb = false;
-		if (!repositTask.findAll().isEmpty()) {
+		if (!repositTask.findAllNotClosed().isEmpty()) {
 			areTasksOnDb = true;
 		}
 		model.addAttribute("areTasksOnDb", areTasksOnDb);
@@ -237,7 +241,7 @@ public class TaskController {
 		// restituisce al model questo valore booleano false se non ci sono progetti a db
 		// e restituisce true se ci sono progetti a db
 		boolean areTasksOnDb = false;
-		if (!repositTask.findAll().isEmpty()) {
+		if (!repositTask.findAllNotClosed().isEmpty()) {
 			areTasksOnDb = true;
 		}
 		model.addAttribute("areTasksOnDb", areTasksOnDb);
@@ -427,6 +431,23 @@ public class TaskController {
 		
 	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 	ContatoreController.contatoreAttivato = false;
+	
+	//restituisce al model questo valore booleano false se non ci sono clienti a db
+		//e restituisce true se ci sono clienti a db
+		boolean areClientsOnDb = false;
+		if(!repositoryCliente.findAll().isEmpty()) {
+			areClientsOnDb = true;
+		}
+		model.addAttribute("areClientsOnDb", areClientsOnDb);
+	
+	// restituisce al model questo valore booleano false se non ci sono progetti a
+	// db
+	// e restituisce true se ci sono progetti a db
+	boolean areProjectsOnDb = false;
+	if (!repositProgetto.findAll().isEmpty()) {
+		areProjectsOnDb = true;
+	}
+	model.addAttribute("areProjectsOnDb", areProjectsOnDb);
 	
 	return "/Task/freelapp-insertTask-noProgetto";
     }
