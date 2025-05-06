@@ -269,7 +269,7 @@ function creaContenutoTariffaOraria(){
 						<div id="inputTariffaOrariaError" class="text-red-600 text-[12px] w-full"></div>
 					</div>
 			</div>
-			<div class="text-center p-3">Per questo progetto sarà impiegata una tariffa oraria di €: <strong>
+			<div class="text-center p-3">Per questo progetto sarà impiegata una tariffa oraria di € <strong>
 					<span id="tariffa-oraria-selezionata-per-progetto">00</span></strong>
 			</div>`;
 }
