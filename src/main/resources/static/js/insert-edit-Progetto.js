@@ -113,7 +113,7 @@ function validation(e){
 	}
 	
 	//validazione tipologia limite-tempo
-		if(inputSelectTipologia.value == "limite-tempo"){
+		if(inputSelectTipologia.value == "ore"){
 			const limiteOreInput = document.getElementById('limite-ore-input');
 			const limiteOreInputError = document.getElementById('limiteOreInputError');
 			const selectionTariffaOraria = document.getElementById('selectionTariffaOraria');
@@ -141,7 +141,7 @@ function validation(e){
 		}
 		
 	//validazione tipologia tariffa oraria
-		if(inputSelectTipologia.value == "tariffa-oraria"){
+		if(inputSelectTipologia.value == "tariffa"){
 			const selectionTariffaOraria = document.getElementById('selectionTariffaOraria');
 			const inputTariffaOrariaError = document.getElementById('inputTariffaOrariaError');
 			if(selectionTariffaOraria.value == 0){
@@ -173,13 +173,13 @@ function tipologiaStatisticaSelect(value){
 			tettoMaxOreInserito = 0;
 			break;
 		
-		case "limite-tempo":
+		case "ore":
 			creaContenutoLimiteTempo();
 			tariffaOrariaInserita = 0;
 			tettoMaxOreInserito = 0;
 			break;
 			
-		case "tariffa-oraria":
+		case "tariffa":
 			creaContenutoTariffaOraria();
 			tariffaOrariaInserita = 0;
 			tettoMaxOreInserito = 0;
@@ -241,7 +241,6 @@ function eventLIstenerBudget(value){
 function eventListenerTariffaOraria(value){
 	const risultatoOreDaBudget = document.getElementById('risultato-ore-da-budget');
 	const risultatoMinutiDaBudget = document.getElementById('risultato-minuti-da-budget');
-	const inputRangeValue = document.getElementById('input-range-value');
 	tariffaOrariaInserita = Number(value);
 	if(tariffaOrariaInserita != 0){
 		risultatoBudget = budgetInseritoValore / tariffaOrariaInserita;
@@ -304,7 +303,7 @@ function creaContenutoLimiteTempo(){
 					<div class="col relative md:col-span-2 col-span-3">
 						<input type="number" name="tariffaOraria" class="border-red-600 h-8 h-8  text-[#0057A5] rounded-lg bg-gray-100 ps-4"	
 							 id="selectionTariffaOraria"
-							th:field="*{tariffaOraria}" value="${tariffaOraria}" min="0" step="0.01"  oninput="eventListenerTariffaOraria(value)">
+							th:field="*{tariffaOraria}" value="${tariffaOraria}" min="0" step="0.01"  oninput="selezioneTariffaOrariaMaxOre(value)">
 							<span> €</span>
 						<div id="inputTariffaOrariaError" class="text-red-600 text-[12px] w-full"></div>
 					</div>
@@ -318,7 +317,7 @@ function creaContenutoLimiteTempo(){
 function eventLIstenerInputOreMax(value){
 	const guadagnoMaxPerProgetto = document.getElementById('guadagno-max-per-progetto');
 	tettoMaxOreInserito = Number(value);
-	guadagnoMaxPerProgetto.innerHTML = tettoMaxOreInserito * tariffaOrariaInserita;
+	guadagnoMaxPerProgetto.innerHTML = (tettoMaxOreInserito * tariffaOrariaInserita).toFixed(2);
 	
 	
 }
@@ -327,7 +326,7 @@ function selezioneTariffaOrariaMaxOre(value){
 	const guadagnoMaxPerProgetto = document.getElementById('guadagno-max-per-progetto');
 	//const inputRangeValue = document.getElementById('input-range-value');
 	tariffaOrariaInserita = Number(value);
-	guadagnoMaxPerProgetto.innerHTML = tettoMaxOreInserito * tariffaOrariaInserita;
+	guadagnoMaxPerProgetto.innerHTML = (tettoMaxOreInserito * tariffaOrariaInserita).toFixed(2);
 }
 
 //funzione che mostra al caricamento pagina di edi progetto i campi del form relativi alla tipologia salvata a db
@@ -336,11 +335,11 @@ function showTipologia(){
 		creaContenutoBudget();
 	}
 	
-	if(inputSelectTipologia.value == "limite-tempo"){
+	if(inputSelectTipologia.value == "ore"){
 		creaContenutoLimiteTempo();
 	}
 	
-	if(inputSelectTipologia.value == "tariffa-oraria"){
+	if(inputSelectTipologia.value == "tariffa"){
 		creaContenutoTariffaOraria();
 	}
 }
