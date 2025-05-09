@@ -568,24 +568,67 @@
 						
 						<div th:if="paginazioneAttivaData">
 							<div th:if="${listProgettiByDataInizio.isEmpty()}" id="ricerca-vuota-data" class="text-center text-[#0057A5] p-4">
-							<div>
-								<h1>La ricerca non ha prodotto risultati</h1>
+								<div>
+									<h1>La ricerca non ha prodotto risultati</h1>
+								</div>
 							</div>
-						</div>
 						</div>
 						
 						<div th:if="paginazioneAttivaData" id="paginazione-data" class="p-4 mb-10">
-							
+						
 							<div class="flex justify-between text-center">
-								<div  class="col"
+								<div class="col"
 									th:text="|Progetti totali ordinati per data inizio: ${totalItemByDatainizio} - Pagina ${currentPage} di ${totalPageByDataInizio}|">
 								</div>
-								<div class="col">
-									<span class=" justify-center"
-										th:each="i : ${#numbers.sequence(1, totalPageByDataInizio)}"> <a
-										class="p-[3px] text-[#0057A5]"
-										style="border: 1px solid #0057A5; border-radius: 5px;"
-										th:href="@{'/Progetti/page/'+${i}}" th:text="${i}"></a>
+						
+								<div th:if="${totalPageByDataInizio > 1 and totalPageByDataInizio < 7}" class="col">
+									<span class=" justify-center" th:each="i : ${#numbers.sequence(1, totalPageByDataInizio)}">
+										<a class="p-[3px] text-[#0057A5]" style="border: 1px solid #0057A5; border-radius: 5px;"
+											th:href="@{'/Progetti/page/'+${i}}" th:text="${i}"></a>
+									</span>
+								</div>
+								<div th:if="${totalPageByDataInizio >= 7}" class="col">
+									<span th:if="${currentPage == 1}" class=" justify-center">
+										<a class="p-[3px] text-[#0057A5]" style="border: 1px solid #0057A5; border-radius: 5px; background-color: yellow;"
+											th:href="@{'/Progetti/page/1'}">1</a>
+									</span>
+									<span th:if="${currentPage > 1}" class=" justify-center">
+										<a class="p-[3px] text-[#0057A5]" style="border: 1px solid #0057A5; border-radius: 5px;"
+											th:href="@{'/Progetti/page/'+${currentPage - 1}}">Prev</a>
+									</span>
+									<span th:unless="${currentPage == 1}" class=" justify-center">
+										<a class="p-[3px] text-[#0057A5]" style="border: 1px solid #0057A5; border-radius: 5px;"
+											th:href="@{'/Progetti/page/1'}">1</a>
+									</span>
+									<span th:if="${currentPage > 2}" class=" justify-centerp-[3px] text-[#0057A5]"
+										style="border: 1px solid #0057A5; border-radius: 5px;">...
+									</span>
+									<span th:if="${currentPage > 2}" class=" justify-center">
+										<a class="p-[3px] text-[#0057A5]" style="border: 1px solid #0057A5; border-radius: 5px;"
+											th:href="@{'/Progetti/page/'+${currentPage - 1}}" th:text="${currentPage - 1}"></a>
+									</span>
+									<span th:if="${currentPage > 1 and currentPage != totalPageByDataInizio}" class=" justify-center">
+										<a class="p-[3px] text-[#0057A5] " style="border: 1px solid #0057A5; border-radius: 5px; background-color: yellow;"
+											th:href="@{'/Progetti/page/'+${currentPage}}" th:text="${currentPage}"></a>
+									</span>
+									<span th:if="${currentPage < (totalPageByDataInizio - 1)}" class=" justify-center">
+										<a class="p-[3px] text-[#0057A5] " style="border: 1px solid #0057A5; border-radius: 5px;"
+											th:href="@{'/Progetti/page/'+${currentPage + 1}}" th:text="${currentPage + 1}"></a>
+									</span>
+									<span th:if="${currentPage < (totalPageByDataInizio - 2)}" class=" justify-centerp-[3px] text-[#0057A5]"
+										style="border: 1px solid #0057A5; border-radius: 5px;">...
+									</span>
+									<span th:if="${currentPage == totalPageByDataInizio}" class=" justify-center">
+										<a class="p-[3px] text-[#0057A5] " style="border: 1px solid #0057A5; border-radius: 5px; background-color: yellow;"
+											th:href="@{'/Progetti/page/'+${totalPageByDataInizio}}" th:text="${totalPageByDataInizio}"></a>
+									</span>
+									<span th:unless="${currentPage == totalPageByDataInizio}" class=" justify-center">
+										<a class="p-[3px] text-[#0057A5] " style="border: 1px solid #0057A5; border-radius: 5px;"
+											th:href="@{'/Progetti/page/'+${totalPageByDataInizio}}" th:text="${totalPageByDataInizio}"></a>
+									</span>
+									<span th:if="${currentPage < totalPageByDataInizio}" class=" justify-center">
+										<a class="p-[3px] text-[#0057A5]" style="border: 1px solid #0057A5; border-radius: 5px;"
+											th:href="@{'/Progetti/page/'+${currentPage + 1}}">Next</a>
 									</span>
 								</div>
 							</div>
@@ -605,7 +648,7 @@
 							<div  class="col"
 								th:text="|Progetti totali ordinati per cliente: ${totalItemByCliente} - Pagina ${currentPage} di ${totalPageByCliente}|">
 							</div>
-							<div class="col">
+							<div th:if="${totalPageByCliente > 1 and totalPageByCliente < 7}" class="col">
 								<span class=" justify-center" th:each="i : ${#numbers.sequence(1, totalPageByCliente)}"> <a
 										class="p-[3px] text-[#0057A5]" style="border: 1px solid #0057A5; border-radius: 5px;"
 										th:href="@{'/Progetti/page/'+${i}}" th:text="${i}"></a>
