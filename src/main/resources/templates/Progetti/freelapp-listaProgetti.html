@@ -414,16 +414,16 @@
 													<li th:if="${progettoPerData.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
 														<span class="tooltiptext-top">Chiudi progetto</span>
 														<div class="size-6 flex items-end">
-															<button type="button" class="size-5 inline bg-[url(/img/sources/icons/enter.svg)] 
-																hover:bg-[url(/img/sources/icons/exit.svg)]" th:onclick="creaModaleChiudiProgetto([[${progettoPerData.getId()}]], [[${progettoPerData.getName()}]])"></button>
+															<button type="button" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
+																hover:bg-[url(/img/sources/icons/power-red.svg)]" th:onclick="creaModaleChiudiProgetto([[${progettoPerData.getId()}]], [[${progettoPerData.getName()}]])"></button>
 														</div>
 													</li>
 													<li th:unless="${progettoPerData.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
 														<span class="tooltiptext-top">Apri progetto</span>
 														<form th:action="@{/Progetti/apri/{id}(id=${progettoPerData.getId()})}" th:object="${progetto}" method="post"
 															class="size-6 flex items-end">
-															<button type="submit" class="size-5 inline bg-[url(/img/sources/icons/exit.svg)] 
-																hover:bg-[url(/img/sources/icons/garbage.svg)]"></button>															
+															<button type="submit" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
+																hover:bg-[url(/img/sources/icons/power-green.svg)]"></button>															
 														</form>
 													</li>
 													<li class="flex flex-col md:flex-row px-2 mt-6 mr-2 float-right">
