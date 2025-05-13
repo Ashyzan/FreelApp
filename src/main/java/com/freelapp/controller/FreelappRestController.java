@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.freelapp.model.Progetto;
 import com.freelapp.model.Task;
+import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.repository.TaskRepository;
+import com.freelapp.restModel.RestProgetto;
 import com.freelapp.restModel.RestTask;
 import com.freelapp.service.ContatoreService;
 
@@ -29,6 +32,9 @@ public class FreelappRestController {
 
 	@Autowired
 	private TaskRepository taskRepository;
+	
+	@Autowired
+	private ProgettoRepository progettoRepository;
 	
 	@Autowired
 	private ContatoreService contatoreService;
@@ -126,6 +132,38 @@ public class FreelappRestController {
 				} );
 		
 		return taskListOreLavorate;
+	}
+	
+	//metodo che genera una lista di progetti archiviati custom 
+	@GetMapping("/statistics/achived-projects")
+	public List<RestProgetto> archiviedProjectsList(){
+		
+		//crezione nuova lista da riempire
+		List<RestProgetto> archProjectList = new ArrayList<RestProgetto>();
+		
+		//lista progetti archiviati da repository
+		List<Progetto> progettoList = new ArrayList<Progetto>();
+		progettoList = progettoRepository.findByArchivia(true);
+		
+		progettoList.forEach(progetto -> {
+			
+			//creo per ogni progetto archiviato preso dalla repo un provvisiorio RestProgetto in cui inserisco i dati
+			//del progetto archiviato preso da db . Inseriro poi questo provvisiorio nella archProjectList
+			RestProgetto progettoTemporaneo = new RestProgetto(null, null, null, null, null, null);
+			
+			progettoTemporaneo.setNome(progetto.getName());
+			progettoTemporaneo.setProgettoId(progetto.getId());
+			progettoTemporaneo.setNomeCliente(progetto.getCliente().getLabelCliente());
+			progettoTemporaneo.setClienteId(progetto.getCliente().getId());
+			progettoTemporaneo.setCountTaskProgetto(progetto.getElencoTask().size());
+			progettoTemporaneo.setTipologia(progetto.getTipologia());
+			
+			archProjectList.add(progettoTemporaneo);
+			
+//			System.out.println(progetto.getName());
+		});
+		
+		return archProjectList;
 	}
 	
 //	@GetMapping(value = "/task/timeExceed/{id}", produces = MediaType.TEXT_HTML_VALUE)

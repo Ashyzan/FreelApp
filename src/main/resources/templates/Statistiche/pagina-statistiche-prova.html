@@ -9,6 +9,7 @@
 	-->
 	<link rel="stylesheet" href="/animate.css">	
 	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js"></script>
 	<script>
 		tailwind.config = {
 			theme: {
@@ -38,7 +39,7 @@
 
 </head>
 
-<body class="font-sans" style="width: 100vw; height: 100vh;">
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="getProjectsArchived()">
 	<header>
 		<nav id="navbar"
 			class="flex justify-around items-center w-full h-fit md:px-1 md:py-0 p-2 bg-[#0057A5] font-bold  text-sm text-white">
@@ -161,11 +162,15 @@
 					<h1 class="text-[#0057A5] font-bold p-4 text-center">
 						AREA STATISTICHE -- PROVE</h1>
 				
+						<div class="p-10 max-h-[600px]">
+						  <canvas id="myChart"></canvas>
+						</div>
 				
 			</div>
 		</div>
 	</main>
-
+	
+	
 
   <!-- Script -->
 	<script th:inline="javascript">
@@ -180,6 +185,7 @@
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
+	<script type="text/javascript" th:src="@{/js/charts.js}"></script>
 	
 
 </body>
