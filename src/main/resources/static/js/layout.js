@@ -15,19 +15,14 @@ const ricercaVuotaClienti = document.getElementById('ricerca-vuota-clienti');
 const paginazioneData = document.getElementById('paginazione-data');
 const paginazioneClienti = document.getElementById('paginazione-clienti');
 let paginazioneAttivaCliente = new Boolean();
+	paginazioneAttivaCliente = false; //assegna false per visualizzare di default quella per data
 let paginazioneAttivaData = new Boolean();
+	paginazioneAttivaData = true
 
 // recupero elementi dal DOM per navBar	
 const navBar = document.querySelector('.nav-bar');
 const navOptionsMobile = document.querySelector('#options-button-mobile');
 const navOptionsDesktop = document.querySelector('.nav-option-desktop');
-
-// recupero elementi dal DOM per modale	
-//const modal = document.querySelector('#modal');
-//const nuovoProgettoButton = document.querySelector('#nuovoProgettoButton');
-//const modalCloseButton = document.getElementById('modalCloseButton');
-
-
   
 
 //recupero elemento dal DOM per animazione partenza contatore
