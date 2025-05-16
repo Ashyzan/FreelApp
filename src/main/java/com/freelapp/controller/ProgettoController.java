@@ -39,7 +39,7 @@ public class ProgettoController {
 	
 	//variablili che verranno utilizzate per memorizzare la scelta effettuata durante la sessione
 	public static boolean ordinaElencoProgettiPerData = true;
-	
+
 	public static boolean ordinaElencoProgettiPerCliente = false;
 	
 	//variabile che memorizza l'ultima pagina consultata nella lista Progetti e serve per mantenerla durante la sessione
@@ -178,7 +178,7 @@ public class ProgettoController {
 			
 			@GetMapping("/progetto-search")
 			public String listaProgettiSearch(@Param("input") String input, Model model) {
-				
+
 				
 				
 				//passo al model i contatore e task in uso (gli static)

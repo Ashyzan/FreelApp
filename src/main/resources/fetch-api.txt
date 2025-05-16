@@ -1,3 +1,0 @@
-async function attivaPaginazione2() {
-	const api_urlOrdinaElencoProgettiPerData = 'http://localhost:8080/api/progetti/cambiaOrdinePerData';
-	await fetch(api_urlOrdinaElencoProgettiPerData);

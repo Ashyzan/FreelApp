@@ -113,65 +113,18 @@ function switchToVisualizzazioneData(){
 
 function attivaPaginazione1() {
 	switchToVisualizzazioneClienti()
-	//paginazioneAttivaCliente = true;
-	//console.log('paginazioneAttivaCliente ' + paginazioneAttivaCliente);
-	//paginazioneAttivaData = false;
-	//console.log('paginazioneAttivaData ' + paginazioneAttivaData);
-	
-	
-
 }
-
-	// mostra "non ci sono progetti""
-			if ((ricercaVuotaClienti != null) && (ricercaVuotaData != null)) {
-				ricercaVuotaClienti.classList.remove('hidden');
-				ricercaVuotaData.classList.add('hidden');
-			}
-// funzione bottone filtro pagina progetti per cliente
-if (filtraPerClientiButton != null) {
-	filtraPerClientiButton.addEventListener('click', function() {
-	if ((listCliente != null) && (paginazioneClienti != null)) {
-		listCliente.classList.remove('hidden');
-		paginazioneClienti.classList.remove('hidden');
-		listDataInizio.classList.add('hidden');
-		paginazioneData.classList.add('hidden');
-		}		
-				})
-			}
-
 
 
 function attivaPaginazione2() {
 	switchToVisualizzazioneData()
-	//paginazioneAttivaCliente = false;
-	//console.log('paginazioneAttivaCliente ' + paginazioneAttivaCliente);
-	//paginazioneAttivaData = true;
-	//console.log('paginazioneAttivaData ' + paginazioneAttivaData);
-	//filtraPerDataButton.classList.add('opacity-50', 'pointer-events-none');
-	//filtraPerClientiButton.classList.remove('opacity-50', 'pointer-events-none');
-
 }
 
-// mostra "non ci sono progetti"
-if ((ricercaVuotaData != null) && (ricercaVuotaClienti != null)) {
-	ricercaVuotaData.classList.remove('hidden');
-	ricercaVuotaClienti.classList.add('hidden');
-	}
-// funzione bottone filtro pagina progetti per data inizio
-if (filtraPerDataButton != null) {
-filtraPerDataButton.addEventListener('click', function() {
-if ((listDataInizio != null) && (paginazioneData != null)) {
-	listDataInizio.classList.remove('hidden');
-	paginazioneData.classList.remove('hidden');
-	listCliente.classList.add('hidden');
-	paginazioneClienti.classList.add('hidden');
-			}
-		
-		})
-	}
 
 
-// funzione per il countdown di caratteri nelle textarea di max 500 caratteri
+
+
+//*******  funzione per il countdown di caratteri nelle textarea di max 500 caratteri ********************
 if((contatoreCaratteriCinquecento != null) && (textAreaDescrizioneCinquecento != null)
 		 && (tectAreaCinquecentoError!= null)){
 
