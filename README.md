@@ -1,5 +1,6 @@
-# FreelApp
-**Essential Work App for Freelance**
+<img src="src/main/resources/static/img/logo-with-white.png" alt="Logo Freelapp Preview" width="200"/>
+
+**FREELAPP Essential Work App for Freelance**
 
 FreelApp is a collaborative project born from a group of former Boolean students who came together to build a web application tailored for freelancers.
 Over time, the project has evolved into an essential tool designed to make life easier for freelancers and professionals. FreelApp offers a clean and functional workspace to manage projects, clients, and track tasks efficiently.
