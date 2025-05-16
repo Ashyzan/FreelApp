@@ -41,7 +41,7 @@
 </head>
 
 <body class="font-sans" style="width: 100vw; height: 100vh;"
-	onload="timerstart()">
+	onload="timerstart(), visualizzazioneProgettiDaSceltaUtente()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 			<button
 				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5] ">
@@ -363,7 +363,7 @@
 
 												
 		<!------------------ card per data     --------------------->
-							<div id="list-data-inizio" th:if="paginazioneAttivaData" class="">
+							<div id="list-data-inizio" class="">
 							<div  class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-center w-full">
 							<div th:unless="${progettoPerData.getArchivia()} == true" th:each="progettoPerData : ${listProgettiByDataInizio}"
 								class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
@@ -471,7 +471,7 @@
 							 </div>
 							</div>
 <!-----------------------	card per clienti -------------------->
-							<div id="list-cliente" th:if="paginazioneAttivaCliente" class="hidden"> 
+							<div id="list-cliente"  class="hidden"> 
 							<div  class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-center w-full">
 							<div th:unless="${progettoCliente.getArchivia()} == true" th:each="progettoCliente : ${listProgettiByCliente}" class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
 														
@@ -577,15 +577,15 @@
 						
 <!--paginazione lista per data-->
 						
-						<div th:if="paginazioneAttivaData">
-							<div th:if="${listProgettiByDataInizio.isEmpty()}" id="ricerca-vuota-data" class="text-center text-[#0057A5] p-4">
-								<div>
+					
+						<div th:if="${listProgettiByDataInizio.isEmpty()}"  id="ricerca-vuota-data" class="text-center text-[#0057A5] p-4">
+								<div >
 									<h1>La ricerca non ha prodotto risultati</h1>
 								</div>
 							</div>
-						</div>
+					
 						
-						<div th:if="paginazioneAttivaData" id="paginazione-data" class="p-[-20px] md:p-4 mb-4">
+						<div id="paginazione-data" class="p-[-20px] md:p-4 mb-4">
 						
 							<div class="flex flex-col lg:flex-row justify-between text-center ">
 								<div class="col flex justify-center flex-col lg:flex-row mb-6 ">
@@ -610,7 +610,7 @@
 										<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
 											th:href="@{'/Progetti/page/'+${currentPage - 1}}">
 											<img th:src="@{/img/sources/icons/arrow-left-blue.svg}"
-												alt="prev" class="h-4 w-auto pe-2">
+												alt="prev" class="max-xs:hidden h-4 w-auto pe-2">
 											<span>Prev</span>
 										</a>
 									</span>
@@ -649,7 +649,7 @@
 											th:href="@{'/Progetti/page/'+${currentPage + 1}}">
 											<span>Next</span>
 											<img th:src="@{/img/sources/icons/arrow-right-blue.svg}" 
-												alt="prev" class="h-4 w-auto ps-2">
+												alt="prev" class="max-xs:hidden h-4 w-auto ps-2">
 										</a>
 									</span>
 								</div>
@@ -657,14 +657,13 @@
 						</div>
 
 <!--	paginazione lista per clienti-->
-					<div th:if="paginazioneAttivaCliente">
-						<div th:if="${listProgettiByCliente.isEmpty()}" id="ricerca-vuota-clienti" class="hidden text-center text-[#0057A5] p-4">
-							<div>
-								<h1>La ricerca non ha prodotto risultati</h1>
-							</div>
-						</div>
-					</div>
-					<div th:if="paginazioneAttivaCliente" id="paginazione-clienti" class="p-[-20px] md:p-4 mb-4">
+							<!-- <div th:if="${listProgettiByCliente.isEmpty()}"  id="ricerca-vuota-clienti" class="text-center text-[#0057A5] p-4">
+								<div >
+									<h1>La ricerca non ha prodotto risultati</h1>
+								</div>
+							</div> -->
+				
+					<div  id="paginazione-clienti" class="hidden p-[-20px] md:p-4 mb-4">
 						
 							<div class="flex flex-col lg:flex-row justify-between text-center ">
 								<div class="col flex justify-center flex-col lg:flex-row mb-6 ">
@@ -689,7 +688,7 @@
 										<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
 											th:href="@{'/Progetti/page/'+${currentPage - 1}}">
 											<img th:src="@{/img/sources/icons/arrow-left-blue.svg}"
-												alt="prev" class="h-4 w-auto pe-2">
+												alt="prev" class="max-xs:hidden h-4 w-auto pe-2">
 											<span>Prev</span>
 										</a>
 									</span>
@@ -728,7 +727,7 @@
 											th:href="@{'/Progetti/page/'+${currentPage + 1}}">
 											<span>Next</span>
 											<img th:src="@{/img/sources/icons/arrow-right-blue.svg}" 
-												alt="prev" class="h-4 w-auto ps-2">
+												alt="prev" class="max-xs:hidden h-4 w-auto ps-2">
 										</a>
 									</span>
 								</div>
@@ -1118,7 +1117,12 @@
 		let taskInUsoName = /*[[${taskInUsoName}]]*/ null;
 		let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
 		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean	
+		let ordinaElencoProgettiPerData = /*[[${ordinaElencoProgettiPerData}]]*/null; //boolean
+		let ordinaElencoProgettiPerCliente = /*[[${ordinaElencoProgettiPerCliente}]]*/null; //boolean
 		/*]]>*/
+		
+		console.log("ordinaElencoProgettiPerData: " + ordinaElencoProgettiPerData);
+		console.log("ordinaElencoProgettiPerCliente: " + ordinaElencoProgettiPerCliente)
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>

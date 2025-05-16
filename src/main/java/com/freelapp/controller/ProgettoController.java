@@ -36,6 +36,14 @@ public class ProgettoController {
 
 
 	private static final boolean Task = false;
+	
+	//variablili che verranno utilizzate per memorizzare la scelta effettuata durante la sessione
+	public static boolean ordinaElencoProgettiPerData = true;
+	
+	public static boolean ordinaElencoProgettiPerCliente = false;
+	
+	//variabile che memorizza l'ultima pagina consultata nella lista Progetti e serve per mantenerla durante la sessione
+	private static int currentPageListaProgetti = 1;
 
 	@Autowired
 	private ProgettoRepository repositProgetto;
@@ -65,6 +73,10 @@ public class ProgettoController {
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
 				
+				//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
+				model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
+				model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
+				
 				//invio al model il booleano del contatore attivato
 				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
@@ -85,14 +97,16 @@ public class ProgettoController {
 				}
 				model.addAttribute("areProjectsOnDb", areProjectsOnDb);
 				
-				return getOnePage(1, model);
+				//se siamo ad inizio sessione currentPageListaProgetti == 1 altrimenti terrà in memoria l'ultima pagina visitata
+				return getOnePage(currentPageListaProgetti, model);
 			}
 			
 			@GetMapping("/Progetti/page/{pageNumber}")
 			public String getOnePage(@PathVariable("pageNumber") int currentPage, Model model ) {
 					
-					
-					
+					//aggiorna la variabile che memorizza l'ultima pagina visitata
+					currentPageListaProgetti = currentPage;
+		
 					// ordina i progetti per data di inizio
 					Page<Progetto> pageByDataInizio = progettoService.orderByDataInizio(currentPage);
 					int totalPageByDataInizio = pageByDataInizio.getTotalPages();	
@@ -135,6 +149,10 @@ public class ProgettoController {
 					//invio al model il booleano del contatore attivato
 					//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 					model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+					
+					//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
+					model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
+					model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
 		
 					//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 					ContatoreController.contatoreAttivato = false;
@@ -161,6 +179,8 @@ public class ProgettoController {
 			@GetMapping("/progetto-search")
 			public String listaProgettiSearch(@Param("input") String input, Model model) {
 				
+				
+				
 				//passo al model i contatore e task in uso (gli static)
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
@@ -168,9 +188,13 @@ public class ProgettoController {
 				//invio al model il booleano del contatore attivato
 				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+				
+				//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
+				model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
+				model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
 		
 				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
-//				ContatoreController.contatoreAttivato = false;
+				//ContatoreController.contatoreAttivato = false;
 				
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
@@ -208,10 +232,12 @@ public class ProgettoController {
 					List<Progetto> listProgettiByCliente = pageByCliente.getContent();
 					
 					model.addAttribute("currentPage", currentPage);
+					
 					// passaggio al model delle liste per data inizio
 					model.addAttribute("listProgettiByDataInizio", listProgettiByDataInizio);					
 					model.addAttribute("totalPageByDataInizio", totalPageByDataInizio);					
 					model.addAttribute("totalItemByDatainizio", totalItemByDatainizio);
+					
 					// passaggio al model delle liste per cliente
 					model.addAttribute("listProgettiByCliente", listProgettiByCliente);					
 					model.addAttribute("totalPageByCliente", totalPageByCliente);					
@@ -236,6 +262,10 @@ public class ProgettoController {
 					//invio al model il booleano del contatore attivato
 					//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 					model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+					
+					//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
+					model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
+					model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
 		
 					//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 					ContatoreController.contatoreAttivato = false;
@@ -737,5 +767,7 @@ public class ProgettoController {
 				return "redirect:/Progetti";
 				
 			}
+			
+			
 			
 }
