@@ -92,6 +92,7 @@ function switchToVisualizzazioneClienti(){
 	filtraPerClientiButton.classList.add('opacity-50', 'pointer-events-none');
 	filtraPerDataButton.classList.remove('opacity-50', 'pointer-events-none');
 	
+	//chiamata api al metodo che cambia la scelta visualizzazione da data a cliente
 	const api_urlOrdinaElencoProgettiPerCliente = 'http://localhost:8080/api/progetti/cambiaOrdinePerCliente';
 			 fetch(api_urlOrdinaElencoProgettiPerCliente);
 }
@@ -105,6 +106,7 @@ function switchToVisualizzazioneData(){
 	filtraPerClientiButton.classList.remove('opacity-50', 'pointer-events-none');
 	filtraPerDataButton.classList.add('opacity-50', 'pointer-events-none');
 	
+	//chiamata api al metodo che cambia la scelta visualizzazione da cliente a data
 	const api_urlOrdinaElencoProgettiPerData = 'http://localhost:8080/api/progetti/cambiaOrdinePerData';
 		 fetch(api_urlOrdinaElencoProgettiPerData);
 }
