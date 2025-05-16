@@ -328,23 +328,44 @@
 			<div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center">
 				<div class="md:w-5/12 w-full h-2/5 md:h-5/12 border border-[#0057A5] bg-gray-100 p-3 m-3">
 					<h1 class="text-[#0057A5] font-bold">
-						I TUOI PROGETTI IN CORSO</h1>
+						I TUOI ULTIMI PROGETTI INSERITI</h1>
+						<div class="mt-5 p-2">
+						<ul class="" th:each="progetti , iterStat : ${progettiList}" th:if="${iterStat.index >= iterStat.size-8}">
+						<a th:href="@{|Progetti/${progetti.id}|}">
+								<li th:text = "${progetti.name}"></li>
+								</a>
+						</ul>
+				</div>						
 				</div>
 				<div class="md:w-5/12 w-full h-2/5 md:h-5/12 border border-[#0057A5] bg-gray-100 p-3 m-3">
 					<h1 class="text-[#0057A5] font-bold">
 						AREA STATISTICHE</h1>
 						<button type="submit"
-							class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
+							class="p-2 mt-5 col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
 							<a th:href="@{/Statistiche}">Vai alla pagina statistiche provvisoria</a>
 						</button>
 				</div>
 				<div class="md:w-5/12 w-full h-2/5 md:h-5/12 border border-[#0057A5] bg-gray-100 p-3 m-3">
 					<h1 class="text-[#0057A5] font-bold">
 						I TUOI TASK AVVIATI</h1>
+						<div class="mt-5 p-2">
+									<ul class="" th:each="task , iterStat : ${taskList}" th:if="${iterStat.index >= iterStat.size-8}">
+										<a th:href="@{|Task/${task.id}|}">
+													<li th:text = "${task.name}"></li>
+													</a>
+											</ul>
+									</div>
 				</div>
 				<div class="md:w-5/12 w-full h-2/5 md:h-5/12 border border-[#0057A5] bg-gray-100 p-3 m-3">
 					<h1 class="text-[#0057A5] font-bold">
 						I TUOI CLIENTI</h1>
+						<div class="mt-5 p-2">
+												<ul class="" th:each="clienti , iterStat : ${clientiList}" th:if="${iterStat.index >= iterStat.size-8}">
+												<a th:href="@{|Clienti/${clienti.id}|}">
+														<li th:text = "${clienti.labelCliente}"></li>
+														</a>
+												</ul>
+										</div>	
 				</div>
 				<div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden" id="dettaglio-contatore-bottom">
 					<div class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
