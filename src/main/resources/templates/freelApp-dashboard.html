@@ -4,9 +4,9 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!--
+	<!--/*/
 		<link rel="stylesheet" th:href="@{/main.css}">		
-	-->
+	/*/-->
 	<link rel="stylesheet" href="/animate.css">	
 	<script src="https://cdn.tailwindcss.com"></script>
 	<script>
@@ -93,9 +93,9 @@
 						</span> <span class="pt-1">ESCI</span>
 					</a>
 					</li>
-<!-- 					<li class=" max-lg:hidden" id="dettaglio-contatore-top"> -->
+<!--/* 					<li class=" max-lg:hidden" id="dettaglio-contatore-top"> */-->
 
-<!-- 					</li> -->
+<!--/* 					</li> */-->
 					<li class="md:mx-4 py-5 md:py-0">
 						<button class=" hover:text-gray-400 cursor-pointer md:hidden"
 							onclick="onToggleOptionsMobile(this)">
@@ -128,7 +128,7 @@
 				</ul>
 			</div>
 			
-		<!-- CONTATORE --><div id="dettaglio-contatore-top"
+		<!--/* CONTATORE */--><div id="dettaglio-contatore-top"
 							class="max-lg:hidden h-fit border-4 border-[#FFE541] bg-white rounded-[30px] mt-2 mb-2 p-2 py-1">
 							<div class="flex items-center text-[#0057A5] font-bold">
 								<div class="col-auto w-8 h-8 mx-2">
@@ -281,7 +281,7 @@
 						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
-								<!-- th:href="@{/Progetti/insert/1} diventera poi th:href="@{'/Progetti/insert/{id}'(id=${userLogged.getId()})'} quando sara implementata autentizazione-->
+								<!-- /* th:href="@{/Progetti/insert/1} diventera poi th:href="@{'/Progetti/insert/{id}'(id=${userLogged.getId()})'} quando sara implementata autentizazione */-->
 								<a th:href="@{/Progetti/insert/1}">
 									<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-project.svg" alt="nuovo progetto">
 								</a>
@@ -447,7 +447,7 @@
 		</div>
 	</main>
 
-	<!-- Modale TimerRapidButton -->
+	<!--/* Modale TimerRapidButton */--> 
 	<div id="modalRapidButton" class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
 		<div class="w-11/12 md:w-[550px] h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
 			<div class="grid grid-cols-12 p-1">
@@ -482,7 +482,7 @@
 										<span class="text-center text-nowrap max-md:text-sm">Torna alla ricerca/selezione</span>
 									</button>
 								</div>
-								<!-- Inizio selectMode del rapid button -->
+								<!--/* Inizio selectMode del rapid button */-->
 								<div id="select-mode" class="hidden w-full overflow-y-auto border border-[#0057A5] rounded-l-lg mb-2">
 									<div class="w-full h-32 ">
 											<div class="w-full h-8 border-b border-[#0057A5] bg-gray-100 grid grid-cols-8">
@@ -518,9 +518,9 @@
 											</button>
 									</div>
 								</div>
-								<!-- Fine selectMode del rapid button -->
+								<!--/* Fine selectMode del rapid button */-->
 								
-								<!-- Inizio searchMode del rapid button -->
+								<!--/* Inizio searchMode del rapid button */-->
 								<div id="search-mode" class="hidden w-full mb-2">
 									<div class="flex justify-center">
 										<input type="text" placeholder="Ricerca per Cliente/Progetto/Task..."
@@ -539,12 +539,12 @@
 										</div>
 									</div>
 								</div>
-								<!-- Fine searchMode del rapid button -->
+								<!--/* Fine searchMode del rapid button */-->
 							</div>
 						</div>
 				</div>
 				<div th:if="${taskList.isEmpty()}" class="text-center text-[#0057A5] font-bold p-10">Nessun Task inserito</div>
-				<!-- Inizio sezione resume task -->
+				<!--/* Inizio sezione resume task */-->
 				<div id="taskResumeTable" class="hidden text-[#0057A5]">
 					<div class="w-full h-auto">
 						<div id="taskResumeBody" class="p-3 text-center mx-2">
@@ -586,7 +586,7 @@
 							</div>
 						</div>
 						<div class="flex justify-center p-3">
-							<!-- Inizio sezione contatore -->
+							<!--/* Inizio sezione contatore */-->
 							<div id="contatore-task-rapid" class="hidden w-full md:w-4/5 h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] py-1 px-1 md:px-3">
 								<div class="flex justify-between items-center text-[#0057A5] font-bold">
 									<div class="col-auto md:ms-2">
@@ -624,8 +624,8 @@
 									</div>
 								</div>
 							</div>
-							<!-- fine sezione contatore -->
-							<!-- Inizio sezione ore lavorate -->
+							<!--/* fine sezione contatore */-->
+							<!--/* Inizio sezione ore lavorate */-->
 							<div id="ore-lavorate-task-rapid-container" class="hidden w-[90%] h-fit">
 								<div class="flex flex-row justify-center p-2">
 									<form id="taskDetailHrefOre" th:object="${contatore}"
@@ -664,9 +664,9 @@
 									</form>
 								</div>
 							</div>
-							<!-- fine sezione ore lavorate -->
+							<!--/* fine sezione ore lavorate */-->
 						</div>
-						<!-- Inizio sezione pulsanti opzione -->
+						<!--/* Inizio sezione pulsanti opzione */-->
 						<div id="options-buttons" class="flex justify-around items-center bg-[#0057A5] p-3 w-full rounded-b-lg">
 							<button type="button" id="contatore-task-rapid-button"
 								class="flex flex-col justify-center items-center w-1/5 text-[#FFE541] font-bold ">
@@ -684,15 +684,15 @@
 								<span class="">DETTAGLIO</span>
 							</a>
 						</div>
-						<!-- fine sezione pulsanti opzione -->
+						<!--/* fine sezione pulsanti opzione */-->
 					</div>
 				</div>
-				<!-- fine sezione resume task -->
+				<!--/* fine sezione resume task */-->
 			</div>
 		</div>
 	</div>
 	
-	<!-- Modale -->
+	<!--/* Modale */-->
 	<div id="modale"
 		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
 		<div
@@ -709,9 +709,9 @@
 		</div>
 	</div>
 
-	<!-- Fine Modale -->
+	<!--/* Fine Modale */-->
 
-  <!-- Script -->
+  <!--/* Script */-->
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 		let finalTimeSec = /*[[${finaltime}]]*/ null;
