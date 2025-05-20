@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +42,10 @@ public class ProgettoController {
 	public static boolean ordinaElencoProgettiPerCliente = false;
 	
 	//variabile che memorizza l'ultima pagina consultata nella lista Progetti e serve per mantenerla durante la sessione
-	private static int currentPageListaProgetti = 1;
+	private int currentPageListaProgetti = 1;
+	
+	//variabile che passo al model del search progetti per dirgli che siamo in modalità search
+	private boolean searchMode = false;
 
 	@Autowired
 	private ProgettoRepository repositProgetto;
@@ -68,7 +70,10 @@ public class ProgettoController {
 	
 			@GetMapping("/Progetti")
 			public String listaProgetti(Model model) {
-					
+				
+				//essendo fuori dalla modalità search reinizializzo la varibile
+				searchMode = false;
+				
 				//passo al model i contatore e task in uso (gli static)
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
@@ -106,6 +111,9 @@ public class ProgettoController {
 					
 					//aggiorna la variabile che memorizza l'ultima pagina visitata
 					currentPageListaProgetti = currentPage;
+					
+					//essendo fuori dalla modalità search reinizializzo la varibile
+					searchMode = false;
 		
 					// ordina i progetti per data di inizio
 					Page<Progetto> pageByDataInizio = progettoService.orderByDataInizio(currentPage);
@@ -179,7 +187,9 @@ public class ProgettoController {
 			@GetMapping("/progetto-search")
 			public String listaProgettiSearch(@Param("input") String input, Model model) {
 
-				
+				//passo al model questo booleano per dirgli che siamo in modalità search
+				searchMode = true;
+				model.addAttribute("searchMode", searchMode);
 				
 				//passo al model i contatore e task in uso (gli static)
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
@@ -215,11 +225,17 @@ public class ProgettoController {
 				return progettoBySearch(1, input, model);
 			} 
 				 
-			 @GetMapping("/progetto-search/page/{numberPage}")
-			 public String progettoBySearch(@PathVariable("pageNumber") int currentPage, String input,
+			 @GetMapping("/progetto-search-input={input}/page/{numberPage}")
+			 public String progettoBySearch(@PathVariable("numberPage") int currentPage, @PathVariable("input") String input,
 					 	Model model) {
+				 
+				 	//passo al model l'input inserito per mostrare all'utente cosa ha inserito come input
+				 	model.addAttribute("inputInserito", input);				 
+				 	//passo al model questo booleano per dirgli che siamo in modalità search
+				 	searchMode = true;
+				 	model.addAttribute("searchMode", searchMode);
 
-				 // ordina i progetti per data di inizio
+				 	// ordina i progetti per data di inizio
 					Page<Progetto> pageByDataInizio = progettoService.findSearchedPageByDataInizio(currentPage,input);
 					int totalPageByDataInizio = pageByDataInizio.getTotalPages();	
 					long totalItemByDatainizio = pageByDataInizio.getTotalElements();		

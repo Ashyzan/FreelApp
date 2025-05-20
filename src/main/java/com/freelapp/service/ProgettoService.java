@@ -50,13 +50,13 @@ public class ProgettoService {
 	}
 	
 	public Page<Progetto> findSearchedPageByDataInizio(int pageNumber, String input){
-		Pageable pageable = PageRequest.of(pageNumber -1, 4, Sort.by("dataInizio").descending());
+		Pageable pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
 		return progettoRepository.search(input, pageable);
 		
 	}
 	
 	public Page<Progetto> findSearchedPageByClient(int pageNumber, String input){
-		Pageable pageable = PageRequest.of(pageNumber -1, 4, Sort.by("cliente.labelCliente").ascending());
+		Pageable pageable = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").ascending());
 		return progettoRepository.search(input, pageable);
 		
 	}

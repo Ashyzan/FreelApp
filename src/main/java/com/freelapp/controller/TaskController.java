@@ -32,6 +32,12 @@ import jakarta.validation.Valid;
 
 @Controller
 public class TaskController {
+	
+	//variabile che passo al model del search task per dirgli che siamo in modalità search
+	private boolean searchMode = false;
+	
+	//variabile che memorizza l'ultima pagina consultata nella lista Task e serve per mantenerla durante la sessione
+	private int currentPageListaTask = 1;
 
     @Autowired
     private TaskRepository repositTask;
@@ -53,6 +59,10 @@ public class TaskController {
 
     @GetMapping("/Task")
     public String iMieiTask(Model model) {
+    	
+    	//essendo fuori dalla modalità search reinizializzo la varibile
+		searchMode = false;
+		model.addAttribute("searchMode", searchMode);
     	
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
@@ -98,71 +108,82 @@ public class TaskController {
 					model.addAttribute("taskListOreLavorate", taskListOreLavorate);
 						} );
 
-		
-    	
-
-	return getOnePage(1, model);
+	return getOnePage(currentPageListaTask, model);
     }
 
+    
     @GetMapping("/Task/page/{pageNumber}")
     public String getOnePage(@PathVariable("pageNumber") int currentPage, Model model) {
+    	
+    	//aggiorna la variabile che memorizza l'ultima pagina visitata
+		currentPageListaTask = currentPage;
+					
+		//essendo fuori dalla modalità search reinizializzo la varibile
+		searchMode = false;
+		model.addAttribute("searchMode", searchMode);
 
-	Page<Task> page = taskService.findPage(currentPage);
-
-	int totalPages = page.getTotalPages();
-
-	long totalItems = page.getTotalElements();
-
-	List<Task> listTask = page.getContent();
+		Page<Task> page = taskService.findPage(currentPage);
 	
-
-	model.addAttribute("list", listTask);
-
-	model.addAttribute("currentPage", currentPage);
-
-	model.addAttribute("totalPages", totalPages);
-
-	model.addAttribute("totalItems", totalItems);
-
-	contatoreservice.importContatoreInGet(model);
+		int totalPages = page.getTotalPages();
 	
-	//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
-	if(currentPage != 0) {
-		String endPoint = "/Task/page/" + currentPage;
+		long totalItems = page.getTotalElements();
+	
+		List<Task> listTask = page.getContent();
 		
-		model.addAttribute("endPoint", endPoint);						
-	} else {
-		String endPoint = "/Task";
-		model.addAttribute("endPoint", endPoint);	
-	}
 	
-	//passo al model i contatore e task in uso (gli static)
-	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
-	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		model.addAttribute("list", listTask);
 	
-	//invio al model il booleano del contatore attivato
-	//se contatoreAttivato = true avvio animazione su titolo task al contatore;
-	model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		model.addAttribute("currentPage", currentPage);
 	
-	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
-	ContatoreController.contatoreAttivato = false;
+		model.addAttribute("totalPages", totalPages);
 	
-	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
-	taskService.informationFromTaskInUsoToModel(model);
-
-		// restituisce al model questo valore booleano false se non ci sono progetti a db
-		// e restituisce true se ci sono progetti a db
-		boolean areTasksOnDb = false;
-		if (!repositTask.findAllNotClosed().isEmpty()) {
-			areTasksOnDb = true;
+		model.addAttribute("totalItems", totalItems);
+	
+		contatoreservice.importContatoreInGet(model);
+		
+		//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+		if(currentPage != 0) {
+			String endPoint = "/Task/page/" + currentPage;
+			
+			model.addAttribute("endPoint", endPoint);						
+		} else {
+			String endPoint = "/Task";
+			model.addAttribute("endPoint", endPoint);	
 		}
-		model.addAttribute("areTasksOnDb", areTasksOnDb);
-
-	return "/Task/freelApp-listaTask";
+		
+		//passo al model i contatore e task in uso (gli static)
+		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		
+		//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+		ContatoreController.contatoreAttivato = false;
+		
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+		taskService.informationFromTaskInUsoToModel(model);
+	
+			// restituisce al model questo valore booleano false se non ci sono progetti a db
+			// e restituisce true se ci sono progetti a db
+			boolean areTasksOnDb = false;
+			if (!repositTask.findAllNotClosed().isEmpty()) {
+				areTasksOnDb = true;
+			}
+			model.addAttribute("areTasksOnDb", areTasksOnDb);
+	
+		return "/Task/freelApp-listaTask";
     }
 
+    
+    
     @GetMapping("/task-search")
     public String listaTaskSearch(@Param("input") String input, Model model) {
+    	
+    	//passo al model questo booleano per dirgli che siamo in modalità search
+		searchMode = true;
+		model.addAttribute("searchMode", searchMode);
   
     	//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
@@ -193,43 +214,50 @@ public class TaskController {
 	return taskBySearch(1, input, model);
     }
 
-    @GetMapping("/task-search/page/{numberPage}")
-    public String taskBySearch(@PathVariable("pageNumber") int currentPage, String input, Model model) {
+    @GetMapping("/task-search-input={input}/page/{numberPage}")
+    public String taskBySearch(@PathVariable("numberPage") int currentPage,  @PathVariable("input") String input,
+    			Model model) {
+    	
+    	//passo al model l'input inserito per mostrare all'utente cosa ha inserito come input
+		model.addAttribute("inputInserito", input);				 
+		//passo al model questo booleano per dirgli che siamo in modalità search
+		searchMode = true;
+		model.addAttribute("searchMode", searchMode);
 
-	Page<Task> page = taskService.findSearchedPage(currentPage, input);
-
-	int totalPages = page.getTotalPages();
-
-	long totalItems = page.getTotalElements();
-
-	List<Task> listaTaskSearch = page.getContent();
-
-	model.addAttribute("currentPage", currentPage);
-
-	model.addAttribute("totalPages", totalPages);
-
-	model.addAttribute("totalItems", totalItems);
-
-	model.addAttribute("list", listaTaskSearch);
+		Page<Task> page = taskService.findSearchedPage(currentPage, input);
 	
-	contatoreservice.importContatoreInGet(model);
+		int totalPages = page.getTotalPages();
 	
-	//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
-	if(input != null) {
-		String endPoint = "/task-search?input=" + input;
+		long totalItems = page.getTotalElements();
+	
+		List<Task> listaTaskSearch = page.getContent();
+	
+		model.addAttribute("currentPage", currentPage);
+	
+		model.addAttribute("totalPages", totalPages);
+	
+		model.addAttribute("totalItems", totalItems);
+	
+		model.addAttribute("list", listaTaskSearch);
 		
-		model.addAttribute("endPoint", endPoint);						
-	} else {
-		String endPoint = "/task-search";
-		model.addAttribute("endPoint", endPoint);
-	}
-	
-	//passo al model i contatore e task in uso (gli static)
-	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
-	model.addAttribute("taskInUso", ContatoreController.taskInUso);
-	
-	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
-	taskService.informationFromTaskInUsoToModel(model);
+		contatoreservice.importContatoreInGet(model);
+		
+		//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+		if(input != null) {
+			String endPoint = "/task-search?input=" + input;
+			
+			model.addAttribute("endPoint", endPoint);						
+		} else {
+			String endPoint = "/task-search";
+			model.addAttribute("endPoint", endPoint);
+		}
+		
+		//passo al model i contatore e task in uso (gli static)
+		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		
+		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+		taskService.informationFromTaskInUsoToModel(model);
 	
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
