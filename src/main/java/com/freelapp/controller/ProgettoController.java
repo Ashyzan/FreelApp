@@ -46,6 +46,14 @@ public class ProgettoController {
 	
 	//variabile che passo al model del search progetti per dirgli che siamo in modalità search
 	private boolean searchMode = false;
+	
+	//variabile che memorizza l'ultima pagina consultata nella ricerca da lista Progetti e serve per mantenerla durante
+	//consultazione del dettaglio prima di tornare alla ricerca o fino a nuova ricerca
+	private int lastVisitedPageInProgettiSearch = 1;
+	
+	//variabile che memorizza l'input inserito nella ricerca da lista Progetti e serve per mantenerlo durante
+	//consultazione del dettaglio prima di tornare alla ricerca o fino a nuova ricerca
+	private String lastInputInProgettiSearch = "";
 
 	@Autowired
 	private ProgettoRepository repositProgetto;
@@ -73,6 +81,11 @@ public class ProgettoController {
 				
 				//essendo fuori dalla modalità search reinizializzo la varibile
 				searchMode = false;
+				
+				//reinizzializzazione variabili per memorizz input,ultima paginavisitate usate 
+				//nel dettaglio progetto selezionato dalla modalità ricerca
+				lastInputInProgettiSearch = "";
+				lastVisitedPageInProgettiSearch = 1;
 				
 				//passo al model i contatore e task in uso (gli static)
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
@@ -114,6 +127,7 @@ public class ProgettoController {
 					
 					//essendo fuori dalla modalità search reinizializzo la varibile
 					searchMode = false;
+					model.addAttribute("searchMode", searchMode);
 		
 					// ordina i progetti per data di inizio
 					Page<Progetto> pageByDataInizio = progettoService.orderByDataInizio(currentPage);
@@ -222,7 +236,12 @@ public class ProgettoController {
 				}
 				model.addAttribute("areProjectsOnDb", areProjectsOnDb);
 				
-				return progettoBySearch(1, input, model);
+				
+				//assegnazione variabile per memorizz input che sarà usata nel dettaglio progetto selezionato dalla modalità ricerca
+				lastInputInProgettiSearch = input;
+				lastVisitedPageInProgettiSearch = 1;
+				
+				return progettoBySearch(lastVisitedPageInProgettiSearch, input, model);
 			} 
 				 
 			 @GetMapping("/progetto-search-input={input}/page/{numberPage}")
@@ -234,6 +253,9 @@ public class ProgettoController {
 				 	//passo al model questo booleano per dirgli che siamo in modalità search
 				 	searchMode = true;
 				 	model.addAttribute("searchMode", searchMode);
+				 	
+				 	//assegnazione variabile per memorizz pagina corrente che sarà usata nel dettaglio progetto selezionato dalla modalità ricerca
+				 	lastVisitedPageInProgettiSearch = currentPage;
 
 				 	// ordina i progetti per data di inizio
 					Page<Progetto> pageByDataInizio = progettoService.findSearchedPageByDataInizio(currentPage,input);
@@ -338,6 +360,16 @@ public class ProgettoController {
 				
 				//passa a modello nel caso in base alla tipologia i risultati delle statistiche
 				progettoService.calcoloStatisticheTipologiaFromProgettoToModel(progetto, model);
+				
+				//se si arriva al dettaglio progetto dalla ricerca su lista progetti passo al model
+				// questo booleano per dirgli che siamo in modalità search, l'ultima pagina visita in search 
+				//e l'input inserito (variabili inizializzata ad inizio controller) che verranno usati nel button dedicato
+				//per tornare alla ricerca
+				if(searchMode == true) {
+					model.addAttribute("searchMode", searchMode);
+					model.addAttribute("lastVisitedPageInProgettiSearch", lastVisitedPageInProgettiSearch);
+					model.addAttribute("lastInputInProgettiSearch", lastInputInProgettiSearch);
+				}
 				
 				
 				return "/Progetti/freelapp-descrizioneProgetto";

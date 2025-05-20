@@ -54,6 +54,14 @@ public class ClientController {
 	
 	//variabile che passo al model del search clienti per dirgli che siamo in modalità search
 	private boolean searchMode = false;
+	
+	//variabile che memorizza l'ultima pagina consultata nella ricerca da lista Clienti e serve per mantenerla durante
+	//consultazione del dettaglio prima di tornare alla ricerca o fino a nuova ricerca
+	private int lastVisitedPageInClientiSearch = 1;
+	
+	//variabile che memorizza l'input inserito nella ricerca da lista Clienti e serve per mantenerlo durante
+	//consultazione del dettaglio prima di tornare alla ricerca o fino a nuova ricerca
+	private String lastInputInClientiSearch = "";
 
 	@Autowired
 	private ClienteRepository repositoryCliente;
@@ -88,6 +96,11 @@ public class ClientController {
 		searchMode = false;
 		model.addAttribute("searchMode", searchMode);
 		
+		//reinizzializzazione variabili per memorizz input,ultima paginavisitate usate 
+		//nel dettaglio progetto selezionato dalla modalità ricerca
+		lastInputInClientiSearch = "";
+		lastVisitedPageInClientiSearch = 1;
+		
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
@@ -112,6 +125,7 @@ public class ClientController {
 		}
 		model.addAttribute("areClientsOnDb", areClientsOnDb);
 		
+		//se siamo ad inizio sessione currentPageListaClienti == 1 altrimenti terrà in memoria l'ultima pagina visitata
 		return getOnePage(currentPageListaClienti, model );
 	} 
 	
@@ -215,7 +229,11 @@ public class ClientController {
 		}
 		model.addAttribute("areClientsOnDb", areClientsOnDb);
 		
-		return clienteBySearch(1, input, model);
+		//assegnazione variabile per memorizz input che sarà usata nel dettaglio progetto selezionato dalla modalità ricerca
+		lastInputInClientiSearch = input;
+		lastVisitedPageInClientiSearch = 1;
+		
+		return clienteBySearch(lastVisitedPageInClientiSearch, input, model);
 	} 
 		 
 	 @GetMapping("/cliente-search-input={input}/page/{numberPage}")
@@ -228,6 +246,9 @@ public class ClientController {
 			// passo al model questo booleano per dirgli che siamo in modalità search
 			searchMode = true;
 			model.addAttribute("searchMode", searchMode);
+			
+			//assegnazione variabile per memorizz pagina corrente che sarà usata nel dettaglio progetto selezionato dalla modalità ricerca
+			lastVisitedPageInClientiSearch = currentPage;
 
 			Page<Cliente> page = clienteService.findSearchedPage(currentPage, input);
 
@@ -320,6 +341,16 @@ public class ClientController {
 		List<Task> taskList = new ArrayList<Task> ();
 		taskList = repositTask.findAllNotClosed();
 		model.addAttribute("taskList", taskList);
+		
+		//se si arriva al dettaglio progetto dalla ricerca su lista clienti passo al model
+		// questo booleano per dirgli che siamo in modalità search, l'ultima pagina visita in search 
+		//e l'input inserito (variabili inizializzata ad inizio controller) che verranno usati nel button dedicato
+		//per tornare alla ricerca
+				if(searchMode == true) {
+					model.addAttribute("searchMode", searchMode);
+					model.addAttribute("lastVisitedPageInProgettiSearch", lastVisitedPageInClientiSearch);
+					model.addAttribute("lastInputInProgettiSearch", lastInputInClientiSearch);
+				}
 	
 		return "/Clienti/freelapp-descrizioneCliente";
 	  }

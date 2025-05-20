@@ -784,12 +784,12 @@
 								<div th:if="${totalPageByDataInizio >= 7}" class="col flex gap-1 md:gap-2 flex justify-center">
 									<span th:if="${currentPage == 1}"
 										class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
-										<a class="" th:href="@{|/progetto-search=${inputInserito}/page/1|}">1</a>
+										<a class="" th:href="@{|/progetto-search-input=${inputInserito}/page/1|}">1</a>
 									</span>
 									<span th:if="${currentPage > 1}"
 										class=" h-7 w-auto flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
 										<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
-											th:href="@{|/progetto-search=${inputInserito}/page/${currentPage - 1}|}">
+											th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage - 1}|}">
 											<img th:src="@{/img/sources/icons/arrow-left-blue.svg}" alt="prev"
 												class="max-xs:hidden h-4 w-auto pe-2">
 											<span>Prev</span>
@@ -797,7 +797,7 @@
 									</span>
 									<span th:unless="${currentPage == 1}"
 										class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5]" th:href="@{|/progetto-search=${inputInserito}/page/1|}">1</a>
+										<a class="p-[3px] text-[#0057A5]" th:href="@{|/progetto-search-input=${inputInserito}/page/1|}">1</a>
 									</span>
 									<span th:if="${currentPage > 2}"
 										class=" h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
@@ -805,17 +805,17 @@
 									</span>
 									<span th:if="${currentPage > 2}"
 										class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5]" th:href="@{|/progetto-search=${inputInserito}/page/${currentPage - 1}|}"
+										<a class="p-[3px] text-[#0057A5]" th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage - 1}|}"
 											th:text="${currentPage - 1}"></a>
 									</span>
 									<span th:if="${currentPage > 1 and currentPage != totalPageByDataInizio}"
 										class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search=${inputInserito}/page/${currentPage}|}"
+										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage}|}"
 											th:text="${currentPage}"></a>
 									</span>
 									<span th:if="${currentPage < (totalPageByDataInizio - 1)}"
 										class="h-7 w-7 flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search=${inputInserito}/page/${currentPage + 1}|}"
+										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage + 1}|}"
 											th:text="${currentPage + 1}"></a>
 									</span>
 									<span th:if="${currentPage < (totalPageByDataInizio - 2)}"
@@ -824,18 +824,18 @@
 									</span>
 									<span th:if="${currentPage == totalPageByDataInizio}"
 										class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search=${inputInserito}/page/${totalPageByCliente}|}"
+										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search-input=${inputInserito}/page/${totalPageByCliente}|}"
 											th:text="${totalPageByDataInizio}"></a>
 									</span>
 									<span th:unless="${currentPage == totalPageByDataInizio}"
 										class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search=${inputInserito}/page/${totalPageByCliente}|}"
+										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search-input=${inputInserito}/page/${totalPageByCliente}|}"
 											th:text="${totalPageByDataInizio}"></a>
 									</span>
 									<span th:if="${currentPage < totalPageByDataInizio}"
 										class="h-7 w-auto flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
 										<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
-											th:href="@{|/progetto-search=${inputInserito}/page/${currentPage + 1}|}">
+											th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage + 1}|}">
 											<span>Next</span>
 											<img th:src="@{/img/sources/icons/arrow-right-blue.svg}" alt="prev"
 												class="max-xs:hidden h-4 w-auto ps-2">
@@ -869,7 +869,7 @@
 									<span th:if="${currentPage > 1}"
 										class=" h-7 w-auto flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
 										<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
-											th:href="@{|/progetto-search?input=${inputInserito}/page/${currentPage - 1}|}">
+											th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage - 1}|}">
 											<img th:src="@{/img/sources/icons/arrow-left-blue.svg}" alt="prev"
 												class="max-xs:hidden h-4 w-auto pe-2">
 											<span>Prev</span>

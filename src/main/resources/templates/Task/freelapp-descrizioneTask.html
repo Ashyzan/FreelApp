@@ -329,7 +329,7 @@
 <div id="main-section"
 				class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto">
 
-<div class="grid lg:grid-cols-2 md:grid-cols-2 sd:grid-cols-1">
+<div class="md:w-4/5 grid lg:grid-cols-2 md:grid-cols-2 sd:grid-cols-1">
 			<div
 				class="gap-4 rounded-lg bg-gray-100 p-6 m-3 shadow-lg">
 				<div>
@@ -386,6 +386,15 @@
 							</button>
 						</div>
 
+					</div>
+					<div class="text-center mt-5 p-4">
+						<a class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+							th:href="@{/Task}">Torna alla lista dei Task </a>
+					</div>
+					<div th:if="${searchMode == true}" class="text-center mt-5 p-4">
+						<a class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+							th:href="@{|/task-search-input=${lastInputInTaskSearch}/page/${lastVisitedPageInTaskSearch}|}">Torna
+							alla ricerca </a>
 					</div>
 				</div>
 			</div>

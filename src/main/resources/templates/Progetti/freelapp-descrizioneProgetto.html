@@ -426,6 +426,10 @@
 								<a class="border-2 border-[#0057A5] bg-[#ffe541] rounded-[35px] px-3 py-1 shadow-slate-400 shadow-md"
 									th:href="@{/Progetti}">Torna alla lista dei Progetti </a>
 							</div>
+							<div th:if="${searchMode == true}" class="text-center mt-5 p-4">
+								<a class="border-2 border-[#0057A5] bg-[#ffe541] rounded-[35px] px-3 py-1 shadow-slate-400 shadow-md"
+									th:href="@{|/progetto-search-input=${lastInputInProgettiSearch}/page/${lastVisitedPageInProgettiSearch}|}">Torna alla ricerca </a>
+							</div>
 							</div>
 							<section class="my-8 w-11/12">
 								<div class="h-12 text-center text-[#0057A5] font-bold items-center m-3">
