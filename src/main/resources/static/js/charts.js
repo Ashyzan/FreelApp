@@ -18,64 +18,86 @@ async function getProjectsArchived(){
 			coutnTaskOfProject.push(item.countTaskProgetto);
 		
 		}) 
+		
+		//creazione grafico
+			  const ctx = document.getElementById('myChart');
 
-		// donuts
-		const data = {
-		  labels: [
-		    'Tempo Stimato',
-		    'Tempo lavorato',
-		    		  ],
-		  datasets: [{
-		    label: 'Percentuale',
-		    data: [50, 100],
-		    backgroundColor: [
-		      'rgb(255, 205, 86)',
-		      'rgb(0, 87, 165)'
-		    ],
-		    hoverOffset: 4
-		  }]
-		};
+			  new Chart(ctx, {
+			    type: 'bar',
+			    data: {
+			      labels: projectNameList,
+			      datasets: [{
+			        label: 'N. task',
+			        data: coutnTaskOfProject,
+			        borderWidth: 1
+			      }]
+			    },
+			    options: {
+			      scales: {
+			        y: {
+			          beginAtZero: true
+			        }
+			      }
+			    }
+			  });
+			 }
 		
-		const donut = document.getElementById('donut');
-					
-		new Chart(donut, {
-		  type: 'doughnut',
-		  data: data,
-		  options: {
-		    responsive: true,
-		    plugins: {
-		      legend: {
-		        position: 'top',
-		      },
-		      title: {
-		        display: true,
-		        text: 'Satistica del task'
-		      }
-		    }
-		  },
-		});
-		
-		
-//creazione grafico
-	  const ctx = document.getElementById('myChart');
+			 // TEST ROSA
 
-	  new Chart(ctx, {
-	    type: 'bar',
-	    data: {
-	      labels: projectNameList,
-	      datasets: [{
-	        label: 'N. task',
-	        data: coutnTaskOfProject,
-	        borderWidth: 1
-	      }]
-	    },
-	    options: {
-	      scales: {
-	        y: {
-	          beginAtZero: true
-	        }
-	      }
-	    }
-	  });
-	 }
+			 const api_rosaTest = 'http://localhost:8080/api/statistiche-test'
+
+			 // Make a GET request
+			 fetch(api_rosaTest)
+			   .then(response => {
+			     if (!response.ok) {
+			       throw new Error('Network response was not ok');
+			     }
+			     return response.json();
+			   })
+			   .then(data => {
+			     console.log(data);
+			   })
+			   .catch(error => {
+			     console.error('Error:', error);
+			   });
+
+
+			 // donuts
+			 const data = {
+			   labels: [
+			     'Tempo Stimato',
+			     'Tempo lavorato',
+			     		  ],
+			   datasets: [{
+			     label: 'Percentuale',
+			     data: [50, 100],
+			     backgroundColor: [
+			       'rgb(255, 205, 86)',
+			       'rgb(0, 87, 165)'
+			     ],
+			     hoverOffset: 4
+			   }]
+			 };
+
+			 const donut = document.getElementById('donut');
+			 			
+			 new Chart(donut, {
+			   type: 'doughnut',
+			   data: data,
+			   options: {
+			     responsive: true,
+			     plugins: {
+			       legend: {
+			         position: 'top',
+			       },
+			       title: {
+			         display: true,
+			         text: 'Satistica del task'
+			       }
+			     }
+			   },
+			 });
+		
+		
+
 	

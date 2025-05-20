@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
@@ -165,6 +167,30 @@ public class FreelappRestController {
 		
 		return archProjectList;
 	}
+	
+
+		
+		//metodo che genera una lista di progetti archiviati custom 
+			@GetMapping("/statistiche-test") 
+			public JSONObject TaskJson(){
+			
+				JSONObject JsonObj = new JSONObject();
+				
+
+				JsonObj.put("io" , "Rosa");
+				
+				//JSONArray arrayjs = new JSONArray();
+				
+			//	arrayjs.add("pinco");
+			//	arrayjs.add("pallino");
+			//	arrayjs.add("zuppa");
+			//	arrayjs.add("minestrone");
+				
+			//	JsonObj.put("descrizione lista", arrayjs);
+				
+				return  JsonObj;
+				
+			}
 	
 //	@GetMapping(value = "/task/timeExceed/{id}", produces = MediaType.TEXT_HTML_VALUE)
 //	public String timeExceedError(@PathVariable("id")Integer id, Model model) {
