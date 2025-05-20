@@ -350,7 +350,9 @@
 							</div>
 						</div>
 
-
+						<div th:if="${searchMode == true}" class="p-6 text-center" 
+													th:text="|Risultati per --> '${inputInserito}'|"></div>
+																		
 						<!-- SUPER FLIP CARD -->
 						<div
 							class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-4">

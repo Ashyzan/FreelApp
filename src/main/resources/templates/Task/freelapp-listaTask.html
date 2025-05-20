@@ -341,7 +341,9 @@
 								</div>
 							</div>
 						</section>
-
+						<div th:if="${searchMode == true}" class="p-6 text-center" 
+													th:text="|Risultati per --> '${inputInserito}'|"></div>
+																		
 
 						<!--						ELENCO TASK CON CARD-->
 						<!-- ${taskStat.index} è una sintassi thymeleaf che serve a recuperare dall'elemento dati accesori all'interno dell'elenco come l'index-->
