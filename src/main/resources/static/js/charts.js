@@ -7,7 +7,7 @@ async function getProjectsArchived(){
 		const response = await fetch(api_urlProjectsArchived);
 		const projectsList = await response.json();
 		
-		//creo du earray vuouti che conterrano i dati degli assi del grafico e verrano utilizzati come etichette degli assi
+		//creo due array vuoti che conterrano i dati degli assi del grafico e verrano utilizzati come etichette degli assi
 		const projectNameList = [];
 		const coutnTaskOfProject = [];
 		
