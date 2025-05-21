@@ -176,8 +176,11 @@ public class FreelappRestController {
 			
 				JSONObject JsonObj = new JSONObject();
 				
+				// scrivere una funzione che calcoli il tempo stimato
+				// differenza fra task datachiusurastimata e data inizio
 
-				JsonObj.put("io" , "Rosa");
+				JsonObj.put("tempostimato" , "15");
+				JsonObj.put("tempolavorato" , "2");
 				
 				//JSONArray arrayjs = new JSONArray();
 				

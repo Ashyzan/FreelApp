@@ -3,7 +3,6 @@
 const api_urlProjectsArchived = 'http://localhost:8080/api/statistics/achived-projects'
 
 async function getProjectsArchived(){
-	console.log("sono in getProjectsArchived")
 	
 		const response = await fetch(api_urlProjectsArchived);
 		const projectsList = await response.json();
@@ -47,56 +46,61 @@ async function getProjectsArchived(){
 			 const api_rosaTest = 'http://localhost:8080/api/statistiche-test'
 
 			 // Make a GET request
-			 fetch(api_rosaTest)
+		 fetch(api_rosaTest)
 			   .then(response => {
 			     if (!response.ok) {
 			       throw new Error('Network response was not ok');
 			     }
 			     return response.json();
 			   })
-			   .then(data => {
-			     console.log(data);
+			   .then(datajson => {
+							 
+				 // donuts
+				 		 const data = {
+				 		   labels: [
+				 		     'Tempo Stimato',
+				 		     'Tempo lavorato',
+				 		     		  ],
+				 		   datasets: [{
+				 		     label: 'Percentuale',
+				 		     data: [datajson.tempostimato, datajson.tempolavorato],
+				 		     backgroundColor: [
+				 		       'rgb(0, 87, 165)',
+				 		       'rgb(255, 205, 86)'
+				 		     ],
+				 		     hoverOffset: 4
+				 		   }]
+				 		 };
+						 
+						 // richiamo id ciambella nel file html
+						 const donut = document.getElementById('donut');
+						 // inserisco i data	 			
+						 	 new Chart(donut, {
+						 	   type: 'doughnut',
+						 	   data: data,
+						 	   options: {
+						 	     responsive: true,
+						 	     plugins: {
+						 	       legend: {
+						 	         position: 'top',
+						 	       },
+						 	       title: {
+						 	         display: true,
+						 	         text: 'Satistica del task'
+						 	       }
+						 	     }
+						 	   },
+						 	 });
+						 
 			   })
 			   .catch(error => {
 			     console.error('Error:', error);
 			   });
 
 
-			 // donuts
-			 const data = {
-			   labels: [
-			     'Tempo Stimato',
-			     'Tempo lavorato',
-			     		  ],
-			   datasets: [{
-			     label: 'Percentuale',
-			     data: [50, 100],
-			     backgroundColor: [
-			       'rgb(255, 205, 86)',
-			       'rgb(0, 87, 165)'
-			     ],
-			     hoverOffset: 4
-			   }]
-			 };
+			
 
-			 const donut = document.getElementById('donut');
-			 			
-			 new Chart(donut, {
-			   type: 'doughnut',
-			   data: data,
-			   options: {
-			     responsive: true,
-			     plugins: {
-			       legend: {
-			         position: 'top',
-			       },
-			       title: {
-			         display: true,
-			         text: 'Satistica del task'
-			       }
-			     }
-			   },
-			 });
+		
 		
 		
 
