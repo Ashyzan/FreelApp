@@ -15,7 +15,10 @@
 				extend: {
 					colors: {
 						clifford: '#da373d',
-					}
+					},
+					screens: {
+						xs: '375px'
+					},
 				}
 			}
 		}
@@ -31,8 +34,8 @@
 	<title id="timerTitolo">FreelApp</title>
 </head>
 
-<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart()">
-	<section id="rapidButton" class=" fixed md:top-[80%] top-[65%] right-0">
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart(), showTipologia()">
+	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 			<button
 				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5] ">
 				<div class="t-tooltip col-auto w-8 h-8 ms-2">
@@ -319,7 +322,7 @@
 					<img class="h-[35px] w-[35px]" src="/img/sources/icons/exit.svg" alt="logout">
 				</a>
 			</div>
-			<div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5]">
+			<div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto">
 				<div class="flex flex-col justify-center items-center w-full">
 					<div class="h-12 text-center font-bold items-center m-3">
 						<h1 th:text="|MODIFICA PROGETTO: ${formProgetto.getName()}" |></h1>
@@ -337,6 +340,7 @@
 									<div class=" col md:col-span-2 col-span-3">
 										<input placeholder="Titolo Progetto.." type="text" class="border-red-600 w-full h-8 px-4 rounded-lg bg-gray-100"
 											 id="name" th:field="*{name}" th:errorClass="border">
+										<div id="nomeProgettoError" class="text-red-600 text-[12px] text-center w-full"></div>
 										<div th:if="${#fields.hasErrors('name')}"
 											class="text-red-600 text-[12px] text-center w-full">
 											<ul>
@@ -407,7 +411,7 @@
 												th:text="${cliente.labelCliente}">
 											</option>
 										</select>
-
+										<div id="clienteProgettoError" class="text-red-600 text-[12px] text-center w-full"></div>
 										<div th:if="${#fields.hasErrors('cliente')}"
 											class="text-red-600 text-[12px] text-center w-full">
 											<ul>
@@ -416,9 +420,26 @@
 											</ul>
 										</div>
 									</div>
-
 								</div>
 							</div>
+								<div class="grid md:grid-cols-3 grid-cols-4 mb-4 py-2">
+									<div class="col">
+											<label for="tipologia-select">Tipologia*</label>
+										</div>
+										<div class="col md:col-span-2 col-span-3">
+											<select onchange="tipologiaStatisticaSelect(value)" class="border-red-600 h-8  text-[#0057A5] w-full h-8 ps-4 rounded-lg 
+													bg-gray-100" id="tipologia-select" name="tipologia" th:field="*{tipologia}">
+												<option value="">Seleziona tipologia</option>
+												<option value="budget">Budget</option>
+												<option value="ore">Limite di tempo</option>
+												<option value="tariffa">Tariffa oraria</option>
+											</select>
+											<div id="inputSelectTipologiaError" class="text-red-600 text-[12px] text-center w-full"></div>
+										</div>
+									</div>
+									<div id="contenuto-form-statistiche">
+									
+									</div>
 							<div class="flex justify-around items-center">
 								<button
 									class="shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
@@ -431,20 +452,21 @@
 						</form>
 					</div>
 				</div>
-				<div class="pb-28 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden" id="dettaglio-contatore-bottom">
+				<!-- CONTATORE -->
+				<div class="m-auto pb-44 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden" id="dettaglio-contatore-bottom">
 					<div class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
 						<div class="flex justify-between items-center text-[#0057A5] font-bold">
-							<div id="icona-contatore" class="col-auto ps-3 w-[15%]">
+							<div id="icona-contatore" class="max-xs:hidden col-auto ps-3 w-[15%]">
 								<img class="h-[45px] w-[45px]" src="/img/sources/icons/contatore-blue.svg" alt="contatore">
 							</div>
-							<div th:if="${taskInUso == null}" class="flex flex-col items-center">
+							<div th:if="${taskInUso == null}" class="flex flex-col items-center justify-center w-auto max-xs:ps-4">
 								<div th:unless="${contatoreIsTrue}" class="col-auto text-[14px] p-0">...</div>
 								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
 									class="col-auto text-[14px] p-0"></div>
 								<div class="col-auto text-[24px] p-0" id="timerDue">00:00:00</div>
 							</div>
 							<a th:unless="${taskInUso == null}" th:href="@{|/Task/${taskInUso.id}|}"
-								class="t-tooltip flex flex-col items-center relative w-[45%]">
+								class="t-tooltip flex flex-col items-center relative w-[45%] justify-center w-auto max-xs:ps-4">
 								<div th:unless="${contatoreIsTrue}" class="col-auto text-[14px] p-0">...</div>
 								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
 									class="col-auto text-[14px] text-left p-0 w-full ml-4 truncate"></div>
@@ -454,13 +476,13 @@
 									Dettaglio task
 								</div>
 							</a>
-							<div class="col-auto flex items-center w-[40%]">
+							<div class="col-auto flex items-center w-[40%] max-xs:w-full max-xs:ps-2">
 								<div th:if="${taskInUso == null}" class="mx-2 flex items-center">
 									<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg" alt="stop">
 								</div>
 								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
 									<button id="stopButtonBottom" type="button" class="hover:opacity-75"
-											onclick="creaModaleStop()">
+										onclick="creaModaleStop()">
 										<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg"
 											alt="stop">
 									</button>
@@ -498,7 +520,7 @@
 											method="post">
 											<input type="hidden" name="endPoint" th:value="${endPoint}">
 											<button type="button" class="hover:opacity-75 flex items-center"
-													th:onclick="creaApriModaleStartInInsertEditProgettoMode([[ ${formProgetto.getName()}]])">
+												th:onclick="creaApriModaleStartInInsertEditProgettoMode([[ ${formProgetto.getName()}]])">
 												<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg"
 													alt="start">
 											</button>
@@ -509,6 +531,7 @@
 						</div>
 					</div>
 				</div>
+				<!-- FINE CONTATORE -->
 			</div>
 	</main>
 	
@@ -785,12 +808,17 @@
 		let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
 		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
 		let endPoint =/*[[${endPoint}]]*/null; //String
+		let tipologia =/*[[${tipologia}]]*/null; //String
+		let budgetMonetario =/*[[${budgetMonetario}]]*/null; //double
+		let tariffaOraria =/*[[${tariffaOraria}]]*/null; //double
+		let budgetOre =/*[[${budgetOre}]]*/null; //int
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
 	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 	<script type="text/javascript" th:src="@{/js/timerRapidButton.js}"></script>
+	<script type="text/javascript" th:src="@{/js/insert-edit-Progetto.js}"></script>
 </body>
 
 </html>

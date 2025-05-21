@@ -34,6 +34,8 @@ public interface TaskRepository extends JpaRepository<Task, Integer>, PagingAndS
     		+ "t.progetto.cliente.nameContatto LIKE '%'||:input||'%' OR "
     		+ "t.progetto.cliente.surnameContatto LIKE '%'||:input||'%'")
     public Page<Task> search( String input, Pageable pageable);
+	
+	public List<Task> findByProgettoId(Integer id);
     
     public List<Task> findAll();
     

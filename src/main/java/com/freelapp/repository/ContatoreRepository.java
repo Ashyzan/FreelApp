@@ -6,6 +6,7 @@ import com.freelapp.model.Contatore;
 
 public interface ContatoreRepository extends JpaRepository<Contatore, Integer> {
 	
+	
 
 }
 

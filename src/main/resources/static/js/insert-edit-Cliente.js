@@ -79,7 +79,7 @@ function validation(e){
 	e.preventDefault()
 	let hasPrivatoErrors = false;
 	let hasAziendaErrors = false;
-	let hasContattiErrors = false
+	let hasContattiErrors = false;
 	
 	//anticipazione validazione label cliente
 	if(labelCliente.value.trim().length === 0){

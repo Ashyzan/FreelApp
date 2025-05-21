@@ -1,12 +1,12 @@
 package com.freelapp.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +34,27 @@ import jakarta.validation.Valid;
 public class ProgettoController {
 
 
+	private static final boolean Task = false;
+	
+	//variablili che verranno utilizzate per memorizzare la scelta effettuata durante la sessione
+	public static boolean ordinaElencoProgettiPerData = true;
+
+	public static boolean ordinaElencoProgettiPerCliente = false;
+	
+	//variabile che memorizza l'ultima pagina consultata nella lista Progetti e serve per mantenerla durante la sessione
+	private int currentPageListaProgetti = 1;
+	
+	//variabile che passo al model del search progetti per dirgli che siamo in modalità search
+	private boolean searchMode = false;
+	
+	//variabile che memorizza l'ultima pagina consultata nella ricerca da lista Progetti e serve per mantenerla durante
+	//consultazione del dettaglio prima di tornare alla ricerca o fino a nuova ricerca
+	private int lastVisitedPageInProgettiSearch = 1;
+	
+	//variabile che memorizza l'input inserito nella ricerca da lista Progetti e serve per mantenerlo durante
+	//consultazione del dettaglio prima di tornare alla ricerca o fino a nuova ricerca
+	private String lastInputInProgettiSearch = "";
+
 	@Autowired
 	private ProgettoRepository repositProgetto;
 	  
@@ -57,10 +78,22 @@ public class ProgettoController {
 	
 			@GetMapping("/Progetti")
 			public String listaProgetti(Model model) {
-					
+				
+				//essendo fuori dalla modalità search reinizializzo la varibile
+				searchMode = false;
+				
+				//reinizzializzazione variabili per memorizz input,ultima paginavisitate usate 
+				//nel dettaglio progetto selezionato dalla modalità ricerca
+				lastInputInProgettiSearch = "";
+				lastVisitedPageInProgettiSearch = 1;
+				
 				//passo al model i contatore e task in uso (gli static)
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
+				
+				//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
+				model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
+				model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
 				
 				//invio al model il booleano del contatore attivato
 				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -82,14 +115,20 @@ public class ProgettoController {
 				}
 				model.addAttribute("areProjectsOnDb", areProjectsOnDb);
 				
-				return getOnePage(1, model);
+				//se siamo ad inizio sessione currentPageListaProgetti == 1 altrimenti terrà in memoria l'ultima pagina visitata
+				return getOnePage(currentPageListaProgetti, model);
 			}
 			
 			@GetMapping("/Progetti/page/{pageNumber}")
 			public String getOnePage(@PathVariable("pageNumber") int currentPage, Model model ) {
 					
+					//aggiorna la variabile che memorizza l'ultima pagina visitata
+					currentPageListaProgetti = currentPage;
 					
-					
+					//essendo fuori dalla modalità search reinizializzo la varibile
+					searchMode = false;
+					model.addAttribute("searchMode", searchMode);
+		
 					// ordina i progetti per data di inizio
 					Page<Progetto> pageByDataInizio = progettoService.orderByDataInizio(currentPage);
 					int totalPageByDataInizio = pageByDataInizio.getTotalPages();	
@@ -132,6 +171,10 @@ public class ProgettoController {
 					//invio al model il booleano del contatore attivato
 					//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 					model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+					
+					//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
+					model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
+					model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
 		
 					//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 					ContatoreController.contatoreAttivato = false;
@@ -157,6 +200,10 @@ public class ProgettoController {
 			
 			@GetMapping("/progetto-search")
 			public String listaProgettiSearch(@Param("input") String input, Model model) {
+
+				//passo al model questo booleano per dirgli che siamo in modalità search
+				searchMode = true;
+				model.addAttribute("searchMode", searchMode);
 				
 				//passo al model i contatore e task in uso (gli static)
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
@@ -165,9 +212,13 @@ public class ProgettoController {
 				//invio al model il booleano del contatore attivato
 				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+				
+				//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
+				model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
+				model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
 		
 				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
-//				ContatoreController.contatoreAttivato = false;
+				//ContatoreController.contatoreAttivato = false;
 				
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
@@ -185,14 +236,28 @@ public class ProgettoController {
 				}
 				model.addAttribute("areProjectsOnDb", areProjectsOnDb);
 				
-				return progettoBySearch(1, input, model);
+				
+				//assegnazione variabile per memorizz input che sarà usata nel dettaglio progetto selezionato dalla modalità ricerca
+				lastInputInProgettiSearch = input;
+				lastVisitedPageInProgettiSearch = 1;
+				
+				return progettoBySearch(lastVisitedPageInProgettiSearch, input, model);
 			} 
 				 
-			 @GetMapping("/progetto-search/page/{numberPage}")
-			 public String progettoBySearch(@PathVariable("pageNumber") int currentPage, String input,
+			 @GetMapping("/progetto-search-input={input}/page/{numberPage}")
+			 public String progettoBySearch(@PathVariable("numberPage") int currentPage, @PathVariable("input") String input,
 					 	Model model) {
+				 
+				 	//passo al model l'input inserito per mostrare all'utente cosa ha inserito come input
+				 	model.addAttribute("inputInserito", input);				 
+				 	//passo al model questo booleano per dirgli che siamo in modalità search
+				 	searchMode = true;
+				 	model.addAttribute("searchMode", searchMode);
+				 	
+				 	//assegnazione variabile per memorizz pagina corrente che sarà usata nel dettaglio progetto selezionato dalla modalità ricerca
+				 	lastVisitedPageInProgettiSearch = currentPage;
 
-				 // ordina i progetti per data di inizio
+				 	// ordina i progetti per data di inizio
 					Page<Progetto> pageByDataInizio = progettoService.findSearchedPageByDataInizio(currentPage,input);
 					int totalPageByDataInizio = pageByDataInizio.getTotalPages();	
 					long totalItemByDatainizio = pageByDataInizio.getTotalElements();		
@@ -205,10 +270,12 @@ public class ProgettoController {
 					List<Progetto> listProgettiByCliente = pageByCliente.getContent();
 					
 					model.addAttribute("currentPage", currentPage);
+					
 					// passaggio al model delle liste per data inizio
 					model.addAttribute("listProgettiByDataInizio", listProgettiByDataInizio);					
 					model.addAttribute("totalPageByDataInizio", totalPageByDataInizio);					
 					model.addAttribute("totalItemByDatainizio", totalItemByDatainizio);
+					
 					// passaggio al model delle liste per cliente
 					model.addAttribute("listProgettiByCliente", listProgettiByCliente);					
 					model.addAttribute("totalPageByCliente", totalPageByCliente);					
@@ -233,6 +300,10 @@ public class ProgettoController {
 					//invio al model il booleano del contatore attivato
 					//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 					model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+					
+					//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
+					model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
+					model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
 		
 					//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 					ContatoreController.contatoreAttivato = false;
@@ -258,8 +329,9 @@ public class ProgettoController {
 	
 			@GetMapping("/Progetti/{id}")
 			public String descrizioneProgetto(@PathVariable("id") int progettoId, Model model) {
-		
-				model.addAttribute("progetto", repositProgetto.getReferenceById(progettoId));
+				Progetto progetto = repositProgetto.getReferenceById(progettoId);
+				
+				model.addAttribute("progetto", progetto);
 				
 				//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
 				String endPoint = "/Progetti/" + repositProgetto.getReferenceById(progettoId).getId();
@@ -285,6 +357,20 @@ public class ProgettoController {
 				List<Task> taskList = new ArrayList<Task> ();
 				taskList = repositTask.findAllNotClosed();
 				model.addAttribute("taskList", taskList);
+				
+				//passa a modello nel caso in base alla tipologia i risultati delle statistiche
+				progettoService.calcoloStatisticheTipologiaFromProgettoToModel(progetto, model);
+				
+				//se si arriva al dettaglio progetto dalla ricerca su lista progetti passo al model
+				// questo booleano per dirgli che siamo in modalità search, l'ultima pagina visita in search 
+				//e l'input inserito (variabili inizializzata ad inizio controller) che verranno usati nel button dedicato
+				//per tornare alla ricerca
+				if(searchMode == true) {
+					model.addAttribute("searchMode", searchMode);
+					model.addAttribute("lastVisitedPageInProgettiSearch", lastVisitedPageInProgettiSearch);
+					model.addAttribute("lastInputInProgettiSearch", lastInputInProgettiSearch);
+				}
+				
 				
 				return "/Progetti/freelapp-descrizioneProgetto";
 		   }
@@ -330,6 +416,17 @@ public class ProgettoController {
 				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 				ContatoreController.contatoreAttivato = false;
 				
+				//metodo che passa al model i valori inerenti la tipologia progetto per le statistiche
+				progettoService.tipologiaFromProgettoToModel(formProgetto, model);
+				
+				//restituisce al model questo valore booleano false se non ci sono clienti a db
+				//e restituisce true se ci sono clienti a db
+				boolean areClientsOnDb = false;
+				if(!repositClient.findAll().isEmpty()) {
+					areClientsOnDb = true;
+				}
+				model.addAttribute("areClientsOnDb", areClientsOnDb);
+				
 				return "/Progetti/freelapp-insertProgetto";
 			}
 	
@@ -362,6 +459,9 @@ public class ProgettoController {
 						List<Task> taskList = new ArrayList<Task> ();
 						taskList = repositTask.findAllNotClosed();
 						model.addAttribute("taskList", taskList);
+						
+						//metodo che passa al model i valori inerenti la tipologia progetto per le statistiche
+						progettoService.tipologiaFromProgettoToModel(formProgetto, model);
 					
 			    	    return "/Progetti/freelapp-insertProgetto";
 					
@@ -414,6 +514,9 @@ public class ProgettoController {
 				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 				ContatoreController.contatoreAttivato = false;
 				
+				//metodo che passa al model i valori inerenti la tipologia progetto per le statistiche
+				progettoService.tipologiaFromProgettoToModel(formProgetto, model);
+				
 				return "/Progetti/freelapp-editProgetto";
 			}
 			
@@ -440,6 +543,9 @@ public class ProgettoController {
 					List<Task> taskList = new ArrayList<Task> ();
 					taskList = repositTask.findAllNotClosed();
 					model.addAttribute("taskList", taskList);
+					
+					//metodo che passa al model i valori inerenti la tipologia progetto per le statistiche
+					progettoService.tipologiaFromProgettoToModel(formProgetto, model);
 					
 					return  "/Progetti/freelapp-editProgetto";
 				}
@@ -661,5 +767,55 @@ public class ProgettoController {
 						
 				return "/Progetti/freelApp-archivioProgetti";
 			}
+			 
+			 
+			@PostMapping("/Progetti/chiudi/{id}")
+			public String chiudiProgetto(@PathVariable("id") Integer id, Model model) {
+				
+				Progetto progetto = repositProgetto.findById(id).get();
+				
+				
+				//Creo una lista di tutti i task del progetto
+				List<Task> taskProgettoList = new ArrayList<Task>();
+				taskProgettoList = repositTask.findByProgettoId(id);
+				
+				//metodo del service che mette in pausa e in stop tutti i contatori attivi 
+				//del progetto da chiudere
+				contatoreservice.pauseAndStopTimersForClosingProject(taskProgettoList);
+				
+				//per ogni task del progetto da chiudere viene settato lo stato in chiuso e la data di 
+				//chiusura definitiva
+				taskProgettoList.forEach(task -> {
+					task.setStato("chiuso");
+					task.setDataChiusuraDefinitiva(LocalDate.now());
+					repositTask.save(task);
+				});
+				
+				progetto.setDataFine(LocalDate.now());
+				progetto.setDataModifica(LocalDateTime.now());
+				repositProgetto.save(progetto);
+				
+				//tolgo dallo static il task/contatore che erano in uso se appartenenti al progetto chiuso
+				ContatoreController.contatoreInUso = null;
+				ContatoreController.taskInUso = null;
+				
+				return "redirect:/Progetti";
+				
+			}
+			
+			@PostMapping("/Progetti/apri/{id}")
+			public String apriProgetto(@PathVariable("id") Integer id, Model model) {
+				
+				Progetto progetto = repositProgetto.findById(id).get();
+				//setta la data di fine progetto = null così da essere aperto di nuovo
+				progetto.setDataFine(null);
+				progetto.setDataModifica(LocalDateTime.now());
+				repositProgetto.save(progetto);
+				
+				return "redirect:/Progetti";
+				
+			}
+			
+			
 			
 }

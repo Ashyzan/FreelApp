@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -127,6 +128,24 @@ public class FreelappRestController {
 		
 		return taskListOreLavorate;
 	}
+	
+	@GetMapping("/progetti/cambiaOrdinePerCliente")
+			public void cambiaOrdinePerCliente() {
+				//cambia il valore delle variabili inizializzate ad inizio controller al click dell'icona
+				//ordina per clienti sul template listaPorogetti
+				ProgettoController.ordinaElencoProgettiPerCliente = true;
+				ProgettoController.ordinaElencoProgettiPerData = false;
+				
+			}
+	
+	@GetMapping("/progetti/cambiaOrdinePerData")
+			public void cambiaOrdinePerData() {
+				//cambia il valore delle variabili inizializzate ad inizio controller al click dell'icona
+				//ordina per clienti sul template listaPorogetti
+				ProgettoController.ordinaElencoProgettiPerCliente = false;
+				ProgettoController.ordinaElencoProgettiPerData = true;
+				
+			}
 	
 //	@GetMapping(value = "/task/timeExceed/{id}", produces = MediaType.TEXT_HTML_VALUE)
 //	public String timeExceedError(@PathVariable("id")Integer id, Model model) {

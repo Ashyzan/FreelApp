@@ -48,6 +48,20 @@ import jakarta.validation.Valid;
 @Controller
 @ControllerAdvice //  serve per la gestione degli errori di maxSize file
 public class ClientController {
+	
+	//variabile che memorizza l'ultima pagina consultata nella lista Clienti serve per mantenerla durante la sessione
+	private int currentPageListaClienti = 1;
+	
+	//variabile che passo al model del search clienti per dirgli che siamo in modalità search
+	private boolean searchMode = false;
+	
+	//variabile che memorizza l'ultima pagina consultata nella ricerca da lista Clienti e serve per mantenerla durante
+	//consultazione del dettaglio prima di tornare alla ricerca o fino a nuova ricerca
+	private int lastVisitedPageInClientiSearch = 1;
+	
+	//variabile che memorizza l'input inserito nella ricerca da lista Clienti e serve per mantenerlo durante
+	//consultazione del dettaglio prima di tornare alla ricerca o fino a nuova ricerca
+	private String lastInputInClientiSearch = "";
 
 	@Autowired
 	private ClienteRepository repositoryCliente;
@@ -78,6 +92,15 @@ public class ClientController {
 	@GetMapping("/Clienti")
 	public String listaClienti(Model model) {
 		
+		//essendo fuori dalla modalità search reinizializzo la varibile
+		searchMode = false;
+		model.addAttribute("searchMode", searchMode);
+		
+		//reinizzializzazione variabili per memorizz input,ultima paginavisitate usate 
+		//nel dettaglio progetto selezionato dalla modalità ricerca
+		lastInputInClientiSearch = "";
+		lastVisitedPageInClientiSearch = 1;
+		
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
@@ -102,12 +125,20 @@ public class ClientController {
 		}
 		model.addAttribute("areClientsOnDb", areClientsOnDb);
 		
-		return getOnePage(1, model );
+		//se siamo ad inizio sessione currentPageListaClienti == 1 altrimenti terrà in memoria l'ultima pagina visitata
+		return getOnePage(currentPageListaClienti, model );
 	} 
 	
 	
 	@GetMapping("/Clienti/page/{pageNumber}")
 	public String getOnePage(@PathVariable("pageNumber") int currentPage, Model model ) {
+		
+		//aggiorna la variabile che memorizza l'ultima pagina visitata
+		currentPageListaClienti = currentPage;
+					
+		//essendo fuori dalla modalità search reinizializzo la varibile
+		searchMode = false;
+		model.addAttribute("searchMode", searchMode);
 		
 		Page<Cliente> page = clienteService.findPage(currentPage);
 		
@@ -170,6 +201,10 @@ public class ClientController {
 	@GetMapping("/cliente-search")
 	public String listaClientiSearch(@Param("input") String input,Model model) {
 		
+		//passo al model questo booleano per dirgli che siamo in modalità search
+		searchMode = true;
+		model.addAttribute("searchMode", searchMode);
+		
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
@@ -194,70 +229,86 @@ public class ClientController {
 		}
 		model.addAttribute("areClientsOnDb", areClientsOnDb);
 		
-		return clienteBySearch(1, input, model);
+		//assegnazione variabile per memorizz input che sarà usata nel dettaglio progetto selezionato dalla modalità ricerca
+		lastInputInClientiSearch = input;
+		lastVisitedPageInClientiSearch = 1;
+		
+		return clienteBySearch(lastVisitedPageInClientiSearch, input, model);
 	} 
 		 
-	 @GetMapping("/cliente-search/page/{numberPage}")
-	 public String clienteBySearch(@PathVariable("pageNumber") int currentPage, String input,
+	 @GetMapping("/cliente-search-input={input}/page/{numberPage}")
+	 public String clienteBySearch(@PathVariable("numberPage") int currentPage, @PathVariable("input") String input,
 			 	Model model) {
 				 
-				 Page<Cliente> page = clienteService.findSearchedPage(currentPage,input);
-
-				 int totalPages = page.getTotalPages();
-				 
-				 long totalItems = page.getTotalElements();
-				 
-				 List<Cliente> listaClientiSearch = page.getContent();
-				
-				model.addAttribute("currentPage", currentPage);
+			// passo al model l'input inserito per mostrare all'utente cosa ha inserito come
+			// input
+			model.addAttribute("inputInserito", input);
+			// passo al model questo booleano per dirgli che siamo in modalità search
+			searchMode = true;
+			model.addAttribute("searchMode", searchMode);
 			
-				model.addAttribute("totalPages", totalPages);
-				
-				model.addAttribute("totalItems", totalItems);
-				
-				model.addAttribute("list", listaClientiSearch);	
-				
-				contatoreservice.importContatoreInGet(model);
-				
-				//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
-				if(input != null) {
-					String endPoint = "/cliente-search?input=" + input;
-					
-					model.addAttribute("endPoint", endPoint);						
-				} else {
-					String endPoint = "/cliente-search";
-					model.addAttribute("endPoint", endPoint);	
-				}
-				
-				//passo al model i contatore e task in uso (gli static)
-				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
-				model.addAttribute("taskInUso", ContatoreController.taskInUso);
-				
-				//invio al model il booleano del contatore attivato
-				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
-				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
-		
-				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
-				ContatoreController.contatoreAttivato = false;
-				
-				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
-				taskService.informationFromTaskInUsoToModel(model);
-				
-				//passa al model la lista di tutti i task esclusi quelli chiusi
-				List<Task> taskList = new ArrayList<Task> ();
-				taskList = repositTask.findAllNotClosed();
-				model.addAttribute("taskList", taskList);
-				
-				//restituisce al model questo valore booleano false se non ci sono clienti a db
-				//e restituisce true se ci sono clienti a db
-				boolean areClientsOnDb = false;
-				if(!repositoryCliente.findAll().isEmpty()) {
-					areClientsOnDb = true;
-				}
-				model.addAttribute("areClientsOnDb", areClientsOnDb);
-				
-				return "Clienti/freelApp-listClient";
-		 
+			//assegnazione variabile per memorizz pagina corrente che sarà usata nel dettaglio progetto selezionato dalla modalità ricerca
+			lastVisitedPageInClientiSearch = currentPage;
+
+			Page<Cliente> page = clienteService.findSearchedPage(currentPage, input);
+
+			int totalPages = page.getTotalPages();
+
+			long totalItems = page.getTotalElements();
+
+			List<Cliente> listaClientiSearch = page.getContent();
+
+			model.addAttribute("currentPage", currentPage);
+
+			model.addAttribute("totalPages", totalPages);
+
+			model.addAttribute("totalItems", totalItems);
+
+			model.addAttribute("list", listaClientiSearch);
+
+			contatoreservice.importContatoreInGet(model);
+
+			// passo al model l'endpoint da dare come input hidden a start/pause/stop del
+			// contatore
+			if (input != null) {
+				String endPoint = "/cliente-search?input=" + input;
+
+				model.addAttribute("endPoint", endPoint);
+			} else {
+				String endPoint = "/cliente-search";
+				model.addAttribute("endPoint", endPoint);
+			}
+
+			// passo al model i contatore e task in uso (gli static)
+			model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+			model.addAttribute("taskInUso", ContatoreController.taskInUso);
+
+			// invio al model il booleano del contatore attivato
+			// se contatoreAttivato = true avvio animazione su titolo task al contatore;
+			model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+
+			// inizializzo a false così che al refresh o cambio pagina non esegue animazione
+			// ma solo allo start
+			ContatoreController.contatoreAttivato = false;
+
+			// metodo che passa al model le informazioni sul task in uso per generare la
+			// modale STOP
+			taskService.informationFromTaskInUsoToModel(model);
+
+			// passa al model la lista di tutti i task esclusi quelli chiusi
+			List<Task> taskList = new ArrayList<Task>();
+			taskList = repositTask.findAllNotClosed();
+			model.addAttribute("taskList", taskList);
+
+			// restituisce al model questo valore booleano false se non ci sono clienti a db
+			// e restituisce true se ci sono clienti a db
+			boolean areClientsOnDb = false;
+			if (!repositoryCliente.findAll().isEmpty()) {
+				areClientsOnDb = true;
+			}
+			model.addAttribute("areClientsOnDb", areClientsOnDb);
+
+			return "Clienti/freelApp-listClient";
 		 
 	  }	
 	
@@ -290,6 +341,16 @@ public class ClientController {
 		List<Task> taskList = new ArrayList<Task> ();
 		taskList = repositTask.findAllNotClosed();
 		model.addAttribute("taskList", taskList);
+		
+		//se si arriva al dettaglio progetto dalla ricerca su lista clienti passo al model
+		// questo booleano per dirgli che siamo in modalità search, l'ultima pagina visita in search 
+		//e l'input inserito (variabili inizializzata ad inizio controller) che verranno usati nel button dedicato
+		//per tornare alla ricerca
+				if(searchMode == true) {
+					model.addAttribute("searchMode", searchMode);
+					model.addAttribute("lastVisitedPageInProgettiSearch", lastVisitedPageInClientiSearch);
+					model.addAttribute("lastInputInProgettiSearch", lastInputInClientiSearch);
+				}
 	
 		return "/Clienti/freelapp-descrizioneCliente";
 	  }

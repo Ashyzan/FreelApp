@@ -78,6 +78,10 @@ public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, Pa
 
 		public Page<Progetto> findByArchivia(boolean i, Pageable pageable2);
 		
+		
+		@Query("SELECT p FROM Progetto p WHERE p.dataFine IS NULL")
+		public List<Progetto> findByActiveProject();
+		
 		public List<Progetto>findByArchivia(boolean value);
 	    
 }

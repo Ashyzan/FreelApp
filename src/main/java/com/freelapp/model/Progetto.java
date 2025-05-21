@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +19,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,6 +32,7 @@ public class Progetto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "progetto_id")
 	private int id;
 	
 	@Column(name = "DenominazioneProgetto", nullable = false)
@@ -58,6 +62,22 @@ public class Progetto {
 	@Column(name = "DataFine")
 	private LocalDate dataFine;
 	
+	@Column(name = "Tipologia", nullable = false)
+	@NotNull(message = "Scelta tipologia obbligatoria")
+	private String tipologia;
+	
+	@Column(name = "Budget_monetario")
+	private double budgetMonetario = 0.00;
+	
+	@Column(name = "Tariffa_oraria")
+	private double tariffaOraria = 0.00;
+	
+	@Column(name = "Budget_ore")
+	private int budgetOre = 0;
+	
+	@Column(name = "Guadagno_effettivo")
+	private double guadagnoEffettivo;
+	
 	@OneToMany(mappedBy = "progetto")
 	@JsonManagedReference
 	@JsonIgnore
@@ -72,6 +92,47 @@ public class Progetto {
 	@JoinColumn(name = "UtenteRif", nullable = false)
 	private User utente;
 	
+	
+	public String getTipologia() {
+		return tipologia;
+	}
+
+	public void setTipologia(String tipologia) {
+		this.tipologia = tipologia;
+	}
+
+	public double getBudgetMonetario() {
+		return budgetMonetario;
+	}
+
+	public void setBudgetMonetario(double budgetMonetario) {
+		this.budgetMonetario = budgetMonetario;
+	}
+
+	public double getTariffaOraria() {
+		return tariffaOraria;
+	}
+
+	public void setTariffaOraria(double tariffaOraria) {
+		this.tariffaOraria = tariffaOraria;
+	}
+
+	public int getBudgetOre() {
+		return budgetOre;
+	}
+
+	public void setBudgetOre(int budgetOre) {
+		this.budgetOre = budgetOre;
+	}
+
+	public double getGuadagnoEffettivo() {
+		return guadagnoEffettivo;
+	}
+
+	public void setGuadagnoEffettivo(double guadagnoEffettivo) {
+		this.guadagnoEffettivo = guadagnoEffettivo;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -79,6 +140,8 @@ public class Progetto {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+
 
 	public String getName() {
 		return name;
