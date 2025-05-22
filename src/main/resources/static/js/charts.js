@@ -43,7 +43,7 @@ async function getProjectsArchived(){
 		
 			 // TEST ROSA
 
-			 const api_rosaTest = 'http://localhost:8080/api/statistiche-test'
+			 const api_rosaTest = 'http://localhost:8080/api/statistiche-test/13'
 
 			 // Make a GET request
 		 fetch(api_rosaTest)
@@ -54,7 +54,8 @@ async function getProjectsArchived(){
 			     return response.json();
 			   })
 			   .then(datajson => {
-							 
+							 console.log("finaltime" + datajson.finaltime);
+							 console.log("tempolavorato" + datajson.tempolavorato);
 				 // donuts
 				 		 const data = {
 				 		   labels: [
@@ -63,7 +64,7 @@ async function getProjectsArchived(){
 				 		     		  ],
 				 		   datasets: [{
 				 		     label: 'Percentuale',
-				 		     data: [datajson.tempostimato, datajson.tempolavorato],
+				 		     data: [datajson.finaltime, datajson.tempolavorato],
 				 		     backgroundColor: [
 				 		       'rgb(0, 87, 165)',
 				 		       'rgb(255, 205, 86)'

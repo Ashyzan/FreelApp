@@ -169,17 +169,19 @@ public class FreelappRestController {
 	}
 	
 
-		
 		//metodo che genera una lista di progetti archiviati custom 
-			@GetMapping("/statistiche-test") 
-			public JSONObject TaskJson(){
+			@GetMapping("/statistiche-test/{id}") 
+			public JSONObject TaskJson(@PathVariable("id") Integer id){
+				
+				Task task = taskRepository.getReferenceById(id);
+				Long finalTime = task.getContatore().getFinaltime();
 			
 				JSONObject JsonObj = new JSONObject();
 				
 				// scrivere una funzione che calcoli il tempo stimato
 				// differenza fra task datachiusurastimata e data inizio
 
-				JsonObj.put("tempostimato" , "15");
+				JsonObj.put("finaltime" ,finalTime);
 				JsonObj.put("tempolavorato" , "2");
 				
 				//JSONArray arrayjs = new JSONArray();
