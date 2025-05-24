@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
@@ -21,6 +22,9 @@ import com.freelapp.model.Task;
 import com.freelapp.repository.TaskRepository;
 import com.freelapp.restModel.RestTask;
 import com.freelapp.service.ContatoreService;
+import com.freelapp.service.TaskService;
+
+
 
 
 @RestController
@@ -33,6 +37,9 @@ public class FreelappRestController {
 	
 	@Autowired
 	private ContatoreService contatoreService;
+	
+	@Autowired
+	private TaskService taskService;
 	
 	@GetMapping("/task/{id}")
 	public Optional<RestTask> get(@PathVariable("id") Integer id){
@@ -146,6 +153,43 @@ public class FreelappRestController {
 				ProgettoController.ordinaElencoProgettiPerData = true;
 				
 			}
+	
+// *********************** API PER STATISTICHE **************************
+	
+	//api che ritorna json con statistiche dettaglio task
+	@GetMapping("/statistiche-dettaglio-task/{id}") 
+	public JSONObject TaskJson(@PathVariable("id") Integer id){
+				
+		Task task = taskRepository.getReferenceById(id);
+		
+		String guadagnoAttualeTask = null;
+		String pauseTask = null;
+		//verifico se il task ha il contatore calcolo il guadagno altrimenti informo utente che non ha contatore attivo
+		if(task.getContatore() != null) {
+			guadagnoAttualeTask = taskService.calcoloGuadagnoTaskDaFinalTime(task) + " €";
+			pauseTask = String.valueOf(task.getContatore().getStop_numbers());
+		} else {
+			guadagnoAttualeTask = "Task non avviato";
+			pauseTask = "-";
+		}
+		
+		//recupero pauseTask
+			
+		//creazione json
+		JSONObject JsonObj = new JSONObject();
+				
+		JsonObj.put("guadagnoAttualeTask" , guadagnoAttualeTask);
+		JsonObj.put("pauseTask", pauseTask);
+		
+		return JsonObj;
+				
+	}
+	
+	
+	
+	
+	
+	
 	
 //	@GetMapping(value = "/task/timeExceed/{id}", produces = MediaType.TEXT_HTML_VALUE)
 //	public String timeExceedError(@PathVariable("id")Integer id, Model model) {

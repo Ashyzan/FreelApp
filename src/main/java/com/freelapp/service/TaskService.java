@@ -1,5 +1,6 @@
 package com.freelapp.service;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -76,6 +77,30 @@ public class TaskService {
 		model.addAttribute("taskInUsoId", taskInUsoId);
 		model.addAttribute("taskInUsoName", taskInUsoName);
 		model.addAttribute("taskInUsoProgetto", taskInUsoProgetto);
+	}
+	
+	
+// ******************** METODI PER CALCOLO STATISTICHE ************************************
+	
+	//metodo per calcolare il guadagno di un task riferito all'ultima finalTime salvata a DB
+	public String calcoloGuadagnoTaskDaFinalTime(Task task) {
+		
+		Long finalTimeAttuale = task.getContatore().getFinaltime();
+		
+		double finalTimeAttualeInOre = (finalTimeAttuale.doubleValue() / 3600);
+		System.out.println("finalTimeAttualeInOre: " + finalTimeAttualeInOre);
+		
+		double tariffaOrariaProgetto = task.getProgetto().getTariffaOraria();
+		System.out.println("tariffaOrariaProgetto: " + tariffaOrariaProgetto);
+
+		double guadagnoTemporaneoTask = (finalTimeAttualeInOre*tariffaOrariaProgetto);
+		System.out.println("guadagnoTemporaneoTask: " + guadagnoTemporaneoTask);
+		
+		DecimalFormat guadagnoTemporaneoTaskFormattato = new DecimalFormat("0.00");
+		
+		String guadagnoTemporaneoTaskToString = String.valueOf(guadagnoTemporaneoTaskFormattato.format(guadagnoTemporaneoTask));
+	
+		return guadagnoTemporaneoTaskToString;
 	}
 	
 }
