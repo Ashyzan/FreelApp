@@ -4,7 +4,10 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -88,13 +91,13 @@ public class TaskService {
 		Long finalTimeAttuale = task.getContatore().getFinaltime();
 		
 		double finalTimeAttualeInOre = (finalTimeAttuale.doubleValue() / 3600);
-		System.out.println("finalTimeAttualeInOre: " + finalTimeAttualeInOre);
+		//System.out.println("finalTimeAttualeInOre: " + finalTimeAttualeInOre);
 		
 		double tariffaOrariaProgetto = task.getProgetto().getTariffaOraria();
-		System.out.println("tariffaOrariaProgetto: " + tariffaOrariaProgetto);
+		//System.out.println("tariffaOrariaProgetto: " + tariffaOrariaProgetto);
 
 		double guadagnoTemporaneoTask = (finalTimeAttualeInOre*tariffaOrariaProgetto);
-		System.out.println("guadagnoTemporaneoTask: " + guadagnoTemporaneoTask);
+		//System.out.println("guadagnoTemporaneoTask: " + guadagnoTemporaneoTask);
 		
 		DecimalFormat guadagnoTemporaneoTaskFormattato = new DecimalFormat("0.00");
 		
@@ -103,4 +106,38 @@ public class TaskService {
 		return guadagnoTemporaneoTaskToString;
 	}
 	
+	//metodo che restituisce se in linea o no rispetto chiusura prevista
+	public Map<String, Long> inLineaConChiusuraStimata(Task task) {
+		
+			Map<String, Long> statisticheChiusuraStimata = new HashMap<String, Long>();
+		
+			//calcolo dei giorni totali tra data inizio e fine stimata
+			LocalDate dataChiusuraStimata = task.getDataChiusuraStimata();
+			LocalDate dataInizio = task.getDataInizio();
+			long giorniTotali = dataInizio.until(dataChiusuraStimata, ChronoUnit.DAYS);
+			//System.out.println("giorni disponibili : " + giorniTotali);
+			
+			//calcolo dei giorni ancora disponibili o in eccesso
+			LocalDate dataAttuale = LocalDate.now();
+			long giorniInEccesso = 0;
+			long giorniAncoraDisponibili = 0;
+			long calcoloGiorniAncoraDisponibili = dataAttuale.until(dataChiusuraStimata, ChronoUnit.DAYS);
+			if(calcoloGiorniAncoraDisponibili >= 0) {
+				giorniAncoraDisponibili = calcoloGiorniAncoraDisponibili;
+			} else {
+				giorniInEccesso = Math.abs(calcoloGiorniAncoraDisponibili);
+				
+			}
+			
+			//System.out.println("giorni ancora diponibili: " + giorniAncoraDisponibili);
+			
+			//riempimento dell'HashMap
+			statisticheChiusuraStimata.put("giorniTotaliStimati", giorniTotali);
+			statisticheChiusuraStimata.put("giorniAncoraDisponibili", giorniAncoraDisponibili);
+			statisticheChiusuraStimata.put("giorniOltreChiusuraStimata", giorniInEccesso);
+			
+			//System.out.println("giorniChiusuraStimata MAP: " + statisticheChiusuraStimata);
+			
+			return statisticheChiusuraStimata;
+	}
 }

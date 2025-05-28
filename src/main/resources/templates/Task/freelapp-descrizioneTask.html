@@ -330,7 +330,7 @@
 <div id="main-section"
 				class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto">
 
-<div class="md:w-4/5 grid lg:grid-cols-2 md:grid-cols-1 md:ms-20 ">
+<div class="md:w-11/12 grid lg:grid-cols-2 md:grid-cols-1">
 <!-- 	prima column -->
 			<div
 				class="gap-4 rounded-lg bg-gray-100 p-6 m-3 shadow-lg">
@@ -405,15 +405,29 @@
 			</div>
 <!-- 			second column -->
 			<div class="gap-4 rounded-lg bg-gray-100 p-6 m-3 shadow-lg">
-				<h3 class="text-center text-[#0057A5] text-xl font-bold">Statistiche</h3>
-				<div class="grid grid-cols-3 mb-2 py-2 px-3">
-					<div class="col font-bold pe-1 py-1">Guadagno Attuale</div>
-					<div class="md:ms-20 col col-span-2 py-1" id="guadagnoAttualeTask"></div>
-					<div class="col font-bold pe-1 py-1">Numero pause</div>
-					<div class="md:ms-20 col col-span-2 py-1" id="pauseTask"></div>
+				<h3 class="text-center text-[#FFE641] text-xl font-bold mb-4">Statistiche</h3>
+				<div class="grid grid-cols-2 mb-2 py-2 px-3 border-b-4">
+					<div class="col border-r-2">
+						<div class="text-center font-bold">Guadagno Attuale</div>
+						<div class="text-center" id="guadagnoAttualeTask"
+							th:text="${guadagnoAttualeTask}"></div>
+					</div>
+					<div class="col border-l-2">
+						<div class="text-center font-bold">Numero pause</div>
+						<div class="text-center" id="pauseTask" th:text="${pauseTask}"></div>
+					</div>
+					
+					<div th:if="${dataChiusuraStimataNonDisponibile != null}" class="border-b-4">
+						<div class="col font-bold pe-1 py-1">Chiusura Stimata</div>
+						<div class="md:ms-20 col col-span-2 py-1" id="pauseTask"
+							th:text="${dataChiusuraStimataNonDisponibile}"></div>
+					</div>
 				</div>
-				<canvas class="m-auto border border-red-300 w-4/5 h-auto" id="myChart"></canvas>
-				<div class="text-center">I dati visualizzati sono riferiti all'ultima pausa.</div>
+				<div th:unless="${dataChiusuraStimataNonDisponibile != null}" class="border-b-4">
+					<div id="contenitoreGiorniChiusuraStimata"></div>
+				</div>
+				<canvas class="m-auto w-auto h-[250px]" id="myChart"></canvas>
+				<div class="text-center text-xs pt-3">I dati visualizzati sono riferiti all'ultima pausa</div>
 			</div>
 			</div>
 <!-- CONTATORE -->
@@ -841,6 +855,8 @@
 				let taskInUsoId = /*[[${taskInUsoId}]]*/ null;
 				let taskInUsoName = /*[[${taskInUsoName}]]*/ null;
 				let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
+				let dataInizioTask = /*[[${#temporals.format(task.getDataInizio(),'dd MMM yyyy')}]]*/ null;
+				let dataFineStimata = /*[[${#temporals.format(task.getDataChiusuraStimata(),'dd MMM yyyy')}]]*/ null;
 				/*]]>*/
 			</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>

@@ -348,6 +348,27 @@ public class TaskController {
 			model.addAttribute("lastVisitedPageInTaskSearch", lastVisitedPageInTaskSearch);
 			model.addAttribute("lastInputInTaskSearch", lastInputInTaskSearch);
 		}
+		
+		//sezione che manda al model le statistiche(non grafici)
+		String guadagnoAttualeTask = null;
+		String pauseTask = null;
+		//verifico se il task ha il contatore calcolo il guadagno altrimenti informo utente che non ha contatore attivo
+		if(task.getContatore() != null) {
+			guadagnoAttualeTask = taskService.calcoloGuadagnoTaskDaFinalTime(task) + " €";
+			pauseTask = String.valueOf(task.getContatore().getStop_numbers());
+		} else {
+			guadagnoAttualeTask = "Task non avviato";
+			pauseTask = "-";
+		}
+		
+		model.addAttribute("guadagnoAttualeTask", guadagnoAttualeTask);
+		model.addAttribute("pauseTask", pauseTask);
+		
+		if(task.getDataChiusuraStimata() == null) {
+			String dataChiusuraStimataNonDisponibile =  "Inserire data di chiusura stimata per il calcolo";
+			model.addAttribute("dataChiusuraStimataNonDisponibile", dataChiusuraStimataNonDisponibile);
+		} else {taskService.inLineaConChiusuraStimata(task);}
+		
 	
 	return "/Task/freelapp-descrizioneTask";
     }

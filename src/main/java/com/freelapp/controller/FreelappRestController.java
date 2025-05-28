@@ -1,7 +1,9 @@
 package com.freelapp.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.json.simple.JSONObject;
@@ -162,24 +164,15 @@ public class FreelappRestController {
 				
 		Task task = taskRepository.getReferenceById(id);
 		
-		String guadagnoAttualeTask = null;
-		String pauseTask = null;
-		//verifico se il task ha il contatore calcolo il guadagno altrimenti informo utente che non ha contatore attivo
-		if(task.getContatore() != null) {
-			guadagnoAttualeTask = taskService.calcoloGuadagnoTaskDaFinalTime(task) + " €";
-			pauseTask = String.valueOf(task.getContatore().getStop_numbers());
-		} else {
-			guadagnoAttualeTask = "Task non avviato";
-			pauseTask = "-";
-		}
 		
-		//recupero pauseTask
+		
+		//recupero dati chiusura stimata
+		Map<String, Long> giorniChiusuraStimata = taskService.inLineaConChiusuraStimata(task);
 			
 		//creazione json
 		JSONObject JsonObj = new JSONObject();
 				
-		JsonObj.put("guadagnoAttualeTask" , guadagnoAttualeTask);
-		JsonObj.put("pauseTask", pauseTask);
+		JsonObj.put("giorniChiusuraStimata" , giorniChiusuraStimata);
 		
 		return JsonObj;
 				
