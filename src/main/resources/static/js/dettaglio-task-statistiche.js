@@ -70,7 +70,7 @@ function creaGraficoGiorniStimati(datajson){
 			borderWidth: 0,
 			borderSkipped: false,
 			borderRadius: 4,
-			barPercentage: 0.1
+			barPercentage: 0.3
 		}]
 	};
 
@@ -98,7 +98,7 @@ function creaGraficoGiorniStimati(datajson){
 			ctx.fillText(dataFineStimata, right - 70, y.getPixelForValue(0) - 20);
 
 			ctx.fillStyle = 'rgba(219, 220, 221, 1)';
-			ctx.fillRect(left, y.getPixelForValue(0) - 3, width, 6)
+			ctx.fillRect(left, y.getPixelForValue(0) - 8, width, 17)
 
 			
 		}

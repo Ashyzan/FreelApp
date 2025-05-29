@@ -163,16 +163,19 @@ public class FreelappRestController {
 	public JSONObject TaskJson(@PathVariable("id") Integer id){
 				
 		Task task = taskRepository.getReferenceById(id);
-		
-		
-		
+
 		//recupero dati chiusura stimata
 		Map<String, Long> giorniChiusuraStimata = taskService.inLineaConChiusuraStimata(task);
+		
+		//recupero tipologia del progetto del task
+		String tipologiaProgetto = task.getProgetto().getTipologia();
 			
 		//creazione json
 		JSONObject JsonObj = new JSONObject();
 				
 		JsonObj.put("giorniChiusuraStimata" , giorniChiusuraStimata);
+		JsonObj.put("tipologiaProgetto" , tipologiaProgetto);
+		
 		
 		return JsonObj;
 				
