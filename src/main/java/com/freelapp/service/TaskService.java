@@ -85,7 +85,7 @@ public class TaskService {
 	
 // ******************** METODI PER CALCOLO STATISTICHE ************************************
 	
-	//metodo per calcolare il guadagno di un task riferito all'ultima finalTime salvata a DB
+	//metodo per calcolare il guadagno di un task riferito all'ultima finalTime salvata a DB -restituisce un String
 	public String calcoloGuadagnoTaskDaFinalTime(Task task) {
 		
 		Long finalTimeAttuale = task.getContatore().getFinaltime();
@@ -104,6 +104,23 @@ public class TaskService {
 		String guadagnoTemporaneoTaskToString = String.valueOf(guadagnoTemporaneoTaskFormattato.format(guadagnoTemporaneoTask));
 	
 		return guadagnoTemporaneoTaskToString;
+	}
+	
+	//metodo per calcolare il guadagno di un task riferito all'ultima finalTime salvata a DB - restituisce un double
+	public double calcoloGuadagnoTaskDaFinalTimeToDouble(Task task) {
+		
+		Long finalTimeAttuale = task.getContatore().getFinaltime();
+		
+		double finalTimeAttualeInOre = (finalTimeAttuale.doubleValue() / 3600);
+		//System.out.println("finalTimeAttualeInOre: " + finalTimeAttualeInOre);
+		
+		double tariffaOrariaProgetto = task.getProgetto().getTariffaOraria();
+		//System.out.println("tariffaOrariaProgetto: " + tariffaOrariaProgetto);
+
+		double guadagnoTemporaneoTask = (finalTimeAttualeInOre*tariffaOrariaProgetto);
+		//System.out.println("guadagnoTemporaneoTask: " + guadagnoTemporaneoTask);
+		
+		return guadagnoTemporaneoTask;
 	}
 	
 	//metodo che restituisce se in linea o no rispetto chiusura prevista

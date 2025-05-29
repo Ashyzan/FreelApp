@@ -167,7 +167,7 @@ public class FreelappRestController {
 		//recupero dati chiusura stimata
 		Map<String, Long> giorniChiusuraStimata = taskService.inLineaConChiusuraStimata(task);
 		
-		//recupero tipologia del progetto del task
+		//recupero tipologia del progetto del task 		
 		String tipologiaProgetto = task.getProgetto().getTipologia();
 			
 		//creazione json
@@ -176,6 +176,20 @@ public class FreelappRestController {
 		JsonObj.put("giorniChiusuraStimata" , giorniChiusuraStimata);
 		JsonObj.put("tipologiaProgetto" , tipologiaProgetto);
 		
+		//a seconda della tipolgia progetto mando nel json un budget differente e suo relativo utilizzo		
+		switch (tipologiaProgetto) {
+		case "budget":
+			JsonObj.put("budgetTotaleProgetto" , task.getProgetto().getBudgetMonetario());
+			JsonObj.put("budgetImpiegatoDalTaskProgetto" , taskService.calcoloGuadagnoTaskDaFinalTimeToDouble(task));
+			break;
+		case "ore":
+			JsonObj.put("budgetTotaleProgetto" , task.getProgetto().getBudgetOre());
+			//restituisce le ore utilizzate dal task trasformando il finaltime in ore
+			JsonObj.put("budgetImpiegatoDalTaskProgetto" , task.getContatore().getFinaltime().doubleValue() / 3600);
+			break;
+		default:
+			JsonObj.put("budgetTotaleProgetto" , null);
+		}
 		
 		return JsonObj;
 				

@@ -24,7 +24,7 @@ function apiStatisticheJson(idTask){
 						}
 						
 						if(datajson.giorniChiusuraStimata.giorniAncoraDisponibili > 0){
-							contenitoreGiorniChiusuraStimata.innerHTML = `	<div class="text-center font-bold pe-1 py-1">Countdown fine stimata</div>
+							contenitoreGiorniChiusuraStimata.innerHTML = `	<div class="text-center font-bold pe-1 py-1">Countdown chiusura stimata</div>
 																			<div class="md:hidden text-center mb-2"> giorni rimanenti ${datajson.giorniChiusuraStimata.giorniAncoraDisponibili }</div>
 																			<canvas class="m-auto  mb-2" id="chiusuraStimata"></canvas>`
 							creaGraficoGiorniStimati(datajson);	 
@@ -33,6 +33,7 @@ function apiStatisticheJson(idTask){
 						}
 						
 						tempoBudgetParzialeDaTipologia(datajson);
+						console.log("datajson.budgetTotaleProgetto - datajson.budgetImpiegatoDalTaskProgetto: " + datajson.budgetTotaleProgetto - datajson.budgetImpiegatoDalTaskProgetto)
 							 
 				   })
 				   .catch(error => {
@@ -161,17 +162,29 @@ function creaGraficoGiorniStimati(datajson){
 
 function tempoBudgetParzialeDaTipologia(datajson){
 	
+	
+	let titoloGrafico = null;
+	if(datajson.tipologiaProgetto ==  "budget"){
+		titoloGrafico ="Budget totale progetto: " + datajson.budgetTotaleProgetto + " €"
+	}
+	
+	if(datajson.tipologiaProgetto ==  "ore"){
+			titoloGrafico ="Monte ore progetto: " + datajson.budgetTotaleProgetto + " ore"
+		}
+	
 	const data = {
 		labels: [
-			'Bundget  residuo',
-			'Budget impiegato',
+			'Residuo',
+			'Task',
+			'Altri task'
 		],
 		datasets: [{
-			label: 'Percentuale',
-			data: ['20', '35'],
+			label: '€ ',
+			data: [(datajson.budgetTotaleProgetto - datajson.budgetImpiegatoDalTaskProgetto), datajson.budgetImpiegatoDalTaskProgetto, '10'],
 			backgroundColor: [
 				'rgb(0, 87, 165)',
-				'rgb(255, 205, 86)'
+				'rgba(0, 87, 165, 0.3)',
+				'rgb(255, 87, 165)'
 			],
 			hoverOffset: 4
 		}]
@@ -184,14 +197,14 @@ function tempoBudgetParzialeDaTipologia(datajson){
 		type: 'doughnut',
 		data: data,
 		options: {
-			responsive: true,
+			responsive: false,
 			plugins: {
 				legend: {
 					position: 'top',
 				},
 				title: {
 					display: true,
-					text: 'Utilizzo budget del progetto'
+					text: titoloGrafico
 				}
 			}
 		},
