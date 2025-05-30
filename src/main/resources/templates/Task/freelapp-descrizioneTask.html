@@ -384,36 +384,44 @@
 							<div class="col-span1 font-bold">Azioni</div>
 							<div class="col-span-2 flex md:ms-20 justify-end md:justify-center  items-center gap-6">
 								<div>
-									<div class="t-tooltip w-5 h-5">
-										<img src="/img/sources/icons/contatore-blue-inattivo.svg">
+									<div class="t-tooltip  w-6 h-6">
+										<div th:if="${task.id == taskInUsoId or task.getStato() == 'chiuso'}" class="size-10">
+											<img class="size-6" src="/img/sources/icons/contatore-blue-inattivo.svg">
+										</div>
+										<div class="" th:unless="${task.id == taskInUsoId or task.getStato() == 'chiuso'}">
+											<form th:action="@{'/contatore/cambio/{id}'(id=${task.getId()})}" method="post"
+												class="form-cambio-contatore">
+												<input type="hidden" name="endPoint" th:value="${endPoint}">
+													<button type="submit" class=" text-[#0057A5]">
+														<img class="size-6" src="/img/sources/icons/contatore-blue.svg">
+													</button>
+										
+											</form>
+										</div>
 										<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-20px] mt-[5px]">
 											Seleziona contatore</div>
 									</div>
 								
 								</div>
 								<div>
-									<div class="t-tooltip w-5 h-5">
+									<div class="t-tooltip w-6 h-6">
 										<button th:onclick="creaApriModaleOreLavorate([[${task.id}]] ,[[ ${task.getName()}]])" type="button">
-											<img class="size-5" src="/img/sources/icons/orelavorate-blue.svg">
+											<img class="size-6" src="/img/sources/icons/orelavorate-blue.svg">
 										</button>
 
 										<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-20px] mt-[5px]">
 											Aggiungi Ore</div>
 									</div>
-								
 								</div>
 								<div>
-									<div class="t-tooltip w-5 h-5">
+									<div class="t-tooltip  w-6 h-6">
 										<button type="button"
 											th:onclick="creaApriModaleReset([[${task.id}]] ,[[ ${task.getName()}]], [[ ${task.progetto.getName()}]])">
-											<img class="size-5" src="/img/sources/icons/reset-blue.svg">
-										
-										</button>
-								
+											<img class="size-6" src="/img/sources/icons/reset-blue.svg">
+										</button>	
 										<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-20px] mt-[5px]">
-											Aggiungi Ore</div>
+											Reset Timer</div>
 									</div>
-								
 								</div>
 								<a th:href="@{/Task/edit/{id}(id=${task.getId()})}">
 									<div class="t-tooltip w-5 h-5">
