@@ -19,21 +19,22 @@ function apiStatisticheJson(idTask){
 				     return response.json();
 				   })
 				   .then(datajson => {
-						if(datajson.giorniChiusuraStimata.giorniOltreChiusuraStimata > 0){
-							contenitoreGiorniChiusuraStimata.innerHTML = `<div class="text-red-600 text-center mb-3">Chiusura stimata superata di ${datajson.giorniChiusuraStimata.giorniOltreChiusuraStimata} giorni</div>`
-						}
-						
-						if(datajson.giorniChiusuraStimata.giorniAncoraDisponibili > 0){
-							contenitoreGiorniChiusuraStimata.innerHTML = `	<div class="text-center font-bold pe-1 py-1">Countdown chiusura stimata</div>
-																			<div class="md:hidden text-center mb-2"> giorni rimanenti ${datajson.giorniChiusuraStimata.giorniAncoraDisponibili }</div>
-																			<canvas class="m-auto  mb-2" id="chiusuraStimata"></canvas>`
-							creaGraficoGiorniStimati(datajson);	 
-						} else if(datajson.giorniChiusuraStimata.giorniAncoraDisponibili == 0 && datajson.giorniChiusuraStimata.giorniOltreChiusuraStimata  == 0){
-							contenitoreGiorniChiusuraStimata.innerHTML = `<div class="text-center mb-3">Oggi è il giorno di chiusura Stimata</div>`
+						if(datajson.giorniChiusuraStimata != null){
+							if(datajson.giorniChiusuraStimata.giorniOltreChiusuraStimata > 0){
+								contenitoreGiorniChiusuraStimata.innerHTML = `<div class="text-red-600 text-center mb-3">Chiusura stimata superata di ${datajson.giorniChiusuraStimata.giorniOltreChiusuraStimata} giorni</div>`
+							}
+							
+							if(datajson.giorniChiusuraStimata.giorniAncoraDisponibili > 0){
+								contenitoreGiorniChiusuraStimata.innerHTML = `	<div class="text-center font-bold pe-1 py-1">Countdown chiusura stimata</div>
+																				<div class="md:hidden text-center mb-2"> giorni rimanenti ${datajson.giorniChiusuraStimata.giorniAncoraDisponibili }</div>
+																				<canvas class="m-auto  mb-2" id="chiusuraStimata"></canvas>`
+								creaGraficoGiorniStimati(datajson);	 
+							} else if(datajson.giorniChiusuraStimata.giorniAncoraDisponibili == 0 && datajson.giorniChiusuraStimata.giorniOltreChiusuraStimata  == 0){
+								contenitoreGiorniChiusuraStimata.innerHTML = `<div class="text-center mb-3">Oggi è il giorno di chiusura Stimata</div>`
+							}							
 						}
 						
 						tempoBudgetParzialeDaTipologia(datajson);
-						console.log("datajson.budgetTotaleProgetto - datajson.budgetImpiegatoDalTaskProgetto: " + datajson.budgetTotaleProgetto - datajson.budgetImpiegatoDalTaskProgetto)
 							 
 				   })
 				   .catch(error => {
@@ -164,12 +165,15 @@ function tempoBudgetParzialeDaTipologia(datajson){
 	
 	
 	let titoloGrafico = null;
+	let unitaLabel = null;
 	if(datajson.tipologiaProgetto ==  "budget"){
 		titoloGrafico ="Budget totale progetto: " + datajson.budgetTotaleProgetto + " €"
+		unitaLabel = " €";
 	}
 	
 	if(datajson.tipologiaProgetto ==  "ore"){
 			titoloGrafico ="Monte ore progetto: " + datajson.budgetTotaleProgetto + " ore"
+			unitaLabel = " ore";
 		}
 	
 	const data = {
@@ -179,12 +183,12 @@ function tempoBudgetParzialeDaTipologia(datajson){
 			'Altri task'
 		],
 		datasets: [{
-			label: '€ ',
-			data: [(datajson.budgetTotaleProgetto - datajson.budgetImpiegatoDalTaskProgetto), datajson.budgetImpiegatoDalTaskProgetto, '10'],
+			label: unitaLabel,
+			data: [(datajson.budgetTotaleProgetto - datajson.budgetImpiegatoDalTask), datajson.budgetImpiegatoDalTask, datajson.budgetImpiegatoDaAltriTask],
 			backgroundColor: [
-				'rgb(0, 87, 165)',
 				'rgba(0, 87, 165, 0.3)',
-				'rgb(255, 87, 165)'
+				'rgb(255, 87, 165)',
+				'rgb(0, 87, 165)'
 			],
 			hoverOffset: 4
 		}]

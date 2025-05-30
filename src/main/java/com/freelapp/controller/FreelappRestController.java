@@ -165,7 +165,12 @@ public class FreelappRestController {
 		Task task = taskRepository.getReferenceById(id);
 
 		//recupero dati chiusura stimata
-		Map<String, Long> giorniChiusuraStimata = taskService.inLineaConChiusuraStimata(task);
+		Map<String, Long> giorniChiusuraStimata;
+		if(task.getDataChiusuraStimata() != null){
+			giorniChiusuraStimata = taskService.inLineaConChiusuraStimata(task);
+		} else {
+			giorniChiusuraStimata = null;
+		}
 		
 		//recupero tipologia del progetto del task 		
 		String tipologiaProgetto = task.getProgetto().getTipologia();
@@ -175,17 +180,27 @@ public class FreelappRestController {
 				
 		JsonObj.put("giorniChiusuraStimata" , giorniChiusuraStimata);
 		JsonObj.put("tipologiaProgetto" , tipologiaProgetto);
+		JsonObj.put("budgetImpiegatoDaAltriTask" , taskService.calcoloParteDiBudgetUsataDaAltriTaskNelProgetto(task));
+		
 		
 		//a seconda della tipolgia progetto mando nel json un budget differente e suo relativo utilizzo		
 		switch (tipologiaProgetto) {
 		case "budget":
 			JsonObj.put("budgetTotaleProgetto" , task.getProgetto().getBudgetMonetario());
-			JsonObj.put("budgetImpiegatoDalTaskProgetto" , taskService.calcoloGuadagnoTaskDaFinalTimeToDouble(task));
+			if(task.getContatore() != null) {
+				JsonObj.put("budgetImpiegatoDalTask" , taskService.calcoloGuadagnoTaskDaFinalTimeToDouble(task));
+			} else {
+				JsonObj.put("budgetImpiegatoDalTask" , "-");
+			}
 			break;
 		case "ore":
 			JsonObj.put("budgetTotaleProgetto" , task.getProgetto().getBudgetOre());
 			//restituisce le ore utilizzate dal task trasformando il finaltime in ore
-			JsonObj.put("budgetImpiegatoDalTaskProgetto" , task.getContatore().getFinaltime().doubleValue() / 3600);
+			if(task.getContatore() != null) {
+				JsonObj.put("budgetImpiegatoDalTask" , task.getContatore().getFinaltime().doubleValue() / 3600);				
+			} else {
+				JsonObj.put("budgetImpiegatoDalTask" , 0);
+			}
 			break;
 		default:
 			JsonObj.put("budgetTotaleProgetto" , null);

@@ -357,7 +357,7 @@ public class TaskController {
 			guadagnoAttualeTask = taskService.calcoloGuadagnoTaskDaFinalTime(task) + " €";
 			pauseTask = String.valueOf(task.getContatore().getStop_numbers());
 		} else {
-			guadagnoAttualeTask = "Task non avviato";
+			guadagnoAttualeTask = "Task inattivo";
 			pauseTask = "-";
 		}
 		

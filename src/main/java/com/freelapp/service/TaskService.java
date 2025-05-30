@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.freelapp.controller.ContatoreController;
+import com.freelapp.model.Progetto;
 import com.freelapp.model.Task;
 import com.freelapp.repository.TaskRepository;
 
@@ -26,6 +28,9 @@ public class TaskService {
 
 	@Autowired
 	private TaskRepository taskRepository;
+	
+	//variabile che viene utilizzata nel metodo di statistica "calcoloParteDiBudgetUsataDaAltriTaskNelProgetto"
+	Long finalTimeAltriTaskDelProgetto = 0l;
 
 	public List<Task> findAllNotClosed(){
 		//restituisce la lista dei task attivi(non chiusi)
@@ -156,5 +161,32 @@ public class TaskService {
 			//System.out.println("giorniChiusuraStimata MAP: " + statisticheChiusuraStimata);
 			
 			return statisticheChiusuraStimata;
+	}
+	
+	
+	//metodo che calcola la parte di budgetImpiegata dagli altri task del progetto
+	public double calcoloParteDiBudgetUsataDaAltriTaskNelProgetto(Task task) {
+		
+		double parteDiBudgetUsataDaAltriTaskNelProgettoInOre = 0;
+		
+		//riporto a zero la variabile finalTimeAltriTaskDelProgetto inizializzata ad inizio classe
+		finalTimeAltriTaskDelProgetto = 0l;
+		
+		//ricavo il progetto relativo al task
+		Integer progettoId = task.getProgetto().getId();
+		
+		//recupero tutti i task del progetto per sommarne poi il finaltime
+		List<Task> listaTaskProgetto = new ArrayList<Task>();
+		listaTaskProgetto = taskRepository.findByProgettoId(progettoId);
+		listaTaskProgetto.forEach( altroTask -> {			
+			if(altroTask.getContatore() != null && altroTask.getId() != task.getId()) {
+					finalTimeAltriTaskDelProgetto = finalTimeAltriTaskDelProgetto + altroTask.getContatore().getFinaltime();					
+			}
+		});
+		
+		//trasmormo il finalTime da secondi ad ore
+		parteDiBudgetUsataDaAltriTaskNelProgettoInOre = (finalTimeAltriTaskDelProgetto.doubleValue() / 3600);
+		
+		return parteDiBudgetUsataDaAltriTaskNelProgettoInOre;
 	}
 }
