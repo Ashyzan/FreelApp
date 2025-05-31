@@ -2,9 +2,34 @@ console.log("sono in dettaglioTaskStatstiche");
 
 //recupero elementi dal DOM
 const contenitoreGiorniChiusuraStimata = document.getElementById('contenitoreGiorniChiusuraStimata');
+const descrizioneContratta = document.getElementById('descrizioneContratta');
+const descrizioneEspansa = document.getElementById('descrizioneEspansa');
+const buttonEspandiDescrizione = document.getElementById('buttonEspandiDescrizione');
+const buttonRiduciDescrizione = document.getElementById('buttonRiduciDescrizione');
+
+
+// ************* logica di espansione e riduzione descrizione
+if(buttonEspandiDescrizione != null){
+	buttonEspandiDescrizione.addEventListener('click', mostraDescrizioneCompleta);	
+}
+buttonRiduciDescrizione.addEventListener('click', mostraDescrizioneRidotta);
+
+function mostraDescrizioneCompleta(){
+	descrizioneContratta.classList.add('hidden');
+	descrizioneEspansa.classList.remove('hidden');
+}
+
+function mostraDescrizioneRidotta(){
+	descrizioneContratta.classList.remove('hidden');
+	descrizioneEspansa.classList.add('hidden');
+}
 
 
 
+
+
+
+//************** logica chiamata API per grafici statistiche */
 const url_apiStatisticheTask = '/api/statistiche-dettaglio-task/';
 
 function apiStatisticheJson(idTask){

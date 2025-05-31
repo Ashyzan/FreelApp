@@ -344,8 +344,26 @@
 
 					<h1 class="text-[#0057A5] text-[32px]"
 						th:text="${task.getName()}"></h1>
-					<h3 class="text-gray-600 border-b-4 text-lg pb-4"
-						th:text="${task.getDescrizione()}"></h3>
+						<!-- Se la descrizione è superiore a 150 caratteri la mostra in forma contratta con sintassi thymeleaf + tasto espandi -->
+					<div id="descrizioneContratta" class="border-b-4 ">
+						<h3 class="text-gray-600 text-lg pb-4" th:text="${#strings.abbreviate(task.getDescrizione(),150)}">
+						</h3>
+						<div th:if="${#strings.length(task.getDescrizione()) >= 150}" class="text-end mb-3">
+							<button id="buttonEspandiDescrizione" type="button" class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg py-[2px] px-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5] ">
+								Espandi
+							</button>							
+						</div>
+					</div>
+					<div id="descrizioneEspansa" class="hidden border-b-4">
+						<h3 class="text-gray-600 text-lg pb-4" 
+							th:text="${task.getDescrizione()}">
+						</h3>
+						<div class="text-end mb-3">
+							<button id="buttonRiduciDescrizione" type="button" class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg py-[2px] px-[9px] text-[#0057A5] font-bold shadow-md shadow-[#0057A5] ">
+								Leggi meno
+							</button>
+						</div>
+					</div>
 
 					<div class="">
 						
