@@ -554,7 +554,7 @@
 							</div>
 							<a th:unless="${taskInUso == null}"
 								th:href="@{|/Task/${taskInUso.id}|}"
-								class="t-tooltip flex flex-col items-center relative w-[45%] justify-center w-auto max-xs:ps-4">
+								class="t-tooltip flex flex-col items-center relative w-[40%] justify-center max-xs:ps-4">
 								<div th:unless="${contatoreIsTrue}"
 									class="col-auto text-[14px] p-0">...</div>
 								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
@@ -624,8 +624,9 @@
 							</div>
 						</div>
 					</div>
-				<div id="bottom" class="max-md:h-36"></div>
+					<div id="bottom" class="max-md:h-36"></div>
 				</div>
+				<!-- FINE CONTATORE -->
 			</div>
 		</div>
 	</main>

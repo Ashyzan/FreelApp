@@ -230,7 +230,7 @@ public class ContatoreController {
 
 	contatoreInUso = contatore;
 	taskInUso = task;
-	contatoreAttivato = true;
+	//contatoreAttivato = true; 
 	
 
 //	return "/Contatore/timer";

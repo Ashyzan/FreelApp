@@ -35,7 +35,7 @@
 	
     <title id="timerTitolo">FreelApp</title>
 </head>
-<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart()">
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="controlloContatoreAttivato(), timerstart()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 			<button
 				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5] ">
@@ -335,10 +335,10 @@
 			</div>
 		</div>
 		<!-- CONTATORE -->
-				<div class="m-auto pb-44 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden"
+				<div class="m-auto md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden"
 					id="dettaglio-contatore-bottom">
 					<div
-						class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
+						class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1 mb-40 md:mb-20">
 						<div
 							class="flex justify-between items-center text-[#0057A5] font-bold">
 							<div id="icona-contatore" class="max-xs:hidden col-auto ps-3 w-[15%]">
@@ -355,7 +355,7 @@
 							</div>
 							<a th:unless="${taskInUso == null}"
 								th:href="@{|/Task/${taskInUso.id}|}"
-								class="t-tooltip flex flex-col items-center relative w-[45%] justify-center w-auto max-xs:ps-4">
+								class="t-tooltip flex flex-col items-center relative w-[40%] justify-center max-xs:ps-4">
 								<div th:unless="${contatoreIsTrue}"
 									class="col-auto text-[14px] p-0">...</div>
 								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
@@ -425,6 +425,7 @@
 							</div>
 						</div>
 					</div>
+					<div id="bottom" class="max-md:h-36"></div>
 				</div>
 				<!-- FINE CONTATORE -->
 	 </div>
