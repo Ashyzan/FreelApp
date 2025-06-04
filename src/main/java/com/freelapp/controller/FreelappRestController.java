@@ -180,12 +180,12 @@ public class FreelappRestController {
 				
 		JsonObj.put("giorniChiusuraStimata" , giorniChiusuraStimata);
 		JsonObj.put("tipologiaProgetto" , tipologiaProgetto);
-		JsonObj.put("budgetImpiegatoDaAltriTask" , taskService.calcoloParteDiBudgetUsataDaAltriTaskNelProgetto(task));
 		
 		
 		//a seconda della tipolgia progetto mando nel json un budget differente e suo relativo utilizzo		
 		switch (tipologiaProgetto) {
 		case "budget":
+			JsonObj.put("budgetImpiegatoDaAltriTask" , taskService.calcoloParteDiBudgetUsataDaAltriTaskNelProgettoMonetario(task));
 			JsonObj.put("budgetTotaleProgetto" , task.getProgetto().getBudgetMonetario());
 			if(task.getContatore() != null) {
 				JsonObj.put("budgetImpiegatoDalTask" , taskService.calcoloGuadagnoTaskDaFinalTimeToDouble(task));
@@ -194,6 +194,7 @@ public class FreelappRestController {
 			}
 			break;
 		case "ore":
+			JsonObj.put("budgetImpiegatoDaAltriTask" , taskService.calcoloParteDiBudgetUsataDaAltriTaskNelProgettoOre(task));
 			JsonObj.put("budgetTotaleProgetto" , task.getProgetto().getBudgetOre());
 			//restituisce le ore utilizzate dal task trasformando il finaltime in ore
 			if(task.getContatore() != null) {

@@ -504,15 +504,26 @@
 					</div>
 					
 				</div>
-				<div th:if="${task.progetto.getTipologia() != 'tariffa'}" class="md:grid grid-cols-2 w-full mb-4">
-					<div id="guadagno" class="col flex flex-col justify-center items-center py-8 mb-2">
-						<div class="mx-auto  text-xl font-bold mb-2">Guadagno</div>
-						<div class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " id="guadagnoAttualeTask"
-							th:text="${guadagnoAttualeTask}"></div>
+				<div th:if="${task.getStato() != 'inattivo'}">
+					<div th:if="${task.progetto.getTipologia() != 'tariffa'}" class="md:grid grid-cols-2 w-full mb-4">
+						<div id="guadagno" class="col flex flex-col justify-center items-center py-8 mb-2">
+							<div class="mx-auto  text-xl font-bold mb-2">Guadagno</div>
+							<div class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " id="guadagnoAttualeTask"
+								th:text="${guadagnoAttualeTask}"></div>
+						</div>
+						<div th:if="${task.getStato != 'inattivo'}">
+							<canvas  class="m-auto col w-3/4" id="myChart"></canvas>
+						</div>
 					</div>
-					<canvas  class="m-auto col w-3/4" id="myChart"></canvas>
+					<div th:if="${task.progetto.getTipologia() == 'tariffa'}" class=" w-full">
+						<div id="guadagno" class="flex flex-col justify-center items-center py-8 mb-2">
+							<div class="mx-auto  text-xl font-bold mb-2">Guadagno</div>
+							<div class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " id="guadagnoAttualeTask"
+								th:text="${guadagnoAttualeTask}"></div>
+						</div>
+					</div>					
 				</div>
-				<div th:if="${task.progetto.getTipologia() == 'tariffa'}" class=" w-full">
+				<div th:if="${task.getStato() == 'inattivo'}">
 					<div id="guadagno" class="flex flex-col justify-center items-center py-8 mb-2">
 						<div class="mx-auto  text-xl font-bold mb-2">Guadagno</div>
 						<div class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " id="guadagnoAttualeTask"
@@ -523,10 +534,10 @@
 			</div>
 			</div>
 <!-- CONTATORE -->
-				<div class="m-auto pb-44 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden"
+				<div class="m-auto pb-40 md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden"
 					id="dettaglio-contatore-bottom">
 					<div
-						class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1">
+						class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1 mb-12">
 						<div
 							class="flex justify-between items-center text-[#0057A5] font-bold">
 							<div id="icona-contatore" class="max-xs:hidden col-auto ps-3 w-[15%]">
@@ -949,6 +960,7 @@
 				let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
 				let dataInizioTask = /*[[${#temporals.format(task.getDataInizio(),'dd MMM yyyy')}]]*/ null;
 				let dataFineStimata = /*[[${#temporals.format(task.getDataChiusuraStimata(),'dd MMM yyyy')}]]*/ null;
+				let statoTask = /*[[${task.getStato()}]]*/ null;
 				/*]]>*/
 			</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>

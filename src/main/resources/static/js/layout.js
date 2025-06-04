@@ -7,6 +7,8 @@ let buttontest = document.getElementById('buttontest');
 
 
 
+
+
 // recupero elementi dal DOM per navBar	
 const navBar = document.querySelector('.nav-bar');
 const navOptionsMobile = document.querySelector('#options-button-mobile');
@@ -16,6 +18,7 @@ const navOptionsDesktop = document.querySelector('.nav-option-desktop');
 //recupero elemento dal DOM per animazione partenza contatore
 const dettaglioContatoreTop = document.getElementById('dettaglio-contatore-top');
 const dettaglioContatoreBottom = document.getElementById('dettaglio-contatore-bottom');
+const altezzaDisplay = window.screen.height;
 
 //recupero elementi dal DOM per errore numero massimo caratteri textArea
 const contatoreCaratteriCinquecento = document.getElementById('contatore-caratteri-cinquecento');
@@ -51,7 +54,13 @@ function onToggleOptionsDesktop(e){
 // ********* animazione avvio contatore ******************************************************************************
 if(contatoreAttivato == true){
 	dettaglioContatoreTop.classList.add('animate_animated','animate__bounceIn');
-	dettaglioContatoreBottom.classList.add('animate_animated','animate__bounceIn');
+	if(dettaglioContatoreBottom.display != "none"){
+		console.log("sono in")
+		dettaglioContatoreBottom.scrollIntoView(true);
+		setTimeout(() => {
+			dettaglioContatoreBottom.classList.add('animate_animated','animate__bounceIn');				  
+		}, 1000);
+	}
 }
 
 

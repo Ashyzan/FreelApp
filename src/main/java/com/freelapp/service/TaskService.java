@@ -164,8 +164,8 @@ public class TaskService {
 	}
 	
 	
-	//metodo che calcola la parte di budgetImpiegata dagli altri task del progetto
-	public double calcoloParteDiBudgetUsataDaAltriTaskNelProgetto(Task task) {
+	//metodo che calcola la parte di budget orario Impiegata dagli altri task del progetto ad ore
+	public double calcoloParteDiBudgetUsataDaAltriTaskNelProgettoOre(Task task) {
 		
 		double parteDiBudgetUsataDaAltriTaskNelProgettoInOre = 0;
 		
@@ -188,5 +188,34 @@ public class TaskService {
 		parteDiBudgetUsataDaAltriTaskNelProgettoInOre = (finalTimeAltriTaskDelProgetto.doubleValue() / 3600);
 		
 		return parteDiBudgetUsataDaAltriTaskNelProgettoInOre;
+	}
+	
+	
+	//metodo che calcola la parte di budget monetario Impiegata dagli altri task del progetto a budget monetario
+	public double calcoloParteDiBudgetUsataDaAltriTaskNelProgettoMonetario(Task task) {
+		
+		double parteDiBudgetUsataDaAltriTaskNelProgettoInOre = 0;
+		
+		//riporto a zero la variabile finalTimeAltriTaskDelProgetto inizializzata ad inizio classe
+		finalTimeAltriTaskDelProgetto = 0l;
+		
+		//ricavo il progetto relativo al task
+		Integer progettoId = task.getProgetto().getId();
+		
+		double tariffaOrariaProgetto = task.getProgetto().getTariffaOraria();
+		
+		//recupero tutti i task del progetto per sommarne poi il finaltime
+		List<Task> listaTaskProgetto = new ArrayList<Task>();
+		listaTaskProgetto = taskRepository.findByProgettoId(progettoId);
+		listaTaskProgetto.forEach( altroTask -> {			
+			if(altroTask.getContatore() != null && altroTask.getId() != task.getId()) {
+					finalTimeAltriTaskDelProgetto = finalTimeAltriTaskDelProgetto + altroTask.getContatore().getFinaltime();					
+			}
+		});
+		
+		//trasmormo il finalTime da secondi ad ore
+		parteDiBudgetUsataDaAltriTaskNelProgettoInOre = (finalTimeAltriTaskDelProgetto.doubleValue() / 3600);
+		
+		return parteDiBudgetUsataDaAltriTaskNelProgettoInOre*tariffaOrariaProgetto;
 	}
 }
