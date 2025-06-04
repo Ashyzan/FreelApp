@@ -52,14 +52,18 @@ function onToggleOptionsDesktop(e){
 
 
 // ********* animazione avvio contatore ******************************************************************************
-if(contatoreAttivato == true){
-	dettaglioContatoreTop.classList.add('animate_animated','animate__bounceIn');
-	if(dettaglioContatoreBottom.display != "none"){
-		console.log("sono in")
-		dettaglioContatoreBottom.scrollIntoView(true);
-		setTimeout(() => {
-			dettaglioContatoreBottom.classList.add('animate_animated','animate__bounceIn');				  
-		}, 1000);
+function controlloContatoreAttivato(){
+	
+	if(contatoreAttivato == true){
+		if(dettaglioContatoreBottom.display != "none"){
+			console.log("sono in")
+			document.getElementById('bottom').scrollIntoView(true);
+			//document.getElementById('main-section').scrollTop = document.getElementById('main-section').scrollHeight + 100;
+			setTimeout(() => {
+				dettaglioContatoreBottom.classList.add('animate_animated','animate__bounceIn');				  
+			}, 500);
+		}
+		dettaglioContatoreTop.classList.add('animate_animated','animate__bounceIn');
 	}
 }
 

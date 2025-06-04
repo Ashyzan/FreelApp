@@ -633,9 +633,10 @@ public class TaskController {
 	    return "/Task/freelapp-editTask";
 	}
 
+	 formTask.setDataModifica(LocalDateTime.now());
 	repositTask.save(formTask);
 
-	return "redirect:/Task";
+	return "redirect:/Task/"+id;
 
     }
 
