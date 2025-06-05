@@ -544,7 +544,7 @@ public class TaskController {
 	    // riporto nel modello l'elenco dei progetti disponibili
 	    model.addAttribute("listaProgetti", repositProgetto.findAll());
 	    
-	//  passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+	    //  passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
 		String endPoint = "/Task/newTask";
 		model.addAttribute("endPoint", endPoint);
 		
@@ -561,6 +561,24 @@ public class TaskController {
 		List<Task> taskList = new ArrayList<Task> ();
 		taskList = repositTask.findAllNotClosed();
 		model.addAttribute("taskList", taskList);
+		
+		//restituisce al model questo valore booleano false se non ci sono clienti a db
+		//e restituisce true se ci sono clienti a db
+		boolean areClientsOnDb = false;
+		if(!repositoryCliente.findAll().isEmpty()) {
+			areClientsOnDb = true;
+		}
+		model.addAttribute("areClientsOnDb", areClientsOnDb);
+	
+		// restituisce al model questo valore booleano false se non ci sono progetti a
+		// db
+		// e restituisce true se ci sono progetti a db
+		boolean areProjectsOnDb = false;
+		if (!repositProgetto.findAll().isEmpty()) {
+			areProjectsOnDb = true;
+		}
+		model.addAttribute("areProjectsOnDb", areProjectsOnDb);
+	
 
 	    return "/Task/freelapp-insertTask-noProgetto";
 	}

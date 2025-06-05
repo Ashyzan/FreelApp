@@ -57,7 +57,7 @@ function controlloContatoreAttivato(){
 	if(contatoreAttivato == true){
 		if(dettaglioContatoreBottom.display != "none"){
 			console.log("sono in")
-			document.getElementById('bottom').scrollIntoView(true);
+			document.getElementById('bottom').scrollIntoView({ behavior: "smooth"});
 			//document.getElementById('main-section').scrollTop = document.getElementById('main-section').scrollHeight + 100;
 			setTimeout(() => {
 				dettaglioContatoreBottom.classList.add('animate_animated','animate__bounceIn');				  
