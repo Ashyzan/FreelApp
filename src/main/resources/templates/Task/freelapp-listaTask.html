@@ -400,13 +400,15 @@
 											
 													<ul class="">
 											
-														<li class="flex flex-col md:flex-row float-left"><a th:href="@{|/Task/${task.id}|}"
+														<li class="flex flex-col md:flex-row float-left max-xs:w-full max-xs:justify-center">
+															<a th:href="@{|/Task/${task.id}|}"
 																class="inline text-center mt-4 mb-2 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
-																vai al dettaglio </a>
+																vai al dettaglio 
+															</a>
 														</li>
 											
 														<!-- 				SELEZIONA IL CONTATORE -->
-														<li class="tooltip-top flex flex-col md:flex-row px-2 mt-4 ml-6 float-left max-md:pt-2 sm:ms-5 md:ms-20 lg:ms-0">
+														<li class="tooltip-top flex flex-col md:flex-row px-2 mt-4 ml-6 float-left max-md:pt-2 sm:ms-5 md:ms-20 lg:ms-0 ">
 															<span class="tooltiptext-top">Seleziona contatore</span>
 											
 															<div th:if="${task.id == taskInUsoId or task.getStato() == 'chiuso'}" class="size-6 md:size-10">
@@ -427,7 +429,7 @@
 														</li>
 											
 														<!-- 	AGGIUNGI ORE LAVORATE TASK -->
-														<li class="tooltip-top flex flex-col md:flex-row px-2 mt-4 ml-3 float-left max-md:pt-2">
+														<li class="tooltip-top flex flex-col md:flex-row px-2 mt-4 max-xs:ml-3 md:ml-3 float-left max-md:pt-2 max-sm:ml-1">
 															<span class="tooltiptext-top">Aggiungi Ore</span>
 															<button th:onclick="creaApriModaleOreLavorate([[${task.id}]] ,[[ ${task.getName()}]])" type="button">
 																<img class="size-6 md:size-10" src="/img/sources/icons/orelavorate-blue.svg">											
@@ -435,7 +437,7 @@
 														</li>
 											
 														<!-- 	RESETTA TASK -->
-														<li class="tooltip-top flex flex-col md:flex-row px-2 mt-4 ml-3 float-left max-md:pt-2">
+														<li class="tooltip-top flex flex-col md:flex-row px-2 mt-4 max-xs:ml-3 md:ml-3 float-left max-md:pt-2  max-sm:ml-1">
 															<span class="tooltiptext-top">Reset Timer</span>
 															<div th:if="${task.getStato() == 'inattivo'}">
 																<img class="size-6 md:size-10 opacity-[0.4]" src="/img/sources/icons/reset-blue.svg">
@@ -448,7 +450,7 @@
 																</button>
 															</div>
 														</li>
-														<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
+														<li class="flex flex-col md:flex-row px-2 mt-6 float-right ms-4">
 															<a th:href="@{|/Task/edit/${task.id}|}"><img th:src="@{/img/sources/icons/modify-grey.svg}"
 																	alt="modifica-task" class="size-5 inline"></a>
 														</li>
