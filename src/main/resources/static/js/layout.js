@@ -55,8 +55,7 @@ function onToggleOptionsDesktop(e){
 function controlloContatoreAttivato(){
 	
 	if(contatoreAttivato == true){
-		if(dettaglioContatoreBottom.display != "none"){
-			console.log("sono in")
+		if(window.innerWidth < 1024){
 			document.getElementById('bottom').scrollIntoView({ behavior: "smooth"});
 			//document.getElementById('main-section').scrollTop = document.getElementById('main-section').scrollHeight + 100;
 			setTimeout(() => {
