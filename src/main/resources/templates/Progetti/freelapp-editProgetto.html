@@ -34,7 +34,7 @@
 	<title id="timerTitolo">FreelApp</title>
 </head>
 
-<body class="font-sans" style="width: 100vw; height: 100vh;" onload="controlloContatoreAttivato(), timerstart(), showTipologia()">
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), timerstart(), showTipologia()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 			<button
 				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5] ">
@@ -813,6 +813,7 @@
 		let budgetMonetario =/*[[${budgetMonetario}]]*/null; //double
 		let tariffaOraria =/*[[${tariffaOraria}]]*/null; //double
 		let budgetOre =/*[[${budgetOre}]]*/null; //int
+		let contatoreCliccatoPreRefresh = /*[[${contatoreCliccatoPreRefresh}]]*/ null; //boolean
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>

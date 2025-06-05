@@ -109,6 +109,13 @@ public class ClientController {
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 		
+		// invio al model il booleano del contatore cliccato prima del refresh pagina
+		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+		ContatoreController.contatoreCliccatoPreRefresh = false;
+		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
 		
@@ -179,6 +186,13 @@ public class ClientController {
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
 		
+		// invio al model il booleano del contatore cliccato prima del refresh pagina
+		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+		ContatoreController.contatoreCliccatoPreRefresh = false;
+		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
 		
@@ -212,6 +226,13 @@ public class ClientController {
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		// invio al model il booleano del contatore cliccato prima del refresh pagina
+		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+		ContatoreController.contatoreCliccatoPreRefresh = false;
 		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
@@ -290,6 +311,13 @@ public class ClientController {
 			// inizializzo a false così che al refresh o cambio pagina non esegue animazione
 			// ma solo allo start
 			ContatoreController.contatoreAttivato = false;
+			
+			// invio al model il booleano del contatore cliccato prima del refresh pagina
+			// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+			model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+			// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+			ContatoreController.contatoreCliccatoPreRefresh = false;
 
 			// metodo che passa al model le informazioni sul task in uso per generare la
 			// modale STOP
@@ -337,6 +365,13 @@ public class ClientController {
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
 		
+		// invio al model il booleano del contatore cliccato prima del refresh pagina
+		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+		ContatoreController.contatoreCliccatoPreRefresh = false;
+		
 		//passa al model la lista di tutti i task esclusi quelli chiusi
 		List<Task> taskList = new ArrayList<Task> ();
 		taskList = repositTask.findAllNotClosed();
@@ -382,6 +417,13 @@ public class ClientController {
 		
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
+		
+		// invio al model il booleano del contatore cliccato prima del refresh pagina
+		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+		ContatoreController.contatoreCliccatoPreRefresh = false;
 		
 		//passa al model la lista di tutti i task esclusi quelli chiusi
 		List<Task> taskList = new ArrayList<Task> ();
@@ -494,6 +536,13 @@ public class ClientController {
 		
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
+		
+		// invio al model il booleano del contatore cliccato prima del refresh pagina
+		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+		ContatoreController.contatoreCliccatoPreRefresh = false;
 		
 		//passa al model la lista di tutti i task esclusi quelli chiusi
 		List<Task> taskList = new ArrayList<Task> ();

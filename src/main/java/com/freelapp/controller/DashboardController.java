@@ -60,6 +60,13 @@ public class DashboardController {
 		
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
+		
+		// invio al model il booleano del contatore cliccato prima del refresh pagina
+		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+		ContatoreController.contatoreCliccatoPreRefresh = false;
 
 		List<Cliente> clienteList = new ArrayList<Cliente> ();
 

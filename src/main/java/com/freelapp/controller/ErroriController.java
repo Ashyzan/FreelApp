@@ -48,6 +48,13 @@ public class ErroriController {
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
 		
+		// invio al model il booleano del contatore cliccato prima del refresh pagina
+		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+		ContatoreController.contatoreCliccatoPreRefresh = false;
+		
 		//passa al model la lista di tutti i task esclusi quelli chiusi
 		List<Task> taskList = new ArrayList<Task> ();
 		taskList = taskRepository.findAllNotClosed();

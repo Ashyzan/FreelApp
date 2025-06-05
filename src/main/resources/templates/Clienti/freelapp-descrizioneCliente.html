@@ -38,7 +38,7 @@
 	<title id="timerTitolo">FreelApp</title>
 </head>
 
-<body class="font-sans" style="width: 100vw; height: 100vh;" onload="controlloContatoreAttivato(), timerstart()">
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), timerstart()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 			<button
 				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5] ">
@@ -433,7 +433,7 @@
 								<div th:unless="${taskInUso == null}"
 									class="mx-2 flex items-center">
 									<button id="stopButtonBottom" type="button"
-										class="hover:opacity-75">
+										class="hover:opacity-75" onclick="creaModaleStop()">
 										<img class="h-[45px] w-[45px]"
 											src="/img/sources/icons/stop-blue.svg" alt="stop">
 									</button>
@@ -763,6 +763,7 @@
 		let taskInUsoId = /*[[${taskInUsoId}]]*/ null;
 		let taskInUsoName = /*[[${taskInUsoName}]]*/ null;
 		let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
+		let contatoreCliccatoPreRefresh = /*[[${contatoreCliccatoPreRefresh}]]*/ null; //boolean
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>

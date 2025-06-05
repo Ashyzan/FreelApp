@@ -35,7 +35,7 @@
 	
     <title id="timerTitolo">FreelApp</title>
 </head>
-<body class="font-sans" style="width: 100vw; height: 100vh;" onload="controlloContatoreAttivato(), timerstart()">
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), timerstart()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 			<button
 				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5] ">
@@ -755,6 +755,7 @@
 		let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
 		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
 		let endPoint =/*[[${endPoint}]]*/null; //String
+		let contatoreCliccatoPreRefresh = /*[[${contatoreCliccatoPreRefresh}]]*/ null;
 		/*]]>*/
 	</script>	
     <script type="text/javascript" th:src="@{/js/timer.js}"></script>

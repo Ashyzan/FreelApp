@@ -68,6 +68,13 @@ function controlloContatoreAttivato(){
 
 
 
+//******************* animazione se contatore cliccato su play/pause prima del refresh in mobile  ************/
+function contatoreCliccatoPlayPauseInMobile(){
+	if(contatoreCliccatoPreRefresh == true && window.innerWidth < 1024){
+		document.getElementById('bottom').scrollIntoView({ behavior: "smooth"});
+	}
+}
+
 
 
 
