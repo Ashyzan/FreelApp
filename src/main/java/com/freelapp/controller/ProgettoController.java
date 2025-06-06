@@ -99,6 +99,13 @@ public class ProgettoController {
 				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 				
+				// invio al model il booleano del contatore cliccato prima del refresh pagina
+				// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+				model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+				// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+				ContatoreController.contatoreCliccatoPreRefresh = false;
+				
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
 				
@@ -172,6 +179,13 @@ public class ProgettoController {
 					//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 					model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 					
+					// invio al model il booleano del contatore cliccato prima del refresh pagina
+					// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+					model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+					// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+					ContatoreController.contatoreCliccatoPreRefresh = false;
+					
 					//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
 					model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
 					model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
@@ -212,6 +226,13 @@ public class ProgettoController {
 				//invio al model il booleano del contatore attivato
 				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+				
+				// invio al model il booleano del contatore cliccato prima del refresh pagina
+				// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+				model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+				// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+				ContatoreController.contatoreCliccatoPreRefresh = false;
 				
 				//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
 				model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
@@ -301,6 +322,13 @@ public class ProgettoController {
 					//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 					model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 					
+					// invio al model il booleano del contatore cliccato prima del refresh pagina
+					// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+					model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+					// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+					ContatoreController.contatoreCliccatoPreRefresh = false;
+					
 					//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
 					model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
 					model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
@@ -349,6 +377,13 @@ public class ProgettoController {
 		
 				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 				ContatoreController.contatoreAttivato = false;
+				
+				// invio al model il booleano del contatore cliccato prima del refresh pagina
+				// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+				model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+				// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+				ContatoreController.contatoreCliccatoPreRefresh = false;
 	
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
@@ -415,6 +450,13 @@ public class ProgettoController {
 		
 				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 				ContatoreController.contatoreAttivato = false;
+				
+				// invio al model il booleano del contatore cliccato prima del refresh pagina
+				// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+				model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+				// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+				ContatoreController.contatoreCliccatoPreRefresh = false;
 				
 				//metodo che passa al model i valori inerenti la tipologia progetto per le statistiche
 				progettoService.tipologiaFromProgettoToModel(formProgetto, model);
@@ -514,6 +556,13 @@ public class ProgettoController {
 				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 				ContatoreController.contatoreAttivato = false;
 				
+				// invio al model il booleano del contatore cliccato prima del refresh pagina
+				// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+				model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+				// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+				ContatoreController.contatoreCliccatoPreRefresh = false;
+				
 				//metodo che passa al model i valori inerenti la tipologia progetto per le statistiche
 				progettoService.tipologiaFromProgettoToModel(formProgetto, model);
 				
@@ -553,7 +602,7 @@ public class ProgettoController {
 				formProgetto.setDataModifica(LocalDateTime.now());
 				repositProgetto.save(formProgetto);
 				
-				return "redirect:/Progetti"; 
+				return "redirect:/Progetti/" + formProgetto.getId(); 
 			    }
 			
 			
@@ -668,6 +717,13 @@ public class ProgettoController {
 				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 				ContatoreController.contatoreAttivato = false;
 				
+				// invio al model il booleano del contatore cliccato prima del refresh pagina
+				// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+				model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+				// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+				ContatoreController.contatoreCliccatoPreRefresh = false;
+				
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
 				
@@ -700,6 +756,13 @@ public class ProgettoController {
 				//invio al model il booleano del contatore attivato
 				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+				
+				// invio al model il booleano del contatore cliccato prima del refresh pagina
+				// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+				model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+				// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+				ContatoreController.contatoreCliccatoPreRefresh = false;
 
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);

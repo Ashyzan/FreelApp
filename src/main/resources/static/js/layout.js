@@ -7,6 +7,8 @@ let buttontest = document.getElementById('buttontest');
 
 
 
+
+
 // recupero elementi dal DOM per navBar	
 const navBar = document.querySelector('.nav-bar');
 const navOptionsMobile = document.querySelector('#options-button-mobile');
@@ -16,6 +18,7 @@ const navOptionsDesktop = document.querySelector('.nav-option-desktop');
 //recupero elemento dal DOM per animazione partenza contatore
 const dettaglioContatoreTop = document.getElementById('dettaglio-contatore-top');
 const dettaglioContatoreBottom = document.getElementById('dettaglio-contatore-bottom');
+const altezzaDisplay = window.screen.height;
 
 //recupero elementi dal DOM per errore numero massimo caratteri textArea
 const contatoreCaratteriCinquecento = document.getElementById('contatore-caratteri-cinquecento');
@@ -49,12 +52,28 @@ function onToggleOptionsDesktop(e){
 
 
 // ********* animazione avvio contatore ******************************************************************************
-if(contatoreAttivato == true){
-	dettaglioContatoreTop.classList.add('animate_animated','animate__bounceIn');
-	dettaglioContatoreBottom.classList.add('animate_animated','animate__bounceIn');
+function controlloContatoreAttivato(){
+	
+	if(contatoreAttivato == true){
+		if(window.innerWidth < 1024){
+			document.getElementById('bottom').scrollIntoView({ behavior: "smooth"});
+			//document.getElementById('main-section').scrollTop = document.getElementById('main-section').scrollHeight + 100;
+			setTimeout(() => {
+				dettaglioContatoreBottom.classList.add('animate_animated','animate__bounceIn');				  
+			}, 500);
+		}
+		dettaglioContatoreTop.classList.add('animate_animated','animate__bounceIn');
+	}
 }
 
 
+
+//******************* animazione se contatore cliccato su play/pause prima del refresh in mobile  ************/
+function contatoreCliccatoPlayPauseInMobile(){
+	if(contatoreCliccatoPreRefresh == true && window.innerWidth < 1024){
+		document.getElementById('bottom').scrollIntoView({ behavior: "smooth"});
+	}
+}
 
 
 

@@ -41,6 +41,8 @@ public class ContatoreController {
     public static Task taskInUso;
     
     public static boolean contatoreAttivato = false;
+    
+    public static boolean contatoreCliccatoPreRefresh = false;
 
 //    @GetMapping("/Contatore/timer/{id}")
 //    public String gestioneTimer(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
@@ -230,7 +232,8 @@ public class ContatoreController {
 
 	contatoreInUso = contatore;
 	taskInUso = task;
-	contatoreAttivato = true;
+	//contatoreAttivato = true; 
+	contatoreCliccatoPreRefresh = true;
 	
 
 //	return "/Contatore/timer";
@@ -335,6 +338,7 @@ public class ContatoreController {
 	}
 
 	contatoreAttivato = false;
+	contatoreCliccatoPreRefresh = true;
 	return "redirect:" + endPoint;
     }
 

@@ -87,7 +87,9 @@ public class ProgettoService {
 					//valore (finalTimeProgetto) che deriva dalla somma di tutti i finalTime di progetti
 					int finalTimeProgetto = 0;
 					for(Task task : progetto.getElencoTask()) {
-						finalTimeProgetto += task.getContatore().getFinaltime();
+						if(task.getContatore() != null) {
+							finalTimeProgetto += task.getContatore().getFinaltime();							
+						}
 					}
 					
 					oreRimanenti = oreTotaliProgetto - (finalTimeProgetto/3600);

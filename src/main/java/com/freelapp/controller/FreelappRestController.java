@@ -1,9 +1,12 @@
 package com.freelapp.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
@@ -21,6 +24,9 @@ import com.freelapp.model.Task;
 import com.freelapp.repository.TaskRepository;
 import com.freelapp.restModel.RestTask;
 import com.freelapp.service.ContatoreService;
+import com.freelapp.service.TaskService;
+
+
 
 
 @RestController
@@ -33,6 +39,9 @@ public class FreelappRestController {
 	
 	@Autowired
 	private ContatoreService contatoreService;
+	
+	@Autowired
+	private TaskService taskService;
 	
 	@GetMapping("/task/{id}")
 	public Optional<RestTask> get(@PathVariable("id") Integer id){
@@ -146,6 +155,67 @@ public class FreelappRestController {
 				ProgettoController.ordinaElencoProgettiPerData = true;
 				
 			}
+	
+// *********************** API PER STATISTICHE **************************
+	
+	//api che ritorna json con statistiche dettaglio task
+	@GetMapping("/statistiche-dettaglio-task/{id}") 
+	public JSONObject TaskJson(@PathVariable("id") Integer id){
+				
+		Task task = taskRepository.getReferenceById(id);
+
+		//recupero dati chiusura stimata
+		Map<String, Long> giorniChiusuraStimata;
+		if(task.getDataChiusuraStimata() != null){
+			giorniChiusuraStimata = taskService.inLineaConChiusuraStimata(task);
+		} else {
+			giorniChiusuraStimata = null;
+		}
+		
+		//recupero tipologia del progetto del task 		
+		String tipologiaProgetto = task.getProgetto().getTipologia();
+			
+		//creazione json
+		JSONObject JsonObj = new JSONObject();
+				
+		JsonObj.put("giorniChiusuraStimata" , giorniChiusuraStimata);
+		JsonObj.put("tipologiaProgetto" , tipologiaProgetto);
+		
+		
+		//a seconda della tipolgia progetto mando nel json un budget differente e suo relativo utilizzo		
+		switch (tipologiaProgetto) {
+		case "budget":
+			JsonObj.put("budgetImpiegatoDaAltriTask" , taskService.calcoloParteDiBudgetUsataDaAltriTaskNelProgettoMonetario(task));
+			JsonObj.put("budgetTotaleProgetto" , task.getProgetto().getBudgetMonetario());
+			if(task.getContatore() != null) {
+				JsonObj.put("budgetImpiegatoDalTask" , taskService.calcoloGuadagnoTaskDaFinalTimeToDouble(task));
+			} else {
+				JsonObj.put("budgetImpiegatoDalTask" , "-");
+			}
+			break;
+		case "ore":
+			JsonObj.put("budgetImpiegatoDaAltriTask" , taskService.calcoloParteDiBudgetUsataDaAltriTaskNelProgettoOre(task));
+			JsonObj.put("budgetTotaleProgetto" , task.getProgetto().getBudgetOre());
+			//restituisce le ore utilizzate dal task trasformando il finaltime in ore
+			if(task.getContatore() != null) {
+				JsonObj.put("budgetImpiegatoDalTask" , task.getContatore().getFinaltime().doubleValue() / 3600);				
+			} else {
+				JsonObj.put("budgetImpiegatoDalTask" , 0);
+			}
+			break;
+		default:
+			JsonObj.put("budgetTotaleProgetto" , null);
+		}
+		
+		return JsonObj;
+				
+	}
+	
+	
+	
+	
+	
+	
 	
 //	@GetMapping(value = "/task/timeExceed/{id}", produces = MediaType.TEXT_HTML_VALUE)
 //	public String timeExceedError(@PathVariable("id")Integer id, Model model) {

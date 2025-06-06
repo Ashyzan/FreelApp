@@ -85,6 +85,13 @@ public class TaskController {
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
 		
+		// invio al model il booleano del contatore cliccato prima del refresh pagina
+		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+		ContatoreController.contatoreCliccatoPreRefresh = false;
+		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
 		
@@ -175,6 +182,13 @@ public class TaskController {
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
 		
+		// invio al model il booleano del contatore cliccato prima del refresh pagina
+		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+		ContatoreController.contatoreCliccatoPreRefresh = false;
+		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
 	
@@ -215,6 +229,13 @@ public class TaskController {
 		
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 //		ContatoreController.contatoreAttivato = false;
+		
+		// invio al model il booleano del contatore cliccato prima del refresh pagina
+		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+		ContatoreController.contatoreCliccatoPreRefresh = false;
 
 		// restituisce al model questo valore booleano false se non ci sono progetti a db
 		// e restituisce true se ci sono progetti a db
@@ -286,6 +307,13 @@ public class TaskController {
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
 		
+		// invio al model il booleano del contatore cliccato prima del refresh pagina
+		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+		ContatoreController.contatoreCliccatoPreRefresh = false;
+		
 		// restituisce al model questo valore booleano false se non ci sono progetti a db
 		// e restituisce true se ci sono progetti a db
 		boolean areTasksOnDb = false;
@@ -329,6 +357,21 @@ public class TaskController {
 		// inizializzo a false così che al refresh o cambio pagina non esegue animazione
 		// ma solo allo start
 		ContatoreController.contatoreAttivato = false;
+		
+		// invio al model il booleano del contatore cliccato prima del refresh pagina
+		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+		ContatoreController.contatoreCliccatoPreRefresh = false;
+		
+		// invio al model il booleano del contatore cliccato prima del refresh pagina
+		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+		ContatoreController.contatoreCliccatoPreRefresh = false;
+		
 
 		// metodo che passa al model le informazioni sul task in uso per generare la
 		// modale STOP
@@ -348,6 +391,27 @@ public class TaskController {
 			model.addAttribute("lastVisitedPageInTaskSearch", lastVisitedPageInTaskSearch);
 			model.addAttribute("lastInputInTaskSearch", lastInputInTaskSearch);
 		}
+		
+		//sezione che manda al model le statistiche(non grafici)
+		String guadagnoAttualeTask = null;
+		String pauseTask = null;
+		//verifico se il task ha il contatore calcolo il guadagno altrimenti informo utente che non ha contatore attivo
+		if(task.getContatore() != null) {
+			guadagnoAttualeTask = taskService.calcoloGuadagnoTaskDaFinalTime(task) + " €";
+			pauseTask = String.valueOf(task.getContatore().getStop_numbers());
+		} else {
+			guadagnoAttualeTask = "Task inattivo";
+			pauseTask = "-";
+		}
+		
+		model.addAttribute("guadagnoAttualeTask", guadagnoAttualeTask);
+		model.addAttribute("pauseTask", pauseTask);
+		
+		if(task.getDataChiusuraStimata() == null) {
+			String dataChiusuraStimataNonDisponibile =  "Inserire data di chiusura stimata per il calcolo";
+			model.addAttribute("dataChiusuraStimataNonDisponibile", dataChiusuraStimataNonDisponibile);
+		} else {taskService.inLineaConChiusuraStimata(task);}
+		
 	
 	return "/Task/freelapp-descrizioneTask";
     }
@@ -400,6 +464,13 @@ public class TaskController {
 		
 	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 	ContatoreController.contatoreAttivato = false;
+	
+	// invio al model il booleano del contatore cliccato prima del refresh pagina
+	// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+	model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+	// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+	ContatoreController.contatoreCliccatoPreRefresh = false;
 	
 	return "/Task/freelapp-insertTask";
     }
@@ -493,13 +564,20 @@ public class TaskController {
 	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 	ContatoreController.contatoreAttivato = false;
 	
+	// invio al model il booleano del contatore cliccato prima del refresh pagina
+	// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+	model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+	// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+	ContatoreController.contatoreCliccatoPreRefresh = false;
+	
 	//restituisce al model questo valore booleano false se non ci sono clienti a db
-		//e restituisce true se ci sono clienti a db
-		boolean areClientsOnDb = false;
-		if(!repositoryCliente.findAll().isEmpty()) {
+	//e restituisce true se ci sono clienti a db
+	boolean areClientsOnDb = false;
+	if(!repositoryCliente.findAll().isEmpty()) {
 			areClientsOnDb = true;
-		}
-		model.addAttribute("areClientsOnDb", areClientsOnDb);
+	}
+	model.addAttribute("areClientsOnDb", areClientsOnDb);
 	
 	// restituisce al model questo valore booleano false se non ci sono progetti a
 	// db
@@ -523,7 +601,7 @@ public class TaskController {
 	    // riporto nel modello l'elenco dei progetti disponibili
 	    model.addAttribute("listaProgetti", repositProgetto.findAll());
 	    
-	//  passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+	    //  passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
 		String endPoint = "/Task/newTask";
 		model.addAttribute("endPoint", endPoint);
 		
@@ -540,6 +618,24 @@ public class TaskController {
 		List<Task> taskList = new ArrayList<Task> ();
 		taskList = repositTask.findAllNotClosed();
 		model.addAttribute("taskList", taskList);
+		
+		//restituisce al model questo valore booleano false se non ci sono clienti a db
+		//e restituisce true se ci sono clienti a db
+		boolean areClientsOnDb = false;
+		if(!repositoryCliente.findAll().isEmpty()) {
+			areClientsOnDb = true;
+		}
+		model.addAttribute("areClientsOnDb", areClientsOnDb);
+	
+		// restituisce al model questo valore booleano false se non ci sono progetti a
+		// db
+		// e restituisce true se ci sono progetti a db
+		boolean areProjectsOnDb = false;
+		if (!repositProgetto.findAll().isEmpty()) {
+			areProjectsOnDb = true;
+		}
+		model.addAttribute("areProjectsOnDb", areProjectsOnDb);
+	
 
 	    return "/Task/freelapp-insertTask-noProgetto";
 	}
@@ -586,6 +682,13 @@ public class TaskController {
 	//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 	ContatoreController.contatoreAttivato = false;
 	
+	// invio al model il booleano del contatore cliccato prima del refresh pagina
+	// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+	model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+	// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+	ContatoreController.contatoreCliccatoPreRefresh = false;
+	
 	return "/Task/freelapp-editTask";
     }
 
@@ -612,9 +715,10 @@ public class TaskController {
 	    return "/Task/freelapp-editTask";
 	}
 
+	 formTask.setDataModifica(LocalDateTime.now());
 	repositTask.save(formTask);
 
-	return "redirect:/Task";
+	return "redirect:/Task/"+id;
 
     }
 
