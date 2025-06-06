@@ -12,6 +12,46 @@ let iterazioni = 0;
 	const timerDue = document.getElementById('timerDue');
 	
 	
+	
+	
+	
+	//****************** CHIAMATA API PER START CONTATORE ********************************/
+	
+function startContatoreApi(id){
+	const url_apiStart = 'http://localhost:8080/start/' + id;
+	
+	fetch(url_apiStart).then(response =>{
+		
+		if (!response.ok) {
+							       throw new Error('Network response was not ok');
+							     }
+							     return response.json();
+							})
+							.then(data =>{
+								
+								console.log("JSON: " + data)
+								
+								console.log("finaltime json:" + data.finaltime);
+								//aggiorno le variabili
+								contatoreTrue = data.contatoreIsTrue;
+								finalTimeSec = Number(data.finaltime);
+								console.log("finalTimeSec: "+ typeof finalTimeSec + " " + finalTimeSec)
+								contatoreIsRun = data.contatoreIsRun;
+								
+								hours = finalTimeSec / 3600;
+								minutes = (finalTimeSec % 3600) / 60;
+								seconds = finalTimeSec % 60;
+								   
+									// "task": 7,
+								    //"contatoreIsRun": true,
+								    //"contatore": 7
+									timerstart()
+							});
+								 
+		
+	
+}
+	
 	//console.log("finalTimeSec iniziale: " + finalTimeSec)
 	//console.log("ore iniziali: " + hours);
 	//console.log("minuti iniziali: " + minutes);
@@ -95,5 +135,10 @@ function timeExceed(iterazioni){
 				formContatoreErroreFinalSecond.submit(); 					
 			}
 }
+
+
+
+
+
 	
 	
