@@ -164,14 +164,9 @@
 									src="/img/sources/icons/pause-blue.svg" alt="pause">
 							</div>
 							<div th:if="${contatoreIsRun}">
-								<form th:action="@{|/Contatore/pause/${taskInUso.id}|}"
-									th:object="${contatore}" method="post">
-									<input type="hidden" name="endPoint" th:value="${endPoint}">
-									<button type="submit" class="hover:opacity-75 ">
-										<img class="h-[29px] w-[29px]"
-											src="/img/sources/icons/pause-blue.svg" alt="pause">
-									</button>
-								</form>
+								<button type="button" class="hover:opacity-75 " th:onclick="pauseContatoreApi([[${taskInUso.id}]])">
+									<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
+								</button>
 							</div>
 						</div>
 						<div th:if="${taskInUso == null}" class="w-8 h-8">
@@ -184,16 +179,11 @@
 									src="/img/sources/icons/play-blue.svg" alt="start">
 							</div>
 							<div th:unless="${contatoreIsRun}">
-								<form th:action="@{|/start/${taskInUso.id}|}"
-									th:object="${contatore}" method="post">
-									<input type="hidden" name="endPoint" th:value="${endPoint}">
-									<button type="submit" class="hover:opacity-75">
-										<img class="h-[29px] w-[29px]"
-											src="/img/sources/icons/play-blue.svg" alt="start">
-									</button>
-								</form>
+								<button type="button" class="hover:opacity-75" th:onclick="startContatoreApi([[${taskInUso.id}]])">
+									<img class="h-[29px] w-[29px]" src="/img/sources/icons/play-blue.svg" alt="start">
+								</button>
 							</div>
-						</div>
+							</div>
 					</div>
 				</div>
 			</div>

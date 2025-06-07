@@ -52,32 +52,74 @@ function startContatoreApi(id){
 	
 }
 	
+//****************** CHIAMATA API PER PAUSE CONTATORE ********************************/
+	
+function pauseContatoreApi(id){
+	const url_apiStart = 'http://localhost:8080/Contatore/pause/' + id;
+	
+	fetch(url_apiStart).then(response =>{
+		
+		if (!response.ok) {
+							       throw new Error('Network response was not ok');
+							     }
+							     return response.json();
+							})
+							.then(data =>{
+								
+								console.log("JSON: " + data)
+								
+								console.log("finaltime json:" + data.finaltime);
+								//aggiorno le variabili
+								contatoreTrue = data.contatoreIsTrue;
+								finalTimeSec = Number(data.finaltime);
+								console.log("finalTimeSec: "+ typeof finalTimeSec + " " + finalTimeSec)
+								contatoreIsRun = data.contatoreIsRun;
+								
+								hours = finalTimeSec / 3600;
+								minutes = (finalTimeSec % 3600) / 60;
+								seconds = finalTimeSec % 60;
+								   
+									// "task": 7,
+								    //"contatoreIsRun": true,
+								    //"contatore": 7
+									stampacontatore();
+							});
+								 
+		
+	
+}
+
 	//console.log("finalTimeSec iniziale: " + finalTimeSec)
 	//console.log("ore iniziali: " + hours);
 	//console.log("minuti iniziali: " + minutes);
 	//console.log("secondi iniziali: " + seconds);
 				
 	function tempochescorre() {
-		iterazioni ++;
-		
-		seconds++;
-		stampacontatore();
-		
-		if (seconds == 59) {
-			seconds = -1;
-			
-			if(minutes <= 59){
-				minutes++;
-			}
-				else {
-				minutes = 0;
-				seconds = -1;
-				hours++;
-			}
-		}
-		//verifica ogni secondo se il timer ha raggiuno il massimo consentito
-		timeExceed(iterazioni);
+		if(contatoreIsRun !== true){
+			stampacontatore();
+		} else{ 
+			iterazioni ++;
+					
+					seconds++;
+					stampacontatore();
+					
+					if (seconds == 59) {
+						seconds = -1;
+						
+						if(minutes <= 59){
+							minutes++;
+						}
+							else {
+							minutes = 0;
+							seconds = -1;
+							hours++;
+						}
+					}
+					//verifica ogni secondo se il timer ha raggiuno il massimo consentito
+					timeExceed(iterazioni);
 
+		}
+		
 	}
 
 	
@@ -118,8 +160,8 @@ function startContatoreApi(id){
 				//console.log("contatore non attivo , finaltime = " + finalTimeSec + "testtaskdatestare " + testtaskdatestare);
 			}
 
-			else  {
-			
+			else {
+				
 				//console.log("finaltime is not defined , finaltime = " + finalTimeSec);
 			}
 		

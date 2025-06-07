@@ -182,14 +182,10 @@
 												src="/img/sources/icons/pause-blue.svg" alt="pause">
 										</div>
 										<div th:if="${contatoreIsRun}">
-											<form th:action="@{|/Contatore/pause/${taskInUso.id}|}"
-												th:object="${contatore}" method="post">
-												<input type="hidden" name="endPoint" th:value="${endPoint}">
-												<button type="submit" class="hover:opacity-75 ">
+												<button type="button" class="hover:opacity-75 " th:onclick="pauseContatoreApi([[${taskInUso.id}]])">
 													<img class="h-[29px] w-[29px]"
 														src="/img/sources/icons/pause-blue.svg" alt="pause">
 												</button>
-											</form>
 										</div>
 									</div>
 									<div th:if="${taskInUso == null}" class="w-8 h-8">
