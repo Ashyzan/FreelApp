@@ -25,7 +25,7 @@ function chiudiModale(){
 
 
 
-// *******************************  FUNZIONE MODALE STOP ******************************
+// *******************************  FUNZIONE MODALE STOP TASK ******************************
 
 //funzione creazione modale STOP
 function creaModaleStop(){
@@ -113,7 +113,7 @@ function creaApriModaleOreLavorate(idTaskselected, taskSelectedName){
 
 
 
-// *******************************  FUNZIONE MODALE RESET ******************************
+// *******************************  FUNZIONE MODALE RESET TASK ******************************
 
 //funzione creazione e apertura modale RESET
 function creaApriModaleReset(idTaskselected, taskName, progettoName){

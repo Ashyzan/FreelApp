@@ -34,7 +34,7 @@ import jakarta.validation.Valid;
 public class ProgettoController {
 
 
-	private static final boolean Task = false;
+	//private static final boolean Task = false;
 	
 	//variablili che verranno utilizzate per memorizzare la scelta effettuata durante la sessione
 	public static boolean ordinaElencoProgettiPerData = true;
