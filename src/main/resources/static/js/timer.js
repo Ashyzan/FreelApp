@@ -46,7 +46,6 @@ function startContatoreApi(id){
 								//aggiorno le variabili
 								contatoreTrue = data.contatoreIsTrue;
 								finalTimeSec = Number(data.finaltime);
-								console.log("finalTimeSec: "+ typeof finalTimeSec + " " + finalTimeSec)
 								contatoreIsRun = data.contatoreIsRun;
 								
 								hours = finalTimeSec / 3600;
@@ -54,7 +53,8 @@ function startContatoreApi(id){
 								seconds = finalTimeSec % 60;
 								
 								timerstart()
-								
+								//dopo aver caricato i pulsanti tramite thymelaf secondo quanto preso dal model, al click 
+								//del play vengono nascosti e sostituiti da quelli generati da javascritp
 								if(pauseTopSvgBeforeApiContatoreNotRun != null && pauseTopSvgBeforeApiContatoreNotRun.display != "none"){
 									pauseTopSvgBeforeApiContatoreNotRun.classList.add('hidden');		
 								}
@@ -63,12 +63,12 @@ function startContatoreApi(id){
 								}
 								
 								
-										
-										playTopAfterApi.innerHTML = `<img class="h-[29px] w-[29px]"
+								//rende non cliccabile il pulsante play del contatore con il contatore in run
+								playTopAfterApi.innerHTML = `<img class="h-[29px] w-[29px]"
 																		//src="/img/sources/icons/play-blue.svg" alt="start">`;
 										
-										
-										pauseTopAfterApi.innerHTML = `<button type="button" class="hover:opacity-75 " onclick="pauseContatoreApi(${taskInUsoId})">
+								//rende cliccabile il pulsante pause del contatore con il contatore in run		
+								pauseTopAfterApi.innerHTML = `<button type="button" class="hover:opacity-75 " onclick="pauseContatoreApi(${taskInUsoId})">
 																		<img class="h-[29px] w-[29px]"
 																			src="/img/sources/icons/pause-blue.svg" alt="pause">
 																	</button>`;
@@ -93,38 +93,34 @@ function pauseContatoreApi(id){
 							})
 							.then(data =>{
 								
-								console.log("JSON: " + data)
-								
-								console.log("finaltime json:" + data.finaltime);
 								//aggiorno le variabili
 								contatoreTrue = data.contatoreIsTrue;
 								finalTimeSec = Number(data.finaltime);
-								console.log("finalTimeSec: "+ typeof finalTimeSec + " " + finalTimeSec)
 								contatoreIsRun = data.contatoreIsRun;
 								
 								hours = finalTimeSec / 3600;
 								minutes = (finalTimeSec % 3600) / 60;
 								seconds = finalTimeSec % 60;
+								//azzera il setInterval per evitare che agli start successivi la velocità del contatore aumenti
 								clearInterval(crono);
 								stampacontatore();
 								
 								
-								
-								if(playTopSvgBeforeApiContatoreNotRun != null && playTopSvgBeforeApiContatoreNotRun.display === "none"){
-									playTopSvgBeforeApiContatoreNotRun.classList.remove('hidden');		
+								//dopo aver caricato i pulsanti tramite thymelaf secondo quanto preso dal model, al click 
+								//del pause vengono nascosti e sostituiti da quelli generati da javascritp
+								if(playTopSvgBeforeApiContatoreNotRun != null && playTopSvgBeforeApiContatoreNotRun.display != "none"){
+									playTopSvgBeforeApiContatoreNotRun.classList.add('hidden');		
 								}
-								if(pauseTopSvgBeforeApiContatorIsRun != null && pauseTopSvgBeforeApiContatorIsRun.display === "none"){
-									pauseTopSvgBeforeApiContatorIsRun.classList.remove('hidden');		
+								if(pauseTopSvgBeforeApiContatorIsRun != null && pauseTopSvgBeforeApiContatorIsRun.display != "none"){
+									pauseTopSvgBeforeApiContatorIsRun.classList.add('hidden');		
 								}
 								
-												
+								//rende cliccabile il pulsante play del contatore con il contatore in pausa				
 								playTopAfterApi.innerHTML = `<button type="button" class="hover:opacity-75 " onclick="startContatoreApi(${taskInUsoId})">
 																<img class="h-[29px] w-[29px]"
 																	src="/img/sources/icons/play-blue.svg" alt="play">
 															</button>`;
-								
-								
-																		
+								//rende  non cliccabile il pulsante pause del contatore con il contatore in pausa
 								pauseTopAfterApi.innerHTML = `<img class="h-[29px] w-[29px]"
 																//src="/img/sources/icons/pause-blue.svg" alt="pause">`;
 							});
