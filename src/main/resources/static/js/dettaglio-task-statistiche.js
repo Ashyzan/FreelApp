@@ -34,7 +34,7 @@ const url_apiStatisticheTask = '/api/statistiche-dettaglio-task/';
 
 function apiStatisticheJson(idTask){
 	
-	//esegue il fetch solo se in task è attivo
+	//esegue il fetch solo se il task è attivo
 	if(statoTask != "inattivo"){
 		
 		console.log("url statistiche: " + url_apiStatisticheTask)

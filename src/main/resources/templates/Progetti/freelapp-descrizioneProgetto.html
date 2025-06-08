@@ -578,42 +578,56 @@
 									inizio</div>
 								<div
 									class="md:ms-20 col-span-1 md:col-span-2 py-2 text-center max-md:text-end"
-									th:text="${#temporals.format(progetto.getDataInizio(),'dd MMM yyyy')}"></div>
+									th:text="${#temporals.format(progetto.getDataInizio(),'dd MMM yyyy')}">
+								</div>
+
 								<div th:if="${progetto.getDataFine() != null}"
 									class="col-span-2 md:col-span-1  font-bold pe-1 py-2">Data
 									Chiusura</div>
+
 								<div th:if="${progetto.getDataFine() != null}"
-									class="md:ms-20 col-span-1 md:col-span-2 py-2 max-md:text-end"
-									th:text=" ${#temporals.format(progetto.getDataFine(), 'dd MMM yyyy')}"></div>
+									class="md:ms-20 col-span-1 md:col-span-2 py-2 text-center max-md:text-end"
+									th:text=" ${#temporals.format(progetto.getDataFine(), 'dd MMM yyyy')}">
+								</div>
 
 							</div>
 							<div class="grid grid-cols-3 mb-2 py-2 border-b-4">
-							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
+								<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
 									Totali</div>
-							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
-							th:text="${progetto.getElencoTask().size()}">
-							</div>
-							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
+								<div
+									class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
+									th:text="${progetto.getElencoTask().size()}"></div>
+								<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
 									Attivi</div>
-							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
-							th:text="${progetto.getElencoTask().size()}">
-							</div>
-							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
+
+								<div
+									class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
+									th:text="${#lists.size(progetto.elencoTask.?[stato != 'chiuso'])}">
+								</div>
+								<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
 									chiusi</div>
-							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
-							th:text="${progetto.getElencoTask().size()}">
-							</div>
-							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Guadagno Task
-									Attivi</div>
-							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
-							th:text="${progetto.getElencoTask().size()}">
-							</div>
-							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Guadagno Task
-									Chiusi</div>
-							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
-							th:text="${progetto.getElencoTask().size()}">
-							</div>
-							
+								<div
+									class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
+									th:text="${#lists.size(progetto.elencoTask.?[stato == 'chiuso'])}">
+								</div>
+								<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Guadagno
+									Totale</div>
+								<div
+									class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
+									th:text="${guadagnoTotaleProgetto}"></div>
+								<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Guadagno
+									Task Attivi</div>
+								<div
+									class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
+									th:text="${guadagnoTotaleTaskAttivi}"></div>
+									
+								<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Guadagno
+									Task Chiusi</div>
+								<div
+									class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
+									th:text="${guadagnoTotaleTaskChiusi}">
+								</div>
+
 							</div>
 							<div class="grid grid-cols-3 mb-2 py-2 border-b-4">
 								<div class="col font-bold pe-1 py-2">Stato</div>
@@ -651,10 +665,9 @@
 
 													<img th:src="@{/img/sources/icons/add-task-blue.svg}"
 													alt="aggiungi-task" class=" size-6 inline"> <span
-													class="tooltiptext-top">
-														Aggiungi Task</span>
+													class="tooltiptext-top"> Aggiungi Task</span>
 
-											</a> <img class="col-auto w-8 h-8 ms-2"
+											</a> <img class="size-6 inline"
 												th:unless="${progetto.dataFine == null}"
 												th:src="@{/img/sources/icons/add-task-blue-opacity.svg}">
 											</li>
@@ -665,8 +678,7 @@
 													<img class="size-5 inline"
 													src="/img/sources/icons/modify-blue.svg"
 													alt="modifica progetto"> <span
-													class="tooltiptext-top">
-														Modifica</span>
+													class="tooltiptext-top"> Modifica</span>
 
 											</a></li>
 											<li th:if="${progetto.dataFine == null}"
@@ -692,7 +704,8 @@
 												</form>
 											</li>
 
-											<li class="flex flex-col md:flex-row mr-3 float-left tooltip-top">
+											<li
+												class="flex flex-col md:flex-row mr-3 float-left tooltip-top">
 												<form
 													th:action="@{/Progetti/archivia/{id}(id=${progetto.getId()})}"
 													th:object="${progetto}" method="post">
@@ -704,16 +717,15 @@
 												</form>
 
 											</li>
-											<li class="flex flex-col md:flex-row mr-3 float-left tooltip-top"><button
+											<li
+												class="flex flex-col md:flex-row mr-3 float-left tooltip-top"><button
 													type="button" id="deleteButton"
 													th:onclick="creaApriModaleDeleteProgetto([[${progetto.id}]], [[${progetto.getName()}]], [[${progetto.cliente.getLabelCliente()}]])">
-													
-														<img class="size-5 inline"
-															src="/img/sources/icons/garbage-red.svg" alt="elimina">
-														<span
-															class="tooltiptext-top">
-															Elimina</span>
-													
+
+													<img class="size-5 inline"
+														src="/img/sources/icons/garbage-red.svg" alt="elimina">
+													<span class="tooltiptext-top"> Elimina</span>
+
 												</button></li>
 
 										</ul>
@@ -730,85 +742,84 @@
 						<div class="text-center mt-5 p-4">
 							<a
 								class="inline mx-3 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
-								th:href="@{/Progetti}">Tutti i progetti </a>
-								<a
+								th:href="@{/Progetti}">Tutti i progetti </a> <a
 								class="inline mx-3 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
 								th:href="@{/Progetti}">Lista task</a>
 						</div>
-						
-						
+
+
 					</div>
 				</div>
 				<!-- 			second column -->
-<!-- 				<div class="w-1/2 gap-4 rounded-lg bg-gray-100 p-2 md:p-6 m-3 shadow-lg"> -->
-<!-- 					<h3 class="text-center text-[#FFE641] text-xl font-bold mb-4">Statistiche</h3> -->
-<!-- 					<div th:if="${dataChiusuraStimataNonDisponibile != null}" -->
-<!-- 						class="border-b-4 "> -->
-<!-- 						<div class="col font-bold text-center pe-1 py-1 ">Chiusura -->
-<!-- 							Stimata</div> -->
-<!-- 						<div class="col col-span-2 py-1 text-center mb-10" id="pauseTask" -->
-<!-- 							th:text="${dataChiusuraStimataNonDisponibile}"></div> -->
-<!-- 					</div> -->
-<!-- 					<div th:unless="${dataChiusuraStimataNonDisponibile != null}" -->
-<!-- 						class="border-b-4"> -->
-<!-- 						<div id="contenitoreGiorniChiusuraStimata"></div> -->
-<!-- 					</div> -->
-<!-- 					<div class="grid grid-cols-3 mb-2 py-2 px-3 border-b-4"> -->
-<!-- 						<div class="col border-r-2"> -->
-<!-- 							<div class="text-center font-bold">Tariffa oraria</div> -->
-<!-- 							<div class="text-center" id="guadagnoAttualeTask" -->
-<!-- 								th:text="|${task.progetto.getTariffaOraria()} €|"></div> -->
-<!-- 						</div> -->
-<!-- 						<div class="col border-l-2 border-r-2"> -->
-<!-- 							<div class="text-center font-bold">Ore Lavorate</div> -->
-<!-- 							<div th:if="${task.contatore != null}" class="text-center" -->
-<!-- 								id="pauseTask" th:text="${task.contatore.getFinaltime() /3600}"></div> -->
-<!-- 							<div th:if="${task.contatore == null}" class="text-center" -->
-<!-- 								id="pauseTask">--</div> -->
-<!-- 						</div> -->
-<!-- 						<div class="col border-l-2"> -->
-<!-- 							<div class="text-center font-bold">Pause</div> -->
-<!-- 							<div class="text-center" id="pauseTask" th:text="${pauseTask}"></div> -->
-<!-- 						</div> -->
+				<!-- 				<div class="w-1/2 gap-4 rounded-lg bg-gray-100 p-2 md:p-6 m-3 shadow-lg"> -->
+				<!-- 					<h3 class="text-center text-[#FFE641] text-xl font-bold mb-4">Statistiche</h3> -->
+				<!-- 					<div th:if="${dataChiusuraStimataNonDisponibile != null}" -->
+				<!-- 						class="border-b-4 "> -->
+				<!-- 						<div class="col font-bold text-center pe-1 py-1 ">Chiusura -->
+				<!-- 							Stimata</div> -->
+				<!-- 						<div class="col col-span-2 py-1 text-center mb-10" id="pauseTask" -->
+				<!-- 							th:text="${dataChiusuraStimataNonDisponibile}"></div> -->
+				<!-- 					</div> -->
+				<!-- 					<div th:unless="${dataChiusuraStimataNonDisponibile != null}" -->
+				<!-- 						class="border-b-4"> -->
+				<!-- 						<div id="contenitoreGiorniChiusuraStimata"></div> -->
+				<!-- 					</div> -->
+				<!-- 					<div class="grid grid-cols-3 mb-2 py-2 px-3 border-b-4"> -->
+				<!-- 						<div class="col border-r-2"> -->
+				<!-- 							<div class="text-center font-bold">Tariffa oraria</div> -->
+				<!-- 							<div class="text-center" id="guadagnoAttualeTask" -->
+				<!-- 								th:text="|${task.progetto.getTariffaOraria()} €|"></div> -->
+				<!-- 						</div> -->
+				<!-- 						<div class="col border-l-2 border-r-2"> -->
+				<!-- 							<div class="text-center font-bold">Ore Lavorate</div> -->
+				<!-- 							<div th:if="${task.contatore != null}" class="text-center" -->
+				<!-- 								id="pauseTask" th:text="${task.contatore.getFinaltime() /3600}"></div> -->
+				<!-- 							<div th:if="${task.contatore == null}" class="text-center" -->
+				<!-- 								id="pauseTask">--</div> -->
+				<!-- 						</div> -->
+				<!-- 						<div class="col border-l-2"> -->
+				<!-- 							<div class="text-center font-bold">Pause</div> -->
+				<!-- 							<div class="text-center" id="pauseTask" th:text="${pauseTask}"></div> -->
+				<!-- 						</div> -->
 
-<!-- 					</div> -->
-<!-- 					<div th:if="${task.getStato() != 'inattivo'}"> -->
-<!-- 						<div th:if="${task.progetto.getTipologia() != 'tariffa'}" -->
-<!-- 							class="md:grid grid-cols-2 w-full mb-4"> -->
-<!-- 							<div id="guadagno" -->
-<!-- 								class="col flex flex-col justify-center items-center py-8 mb-2"> -->
-<!-- 								<div class="mx-auto  text-xl font-bold mb-2">Guadagno</div> -->
-<!-- 								<div -->
-<!-- 									class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " -->
-<!-- 									id="guadagnoAttualeTask" th:text="${guadagnoAttualeTask}"></div> -->
-<!-- 							</div> -->
-<!-- 							<div th:if="${task.getStato != 'inattivo'}"> -->
-<!-- 								<canvas class="m-auto col w-3/4" id="myChart"></canvas> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 						<div th:if="${task.progetto.getTipologia() == 'tariffa'}" -->
-<!-- 							class=" w-full"> -->
-<!-- 							<div id="guadagno" -->
-<!-- 								class="flex flex-col justify-center items-center py-8 mb-2"> -->
-<!-- 								<div class="mx-auto  text-xl font-bold mb-2">Guadagno</div> -->
-<!-- 								<div -->
-<!-- 									class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " -->
-<!-- 									id="guadagnoAttualeTask" th:text="${guadagnoAttualeTask}"></div> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 					<div th:if="${task.getStato() == 'inattivo'}"> -->
-<!-- 						<div id="guadagno" -->
-<!-- 							class="flex flex-col justify-center items-center py-8 mb-2"> -->
-<!-- 							<div class="mx-auto  text-xl font-bold mb-2">Guadagno</div> -->
-<!-- 							<div -->
-<!-- 								class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " -->
-<!-- 								id="guadagnoAttualeTask" th:text="${guadagnoAttualeTask}"></div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 					<div class="text-center text-xs pt-3">I dati visualizzati -->
-<!-- 						sono riferiti all'ultima pausa</div> -->
-<!-- 				</div> -->
+				<!-- 					</div> -->
+				<!-- 					<div th:if="${task.getStato() != 'inattivo'}"> -->
+				<!-- 						<div th:if="${task.progetto.getTipologia() != 'tariffa'}" -->
+				<!-- 							class="md:grid grid-cols-2 w-full mb-4"> -->
+				<!-- 							<div id="guadagno" -->
+				<!-- 								class="col flex flex-col justify-center items-center py-8 mb-2"> -->
+				<!-- 								<div class="mx-auto  text-xl font-bold mb-2">Guadagno</div> -->
+				<!-- 								<div -->
+				<!-- 									class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " -->
+				<!-- 									id="guadagnoAttualeTask" th:text="${guadagnoAttualeTask}"></div> -->
+				<!-- 							</div> -->
+				<!-- 							<div th:if="${task.getStato != 'inattivo'}"> -->
+				<!-- 								<canvas class="m-auto col w-3/4" id="myChart"></canvas> -->
+				<!-- 							</div> -->
+				<!-- 						</div> -->
+				<!-- 						<div th:if="${task.progetto.getTipologia() == 'tariffa'}" -->
+				<!-- 							class=" w-full"> -->
+				<!-- 							<div id="guadagno" -->
+				<!-- 								class="flex flex-col justify-center items-center py-8 mb-2"> -->
+				<!-- 								<div class="mx-auto  text-xl font-bold mb-2">Guadagno</div> -->
+				<!-- 								<div -->
+				<!-- 									class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " -->
+				<!-- 									id="guadagnoAttualeTask" th:text="${guadagnoAttualeTask}"></div> -->
+				<!-- 							</div> -->
+				<!-- 						</div> -->
+				<!-- 					</div> -->
+				<!-- 					<div th:if="${task.getStato() == 'inattivo'}"> -->
+				<!-- 						<div id="guadagno" -->
+				<!-- 							class="flex flex-col justify-center items-center py-8 mb-2"> -->
+				<!-- 							<div class="mx-auto  text-xl font-bold mb-2">Guadagno</div> -->
+				<!-- 							<div -->
+				<!-- 								class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " -->
+				<!-- 								id="guadagnoAttualeTask" th:text="${guadagnoAttualeTask}"></div> -->
+				<!-- 						</div> -->
+				<!-- 					</div> -->
+				<!-- 					<div class="text-center text-xs pt-3">I dati visualizzati -->
+				<!-- 						sono riferiti all'ultima pausa</div> -->
+				<!-- 				</div> -->
 			</div>
 
 
@@ -1225,8 +1236,8 @@
 						src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
 				</div>
 			</div>
-			<div id="contenuto-modale" class="w-full h-auto bg-white rounded-b-lg">		
-			</div>
+			<div id="contenuto-modale"
+				class="w-full h-auto bg-white rounded-b-lg"></div>
 		</div>
 	</div>
 

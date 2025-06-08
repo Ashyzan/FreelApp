@@ -20,10 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.freelapp.model.Progetto;
 import com.freelapp.model.Task;
+import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.repository.TaskRepository;
 import com.freelapp.restModel.RestTask;
 import com.freelapp.service.ContatoreService;
+import com.freelapp.service.ProgettoService;
 import com.freelapp.service.TaskService;
 
 
@@ -38,10 +41,16 @@ public class FreelappRestController {
 	private TaskRepository taskRepository;
 	
 	@Autowired
+	private ProgettoRepository progettoRepository;
+	
+	@Autowired
 	private ContatoreService contatoreService;
 	
 	@Autowired
 	private TaskService taskService;
+	
+	@Autowired
+	private ProgettoService progettoService;
 	
 	@GetMapping("/task/{id}")
 	public Optional<RestTask> get(@PathVariable("id") Integer id){
@@ -210,7 +219,7 @@ public class FreelappRestController {
 		return JsonObj;
 				
 	}
-	
+	 
 	
 	
 	
