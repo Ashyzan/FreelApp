@@ -177,32 +177,34 @@
 											src="/img/sources/icons/pause-blue.svg" alt="pause">
 									</div>
 									<div th:unless="${taskInUso == null}" class="w-8 h-8">
-										<div th:if="${!contatoreIsRun}">
+										<div th:if="${!contatoreIsRun}" id="pause-top-svg-before-api-contatoreNotRun">
 											<img class="h-[29px] w-[29px]"
 												src="/img/sources/icons/pause-blue.svg" alt="pause">
 										</div>
-										<div th:if="${contatoreIsRun}">
+										<div th:if="${contatoreIsRun}" id="pause-top-svg-before-api-contatoreIsRun">
 												<button type="button" class="hover:opacity-75 " th:onclick="pauseContatoreApi([[${taskInUso.id}]])">
 													<img class="h-[29px] w-[29px]"
 														src="/img/sources/icons/pause-blue.svg" alt="pause">
 												</button>
 										</div>
+										<div id="pause-top-after-api"></div>
 									</div>
 									<div th:if="${taskInUso == null}" class="w-8 h-8">
 										<img class="h-[29px] w-[29px]"
 											src="/img/sources/icons/play-blue.svg" alt="start">
 									</div>
 									<div th:unless="${taskInUso == null}" class="w-8 h-8">
-										<div th:if="${contatoreIsRun}">
+										<div th:if="${contatoreIsRun}" id="play-top-svg-before-api-contatoreNotRun">
 											<img class="h-[29px] w-[29px]"
 												src="/img/sources/icons/play-blue.svg" alt="start">
 										</div>
-										<div th:unless="${contatoreIsRun}">
+										<div th:unless="${contatoreIsRun}" id="play-top-svg-before-api-contatoreIsRun">
 												<button type="button" class="hover:opacity-75" th:onclick="startContatoreApi([[${taskInUso.id}]])">
 													<img class="h-[29px] w-[29px]"
 														src="/img/sources/icons/play-blue.svg" alt="start">
 												</button>
 										</div>
+										<div id="play-top-after-api" class="w-8 h-8"></div>
 									</div>
 								</div>
 							</div>

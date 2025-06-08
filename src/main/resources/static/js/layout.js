@@ -30,6 +30,14 @@ const contatoreCaratteriCinquecentoContainer = document.getElementById('contator
 
 
 
+
+
+
+
+
+
+
+
 // ********** funzioni per navBar *********************************************************************  		
 function onToggleMenu(e){
 	navBar.classList.toggle('top-[-100%]')
@@ -108,6 +116,19 @@ if((contatoreCaratteriCinquecento != null) && (textAreaDescrizioneCinquecento !=
 			});
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //if(openModalButton != null){
 //	openModalButton.addEventListener('click', function(){

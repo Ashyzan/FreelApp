@@ -13,6 +13,20 @@ let iterazioni = 0;
 	
 	
 	
+//recupero elementi dal DOM per pulsanti pause e play dei contatori
+	//    ------ pause TOP -------
+	const pauseTopSvgBeforeApiContatoreNotRun = document.getElementById('pause-top-svg-before-api-contatoreNotRun');
+	const pauseTopSvgBeforeApiContatorIsRun = document.getElementById('pause-top-svg-before-api-contatoreIsRun');
+	const pauseTopAfterApi = document.getElementById('pause-top-after-api');
+
+	//    ------ play TOP --------
+	const playTopSvgBeforeApiContatoreNotRun = document.getElementById('play-top-svg-before-api-contatoreNotRun');
+	const playTopSvgBeforeApiContatorIsRun = document.getElementById('play-top-svg-before-api-contatoreIsRun');
+	const playTopAfterApi = document.getElementById('play-top-after-api');
+
+	
+	
+	
 	
 	
 	//****************** CHIAMATA API PER START CONTATORE ********************************/
@@ -29,9 +43,6 @@ function startContatoreApi(id){
 							})
 							.then(data =>{
 								
-								console.log("JSON: " + data)
-								
-								console.log("finaltime json:" + data.finaltime);
 								//aggiorno le variabili
 								contatoreTrue = data.contatoreIsTrue;
 								finalTimeSec = Number(data.finaltime);
@@ -41,11 +52,27 @@ function startContatoreApi(id){
 								hours = finalTimeSec / 3600;
 								minutes = (finalTimeSec % 3600) / 60;
 								seconds = finalTimeSec % 60;
-								   
-									// "task": 7,
-								    //"contatoreIsRun": true,
-								    //"contatore": 7
-									timerstart()
+								
+								timerstart()
+								
+								if(pauseTopSvgBeforeApiContatoreNotRun != null && pauseTopSvgBeforeApiContatoreNotRun.display != "none"){
+									pauseTopSvgBeforeApiContatoreNotRun.classList.add('hidden');		
+								}
+								if(playTopSvgBeforeApiContatorIsRun != null && playTopSvgBeforeApiContatorIsRun.display != "none"){
+									playTopSvgBeforeApiContatorIsRun.classList.add('hidden');		
+								}
+								
+								
+										
+										playTopAfterApi.innerHTML = `<img class="h-[29px] w-[29px]"
+																		//src="/img/sources/icons/play-blue.svg" alt="start">`;
+										
+										
+										pauseTopAfterApi.innerHTML = `<button type="button" class="hover:opacity-75 " onclick="pauseContatoreApi(${taskInUsoId})">
+																		<img class="h-[29px] w-[29px]"
+																			src="/img/sources/icons/pause-blue.svg" alt="pause">
+																	</button>`;
+									
 							});
 								 
 		
@@ -78,11 +105,28 @@ function pauseContatoreApi(id){
 								hours = finalTimeSec / 3600;
 								minutes = (finalTimeSec % 3600) / 60;
 								seconds = finalTimeSec % 60;
-								   
-									// "task": 7,
-								    //"contatoreIsRun": true,
-								    //"contatore": 7
-									stampacontatore();
+								clearInterval(crono);
+								stampacontatore();
+								
+								
+								
+								if(playTopSvgBeforeApiContatoreNotRun != null && playTopSvgBeforeApiContatoreNotRun.display === "none"){
+									playTopSvgBeforeApiContatoreNotRun.classList.remove('hidden');		
+								}
+								if(pauseTopSvgBeforeApiContatorIsRun != null && pauseTopSvgBeforeApiContatorIsRun.display === "none"){
+									pauseTopSvgBeforeApiContatorIsRun.classList.remove('hidden');		
+								}
+								
+												
+								playTopAfterApi.innerHTML = `<button type="button" class="hover:opacity-75 " onclick="startContatoreApi(${taskInUsoId})">
+																<img class="h-[29px] w-[29px]"
+																	src="/img/sources/icons/play-blue.svg" alt="play">
+															</button>`;
+								
+								
+																		
+								pauseTopAfterApi.innerHTML = `<img class="h-[29px] w-[29px]"
+																//src="/img/sources/icons/pause-blue.svg" alt="pause">`;
 							});
 								 
 		
@@ -95,9 +139,11 @@ function pauseContatoreApi(id){
 	//console.log("secondi iniziali: " + seconds);
 				
 	function tempochescorre() {
+		
 		if(contatoreIsRun !== true){
 			stampacontatore();
 		} else{ 
+			
 			iterazioni ++;
 					
 					seconds++;
@@ -149,8 +195,10 @@ function pauseContatoreApi(id){
 		
 		if (contatoreTrue && contatoreIsRun) {
 				// eseguo prim la funzione una volta per togliere il lag di 1 secondo, poi entro nel ciclo
+				
 				tempochescorre();
-				setInterval(tempochescorre, 1000);
+				
+				crono = setInterval(tempochescorre, 1000);
 				//console.log("contatore attivo , finaltime = " + finalTimeSec + contatoreIsRun + testtaskdatestare);
 			}
 
