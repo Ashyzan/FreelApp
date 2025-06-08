@@ -1,6 +1,7 @@
 package com.freelapp.service;
 
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,31 +125,39 @@ public class ProgettoService {
 	//metodo che calcola il guadagno totale del progetto
 		public void guadagnoTotaleProgetto(Progetto progetto, Model model) {
 		
-	double guadagnoTotaleProgetto = 0;
+	double guadagnoTotaleProgettoR = 0;
 	for(Task task : progetto.getElencoTask()) {
 		if(task.getContatore() != null) {
-			guadagnoTotaleProgetto += ((task.getContatore().getFinaltime())/3600)* progetto.getTariffaOraria();							
+			guadagnoTotaleProgettoR += ((task.getContatore().getFinaltime().doubleValue())/3600)* progetto.getTariffaOraria();							
 	
 						}
+		else {guadagnoTotaleProgettoR = 0;}
 				}
+		String guadagnoTotaleProgetto = String.format("%.2f", guadagnoTotaleProgettoR);
 			model.addAttribute("guadagnoTotaleProgetto", guadagnoTotaleProgetto);
 			}
 		
 		//metodo che calcola il guadagno totale dei task attivi
 			public void guadagnoTotaleTaskAttivi(Progetto progetto, Model model) {
 				
-			Double guadagnoTotaleTaskAttivi = 0.00;
+			double guadagnoTotaleTaskAttiviResult = 0;
 			
 			for(Task task : progetto.getElencoTask()) {
 				if( (task.getContatore().getFinaltime() != null)) {
 					
 					if(!task.getStato().equals("chiuso")) {
 					//	System.out.println("************************************** sono nellif del getstato diverso da chiuso");
-						guadagnoTotaleTaskAttivi += ((task.getContatore().getFinaltime())/3600)* progetto.getTariffaOraria();
+						guadagnoTotaleTaskAttiviResult += ((task.getContatore().getFinaltime().doubleValue())/3600)* progetto.getTariffaOraria();
+						
 						}
-					else {guadagnoTotaleTaskAttivi = 0.00;}
+					else {guadagnoTotaleTaskAttiviResult = 0;
+					System.out.println("************************************** sono nell ELSE del getstato diverso da chiuso");
+					}
+					System.out.println("************************************** STAMPO LO STRING");
+					String guadagnoTotaleTaskAttivi = String.format("%.2f", guadagnoTotaleTaskAttiviResult);
+					model.addAttribute("guadagnoTotaleTaskAttiviResult", guadagnoTotaleTaskAttivi);
 					
-					model.addAttribute("guadagnoTotaleTaskAttivi", guadagnoTotaleTaskAttivi);
+					
 							}
 						}
 					} 
@@ -158,18 +167,21 @@ public class ProgettoService {
 			//metodo che calcola il guadagno totale dei task chiusi
 				public void guadagnoTotaleTaskChiusi(Progetto progetto, Model model) {
 					
-				Double guadagnoTotaleTaskChiusi = 0.00;
+				double guadagnoTotaleTaskChiusiResult = 0;
 				
 				for(Task task : progetto.getElencoTask()) {
 					if( task.getContatore().getFinaltime() != null) {
 						
 						if(task.getStato().equals("chiuso")) {
+							
 							// System.out.println("************************************** sono nellif del getstato UGUALE a chiuso");
-							guadagnoTotaleTaskChiusi += ((task.getContatore().getFinaltime())/3600)* progetto.getTariffaOraria();	
+							guadagnoTotaleTaskChiusiResult += ((task.getContatore().getFinaltime().doubleValue())/3600)* progetto.getTariffaOraria();	
 						}	
-						else {guadagnoTotaleTaskChiusi = 0.00;}
+						else {guadagnoTotaleTaskChiusiResult = 0;}
 						
+						String guadagnoTotaleTaskChiusi = String.format("%.2f", guadagnoTotaleTaskChiusiResult);
 						model.addAttribute("guadagnoTotaleTaskChiusi", guadagnoTotaleTaskChiusi);
+						
 							
 								}
 							}
