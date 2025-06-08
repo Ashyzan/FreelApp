@@ -528,17 +528,17 @@
 
 				<!-- 					Nuovo dettaglio progetto -->
 				<!-- 	prima column -->
-				<div class="gap-4 rounded-lg bg-gray-100 p-6 m-3 shadow-lg">
+				<div class="w-1/2 gap-4 rounded-lg bg-gray-100 p-6 m-3 shadow-lg">
 					<div>
 						<div class="flex">
-							<div class="w-1/2 truncate mb-3">
+							<div class="w-2/3 truncate mb-3">
 								<p class="inline font-bold py-2">Cliente:</p>
 								<a th:href="@{/Clienti/{id}(id=${progetto.cliente.getId()})}"
 									class="ps-3 inline text-lg text-end leading-tight font-medium hover:underline"
 									th:text="${progetto.cliente.nameContatto}"></a>
 
 							</div>
-							<div class="w-1/2 mb-3">
+							<div class="w-1/3 mb-3">
 								<p class="float-right text-[#FFE641] font-bold text-end">
 									Tipologia:<span
 										class="ps-3 text-lg text-end leading-tight font-medium text-[#0057A5]"
@@ -547,7 +547,7 @@
 
 							</div>
 						</div>
-						<h1 class="text-[#0057A5] text-[32px] line-clamp-3"
+						<h1 class="text-[#0057A5] text-[32px]"
 							th:text="${progetto.getName()}"></h1>
 						<!-- Se la descrizione è superiore a 150 caratteri la mostra in forma contratta con sintassi thymeleaf + tasto espandi -->
 						<div id="descrizioneContratta" class="border-b-4 ">
@@ -586,6 +586,34 @@
 									class="md:ms-20 col-span-1 md:col-span-2 py-2 max-md:text-end"
 									th:text=" ${#temporals.format(progetto.getDataFine(), 'dd MMM yyyy')}"></div>
 
+							</div>
+							<div class="grid grid-cols-3 mb-2 py-2 border-b-4">
+							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
+									Totali</div>
+							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
+							th:text="${progetto.getElencoTask().size()}">
+							</div>
+							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
+									Attivi</div>
+							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
+							th:text="${progetto.getElencoTask().size()}">
+							</div>
+							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
+									chiusi</div>
+							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
+							th:text="${progetto.getElencoTask().size()}">
+							</div>
+							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Guadagno Task
+									Attivi</div>
+							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
+							th:text="${progetto.getElencoTask().size()}">
+							</div>
+							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Guadagno Task
+									Chiusi</div>
+							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
+							th:text="${progetto.getElencoTask().size()}">
+							</div>
+							
 							</div>
 							<div class="grid grid-cols-3 mb-2 py-2 border-b-4">
 								<div class="col font-bold pe-1 py-2">Stato</div>
@@ -701,19 +729,18 @@
 						</div>
 						<div class="text-center mt-5 p-4">
 							<a
-								class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+								class="inline mx-3 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
 								th:href="@{/Progetti}">Tutti i progetti </a>
+								<a
+								class="inline mx-3 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+								th:href="@{/Progetti}">Lista task</a>
 						</div>
-						<div th:if="${searchMode == true}" class="text-center mt-5 p-4">
-							<a
-								class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
-								th:href="@{|/task-search-input=${lastInputInTaskSearch}/page/${lastVisitedPageInTaskSearch}|}">Torna
-								alla ricerca </a>
-						</div>
+						
+						
 					</div>
 				</div>
 				<!-- 			second column -->
-<!-- 				<div class="gap-4 rounded-lg bg-gray-100 p-2 md:p-6 m-3 shadow-lg"> -->
+<!-- 				<div class="w-1/2 gap-4 rounded-lg bg-gray-100 p-2 md:p-6 m-3 shadow-lg"> -->
 <!-- 					<h3 class="text-center text-[#FFE641] text-xl font-bold mb-4">Statistiche</h3> -->
 <!-- 					<div th:if="${dataChiusuraStimataNonDisponibile != null}" -->
 <!-- 						class="border-b-4 "> -->
