@@ -137,58 +137,42 @@ public class ProgettoService {
 		//metodo che calcola il guadagno totale dei task attivi
 			public void guadagnoTotaleTaskAttivi(Progetto progetto, Model model) {
 				
-			double guadagnoTotaleTaskAttivi = 0d;
+			Double guadagnoTotaleTaskAttivi = 0.00;
 			
-			
-		    
 			for(Task task : progetto.getElencoTask()) {
 				if( (task.getContatore().getFinaltime() != null)) {
 					
+					if(!task.getStato().equals("chiuso")) {
+					//	System.out.println("************************************** sono nellif del getstato diverso da chiuso");
+						guadagnoTotaleTaskAttivi += ((task.getContatore().getFinaltime())/3600)* progetto.getTariffaOraria();
+						}
+					else {guadagnoTotaleTaskAttivi = 0.00;}
 					
-					
-					if(task.getStato() != "chiuso") {
-						System.out.println("************************************** sono nellif del getstato diverso da chiuso");
-						guadagnoTotaleTaskAttivi += ((task.getContatore().getFinaltime())/3600)* progetto.getTariffaOraria();}							
 					model.addAttribute("guadagnoTotaleTaskAttivi", guadagnoTotaleTaskAttivi);
-				}
-					
-					
-			
-								}
-						} 
+							}
+						}
+					} 
 					
 					
 		
 			//metodo che calcola il guadagno totale dei task chiusi
 				public void guadagnoTotaleTaskChiusi(Progetto progetto, Model model) {
 					
-				double guadagnoTotaleTaskChiusi = 0d;
+				Double guadagnoTotaleTaskChiusi = 0.00;
 				
-			    
 				for(Task task : progetto.getElencoTask()) {
 					if( task.getContatore().getFinaltime() != null) {
 						
-						
-						
-						if(task.getStato() == "chiuso") {
-							System.out.println("************************************** sono nellif del getstato UGUALE a chiuso");
+						if(task.getStato().equals("chiuso")) {
+							// System.out.println("************************************** sono nellif del getstato UGUALE a chiuso");
 							guadagnoTotaleTaskChiusi += ((task.getContatore().getFinaltime())/3600)* progetto.getTariffaOraria();	
-							model.addAttribute("guadagnoTotaleTaskChiusi", guadagnoTotaleTaskChiusi);
-						}						
+						}	
+						else {guadagnoTotaleTaskChiusi = 0.00;}
+						
+						model.addAttribute("guadagnoTotaleTaskChiusi", guadagnoTotaleTaskChiusi);
 							
-						}
-					
-						
-//						Long HH = task.getContatore().getFinaltime() / 3600;
-//					    Long MM= (task.getContatore().getFinaltime() % 3600) / 60;
-//					      
-//					    String timer = String.format("%02d:%02d:%02d", HH, MM);
-					    
-					    
-									
-					
+								}
 							}
-						
 						}
 				
 				
