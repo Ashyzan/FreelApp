@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,7 +58,7 @@ public class OreLavorateController {
 	    Long finalTime =  orelavorateservice.FinalOre(Time);
 	    
 	    // definisco lo start del contatore da localdate a localdatetime 
-	    LocalDateTime START = date.atStartOfDay();
+	  LocalDateTime START = date.atStartOfDay();
 	    
 	    // calcolo lo stop a partire dallo start e dal finaltime (in secondi) richiamando il metodo perposto dal service
 	    LocalDateTime STOP = orelavorateservice.findStop(START, finalTime);
@@ -78,10 +79,11 @@ public class OreLavorateController {
 	    	// aggiungi e lascia aperto
 	    	else {
 	    		contatore = new Contatore();
-		    	task.setContatore(contatore);
+		    		task.setContatore(contatore);
 	    		task.getContatore().setFinaltime(finalTime); 
-		    	task.getContatore().setStart(START);
-		    	task.getContatore().setPause(STOP);
+	    		task.getContatore().setStart(START);
+	    		task.getContatore().setPause(STOP);
+	    		task.setStato("in pausa");
 	    		
 	    	}
 	    }
@@ -90,11 +92,11 @@ public class OreLavorateController {
 	    	
 	    	if(aggiungiOre) { // aggiungi e lascia aperto
 	    		task.getContatore().setRestart(START);
-		    	task.getContatore().setPause(STOP);
-	    	Long finalTimeAdd	= task.getContatore().getFinaltime() + finalTime;
-	    	task.getContatore().setFinaltime(finalTimeAdd);
+	    		task.getContatore().setPause(STOP);
+	    		Long finalTimeAdd	= task.getContatore().getFinaltime() + finalTime;
+	    		task.getContatore().setFinaltime(finalTimeAdd);
 	    	
-			repositTask.save(task); 
+	    		repositTask.save(task); 
 	    	}
 	    	// sovrascrivi e chiudi
 	    	else {

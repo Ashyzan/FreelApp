@@ -64,7 +64,7 @@ function creaApriModaleOreLavorate(idTaskselected, taskSelectedName){
 	if (dd < 10) dd = '0' + dd;
 	if (mm < 10) mm = '0' + mm;
 
-	const formattedToday =   yyyy  + '-' + dd + '-' + mm ;
+	const formattedToday =   yyyy  + '-' + mm + '-' + dd ;
 	contenutoModale.innerHTML = `	<div class="w-full h-auto bg-white rounded-b-lg p-3">
 						<div class="mb-3 text-[#0057A5]">
 							<form action="/orelavorate/${idTaskselected}"	method="post">
