@@ -69,6 +69,7 @@ public class OreLavorateController {
 	    	task.getContatore().setFinaltime(finalTime); 
 	    	task.getContatore().setStart(START);
 	    	task.getContatore().setStop(STOP);
+	    	task.setStato("chiuso");
 	    	
 	    	// salvo in automatico la data fine task in corrispondenza dello stop contatore
 	    	taskservice.setStopTaskDate(STOP, taskId);

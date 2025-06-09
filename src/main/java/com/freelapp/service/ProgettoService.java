@@ -143,23 +143,17 @@ public class ProgettoService {
 			double guadagnoTotaleTaskAttiviResult = 0;
 			
 			for(Task task : progetto.getElencoTask()) {
-				if( (task.getContatore().getFinaltime() != null)) {
+				if(task.getContatore() != null) {
 					
 					if(!task.getStato().equals("chiuso")) {
 					//	System.out.println("************************************** sono nellif del getstato diverso da chiuso");
 						guadagnoTotaleTaskAttiviResult += ((task.getContatore().getFinaltime().doubleValue())/3600)* progetto.getTariffaOraria();
-						
 						}
-					else {guadagnoTotaleTaskAttiviResult = 0;
-					System.out.println("************************************** sono nell ELSE del getstato diverso da chiuso");
-					}
-					System.out.println("************************************** STAMPO LO STRING");
-					String guadagnoTotaleTaskAttivi = String.format("%.2f", guadagnoTotaleTaskAttiviResult);
-					model.addAttribute("guadagnoTotaleTaskAttiviResult", guadagnoTotaleTaskAttivi);
-					
-					
+					else {guadagnoTotaleTaskAttiviResult = 0;}
 							}
 						}
+								String guadagnoTotaleTaskAttivi = String.format("%.2f", guadagnoTotaleTaskAttiviResult);
+								model.addAttribute("guadagnoTotaleTaskAttivi", guadagnoTotaleTaskAttivi);
 					} 
 					
 					
@@ -170,21 +164,15 @@ public class ProgettoService {
 				double guadagnoTotaleTaskChiusiResult = 0;
 				
 				for(Task task : progetto.getElencoTask()) {
-					if( task.getContatore().getFinaltime() != null) {
+					if( task.getContatore() != null)  {
 						
-						if(task.getStato().equals("chiuso")) {
-							
-							// System.out.println("************************************** sono nellif del getstato UGUALE a chiuso");
+						if( task.getStato().equals("chiuso")) {
 							guadagnoTotaleTaskChiusiResult += ((task.getContatore().getFinaltime().doubleValue())/3600)* progetto.getTariffaOraria();	
-						}	
-						else {guadagnoTotaleTaskChiusiResult = 0;}
-						
-						String guadagnoTotaleTaskChiusi = String.format("%.2f", guadagnoTotaleTaskChiusiResult);
-						model.addAttribute("guadagnoTotaleTaskChiusi", guadagnoTotaleTaskChiusi);
-						
-							
+									}	
 								}
 							}
+				String guadagnoTotaleTaskChiusi = String.format("%.2f", guadagnoTotaleTaskChiusiResult);
+				model.addAttribute("guadagnoTotaleTaskChiusi", guadagnoTotaleTaskChiusi);
 						}
 				
 				
