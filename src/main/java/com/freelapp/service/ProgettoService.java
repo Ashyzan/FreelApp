@@ -133,7 +133,7 @@ public class ProgettoService {
 						}
 		else {guadagnoTotaleProgettoR = 0;}
 				}
-		String guadagnoTotaleProgetto = String.format("%.2f", guadagnoTotaleProgettoR);
+			String guadagnoTotaleProgetto = String.format("%.2f", guadagnoTotaleProgettoR);
 			model.addAttribute("guadagnoTotaleProgetto", guadagnoTotaleProgetto);
 			}
 		
