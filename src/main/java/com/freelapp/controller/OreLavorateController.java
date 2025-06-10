@@ -88,7 +88,7 @@ public class OreLavorateController {
 	    	}
 	    }
 	    
-	    else if(task.getContatore() != null){
+	    else if((task.getContatore() != null) && (task.getContatore().getStop() != null)) {
 	    	
 	    	if(aggiungiOre) { // aggiungi e lascia aperto
 	    		task.getContatore().setRestart(START);
