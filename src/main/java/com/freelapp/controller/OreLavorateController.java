@@ -88,34 +88,41 @@ public class OreLavorateController {
 	    	}
 	    }
 	    
-	    else if((task.getContatore() != null) && (task.getContatore().getStop() != null)) {
+	    else if(task.getContatore() != null ) {
 	    	
-	    	if(aggiungiOre) { // aggiungi e lascia aperto
-	    		task.getContatore().setRestart(START);
-	    		task.getContatore().setPause(STOP);
-	    		Long finalTimeAdd	= task.getContatore().getFinaltime() + finalTime;
-	    		task.getContatore().setFinaltime(finalTimeAdd);
-	    	
-	    		repositTask.save(task); 
+	    	if(task.getContatore().getStop() != null) {
+	    			// non fare nulla
 	    	}
-	    	// sovrascrivi e chiudi
-	    	else {
-		    	task.getContatore().setStart(START);
-		    	task.getContatore().setStop(STOP);
-		    	task.getContatore().setFinaltime(finalTime); 
+	    else 	if(aggiungiOre) { // aggiungi e lascia aperto
+				    		task.getContatore().setRestart(START);
+				    		task.getContatore().setPause(STOP);
+				    		Long finalTimeAdd	= task.getContatore().getFinaltime() + finalTime;
+				    		task.getContatore().setFinaltime(finalTimeAdd);
+				    		task.setStato("in pausa");
+				    		repositTask.save(task); 
+				    	}
+					    	else {		// sovrascrivi e chiudi
+						    	task.getContatore().setStart(START);
+						    	task.getContatore().setStop(STOP);
+						    	task.getContatore().setFinaltime(finalTime); 
+						    	
+						    	// salvo in automatico la data fine task in corrispondenza dello stop contatore
+						    	taskservice.setStopTaskDate(STOP, taskId);
+						    	
+						    	//setto lo stato in chiuso
+						    	task.setStato("chiuso");
+								repositTask.save(task); 
+						    	}
 		    	
-		    	// salvo in automatico la data fine task in corrispondenza dello stop contatore
-		    	taskservice.setStopTaskDate(STOP, taskId);
-		    	
-		    	//setto lo stato in chiuso
-		    	task.setStato("chiuso");
-				repositTask.save(task); 
-		    	}
-	    }
+	    		
+
+	    	}
+	    	
+	    	
+    	model.addAttribute("contatore", contatore);
+    	
+    	repositContatore.save(task.getContatore());
 	    
-		model.addAttribute("contatore", contatore);
-		   
-		repositContatore.save(task.getContatore());
 		
 		return "redirect:/Task/{id}";
 	
