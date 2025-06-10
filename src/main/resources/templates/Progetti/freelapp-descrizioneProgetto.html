@@ -469,10 +469,10 @@
 										alt="progetto-chiuso" class="size-5 inline">
 								</div>
 								<div class="col font-bold pe-1 py-2">Tempo lavorato</div>
-								<div th:if="${progetto} != null" th:text="${timeInHHMMSS}"
+								<div th:if="${finaltimeTotaleProgetto} != null" th:text="${finaltimeTotaleProgetto}"
 									class="md:ms-20 col col-span-2 text-center max-md:text-end py-2"
 									id="">00:00:00</div>
-								<div th:if="${progetto} == null"
+								<div th:if="${finaltimeTotaleProgetto} == null"
 									class="md:ms-20 col col-span-2 text-center max-md:text-end py-2"
 									id="">00:00:00</div>
 							</div>

@@ -405,6 +405,9 @@ public class ProgettoController {
 				//passo al modello nel dettaglio progetto il guadagno totale dei task chiusi
 				progettoService.guadagnoTotaleTaskChiusi(progetto, model);
 				
+				//passo al modello nel dettaglio progetto il finaltime totale
+				progettoService.finaltimeTotaleProgetto(progetto,model);
+				
 				
 				
 				

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.freelapp.model.Contatore;
 import com.freelapp.model.Progetto;
 import com.freelapp.model.Task;
 import com.freelapp.repository.ProgettoRepository;
@@ -22,6 +23,9 @@ public class ProgettoService {
 	@Autowired
 	private ProgettoRepository progettoRepository;
 
+	@Autowired
+    private TaskService taskservice;
+	
 	public List<Progetto> findAll(){
 		return progettoRepository.findAll();
 		
@@ -175,7 +179,23 @@ public class ProgettoService {
 				model.addAttribute("guadagnoTotaleTaskChiusi", guadagnoTotaleTaskChiusi);
 						}
 			
-				// calcolo il t
+				// calcolo il finaltime totale del progetto sommando  i finaltime dei task aperti o chusi
+				public void finaltimeTotaleProgetto(Progetto progetto, Model model) {
+					Long finaltime = 0l; 
+					Task tasknew = new Task();
+					Contatore contatore = new Contatore();
+					
+					for(Task task : progetto.getElencoTask()) {
+						if(task.getContatore() != null) {
+							task.getContatore().getFinaltime();
+							finaltime += task.getContatore().getFinaltime();
+						}
+					}
+					tasknew.setContatore(contatore);
+					tasknew.getContatore().setFinaltime(finaltime);
+					String finaltimeTotaleProgetto = taskservice.Timer(tasknew);					
+					model.addAttribute("finaltimeTotaleProgetto", finaltimeTotaleProgetto);
+				}
 				
 				
 	
