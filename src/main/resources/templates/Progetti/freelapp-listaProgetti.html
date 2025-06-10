@@ -30,6 +30,9 @@
 	            content-visibility: auto;
 	          }
 			  
+			  .t-tooltip:hover .t-box{
+				display: block;
+			  }
 
 	        }
 	      </style>
@@ -371,7 +374,7 @@
 											th:src="@{${progettoPerData.cliente.LogoPath}}" alt="logo-cliente">
 									</div>
 
-									<div class="p-4 w-full z-10">
+									<div class="p-4 w-full">
 										<div>
 											<img th:if="${progettoPerData.getDataFine} == null"
 												th:src="@{/img/sources/icons/contatore-on-start.svg}"
@@ -396,27 +399,26 @@
 
 										<div>
 
-											
+											<span>
 
 												<ul>
 
-													<li class="flex flex-col md:flex-row float-left tooltip-top"><a
+													<li class="flex flex-col md:flex-row float-left"><a
 														th:href="@{/Progetti/{id}(id=${progettoPerData.getId()})}"
 														class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
-															Vai al dettaglio
-															 </a></li>
+															vai al dettaglio </a></li>
 												
-												<li class="flex flex-col md:flex-row px-2 mt-6 float-left tooltip-top ms-2">
+												<li class="flex flex-col md:flex-row px-2 mt-6 float-left">
 														
 														<a th:if="${progettoPerData.dataFine == null}"
 														th:href="@{/Task/insert/progetto-{id}(id=${progettoPerData.getId()})}">
 														
-															
+															<div class="tooltip-top col-auto w-8 h-8 ms-2">
 															<span class="tooltiptext-top">Aggiungi task</span>
 															<img th:src="@{/img/sources/icons/add-task-blue.svg}"
 																		alt="aggiungi-task" class="size-8 ml-3 -mt-1 inline">
 																
-															
+															</div>
 															</a>
 														<img class="col-auto w-8 h-8 ms-2" th:unless="${progettoPerData.dataFine == null}" th:src="@{/img/sources/icons/add-task-blue-opacity.svg}">	
 													</li>
@@ -436,8 +438,7 @@
 																hover:bg-[url(/img/sources/icons/power-green.svg)]"></button>															
 														</form>
 													</li>
-													<li class="flex flex-col md:flex-row px-2 mt-6 mr-2 float-right tooltip-top">
-													<span class="tooltiptext-top">Modifica</span>
+													<li class="flex flex-col md:flex-row px-2 mt-6 mr-2 float-right">
 														<a
 														th:href="@{/Progetti/edit/{id}(id=${progettoPerData.getId()})}"><img
 															th:src="@{/img/sources/icons/modify-grey.svg}"
@@ -460,7 +461,7 @@
 													</li>
                  
 												</ul>
-											
+											</span>
 										</div>
 
 
@@ -476,7 +477,7 @@
 							<div  class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-center w-full">
 							<div th:unless="${progettoCliente.getArchivia()} == true" th:each="progettoCliente : ${listProgettiByCliente}" class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
 														
-							<div class="md:flex z-10" >
+							<div class="md:flex" >
 									<div class="md:shrink-0">
 										<img class="aspect-square h-48 w-full object-cover md:w-48" th:src="@{${progettoCliente.cliente.LogoPath}}"
 											alt="logo-cliente">
@@ -500,9 +501,9 @@
 										<p th:text="${progettoCliente.descrizione}" class="mt-2 text-slate-500 line-clamp-2">descrizione
 											progetto</p>
 							
-										<div class="">
+										<div>
 							
-											
+											<span>
 							
 												<ul>
 							
@@ -511,18 +512,18 @@
 															class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
 															vai al dettaglio </a>
 															</li>
-													<li class="flex flex-col md:flex-row px-2 mt-6 float-left tooltip-top">
+													<li class="flex flex-col md:flex-row px-2 mt-6 float-left">
 														<a th:if="${progettoCliente.dataFine == null}"
 														th:href="@{/Task/insert/progetto-{id}(id=${progettoCliente.getId()})}">
 														
-															
+															<div class=" t-tooltip col-auto w-8 h-8 ms-2">
 															
 															<img th:src="@{/img/sources/icons/add-task-blue.svg}"
 																		alt="aggiungi-task" class=" size-8 ml-3 -mt-1 inline">
-																<span class="tooltiptext-top">
+																<div class=" relative hidden -left-4 bottom-20 t-box w-32 text-center text-nowrap border border-[#0057A5] text-[#0057A5] bg-gray-100 rounded-lg p-1">
 																	Aggiungi Task
-																</span>
-															
+																</div>
+															</div>
 															</a>
 															<img class="col-auto w-8 h-8 ms-2" th:unless="${progettoCliente.dataFine == null}" th:src="@{/img/sources/icons/add-task-blue-opacity.svg}">		
 													</li>
@@ -542,15 +543,13 @@
 																hover:bg-[url(/img/sources/icons/power-green.svg)]"></button>
 														</form>
 													</li>
-													<li class="flex flex-col md:flex-row px-2 mt-6 float-right tooltip-top">
-													<span class="tooltiptext-top">Modifica</span>
+													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
 														<a th:href="@{/Progetti/edit/{id}(id=${progettoCliente.getId()})}"><img
 																th:src="@{/img/sources/icons/modify-grey.svg}" alt="progetto-attivo"
 																class="size-5 inline"></a>
 													</li>
 							
-													<li class="flex flex-col md:flex-row px-2 mt-6 float-right tooltip-top">
-													<span class="tooltiptext-top">Archivia</span>
+													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
 														<form th:action="@{/Progetti/archivia/{id}(id=${progettoCliente.getId()})}"
 														th:object="${progetto}" method="post">
 														<button type="submit">
@@ -567,7 +566,7 @@
 														</li>
 												
 												</ul>
-											
+											</span>
 										</div>
 							
 							
@@ -1230,7 +1229,7 @@
 												<div class="grid grid-cols-2 flex items-center mb-2">
 													<p class="col mb-2 font-semibold">Inserisci la data</p>
 													<input type="date" name="date" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
-														class=" col md:text-xl p-2 border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-[#ffe541]/50"
+														class=" col md:text-xl border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-[#ffe541]/50"
 														id="dataOreLavorate">												
 												</div>
 												<div class="grid grid-cols-2 flex items-center mb-2">
