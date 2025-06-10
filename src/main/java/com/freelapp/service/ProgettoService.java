@@ -174,7 +174,8 @@ public class ProgettoService {
 				String guadagnoTotaleTaskChiusi = String.format("%.2f", guadagnoTotaleTaskChiusiResult);
 				model.addAttribute("guadagnoTotaleTaskChiusi", guadagnoTotaleTaskChiusi);
 						}
-				
+			
+				// calcolo il t
 				
 				
 	
