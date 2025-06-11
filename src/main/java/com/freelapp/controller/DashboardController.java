@@ -42,13 +42,15 @@ public class DashboardController {
 	@GetMapping("/dashboard")
 	public String index( Model model){
 		
-//	passo al model l'endpoint da dare come input hidden a strt/pause/stop del contatore
+		//	passo al model l'endpoint da dare come input hidden a strt/pause/stop del contatore
 		String endPoint = "/dashboard";
 		model.addAttribute("endPoint", endPoint);
 		
 		contatoreservice.importContatoreInGet(model);
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+		
 	
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
@@ -60,6 +62,9 @@ public class DashboardController {
 		
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
+		
+		//inizializzo a false così al reload successivo js non genera i tasti del contatore
+		ContatoreController.contatoreAttivatoDaRapidButton = false;
 		
 		// invio al model il booleano del contatore cliccato prima del refresh pagina
 		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;

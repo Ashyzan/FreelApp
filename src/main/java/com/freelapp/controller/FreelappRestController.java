@@ -138,6 +138,37 @@ public class FreelappRestController {
 		return taskListOreLavorate;
 	}
 	
+	//metodo che ritorna la lista completa dei task(non chiusi) per la modalità select del rapid Button
+	@GetMapping("/selectMode")
+	public List<RestTask> taskListSelectModeRapidButton(){
+	
+		List<RestTask> listaTaskSelectMode = new ArrayList<RestTask> ();
+		
+		List<Task> listaTaskNotClosed = taskRepository.findAllNotClosed();
+		
+		listaTaskNotClosed.forEach(task ->{
+			
+			RestTask taskTemporaneo = new RestTask(null, null, null, null, null, null, null, null, null, null);
+			
+			taskTemporaneo.setNome(task.getName());
+			taskTemporaneo.setProgetto(task.getProgetto().getName());
+			taskTemporaneo.setProgettoId(task.getProgetto().getId());
+			taskTemporaneo.setCliente(task.getProgetto().getCliente().getLabelCliente());
+			taskTemporaneo.setClienteId(task.getProgetto().getCliente().getId());
+			taskTemporaneo.setLogoCliente(task.getProgetto().getCliente().getLogoPath());
+			taskTemporaneo.setFinalTime(0l);
+			taskTemporaneo.setTaskAttualmenteInUso(0);
+			taskTemporaneo.setId(task.getId());
+			taskTemporaneo.setStato(task.getStato());
+			
+			listaTaskSelectMode.add(taskTemporaneo);
+		});
+		
+		return listaTaskSelectMode;
+		
+	}
+	
+	
 	@GetMapping("/progetti/cambiaOrdinePerCliente")
 			public void cambiaOrdinePerCliente() {
 				//cambia il valore delle variabili inizializzate ad inizio controller al click dell'icona

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Optional;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,9 @@ public class ContatoreController {
     public static boolean contatoreAttivato = false;
     
     public static boolean contatoreCliccatoPreRefresh = false;
+    
+    //nel caso in cui il contatore sia stato attivado da rapid button fa partire il contatore lato js sul template - se contatoreAttivatoDaRapidButton == true
+    public static boolean contatoreAttivatoDaRapidButton = false;
 
 //    @GetMapping("/Contatore/timer/{id}")
 //    public String gestioneTimer(@PathVariable("id") Integer taskId, @ModelAttribute("contatore") Contatore contatore,
@@ -438,8 +442,8 @@ public class ContatoreController {
     }
     
     
-     // ------------------------------- prova contatore PAUSE rest
     
+     // ------------------------------- prova contatore PAUSE rest
     @ResponseBody
     @GetMapping("/Contatore/pause/{id}")
     public JSONObject pauseContatore(@PathVariable("id") Integer taskId) {
@@ -548,11 +552,53 @@ public class ContatoreController {
 
 	contatoreAttivato = false;
 	contatoreCliccatoPreRefresh = true;
+
 	return JsonObj;
     }
 
-
-     
+    
+    
+    
+    
+    
+    //metodo che al cambio contatore da rapid button ritorna sulla stessa pagina cambiando il task in uso
+    @PostMapping("/redirect-endpoint/start/{id}")
+    public String aggiornaTaskInUsoStart(@PathVariable("id")Integer taskId,
+    		// l'endpoint passato dal model serve a far ritornare sulla pagina di partenza dopo aver cliccato su pause
+    		@ModelAttribute("endPoint") String endPoint) {
+    	
+    		contatoreInUso = repositTask.getReferenceById(taskId).getContatore();
+    		taskInUso = repositTask.getReferenceById(taskId);
+    		contatoreAttivatoDaRapidButton = true;
+    		
+//    		Task task = repositTask.getReferenceById(taskId);
+//    		task.setStato("in corso");
+//    		repositTask.save(task);
+    		
+    	return "redirect:" + endPoint;
+    }
+    
+    @PostMapping("/redirect-endpoint/pause/{id}")
+    public String aggiornaTaskInUsoPause( @PathVariable("id")Integer taskId,
+    		// l'endpoint passato dal model serve a far ritornare sulla pagina di partenza dopo aver cliccato su pause
+    		@ModelAttribute("endPoint") String endPoint) {
+    	
+    		contatoreInUso = repositTask.getReferenceById(taskId).getContatore();
+    		taskInUso = repositTask.getReferenceById(taskId);
+    		contatoreAttivatoDaRapidButton = false;
+    		
+//    		Task task = repositTask.getReferenceById(taskId);
+    		//task.setStato("in pausa");
+    		//repositTask.save(task);
+    		
+    	return "redirect:" + endPoint ;
+    }
+    
+    
+    
+    
+    
+    
     
 	@PostMapping("/Contatore/stop/{id}")
 	public String stopContatore(@PathVariable("id") Integer taskId, Model model) {
