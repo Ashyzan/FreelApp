@@ -182,7 +182,7 @@
 												src="/img/sources/icons/pause-blue.svg" alt="pause">
 										</div>
 										<div th:if="${contatoreIsRun}" id="pause-top-svg-before-api-contatoreIsRun">
-												<button type="button" class="hover:opacity-75 " th:onclick="pauseContatoreApi([[${taskInUso.id}]])">
+												<button type="button" class="hover:opacity-75 " th:onclick="pauseContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()">
 													<img class="h-[29px] w-[29px]"
 														src="/img/sources/icons/pause-blue.svg" alt="pause">
 												</button>
@@ -199,7 +199,7 @@
 												src="/img/sources/icons/play-blue.svg" alt="start">
 										</div>
 										<div th:unless="${contatoreIsRun}" id="play-top-svg-before-api-contatoreIsRun">
-												<button type="button" class="hover:opacity-75" th:onclick="startContatoreApi([[${taskInUso.id}]])">
+												<button type="button" class="hover:opacity-75" th:onclick="startContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()">
 													<img class="h-[29px] w-[29px]"
 														src="/img/sources/icons/play-blue.svg" alt="start">
 												</button>
