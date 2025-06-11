@@ -123,71 +123,65 @@
 					<div class="col-auto w-8 h-8 mx-2">
 						<img src="/img/sources/icons/contatore-blue.svg" alt="contatore">
 					</div>
-					<div th:if="${taskInUso == null}"
-						class="flex flex-col items-center w-[100px]">
+					<div th:if="${taskInUso == null}" class="flex flex-col items-center w-[100px]">
 						<div th:unless="${contatoreIsTrue}" class=" text-[10px] p-0">...</div>
-						<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
-							class=" text-[10px] p-0"></div>
+						<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}" class=" text-[10px] p-0"></div>
 						<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
 					</div>
-					<a th:unless="${taskInUso == null}"
-						th:href="@{|/Task/${taskInUso.id}|}"
-						class="flex flex-col items-center w-[100px]">
+					<a th:unless="${taskInUso == null}" th:href="@{|/Task/${taskInUso.id}|}"
+						class="t-tooltip flex flex-col items-center w-[100px]">
 						<div th:unless="${contatoreIsTrue}" class=" text-[10px] p-0">...</div>
 						<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
 							class=" text-[10px] p-0 max-w-[90px] truncate"></div>
-						<form id="formContatoreErroreFinalsecond" th:object="${contatore}"
-							method="post">
+						<form id="formContatoreErroreFinalsecond" th:object="${contatore}" method="post">
 							<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
 						</form>
-
+						<div
+							class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-40px] mt-[40px]">
+							Dettaglio task</div>
 					</a>
 					<div class="col-auto flex items-center px-2">
 						<div th:if="${taskInUso == null}" class="w-8 h-8 ">
-							<img class="h-[29px] w-[29px]"
-								src="/img/sources/icons/stop-blue.svg" alt="stop">
+							<img class="h-[29px] w-[29px]" src="/img/sources/icons/stop-blue.svg" alt="stop">
 						</div>
 						<div th:unless="${taskInUso == null}" class="w-8 h-8">
-							<button id="stopButtonTop" type="button" 
-									 onclick="creaModaleStop()" class="hover:opacity-75">
-								<img class="h-[29px] w-[29px]"
-									src="/img/sources/icons/stop-blue.svg" alt="stop">
+							<button id="stopButtonTop" type="button" onclick="creaModaleStop()" class="hover:opacity-75">
+								<img class="h-[29px] w-[29px]" src="/img/sources/icons/stop-blue.svg" alt="stop">
 							</button>
 						</div>
 						<div th:if="${taskInUso == null}" class="w-8 h-8">
-							<img class="h-[29px] w-[29px]"
-								src="/img/sources/icons/pause-blue.svg" alt="pause">
+							<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
 						</div>
 						<div th:unless="${taskInUso == null}" class="w-8 h-8">
-							<div th:if="${!contatoreIsRun}">
-								<img class="h-[29px] w-[29px]"
-									src="/img/sources/icons/pause-blue.svg" alt="pause">
+							<div th:if="${!contatoreIsRun}" id="pause-top-svg-before-api-contatoreNotRun">
+								<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
 							</div>
-							<div th:if="${contatoreIsRun}">
-								<button type="button" class="hover:opacity-75 " th:onclick="pauseContatoreApi([[${taskInUso.id}]])">
+							<div th:if="${contatoreIsRun}" id="pause-top-svg-before-api-contatoreIsRun">
+								<button type="button" class="hover:opacity-75 "
+									th:onclick="pauseContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()">
 									<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
 								</button>
 							</div>
+							<div id="pause-top-after-api"></div>
 						</div>
 						<div th:if="${taskInUso == null}" class="w-8 h-8">
-							<img class="h-[29px] w-[29px]"
-								src="/img/sources/icons/play-blue.svg" alt="start">
+							<img class="h-[29px] w-[29px]" src="/img/sources/icons/play-blue.svg" alt="start">
 						</div>
 						<div th:unless="${taskInUso == null}" class="w-8 h-8">
-							<div th:if="${contatoreIsRun}">
-								<img class="h-[29px] w-[29px]"
-									src="/img/sources/icons/play-blue.svg" alt="start">
+							<div th:if="${contatoreIsRun}" id="play-top-svg-before-api-contatoreNotRun">
+								<img class="h-[29px] w-[29px]" src="/img/sources/icons/play-blue.svg" alt="start">
 							</div>
-							<div th:unless="${contatoreIsRun}">
-								<button type="button" class="hover:opacity-75" th:onclick="startContatoreApi([[${taskInUso.id}]])">
+							<div th:unless="${contatoreIsRun}" id="play-top-svg-before-api-contatoreIsRun">
+								<button type="button" class="hover:opacity-75"
+									th:onclick="startContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()">
 									<img class="h-[29px] w-[29px]" src="/img/sources/icons/play-blue.svg" alt="start">
 								</button>
 							</div>
-							</div>
+							<div id="play-top-after-api" class="w-8 h-8"></div>
+						</div>
 					</div>
 				</div>
 			</div>
-
 			<div>
 				<button class="px-1 rounded cursor-pointer md:hidden"
 					onclick="onToggleMenu(this)" name="menu">
@@ -690,43 +684,36 @@
 								</div>
 								<div th:unless="${taskInUso == null}"
 									class="mx-2 flex items-center">
-									<div th:unless="${contatoreIsRun}">
+									<div th:unless="${contatoreIsRun}" id="pause-bottom-svg-before-api-contatoreNotRun">
 										<img class="h-[45px] w-[45px]"
 											src="/img/sources/icons/pause-blue.svg" alt="pause">
 									</div>
-									<div th:if="${contatoreIsRun}">
-										<form th:action="@{|/Contatore/pause/${taskInUso.id}|}"
-											th:object="${contatore}" method="post">
-											<input type="hidden" name="endPoint" th:value="${endPoint}">
-											<button type="submit"
+									<div th:if="${contatoreIsRun}" id="pause-bottom-svg-before-api-contatoreIsRun">
+											<button type="button" th:onclick="pauseContatoreApi([[${taskInUso.id}]])"
 												class="hover:opacity-75 flex items-center">
 												<img class="h-[45px] w-[45px]"
 													src="/img/sources/icons/pause-blue.svg" alt="pause">
 											</button>
-										</form>
 									</div>
+									<div id="pause-bottom-after-api" class="w-11 h-11"></div>
 								</div>
 								<div th:if="${taskInUso == null}" class="mx-2 flex items-center">
 									<img class="h-[45px] w-[45px]"
 										src="/img/sources/icons/play-blue.svg" alt="start">
 								</div>
-								<div th:unless="${taskInUso == null}"
-									class="mx-2 flex items-center">
-									<div th:if="${contatoreIsRun}">
+								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
+									<div th:if="${contatoreIsRun}" id="play-bottom-svg-before-api-contatoreNotRun">
 										<img class="h-[45px] w-[45px]"
 											src="/img/sources/icons/play-blue.svg" alt="start">
 									</div>
-									<div th:unless="${contatoreIsRun}">
-										<form th:action="@{|/start/${taskInUso.id}|}"
-											th:object="${contatore}" method="post">
-											<input type="hidden" name="endPoint" th:value="${endPoint}">
-											<button type="submit"
+									<div th:unless="${contatoreIsRun}" id="play-bottom-svg-before-api-contatoreIsRun">
+											<button type="button" th:onclick="startContatoreApi([[${taskInUso.id}]])"
 												class="hover:opacity-75 flex items-center">
 												<img class="h-[45px] w-[45px]"
 													src="/img/sources/icons/play-blue.svg" alt="start">
 											</button>
-										</form>
 									</div>
+									<div id="play-bottom-after-api" class="w-11 h-11"></div>
 								</div>
 							</div>
 						</div>
@@ -772,6 +759,7 @@
 		let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
 		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
 		let contatoreCliccatoPreRefresh = /*[[${contatoreCliccatoPreRefresh}]]*/ null; //boolean
+		let contatoreAttivatoDaRapidButton = /*[[${contatoreAttivatoDaRapidButton}]]*/null; //boolean
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>

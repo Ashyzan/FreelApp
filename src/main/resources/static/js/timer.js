@@ -250,11 +250,13 @@ function pauseContatoreApi(id){
 	function timerstart(){
 		
 		//verifica se il contatore è stato attivato da rapid button
+				
 		if(contatoreAttivatoDaRapidButton === true){
 			contatoreTrue = true;
 			contatoreIsRun = true;
 			pulsantiContatoreInStart()
 		}
+		
 		
 		if (contatoreTrue && contatoreIsRun) {
 				// eseguo prim la funzione una volta per togliere il lag di 1 secondo, poi entro nel ciclo

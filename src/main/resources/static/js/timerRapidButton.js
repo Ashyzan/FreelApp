@@ -19,6 +19,8 @@ let selectTaskList = document.querySelectorAll('form-select-input').value, selec
 const contatoreTaskRapidButton = document.getElementById('contatore-task-rapid-button');
 const contatoreTaskRapidContainer = document.getElementById('contatore-task-rapid');
 const timerResumeTask = document.getElementById('timerResumeTask');
+const formPauseContatore = document.getElementById('form-pause-contatore');
+const formStartContatore = document.getElementById('form-start-contatore');
 
 
 //recupero elementi dal DOM per sezione ore lavorate
@@ -177,12 +179,7 @@ function recapSelectedTask(id){
 	// assegna endpoint dettaglio task in base al task scelto
 	const taskDetailHref = document.getElementById('taskDetailHref')
 	taskDetailHref.href = `/Task/${valueInput}`;
-
-	//assegna action pausa contatore in baseal task scelto
-			const formPauseContatore = document.getElementById('form-pause-contatore');
-			
-			// assegna action avvio contatore in base al task scelto
-			const formStartContatore = document.getElementById('form-start-contatore');
+	
 	
 	//assegna event listener ai form del contatore rapid button
 	formStartContatore.addEventListener('submit', start)
@@ -271,11 +268,7 @@ function recapSearchedTaskList(id){
 	const taskDetailHref = document.getElementById('taskDetailHref')
 	taskDetailHref.href = `/Task/${valueInput}`;
 	
-	//assegna action pausa contatore in baseal task scelto
-		const formPauseContatore = document.getElementById('form-pause-contatore');
-		
-		// assegna action avvio contatore in base al task scelto
-		const formStartContatore = document.getElementById('form-start-contatore');
+
 		
 		//assegna event listener ai form del contatore rapid button
 		formStartContatore.addEventListener('submit', start)
