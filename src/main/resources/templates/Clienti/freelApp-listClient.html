@@ -37,7 +37,7 @@
 <title id="timerTitolo">FreelApp</title>
 </head>
 <body class="font-sans" style="width: 100vw; height: 100vh;"
-	onload="contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), timerstart()">
+	onload="timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 			<button
 				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5] ">
@@ -148,7 +148,7 @@
 						<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
 							class=" text-[10px] p-0 max-w-[90px] truncate"></div>
 							<form id="formContatoreErroreFinalsecond" th:object="${contatore}" method="post">
-								<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
+								<div class=" text-[20px] p-0" id="timerUno" th:text="${finalTimeFormatted}">00:00:00</div>
 							</form>
 						<div
 							class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-40px] mt-[40px]">
@@ -615,7 +615,7 @@
 									class="col-auto text-[14px] p-0">...</div>
 								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
 									class="col-auto text-[14px] text-left p-0 w-full ml-4 truncate"></div>
-								<div class="col-auto text-[24px] p-0" id="timerDue">00:00:00</div>
+								<div class="col-auto text-[24px] p-0" id="timerDue" th:text="${finalTimeFormatted}">00:00:00</div>
 								<div
 									class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-210px] mt-[40px]">
 									Dettaglio task</div>

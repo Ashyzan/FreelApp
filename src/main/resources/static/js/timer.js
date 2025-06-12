@@ -39,6 +39,15 @@ let iterazioni = 0;
 	
 	
 	
+		//verifica se il contatore è stato attivato da rapid button
+				
+		if(contatoreAttivatoDaRapidButton === true){
+			contatoreTrue = true;
+			contatoreIsRun = true;
+			pulsantiContatoreInStart()
+		}
+	
+	
 	
 	
 	//****************** CHIAMATA API PER START CONTATORE ********************************/
@@ -249,13 +258,6 @@ function pauseContatoreApi(id){
 	
 	function timerstart(){
 		
-		//verifica se il contatore è stato attivato da rapid button
-				
-		if(contatoreAttivatoDaRapidButton === true){
-			contatoreTrue = true;
-			contatoreIsRun = true;
-			pulsantiContatoreInStart()
-		}
 		
 		
 		if (contatoreTrue && contatoreIsRun) {

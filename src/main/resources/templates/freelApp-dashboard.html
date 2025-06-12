@@ -41,7 +41,7 @@
 
 </head>
 
-<body class="font-sans" style="width: 100vw; height: 100vh;" onload="contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), timerstart()">
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 		<button
 			class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5] " onclick="getJsonTaskListSelectMode()">
@@ -154,7 +154,7 @@
 										class=" text-[10px] p-0 max-w-[90px] truncate"></div>
 										<form id="formContatoreErroreFinalsecond" 
 										th:object="${contatore}" method="post">
-										<div class=" text-[20px] p-0" id="timerUno">00:00:00</div>
+										<div class=" text-[20px] p-0" id="timerUno" th:text="${finalTimeFormatted}"></div>
 									</form>
 									<div
 										class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-40px] mt-[40px]">
@@ -365,7 +365,7 @@
 									class="col-auto text-[14px] p-0">...</div>
 								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
 									class="col-auto text-[14px] text-left p-0 w-full ml-4 truncate"></div>
-								<div class="col-auto text-[24px] p-0" id="timerDue">00:00:00</div>
+								<div class="col-auto text-[24px] p-0" id="timerDue" th:text="${finalTimeFormatted}">00:00:00</div>
 								<div
 									class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-210px] mt-[40px]">
 									Dettaglio task</div>
@@ -394,7 +394,7 @@
 											src="/img/sources/icons/pause-blue.svg" alt="pause">
 									</div>
 									<div th:if="${contatoreIsRun}" id="pause-bottom-svg-before-api-contatoreIsRun">
-											<button type="button" th:onclick="pauseContatoreApi([[${taskInUso.id}]])"
+											<button type="button" th:onclick="pauseContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()"
 												class="hover:opacity-75 flex items-center">
 												<img class="h-[45px] w-[45px]"
 													src="/img/sources/icons/pause-blue.svg" alt="pause">
@@ -412,7 +412,7 @@
 											src="/img/sources/icons/play-blue.svg" alt="start">
 									</div>
 									<div th:unless="${contatoreIsRun}" id="play-bottom-svg-before-api-contatoreIsRun">
-											<button type="button" th:onclick="startContatoreApi([[${taskInUso.id}]])"
+											<button type="button" th:onclick="startContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()"
 												class="hover:opacity-75 flex items-center">
 												<img class="h-[45px] w-[45px]"
 													src="/img/sources/icons/play-blue.svg" alt="start">
@@ -574,7 +574,7 @@
 										</div>
 										<div id="contatore-rapid-button-start" class="md:mx-1 lg:mx-2">
 											<form class="mx-1 w-50" id="form-start-contatore" method="post">
-												<input type="hidden" name="endPoint" th:value="${endPoint}">
+												<input type="hidden" name="endPoint" th:value="${endPoint}"> 
 												<button id="start-button" type="submit" class="flex justify-center items-center hover:opacity-75">
 													<img class="h-9 w-9 md:w-10 md:h-10" src="/img/sources/icons/play-blue.svg" alt="start">
 												</button>

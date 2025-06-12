@@ -223,6 +223,7 @@ public class TaskController {
     	//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
 		
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -234,6 +235,9 @@ public class TaskController {
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
 		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//inizializzo a false così al reload successivo js non genera i tasti del contatore
+		ContatoreController.contatoreAttivatoDaRapidButton = false;
 		
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 //		ContatoreController.contatoreAttivato = false;
@@ -304,6 +308,7 @@ public class TaskController {
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
 		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
@@ -321,6 +326,9 @@ public class TaskController {
 
 		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
 		ContatoreController.contatoreCliccatoPreRefresh = false;
+		
+		//inizializzo a false così al reload successivo js non genera i tasti del contatore
+		ContatoreController.contatoreAttivatoDaRapidButton = false;
 		
 		// restituisce al model questo valore booleano false se non ci sono progetti a db
 		// e restituisce true se ci sono progetti a db
@@ -355,8 +363,8 @@ public class TaskController {
 		contatoreservice.importContatoreInGet(model);
 
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
-
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
 
 		// invio al model il booleano del contatore attivato
 		// se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -369,16 +377,13 @@ public class TaskController {
 		// invio al model il booleano del contatore cliccato prima del refresh pagina
 		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
 		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+		System.out.println("contatoreCliccatoPreRefresh : " + ContatoreController.contatoreCliccatoPreRefresh);
 
 		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
 		ContatoreController.contatoreCliccatoPreRefresh = false;
 		
-		// invio al model il booleano del contatore cliccato prima del refresh pagina
-		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
-		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
-
-		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
-		ContatoreController.contatoreCliccatoPreRefresh = false;
+		//inizializzo a false così al reload successivo js non genera i tasti del contatore
+		ContatoreController.contatoreAttivatoDaRapidButton = false;
 		
 
 		// metodo che passa al model le informazioni sul task in uso per generare la
