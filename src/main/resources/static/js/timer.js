@@ -39,13 +39,7 @@ let iterazioni = 0;
 	
 	
 	
-		//verifica se il contatore è stato attivato da rapid button
-				
-		if(contatoreAttivatoDaRapidButton === true){
-			contatoreTrue = true;
-			contatoreIsRun = true;
-			pulsantiContatoreInStart()
-		}
+	
 	
 	
 	
@@ -113,7 +107,13 @@ let iterazioni = 0;
 	}
 	
 	function timerstart(){
-		
+		//verifica se il contatore è stato attivato da rapid button
+					
+			if(contatoreAttivatoDaRapidButton === true){
+				contatoreTrue = true;
+				contatoreIsRun = true;
+				pulsantiContatoreInStart()
+			}
 		
 		
 		if (contatoreTrue && contatoreIsRun) {
@@ -151,51 +151,7 @@ function timeExceed(iterazioni){
 
 
 
-function pulsantiContatoreInStart(){
-	//contatore-basso (mobile)
-										//dopo aver caricato i pulsanti tramite thymelaf secondo quanto preso dal model, al click 
-										//del play vengono nascosti e sostituiti da quelli generati da javascritp
-										if(pauseBottomSvgBeforeApiContatoreNotRun != null && pauseBottomSvgBeforeApiContatoreNotRun.display != "none"){
-											pauseBottomSvgBeforeApiContatoreNotRun.classList.add('hidden');		
-										}
-										if(playBottomSvgBeforeApiContatorIsRun != null && playBottomSvgBeforeApiContatorIsRun.display != "none"){
-											playBottomSvgBeforeApiContatorIsRun.classList.add('hidden');		
-										}
-																											
-										//rende non cliccabile il pulsante play del contatore con il contatore in run
-										playBottomAfterApi.innerHTML = `<img class="h-[45px] w-[45px]"
-																	src="/img/sources/icons/play-blue.svg" alt="start">`;
-																					
-										//rende cliccabile il pulsante pause del contatore con il contatore in run		
-										pauseBottomAfterApi.innerHTML = `<button type="button" class="hover:opacity-75 " onclick="pauseContatoreApi(${taskInUsoId})">
-																		<img class="h-[45px] w-[45px]"
-																			src="/img/sources/icons/pause-blue.svg" alt="pause">
-																	</button>`;
-									
-									//contatore-alto ( desktop)
-										//dopo aver caricato i pulsanti tramite thymelaf secondo quanto preso dal model, al click 
-										//del play vengono nascosti e sostituiti da quelli generati da javascritp
-										if(pauseTopSvgBeforeApiContatoreNotRun != null && pauseTopSvgBeforeApiContatoreNotRun.display != "none"){
-											pauseTopSvgBeforeApiContatoreNotRun.classList.add('hidden');		
-										}
-										if(playTopSvgBeforeApiContatorIsRun != null && playTopSvgBeforeApiContatorIsRun.display != "none"){
-											playTopSvgBeforeApiContatorIsRun.classList.add('hidden');		
-										}
-										
-										
-										//rende non cliccabile il pulsante play del contatore con il contatore in run
-										playTopAfterApi.innerHTML = `<img class="h-[29px] w-[29px]"
-																				src="/img/sources/icons/play-blue.svg" alt="start">`;
-												
-										//rende cliccabile il pulsante pause del contatore con il contatore in run		
-										pauseTopAfterApi.innerHTML = `<button type="button" class="hover:opacity-75 " onclick="pauseContatoreApi(${taskInUsoId})">
-																				<img class="h-[29px] w-[29px]"
-																					src="/img/sources/icons/pause-blue.svg" alt="pause">
-																			</button>`;
-											console.log("sono in startContatoreApi, un attimo prima di timerStart e contatoreIsRun = " + contatoreIsRun + 
-													" contatoreTrue = " + contatoreTrue
-											)							
-}
+
 
 
 	

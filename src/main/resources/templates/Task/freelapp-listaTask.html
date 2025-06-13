@@ -158,7 +158,7 @@
 							</div>
 							<div th:if="${contatoreIsRun}" id="pause-top-svg-before-api-contatoreIsRun">
 								<button type="button" class="hover:opacity-75 "
-									th:onclick="pauseContatoreApi([[${taskInUso.id}]])">
+									th:onclick="pauseContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()">
 									<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
 								</button>
 							</div>
@@ -173,7 +173,7 @@
 							</div>
 							<div th:unless="${contatoreIsRun}" id="play-top-svg-before-api-contatoreIsRun">
 								<button type="button" class="hover:opacity-75"
-									th:onclick="startContatoreApi([[${taskInUso.id}]])">
+									th:onclick="startContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()">
 									<img class="h-[29px] w-[29px]" src="/img/sources/icons/play-blue.svg" alt="start">
 								</button>
 							</div>
@@ -689,7 +689,7 @@
 											src="/img/sources/icons/pause-blue.svg" alt="pause">
 									</div>
 									<div th:if="${contatoreIsRun}" id="pause-bottom-svg-before-api-contatoreIsRun">
-											<button type="button" th:onclick="pauseContatoreApi([[${taskInUso.id}]])"
+											<button type="button" th:onclick="pauseContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()"
 												class="hover:opacity-75 flex items-center">
 												<img class="h-[45px] w-[45px]"
 													src="/img/sources/icons/pause-blue.svg" alt="pause">
@@ -707,7 +707,7 @@
 											src="/img/sources/icons/play-blue.svg" alt="start">
 									</div>
 									<div th:unless="${contatoreIsRun}" id="play-bottom-svg-before-api-contatoreIsRun">
-											<button type="button" th:onclick="startContatoreApi([[${taskInUso.id}]])"
+											<button type="button" th:onclick="startContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()"
 												class="hover:opacity-75 flex items-center">
 												<img class="h-[45px] w-[45px]"
 													src="/img/sources/icons/play-blue.svg" alt="start">
