@@ -208,97 +208,97 @@ function creaApriModaleDeleteTask(idTask, taskSelectedName, taskSelectedProgetto
 // *******************************  FUNZIONI MODALE START IN EDIT E INSERT ******************************
 
 //funzione creazione e apertura modale START CLIENTE in edit e insert
-function creaApriModaleStartInInsertEditMode(clienteSelectedLabel){
-	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/start/${taskInUsoId}" method="post">
-						<input type="hidden" name="endPoint" value="${endPoint}">
-						<div class="flex flex-col justify-center p-2 text-center ">
-							<div class="p-3 text-[#0057A5]">
-								<p>Proseguendo le modifiche non salvate al Cliente 
-								<strong> ${clienteSelectedLabel}</strong> andranno perse. Vuoi procedere?</p>
-							</div>
-							<div class="p-6">
-								<button type="submit"
-									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
-							</div>
-						</div>
-					</form>`;
-				apriModale();
-}
+//function creaApriModaleStartInInsertEditMode(clienteSelectedLabel){
+//	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/start/${taskInUsoId}" method="post">
+//						<input type="hidden" name="endPoint" value="${endPoint}">
+//						<div class="flex flex-col justify-center p-2 text-center ">
+//							<div class="p-3 text-[#0057A5]">
+//								<p>Proseguendo le modifiche non salvate al Cliente 
+//								<strong> ${clienteSelectedLabel}</strong> andranno perse. Vuoi procedere?</p>
+//							</div>
+//							<div class="p-6">
+//								<button type="submit"
+//									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
+//							</div>
+//						</div>
+//					</form>`;
+//				apriModale();
+//}
 
 //funzione creazione e apertura modale START PROGETTO in edit e insert
-function creaApriModaleStartInInsertEditProgettoMode(progettoSelectedLabel){
-	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/start/${taskInUsoId}" method="post">
-						<input type="hidden" name="endPoint" value="${endPoint}">
-						<div class="flex flex-col justify-center p-2 text-center ">
-							<div class="p-3 text-[#0057A5]">
-								<p>Proseguendo le modifiche non salvate al Progetto 
-								<strong> ${progettoSelectedLabel}</strong> andranno perse. Vuoi procedere?</p>
-							</div>
-							<div class="p-6">
-								<button type="submit"
-									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
-							</div>
-						</div>
-					</form>`;
-				apriModale();
-}
+//function creaApriModaleStartInInsertEditProgettoMode(progettoSelectedLabel){
+//	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/start/${taskInUsoId}" method="post">
+//						<input type="hidden" name="endPoint" value="${endPoint}">
+//						<div class="flex flex-col justify-center p-2 text-center ">
+//							<div class="p-3 text-[#0057A5]">
+//								<p>Proseguendo le modifiche non salvate al Progetto 
+//								<strong> ${progettoSelectedLabel}</strong> andranno perse. Vuoi procedere?</p>
+//							</div>
+//							<div class="p-6">
+//								<button type="submit"
+//									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
+//							</div>
+//						</div>
+//					</form>`;
+//				apriModale();
+//}
 
 //funzione creazione e apertura modale START TASK in edit
-function creaApriModaleStartInEditTaskMode(taskSelectedId,taskSelectedName, taskSelectedProgettoName){
-	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/start/${taskInUsoId}" method="post">
-											<input type="hidden" name="endPoint" value=${endPoint}${taskSelectedId}>
-											<div class="flex flex-col justify-center p-2 text-center ">
-												<div class="p-3 text-[#0057A5]">
-													<p>Proseguendo le modifiche non salvate al task <strong>${taskSelectedName} </strong>
-														 relativo al progetto <strong>${taskSelectedProgettoName} </strong> andranno perse. Vuoi procedere?</p>
-												</div>
-												<div class="p-6">
-													<button type="submit"
-														class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
-												</div>
-											</div>
-										</form>`;
-										
-				apriModale();
-}
+//function creaApriModaleStartInEditTaskMode(taskSelectedId,taskSelectedName, taskSelectedProgettoName){
+//	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/start/${taskInUsoId}" method="post">
+//											<input type="hidden" name="endPoint" value=${endPoint}${taskSelectedId}>
+//											<div class="flex flex-col justify-center p-2 text-center ">
+//												<div class="p-3 text-[#0057A5]">
+//													<p>Proseguendo le modifiche non salvate al task <strong>${taskSelectedName} </strong>
+//														 relativo al progetto <strong>${taskSelectedProgettoName} </strong> andranno perse. Vuoi procedere?</p>
+//												</div>
+//												<div class="p-6">
+//													<button type="submit"
+//														class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
+//												</div>
+//											</div>
+//										</form>`;
+//										
+//				apriModale();
+//}
 
 //funzione creazione e apertura modale START TASK in insert  da side-bar(no-progetto)
-function creaApriModaleStartInInsertTaskMode_sideBar(){
-	contenutoModale.innerHTML = `<form id="form-start-pause" action="/start/${taskInUsoId}" method="post">
-						<input type="hidden" name="endPoint" value="${endPoint}">
-						<div class="flex flex-col justify-center p-2 text-center ">
-							<div class="p-3 text-[#0057A5]">
-								<p>Proseguendo le modifiche non salvate al Task andranno perse. Vuoi procedere?</p>
-							</div>
-							<div class="p-6">
-								<button type="submit"
-									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
-							</div>
-						</div>
-					</form>`;
-					
-			apriModale();
-}
+//function creaApriModaleStartInInsertTaskMode_sideBar(){
+//	contenutoModale.innerHTML = `<form id="form-start-pause" action="/start/${taskInUsoId}" method="post">
+//						<input type="hidden" name="endPoint" value="${endPoint}">
+//						<div class="flex flex-col justify-center p-2 text-center ">
+//							<div class="p-3 text-[#0057A5]">
+//								<p>Proseguendo le modifiche non salvate al Task andranno perse. Vuoi procedere?</p>
+//							</div>
+//							<div class="p-6">
+//								<button type="submit"
+//									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
+//							</div>
+//						</div>
+//					</form>`;
+//					
+//			apriModale();
+//}
 
 //funzione creazione e apertura modale START TASK in insert  da progetto
-function creaApriModaleStartInInsertTaskMode_fromProgetto(){
-	contenutoModale.innerHTML = `<form id="form-start-pause" action="/start/${taskInUsoId}" method="post">
-						<input type="hidden" name="endPoint" value="${endPoint}${progettoId}">
-						<div class="flex flex-col justify-center p-2 text-center ">
-							<div class="p-3 text-[#0057A5]">
-								<p>Proseguendo le modifiche non salvate al Task 
-								relativo al progetto <strong>${taskProgettoName}</strong> andranno perse. Vuoi procedere?</p>
-							</div>
-							<div class="p-6">
-								<button type="submit"
-									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px] ">Conferma</button>
-							</div>
-						</div>
-					</form>`;
-				
-			apriModale();
-	
-}
+//function creaApriModaleStartInInsertTaskMode_fromProgetto(){
+//	contenutoModale.innerHTML = `<form id="form-start-pause" action="/start/${taskInUsoId}" method="post">
+//						<input type="hidden" name="endPoint" value="${endPoint}${progettoId}">
+//						<div class="flex flex-col justify-center p-2 text-center ">
+//							<div class="p-3 text-[#0057A5]">
+//								<p>Proseguendo le modifiche non salvate al Task 
+//								relativo al progetto <strong>${taskProgettoName}</strong> andranno perse. Vuoi procedere?</p>
+//							</div>
+//							<div class="p-6">
+//								<button type="submit"
+//									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px] ">Conferma</button>
+//							</div>
+//						</div>
+//					</form>`;
+//				
+//			apriModale();
+//	
+//}
 
 
 
@@ -306,97 +306,97 @@ function creaApriModaleStartInInsertTaskMode_fromProgetto(){
 // *******************************  FUNZIONI MODALE PAUSE IN EDIT E INSERT ******************************
 
 //funzione creazione e apertura modale PAUSE CLIENTE in edit e insert
-function creaApriModalePauseInInsertEditMode(clienteSelectedLabel){
-	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/Contatore/pause/${taskInUsoId}" method="post">
-						<input type="hidden" name="endPoint" value="${endPoint}">
-						<div class="flex flex-col justify-center p-2 text-center ">
-							<div class="p-3 text-[#0057A5]">
-							<p>Proseguendo le modifiche non salvate al Cliente 
-							<strong> ${clienteSelectedLabel}</strong> andranno perse. Vuoi procedere?</p>
-							</div>
-							<div class="p-6">
-								<button type="submit"
-									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
-							</div>
-						</div>
-					</form>`;
-				apriModale();
-}
+//function creaApriModalePauseInInsertEditMode(clienteSelectedLabel){
+//	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/Contatore/pause/${taskInUsoId}" method="post">
+//						<input type="hidden" name="endPoint" value="${endPoint}">
+//						<div class="flex flex-col justify-center p-2 text-center ">
+//							<div class="p-3 text-[#0057A5]">
+//							<p>Proseguendo le modifiche non salvate al Cliente 
+//							<strong> ${clienteSelectedLabel}</strong> andranno perse. Vuoi procedere?</p>
+//							</div>
+//							<div class="p-6">
+//								<button type="submit"
+//									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
+//							</div>
+//						</div>
+//					</form>`;
+//				apriModale();
+//}
 
 //funzione creazione e apertura modale PAUSE PROGETTO in edit e insert
-function creaApriModalePauseInInsertEditProgettoMode(progettoSelectedLabel){
-	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/Contatore/pause/${taskInUsoId}" method="post">
-						<input type="hidden" name="endPoint" value="${endPoint}">
-						<div class="flex flex-col justify-center p-2 text-center ">
-							<div class="p-3 text-[#0057A5]">
-							<p>Proseguendo le modifiche non salvate al Progetto
-							<strong> ${progettoSelectedLabel}</strong> andranno perse. Vuoi procedere?</p>
-							</div>
-							<div class="p-6">
-								<button type="submit"
-									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
-							</div>
-						</div>
-					</form>`;
-				apriModale();
-}
+//function creaApriModalePauseInInsertEditProgettoMode(progettoSelectedLabel){
+//	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/Contatore/pause/${taskInUsoId}" method="post">
+//						<input type="hidden" name="endPoint" value="${endPoint}">
+//						<div class="flex flex-col justify-center p-2 text-center ">
+//							<div class="p-3 text-[#0057A5]">
+//							<p>Proseguendo le modifiche non salvate al Progetto
+//							<strong> ${progettoSelectedLabel}</strong> andranno perse. Vuoi procedere?</p>
+//							</div>
+//							<div class="p-6">
+//								<button type="submit"
+//									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
+//							</div>
+//						</div>
+//					</form>`;
+//				apriModale();
+//}
 
 //funzione creazione e apertura modale PAUSE TASK in edit
-function creaApriModalePauseInEditTaskMode(taskSelectedId, taskSelectedName, taskSelectedProgettoName){
-	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/Contatore/pause/${taskInUsoId}" method="post">
-											<input type="hidden" name="endPoint" value=${endPoint}${taskSelectedId}>
-											<div class="flex flex-col justify-center p-2 text-center ">
-												<div class="p-3 text-[#0057A5]">
-													<p>Proseguendo le modifiche non salvate al task <strong>${taskSelectedName} </strong>
-														 relativo al Progetto <strong>${taskSelectedProgettoName} </strong> andranno perse. Vuoi procedere?</p>
-												</div>
-												<div class="p-6">
-													<button type="submit"
-														class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
-												</div>
-											</div>
-										</form>`;
-										
-				apriModale();
-}
+//function creaApriModalePauseInEditTaskMode(taskSelectedId, taskSelectedName, taskSelectedProgettoName){
+//	contenutoModale.innerHTML = `	<form id="form-start-pause" action="/Contatore/pause/${taskInUsoId}" method="post">
+//											<input type="hidden" name="endPoint" value=${endPoint}${taskSelectedId}>
+//											<div class="flex flex-col justify-center p-2 text-center ">
+//												<div class="p-3 text-[#0057A5]">
+//													<p>Proseguendo le modifiche non salvate al task <strong>${taskSelectedName} </strong>
+//														 relativo al Progetto <strong>${taskSelectedProgettoName} </strong> andranno perse. Vuoi procedere?</p>
+//												</div>
+//												<div class="p-6">
+//													<button type="submit"
+//														class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
+//												</div>
+//											</div>
+//										</form>`;
+//										
+//				apriModale();
+//}
 
 //funzione creazione e apertura modale PAUSE TASK in insert  da side-bar(no-progetto)
-function creaApriModalePauseInInsertTaskMode_sideBar(){
-	contenutoModale.innerHTML = `<form id="form-start-pause" action="/Contatore/pause/${taskInUsoId}" method="post">
-						<input type="hidden" name="endPoint" value="${endPoint}">
-						<div class="flex flex-col justify-center p-2 text-center ">
-							<div class="p-3 text-[#0057A5]">
-								<p>Proseguendo le modifiche non salvate al Task andranno perse. Vuoi procedere?</p>
-							</div>
-							<div class="p-6">
-								<button type="submit"
-									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
-							</div>
-						</div>
-					</form>`;
-					
-			apriModale();
-}
+//function creaApriModalePauseInInsertTaskMode_sideBar(){
+//	contenutoModale.innerHTML = `<form id="form-start-pause" action="/Contatore/pause/${taskInUsoId}" method="post">
+//						<input type="hidden" name="endPoint" value="${endPoint}">
+//						<div class="flex flex-col justify-center p-2 text-center ">
+//							<div class="p-3 text-[#0057A5]">
+//								<p>Proseguendo le modifiche non salvate al Task andranno perse. Vuoi procedere?</p>
+//							</div>
+//							<div class="p-6">
+//								<button type="submit"
+//									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
+//							</div>
+//						</div>
+//					</form>`;
+//					
+//			apriModale();
+//}
 
 //funzione creazione e apertura modale PAUSE TASK in insert  da progetto
-function creaApriModalePauseInInsertTaskMode_fromProgetto(){
-	contenutoModale.innerHTML = `<form id="form-start-pause" action="/Contatore/pause/${taskInUsoId}" method="post">
-						<input type="hidden" name="endPoint" value="${endPoint}${progettoId}">
-						<div class="flex flex-col justify-center p-2 text-center ">
-							<div class="p-3 text-[#0057A5]">
-								<p>Proseguendo le modifiche non salvate al nuovo Task 
-								relativo al progetto <strong>${taskProgettoName}</strong> andranno perse. Vuoi procedere?</p>
-							</div>
-							<div class="p-6">
-								<button type="submit"
-									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
-							</div>
-						</div>
-					</form>`;
-				
-			apriModale();
-	
-}
+//function creaApriModalePauseInInsertTaskMode_fromProgetto(){
+//	contenutoModale.innerHTML = `<form id="form-start-pause" action="/Contatore/pause/${taskInUsoId}" method="post">
+//						<input type="hidden" name="endPoint" value="${endPoint}${progettoId}">
+//						<div class="flex flex-col justify-center p-2 text-center ">
+//							<div class="p-3 text-[#0057A5]">
+//								<p>Proseguendo le modifiche non salvate al nuovo Task 
+//								relativo al progetto <strong>${taskProgettoName}</strong> andranno perse. Vuoi procedere?</p>
+//							</div>
+//							<div class="p-6">
+//								<button type="submit"
+//									class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Conferma</button>
+//							</div>
+//						</div>
+//					</form>`;
+//				
+//			apriModale();
+//	
+//}
 
 //************************************* FUNZIONE MODALE CHIUSURA PROGETTO ************************ */
 function creaModaleChiudiProgetto(progettoId, progettoName){
