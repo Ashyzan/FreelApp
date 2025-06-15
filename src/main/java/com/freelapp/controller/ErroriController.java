@@ -37,6 +37,10 @@ public class ErroriController {
 		contatoreservice.importContatoreInGet(model);
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+		
+		//inizializzo a false così al reload successivo js non genera i tasti del contatore
+		ContatoreController.contatoreAttivatoDaRapidButton = false;
 		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP	
 		taskService.informationFromTaskInUsoToModel(model);

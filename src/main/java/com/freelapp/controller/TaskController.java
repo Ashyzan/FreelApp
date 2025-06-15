@@ -462,6 +462,11 @@ public class TaskController {
 	//passo al model i contatore e task in uso (gli static)
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+	model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+	
+	//inizializzo a false così al reload successivo js non genera i tasti del contatore
+	ContatoreController.contatoreAttivatoDaRapidButton = false;
+	
 	
 	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 	taskService.informationFromTaskInUsoToModel(model);
@@ -508,6 +513,10 @@ public class TaskController {
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+	
+		//inizializzo a false così al reload successivo js non genera i tasti del contatore
+		ContatoreController.contatoreAttivatoDaRapidButton = false;
 		
 		//riporto al model l'id del progetto in uso
 		model.addAttribute("progettoId", progetto.getId());
@@ -561,6 +570,10 @@ public class TaskController {
 	//passo al model i contatore e task in uso (gli static)
 	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+	model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+	
+	//inizializzo a false così al reload successivo js non genera i tasti del contatore
+	ContatoreController.contatoreAttivatoDaRapidButton = false;
 	
 	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 	taskService.informationFromTaskInUsoToModel(model);
@@ -623,6 +636,10 @@ public class TaskController {
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+	
+		//inizializzo a false così al reload successivo js non genera i tasti del contatore
+		ContatoreController.contatoreAttivatoDaRapidButton = false;
 		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
@@ -679,6 +696,10 @@ public class TaskController {
   //passo al model i contatore e task in uso (gli static)
   	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
   	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+  	model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+	
+	//inizializzo a false così al reload successivo js non genera i tasti del contatore
+	ContatoreController.contatoreAttivatoDaRapidButton = false;
   	
   	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 	taskService.informationFromTaskInUsoToModel(model);
@@ -713,9 +734,13 @@ public class TaskController {
 	if (bindingResult.hasErrors()) {
 	    bindingResult.addError(new ObjectError("Errore", "c'è un errore nel salvataggio del form"));
 	    
-	  //passo al model i contatore e task in uso (gli static)
+	    //passo al model i contatore e task in uso (gli static)
 	  	model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 	  	model.addAttribute("taskInUso", ContatoreController.taskInUso);
+	  	model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+	
+	  	//inizializzo a false così al reload successivo js non genera i tasti del contatore
+	  	ContatoreController.contatoreAttivatoDaRapidButton = false;
 	  	
 	  	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);

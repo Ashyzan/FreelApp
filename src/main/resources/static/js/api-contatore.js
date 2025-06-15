@@ -1,3 +1,11 @@
+
+//recuper elementi da DOM del dettaglio task per gestione worktime e icona stato in tempo reale dopo caricamento template
+const dettaglioTaskImgStatoOnload = document.getElementById('dettaglio-task-img-stato-onload');
+const dettaglioTaskImgStatoAfterContatoreApi = document.getElementById('dettaglio-task-img-stato-after-contatore-api');
+const dettaglioTaskWorktimeOnload = document.getElementById('dettaglio-task-work-time-onload');
+const dettaglioTaskWorktimeAfterContatoreApi = document.getElementById('dettaglio-task-work-time-after-contatore-api')
+
+
 	//****************** CHIAMATA API PER START CONTATORE ********************************/
 	
 function startContatoreApi(id){
@@ -64,8 +72,13 @@ function startContatoreApi(id){
 										console.log("sono in startContatoreApi, un attimo prima di timerStart e contatoreIsRun = " + contatoreIsRun + 
 												" contatoreTrue = " + contatoreTrue
 										)								
-								timerstart()
+								timerstart();
 								
+								//gestione icona di stato per contatore api senza refresh template
+								if(descrizioneTaskId === taskInUsoId){
+									dettaglioTaskImgStatoOnload.classList.add('hidden');
+									statoDettaglioTaskdaContatoreApi()									
+								}
 									
 							});
 								 
@@ -138,6 +151,15 @@ function pauseContatoreApi(id){
 								//azzera il setInterval per evitare che agli start successivi la velocità del contatore aumenti
 								//clearInterval(crono);
 								stampacontatore();
+								
+								//gestione icona di stato per contatore api senza refresh template
+								if(descrizioneTaskId === taskInUsoId){
+									dettaglioTaskImgStatoOnload.classList.add('hidden');
+									dettaglioTaskWorktimeOnload.classList.add('hidden')
+									statoDettaglioTaskdaContatoreApi()	
+									worktimeDettaglioTaskdaContatoreApi()
+									
+								}
 							});
 								 
 		
@@ -190,4 +212,24 @@ function pulsantiContatoreInStart(){
 		console.log("sono in startContatoreApi, un attimo prima di timerStart e contatoreIsRun = " + contatoreIsRun + 
 													" contatoreTrue = " + contatoreTrue
 					)							
+}
+
+
+//funzione che all'interazione del contatore in dettaglio task ne modica icona di stato e workTime senza refresh
+function statoDettaglioTaskdaContatoreApi(){
+	
+		if(contatoreIsRun === true){
+			dettaglioTaskImgStatoAfterContatoreApi.innerHTML = `<img class="size-5 inline"
+															src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start"> <img`
+		} else{
+			dettaglioTaskImgStatoAfterContatoreApi.innerHTML = `<img class="size-5 inline"
+															src="/img/sources/icons/contatore-on-pause.svg" alt="contatore in pausa">`				
+		}
+
+}
+
+
+//funzione che all'interazione della pausa del contatore in dettaglio task aggiorna worktime senza refresh
+function worktimeDettaglioTaskdaContatoreApi(){								
+	dettaglioTaskWorktimeAfterContatoreApi.innerHTML = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);
 }

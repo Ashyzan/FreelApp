@@ -8,6 +8,7 @@ const buttonEspandiDescrizione = document.getElementById('buttonEspandiDescrizio
 const buttonRiduciDescrizione = document.getElementById('buttonRiduciDescrizione');
 
 
+
 // ************* logica di espansione e riduzione descrizione
 if(buttonEspandiDescrizione != null){
 	buttonEspandiDescrizione.addEventListener('click', mostraDescrizioneCompleta);	

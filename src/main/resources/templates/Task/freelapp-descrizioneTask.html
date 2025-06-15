@@ -366,20 +366,27 @@
 								<div class="grid grid-cols-3 mb-2 py-2 border-b-4">
 									<div class="col font-bold pe-1 py-2">Stato</div>
 									<div class="md:ms-20 col col-span-2 text-center max-md:text-end py-2">
-										<img th:if="${task.getStato() == 'in corso'}" id="semaforo-start" class="size-5 inline"
-											src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start"> <img
-											th:if="${task.getStato() == 'in pausa'}" id="semaforo-pausa" class="size-5 inline"
-											src="/img/sources/icons/contatore-on-pause.svg" alt="contatore in pausa"> <img
-											th:if="${task.getStato() == 'chiuso'}" id="semaforo-stop" class="size-5 inline"
-											src="/img/sources/icons/contatore-on-stop.svg" alt="contatore in stop"> <img
-											th:if="${task.getStato() == 'inattivo'}" id="semaforo-inattivo" class="size-5 inline"
-											src="/img/sources/icons/contatore-inattivo.svg" alt="contatore inattivo">
+										<div id="dettaglio-task-img-stato-onload">
+											<img th:if="${task.getStato() == 'in corso'}" id="semaforo-start" class="size-5 inline"
+												src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start"> <img
+												th:if="${task.getStato() == 'in pausa'}" id="semaforo-pausa" class="size-5 inline"
+												src="/img/sources/icons/contatore-on-pause.svg" alt="contatore in pausa"> <img
+												th:if="${task.getStato() == 'chiuso'}" id="semaforo-stop" class="size-5 inline"
+												src="/img/sources/icons/contatore-on-stop.svg" alt="contatore in stop"> <img
+												th:if="${task.getStato() == 'inattivo'}" id="semaforo-inattivo" class="size-5 inline"
+												src="/img/sources/icons/contatore-inattivo.svg" alt="contatore inattivo">											
+										</div>
+										<div id="dettaglio-task-img-stato-after-contatore-api"></div>
 									</div>
 									<div class="col font-bold pe-1 py-2">Timer</div>
-									<div th:if="${task.getContatore()} != null"
-										th:text="${timeInHHMMSS}" class="md:ms-20 col col-span-2 text-center max-md:text-end py-2" id="">00:00:00</div>
-									<div th:if="${task.getContatore()} == null"
-										class="md:ms-20 col col-span-2 text-center max-md:text-end py-2" id="">00:00:00</div>	
+									<div class="md:ms-20 col col-span-2 text-center max-md:text-end py-2">
+										<div id="dettaglio-task-work-time-onload">
+											<div th:if="${task.getContatore()} != null"
+												th:text="${timeInHHMMSS}" id="">00:00:00</div>
+											<div th:if="${task.getContatore()} == null">00:00:00</div>											
+										</div>
+										<div id="dettaglio-task-work-time-after-contatore-api"></div>										
+									</div>
 								</div>
 								<div class="grid grid-cols-3 py-2 mb-3">
 									<div class="col-span1 font-bold">Azioni</div>
@@ -862,6 +869,7 @@
 				let statoTask = /*[[${task.getStato()}]]*/ null;
 				let endPoint = /*[[${endPoint}]]*/ null;
 				let contatoreAttivatoDaRapidButton = /*[[${contatoreAttivatoDaRapidButton}]]*/null; //boolean
+				let descrizioneTaskId = /*[[${task.getId()}]]*/null; //int
 				/*]]>*/
 				console.log("contatoreCliccatoPreRefresh in dettaglio task: " + contatoreCliccatoPreRefresh)
 			</script>
