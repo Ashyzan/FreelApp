@@ -68,16 +68,15 @@ function startContatoreApi(id){
 									pauseTopAfterApi.innerHTML = `<button type="button" class="hover:opacity-75 " onclick="pauseContatoreApi(${taskInUsoId})">
 																			<img class="h-[29px] w-[29px]"
 																				src="/img/sources/icons/pause-blue.svg" alt="pause">
-																		</button>`;
-										console.log("sono in startContatoreApi, un attimo prima di timerStart e contatoreIsRun = " + contatoreIsRun + 
-												" contatoreTrue = " + contatoreTrue
-										)								
+																		</button>`;				
 								timerstart();
 								
 								//gestione icona di stato per contatore api senza refresh template
-								if(descrizioneTaskId === taskInUsoId){
-									dettaglioTaskImgStatoOnload.classList.add('hidden');
-									statoDettaglioTaskdaContatoreApi()									
+								if(descrizioneTaskId != null){
+									if(descrizioneTaskId === taskInUsoId){
+										dettaglioTaskImgStatoOnload.classList.add('hidden');
+										statoDettaglioTaskdaContatoreApi()									
+									}									
 								}
 									
 							});
@@ -209,9 +208,7 @@ function pulsantiContatoreInStart(){
 										<img class="h-[29px] w-[29px]"
 											src="/img/sources/icons/pause-blue.svg" alt="pause">
 									</button>`;
-		console.log("sono in startContatoreApi, un attimo prima di timerStart e contatoreIsRun = " + contatoreIsRun + 
-													" contatoreTrue = " + contatoreTrue
-					)							
+								
 }
 
 

@@ -158,7 +158,7 @@
 							</div>
 							<div th:if="${contatoreIsRun}" id="pause-top-svg-before-api-contatoreIsRun">
 								<button type="button" class="hover:opacity-75 "
-									th:onclick="pauseContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()">
+									th:onclick="pauseContatoreApi([[${taskInUso.id}]])">
 									<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
 								</button>
 							</div>
@@ -173,7 +173,7 @@
 							</div>
 							<div th:unless="${contatoreIsRun}" id="play-top-svg-before-api-contatoreIsRun">
 								<button type="button" class="hover:opacity-75"
-									th:onclick="startContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()">
+									th:onclick="startContatoreApi([[${taskInUso.id}]])">
 									<img class="h-[29px] w-[29px]" src="/img/sources/icons/play-blue.svg" alt="start">
 								</button>
 							</div>
@@ -331,7 +331,7 @@
 
 						<!--						ELENCO TASK CON CARD-->
 						<!-- ${taskStat.index} è una sintassi thymeleaf che serve a recuperare dall'elemento dati accesori all'interno dell'elenco come l'index-->
-						<div th:each="task : ${list}" class="container m-auto" th:id="${taskStat.index}"> 
+						<div th:each="task : ${list}" class="item-elenco-tasks container m-auto" th:id="${taskStat.index}" th:value="${task.getId()}"> 
 							<div class="grid lg:grid-cols-1 sm:grid-cols-1 gap-4 p-2 flex justify-between w-full max-md:m-auto">
 								<div id="task-card" class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
 									<div class="md:flex max-md:grid max-md:grid-col-1">
@@ -760,6 +760,7 @@
 		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
 		let contatoreCliccatoPreRefresh = /*[[${contatoreCliccatoPreRefresh}]]*/ null; //boolean
 		let contatoreAttivatoDaRapidButton = /*[[${contatoreAttivatoDaRapidButton}]]*/null; //boolean
+		let descrizioneTaskId = null; 
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
