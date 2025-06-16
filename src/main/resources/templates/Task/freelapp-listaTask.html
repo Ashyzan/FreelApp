@@ -344,24 +344,29 @@
 										<div class="p-3 w-full">
 											<div class="max-sm:flex max-sm:justify-end mx-sm:gap-2 max-sm:mb-2">
 												<div class="max-sm:order-3">
-													<img th:if="${task.getStato() == 'in corso'}" id="semaforo-start" class="size-5 inline float-right"
-														src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start"> 
-														<img th:if="${task.getStato() == 'in pausa'}" id="semaforo-pausa" class="size-5 inline float-right"
-														src="/img/sources/icons/contatore-on-pause.svg" alt="contatore in pausa"> 
-														<img th:if="${task.getStato() == 'chiuso'}" id="semaforo-stop" class="size-5 inline float-right"
-														src="/img/sources/icons/contatore-on-stop.svg" alt="contatore in stop">
-														<img th:if="${task.getStato() == 'inattivo'}" id="semaforo-inattivo" class="size-5 inline float-right"
-														src="/img/sources/icons/contatore-inattivo.svg" alt="contatore inattivo">
-	
+													<div th:id="|icona-stato-onload-${taskStat.index}|">
+														<img th:if="${task.getStato() == 'in corso'}" id="semaforo-start" class="size-5 inline float-right"
+															src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start"> 
+															<img th:if="${task.getStato() == 'in pausa'}" id="semaforo-pausa" class="size-5 inline float-right"
+															src="/img/sources/icons/contatore-on-pause.svg" alt="contatore in pausa"> 
+															<img th:if="${task.getStato() == 'chiuso'}" id="semaforo-stop" class="size-5 inline float-right"
+															src="/img/sources/icons/contatore-on-stop.svg" alt="contatore in stop">
+															<img th:if="${task.getStato() == 'inattivo'}" id="semaforo-inattivo" class="size-5 inline float-right"
+															src="/img/sources/icons/contatore-inattivo.svg" alt="contatore inattivo">														
+													</div>
+													<div th:id="|icona-stato-after-contatore-api-${taskStat.index}|"></div>
 												</div>
 												<p th:if="${task.getContatore() == null}"
 													class="max-sm:order-2 mx-4 inline float-right text-[#0057A5]">00:00:00</p>
-												<p th:unless="${task.getContatore() == null}"
-													th:with="hours=${task.contatore.getFinaltime()/3600},
-	             													 minutes=${(task.contatore.getFinaltime()%3600)/60},
-	             													 seconds=${task.contatore.getFinaltime()%60}"
-													th:text="|${#numbers.formatInteger(hours,2)}:${#numbers.formatInteger(minutes,2)}:${#numbers.formatInteger(seconds,2)}|"
-													class="max-sm:order-2 mx-4 inline float-right text-[#0057A5]"></p>
+												<div th:id="|work-time-onload-${taskStat.index}|">
+													<p th:unless="${task.getContatore() == null}"
+														th:with="hours=${task.contatore.getFinaltime()/3600},
+		             													 minutes=${(task.contatore.getFinaltime()%3600)/60},
+		             													 seconds=${task.contatore.getFinaltime()%60}"
+														th:text="|${#numbers.formatInteger(hours,2)}:${#numbers.formatInteger(minutes,2)}:${#numbers.formatInteger(seconds,2)}|"
+														class="max-sm:order-2 mx-4 inline float-right text-[#0057A5]"></p>
+												</div>
+												<div th:id="|work-time-after-contatore-api-${taskStat.index}|" class="max-sm:order-2 mx-4 inline float-right text-[#0057A5]"></div>
 												<p class="max-sm:order-1 mx-4 inline float-right text-[#0057A5] max-sm:block"
 													th:text="${#temporals.format(task.getDataInizio(), 'dd MMM yyyy')}"></p>
 											</div>

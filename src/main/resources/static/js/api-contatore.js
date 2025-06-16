@@ -3,7 +3,13 @@
 const dettaglioTaskImgStatoOnload = document.getElementById('dettaglio-task-img-stato-onload');
 const dettaglioTaskImgStatoAfterContatoreApi = document.getElementById('dettaglio-task-img-stato-after-contatore-api');
 const dettaglioTaskWorktimeOnload = document.getElementById('dettaglio-task-work-time-onload');
-const dettaglioTaskWorktimeAfterContatoreApi = document.getElementById('dettaglio-task-work-time-after-contatore-api')
+const dettaglioTaskWorktimeAfterContatoreApi = document.getElementById('dettaglio-task-work-time-after-contatore-api');
+
+
+
+//recuper elementi dal DOM da lista task per gestione icona di stato task in uso
+const listaTask = document.getElementsByClassName('item-elenco-tasks');
+
 
 
 	//****************** CHIAMATA API PER START CONTATORE ********************************/
@@ -78,6 +84,9 @@ function startContatoreApi(id){
 										statoDettaglioTaskdaContatoreApi()									
 									}									
 								}
+								
+								//gestione icona di stato del primo elemento in task list template
+								gestioneIconaStatoTaskList()
 									
 							});
 								 
@@ -152,13 +161,18 @@ function pauseContatoreApi(id){
 								stampacontatore();
 								
 								//gestione icona di stato per contatore api senza refresh template
-								if(descrizioneTaskId === taskInUsoId){
-									dettaglioTaskImgStatoOnload.classList.add('hidden');
-									dettaglioTaskWorktimeOnload.classList.add('hidden')
-									statoDettaglioTaskdaContatoreApi()	
-									worktimeDettaglioTaskdaContatoreApi()
-									
+								if(descrizioneTaskId != null){
+									if(descrizioneTaskId === taskInUsoId){
+										dettaglioTaskImgStatoOnload.classList.add('hidden');
+										dettaglioTaskWorktimeOnload.classList.add('hidden')
+										statoDettaglioTaskdaContatoreApi()	
+										worktimeDettaglioTaskdaContatoreApi()
+										
+									}	
 								}
+								
+								//gestione icona di stato del primo elemento in task list template
+								gestioneIconaStatoTaskList()
 							});
 								 
 		
@@ -212,12 +226,12 @@ function pulsantiContatoreInStart(){
 }
 
 
-//funzione che all'interazione del contatore in dettaglio task ne modica icona di stato e workTime senza refresh
+//funzione che all'interazione del contatore in dettaglio task ne modica icona di stato senza refresh
 function statoDettaglioTaskdaContatoreApi(){
 	
 		if(contatoreIsRun === true){
 			dettaglioTaskImgStatoAfterContatoreApi.innerHTML = `<img class="size-5 inline"
-															src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start"> <img`
+															src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start">`
 		} else{
 			dettaglioTaskImgStatoAfterContatoreApi.innerHTML = `<img class="size-5 inline"
 															src="/img/sources/icons/contatore-on-pause.svg" alt="contatore in pausa">`				
@@ -228,5 +242,36 @@ function statoDettaglioTaskdaContatoreApi(){
 
 //funzione che all'interazione della pausa del contatore in dettaglio task aggiorna worktime senza refresh
 function worktimeDettaglioTaskdaContatoreApi(){								
-	dettaglioTaskWorktimeAfterContatoreApi.innerHTML = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);
+	dettaglioTaskWorktimeAfterContatoreApi.innerHTML =  Math.floor(hours) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);
+}
+
+
+//funzione che gestisce l'icona di stato e il worktime del primo item della taskList senza fare il refresh della pagina
+function gestioneIconaStatoTaskList(){
+	if(listaTask != null){
+		const iconaStatoOnload = document.getElementById('icona-stato-onload-0');
+		const iconaStatoAfterContatoreApi = document.getElementById('icona-stato-after-contatore-api-0');
+		const workTimeOnload = document.getElementById('work-time-onload-0');
+		const workTimeAfterContatoreApi = document.getElementById('work-time-after-contatore-api-0')
+		if(iconaStatoOnload != null){
+			iconaStatoOnload.classList.add('hidden');			
+		}
+		
+		if(contatoreIsRun === true){
+			if(iconaStatoAfterContatoreApi != null){
+				iconaStatoAfterContatoreApi.innerHTML = `<img class="size-5 inline float-right"
+															src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start">`				
+			}
+		} else if(contatoreIsRun === false){
+			if(workTimeOnload != null){
+				workTimeOnload.classList.add('hidden');				
+			}
+			if(workTimeAfterContatoreApi != null && iconaStatoAfterContatoreApi != null){
+				workTimeAfterContatoreApi.innerHTML = Math.floor(hours) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);
+				iconaStatoAfterContatoreApi.innerHTML = `<img class="size-5 inline float-right"
+															src="/img/sources/icons/contatore-on-pause.svg" alt="contatore in pausa">`								
+			}
+		}
+	}
+	
 }
