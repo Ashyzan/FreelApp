@@ -172,7 +172,7 @@
 								<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
 							</div>
 							<div th:if="${contatoreIsRun}" id="pause-top-svg-before-api-contatoreIsRun">
-								<button type="button" class="hover:opacity-75 "
+								<button type="button" class="hover:opacity-75 " id="button-top-pause-top-svg-before-api-contatoreIsRun"
 									th:onclick="pauseContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()">
 									<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
 								</button>
@@ -485,12 +485,20 @@
 							</div>
 							<div class="col border-l-2 border-r-2">
 								<div class="text-center font-bold">Ore Lavorate</div>
-								<div th:if="${task.contatore != null}" class="text-center" id="pauseTask" th:text="${task.contatore.getFinaltime() /3600}"></div>
-								<div th:if="${task.contatore == null}" class="text-center" id="pauseTask"> --</div>
+								<div id="dettaglio-task-ore-lavorate-after-contatore-api"></div>
+								<!--
+								<div id="dettaglio-task-ore-lavorate-onload">
+									<div th:if="${task.contatore != null}" class="text-center" id="pauseTask" th:text="${task.contatore.getFinaltime() /3600}"></div>
+									<div th:if="${task.contatore == null}" class="text-center" id="pauseTask"> --</div>									
+								</div>
+								-->
 							</div>
-							<div class="col border-l-2">
-								<div class="text-center font-bold">Pause</div>
-								<div class="text-center" id="pauseTask" th:text="${pauseTask}"></div>
+							<div class="col border-l-2 text-center">
+								<div class=" font-bold">Pause</div>
+								<!--
+								<div class="text-center" th:text="${pauseTask}" id="dettaglio-task-pause-onload"></div>
+								-->
+								<div class="text-center" id="dettaglio-task-pause-after-contatore-api"></div>
 							</div>
 							
 						</div>
@@ -498,8 +506,11 @@
 							<div th:if="${task.progetto.getTipologia() != 'tariffa'}" class="md:grid grid-cols-2 w-full mb-4">
 								<div id="guadagno" class="col flex flex-col justify-center items-center py-8 mb-2">
 									<div class="mx-auto  text-xl font-bold mb-2">Guadagno</div>
+									<!--
 									<div class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " id="guadagnoAttualeTask"
 										th:text="${guadagnoAttualeTask}"></div>
+										-->
+									<div id="dettaglio-task-guadagno-after-contatore-api"></div>
 								</div>
 								<div th:if="${task.getStato != 'inattivo'}">
 									<canvas  class="m-auto col w-3/4" id="myChart"></canvas>
@@ -508,16 +519,22 @@
 							<div th:if="${task.progetto.getTipologia() == 'tariffa'}" class=" w-full">
 								<div id="guadagno" class="flex flex-col justify-center items-center py-8 mb-2">
 									<div class="mx-auto  text-xl font-bold mb-2">Guadagno</div>
+									<!--
 									<div class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " id="guadagnoAttualeTask"
 										th:text="${guadagnoAttualeTask}"></div>
+										-->
+									<div id="dettaglio-task-guadagno-after-contatore-api"></div>
 								</div>
 							</div>					
 						</div>
 						<div th:if="${task.getStato() == 'inattivo'}">
 							<div id="guadagno" class="flex flex-col justify-center items-center py-8 mb-2">
 								<div class="mx-auto  text-xl font-bold mb-2">Guadagno</div>
+								<!--
 								<div class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " id="guadagnoAttualeTask"
 									th:text="${guadagnoAttualeTask}"></div>
+									-->
+								<div id="dettaglio-task-guadagno-after-contatore-api"></div>
 							</div>
 						</div>
 						<div class="text-center text-xs pt-3">I dati visualizzati sono riferiti all'ultima pausa</div>
@@ -578,7 +595,7 @@
 											src="/img/sources/icons/pause-blue.svg" alt="pause">
 									</div>
 									<div th:if="${contatoreIsRun}" id="pause-bottom-svg-before-api-contatoreIsRun">
-											<button type="button" th:onclick="pauseContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()"
+											<button type="button" th:onclick="pauseContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode(), apiStatisticheJson([[${task.getId()}]])"
 												class="hover:opacity-75 flex items-center">
 												<img class="h-[45px] w-[45px]"
 													src="/img/sources/icons/pause-blue.svg" alt="pause">

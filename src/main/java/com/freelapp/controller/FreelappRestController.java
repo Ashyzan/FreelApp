@@ -191,8 +191,11 @@ public class FreelappRestController {
 	
 	//api che ritorna json con statistiche dettaglio task
 	@GetMapping("/statistiche-dettaglio-task/{id}") 
-	public JSONObject TaskJson(@PathVariable("id") Integer id){
+	public JSONObject TaskJson(@PathVariable("id") Integer id) throws InterruptedException{
 				
+		//aggiunto ritardo di 200ms nell'esecuzione dell'api per permettere al db di aggiornarsi e di poter aggiornare correttamente i dati statistici
+		Thread.sleep(200);
+
 		Task task = taskRepository.getReferenceById(id);
 
 		//recupero dati chiusura stimata
@@ -237,7 +240,14 @@ public class FreelappRestController {
 		default:
 			JsonObj.put("budgetTotaleProgetto" , null);
 		}
+		//aggiunta di altri dati statistici del dettaglio progetto
+		String guadagnoAttualeTask = taskService.calcoloGuadagnoTaskDaFinalTime(task) + " €";
+		String pauseTask = String.valueOf(task.getContatore().getStop_numbers());
+		String oreLavorate = String.valueOf(task.getContatore().getFinaltime()/3600);
 		
+		JsonObj.put("guadagnoAttualeTask", guadagnoAttualeTask);
+		JsonObj.put("pauseTask", pauseTask);
+		JsonObj.put("oreLavorate", oreLavorate);
 		return JsonObj;
 				
 	}
