@@ -328,7 +328,7 @@
 				</a>
 			</div>
 			<div id="main-section"
-				class="flex w-full justify-center text-[#0057A5]">
+				class="flex w-full justify-center text-[#0057A5] p-10">
 				<!-- 					Nuovo dettaglio progetto -->
 				<!-- 	prima column -->
 				<div
@@ -599,34 +599,31 @@
 						</div>
 					
 				</div>
-			</div>
-		</div>
-		<div class="flex flex-col justify-center items-center w-full">
-			<section class="my-8 w-11/12">
+		<div class="flex flex-col  w-full">
+			<section class="w-11/12">
 				<div
-					class="h-12 text-center text-[#0057A5] font-bold items-center m-3">
+					class="text-center text-[#0057A5] font-bold items-center m-2">
 					<h1>ELENCO TASK ASSOCIATI AL PROGETTO</h1>
 				</div>
 				<table class="text-[#0057A5] w-full m-auto mb-4">
 					<thead
-						class="border border-[#0057A5] md:h-12 h-8 bg-[#0057A5] text-white max-sm:text-[12px]">
+						class="border border-[#0057A5] md:h-12 h-8 text-[#0057A5]  max-sm:text-[12px]">
 						<tr>
 							<th class="md:px-4 px-2">Nome</th>
-							<th class="md:px-4 px-2 max-lg:hidden">Data Inizio</th>
-							<th class="md:px-4 px-2 max-lg:hidden">Cliente</th>
-							<th class="md:px-4 px-2 max-lg:hidden">Data Chiusura
-								Definitiva</th>
+							<th class="md:px-4 px-2 max-lg:hidden">Inizio</th>
+							
+							<th class="md:px-4 px-2 max-lg:hidden">Chiusura
+								</th>
 							<th class="md:px-4 px-2">Stato</th>
-							<th></th>
+							<th class="md:px-4 px-2">Azioni</th>
 						</tr>
 						</th>
 
 						<tbody><tr th:each="task : ${progetto.elencoTask}"
 							class="border-b-2 h-6 text-center max-sm:text-[10px]">
-							<td th:text="${task.getName()}"></td>
+							<td class="mx-10 mt-2 line-clamp-1" th:text="${task.getName()}"></td>
 							<td th:text=" ${task.getDataInizio()}" class="p-2 max-lg:hidden"></td>
-							<td th:text=" ${task.progetto.Cliente.getLabelCliente()}"
-								class="p-2 max-lg:hidden"></td>
+							
 							<td th:text="${task.getDataChiusuraDefinitiva}"
 								class="p-2 max-lg:hidden"></td>
 							<td>
@@ -695,6 +692,8 @@
 					</div>
 				</div>
 			</section>
+		</div>
+			</div>
 		</div>
 
 		<!-- CONTATORE -->
