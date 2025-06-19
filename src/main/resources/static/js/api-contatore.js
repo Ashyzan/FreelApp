@@ -197,7 +197,7 @@ function pulsantiContatoreInStart(){
 			src="/img/sources/icons/play-blue.svg" alt="start">`;
 																			
 		//rende cliccabile il pulsante pause del contatore con il contatore in run		
-		pauseBottomAfterApi.innerHTML = `<button type="button" class="hover:opacity-75 " onclick="pauseContatoreApi(${taskInUsoId})">
+		pauseBottomAfterApi.innerHTML = `<button type="button" class="flex items-center hover:opacity-75 " onclick="pauseContatoreApi(${taskInUsoId})">
 											<img class="h-[45px] w-[45px]"
 												src="/img/sources/icons/pause-blue.svg" alt="pause">
 										</button>`;
