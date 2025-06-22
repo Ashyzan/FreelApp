@@ -571,6 +571,7 @@ public class ContatoreController {
     		taskInUso = repositTask.getReferenceById(taskId);
     		contatoreAttivatoDaRapidButton = true;
     		contatoreCliccatoPreRefresh = true;
+    		contatoreAttivato = true;
     		
 //    		Task task = repositTask.getReferenceById(taskId);
 //    		task.setStato("in corso");
@@ -588,6 +589,7 @@ public class ContatoreController {
     		taskInUso = repositTask.getReferenceById(taskId);
     		contatoreAttivatoDaRapidButton = false;
     		contatoreCliccatoPreRefresh = true;
+    		contatoreAttivato = false;
     		
 //    		Task task = repositTask.getReferenceById(taskId);
     		//task.setStato("in pausa");

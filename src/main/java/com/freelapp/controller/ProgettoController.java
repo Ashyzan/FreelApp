@@ -683,6 +683,9 @@ public class ProgettoController {
 			@GetMapping("/Progetti/archivio")
 			public String progettiArchivio(Model model) {
 				
+				String endPoint = "/Progetti/archivio";
+				model.addAttribute("endPoint", endPoint);
+				
 				//passo al model i contatore e task in uso (gli static)
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
@@ -792,6 +795,9 @@ public class ProgettoController {
 			
 			@GetMapping("/progetto-archivio-search")
 			public String listaProgettiArchiviatiSearch(@Param("input") String input, Model model) {
+				
+				String endPoint = "/progetto-archivio-search";
+				model.addAttribute("endPoint", endPoint);
 				
 				//passo al model i contatore e task in uso (gli static)
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
