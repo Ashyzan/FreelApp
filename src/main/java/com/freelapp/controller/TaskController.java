@@ -688,7 +688,7 @@ public class TaskController {
 	model.addAttribute("formTask", formTask);
 	
 	//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
-    String endPoint = "/Task/edit/";
+    String endPoint = "/Task/edit/"+ formTask.getId();
     model.addAttribute("endPoint", endPoint);
     
     contatoreservice.importContatoreInGet(model);
@@ -742,6 +742,23 @@ public class TaskController {
 	  	//inizializzo a false così al reload successivo js non genera i tasti del contatore
 	  	ContatoreController.contatoreAttivatoDaRapidButton = false;
 	  	
+	  	//invio al model il booleano del contatore attivato
+		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+		model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+		ContatoreController.contatoreAttivato = false;
+		
+		//inizializzo a false così al reload successivo js non genera i tasti del contatore
+		ContatoreController.contatoreAttivatoDaRapidButton = false;
+		
+		// invio al model il booleano del contatore cliccato prima del refresh pagina
+		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+		ContatoreController.contatoreCliccatoPreRefresh = false;
+		
 	  	//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
 		
