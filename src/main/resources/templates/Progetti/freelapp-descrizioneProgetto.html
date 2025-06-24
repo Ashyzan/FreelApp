@@ -328,11 +328,11 @@
 				</a>
 			</div>
 			<div id="main-section"
-				class="flex w-full justify-center text-[#0057A5] p-10">
+				class="flex w-full justify-center text-[#0057A5] p-6">
 				<!-- 					Nuovo dettaglio progetto -->
 				<!-- 	prima column -->
 				<div
-					class="lg:w-1/2 md:w-full sd:w-full h-full gap-4 rounded-lg bg-gray-100 p-4 m-3 shadow-lg">
+					class="lg:w-1/3 md:w-full sd:w-full h-full gap-4 rounded-lg bg-gray-100 p-4 m-3 shadow-lg">
 
 					<div class="flex">
 						<div class="w-2/3 truncate mb-3">
@@ -542,19 +542,19 @@
 					</div>
 
 
-					<div class="text-center mt-2 p-2">
-						<a
-							class="inline mx-3 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
-							th:href="@{/Progetti}">Tutti i progetti </a> <a
-							class="inline mx-3 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
-							th:href="@{/Progetti}">Lista task</a>
-					</div>
+<!--					<div class="text-center mt-2 p-2">-->
+<!--						<a-->
+<!--							class="inline mx-3 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"-->
+<!--							th:href="@{/Progetti}">Tutti i progetti </a> <a-->
+<!--							class="inline mx-3 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"-->
+<!--							th:href="@{/Progetti}">Lista task</a>-->
+<!--					</div>-->
 
 
 				</div>
 				<!-- 			second column -->
 				<div
-					class="lg:w-1/2 md:w-full sd:w-full gap-3 h-full rounded-lg bg-gray-100 p-4 md:p-6 m-3 shadow-lg">
+					class="lg:w-1/3 md:w-full sd:w-full gap-3 h-full rounded-lg bg-gray-100 p-4 md:p-6 m-3 shadow-lg">
 					<h3 class="text-center text-[#FFE641] text-xl font-bold mb-4">Statistiche</h3>
 					<div class="flex">
 						<div class="w-1/2 m-3">
@@ -599,35 +599,26 @@
 						</div>
 					
 				</div>
-		<div class="flex flex-col  w-full">
-			<section class="w-11/12">
+		<div class="flex lg:w-1/3 md:w-full sd:w-full h-full gap-4 rounded-lg bg-gray-100 p-4 m-3 shadow-lg">
+			<section class="">
+					<h1 class="text-center">ELENCO TASK ASSOCIATI AL PROGETTO</h1>
 				<div
 					class="text-center text-[#0057A5] font-bold items-center m-2">
-					<h1>ELENCO TASK ASSOCIATI AL PROGETTO</h1>
 				</div>
-				<table class="text-[#0057A5] w-full m-auto mb-4">
+				<table class="text-[#0057A5] m-auto mb-4">
 					<thead
 						class="border border-[#0057A5] md:h-12 h-8 text-[#0057A5]  max-sm:text-[12px]">
 						<tr>
 							<th class="md:px-4 px-2">Nome</th>
-							<th class="md:px-4 px-2 max-lg:hidden">Inizio</th>
-							
-							<th class="md:px-4 px-2 max-lg:hidden">Chiusura
-								</th>
+							<th class="md:px-4 px-2 max-lg:hidden">Data</th>						
 							<th class="md:px-4 px-2">Stato</th>
 							<th class="md:px-4 px-2">Azioni</th>
 						</tr>
-						</th>
-
 						<tbody><tr th:each="task : ${progetto.elencoTask}"
 							class="border-b-2 h-6 text-center max-sm:text-[10px]">
 							<td class="mx-10 mt-2 line-clamp-1" th:text="${task.getName()}"></td>
 							<td th:text=" ${task.getDataInizio()}" class="p-2 max-lg:hidden"></td>
-							
-							<td th:text="${task.getDataChiusuraDefinitiva}"
-								class="p-2 max-lg:hidden"></td>
-							<td>
-								<div class="flex items-center justify-center gap-1">
+								<td ><div class="flex items-center justify-center gap-1">
 									<img th:if="${task.getStato() == 'in corso'}"
 										id="semaforo-start" class="h-5"
 										src="/img/sources/icons/contatore-on-start.svg"
@@ -642,7 +633,7 @@
 										id="semaforo-inattivo" class="h-5"
 										src="/img/sources/icons/contatore-inattivo.svg"
 										alt="contatore inattivo">
-								</div>
+								</div> 
 							</td>
 							<td>
 								<div class="flex justify-center items-center gap-4 md:px-6 px-2">
