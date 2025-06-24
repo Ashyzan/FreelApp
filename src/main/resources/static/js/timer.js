@@ -120,7 +120,7 @@ let iterazioni = 0;
 				// eseguo prim la funzione una volta per togliere il lag di 1 secondo, poi entro nel ciclo
 				
 				tempochescorre();
-				setInterval(tempochescorre, 1000);
+				//setInterval(tempochescorre, 1000);
 
 			}
 
