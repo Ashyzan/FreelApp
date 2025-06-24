@@ -56,24 +56,29 @@ public class ContatoreService {
 	if ((PAUSE == null) && (STOP == null)) {
 	    contatoreIsRun = true;
 	 //   model.addAttribute("contatoreIsRun", contatoreIsRun);
+	    System.out.println("// CASO 1 : RUN - CONTATORE SENZA PAUSE");
+	   
 
 	}
 	// CASO 2 : RUN - CONTATORE RIAVVIATO
 	else if ((RESTART != null) && (RESTART.isAfter(PAUSE))) {
 	    contatoreIsRun = true;
 	  //  model.addAttribute("contatoreIsRun", contatoreIsRun);
+	    System.out.println("// CASO 2 : RUN - CONTATORE RIAVVIATO");
 
 	}
 	// CASO 3: STOP - CONTATORE FERMO START E STOP
 	else if ((PAUSE != null) && (PAUSE.isAfter(START)) || (STOP != null)) {
 	    contatoreIsRun = false;
 	 //   model.addAttribute("contatoreIsRun", contatoreIsRun);
+	    System.out.println("// CASO 3: STOP - CONTATORE FERMO START E STOP");
 	}
 
 	// CASO 4: STOP - CONTATORE FERMO RESTART E STOP
 	else if ((PAUSE != null) && (PAUSE.isAfter(RESTART)) || (STOP != null)) {
 	    contatoreIsRun = false;
 	  //  model.addAttribute("contatoreIsRun", contatoreIsRun);
+	    System.out.println("// CASO 4: STOP - CONTATORE FERMO RESTART E STOP");
 	}
 
 	return contatoreIsRun;

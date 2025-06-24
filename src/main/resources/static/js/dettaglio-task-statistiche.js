@@ -69,14 +69,16 @@ if(buttonBottomPauseContatoreIsRun != null){
 //************** logica chiamata API per grafici statistiche */
 const url_apiStatisticheTask = '/api/statistiche-dettaglio-task/';
 
-async function apiStatisticheJson(idTask){
-	console.log("statoTask: " + statoTask)
-	//esegue il fetch solo se in task è attivo
+
+function apiStatisticheJson(idTask){
+	
+	//esegue il fetch solo se il task è attivo
+
 	if(statoTask != "inattivo"){
 		
 		console.log("url statistiche: " + url_apiStatisticheTask)
 		
-		await fetch(url_apiStatisticheTask + idTask)
+		 fetch(url_apiStatisticheTask + idTask)
 					   .then(response => {
 					     if (!response.ok) {
 					       throw new Error('Network response was not ok');

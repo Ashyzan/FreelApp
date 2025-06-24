@@ -120,14 +120,14 @@ let iterazioni = 0;
 				// eseguo prim la funzione una volta per togliere il lag di 1 secondo, poi entro nel ciclo
 				
 				tempochescorre();
-				
-				//console.log("contatore attivo , finaltime = " + finalTimeSec + contatoreIsRun + testtaskdatestare);
+				setInterval(tempochescorre, 1000);
+
 			}
 
 			else if (contatoreIsRun !== true) {
 
 				stampacontatore();
-				//console.log("contatore non attivo , finaltime = " + finalTimeSec + "testtaskdatestare " + testtaskdatestare);
+				//console.log("contatore non attivo , finaltime = " + finalTimeSec  );
 			}
 
 			else {

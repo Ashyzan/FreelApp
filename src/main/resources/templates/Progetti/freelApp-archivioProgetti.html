@@ -615,7 +615,50 @@
 										</div>
 									</div>
 								</div>
+
 								<!-- Fine searchMode del rapid button -->
+
+								<!-- fine sezione contatore -->
+								<!-- Inizio sezione ore lavorate -->
+								<div id="ore-lavorate-task-rapid-container" class="hidden w-[90%] h-fit">
+									<div class="flex flex-row justify-center p-2">
+										<form id="taskDetailHrefOre" th:object="${contatore}"
+												method="post">
+											<h2 class="text-center font-bold mb-3">Inserimento ore lavorate</h2>
+											<div class="p-1">
+												<div class="grid grid-cols-2 flex items-center mb-2">
+													<p class="col mb-2 font-semibold">Inserisci la data</p>
+													<input type="date" name="date" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+														class=" col md:text-xl border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-[#ffe541]/50"
+														id="dataOreLavorate">												
+												</div>
+												<div class="grid grid-cols-2 flex items-center mb-2">
+													<p class="col font-semibold">Inserisci ore</p>
+													<input type="time" name="time" value="01:00"
+														class="col h-8 md:text-xl border border-[#0057A5] text-[#0057A5] rounded-lg block w-full text-center	bg-[#ffe541]/50"
+														id="tempoOreLavorate">												
+												</div>
+												<div class="grid grid-cols-1  md:grid-cols-2 flex items-center mb-3">
+													<div class="col text-left  flex items-center justify-start max-md:py-1">
+														<input type="radio" name="aggiungiOre" checked="checked" id="sovrascriviOre" value="0">
+														<label for="sovrascriviOre" class="ps-1">Sovrascrivi e chiudi task</label><br>														
+													</div>
+													<div class="col flex items-center justify-start md:justify-end max-md:py-1">
+														<input type="radio" name="aggiungiOre" id="aggiungiOre" value="1">
+														<label for="aggiungiOre" class="pe-1" >Aggiungi al task attivo</label>														
+													</div>
+												</div>
+												<div class="text-center">
+													<button class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]" 
+														type="submit">
+															Aggiungi
+													</button>													
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+								<!-- fine sezione ore lavorate -->
 							</div>
 						</div>
 				</div>

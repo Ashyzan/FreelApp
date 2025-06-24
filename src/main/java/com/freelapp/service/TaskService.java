@@ -213,7 +213,7 @@ public class TaskService {
 			}
 		});
 		
-		//trasmormo il finalTime da secondi ad ore
+		//trasformo il finalTime da secondi ad ore
 		parteDiBudgetUsataDaAltriTaskNelProgettoInOre = (finalTimeAltriTaskDelProgetto.doubleValue() / 3600);
 		
 		return parteDiBudgetUsataDaAltriTaskNelProgettoInOre*tariffaOrariaProgetto;

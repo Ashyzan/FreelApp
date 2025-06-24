@@ -25,7 +25,7 @@ function chiudiModale(){
 
 
 
-// *******************************  FUNZIONE MODALE STOP ******************************
+// *******************************  FUNZIONE MODALE STOP TASK ******************************
 
 //funzione creazione modale STOP
 function creaModaleStop(){
@@ -64,7 +64,7 @@ function creaApriModaleOreLavorate(idTaskselected, taskSelectedName){
 	if (dd < 10) dd = '0' + dd;
 	if (mm < 10) mm = '0' + mm;
 
-	const formattedToday =   yyyy  + '-' + dd + '-' + mm ;
+	const formattedToday =   yyyy  + '-' + mm + '-' + dd ;
 	contenutoModale.innerHTML = `	<div class="w-full h-auto bg-white rounded-b-lg p-3">
 						<div class="mb-3 text-[#0057A5]">
 							<form action="/orelavorate/${idTaskselected}"	method="post">
@@ -75,7 +75,7 @@ function creaApriModaleOreLavorate(idTaskselected, taskSelectedName){
 								<div class="grid grid-cols-2 flex items-center mt-2 mb-1">
 									<p class="col mb-2 ">Inserisci la data</p>
 									<input type="date" name="date" value="${formattedToday}" datetimepicker-options="${formattedToday}"
-										class=" col md:text-xl p-2 border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-gray-100"
+										class=" col md:text-xl border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-gray-100"
 										id="dataOreLavorate">
 								</div>
 								<div class="grid grid-cols-2 flex items-center mb-2">
@@ -88,12 +88,12 @@ function creaApriModaleOreLavorate(idTaskselected, taskSelectedName){
 									<div class="min-md:col "></div>
 									<div class="min-md:col-span-4 col-span-5">
 										<div class="col text-left">
-											<input type="radio" name="aggiungiOre" checked="checked" id="sovrascriviOre" value="0">
-											<label for="sovrascriviOre" class="ps-1">Sovrascrivi e chiudi task</label><br>
+											<input type="radio" name="aggiungiOre" id="aggiungiOre" value="1" checked="checked">
+											<label for="aggiungiOre" class="pe-1" >Aggiungi al task attivo</label>
 										</div>
 										<div class="col text-left">
-											<input type="radio" name="aggiungiOre" id="aggiungiOre" value="1">
-											<label for="aggiungiOre" class="pe-1" >Aggiungi al task attivo</label>
+											<input type="radio" name="aggiungiOre" id="sovrascriviOre" value="0">
+											<label for="sovrascriviOre" class="ps-1">Sovrascrivi e chiudi task</label><br>
 										</div>
 									</div>
 								</div>
@@ -113,7 +113,7 @@ function creaApriModaleOreLavorate(idTaskselected, taskSelectedName){
 
 
 
-// *******************************  FUNZIONE MODALE RESET ******************************
+// *******************************  FUNZIONE MODALE RESET TASK ******************************
 
 //funzione creazione e apertura modale RESET
 function creaApriModaleReset(idTaskselected, taskName, progettoName){
