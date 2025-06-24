@@ -34,7 +34,7 @@ import jakarta.validation.Valid;
 public class ProgettoController {
 
 
-	private static final boolean Task = false;
+	//private static final boolean Task = false;
 	
 	//variablili che verranno utilizzate per memorizzare la scelta effettuata durante la sessione
 	public static boolean ordinaElencoProgettiPerData = true;
@@ -395,6 +395,21 @@ public class ProgettoController {
 				
 				//passa a modello nel caso in base alla tipologia i risultati delle statistiche
 				progettoService.calcoloStatisticheTipologiaFromProgettoToModel(progetto, model);
+				
+				//passo al modello nel dettaglio progetto il guadagno totale del progetto
+				progettoService.guadagnoTotaleProgetto(progetto, model);
+				
+				//passo al modello nel dettaglio progetto il guadagno totale dei task attivi
+				progettoService.guadagnoTotaleTaskAttivi(progetto, model);
+				
+				//passo al modello nel dettaglio progetto il guadagno totale dei task chiusi
+				progettoService.guadagnoTotaleTaskChiusi(progetto, model);
+				
+				//passo al modello nel dettaglio progetto il finaltime totale
+				progettoService.finaltimeTotaleProgetto(progetto,model);
+				
+				
+				
 				
 				//se si arriva al dettaglio progetto dalla ricerca su lista progetti passo al model
 				// questo booleano per dirgli che siamo in modalità search, l'ultima pagina visita in search 

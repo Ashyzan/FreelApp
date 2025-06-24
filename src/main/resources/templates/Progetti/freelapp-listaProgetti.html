@@ -492,10 +492,11 @@
 							
 										</div>
 										<div th:text="${progettoCliente.cliente.labelCliente}"
-											class="line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
+											class="inline line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
 											cliente</div>
-							
-										<a th:href="@{/Progetti/{id}(id=${progettoCliente.getId()})}" th:text="${progettoCliente.name}"
+											<span th:text="|  -  progetto a ${progettoCliente.getTipologia()}" class=" text-slate-500"></span>
+										
+											<a th:href="@{/Progetti/{id}(id=${progettoCliente.getId()})}" th:text="${progettoCliente.name}"
 											class="line-clamp-1  block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome
 											progetto </a>
 										<p th:text="${progettoCliente.descrizione}" class="mt-2 text-slate-500 line-clamp-2">descrizione
@@ -1229,7 +1230,7 @@
 												<div class="grid grid-cols-2 flex items-center mb-2">
 													<p class="col mb-2 font-semibold">Inserisci la data</p>
 													<input type="date" name="date" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
-														class=" col md:text-xl p-2 border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-[#ffe541]/50"
+														class=" col md:text-xl border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-[#ffe541]/50"
 														id="dataOreLavorate">												
 												</div>
 												<div class="grid grid-cols-2 flex items-center mb-2">

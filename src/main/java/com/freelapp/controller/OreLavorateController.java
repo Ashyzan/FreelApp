@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,7 +58,7 @@ public class OreLavorateController {
 	    Long finalTime =  orelavorateservice.FinalOre(Time);
 	    
 	    // definisco lo start del contatore da localdate a localdatetime 
-	    LocalDateTime START = date.atStartOfDay();
+	  LocalDateTime START = date.atStartOfDay();
 	    
 	    // calcolo lo stop a partire dallo start e dal finaltime (in secondi) richiamando il metodo perposto dal service
 	    LocalDateTime STOP = orelavorateservice.findStop(START, finalTime);
@@ -69,6 +70,7 @@ public class OreLavorateController {
 	    	task.getContatore().setFinaltime(finalTime); 
 	    	task.getContatore().setStart(START);
 	    	task.getContatore().setStop(STOP);
+	    	task.setStato("chiuso");
 	    	
 	    	// salvo in automatico la data fine task in corrispondenza dello stop contatore
 	    	taskservice.setStopTaskDate(STOP, taskId);
@@ -77,42 +79,50 @@ public class OreLavorateController {
 	    	// aggiungi e lascia aperto
 	    	else {
 	    		contatore = new Contatore();
-		    	task.setContatore(contatore);
+		    		task.setContatore(contatore);
 	    		task.getContatore().setFinaltime(finalTime); 
-		    	task.getContatore().setStart(START);
-		    	task.getContatore().setPause(STOP);
+	    		task.getContatore().setStart(START);
+	    		task.getContatore().setPause(STOP);
+	    		task.setStato("in pausa");
 	    		
 	    	}
 	    }
 	    
-	    else if(task.getContatore() != null){
+	    else if(task.getContatore() != null ) {
 	    	
-	    	if(aggiungiOre) { // aggiungi e lascia aperto
-	    		task.getContatore().setRestart(START);
-		    	task.getContatore().setPause(STOP);
-	    	Long finalTimeAdd	= task.getContatore().getFinaltime() + finalTime;
-	    	task.getContatore().setFinaltime(finalTimeAdd);
-	    	
-			repositTask.save(task); 
+	    	if(task.getContatore().getStop() != null) {
+	    			// non fare nulla
 	    	}
-	    	// sovrascrivi e chiudi
-	    	else {
-		    	task.getContatore().setStart(START);
-		    	task.getContatore().setStop(STOP);
-		    	task.getContatore().setFinaltime(finalTime); 
+	    else 	if(aggiungiOre) { // aggiungi e lascia aperto
+				    		task.getContatore().setRestart(START);
+				    		task.getContatore().setPause(STOP);
+				    		Long finalTimeAdd	= task.getContatore().getFinaltime() + finalTime;
+				    		task.getContatore().setFinaltime(finalTimeAdd);
+				    		task.setStato("in pausa");
+				    		repositTask.save(task); 
+				    	}
+					    	else {		// sovrascrivi e chiudi
+						    	task.getContatore().setStart(START);
+						    	task.getContatore().setStop(STOP);
+						    	task.getContatore().setFinaltime(finalTime); 
+						    	
+						    	// salvo in automatico la data fine task in corrispondenza dello stop contatore
+						    	taskservice.setStopTaskDate(STOP, taskId);
+						    	
+						    	//setto lo stato in chiuso
+						    	task.setStato("chiuso");
+								repositTask.save(task); 
+						    	}
 		    	
-		    	// salvo in automatico la data fine task in corrispondenza dello stop contatore
-		    	taskservice.setStopTaskDate(STOP, taskId);
-		    	
-		    	//setto lo stato in chiuso
-		    	task.setStato("chiuso");
-				repositTask.save(task); 
-		    	}
-	    }
+	    		
+
+	    	}
+	    	
+	    	
+    	model.addAttribute("contatore", contatore);
+    	
+    	repositContatore.save(task.getContatore());
 	    
-		model.addAttribute("contatore", contatore);
-		   
-		repositContatore.save(task.getContatore());
 		
 		return "redirect:/Task/{id}";
 	

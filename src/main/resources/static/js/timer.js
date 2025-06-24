@@ -69,13 +69,13 @@ let iterazioni = 0;
 				// eseguo prim la funzione una volta per togliere il lag di 1 secondo, poi entro nel ciclo
 				tempochescorre();
 				setInterval(tempochescorre, 1000);
-				//console.log("contatore attivo , finaltime = " + finalTimeSec + contatoreIsRun + testtaskdatestare);
+			//	console.log("contatore attivo , finaltime = " + finalTimeSec + contatoreIsRun );
 			}
 
 			else if (contatoreIsRun !== true) {
 
 				stampacontatore();
-				//console.log("contatore non attivo , finaltime = " + finalTimeSec + "testtaskdatestare " + testtaskdatestare);
+				//console.log("contatore non attivo , finaltime = " + finalTimeSec  );
 			}
 
 			else  {
