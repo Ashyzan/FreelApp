@@ -712,7 +712,7 @@
 											src="/img/sources/icons/play-blue.svg" alt="start">
 									</div>
 									<div th:unless="${contatoreIsRun}" id="play-bottom-svg-before-api-contatoreIsRun">
-											<button type="button" th:onclick="startContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()"
+											<button type="button" th:onclick="startContatoreApi([[${taskInUso.id}]])"
 												class="hover:opacity-75 flex items-center">
 												<img class="h-[45px] w-[45px]"
 													src="/img/sources/icons/play-blue.svg" alt="start">
@@ -766,6 +766,7 @@
 		let contatoreCliccatoPreRefresh = /*[[${contatoreCliccatoPreRefresh}]]*/ null; //boolean
 		let contatoreAttivatoDaRapidButton = /*[[${contatoreAttivatoDaRapidButton}]]*/null; //boolean
 		let descrizioneTaskId = null; 
+		console.log("contatoreIsRun: " + contatoreIsRun);
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
