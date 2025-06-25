@@ -147,6 +147,37 @@ public class FreelappRestController {
 		return taskListOreLavorate;
 	}
 	
+	//metodo che ritorna la lista completa dei task(non chiusi) per la modalità select del rapid Button
+	@GetMapping("/selectMode")
+	public List<RestTask> taskListSelectModeRapidButton(){
+	
+		List<RestTask> listaTaskSelectMode = new ArrayList<RestTask> ();
+		
+		List<Task> listaTaskNotClosed = taskRepository.findAllNotClosed();
+		
+		listaTaskNotClosed.forEach(task ->{
+			
+			RestTask taskTemporaneo = new RestTask(null, null, null, null, null, null, null, null, null, null);
+			
+			taskTemporaneo.setNome(task.getName());
+			taskTemporaneo.setProgetto(task.getProgetto().getName());
+			taskTemporaneo.setProgettoId(task.getProgetto().getId());
+			taskTemporaneo.setCliente(task.getProgetto().getCliente().getLabelCliente());
+			taskTemporaneo.setClienteId(task.getProgetto().getCliente().getId());
+			taskTemporaneo.setLogoCliente(task.getProgetto().getCliente().getLogoPath());
+			taskTemporaneo.setFinalTime(0l);
+			taskTemporaneo.setTaskAttualmenteInUso(0);
+			taskTemporaneo.setId(task.getId());
+			taskTemporaneo.setStato(task.getStato());
+			
+			listaTaskSelectMode.add(taskTemporaneo);
+		});
+		
+		return listaTaskSelectMode;
+		
+	}
+	
+	
 	@GetMapping("/progetti/cambiaOrdinePerCliente")
 			public void cambiaOrdinePerCliente() {
 				//cambia il valore delle variabili inizializzate ad inizio controller al click dell'icona
@@ -169,8 +200,11 @@ public class FreelappRestController {
 	
 	//api che ritorna json con statistiche dettaglio task
 	@GetMapping("/statistiche-dettaglio-task/{id}") 
-	public JSONObject TaskJson(@PathVariable("id") Integer id){
+	public JSONObject TaskJson(@PathVariable("id") Integer id) throws InterruptedException{
 				
+		//aggiunto ritardo di 200ms nell'esecuzione dell'api per permettere al db di aggiornarsi e di poter aggiornare correttamente i dati statistici
+		Thread.sleep(200);
+
 		Task task = taskRepository.getReferenceById(id);
 
 		//recupero dati chiusura stimata
@@ -215,11 +249,21 @@ public class FreelappRestController {
 		default:
 			JsonObj.put("budgetTotaleProgetto" , null);
 		}
+		//aggiunta di altri dati statistici del dettaglio progetto
+		String guadagnoAttualeTask = taskService.calcoloGuadagnoTaskDaFinalTime(task) + " €";
+		String pauseTask = String.valueOf(task.getContatore().getStop_numbers());
+		String oreLavorate = String.valueOf(task.getContatore().getFinaltime()/3600);
 		
+		JsonObj.put("guadagnoAttualeTask", guadagnoAttualeTask);
+		JsonObj.put("pauseTask", pauseTask);
+		JsonObj.put("oreLavorate", oreLavorate);
 		return JsonObj;
 				
 	}
 	 
+	
+//	@GetMapping("/contatore/{id}/start")
+//	public
 	
 	
 	

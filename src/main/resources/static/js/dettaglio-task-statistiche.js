@@ -1,11 +1,25 @@
 console.log("sono in dettaglioTaskStatstiche");
 
-//recupero elementi dal DOM
-const contenitoreGiorniChiusuraStimata = document.getElementById('contenitoreGiorniChiusuraStimata');
+//recupero elementi dal DOM per descrizione task
 const descrizioneContratta = document.getElementById('descrizioneContratta');
 const descrizioneEspansa = document.getElementById('descrizioneEspansa');
 const buttonEspandiDescrizione = document.getElementById('buttonEspandiDescrizione');
 const buttonRiduciDescrizione = document.getElementById('buttonRiduciDescrizione');
+
+
+//recupero elementi dal DOM per giorni chiusura stimata
+const contenitoreGiorniChiusuraStimata = document.getElementById('contenitoreGiorniChiusuraStimata');
+
+
+//recupero elementi dal DOM per aggiornamento statistiche ( no grafici)
+//const dettaglioTaskOreLavorateOnload = document.getElementById('dettaglio-task-ore-lavorate-onload');
+const dettaglioTaskOreLavorateAfterContatoreApi = document.getElementById('dettaglio-task-ore-lavorate-after-contatore-api');
+const dettaglioTaskPauseOnload = document.getElementById('dettaglio-task-pause-onload');
+const dettaglioTaskPauseAfterContatoreApi = document.getElementById('dettaglio-task-pause-after-contatore-api');
+//const guadagnoAttualeTask = document.getElementById('guadagnoAttualeTask');
+const dettaglioTaskGuadagnoAptferContatoreApi = document.getElementById('dettaglio-task-guadagno-after-contatore-api');
+const buttonTopPauseContatoreIsRun = document.getElementById('pause-top-after-api');
+const buttonBottomPauseContatoreIsRun = document.getElementById('pause-bottom-after-api')
 
 
 // ************* logica di espansione e riduzione descrizione
@@ -25,21 +39,46 @@ function mostraDescrizioneRidotta(){
 }
 
 
+//aggirnamento dati con eventlistener su button pause contatore top
+if(buttonTopPauseContatoreIsRun != null){
+	buttonTopPauseContatoreIsRun.addEventListener('click',function(){
+		//cancello il precedente grafico dal template per poi creare il nuovo aggiornato
+		let chartStatus = Chart.getChart("myChart"); // <canvas> id
+		if (chartStatus != undefined) {
+		  chartStatus.destroy();
+		}
+		apiStatisticheJson(descrizioneTaskId);
+		
+	});
+}
 
+//aggirnamento dati con eventlistener su button pause contatore bottom
+if(buttonBottomPauseContatoreIsRun != null){
+	buttonBottomPauseContatoreIsRun.addEventListener('click',function(){
+		//cancello il precedente grafico dal template per poi creare il nuovo aggiornato
+		let chartStatus = Chart.getChart("myChart"); // <canvas> id
+		if (chartStatus != undefined) {
+		  chartStatus.destroy();
+		}
+		apiStatisticheJson(descrizioneTaskId);
+	});
+}
 
 
 
 //************** logica chiamata API per grafici statistiche */
 const url_apiStatisticheTask = '/api/statistiche-dettaglio-task/';
 
+
 function apiStatisticheJson(idTask){
 	
 	//esegue il fetch solo se il task è attivo
+
 	if(statoTask != "inattivo"){
 		
 		console.log("url statistiche: " + url_apiStatisticheTask)
 		
-		fetch(url_apiStatisticheTask + idTask)
+		 fetch(url_apiStatisticheTask + idTask)
 					   .then(response => {
 					     if (!response.ok) {
 					       throw new Error('Network response was not ok');
@@ -47,6 +86,8 @@ function apiStatisticheJson(idTask){
 					     return response.json();
 					   })
 					   .then(datajson => {
+						
+						
 							if(datajson.giorniChiusuraStimata != null){
 								if(datajson.giorniChiusuraStimata.giorniOltreChiusuraStimata > 0){
 									contenitoreGiorniChiusuraStimata.innerHTML = `<div class="text-red-600 text-center mb-3">Chiusura stimata superata di ${datajson.giorniChiusuraStimata.giorniOltreChiusuraStimata} giorni</div>`
@@ -64,13 +105,20 @@ function apiStatisticheJson(idTask){
 							
 							tempoBudgetParzialeDaTipologia(datajson);
 								 
+							//aggiornamento ore lavorate
+							dettaglioTaskOreLavorateAfterContatoreApi.innerHTML = `<div class="text-center">${datajson.oreLavorate}</div>`;	
+							
+							//aggiornamento pause
+							dettaglioTaskPauseAfterContatoreApi.innerHTML = `<div class="text-center">${datajson.pauseTask}</div>`;										
+								
+							//aggiornamento guadagno
+							dettaglioTaskGuadagnoAptferContatoreApi.innerHTML =`<div class="bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold ">${datajson.guadagnoAttualeTask}</div>`
 					   })
 					   .catch(error => {
 					     console.error('Error:', error);
 					   });
 					   
 	}
-	
 }
 
 
@@ -139,8 +187,8 @@ function creaGraficoGiorniStimati(datajson){
 
 	// richiamo id grafico chiusura stimata file html
 	const chiusuraStimata = document.getElementById('chiusuraStimata');
-	// inserisco i data e configuro	 			
-	new Chart(chiusuraStimata, {
+	// inserisco i data e configuro	 	
+	 new Chart(chiusuraStimata, {
 		type: 'bar',
 		data: data,
 		options: {
@@ -227,8 +275,9 @@ function tempoBudgetParzialeDaTipologia(datajson){
 
 	// richiamo id ciambella nel file html
 	const donut = document.getElementById('myChart');
-	// inserisco i data	 			
-	new Chart(donut, {
+	// inserisco i data	 
+	
+		 new Chart(donut, {
 		type: 'doughnut',
 		data: data,
 		options: {
@@ -246,3 +295,11 @@ function tempoBudgetParzialeDaTipologia(datajson){
 	});
 
 }
+
+
+//***************************** FUNZIONE AGGIORNAMENTO DATI STATISTICI (NO GRAFICI) al click del pause ************************/
+
+
+
+
+
