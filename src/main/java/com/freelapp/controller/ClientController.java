@@ -104,6 +104,10 @@ public class ClientController {
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+		
+		//inizializzo a false così al reload successivo js non genera i tasti del contatore
+		ContatoreController.contatoreAttivatoDaRapidButton = false;
 		
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -178,6 +182,10 @@ public class ClientController {
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+		
+		//inizializzo a false così al reload successivo js non genera i tasti del contatore
+		ContatoreController.contatoreAttivatoDaRapidButton = false;
 		
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -222,6 +230,10 @@ public class ClientController {
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+		
+		//inizializzo a false così al reload successivo js non genera i tasti del contatore
+		ContatoreController.contatoreAttivatoDaRapidButton = false;
 		
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -303,6 +315,10 @@ public class ClientController {
 			// passo al model i contatore e task in uso (gli static)
 			model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 			model.addAttribute("taskInUso", ContatoreController.taskInUso);
+			model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+		
+			//inizializzo a false così al reload successivo js non genera i tasti del contatore
+			ContatoreController.contatoreAttivatoDaRapidButton = false;
 
 			// invio al model il booleano del contatore attivato
 			// se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -354,6 +370,10 @@ public class ClientController {
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+		
+		//inizializzo a false così al reload successivo js non genera i tasti del contatore
+		ContatoreController.contatoreAttivatoDaRapidButton = false;
 		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
@@ -407,6 +427,10 @@ public class ClientController {
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+		
+		//inizializzo a false così al reload successivo js non genera i tasti del contatore
+		ContatoreController.contatoreAttivatoDaRapidButton = false;
 		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
@@ -470,6 +494,10 @@ public class ClientController {
 			//passo al model i contatore e task in uso (gli static)
 			model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 			model.addAttribute("taskInUso", ContatoreController.taskInUso);
+			model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+		
+			//inizializzo a false così al reload successivo js non genera i tasti del contatore
+			ContatoreController.contatoreAttivatoDaRapidButton = false;
 			
 			//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 			taskService.informationFromTaskInUsoToModel(model);
@@ -526,6 +554,10 @@ public class ClientController {
 		//passo al model i contatore e task in uso (gli static)
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+		
+		//inizializzo a false così al reload successivo js non genera i tasti del contatore
+		ContatoreController.contatoreAttivatoDaRapidButton = false;
 		
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
@@ -595,6 +627,10 @@ public class ClientController {
 			//passo al model i contatore e task in uso (gli static)
 			model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 			model.addAttribute("taskInUso", ContatoreController.taskInUso);
+			model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+		
+			//inizializzo a false così al reload successivo js non genera i tasti del contatore
+			ContatoreController.contatoreAttivatoDaRapidButton = false;
 			
 			//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 			taskService.informationFromTaskInUsoToModel(model);

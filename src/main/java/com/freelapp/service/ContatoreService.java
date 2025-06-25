@@ -259,7 +259,22 @@ public class ContatoreService {
 			    model.addAttribute("finaltime", task.getContatore().getFinaltime());
 			    model.addAttribute("contatoreIsRun", contatoreIsRun);
 			    model.addAttribute("contatoreIsTrue", contatoreIsTrue(task));
+			    model.addAttribute("finalTimeFormatted", calcoloFinalTimeString(task));
 
 			}
 	}
+    
+   // metodo che restituisce il finaltime formattato per caricamento template(usato in importContatoreInGet e passato al model
+    public String calcoloFinalTimeString(Task task) {
+    	
+    	double finalTimeInSeconds = task.getContatore().getFinaltime().doubleValue();
+    	
+    
+    	int hours = (int)Math.floor(finalTimeInSeconds / 3600);
+        double secondiRimasti = finalTimeInSeconds % 3600;
+        int minutes =(int)Math.floor(secondiRimasti / 60);
+        int seconds = (int)secondiRimasti % 60;
+    	
+    	return String.format("%02d", hours) + ":"+ String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+    }
 }

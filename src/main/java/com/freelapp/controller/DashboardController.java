@@ -42,13 +42,15 @@ public class DashboardController {
 	@GetMapping("/dashboard")
 	public String index( Model model){
 		
-//	passo al model l'endpoint da dare come input hidden a strt/pause/stop del contatore
+		//	passo al model l'endpoint da dare come input hidden a strt/pause/stop del contatore
 		String endPoint = "/dashboard";
 		model.addAttribute("endPoint", endPoint);
 		
 		contatoreservice.importContatoreInGet(model);
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
+		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+		
 	
 		//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 		taskService.informationFromTaskInUsoToModel(model);
@@ -61,6 +63,9 @@ public class DashboardController {
 		//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 		ContatoreController.contatoreAttivato = false;
 		
+		//inizializzo a false così al reload successivo js non genera i tasti del contatore
+		ContatoreController.contatoreAttivatoDaRapidButton = false;
+		
 		// invio al model il booleano del contatore cliccato prima del refresh pagina
 		// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
 		model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
@@ -68,50 +73,31 @@ public class DashboardController {
 		// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
 		ContatoreController.contatoreCliccatoPreRefresh = false;
 
-		List<Cliente> clienteList = new ArrayList<Cliente> ();
-
-		clienteList = clienteRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
-
-		model.addAttribute("clientiList", clienteList);
-
-		
-		
-		List<Progetto> progettiList = new ArrayList<Progetto> ();
-
-		progettiList = progettoRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
-
-		model.addAttribute("progettiList", progettiList);
-		
-		
-		//passa al model la lista di tutti i task esclusi quelli chiusi
+		//passa al model la lista di tutti i task esclusi quelli chiusi - serve per la generazione del rapid button
 		List<Task> taskList = new ArrayList<Task> ();
 		taskList = taskRepository.findAllNotClosed();
 		model.addAttribute("taskList", taskList);
 		
 		
-//		// lista che restituisce i task per modale delle ore lavorate sulla dashboard
-//		List<Task> taskListOreLavorate = new ArrayList<Task> ();
-//		taskList = taskRepository.findAll(Sort.by(Sort.Direction.DESC, "Name"));
-//		taskList.forEach( task -> {
-//			
-//			
-//				if( task.getContatore() == null) {
-//				taskListOreLavorate.add(task);
-//				
-//						}
-//				
-//				else if( task.getContatore() != null) {
-//					Boolean contatoreAttivo;
-//					contatoreAttivo = contatoreservice.contatoreIsRun(task);
+		
+		
+//		List<Cliente> clienteList = new ArrayList<Cliente> ();
+//
+//		clienteList = clienteRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+//
+//		model.addAttribute("clientiList", clienteList);
+//
 //		
-//					if(task.getContatore().getStop() == null  && contatoreAttivo == false) {
-//					
-//							 taskListOreLavorate.add(task); 
-//									
-//							 }	
-//						}
-//			model.addAttribute("taskListOreLavorate", taskListOreLavorate);
-//				} );
+//		
+//		List<Progetto> progettiList = new ArrayList<Progetto> ();
+//
+//		progettiList = progettoRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+//
+//		model.addAttribute("progettiList", progettiList);
+//		
+//		
+		
+	
 
 		
 		return "freelApp-dashboard";

@@ -19,6 +19,8 @@ let selectTaskList = document.querySelectorAll('form-select-input').value, selec
 const contatoreTaskRapidButton = document.getElementById('contatore-task-rapid-button');
 const contatoreTaskRapidContainer = document.getElementById('contatore-task-rapid');
 const timerResumeTask = document.getElementById('timerResumeTask');
+const formPauseContatore = document.getElementById('form-pause-contatore');
+const formStartContatore = document.getElementById('form-start-contatore');
 
 
 //recupero elementi dal DOM per sezione ore lavorate
@@ -38,6 +40,7 @@ let finalTimeTaskSelezionato = 0;
 //API da cambiare con url definitivi
 const api_urlTaskSelected = 'http://localhost:8080/api/task/'
 const api_urlTaskListSearch = 'http://localhost:8080/api/searchMode/taskList?input='
+const api_urlTaskListComplete = 'http://localhost:8080/api/selectMode'
 
 // apertura modale timerRapidButton
 rapidButton.addEventListener('click', function(){
@@ -125,6 +128,39 @@ async function getJsonTaskListSearch(input){
 	
 }
 
+
+//funzione che richiama api per lista task select mode e genera lista
+async function getJsonTaskListSelectMode(){
+	
+	document.getElementById('items-select-mode').innerHTML =` `;
+	
+		const response = await fetch(api_urlTaskListComplete);
+		const list = await response.json();
+		
+		list.forEach(item =>{
+			const statoItem = assegnaSvgStatoItem(item.stato);
+			document.getElementById('items-select-mode').innerHTML += 
+			`<button type="button" value="${item.id}" onclick="recapSelectedTask(${item.id})"
+					class="border-b-1 shadow-md grid grid-cols-8 p-1 w-full hover:bg-[#FFE541]/50">
+				<span class="col flex items-center justify-center">
+					<img src="${item.logoCliente}" class="h-5 w-auto">
+				</span>
+				<span class="border-r col-span-2 text-center text-[#0057A5] px-1 truncate">${item.cliente}</span>
+				<span class="border-r col-span-2 text-center text-[#0057A5] px-1 truncate">${item.progetto}</span>
+				<span class="border-r col-span-2 text-center text-[#0057A5] px-1 truncate">${item.nome}</span>
+				<span class="col text-center text-[#0057A5] flex items-center justify-center">
+				  <img class="h-5" src=${statoItem}>
+				</span>
+			</button>`		
+		});
+		
+	
+		
+		
+	
+}
+
+
 //funzione che visualizza la card riassuntiva del task selezionato
 function recapSelectedTask(id){
 
@@ -144,18 +180,40 @@ function recapSelectedTask(id){
 	const taskDetailHref = document.getElementById('taskDetailHref')
 	taskDetailHref.href = `/Task/${valueInput}`;
 	
-	// assegna action avvio contatore in base al task scelto
-	const formStartContatore = document.getElementById('form-start-contatore');
-	formStartContatore.action = `/start/${valueInput}`;
 	
-	//assegna action pausa contatore in baseal task scelto
-	const formPauseContatore = document.getElementById('form-pause-contatore');
-	formPauseContatore.action = `/Contatore/pause/${valueInput}`;
+	//assegna event listener ai form del contatore rapid button
+	formStartContatore.addEventListener('submit', start)
+	formPauseContatore.addEventListener('submit', pause)
+			
+	
+					
+	//funzione che intercetta il submit del form formStartContatore
+	function start(e){
+		e.preventDefault()
+		//prima del submit fa avviare il contatore
+		fetch('http://localhost:8080/start/' + valueInput);	
+		formStartContatore.action = `/redirect-endpoint/start/${valueInput}`;
+						
+		formStartContatore.submit();	
+	}
+			
+	//funzione che intercetta il submit del form formPauseContatore
+	function pause(e){
+		e.preventDefault()
+		//prima del submit mette in pausa il contatore
+		fetch('http://localhost:8080/Contatore/pause/' + valueInput);				
+		formPauseContatore.action = `/redirect-endpoint/pause/${valueInput}`;
+		
+		formPauseContatore.submit();
+								
+	}
+				
+	
 	
 	// assegna action avvio contatore in base al task scelto
 	const taskDetailHrefOre = document.getElementById('taskDetailHrefOre');
 		taskDetailHrefOre.action = `/orelavorate/${valueInput}`;
-
+		
 }
 
 //funzione di stampa contatore
@@ -210,14 +268,35 @@ function recapSearchedTaskList(id){
 	const taskDetailHref = document.getElementById('taskDetailHref')
 	taskDetailHref.href = `/Task/${valueInput}`;
 	
-	// assegna action avvio contatore in base al task scelto
-	const formStartContatore = document.getElementById('form-start-contatore');
-	formStartContatore.action = `/start/${valueInput}`;
-	
-	//assegna action pausa contatore in baseal task scelto
-	const formPauseContatore = document.getElementById('form-pause-contatore');
-		formPauseContatore.action = `/Contatore/pause/${valueInput}`;
-	
+
+		
+		//assegna event listener ai form del contatore rapid button
+		formStartContatore.addEventListener('submit', start)
+		formPauseContatore.addEventListener('submit', pause)
+				
+		
+						
+		//funzione che intercetta il submit del form formStartContatore
+		function start(e){
+			e.preventDefault()
+			//prima del submit fa avviare il contatore
+			fetch('http://localhost:8080/start/' + valueInput);	
+			formStartContatore.action = `/redirect-endpoint/start/${valueInput}`;
+							
+			formStartContatore.submit();	
+		}
+				
+		//funzione che intercetta il submit del form formPauseContatore
+		function pause(e){
+			e.preventDefault()
+			//prima del submit mette in pausa il contatore
+			fetch('http://localhost:8080/Contatore/pause/' + valueInput);	
+			formPauseContatore.action = `/redirect-endpoint/pause/${valueInput}`;
+			formPauseContatore.submit();
+			
+									
+									
+		}
 	// assegna action avvio contatore in base al task scelto
 	const taskDetailHrefOre = document.getElementById('taskDetailHrefOre');
 		taskDetailHrefOre.action = `/orelavorate/${valueInput}`;
