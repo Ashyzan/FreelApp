@@ -262,21 +262,68 @@ public class FreelappRestController {
 	}
 	 
 	
-//	@GetMapping("/contatore/{id}/start")
-//	public
+	//api che ritorna json con statistiche dettaglio progetto
+		@GetMapping("/statistiche-dettaglio-progetto/{id}") 
+		public JSONObject ProgettoJson(@PathVariable("id") Integer id) throws InterruptedException{
+					
+			//aggiunto ritardo di 200ms nell'esecuzione dell'api per permettere al db di aggiornarsi e di poter aggiornare correttamente i dati statistici
+			Thread.sleep(200);
+
+			Progetto progetto = progettoRepository.getReferenceById(id);
+
+			//recupero dati chiusura stimata
+//			Map<String, Long> giorniChiusuraStimata;
+//			if(task.getDataChiusuraStimata() != null){
+//				giorniChiusuraStimata = taskService.inLineaConChiusuraStimata(task);
+//			} else {
+//				giorniChiusuraStimata = null;
+//			}
+			
+			//recupero tipologia del progetto del task 		
+			// String tipologiaProgetto = task.getProgetto().getTipologia();
+				
+			//creazione json
+			JSONObject JsonObj = new JSONObject();
+					
+			//JsonObj.put("giorniChiusuraStimata" , giorniChiusuraStimata);
+			//JsonObj.put("tipologiaProgetto" , tipologiaProgetto);
+			
+			
+			//a seconda della tipolgia progetto mando nel json un budget differente e suo relativo utilizzo		
+//			switch (tipologiaProgetto) {
+//			case "budget":
+//				JsonObj.put("budgetImpiegatoDaAltriTask" , taskService.calcoloParteDiBudgetUsataDaAltriTaskNelProgettoMonetario(task));
+//				JsonObj.put("budgetTotaleProgetto" , task.getProgetto().getBudgetMonetario());
+//				if(task.getContatore() != null) {
+//					JsonObj.put("budgetImpiegatoDalTask" , taskService.calcoloGuadagnoTaskDaFinalTimeToDouble(task));
+//				} else {
+//					JsonObj.put("budgetImpiegatoDalTask" , "-");
+//				}
+//				break;
+//			case "ore":
+//				JsonObj.put("budgetImpiegatoDaAltriTask" , taskService.calcoloParteDiBudgetUsataDaAltriTaskNelProgettoOre(task));
+//				JsonObj.put("budgetTotaleProgetto" , task.getProgetto().getBudgetOre());
+//				//restituisce le ore utilizzate dal task trasformando il finaltime in ore
+//				if(task.getContatore() != null) {
+//					JsonObj.put("budgetImpiegatoDalTask" , task.getContatore().getFinaltime().doubleValue() / 3600);				
+//				} else {
+//					JsonObj.put("budgetImpiegatoDalTask" , 0);
+//				}
+//				break;
+//			default:
+//				JsonObj.put("budgetTotaleProgetto" , null);
+//			}
+			//aggiunta di altri dati statistici del dettaglio progetto
+//			String guadagnoAttualeTask = taskService.calcoloGuadagnoTaskDaFinalTime(task) + " €";
+//			String pauseTask = String.valueOf(task.getContatore().getStop_numbers());
+//			String oreLavorate = String.valueOf(task.getContatore().getFinaltime()/3600);
+//			
+//			JsonObj.put("guadagnoAttualeTask", guadagnoAttualeTask);
+//			JsonObj.put("pauseTask", pauseTask);
+//			JsonObj.put("oreLavorate", oreLavorate);
+			return JsonObj;
+					
+		}
 	
-	
-	
-	
-	
-	
-//	@GetMapping(value = "/task/timeExceed/{id}", produces = MediaType.TEXT_HTML_VALUE)
-//	public String timeExceedError(@PathVariable("id")Integer id, Model model) {
-//		
-//		Task taskInUso = taskRepository.getReferenceById(id);
-//		
-//		contatoreService.timeExeed(taskInUso, model);
-//		
-//		return "Errori/timeExceeded";
-//	}
+
 }

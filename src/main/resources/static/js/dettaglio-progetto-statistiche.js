@@ -69,6 +69,22 @@ function apiStatisticheJson(idTask){
 /*grafico*/
 const boundaries = document.getElementById('boundaries');
 
+/* setup */
+const inputs = {
+  min: 0,
+  max: 100,
+  count: 8,
+  decimals: 2,
+  continuity: 1
+};
+
+const generateLabels = () => {
+  return Utils.months({count: inputs.count});
+};
+
+const generateData = () => (Utils.numbers(inputs));
+
+/*config*/
 new Chart = (boundaries , {
   type: 'line',
   data: data,
@@ -88,11 +104,12 @@ new Chart = (boundaries , {
   },
 });
 
+/* data */
 const data = {
   labels: generateLabels(),
   datasets: [
     {
-      label: 'Dataset',
+      label: 'Task',
       data: generateData(),
       borderColor: Utils.CHART_COLORS.red,
       backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red),
@@ -100,3 +117,4 @@ const data = {
     }
   ]
 };
+
