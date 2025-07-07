@@ -37,7 +37,7 @@
 </head>
 
 <body class="font-sans" style="width: 100vw; height: 100vh;"
-	onload="contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), timerstart()">
+	onload="contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), timerstart(), getDataJsonProgetto()">
 	<section id="rapidButton"
 		class=" fixed bottom-[20%] xs:bottom-[15%]  right-0">
 		<button
@@ -1112,7 +1112,9 @@
 			let taskInUsoId = /*[[${taskInUsoId}]]*/ null;
 			let taskInUsoName = /*[[${taskInUsoName}]]*/ null;
 			let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
+			let progettoId = /*[[${progetto.id}]]*/ null;
 			let contatoreCliccatoPreRefresh = /*[[${contatoreCliccatoPreRefresh}]]*/ null; //boolean
+			
 			/*]]>*/
 		</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>

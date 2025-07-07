@@ -109,11 +109,11 @@ let iterazioni = 0;
 	function timerstart(){
 		//verifica se il contatore è stato attivato da rapid button
 					
-			if(contatoreAttivatoDaRapidButton === true){
-				contatoreTrue = true;
-				contatoreIsRun = true;
-				pulsantiContatoreInStart()
-			}
+//			if(contatoreAttivatoDaRapidButton === true){
+//				contatoreTrue = true;
+//				contatoreIsRun = true;
+//				pulsantiContatoreInStart()
+//			}
 		
 		
 		if (contatoreTrue && contatoreIsRun) {

@@ -1,3 +1,6 @@
+console.log("LEGGO IL FILE DETTAGLIO PROGETTO STATISTICHE");
+
+
 const descrizioneContratta = document.getElementById('descrizioneContratta');
 const descrizioneEspansa = document.getElementById('descrizioneEspansa');
 const buttonEspandiDescrizione = document.getElementById('buttonEspandiDescrizione');
@@ -21,100 +24,118 @@ function mostraDescrizioneRidotta(){
 }
 
 //************** logica chiamata API per grafici statistiche */
-const url_apiStatisticheTask = '/api/statistiche-dettaglio-task/';
 
-function apiStatisticheJson(idTask){
-	
-	//esegue il fetch solo se il task è attivo
-	if(statoTask != "inattivo"){
-		
-		console.log("url statistiche: " + url_apiStatisticheTask)
-		
-		fetch(url_apiStatisticheTask + idTask)
-					   .then(response => {
-					     if (!response.ok) {
-					       throw new Error('Network response was not ok');
-					     }
-					     return response.json();
-					   })
-					   .then(datajson => {
-							if(datajson.giorniChiusuraStimata != null){
-								if(datajson.giorniChiusuraStimata.giorniOltreChiusuraStimata > 0){
-									contenitoreGiorniChiusuraStimata.innerHTML = `<div class="text-red-600 text-center mb-3">Chiusura stimata superata di ${datajson.giorniChiusuraStimata.giorniOltreChiusuraStimata} giorni</div>`
-								}
-								
-								if(datajson.giorniChiusuraStimata.giorniAncoraDisponibili > 0){
-									contenitoreGiorniChiusuraStimata.innerHTML = `	<div class="text-center font-bold pe-1 py-1">Countdown chiusura stimata</div>
-																					<div class="md:hidden text-center mb-2"> giorni rimanenti ${datajson.giorniChiusuraStimata.giorniAncoraDisponibili }</div>
-																					<canvas class="m-auto  mb-2" id="chiusuraStimata"></canvas>`
-									creaGraficoGiorniStimati(datajson);	 
-								} else if(datajson.giorniChiusuraStimata.giorniAncoraDisponibili == 0 && datajson.giorniChiusuraStimata.giorniOltreChiusuraStimata  == 0){
-									contenitoreGiorniChiusuraStimata.innerHTML = `<div class="text-center mb-3">Oggi è il giorno di chiusura Stimata</div>`
-								}							
-							}
-							
-							tempoBudgetParzialeDaTipologia(datajson);
-								 
-					   })
-					   .catch(error => {
-					     console.error('Error:', error);
-					   });
-					   
-	}
-	
-}
+
 
 
 
 /*grafico*/
 const boundaries = document.getElementById('boundaries');
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+
+const CHART_COLORS = {
+  red: 'rgb(255, 99, 132)',
+  orange: 'rgb(255, 159, 64)',
+  yellow: 'rgb(255, 205, 86)',
+  green: 'rgb(75, 192, 192)',
+  blue: 'rgb(54, 162, 235)',
+  purple: 'rgb(153, 102, 255)',
+  grey: 'rgb(201, 203, 207)'
+};
+
+const NAMED_COLORS = [
+  CHART_COLORS.red,
+  CHART_COLORS.orange,
+  CHART_COLORS.yellow,
+  CHART_COLORS.green,
+  CHART_COLORS.blue,
+  CHART_COLORS.purple,
+  CHART_COLORS.grey,
+];
 
 /* setup */
 const inputs = {
   min: 0,
   max: 100,
-  count: 8,
+  count: 12,
   decimals: 2,
   continuity: 1
 };
 
 const generateLabels = () => {
-  return Utils.months({count: inputs.count});
+  return MONTHS;
 };
 
-const generateData = () => (Utils.numbers(inputs));
+const generateData = () => (inputs);
 
-/*config*/
-new Chart = (boundaries , {
-  type: 'line',
-  data: data,
-  options: {
-    plugins: {
-      filler: {
-        propagate: false,
-      },
-      title: {
-        display: true,
-        text: (ctx) => 'Fill: ' + ctx.chart.data.datasets[0].fill
-      }
-    },
-    interaction: {
-      intersect: false,
-    }
-  },
-});
 
-/* data */
-const data = {
-  labels: generateLabels(),
-  datasets: [
-    {
-      label: 'Task',
-      data: generateData(),
-      borderColor: Utils.CHART_COLORS.red,
-      backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red),
-      fill: false
+async function getDataJsonProgetto() {
+  const url_apiStatisticheProgetto = '/api/statistiche-dettaglio-progetto/' + progettoId;
+  console.log(url_apiStatisticheProgetto)
+  try {
+    const response = await fetch(url_apiStatisticheProgetto);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
     }
-  ]
-};
+
+    const json = await response.json();
+    console.log(json);
+	
+	
+	/*config*/
+	const config = (boundaries , {
+	  type: 'line',
+	  data: [json.uno, json.due, json.tre],
+	  options: {
+	    plugins: {
+	      filler: {
+	        propagate: false,
+	      },
+	      title: {
+	        display: true,
+	        text: (ctx) => 'Fill: ' + ctx.chart.data.datasets[0].fill
+	      }
+	    },
+	    interaction: {
+	      intersect: false,
+	    }
+	  },
+	});
+	console.log(config);
+	/* data */
+	const data = {
+	  labels: generateLabels(),
+	  datasets: [
+	    {
+	      label: 'Task',
+	      data: generateData(),
+	      borderColor: CHART_COLORS.red,
+	      backgroundColor: (CHART_COLORS.yellow),
+	      fill: true
+	    }
+	  ]
+	};
+	console.log(data);
+
+	
+	
+	
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
 

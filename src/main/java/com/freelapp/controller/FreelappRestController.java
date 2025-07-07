@@ -270,58 +270,15 @@ public class FreelappRestController {
 			Thread.sleep(200);
 
 			Progetto progetto = progettoRepository.getReferenceById(id);
+            
 
-			//recupero dati chiusura stimata
-//			Map<String, Long> giorniChiusuraStimata;
-//			if(task.getDataChiusuraStimata() != null){
-//				giorniChiusuraStimata = taskService.inLineaConChiusuraStimata(task);
-//			} else {
-//				giorniChiusuraStimata = null;
-//			}
-			
-			//recupero tipologia del progetto del task 		
-			// String tipologiaProgetto = task.getProgetto().getTipologia();
-				
-			//creazione json
-			JSONObject JsonObj = new JSONObject();
-					
-			//JsonObj.put("giorniChiusuraStimata" , giorniChiusuraStimata);
-			//JsonObj.put("tipologiaProgetto" , tipologiaProgetto);
-			
-			
-			//a seconda della tipolgia progetto mando nel json un budget differente e suo relativo utilizzo		
-//			switch (tipologiaProgetto) {
-//			case "budget":
-//				JsonObj.put("budgetImpiegatoDaAltriTask" , taskService.calcoloParteDiBudgetUsataDaAltriTaskNelProgettoMonetario(task));
-//				JsonObj.put("budgetTotaleProgetto" , task.getProgetto().getBudgetMonetario());
-//				if(task.getContatore() != null) {
-//					JsonObj.put("budgetImpiegatoDalTask" , taskService.calcoloGuadagnoTaskDaFinalTimeToDouble(task));
-//				} else {
-//					JsonObj.put("budgetImpiegatoDalTask" , "-");
-//				}
-//				break;
-//			case "ore":
-//				JsonObj.put("budgetImpiegatoDaAltriTask" , taskService.calcoloParteDiBudgetUsataDaAltriTaskNelProgettoOre(task));
-//				JsonObj.put("budgetTotaleProgetto" , task.getProgetto().getBudgetOre());
-//				//restituisce le ore utilizzate dal task trasformando il finaltime in ore
-//				if(task.getContatore() != null) {
-//					JsonObj.put("budgetImpiegatoDalTask" , task.getContatore().getFinaltime().doubleValue() / 3600);				
-//				} else {
-//					JsonObj.put("budgetImpiegatoDalTask" , 0);
-//				}
-//				break;
-//			default:
-//				JsonObj.put("budgetTotaleProgetto" , null);
-//			}
-			//aggiunta di altri dati statistici del dettaglio progetto
-//			String guadagnoAttualeTask = taskService.calcoloGuadagnoTaskDaFinalTime(task) + " €";
-//			String pauseTask = String.valueOf(task.getContatore().getStop_numbers());
-//			String oreLavorate = String.valueOf(task.getContatore().getFinaltime()/3600);
-//			
-//			JsonObj.put("guadagnoAttualeTask", guadagnoAttualeTask);
-//			JsonObj.put("pauseTask", pauseTask);
-//			JsonObj.put("oreLavorate", oreLavorate);
-			return JsonObj;
+			JSONObject progettoJsonObj = new JSONObject();
+			progettoJsonObj.put("uno", 1);
+			progettoJsonObj.put("due", 2);
+			progettoJsonObj.put("tre", 3);
+
+			System.out.println("HOLA HOLA SONO NEL JSON OBJ DEL PROGETTO STSTITICHE");
+			return progettoJsonObj;
 					
 		}
 	
