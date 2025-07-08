@@ -32,6 +32,7 @@ public class ProgettoService {
 	}
 	
 	public Page<Progetto> orderByDataInizio(int pageNumber){
+		//inserire vari if a seconda se gli static dei filtri sono null oppure no
 		Pageable pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
 		
 		return progettoRepository.findAll(pageable1);

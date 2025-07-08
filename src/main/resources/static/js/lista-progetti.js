@@ -64,3 +64,31 @@ function attivaPaginazione2() {
 	switchToVisualizzazioneData()
 }
 
+//funzione che al clicl mostra filtri mobile o desktop
+function mostraFiltri(){
+	const imgFiltraPer = document.getElementById('img-filtra-per');
+	const tabellaFiltriMobile = document.getElementById('tabella-filtri-mobile');
+	const tabellaFiltriDesktop = document.getElementById('tabella-filtri-desktop');
+	if(window.innerWidth >= 1024){
+		if(window.getComputedStyle(tabellaFiltriDesktop).display === 'none'){
+			console.log("sono qui")
+			tabellaFiltriDesktop.classList.remove('hidden');
+			imgFiltraPer.src="";
+			imgFiltraPer.src="/img/sources/icons/arrow-up.svg"
+		} else{
+			tabellaFiltriDesktop.classList.add('hidden');
+			imgFiltraPer.src="";
+			imgFiltraPer.src="/img/sources/icons/arrow-down.svg"
+		}
+	}else {
+		if(window.getComputedStyle(tabellaFiltriMobile).display === 'none'){
+			tabellaFiltriMobile.classList.remove('hidden');
+			imgFiltraPer.src="";
+			imgFiltraPer.src="/img/sources/icons/arrow-up.svg"
+		} else{
+			tabellaFiltriMobile.classList.add('hidden');
+			imgFiltraPer.src="";
+			imgFiltraPer.src="/img/sources/icons/arrow-down.svg"
+		}
+	}
+}

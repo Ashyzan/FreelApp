@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
@@ -40,6 +42,12 @@ public class ProgettoController {
 	public static boolean ordinaElencoProgettiPerData = true;
 
 	public static boolean ordinaElencoProgettiPerCliente = false;
+	
+	//static per la gestione dei filtri lista progetto
+	public static boolean filtriAttiviInListaProgetto = false;
+	public static String statoProgettoInListaProgetto = null;
+	public static String ordinaProgettoInListaProgetto = null;
+	public static Integer clienteIdProgettoInListaProgetto = null;
 	
 	//variabile che memorizza l'ultima pagina consultata nella lista Progetti e serve per mantenerla durante la sessione
 	private int currentPageListaProgetti = 1;
@@ -91,6 +99,8 @@ public class ProgettoController {
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
 				model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+				model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaProgetto);
+				System.out.println("filtriAttiviInListaProgetto: " + filtriAttiviInListaProgetto);
 		
 				//inizializzo a false così al reload successivo js non genera i tasti del contatore
 				ContatoreController.contatoreAttivatoDaRapidButton = false;
@@ -112,6 +122,11 @@ public class ProgettoController {
 				
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
+				
+				//passa al model la lista dei clienti 
+				List<Cliente> listaClienti = new ArrayList<Cliente>();
+				listaClienti = repositClient.findAll();
+				model.addAttribute("listaClienti", listaClienti);
 				
 				//passa al model la lista di tutti i task esclusi quelli chiusi
 				List<Task> taskList = new ArrayList<Task> ();
@@ -369,6 +384,36 @@ public class ProgettoController {
 					model.addAttribute("areProjectsOnDb", areProjectsOnDb);
 						
 				return "/Progetti/freelApp-listaProgetti";
+			}
+			 
+			 
+			@PostMapping("/progetto-lista-filtri")
+			public String filtriListaProgetto(Model model, @ModelAttribute("statoProgetto") String statoProgetto, 
+						@ModelAttribute("ordinaProgetto") String ordinaProgetto, @ModelAttribute("clienteId") Integer clienteId) {
+				
+				filtriAttiviInListaProgetto = true;
+				statoProgettoInListaProgetto = statoProgetto;
+					System.out.println("statoProgetto: " + statoProgettoInListaProgetto);
+				ordinaProgettoInListaProgetto = ordinaProgetto;
+					System.out.println("ordinaProgetto: " + ordinaProgettoInListaProgetto);
+				clienteIdProgettoInListaProgetto = clienteId;
+					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
+				
+				return "redirect:/Progetti";
+			}
+			
+			@PostMapping("/progetto-list-filtri/reset")
+			public String resetFiltriProgetto(Model model) {
+				
+				filtriAttiviInListaProgetto = false;
+				statoProgettoInListaProgetto = null;
+					System.out.println("statoProgetto: " + statoProgettoInListaProgetto);
+				ordinaProgettoInListaProgetto = null;
+					System.out.println("statoProgetto: " + ordinaProgettoInListaProgetto);
+				clienteIdProgettoInListaProgetto = null;
+					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
+				
+				return "redirect:/Progetti";
 			}
 	
 			@GetMapping("/Progetti/{id}")
