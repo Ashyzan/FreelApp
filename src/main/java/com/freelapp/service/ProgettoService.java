@@ -257,6 +257,7 @@ public class ProgettoService {
 					}else if(ProgettoController.statoProgettoInListaProgetto.equals("chiuso")) {
 						statoProgetto = "stato progetto CHIUSO";
 					}
+					//riempe la stringa da mostrare con le stringhe di statoProgetto, Ordinamento e Cliente che se vuote sono "" altrimenti contengono testo
 					stringaFiltri = "Elenco filtrato per " + statoProgetto; 
 				}
 				
