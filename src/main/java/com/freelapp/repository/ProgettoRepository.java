@@ -82,6 +82,19 @@ public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, Pa
 		@Query("SELECT p FROM Progetto p WHERE p.dataFine IS NULL")
 		public List<Progetto> findByActiveProject();
 		
+		
+		@Query("SELECT p FROM Progetto p WHERE p.dataFine IS NOT NULL")
+		public List<Progetto> findByNotActiveProject();
+		
+		
+		@Query("SELECT p FROM Progetto p WHERE p.dataFine IS NULL")
+		public Page<Progetto> findByActiveProjectPageable(Pageable pageable);
+		
+		
+		@Query("SELECT p FROM Progetto p WHERE p.dataFine IS NOT NULL")
+		public Page<Progetto> findByNotActiveProjectPageable(Pageable pageable);
+		
+		
 		public List<Progetto>findByArchivia(boolean value);
 	    
 }

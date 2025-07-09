@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.freelapp.controller.ProgettoController;
 import com.freelapp.model.Contatore;
 import com.freelapp.model.Progetto;
 import com.freelapp.model.Task;
@@ -32,19 +33,64 @@ public class ProgettoService {
 	}
 	
 	public Page<Progetto> orderByDataInizio(int pageNumber){
-		//inserire vari if a seconda se gli static dei filtri sono null oppure no
-		Pageable pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
 		
-		return progettoRepository.findAll(pageable1);
+		Page<Progetto> returnString = null;
+		System.out.println("statoProgettoInListaProgetto in ProgettoService: " + ProgettoController.statoProgettoInListaProgetto);
 		
+		//se è stato selezionato il filtro di stato su lista progetti viene cambiato il return del metodo con l'apposita query custom
+		if(ProgettoController.statoProgettoInListaProgetto != null) {
+
+			if(ProgettoController.statoProgettoInListaProgetto.equals("aperto")) {
+				
+				Pageable pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+				returnString = progettoRepository.findByActiveProjectPageable(pageable1);
+				System.out.println("returnString in ProgettoService: " + returnString);
+				
+			} else if(ProgettoController.statoProgettoInListaProgetto.equals("chiuso")) {
+				
+				Pageable pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());	
+				returnString = progettoRepository.findByNotActiveProjectPageable(pageable1);
+				System.out.println("returnString in ProgettoService: " + returnString);
+				
+			} 
+			
+		} else {
+		
+			Pageable pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+			returnString =  progettoRepository.findAll(pageable1);
+			System.out.println("returnString in ProgettoService: " + returnString);
+		}
+		
+		return returnString;
 		
 	}
 	
 	public Page<Progetto> orderByClient(int pageNumber){
-		Pageable pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").ascending());
+	
+		Page<Progetto> returnString = null;
 		
-		return progettoRepository.findAll(pageable2);		
-		
+		//se è stato selezionato il filtro di stato su lista progetti viene cambiato il return del metodo con l'apposita query custom
+		if(ProgettoController.statoProgettoInListaProgetto != null) {
+
+			if(ProgettoController.statoProgettoInListaProgetto.equals("aperto")) {
+				
+				Pageable pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").ascending());
+				returnString = progettoRepository.findByActiveProjectPageable(pageable1);
+				System.out.println("returnString in ProgettoService: " + returnString);
+				
+			} else if(ProgettoController.statoProgettoInListaProgetto.equals("chiuso")) {
+				
+				Pageable pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").ascending());	
+				returnString = progettoRepository.findByNotActiveProjectPageable(pageable1);
+				System.out.println("returnString in ProgettoService: " + returnString);
+				
+			} 
+			
+		} else { 
+			Pageable pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").ascending());
+			returnString =  progettoRepository.findAll(pageable2);	
+		}
+		return returnString;
 	}
 
 	
@@ -142,8 +188,8 @@ public class ProgettoService {
 			model.addAttribute("guadagnoTotaleProgetto", guadagnoTotaleProgetto);
 			}
 		
-		//metodo che calcola il guadagno totale dei task attivi
-			public void guadagnoTotaleTaskAttivi(Progetto progetto, Model model) {
+	//metodo che calcola il guadagno totale dei task attivi
+	public void guadagnoTotaleTaskAttivi(Progetto progetto, Model model) {
 				
 			double guadagnoTotaleTaskAttiviResult = 0;
 			
@@ -163,8 +209,8 @@ public class ProgettoService {
 					
 					
 		
-			//metodo che calcola il guadagno totale dei task chiusi
-				public void guadagnoTotaleTaskChiusi(Progetto progetto, Model model) {
+		//metodo che calcola il guadagno totale dei task chiusi
+		public void guadagnoTotaleTaskChiusi(Progetto progetto, Model model) {
 					
 				double guadagnoTotaleTaskChiusiResult = 0;
 				
@@ -199,9 +245,28 @@ public class ProgettoService {
 				}
 				
 				
+			
+			//metodo che genera la stringa dei filtri applicati da far vedere all'utente in lista progetti
+			public void stringaFiltriInListaProgetti(Model model) {
+				
+				String stringaFiltri = null;
+				if(ProgettoController.statoProgettoInListaProgetto != null || ProgettoController.ordinaProgettoInListaProgetto != null && ProgettoController.clienteIdProgettoInListaProgetto != null) {
+					String statoProgetto = "";
+					if(ProgettoController.statoProgettoInListaProgetto.equals("aperto")) {
+						statoProgetto = "stato progetto APERTO";
+					}else if(ProgettoController.statoProgettoInListaProgetto.equals("chiuso")) {
+						statoProgetto = "stato progetto CHIUSO";
+					}
+					stringaFiltri = "Elenco filtrato per " + statoProgetto; 
+				}
+				
+				model.addAttribute("stringaFiltri", stringaFiltri);
+				
+			}
 	
 	
 }
+
 
 
 

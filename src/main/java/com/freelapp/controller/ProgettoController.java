@@ -101,6 +101,9 @@ public class ProgettoController {
 				model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
 				model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaProgetto);
 				System.out.println("filtriAttiviInListaProgetto: " + filtriAttiviInListaProgetto);
+				
+				//metodo del serviceProgetto che passa al model la stringa per indicare all'utente i filtri selezionati
+				progettoService.stringaFiltriInListaProgetti(model);
 		
 				//inizializzo a false così al reload successivo js non genera i tasti del contatore
 				ContatoreController.contatoreAttivatoDaRapidButton = false;
@@ -388,16 +391,16 @@ public class ProgettoController {
 			 
 			 
 			@PostMapping("/progetto-lista-filtri")
-			public String filtriListaProgetto(Model model, @ModelAttribute("statoProgetto") String statoProgetto, 
-						@ModelAttribute("ordinaProgetto") String ordinaProgetto, @ModelAttribute("clienteId") Integer clienteId) {
+			public String filtriListaProgetto(Model model, @ModelAttribute("statoProgetto") String statoProgetto) {
+//						@ModelAttribute("ordinaProgetto") String ordinaProgetto, @ModelAttribute("clienteId") Integer clienteId) {
 				
 				filtriAttiviInListaProgetto = true;
 				statoProgettoInListaProgetto = statoProgetto;
 					System.out.println("statoProgetto: " + statoProgettoInListaProgetto);
-				ordinaProgettoInListaProgetto = ordinaProgetto;
-					System.out.println("ordinaProgetto: " + ordinaProgettoInListaProgetto);
-				clienteIdProgettoInListaProgetto = clienteId;
-					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
+//				ordinaProgettoInListaProgetto = ordinaProgetto;
+//					System.out.println("ordinaProgetto: " + ordinaProgettoInListaProgetto);
+//				clienteIdProgettoInListaProgetto = clienteId;
+//					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
 				
 				return "redirect:/Progetti";
 			}
