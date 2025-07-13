@@ -47,7 +47,7 @@ public class ProgettoController {
 	public static boolean filtriAttiviInListaProgetto = false;
 	public static String statoProgettoInListaProgetto = "";
 	public static String ordinaProgettoInListaProgetto = "";
-//	public static int clienteIdProgettoInListaProgetto = -1;
+	public static int clienteIdProgettoInListaProgetto = -1;
 	
 	//variabile che memorizza l'ultima pagina consultata nella lista Progetti e serve per mantenerla durante la sessione
 	private int currentPageListaProgetti = 1;
@@ -88,8 +88,8 @@ public class ProgettoController {
 			public String listaProgetti(Model model) {
 				
 				System.out.println("statoProgettoInListaProgetto: " + statoProgettoInListaProgetto);
-//				System.out.println("ordinaProgettoInListaProgetto: " + ordinaProgettoInListaProgetto);
-//				System.out.println("clienteIdProgettoInListaProgetto: " + clienteIdProgettoInListaProgetto);
+				System.out.println("ordinaProgettoInListaProgetto: " + ordinaProgettoInListaProgetto);
+				System.out.println("clienteIdProgettoInListaProgetto: " + clienteIdProgettoInListaProgetto);
 				
 				//essendo fuori dalla modalità search reinizializzo la varibile
 				searchMode = false;
@@ -396,16 +396,15 @@ public class ProgettoController {
 			 
 			@PostMapping("/progetto-lista-filtri")
 			public String filtriListaProgetto(Model model, @ModelAttribute("statoProgetto") String statoProgetto,
-					@ModelAttribute("ordinaProgetto") String ordinaProgetto) {
-//						, @ModelAttribute("clienteSelezionatoId") Integer clienteSelezionatoId) {
+					@ModelAttribute("ordinaProgetto") String ordinaProgetto, @ModelAttribute("clienteSelezionatoId") Integer clienteSelezionatoId) {
 				
 				filtriAttiviInListaProgetto = true;
 				statoProgettoInListaProgetto = statoProgetto;
 					System.out.println("statoProgetto: " + statoProgettoInListaProgetto);
 				ordinaProgettoInListaProgetto = ordinaProgetto;
 					System.out.println("ordinaProgetto: " + ordinaProgettoInListaProgetto);
-//				clienteIdProgettoInListaProgetto = clienteSelezionatoId;
-//					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
+				clienteIdProgettoInListaProgetto = clienteSelezionatoId;
+					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
 				
 				return "redirect:/Progetti";
 			}
@@ -416,10 +415,10 @@ public class ProgettoController {
 				filtriAttiviInListaProgetto = false;
 				statoProgettoInListaProgetto = "";
 					System.out.println("statoProgetto: " + statoProgettoInListaProgetto);
-//				ordinaProgettoInListaProgetto = "";
-//					System.out.println("statoProgetto: " + ordinaProgettoInListaProgetto);
-//				clienteIdProgettoInListaProgetto = -1;
-//					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
+				ordinaProgettoInListaProgetto = "";
+					System.out.println("statoProgetto: " + ordinaProgettoInListaProgetto);
+				clienteIdProgettoInListaProgetto = -1;
+					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
 				
 				return "redirect:/Progetti";
 			}
