@@ -41,6 +41,7 @@ public class ProgettoService {
 	public Page<Progetto> orderByDataInizio(int pageNumber){
 		
 		Pageable pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+		//returnString viene personalizzato ogni volta a seconda dei filtri selezionati 
 		Page<Progetto> returnString = null;
 		returnString =  progettoRepository.findAll(pageable1);
 		
@@ -50,11 +51,11 @@ public class ProgettoService {
 			if(ProgettoController.statoProgettoInListaProgetto.equals("aperto")) {
 				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
 				returnString = progettoRepository.findByActiveProjectPageable(pageable1);
-						System.out.println("returnString in ProgettoService: " + returnString);
+						
 			} else if (ProgettoController.statoProgettoInListaProgetto.equals("chiuso")) {
 				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());	
 				returnString = progettoRepository.findByNotActiveProjectPageable(pageable1);
-						System.out.println("returnString in ProgettoService: " + returnString);
+						
 			}
 		}
 		
@@ -64,22 +65,92 @@ public class ProgettoService {
 			if(ProgettoController.ordinaProgettoInListaProgetto.equals("piuRecente")) {
 				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
 				returnString = progettoRepository.findAll(pageable1);
-						System.out.println("returnString in ProgettoService: " + returnString);
+						
 			}else if(ProgettoController.ordinaProgettoInListaProgetto.equals("menoRecente")) {
 				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").ascending());
 				returnString = progettoRepository.findAll(pageable1);
-						System.out.println("returnString in ProgettoService: " + returnString);
+						
 			}
 		}
 		
 		//condizione di inserimento solo filtro CLIENTE
 		if(ProgettoController.statoProgettoInListaProgetto.equals("") && ProgettoController.ordinaProgettoInListaProgetto.equals("") 
 			&& ProgettoController.clienteIdProgettoInListaProgetto != -1) {
-			pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
 				returnString = progettoRepository.findByClienteId(ProgettoController.clienteIdProgettoInListaProgetto, pageable1);
-						System.out.println("returnString in ProgettoService: " + returnString);
+						
 		}
 	
+		//condizione filtri selezionati --> STATO e ORDINAMENTO
+		if(!ProgettoController.statoProgettoInListaProgetto.equals("") && !ProgettoController.ordinaProgettoInListaProgetto.equals("") 
+			&& ProgettoController.clienteIdProgettoInListaProgetto == -1) {
+					System.out.println("condizione filtri selezionati --> STATO e ORDINAMENTO");
+		   if(ProgettoController.statoProgettoInListaProgetto.equals("aperto")) {
+				if(ProgettoController.ordinaProgettoInListaProgetto.equals("piuRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+					returnString = progettoRepository.findByActiveProjectPageable(pageable1);
+						
+				}else if(ProgettoController.ordinaProgettoInListaProgetto.equals("menoRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").ascending());
+					returnString = progettoRepository.findByActiveProjectPageable(pageable1);
+						
+				}
+				
+			}
+		}
+		
+		//condizione filtri selezionati --> ORDINAMENTO e CLIENTE
+		if(ProgettoController.statoProgettoInListaProgetto.equals("") && !ProgettoController.ordinaProgettoInListaProgetto.equals("") 
+			&& ProgettoController.clienteIdProgettoInListaProgetto != -1) {
+					System.out.println("condizione filtri selezionati --> ORDINAMENTO e CLIENTE");
+			if(ProgettoController.ordinaProgettoInListaProgetto.equals("piuRecente")) {
+				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+				returnString = progettoRepository.findByClienteId(ProgettoController.clienteIdProgettoInListaProgetto, pageable1);
+						
+			} else if(ProgettoController.ordinaProgettoInListaProgetto.equals("menoRecente")) {
+				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").ascending());
+				returnString = progettoRepository.findByClienteId(ProgettoController.clienteIdProgettoInListaProgetto, pageable1);
+						
+			}
+		}
+		
+		//condizione filtri selezionati --> STATO e CLIENTE
+		if(!ProgettoController.statoProgettoInListaProgetto.equals("") && ProgettoController.ordinaProgettoInListaProgetto.equals("") 
+			&& ProgettoController.clienteIdProgettoInListaProgetto != -1) {
+					System.out.println("condizione filtri selezionati --> STATO e CLIENTE");
+			if(ProgettoController.statoProgettoInListaProgetto.equals("aperto")) {
+				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+				returnString = progettoRepository.findByClienteIdWhereProjectIsActive(ProgettoController.clienteIdProgettoInListaProgetto, pageable1);
+			}else if(ProgettoController.statoProgettoInListaProgetto.equals("chiuso")) {
+				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+				returnString = progettoRepository.findByClienteIdWhereProjectIsNotActive(ProgettoController.clienteIdProgettoInListaProgetto, pageable1);
+			}
+		}
+		
+		//condizione filtri selezionati --> STATO, ORDINAMENTO e CLIENTE
+		if(!ProgettoController.statoProgettoInListaProgetto.equals("") && !ProgettoController.ordinaProgettoInListaProgetto.equals("") 
+			&& ProgettoController.clienteIdProgettoInListaProgetto != -1) {
+					System.out.println("condizione filtri selezionati --> STATO, ORDINAMENTO e CLIENTE");
+			if(ProgettoController.statoProgettoInListaProgetto.equals("aperto")) {
+				if(ProgettoController.ordinaProgettoInListaProgetto.equals("piuRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+				returnString = progettoRepository.findByClienteIdWhereProjectIsActive(ProgettoController.clienteIdProgettoInListaProgetto, pageable1);
+				}else if(ProgettoController.ordinaProgettoInListaProgetto.equals("menoRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").ascending());
+				returnString = progettoRepository.findByClienteIdWhereProjectIsActive(ProgettoController.clienteIdProgettoInListaProgetto, pageable1);
+				}
+					
+			}else if(ProgettoController.statoProgettoInListaProgetto.equals("chiuso")) {
+				if(ProgettoController.ordinaProgettoInListaProgetto.equals("piuRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+				returnString = progettoRepository.findByClienteIdWhereProjectIsNotActive(ProgettoController.clienteIdProgettoInListaProgetto, pageable1);
+				}else if(ProgettoController.ordinaProgettoInListaProgetto.equals("menoRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").ascending());
+				returnString = progettoRepository.findByClienteIdWhereProjectIsNotActive(ProgettoController.clienteIdProgettoInListaProgetto, pageable1);
+				}
+				
+			}
+		}
 		
 		return returnString;
 		
@@ -93,6 +164,7 @@ public class ProgettoService {
 	public Page<Progetto> orderByClient(int pageNumber){
 	
 		Pageable pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").ascending());
+//		returnString viene personalizzato ogni volta a seconda dei filtri selezionati 
 		Page<Progetto> returnString = null;
 		returnString =  progettoRepository.findAll(pageable2);
 		
@@ -129,8 +201,78 @@ public class ProgettoService {
 		if(ProgettoController.statoProgettoInListaProgetto.equals("") && ProgettoController.ordinaProgettoInListaProgetto.equals("") 
 			&& ProgettoController.clienteIdProgettoInListaProgetto != -1) {
 			pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").descending());
-				returnString = progettoRepository.findByClienteId(ProgettoController.clienteIdProgettoInListaProgetto, pageable2);
+			returnString = progettoRepository.findByClienteId(ProgettoController.clienteIdProgettoInListaProgetto, pageable2);
 						System.out.println("returnString in ProgettoService: " + returnString);
+		}
+		
+		//condizione filtri selezionati --> STATO e ORDINAMENTO
+		if(!ProgettoController.statoProgettoInListaProgetto.equals("") && !ProgettoController.ordinaProgettoInListaProgetto.equals("") 
+			&& ProgettoController.clienteIdProgettoInListaProgetto == -1) {
+					System.out.println("condizione filtri selezionati --> STATO e ORDINAMENTO");
+			if(ProgettoController.statoProgettoInListaProgetto.equals("aperto")) {
+				if(ProgettoController.ordinaProgettoInListaProgetto.equals("piuRecente")) {
+					pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").descending());
+					returnString = progettoRepository.findByActiveProjectPageable(pageable2);
+						System.out.println("returnString in ProgettoService: " + returnString);
+				}else if(ProgettoController.ordinaProgettoInListaProgetto.equals("menoRecente")) {
+					pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").ascending());
+					returnString = progettoRepository.findByActiveProjectPageable(pageable2);
+						System.out.println("returnString in ProgettoService: " + returnString);
+				}
+				
+			}
+		}
+		
+		//condizione filtri selezionati --> ORDINAMENTO e CLIENTE
+		if(ProgettoController.statoProgettoInListaProgetto.equals("") && !ProgettoController.ordinaProgettoInListaProgetto.equals("") 
+			&& ProgettoController.clienteIdProgettoInListaProgetto != -1) {
+					System.out.println("condizione filtri selezionati --> ORDINAMENTO e CLIENTE");
+			if(ProgettoController.ordinaProgettoInListaProgetto.equals("piuRecente")) {
+				pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").descending());
+				returnString = progettoRepository.findByClienteId(ProgettoController.clienteIdProgettoInListaProgetto, pageable2);
+						
+			} else if(ProgettoController.ordinaProgettoInListaProgetto.equals("menoRecente")) {
+				pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").ascending());
+				returnString = progettoRepository.findByClienteId(ProgettoController.clienteIdProgettoInListaProgetto, pageable2);
+						
+			}
+		}
+		
+		//condizione filtri selezionati --> STATO e CLIENTE
+		if(!ProgettoController.statoProgettoInListaProgetto.equals("") && ProgettoController.ordinaProgettoInListaProgetto.equals("") 
+			&& ProgettoController.clienteIdProgettoInListaProgetto != -1) {
+					System.out.println("condizione filtri selezionati --> STATO e CLIENTE");
+			if(ProgettoController.statoProgettoInListaProgetto.equals("aperto")) {
+				pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").descending());
+				returnString = progettoRepository.findByClienteIdWhereProjectIsActive(ProgettoController.clienteIdProgettoInListaProgetto, pageable2);
+			}else if(ProgettoController.statoProgettoInListaProgetto.equals("chiuso")) {
+				pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").descending());
+				returnString = progettoRepository.findByClienteIdWhereProjectIsNotActive(ProgettoController.clienteIdProgettoInListaProgetto, pageable2);
+			}
+		}
+		
+		//condizione filtri selezionati --> STATO, ORDINAMENTO e CLIENTE
+		if(!ProgettoController.statoProgettoInListaProgetto.equals("") && !ProgettoController.ordinaProgettoInListaProgetto.equals("") 
+			&& ProgettoController.clienteIdProgettoInListaProgetto != -1) {
+					System.out.println("condizione filtri selezionati --> STATO, ORDINAMENTO e CLIENTE");
+			if(ProgettoController.statoProgettoInListaProgetto.equals("aperto")) {
+				if(ProgettoController.ordinaProgettoInListaProgetto.equals("piuRecente")) {
+					pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").descending());
+					returnString = progettoRepository.findByClienteIdWhereProjectIsActive(ProgettoController.clienteIdProgettoInListaProgetto, pageable2);
+				}else if(ProgettoController.ordinaProgettoInListaProgetto.equals("menoRecente")) {
+					pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").ascending());
+					returnString = progettoRepository.findByClienteIdWhereProjectIsActive(ProgettoController.clienteIdProgettoInListaProgetto, pageable2);
+				}
+					
+			}else if(ProgettoController.statoProgettoInListaProgetto.equals("chiuso")) {
+				if(ProgettoController.ordinaProgettoInListaProgetto.equals("piuRecente")) {
+					pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").descending());
+				returnString = progettoRepository.findByClienteIdWhereProjectIsNotActive(ProgettoController.clienteIdProgettoInListaProgetto, pageable2);
+				}else if(ProgettoController.ordinaProgettoInListaProgetto.equals("menoRecente")) {
+					pageable2 = PageRequest.of(pageNumber -1, 12, Sort.by("cliente.labelCliente").ascending());
+				returnString = progettoRepository.findByClienteIdWhereProjectIsNotActive(ProgettoController.clienteIdProgettoInListaProgetto, pageable2);
+				}
+			}
 		}
 		
 		return returnString;
@@ -296,37 +438,36 @@ public class ProgettoService {
 			//metodo che genera la stringa dei filtri applicati da far vedere all'utente in lista progetti
 			public void stringaFiltriInListaProgetti(Model model) {
 				
-				String stringaFiltri = null;
-//				if(ProgettoController.statoProgettoInListaProgetto != null || ProgettoController.ordinaProgettoInListaProgetto != null && ProgettoController.clienteIdProgettoInListaProgetto != -1) {
-//					String statoProgetto = "";
-//					String ordinamentoProgetto = "";
-//					String nomeCliente = ""; 
-//					
-//					if(ProgettoController.statoProgettoInListaProgetto.equals("aperto")) {
-//						statoProgetto = "- stato progetto APERTO";
-//					}else if(ProgettoController.statoProgettoInListaProgetto.equals("chiuso")) {
-//						statoProgetto = "- stato progetto CHIUSO";
-//					}
+				//inizializzo le tre stringhe che poi verranno passate al model e utilizzate da javascript per riempire la lista dei filtri applicati
+				String statoProgetto = null;
+				String ordinamentoProgetto = null;
+				String nomeCliente = null; 
+				if(ProgettoController.statoProgettoInListaProgetto != null || ProgettoController.ordinaProgettoInListaProgetto != null && ProgettoController.clienteIdProgettoInListaProgetto != -1) {
 					
-//					if(ProgettoController.ordinaProgettoInListaProgetto.equals("piuRecente")) {
-//						ordinamentoProgetto = "- ordinamento dal progetto più recente";
-//						
-//					}else if(ProgettoController.ordinaProgettoInListaProgetto.equals("menoRecente")) {
-//						ordinamentoProgetto = "- ordinamento dal progetto meno recente";
-//					}
-//					
-//					if(ProgettoController.clienteIdProgettoInListaProgetto != null) {
-//						
-//						Integer idClienteSelezionato = ProgettoController.clienteIdProgettoInListaProgetto;
-//						nomeCliente ="- cliente " + clienteRepository.findById(idClienteSelezionato).get().getLabelCliente();
-//					}
-//					
-//					
-//					//riempe la stringa da mostrare con le stringhe di statoProgetto, Ordinamento e Cliente che se vuote sono "" altrimenti contengono testo
-//					stringaFiltri = "Elenco filtrato per: " + statoProgetto + ordinamentoProgetto  + nomeCliente + "."; 
-//				}
+					if(ProgettoController.statoProgettoInListaProgetto.equals("aperto")) {
+						statoProgetto = "APERTO";
+					}else if(ProgettoController.statoProgettoInListaProgetto.equals("chiuso")) {
+						statoProgetto = "CHIUSO";
+					}
+					
+					if(ProgettoController.ordinaProgettoInListaProgetto.equals("piuRecente")) {
+						ordinamentoProgetto = "più recente";
+						
+					}else if(ProgettoController.ordinaProgettoInListaProgetto.equals("menoRecente")) {
+						ordinamentoProgetto = "meno recente";
+					}
+					
+					if(ProgettoController.clienteIdProgettoInListaProgetto != -1) {
+						
+						Integer idClienteSelezionato = ProgettoController.clienteIdProgettoInListaProgetto;
+						nomeCliente = clienteRepository.findById(idClienteSelezionato).get().getLabelCliente();
+					}
+					
+				}
 				
-				model.addAttribute("stringaFiltri", stringaFiltri);
+				model.addAttribute("filtroStatoProgetto", statoProgetto);
+				model.addAttribute("filtroOrdinamentoProgetto", ordinamentoProgetto);
+				model.addAttribute("filtroNomeCliente", nomeCliente);
 				
 			}
 	

@@ -453,7 +453,7 @@
 						</div>
 					
 						<div th:if="${searchMode == true}" class="p-10 text-center" th:text="|Risultati per --> '${inputInserito}'|"></div>
-						<div th:if="${filtriAttiviInListaProgetto == true}" class="p-10 text-center" th:text="${stringaFiltri}"></div>
+						<div th:if="${filtriAttiviInListaProgetto == true}" class="p-10 text-center" id="stringaFiltri"></div>
 					
 						<!------------------ card per data     --------------------->
 						<div id="list-data-inizio" class="">
@@ -1473,6 +1473,9 @@
 		let endPoint = /*[[${endPoint}]]*/ null;
 		let contatoreAttivatoDaRapidButton = /*[[${contatoreAttivatoDaRapidButton}]]*/null; //boolean
 		let descrizioneTaskId = null; 
+		let filtroStatoProgetto = /*[[${filtroStatoProgetto}]]*/ null;
+		let filtroOrdinamentoProgetto = /*[[${filtroOrdinamentoProgetto}]]*/ null;
+		let filtroNomeCliente = /*[[${filtroNomeCliente}]]*/ null;
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>

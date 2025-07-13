@@ -1,6 +1,101 @@
 
 console.log("sono in lista-progetti.js")
 
+
+//********************** inserimento lista filtri se applicati  *******************************/
+
+const stringaFiltri = document.getElementById('stringaFiltri');
+console.log("filtroStatoProgetto: " + filtroStatoProgetto);
+console.log("filtroOrdinamentoProgetto: " + filtroOrdinamentoProgetto);
+console.log("filtroNomeCliente: " + filtroNomeCliente);
+if(stringaFiltri != null){
+		if(filtroStatoProgetto != null && filtroOrdinamentoProgetto != null && filtroNomeCliente != null){
+				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+												<div class="col col-span-2 text-start">
+													<ul class="ps-4">
+														<li>- stato progetto <strong>${filtroStatoProgetto}</strong></li>
+														<li>- ordinamento dal progetto <strong>${filtroOrdinamentoProgetto}</strong></li>
+														<li>- cliente <strong>${filtroNomeCliente}</strong></li>
+											   		</ul>
+												</div>
+										   </div>`
+		}
+	
+			
+		if(filtroStatoProgetto == null && filtroOrdinamentoProgetto != null && filtroNomeCliente != null){
+			stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+											<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+											<div class="col col-span-2 text-start">
+												<ul class="ps-4">
+													<li>- ordinamento dal progetto <strong>${filtroOrdinamentoProgetto}</strong></li>
+													<li>- cliente <strong>${filtroNomeCliente}</strong></li>
+										   		</ul>
+											</div>
+									   </div>`
+		}
+			
+		if(filtroStatoProgetto != null && filtroOrdinamentoProgetto == null && filtroNomeCliente != null){
+			stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+											<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+												<div class="col col-span-2 text-start">
+													<ul class="ps-4">
+														<li>- stato progetto <strong>${filtroStatoProgetto}</strong></li>
+														<li>- cliente <strong>${filtroNomeCliente}</strong></li>
+											   		</ul>
+												</div>
+									   </div>`
+		}
+
+		if(filtroStatoProgetto != null && filtroOrdinamentoProgetto != null && filtroNomeCliente == null){
+			stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+											<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+												<div class="col col-span-2 text-start">
+													<ul class="ps-4">
+														<li>- stato progetto <strong>${filtroStatoProgetto}</strong></li>
+														<li>- ordinamento dal progetto <strong>${filtroOrdinamentoProgetto}</strong></li>
+											   		</ul>
+												</div>
+										   </div>`			
+		}
+		
+		if(filtroStatoProgetto != null && filtroOrdinamentoProgetto == null && filtroNomeCliente == null){
+			stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+											<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+												<div class="col col-span-2 text-start">
+													<ul class="ps-4">
+														<li>- stato progetto <strong>${filtroStatoProgetto}</strong></li>
+											   		</ul>
+												</div>
+										   </div>`			
+		}
+		
+		if(filtroStatoProgetto == null && filtroOrdinamentoProgetto != null && filtroNomeCliente == null){
+			stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+											<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+												<div class="col col-span-2 text-start">
+													<ul class="ps-4">
+														<li>- ordinamento dal progetto <strong>${filtroOrdinamentoProgetto}</strong></li>
+											   		</ul>
+												</div>
+										   </div>`			
+		}
+		
+		if(filtroStatoProgetto == null && filtroOrdinamentoProgetto == null && filtroNomeCliente != null){
+			stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+											<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+												<div class="col col-span-2 text-start">
+													<ul class="ps-4">
+														<li>- cliente <strong>${filtroNomeCliente}</strong></li>
+											   		</ul>
+												</div>
+										   </div>`			
+		}
+}
+
+
+
+
 //************** funzioni per lista progetti ordinati per cliente o datainizio *********************************
 
 // recupero elementi DOM per lista progetti ordinati per cliente o datainizio
@@ -92,3 +187,6 @@ function mostraFiltri(){
 		}
 	}
 }
+
+
+

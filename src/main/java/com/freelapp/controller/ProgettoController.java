@@ -86,11 +86,7 @@ public class ProgettoController {
 	
 			@GetMapping("/Progetti")
 			public String listaProgetti(Model model) {
-				
-				System.out.println("statoProgettoInListaProgetto: " + statoProgettoInListaProgetto);
-				System.out.println("ordinaProgettoInListaProgetto: " + ordinaProgettoInListaProgetto);
-				System.out.println("clienteIdProgettoInListaProgetto: " + clienteIdProgettoInListaProgetto);
-				
+					
 				//essendo fuori dalla modalità search reinizializzo la varibile
 				searchMode = false;
 				
@@ -104,7 +100,7 @@ public class ProgettoController {
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
 				model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
 				model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaProgetto);
-				System.out.println("filtriAttiviInListaProgetto: " + filtriAttiviInListaProgetto);
+				
 				
 				//metodo del serviceProgetto che passa al model la stringa per indicare all'utente i filtri selezionati
 				progettoService.stringaFiltriInListaProgetti(model);
