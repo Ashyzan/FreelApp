@@ -1,6 +1,7 @@
 package com.freelapp.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -271,13 +272,20 @@ public class FreelappRestController {
 
 			Progetto progetto = progettoRepository.getReferenceById(id);
             
+			List <Task> elencoTask = progetto.getElencoTask();
+			
+			for(Task singoloTask : elencoTask) {
+				Long finaltime = singoloTask.getContatore().getFinaltime();
+				
+//				Long massimo = finaltime; // Inizializza il massimo con il primo elemento
+
 
 			JSONObject progettoJsonObj = new JSONObject();
 			progettoJsonObj.put("uno", 66);
 			progettoJsonObj.put("due", 12);
 			progettoJsonObj.put("tre", 23);
 
-			System.out.println("HOLA HOLA SONO NEL JSON OBJ DEL PROGETTO STSTITICHE");
+			
 			return progettoJsonObj;
 					
 		}

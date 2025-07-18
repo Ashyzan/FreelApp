@@ -86,7 +86,7 @@ async function getDataJsonProgetto() {
 		const data = {
 		  labels: labels,
 		  datasets: [{
-		    label: 'My First Dataset',
+		    label: 'I task del progetto',
 		    data: [json.uno, json.due, json.tre],
 		    backgroundColor: [
 		      'rgba(255, 99, 132, 0.2)',
