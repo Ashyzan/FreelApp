@@ -273,9 +273,9 @@ public class FreelappRestController {
             
 
 			JSONObject progettoJsonObj = new JSONObject();
-			progettoJsonObj.put("uno", 1);
-			progettoJsonObj.put("due", 2);
-			progettoJsonObj.put("tre", 3);
+			progettoJsonObj.put("uno", 66);
+			progettoJsonObj.put("due", 12);
+			progettoJsonObj.put("tre", 23);
 
 			System.out.println("HOLA HOLA SONO NEL JSON OBJ DEL PROGETTO STSTITICHE");
 			return progettoJsonObj;

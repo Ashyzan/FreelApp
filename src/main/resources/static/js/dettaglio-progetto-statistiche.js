@@ -30,20 +30,20 @@ function mostraDescrizioneRidotta(){
 
 
 /*grafico*/
-const boundaries = document.getElementById('boundaries');
+
 const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
+  'Gen',
+  'Feb',
+  'Mar',
+  'Apr',
+  'Mag',
+  'Giu',
+  'Lug',
+  'Ago',
+  'Set',
+  'Ott',
+  'Nov',
+  'Dic'
 ];
 
 const CHART_COLORS = {
@@ -66,21 +66,6 @@ const NAMED_COLORS = [
   CHART_COLORS.grey,
 ];
 
-/* setup */
-const inputs = {
-  min: 0,
-  max: 100,
-  count: 12,
-  decimals: 2,
-  continuity: 1
-};
-
-const generateLabels = () => {
-  return MONTHS;
-};
-
-const generateData = () => (inputs);
-
 
 async function getDataJsonProgetto() {
   const url_apiStatisticheProgetto = '/api/statistiche-dettaglio-progetto/' + progettoId;
@@ -92,49 +77,57 @@ async function getDataJsonProgetto() {
     }
 
     const json = await response.json();
-    console.log(json);
+    console.log("STAMPO json" + json);
 	
+	console.log("STAMPO json 1 = " + json.uno);
 	
-	/*config*/
-	const config = (boundaries , {
-	  type: 'line',
-	  data: [json.uno, json.due, json.tre],
-	  options: {
-	    plugins: {
-	      filler: {
-	        propagate: false,
-	      },
-	      title: {
-	        display: true,
-	        text: (ctx) => 'Fill: ' + ctx.chart.data.datasets[0].fill
-	      }
-	    },
-	    interaction: {
-	      intersect: false,
-	    }
-	  },
-	});
-	console.log(config);
 	/* data */
-	const data = {
-	  labels: generateLabels(),
-	  datasets: [
-	    {
-	      label: 'Task',
-	      data: generateData(),
-	      borderColor: CHART_COLORS.red,
-	      backgroundColor: (CHART_COLORS.yellow),
-	      fill: true
-	    }
-	  ]
-	};
-	console.log(data);
+		const labels = [1, 2, 3, 4, 5, 6, 7];
+		const data = {
+		  labels: labels,
+		  datasets: [{
+		    label: 'My First Dataset',
+		    data: [json.uno, json.due, json.tre],
+		    backgroundColor: [
+		      'rgba(255, 99, 132, 0.2)',
+		      'rgba(255, 159, 64, 0.2)',
+		      'rgba(255, 205, 86, 0.2)',
+		      'rgba(75, 192, 192, 0.2)',
+		      'rgba(54, 162, 235, 0.2)',
+		      'rgba(153, 102, 255, 0.2)',
+		      'rgba(201, 203, 207, 0.2)'
+		    ],
+		    borderColor: [
+		      'rgb(255, 99, 132)',
+		      'rgb(255, 159, 64)',
+		      'rgb(255, 205, 86)',
+		      'rgb(75, 192, 192)',
+		      'rgb(54, 162, 235)',
+		      'rgb(153, 102, 255)',
+		      'rgb(201, 203, 207)'
+		    ],
+		    borderWidth: 1
+		  }]
+		};
 
-	
-	
-	
+
+new Chart ( 
+	document.getElementById('boundaries'),
+	{
+		  type: 'bar',
+		  data: data,
+		  options: {
+		    scales: {
+		      y: {
+		        beginAtZero: true
+		      }
+		    }
+		  },
+		});
+
   } catch (error) {
     console.error(error.message);
+	
   }
 }
 
