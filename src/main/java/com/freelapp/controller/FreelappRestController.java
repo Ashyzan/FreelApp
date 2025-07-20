@@ -274,21 +274,25 @@ public class FreelappRestController {
             
 			List <Task> elencoTask = progetto.getElencoTask();
 			
+			JSONObject progettoJsonObj = new JSONObject();
 			for(Task singoloTask : elencoTask) {
 				Long finaltime = singoloTask.getContatore().getFinaltime();
 				
 //				Long massimo = finaltime; // Inizializza il massimo con il primo elemento
 
 
-			JSONObject progettoJsonObj = new JSONObject();
 			progettoJsonObj.put("uno", 66);
 			progettoJsonObj.put("due", 12);
 			progettoJsonObj.put("tre", 23);
 
 			
-			return progettoJsonObj;
 					
 		}
+			return progettoJsonObj;
 	
 
+		}
 }
+
+
+
