@@ -1,6 +1,7 @@
 package com.freelapp.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -273,21 +274,37 @@ public class FreelappRestController {
 			Progetto progetto = progettoRepository.getReferenceById(id);
             
 			List <Task> elencoTask = progetto.getElencoTask();
+			List <Long> finalTimeArray = new ArrayList <Long>();
 			
 			JSONObject progettoJsonObj = new JSONObject();
+			
+			// ordino i finaltime ascendente
 			for(Task singoloTask : elencoTask) {
 				Long finaltime = singoloTask.getContatore().getFinaltime();
+				finalTimeArray.add(finaltime);
+				Collections.sort(finalTimeArray);
+				}
+			
+//			Long massimo = finalTimeArray.getFirst();
+//			massimo = 100l;
+			
+			for(Long elemento : finalTimeArray) {
 				
-//				Long massimo = finaltime; // Inizializza il massimo con il primo elemento
-
-
-			progettoJsonObj.put("uno", 66);
+				Long firstElement = finalTimeArray.get(0);
+				
+				Long percentage = elemento / 100 * firstElement;
+				
+				System.out.println("PERCENTAGE *************************" + percentage);
+				
+			}
+			
+			
+			
+			
+            
+			progettoJsonObj.put("uno", 100);
 			progettoJsonObj.put("due", 12);
 			progettoJsonObj.put("tre", 23);
-
-			
-					
-		}
 			return progettoJsonObj;
 	
 

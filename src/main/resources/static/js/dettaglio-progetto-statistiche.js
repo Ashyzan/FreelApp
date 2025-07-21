@@ -86,6 +86,7 @@ async function getDataJsonProgetto() {
 		const data = {
 		  labels: labels,
 		  datasets: [{
+			barPercentage: 1,
 		    label: 'I task del progetto',
 		    data: [json.uno, json.due, json.tre],
 		    backgroundColor: [
@@ -117,12 +118,22 @@ new Chart (
 		  type: 'bar',
 		  data: data,
 		  options: {
-		    scales: {
-		      y: {
-		        beginAtZero: true
-		      }
-		    }
-		  },
+		          scales: {
+		              
+		              yAxes: [{
+		              ticks: {
+		              
+		                     min: 0,
+		                     max: 100,
+		                     callback: function(value){return value+ "%"}
+		                  },  
+		  								scaleLabel: {
+		                     display: true,
+		                     labelString: "Percentage"
+		                  }
+		              }]
+		          }
+		      },
 		});
 
   } catch (error) {
