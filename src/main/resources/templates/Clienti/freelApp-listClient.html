@@ -309,29 +309,107 @@
 			<div id="main-section"
 				class="flex w-full flex-wrap h-full justify-center items-center overflow-y-auto">
 				<div th:if="${areClientsOnDb == true}" class="flex flex-col-reverse md:flex-col w-11/12 2xl:w-4/5">
-					<section>
+					<section class="flex flex-col">
 						<div
 							class="h-12 text-center text-[#0057A5] font-bold items-center mt-3">
 							<h1 class="mt-3 text-xl">ELENCO CLIENTI</h1>
 						</div>
 
 						<!-- 		        RICERCA CLIENTE -->
-						<div class="">
-							<div class="text-center mb-5">
-								<form class="mx-auto w-50" role="search" method="get"
-									th:object="${Cliente}" th:action="@{/cliente-search}">
-									<input type="text"
-										class="border-2 border-[#0057A5] p-1 my-3 rounded-md"
-										name="input" placeholder="Ricerca cliente..."
-										aria-label="Search">
-									<button
-										class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
-										type="submit">Search</button>
-									<a
-										class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-2 rounded-[35px]"
-										th:href="@{/Clienti}">Annulla</a>
+						<div id="sezione-filtri-e-ricerca"
+							class="m-auto flex flex-col justify-center">
+								<div id="sezione-ricerca" class="text-center">
+									<form class="flex max-sm:flex-col max-xs:justify-center items-center mx-auto w-50" role="search" method="get"
+										th:object="${Cliente}" th:action="@{/cliente-search}">
+										<a th:if="${searchMode == true}" th:href="@{/Clienti}">
+												<img class="rounded-[35px] hover:bg-[#FFE541] size-10" src="/img/sources/icons/arrow-left-blue.svg">
+										</a>
+										<input type="text" class="border-2 border-[#0057A5] p-1 m-2 rounded-md" name="input"
+											placeholder="Ricerca clienti..." aria-label="Search">
+										<div>
+											<button
+												class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+												type="submit">Search</button>
+										</div>
+									</form>
+								</div>
+							<div class="md:flex md:flex-row md:items-center md:gap-3 md:justify-center">
+								<div th:if="${filtriAttiviInListaProgetto == false}">
+									<div class="p-4 flex items-center justify-center">
+										<span id="filtra-per-button" class="text-[#0057A5] max-sm:mb-4">Filtra e ordina per</span>
+										<button onclick="mostraFiltri()"><img id="img-filtra-per" src="/img/sources/icons/arrow-down.svg" class="inline size-8 mx-3"></button>
+									</div>									
+								</div>
+								<div th:if="${filtriAttiviInListaProgetto == true}">
+									<form th:action="@{/progetto-list-filtri/reset}" method="post">
+										<button type="submit"
+											class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Resetta filtri
+										</button>										
+									</form>
+								</div>
+							</div>
+							<div id="tabella-filtri-mobile" class="hidden bg-white shadow-sm shadow-[#0057A5] rounded-xl w-full">
+								<form class="max-xs:p-1 sm:p-4"
+										method="post" th:action="@{/progetto-list-filtri}">
+									<fieldset id="ordina-per-asc-desc" class="text-[#0057A5] mb-4">
+										<div class="grid grid-cols-3">
+											<legend class="col-span-1 font-bold me-4">Ordina per</legend>
+											<div class="col-span-1">
+												<input type="radio" id="dataModificaProgetto" name="dataOrdinamentoProgetto" value="dataModificaProgetto"
+													onclick="visualizzaordinamentoListaPiuMenoRecenteMobile()">
+												<label for="piuRecente">Data di modifca</label>
+											</div>
+											<div class="col-span-1">
+												<input type="radio" id="dataCreazioneProgetto" name="dataOrdinamentoProgetto" value="dataCreazioneProgetto"
+													onclick="visualizzaordinamentoListaPiuMenoRecenteMobile()">
+												<label for="menoRecente">Data di crezione</label>
+											</div>
+										</div>
+										<div id="ordinamentoListaPiuMenoRecenteMobile" class="grid grid-cols-3 hidden mb-2">
+											<div class="col-span-1"></div>
+											<div class="col-span-1">
+												<input type="radio" id="piuRecente" name="ordinaProgetto" value="piuRecente">
+												<label for="piuRecente">Più recente</label>
+											</div>
+											<div class="col-span-1">
+												<input type="radio" id="menoRecente" name="ordinaProgetto" value="menoRecente">
+												<label for="menoRecente">Meno recente</label>
+											</div>
+										</div>
+									</fieldset>
+									<fieldset class="text-[#0057A5] mb-4">
+										<div class="grid grid-cols-3">
+											<legend class="col-span-1 font-bold me-4 flex items-center">Filtra per cliente</legend>
+											<div class="col-span-2">
+												<select class="border-red-600 h-8  text-[#0057A5] rounded-lg bg-gray-100
+														block w-full  px-4 focus:outline-none" name="clienteId">
+													<option value="">Seleziona cliente</option>
+													<option th:each="cliente : ${listaClienti}" th:value="${cliente.id}" th:text="${cliente.getLabelCliente()}"></option>
+												</select>
+											</div>
+										</div>
+									</fieldset>
+									<fieldset id="ordina-per-stato" class="text-[#0057A5]">
+										<div class="grid grid-cols-3">
+											<legend class="col-span-1 font-bold me-4">Stato progetto</legend>
+											<div class="col-span-1 max-xs:ps-[0] max-sm:ps-6">
+												<input type="radio" id="aperto" name="statoProgetto" value="aperto">
+												<label for="aperto">Aperto</label>
+											</div>
+											<div class="col-span-1">
+												<input type="radio" id="chiuso" name="statoProgetto" value="chiuso">
+												<label for="chiuso">Chiuso</label>
+											</div>
+										</div>
+									</fieldset>
+									<div class="text-center m-4">
+										<button type="submit"
+											class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Applica
+											filtri</button>
+									</div>
 								</form>
 							</div>
+							
 						</div>
 
 						<div th:if="${searchMode == true}" class="p-6 text-center" 
