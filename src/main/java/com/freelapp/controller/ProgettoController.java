@@ -110,7 +110,7 @@ public class ProgettoController {
 				ContatoreController.contatoreAttivatoDaRapidButton = false;
 				
 				//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
-				model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
+//				model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
 //				model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
 				
 				//invio al model il booleano del contatore attivato
@@ -127,7 +127,7 @@ public class ProgettoController {
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
 				
-				//passa al model la lista dei clienti 
+				//passa al model la lista dei clienti utilizzata nei filtri
 				List<Cliente> listaClienti = new ArrayList<Cliente>();
 				listaClienti = repositClient.findAll();
 				model.addAttribute("listaClienti", listaClienti);
@@ -171,6 +171,10 @@ public class ProgettoController {
 					model.addAttribute("totalPageByDataModifica", totalPageByDataModifica);					
 					model.addAttribute("totalItemByDataModifica", totalItemByDataModifica);
 					
+					//metodo del serviceProgetto che passa al model la stringa per indicare all'utente i filtri selezionati
+					progettoService.stringaFiltriInListaProgetti(model);
+		
+					
 					contatoreservice.importContatoreInGet(model);
 					
 					//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
@@ -187,6 +191,7 @@ public class ProgettoController {
 					model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 					model.addAttribute("taskInUso", ContatoreController.taskInUso);
 					model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+					model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaProgetto);
 		
 					//inizializzo a false così al reload successivo js non genera i tasti del contatore
 					ContatoreController.contatoreAttivatoDaRapidButton = false;
@@ -207,6 +212,11 @@ public class ProgettoController {
 					
 					//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 					taskService.informationFromTaskInUsoToModel(model);
+					
+					//passa al model la lista dei clienti utilizzata nei filtri
+					List<Cliente> listaClienti = new ArrayList<Cliente>();
+					listaClienti = repositClient.findAll();
+					model.addAttribute("listaClienti", listaClienti);
 					
 					//passa al model la lista di tutti i task esclusi quelli chiusi
 					List<Task> taskList = new ArrayList<Task> ();
@@ -235,6 +245,7 @@ public class ProgettoController {
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
 				model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+				
 		
 				//inizializzo a false così al reload successivo js non genera i tasti del contatore
 				ContatoreController.contatoreAttivatoDaRapidButton = false;
