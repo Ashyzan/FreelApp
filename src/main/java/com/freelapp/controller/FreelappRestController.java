@@ -2,6 +2,7 @@ package com.freelapp.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -194,7 +195,7 @@ public class FreelappRestController {
 
 	}
 
-// *********************** API PER STATISTICHE **************************
+	// *********************** API PER STATISTICHE **************************
 
 	// api che ritorna json con statistiche dettaglio task
 	@GetMapping("/statistiche-dettaglio-task/{id}")
@@ -263,42 +264,47 @@ public class FreelappRestController {
 	}
 
 	// api che ritorna json con statistiche dettaglio progetto
-	@GetMapping("/statistiche-dettaglio-progetto/{id}") 
-		public JSONObject ProgettoJson(@PathVariable("id") Integer id) throws InterruptedException{
-					
-			//aggiunto ritardo di 200ms nell'esecuzione dell'api per permettere al db di aggiornarsi e di poter aggiornare correttamente i dati statistici
-			Thread.sleep(200);
+	@GetMapping("/statistiche-dettaglio-progetto/{id}")
+	public JSONObject ProgettoJson(@PathVariable("id") Integer id) throws InterruptedException {
 
-			Progetto progetto = progettoRepository.getReferenceById(id);
-			List <Task> elencoTask = progetto.getElencoTask();
-			List <Long> finalTimeArray = new ArrayList <Long>();
-			List <Long> percentageValues = new ArrayList <Long>();
-			JSONObject progettoJsonObj = new JSONObject();
-			
-			// ordino i finaltime ascendente
-			for(Task singoloTask : elencoTask) {
-				Long finaltime = singoloTask.getContatore().getFinaltime();
-				finalTimeArray.add(finaltime);
-				Collections.sort(finalTimeArray, Collections.reverseOrder());
-				}
-		//	System.out.println("finaltime array sort *************************" + finalTimeArray);
+		// aggiunto ritardo di 200ms nell'esecuzione dell'api per permettere al db di
+		// aggiornarsi e di poter aggiornare correttamente i dati statistici
+		Thread.sleep(200);
 
-			Long firstElement = finalTimeArray.get(0);
-			Long secondElement = finalTimeArray.get(1);
-			
-			percentageValues.add(100l);
-			
-			for (int i = 1; i < finalTimeArray.size(); i++) { 
-				Long percentageElement =   firstElement / secondElement ;
-				percentageValues.add(percentageElement);
-				//System.out.println("PERCENTAGE *************************" + "elemento " + i + " . firstelement " + firstElement + "secondElement = " + secondElement);
-				
-			}
-		
-			progettoJsonObj.put("valori", "percentageValues");
-	//		System.out.println("VALORI *************************" + percentageValues);
-			return progettoJsonObj;
-	
+		Progetto progetto = progettoRepository.getReferenceById(id);
+		List<Task> elencoTask = progetto.getElencoTask();
+		List<Long> finalTimeArray = new ArrayList<Long>();
+		List<Long> percentageValues = new ArrayList<Long>();
+		JSONObject progettoJsonObj = new JSONObject();
+
+		// creo un array con i finaltime dei vari task
+		for (Task singoloTask : elencoTask) {
+			Long finaltime = singoloTask.getContatore().getFinaltime();
+			finalTimeArray.add(finaltime);
 
 		}
+		
+		// copia backup dell'array
+		List<Long> finalTimeArrayOriginal = new ArrayList<>(finalTimeArray);
+		   
+		// eseguo il sort per individuare il massimo alla posizone n. 1   
+		Collections.sort(finalTimeArray, Collections.reverseOrder());
+		Long massimo = finalTimeArray.get(0);
+
+
+		// ripristino l'array con le posizioni originali
+		finalTimeArray = new ArrayList<>(finalTimeArrayOriginal);
+		   
+		// calcolo le percentuali
+		for (Long finaltimeSingolo : finalTimeArray) {
+			Long percentageElement = (finaltimeSingolo * 100) / massimo;
+			
+			percentageValues.add(percentageElement);
+			
+		}
+
+		progettoJsonObj.put("valori", percentageValues);
+		return progettoJsonObj;
+
+	}
 }

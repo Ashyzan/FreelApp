@@ -77,9 +77,8 @@ async function getDataJsonProgetto() {
     }
 
     const json = await response.json();
-    console.log("STAMPO json" + json);
 	
-	console.log("STAMPO json 1 = " + json.uno);
+	console.log("json.valori " + json.valori);
 	
 	/* data */
 		const labels = [1, 2, 3, 4, 5, 6, 7];
@@ -88,7 +87,7 @@ async function getDataJsonProgetto() {
 		  datasets: [{
 			barPercentage: 1,
 		    label: 'I task del progetto',
-		    data: [json.valori],
+		    data: json.valori,
 		    backgroundColor: [
 		      'rgba(255, 99, 132, 0.2)',
 		      'rgba(255, 159, 64, 0.2)',
@@ -118,21 +117,21 @@ new Chart (
 		  type: 'bar',
 		  data: data,
 		  options: {
-		          scales: {
-		              
-		              yAxes: [{
-		              ticks: {
-		              
-		                     min: 0,
-		                     max: 100,
-		                     callback: function(value){return value+ "%"}
-		                  },  
-		  								scaleLabel: {
-		                     display: true,
-		                     labelString: "Percentage"
-		                  }
-		              }]
-		          }
+//		          scales: {
+//		              
+//		              yAxes: [{
+//		              ticks: {
+//		              
+//		                     min: 0,
+//		                     max: 100,
+//		                     callback: function(value){return value+ "%"}
+//		                  },  
+//		  								scaleLabel: {
+//		                     display: true,
+//		                     labelString: "Percentage"
+//		                  }
+//		              }]
+//		          }
 		      },
 		});
 
