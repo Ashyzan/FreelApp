@@ -277,32 +277,34 @@ public class FreelappRestController {
 		List<Long> percentageValues = new ArrayList<Long>();
 		JSONObject progettoJsonObj = new JSONObject();
 
-		// creo un array con i finaltime dei vari task
-		for (Task singoloTask : elencoTask) {
-			Long finaltime = singoloTask.getContatore().getFinaltime();
-			finalTimeArray.add(finaltime);
-
-		}
-		
-		// copia backup dell'array
-		List<Long> finalTimeArrayOriginal = new ArrayList<>(finalTimeArray);
-		   
-		// eseguo il sort per individuare il massimo alla posizone n. 1   
-		Collections.sort(finalTimeArray, Collections.reverseOrder());
-		Long massimo = finalTimeArray.get(0);
-
-
-		// ripristino l'array con le posizioni originali
-		finalTimeArray = new ArrayList<>(finalTimeArrayOriginal);
-		   
-		// calcolo le percentuali
-		for (Long finaltimeSingolo : finalTimeArray) {
-			Long percentageElement = (finaltimeSingolo * 100) / massimo;
+		if(progetto.getElencoTask().size() != 0) {
 			
-			percentageValues.add(percentageElement);
+					// creo un array con i finaltime dei vari task
+					for (Task singoloTask : elencoTask) {
+						Long finaltime = singoloTask.getContatore().getFinaltime();
+						finalTimeArray.add(finaltime);
 			
+					}
+					
+					// copia backup dell'array
+					List<Long> finalTimeArrayOriginal = new ArrayList<>(finalTimeArray);
+					   
+					// eseguo il sort per individuare il massimo alla posizone n. 1   
+					Collections.sort(finalTimeArray, Collections.reverseOrder());
+					Long massimo = finalTimeArray.get(0);
+			
+			
+					// ripristino l'array con le posizioni originali
+					finalTimeArray = new ArrayList<>(finalTimeArrayOriginal);
+					   
+					// calcolo le percentuali
+					for (Long finaltimeSingolo : finalTimeArray) {
+						Long percentageElement = (finaltimeSingolo * 100) / massimo;
+						
+						percentageValues.add(percentageElement);
+						
+					}
 		}
-
 		progettoJsonObj.put("valori", percentageValues);
 		return progettoJsonObj;
 
