@@ -79,14 +79,15 @@ async function getDataJsonProgetto() {
     const json = await response.json();
 	
 	console.log("json.valori " + json.valori);
+	console.log("json.labels " + json.labels);
 	
 	/* data */
-		const labels = [1, 2, 3, 4, 5, 6, 7];
+		const labels = json.labels;
 		const data = {
 		  labels: labels,
 		  datasets: [{
 			barPercentage: 1,
-		    label: 'I task del progetto',
+		    label: 'Task attivi %',
 		    data: json.valori,
 		    backgroundColor: [
 		      'rgba(255, 99, 132, 0.2)',

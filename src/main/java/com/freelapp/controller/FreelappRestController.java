@@ -275,14 +275,21 @@ public class FreelappRestController {
 		List<Task> elencoTask = progetto.getElencoTask();
 		List<Long> finalTimeArray = new ArrayList<Long>();
 		List<Long> percentageValues = new ArrayList<Long>();
+		List<String> NomiTask = new ArrayList<String>();
 		JSONObject progettoJsonObj = new JSONObject();
+	
 
 		if(progetto.getElencoTask().size() != 0) {
 			
 					// creo un array con i finaltime dei vari task
 					for (Task singoloTask : elencoTask) {
+						if (singoloTask.getContatore() != null) {
 						Long finaltime = singoloTask.getContatore().getFinaltime();
 						finalTimeArray.add(finaltime);
+						String TaskName = singoloTask.getName();
+						NomiTask.add(TaskName);
+						
+							}
 			
 					}
 					
@@ -306,6 +313,7 @@ public class FreelappRestController {
 					}
 		}
 		progettoJsonObj.put("valori", percentageValues);
+		progettoJsonObj.put("labels", NomiTask);
 		return progettoJsonObj;
 
 	}
