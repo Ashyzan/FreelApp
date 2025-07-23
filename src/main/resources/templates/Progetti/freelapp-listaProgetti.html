@@ -41,7 +41,7 @@
 </head>
 
 <body class="font-sans" style="width: 100vw; height: 100vh;"
-	onload="timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
+	onload="timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), filtriInUsoDaUtente()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 			<button
 				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5]" onclick="getJsonTaskListSelectMode()">
@@ -334,141 +334,81 @@
 									</form>
 								</div>
 							<div class="md:flex md:flex-row md:items-center md:gap-3 md:justify-center">
-								<div th:if="${filtriAttiviInListaProgetto == false}">
-									<div class="p-4 flex items-center justify-center">
+								<div class="flex justify-center items-center ">
+									<div th:if="${filtriAttiviInListaProgetto == true}">
+										<form th:action="@{/progetto-list-filtri/reset}" method="post">
+											<button type="submit"
+												class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px] me-4">Resetta
+												filtri
+											</button>
+										</form>
+									</div>
+									<div class="py-4 flex items-center justify-center">
 										<span id="filtra-per-button" class="text-[#0057A5] max-sm:mb-4">Filtra e ordina per</span>
 										<button onclick="mostraFiltri()"><img id="img-filtra-per" src="/img/sources/icons/arrow-down.svg" class="inline size-8 mx-3"></button>
-									</div>									
-								</div>
-								<div th:if="${filtriAttiviInListaProgetto == true}">
-									<form th:action="@{/progetto-list-filtri/reset}" method="post">
-										<button type="submit"
-											class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Resetta filtri
-										</button>										
-									</form>
+									</div>	
 								</div>
 							</div>
-							<div id="tabella-filtri-mobile" class="hidden bg-white shadow-sm shadow-[#0057A5] rounded-xl w-full">
-								<form class="max-xs:p-1 sm:p-4"
-										method="post" th:action="@{/progetto-list-filtri}">
-									<fieldset id="ordina-per-asc-desc" class="text-[#0057A5] mb-4">
-										<div class="grid grid-cols-3">
-											<legend class="col-span-1 font-bold me-4">Ordina per</legend>
-											<div class="col-span-1">
-												<input type="radio" id="dataModificaProgetto" name="dataOrdinamentoProgetto" value="dataModificaProgetto"
-													onclick="visualizzaordinamentoListaPiuMenoRecenteMobile()">
-												<label for="piuRecente">Data di modifca</label>
-											</div>
-											<div class="col-span-1">
-												<input type="radio" id="dataCreazioneProgetto" name="dataOrdinamentoProgetto" value="dataCreazioneProgetto"
-													onclick="visualizzaordinamentoListaPiuMenoRecenteMobile()">
-												<label for="menoRecente">Data di crezione</label>
-											</div>
-										</div>
-										<div id="ordinamentoListaPiuMenoRecenteMobile" class="grid grid-cols-3 hidden mb-2">
-											<div class="col-span-1"></div>
-											<div class="col-span-1">
-												<input type="radio" id="piuRecente" name="ordinaProgetto" value="piuRecente">
-												<label for="piuRecente">Più recente</label>
-											</div>
-											<div class="col-span-1">
-												<input type="radio" id="menoRecente" name="ordinaProgetto" value="menoRecente">
-												<label for="menoRecente">Meno recente</label>
-											</div>
-										</div>
-									</fieldset>
-									<fieldset class="text-[#0057A5] mb-4">
-										<div class="grid grid-cols-3">
-											<legend class="col-span-1 font-bold me-4 flex items-center">Filtra per cliente</legend>
-											<div class="col-span-2">
-												<select class="border-red-600 h-8  text-[#0057A5] rounded-lg bg-gray-100
-														block w-full  px-4 focus:outline-none" name="clienteId">
-													<option value="">Seleziona cliente</option>
-													<option th:each="cliente : ${listaClienti}" th:value="${cliente.id}" th:text="${cliente.getLabelCliente()}"></option>
-												</select>
-											</div>
-										</div>
-									</fieldset>
-									<fieldset id="ordina-per-stato" class="text-[#0057A5]">
-										<div class="grid grid-cols-3">
-											<legend class="col-span-1 font-bold me-4">Stato progetto</legend>
-											<div class="col-span-1 max-xs:ps-[0] max-sm:ps-6">
-												<input type="radio" id="aperto" name="statoProgetto" value="aperto">
-												<label for="aperto">Aperto</label>
-											</div>
-											<div class="col-span-1">
-												<input type="radio" id="chiuso" name="statoProgetto" value="chiuso">
-												<label for="chiuso">Chiuso</label>
-											</div>
-										</div>
-									</fieldset>
-									<div class="text-center m-4">
-										<button type="submit"
-											class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Applica
-											filtri</button>
-									</div>
-								</form>
-							</div>
-							
 						</div>
 						<div id="tabella-filtri-desktop" class="hidden bg-white shadow-sm shadow-[#0057A5] w-3/5 m-auto rounded-xl">
 							<form class="p-4" th:action="@{/progetto-lista-filtri}" method="post">
-								<fieldset id="ordina-per-asc-desc" class="text-[#0057A5] mb-4">
+								<fieldset id="ordina-per-asc-desc" class="text-[#0057A5] mb-4 max-lg:text-sm">
 									<div class="grid grid-cols-3">
 										<legend class="col-span-1 font-bold me-4">Ordina per</legend>
-										<div class="col-span-1">
+										<div class="col-span-1" id="inputRadiodataModificaProgetto">
 											<input type="radio" id="dataModificaProgetto" name="dataOrdinamentoProgetto" value="dataModificaProgetto" onclick="visualizzaordinamentoListaPiuMenoRecente()">
 											<label for="piuRecente">Data di modifca</label>
 										</div>
-										<div class="col-span-1">
+										<div class="col-span-1" id="inputRadiodataCreazioneProgetto">
 											<input type="radio" id="dataCreazioneProgetto" name="dataOrdinamentoProgetto" value="dataCreazioneProgetto" onclick="visualizzaordinamentoListaPiuMenoRecente()">
 											<label for="menoRecente">Data di crezione</label>
 										</div>
 									</div>
-									<div id="ordinamentoListaPiuMenoRecente" class="grid grid-cols-3 hidden mb-2">
+									<div id="ordinamentoListaPiuMenoRecente" class="grid grid-cols-3 hidden mb-2 max-md: py-3">
 										<div class="col-span-1"></div>
-										<div class="col-span-1">
-											<input type="radio" id="piuRecente" name="ordinaProgetto" value="piuRecente">
+										<div class="col-span-1" id="inputRadioOrdinaProgettoPiuRecente">
+											<input type="radio" id="piuRecente" name="ordinaProgetto" value="piuRecente" >
 											<label for="piuRecente">Più recente</label>
 										</div>
-										<div class="col-span-1">
+										<div class="col-span-1" id="inputRadioOrdinaProgettoMenoRecente">
 											<input type="radio" id="menoRecente" name="ordinaProgetto" value="menoRecente" >
 											<label for="menoRecente">Meno recente</label>
 										</div>
 									</div>
 								</fieldset>
-								<fieldset class="text-[#0057A5] mb-4">
+								<fieldset class="text-[#0057A5] mb-4 max-lg:text-sm">
 									<div class="grid grid-cols-3">
 										<legend class="col-span-1 font-bold me-4 flex items-center">Filtra per cliente</legend>
 											<div class="col-span-2">
 												<select class="border-red-600 h-8  text-[#0057A5] rounded-lg bg-gray-100
-														block w-[300px] focus:outline-none" name="clienteSelezionatoId">
+														block max-lg:w-full w-[300px] focus:outline-none" name="clienteSelezionatoId">
 													<option value="-1">Seleziona cliente</option>
 													<option th:each="cliente : ${listaClienti}" th:value="${cliente.id}" th:text="${cliente.getLabelCliente()}"></option>
 												</select>
 											</div>
 									</div>
 								</fieldset>
-								<fieldset id="ordina-per-stato" class="text-[#0057A5] mb-2">
+								<fieldset id="ordina-per-stato" class="text-[#0057A5] mb-2 max-lg:text-sm">
 									<div class="grid grid-cols-3">
 										<legend class="col-span-1 font-bold me-4">Stato progetto</legend>
-										<div class="col-span-1">
-											<input type="radio" id="aperto" name="statoProgetto" value="aperto">
+										<div class="col-span-1 max-xs:ps-[0] max-sm:ps-6" id="inputRadioAperto">
+											<input type="radio" id="aperto" name="statoProgetto" value="aperto" >
 											<label for="aperto">Aperto</label>
 										</div>
-										<div class="col-span-1">
-											<input type="radio" id="chiuso" name="statoProgetto" value="chiuso">
+										<div class="col-span-1" id="inputRadioChiuso">
+											<input type="radio" id="chiuso" name="statoProgetto" value="chiuso" >
 											<label for="chiuso">Chiuso</label>
 										</div>
 									</div>
 								</fieldset>
-								<div class="text-center mt-4">
+								<div class="flex justify-center gap-3 mt-4">
 									<button type="submit"
-										class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Applica
+										class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px] ">Applica
 										filtri</button>
 								</div>
 							</form>
 						</div>
+										
 					
 						<div th:if="${searchMode == true}" class="p-10 text-center" th:text="|Risultati per --> '${inputInserito}'|"></div>
 						<div th:if="${filtriAttiviInListaProgetto == true}" class="p-10 text-center" id="stringaFiltri"></div>
@@ -888,7 +828,7 @@
 	</main>
 	
 	<!-- Modale TimerRapidButton -->
-		<div id="modalRapidButton" class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
+	<div id="modalRapidButton" class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
 		<div class="w-11/12 md:w-[550px] h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
 			<div class="grid grid-cols-12 p-1">
 				<div class="col-span-11 flex justify-center items-center text-white font-bold">GESTIONE RAPIDA TASK</div>
@@ -956,51 +896,7 @@
 										</div>
 									</div>
 								</div>
-
 								<!-- Fine searchMode del rapid button -->
-
-								<!-- fine sezione contatore -->
-								<!-- Inizio sezione ore lavorate -->
-								<div id="ore-lavorate-task-rapid-container" class="hidden w-[90%] h-fit">
-									<div class="flex flex-row justify-center p-2">
-										<form id="taskDetailHrefOre" th:object="${contatore}"
-												method="post">
-											<h2 class="text-center font-bold mb-3">Inserimento ore lavorate</h2>
-											<div class="p-1">
-												<div class="grid grid-cols-2 flex items-center mb-2">
-													<p class="col mb-2 font-semibold">Inserisci la data</p>
-													<input type="date" name="date" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
-														class=" col md:text-xl border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-[#ffe541]/50"
-														id="dataOreLavorate">												
-												</div>
-												<div class="grid grid-cols-2 flex items-center mb-2">
-													<p class="col font-semibold">Inserisci ore</p>
-													<input type="time" name="time" value="01:00"
-														class="col h-8 md:text-xl border border-[#0057A5] text-[#0057A5] rounded-lg block w-full text-center	bg-[#ffe541]/50"
-														id="tempoOreLavorate">												
-												</div>
-												<div class="grid grid-cols-1  md:grid-cols-2 flex items-center mb-3">
-													<div class="col text-left  flex items-center justify-start max-md:py-1">
-														<input type="radio" name="aggiungiOre" checked="checked" id="sovrascriviOre" value="0">
-														<label for="sovrascriviOre" class="ps-1">Sovrascrivi e chiudi task</label><br>														
-													</div>
-													<div class="col flex items-center justify-start md:justify-end max-md:py-1">
-														<input type="radio" name="aggiungiOre" id="aggiungiOre" value="1">
-														<label for="aggiungiOre" class="pe-1" >Aggiungi al task attivo</label>														
-													</div>
-												</div>
-												<div class="text-center">
-													<button class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]" 
-														type="submit">
-															Aggiungi
-													</button>													
-												</div>
-											</div>
-										</form>
-									</div>
-								</div>
-								<!-- fine sezione ore lavorate -->
-
 							</div>
 						</div>
 				</div>
@@ -1095,9 +991,11 @@
 										<div class="p-1">
 											<div class="grid grid-cols-2 flex items-center mb-2">
 												<p class="col mb-2 font-semibold">Inserisci la data</p>
-												<input type="date" name="date" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
-													class=" col md:text-xl p-2 border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-[#ffe541]/50"
-													id="dataOreLavorate">												
+
+												<input type="date" name="date"
+													th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+													class=" col md:text-xl border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-[#ffe541]/50"
+													id="dataOreLavorate">
 											</div>
 											<div class="grid grid-cols-2 flex items-center mb-2">
 												<p class="col font-semibold">Inserisci ore</p>
@@ -1105,14 +1003,20 @@
 													class="col h-8 md:text-xl border border-[#0057A5] text-[#0057A5] rounded-lg block w-full text-center	bg-[#ffe541]/50"
 													id="tempoOreLavorate">												
 											</div>
-											<div class="grid grid-cols-1  md:grid-cols-2 flex items-center mb-3">
-												<div class="col text-left  flex items-center justify-start max-md:py-1">
-													<input type="radio" name="aggiungiOre" checked="checked" id="sovrascriviOre" value="0">
-													<label for="sovrascriviOre" class="ps-1">Sovrascrivi e chiudi task</label><br>														
+											<div
+												class="grid grid-cols-1  md:grid-cols-2 flex items-center mb-3">
+												<div
+													class="col flex items-center justify-start md:justify-end max-md:py-1">
+													<input type="radio" name="aggiungiOre" checked="checked" id="aggiungiOre"
+														value="1"> <label for="aggiungiOre" class="pe-1">Aggiungi
+														al task attivo</label>
 												</div>
-												<div class="col flex items-center justify-start md:justify-end max-md:py-1">
-													<input type="radio" name="aggiungiOre" id="aggiungiOre" value="1">
-													<label for="aggiungiOre" class="pe-1" >Aggiungi al task attivo</label>														
+												<div
+													class="col text-left  flex items-center justify-start max-md:py-1">
+													<input type="radio" name="aggiungiOre" 
+														id="sovrascriviOre" value="0"> <label
+														for="sovrascriviOre" class="ps-1">Sovrascrivi e
+														chiudi task</label><br>
 												</div>
 											</div>
 											<div class="text-center">
@@ -1184,10 +1088,12 @@
 		let endPoint = /*[[${endPoint}]]*/ null;
 		let contatoreAttivatoDaRapidButton = /*[[${contatoreAttivatoDaRapidButton}]]*/null; //boolean
 		let descrizioneTaskId = null; 
+		let filtriAttiviInListaProgetto =  /*[[${filtriAttiviInListaProgetto}]]*/ null; // boolean
 		let filtroStatoProgetto = /*[[${filtroStatoProgetto}]]*/ null;
 		let filtroOrdinamentoProgetto = /*[[${filtroOrdinamentoProgetto}]]*/ null;
 		let filtroNomeCliente = /*[[${filtroNomeCliente}]]*/ null;
 		let filtroDataOrdinamentoProgetto = /*[[${filtroDataOrdinamentoProgetto}]]*/ null;
+		console.log("filtriAttiviInListaProgetto: " + filtriAttiviInListaProgetto)
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>

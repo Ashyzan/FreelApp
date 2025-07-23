@@ -378,6 +378,7 @@ public class ProgettoController {
 					@ModelAttribute("clienteSelezionatoId") Integer clienteSelezionatoId) {
 				
 				filtriAttiviInListaProgetto = true;
+				System.out.println("filtriAttiviInListaProgetto: " + filtriAttiviInListaProgetto);
 				statoProgettoInListaProgetto = statoProgetto;
 					System.out.println("statoProgetto: " + statoProgettoInListaProgetto);
 				ordinaProgettoInListaProgetto = ordinaProgetto;
@@ -394,6 +395,7 @@ public class ProgettoController {
 			public String resetFiltriProgetto(Model model) {
 				
 				filtriAttiviInListaProgetto = false;
+				System.out.println("filtriAttiviInListaProgetto: " + filtriAttiviInListaProgetto);
 				statoProgettoInListaProgetto = "";
 					System.out.println("statoProgetto: " + statoProgettoInListaProgetto);
 				ordinaProgettoInListaProgetto = "";
@@ -402,6 +404,8 @@ public class ProgettoController {
 					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
 				dataPerOrdinamentoProgetto = "";
 					System.out.println("dataOrdinamentoProgetto: " + dataPerOrdinamentoProgetto);
+					
+				model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaProgetto);
 				
 				return "redirect:/Progetti";
 			}

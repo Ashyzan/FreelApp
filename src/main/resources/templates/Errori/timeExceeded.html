@@ -571,9 +571,11 @@
 										<div class="p-1">
 											<div class="grid grid-cols-2 flex items-center mb-2">
 												<p class="col mb-2 font-semibold">Inserisci la data</p>
-												<input type="date" name="date" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
-													class=" col md:text-xl p-2 border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-[#ffe541]/50"
-													id="dataOreLavorate">												
+
+												<input type="date" name="date"
+													th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+													class=" col md:text-xl border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-[#ffe541]/50"
+													id="dataOreLavorate">
 											</div>
 											<div class="grid grid-cols-2 flex items-center mb-2">
 												<p class="col font-semibold">Inserisci ore</p>
@@ -581,14 +583,20 @@
 													class="col h-8 md:text-xl border border-[#0057A5] text-[#0057A5] rounded-lg block w-full text-center	bg-[#ffe541]/50"
 													id="tempoOreLavorate">												
 											</div>
-											<div class="grid grid-cols-1  md:grid-cols-2 flex items-center mb-3">
-												<div class="col text-left  flex items-center justify-start max-md:py-1">
-													<input type="radio" name="aggiungiOre" checked="checked" id="sovrascriviOre" value="0">
-													<label for="sovrascriviOre" class="ps-1">Sovrascrivi e chiudi task</label><br>														
+											<div
+												class="grid grid-cols-1  md:grid-cols-2 flex items-center mb-3">
+												<div
+													class="col flex items-center justify-start md:justify-end max-md:py-1">
+													<input type="radio" name="aggiungiOre" checked="checked" id="aggiungiOre"
+														value="1"> <label for="aggiungiOre" class="pe-1">Aggiungi
+														al task attivo</label>
 												</div>
-												<div class="col flex items-center justify-start md:justify-end max-md:py-1">
-													<input type="radio" name="aggiungiOre" id="aggiungiOre" value="1">
-													<label for="aggiungiOre" class="pe-1" >Aggiungi al task attivo</label>														
+												<div
+													class="col text-left  flex items-center justify-start max-md:py-1">
+													<input type="radio" name="aggiungiOre" 
+														id="sovrascriviOre" value="0"> <label
+														for="sovrascriviOre" class="ps-1">Sovrascrivi e
+														chiudi task</label><br>
 												</div>
 											</div>
 											<div class="text-center">
