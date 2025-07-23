@@ -194,15 +194,15 @@ public class FreelappRestController {
 		ProgettoController.ordinaElencoProgettiPerData = true;
 
 	}
-
-	// *********************** API PER STATISTICHE **************************
-
-	// api che ritorna json con statistiche dettaglio task
-	@GetMapping("/statistiche-dettaglio-task/{id}")
-	public JSONObject TaskJson(@PathVariable("id") Integer id) throws InterruptedException {
-
-		// aggiunto ritardo di 200ms nell'esecuzione dell'api per permettere al db di
-		// aggiornarsi e di poter aggiornare correttamente i dati statistici
+	
+	
+// *********************** API PER STATISTICHE **************************
+	
+	//api che ritorna json con statistiche dettaglio task
+	@GetMapping("/statistiche-dettaglio-task/{id}") 
+	public JSONObject TaskJson(@PathVariable("id") Integer id) throws InterruptedException{
+				
+		//aggiunto ritardo di 200ms nell'esecuzione dell'api per permettere al db di aggiornarsi e di poter aggiornare correttamente i dati statistici
 		Thread.sleep(200);
 
 		Task task = taskRepository.getReferenceById(id);
