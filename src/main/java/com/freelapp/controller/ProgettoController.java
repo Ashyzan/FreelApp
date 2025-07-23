@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
@@ -39,7 +41,14 @@ public class ProgettoController {
 	//variablili che verranno utilizzate per memorizzare la scelta effettuata durante la sessione
 	public static boolean ordinaElencoProgettiPerData = true;
 
-	public static boolean ordinaElencoProgettiPerCliente = false;
+	//public static boolean ordinaElencoProgettiPerCliente = false;
+	
+	//static per la gestione dei filtri lista progetto
+	public static boolean filtriAttiviInListaProgetto = false;
+	public static String statoProgettoInListaProgetto = "";
+	public static String ordinaProgettoInListaProgetto = "";
+	public static int clienteIdProgettoInListaProgetto = -1;
+	public static String dataPerOrdinamentoProgetto = "";
 	
 	//variabile che memorizza l'ultima pagina consultata nella lista Progetti e serve per mantenerla durante la sessione
 	private int currentPageListaProgetti = 1;
@@ -78,7 +87,7 @@ public class ProgettoController {
 	
 			@GetMapping("/Progetti")
 			public String listaProgetti(Model model) {
-				
+					
 				//essendo fuori dalla modalità search reinizializzo la varibile
 				searchMode = false;
 				
@@ -91,13 +100,18 @@ public class ProgettoController {
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
 				model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+				model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaProgetto);
+				
+				
+				//metodo del serviceProgetto che passa al model la stringa per indicare all'utente i filtri selezionati
+				progettoService.stringaFiltriInListaProgetti(model);
 		
 				//inizializzo a false così al reload successivo js non genera i tasti del contatore
 				ContatoreController.contatoreAttivatoDaRapidButton = false;
 				
 				//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
-				model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
-				model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
+//				model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
+//				model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
 				
 				//invio al model il booleano del contatore attivato
 				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -112,6 +126,11 @@ public class ProgettoController {
 				
 				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 				taskService.informationFromTaskInUsoToModel(model);
+				
+				//passa al model la lista dei clienti utilizzata nei filtri
+				List<Cliente> listaClienti = new ArrayList<Cliente>();
+				listaClienti = repositClient.findAll();
+				model.addAttribute("listaClienti", listaClienti);
 				
 				//passa al model la lista di tutti i task esclusi quelli chiusi
 				List<Task> taskList = new ArrayList<Task> ();
@@ -141,27 +160,20 @@ public class ProgettoController {
 					model.addAttribute("searchMode", searchMode);
 		
 					// ordina i progetti per data di inizio
-					Page<Progetto> pageByDataInizio = progettoService.orderByDataInizio(currentPage);
-					int totalPageByDataInizio = pageByDataInizio.getTotalPages();	
-					long totalItemByDatainizio = pageByDataInizio.getTotalElements();		
-					List<Progetto> listProgettiByDataInizio = pageByDataInizio.getContent();
-					
-					//ordina i progetti per cliente
-					Page<Progetto> pageByCliente = progettoService.orderByClient(currentPage);
-					int totalPageByCliente = pageByCliente.getTotalPages();	
-					long totalItemByCliente = pageByCliente.getTotalElements();		
-					List<Progetto> listProgettiByCliente = pageByCliente.getContent();
-					
+					Page<Progetto> pageByDataModifica = progettoService.orderByDataModifica(currentPage);
+					int totalPageByDataModifica = pageByDataModifica.getTotalPages();	
+					long totalItemByDataModifica = pageByDataModifica.getTotalElements();		
+					List<Progetto> listProgettiByDataModifica = pageByDataModifica.getContent();
 					
 					model.addAttribute("currentPage", currentPage);
 					// passaggio al model delle liste per data inizio
-					model.addAttribute("listProgettiByDataInizio", listProgettiByDataInizio);					
-					model.addAttribute("totalPageByDataInizio", totalPageByDataInizio);					
-					model.addAttribute("totalItemByDatainizio", totalItemByDatainizio);
-					// passaggio al model delle liste per cliente
-					model.addAttribute("listProgettiByCliente", listProgettiByCliente);					
-					model.addAttribute("totalPageByCliente", totalPageByCliente);					
-					model.addAttribute("totalItemByCliente", totalItemByCliente);
+					model.addAttribute("listProgettiByDataModifica", listProgettiByDataModifica);					
+					model.addAttribute("totalPageByDataModifica", totalPageByDataModifica);					
+					model.addAttribute("totalItemByDataModifica", totalItemByDataModifica);
+					
+					//metodo del serviceProgetto che passa al model la stringa per indicare all'utente i filtri selezionati
+					progettoService.stringaFiltriInListaProgetti(model);
+		
 					
 					contatoreservice.importContatoreInGet(model);
 					
@@ -179,6 +191,7 @@ public class ProgettoController {
 					model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 					model.addAttribute("taskInUso", ContatoreController.taskInUso);
 					model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+					model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaProgetto);
 		
 					//inizializzo a false così al reload successivo js non genera i tasti del contatore
 					ContatoreController.contatoreAttivatoDaRapidButton = false;
@@ -194,15 +207,16 @@ public class ProgettoController {
 					// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
 					ContatoreController.contatoreCliccatoPreRefresh = false;
 					
-					//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
-					model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
-					model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
-		
 					//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 					ContatoreController.contatoreAttivato = false;
 					
 					//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
 					taskService.informationFromTaskInUsoToModel(model);
+					
+					//passa al model la lista dei clienti utilizzata nei filtri
+					List<Cliente> listaClienti = new ArrayList<Cliente>();
+					listaClienti = repositClient.findAll();
+					model.addAttribute("listaClienti", listaClienti);
 					
 					//passa al model la lista di tutti i task esclusi quelli chiusi
 					List<Task> taskList = new ArrayList<Task> ();
@@ -231,6 +245,7 @@ public class ProgettoController {
 				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
 				model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+				
 		
 				//inizializzo a false così al reload successivo js non genera i tasti del contatore
 				ContatoreController.contatoreAttivatoDaRapidButton = false;
@@ -245,10 +260,6 @@ public class ProgettoController {
 
 				// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
 				ContatoreController.contatoreCliccatoPreRefresh = false;
-				
-				//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
-				model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
-				model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
 		
 				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 				//ContatoreController.contatoreAttivato = false;
@@ -291,28 +302,17 @@ public class ProgettoController {
 				 	lastVisitedPageInProgettiSearch = currentPage;
 
 				 	// ordina i progetti per data di inizio
-					Page<Progetto> pageByDataInizio = progettoService.findSearchedPageByDataInizio(currentPage,input);
-					int totalPageByDataInizio = pageByDataInizio.getTotalPages();	
-					long totalItemByDatainizio = pageByDataInizio.getTotalElements();		
-					List<Progetto> listProgettiByDataInizio = pageByDataInizio.getContent();
-					
-					//ordina i progetti per cliente
-					Page<Progetto> pageByCliente = progettoService.findSearchedPageByClient(currentPage,input);
-					int totalPageByCliente = pageByCliente.getTotalPages();	
-					long totalItemByCliente = pageByCliente.getTotalElements();		
-					List<Progetto> listProgettiByCliente = pageByCliente.getContent();
+					Page<Progetto> pageByDataModifica = progettoService.findSearchedPageByDataModifica(currentPage,input);
+					int totalPageByDataModifica = pageByDataModifica.getTotalPages();	
+					long totalItemByDataModifica = pageByDataModifica.getTotalElements();		
+					List<Progetto> listProgettiByDataModifica = pageByDataModifica.getContent();
 					
 					model.addAttribute("currentPage", currentPage);
 					
 					// passaggio al model delle liste per data inizio
-					model.addAttribute("listProgettiByDataInizio", listProgettiByDataInizio);					
-					model.addAttribute("totalPageByDataInizio", totalPageByDataInizio);					
-					model.addAttribute("totalItemByDatainizio", totalItemByDatainizio);
-					
-					// passaggio al model delle liste per cliente
-					model.addAttribute("listProgettiByCliente", listProgettiByCliente);					
-					model.addAttribute("totalPageByCliente", totalPageByCliente);					
-					model.addAttribute("totalItemByCliente", totalItemByCliente);
+					model.addAttribute("listProgettiByDataModifica", listProgettiByDataModifica);					
+					model.addAttribute("totalPageByDataModifica", totalPageByDataModifica);					
+					model.addAttribute("totalItemByDataModifica", totalItemByDataModifica);
 					
 					contatoreservice.importContatoreInGet(model);
 					
@@ -347,7 +347,7 @@ public class ProgettoController {
 					
 					//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
 					model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
-					model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
+//					model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
 		
 					//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
 					ContatoreController.contatoreAttivato = false;
@@ -369,6 +369,45 @@ public class ProgettoController {
 					model.addAttribute("areProjectsOnDb", areProjectsOnDb);
 						
 				return "/Progetti/freelApp-listaProgetti";
+			}
+			 
+			 
+			@PostMapping("/progetto-lista-filtri")
+			public String filtriListaProgetto(Model model, @ModelAttribute("statoProgetto") String statoProgetto,
+					@ModelAttribute("ordinaProgetto") String ordinaProgetto, @ModelAttribute("dataOrdinamentoProgetto") String dataOrdinamentoProgetto,
+					@ModelAttribute("clienteSelezionatoId") Integer clienteSelezionatoId) {
+				
+				filtriAttiviInListaProgetto = true;
+				System.out.println("filtriAttiviInListaProgetto: " + filtriAttiviInListaProgetto);
+				statoProgettoInListaProgetto = statoProgetto;
+					System.out.println("statoProgetto: " + statoProgettoInListaProgetto);
+				ordinaProgettoInListaProgetto = ordinaProgetto;
+					System.out.println("ordinaProgetto: " + ordinaProgettoInListaProgetto);
+				dataPerOrdinamentoProgetto = dataOrdinamentoProgetto;
+				System.out.println("dataOrdinamentoProgetto: " + dataPerOrdinamentoProgetto);
+				clienteIdProgettoInListaProgetto = clienteSelezionatoId;
+					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
+				
+				return "redirect:/Progetti";
+			}
+			
+			@PostMapping("/progetto-list-filtri/reset")
+			public String resetFiltriProgetto(Model model) {
+				
+				filtriAttiviInListaProgetto = false;
+				System.out.println("filtriAttiviInListaProgetto: " + filtriAttiviInListaProgetto);
+				statoProgettoInListaProgetto = "";
+					System.out.println("statoProgetto: " + statoProgettoInListaProgetto);
+				ordinaProgettoInListaProgetto = "";
+					System.out.println("statoProgetto: " + ordinaProgettoInListaProgetto);
+				clienteIdProgettoInListaProgetto = -1;
+					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
+				dataPerOrdinamentoProgetto = "";
+					System.out.println("dataOrdinamentoProgetto: " + dataPerOrdinamentoProgetto);
+					
+				model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaProgetto);
+				
+				return "redirect:/Progetti";
 			}
 	
 			@GetMapping("/Progetti/{id}")
@@ -551,7 +590,7 @@ public class ProgettoController {
 			    	    return "/Progetti/freelapp-insertProgetto";
 					
 				}
-		
+			    formProgetto.setDataModifica(LocalDateTime.now());
 				repositProgetto.save(formProgetto);
 		
 				return "redirect:/Progetti";       

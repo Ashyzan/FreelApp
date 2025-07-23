@@ -41,7 +41,7 @@
 </head>
 
 <body class="font-sans" style="width: 100vw; height: 100vh;"
-	onload="timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), visualizzazioneProgettiDaSceltaUtente()">
+	onload="timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), filtriInUsoDaUtente()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 			<button
 				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5]" onclick="getJsonTaskListSelectMode()">
@@ -96,9 +96,6 @@
 						</span> <span class="pt-1">ESCI</span>
 					</a>
 					</li>
-					<!-- 					<li class=" max-lg:hidden" id="dettaglio-contatore-top"> -->
-
-					<!-- 					</li> -->
 					<li class="md:mx-4 py-5 md:py-0">
 						<button class=" hover:text-gray-400 cursor-pointer md:hidden"
 							onclick="onToggleOptionsMobile(this)">
@@ -314,606 +311,416 @@
 				class="w-full flex-wrap h-full m-auto overflow-y-auto">
 				<div th:if="${areProjectsOnDb == true}" class=" md:flex-col px-4">
 
-					<!-- 			section elenco progetti main		 -->
+					<!-- section elenco progetti main -->
 					<section class="flex flex-col">
-						<div
-							class="h-12 text-center text-[#0057A5] font-bold items-center">
+						<div class="h-12 text-center text-[#0057A5] font-bold items-center">
 							<h1 class="mt-3 text-xl">ELENCO PROGETTI</h1>
 						</div>
-						<div id="filtra-per-clienti" class="flex md:justify-between max-sm:flex-col max-xs:justify-center items-center p-4 md:px-6 mx-3 w-full gap-2">
-							<div class="md:flex md:flex-row md:items-center md:gap-3">
-								<p class="text-[#0057A5] max-sm:mb-4">Ordina per: </p>
-								<div class="max-xs:flex max-xs:flex-row max-sm:gap-3">
-									<button th:onclick="attivaPaginazione1()" id="filtra-per-clienti-button" class=""><img src="/img/sources/icons/clients-blu.svg" class="inline size-8 float-left">	</button>
-									<button th:onclick="attivaPaginazione2()" id="filtra-per-data-button" class="opacity-50 pointer-events-none"><img src="/img/sources/icons/calendar-blue.svg" class="inline size-8 float-left">	</button>														
-								</div>								
-							</div>
-							<div class="text-center">
-								<form class="flex max-sm:flex-col max-xs:justify-center items-center mx-auto w-50" role="search" method="get"
-									th:object="${progetto}" th:action="@{/progetto-search}">
-									<input type="text"
-										class="border-2 border-[#0057A5] p-1 m-2 rounded-md"
-										name="input" placeholder="Ricerca progetti..." aria-label="Search">
-									<div>
-										<button
-											class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
-											type="submit">Search</button>
-										<a
-											class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-2 rounded-[35px]"
-											th:href="@{/Progetti}">Annulla</a>										
+						<div id="sezione-filtri-e-ricerca"
+							class="m-auto flex flex-col justify-center">
+								<div id="sezione-ricerca" class="text-center">
+									<form class="flex max-sm:flex-col max-xs:justify-center items-center mx-auto w-50" role="search" method="get"
+										th:object="${progetto}" th:action="@{/progetto-search}">
+										<a th:if="${searchMode == true}" th:href="@{/Progetti}">
+												<img class="rounded-[35px] hover:bg-[#FFE541] size-10" src="/img/sources/icons/arrow-left-blue.svg">
+										</a>
+										<input type="text" class="border-2 border-[#0057A5] p-1 m-2 rounded-md" name="input"
+											placeholder="Ricerca progetti..." aria-label="Search">
+										<div>
+											<button
+												class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+												type="submit">Search</button>
+										</div>
+									</form>
+								</div>
+							<div class="md:flex md:flex-row md:items-center md:gap-3 md:justify-center">
+								<div class="flex justify-center items-center ">
+									<div th:if="${filtriAttiviInListaProgetto == true}">
+										<form th:action="@{/progetto-list-filtri/reset}" method="post">
+											<button type="submit"
+												class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px] me-4">Resetta
+												filtri
+											</button>
+										</form>
 									</div>
-								</form>											
+									<div class="py-4 flex items-center justify-center">
+										<span id="filtra-per-button" class="text-[#0057A5] max-sm:mb-4">Filtra e ordina per</span>
+										<button onclick="mostraFiltri()"><img id="img-filtra-per" src="/img/sources/icons/arrow-down.svg" class="inline size-8 mx-3"></button>
+									</div>	
+								</div>
 							</div>
 						</div>
-						<div th:if="${searchMode == true}" class="p-10 text-center" 
-							th:text="|Risultati per --> '${inputInserito}'|"></div>
-												
-		<!------------------ card per data     --------------------->
-							<div id="list-data-inizio" class="">
-							<div  class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-center w-full">
-							<div th:unless="${progettoPerData.getArchivia()} == true" th:each="progettoPerData : ${listProgettiByDataInizio}"
-								class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
-								<div class="md:flex">
-									<div class="md:shrink-0">
-										<img class="aspect-square h-48 w-full object-cover md:w-48"
-											th:src="@{${progettoPerData.cliente.LogoPath}}" alt="logo-cliente">
-									</div>
-
-									<div class="p-4 w-full">
-										<div>
-											<img th:if="${progettoPerData.getDataFine} == null"
-												th:src="@{/img/sources/icons/contatore-on-start.svg}"
-												alt="progetto-attivo" class="size-5 inline float-right">
-											<img th:if="${progettoPerData.getDataFine} != null"
-												th:src="@{/img/sources/icons/contatore-on-stop.svg}"
-												alt="progetto-chiuso" class="size-5 inline float-right">
-
+						<div id="tabella-filtri-desktop" class="hidden bg-white shadow-sm shadow-[#0057A5] w-3/5 m-auto rounded-xl">
+							<form class="p-4" th:action="@{/progetto-lista-filtri}" method="post">
+								<fieldset id="ordina-per-asc-desc" class="text-[#0057A5] mb-4 max-lg:text-sm">
+									<div class="grid grid-cols-3">
+										<legend class="col-span-1 font-bold me-4">Ordina per</legend>
+										<div class="col-span-1" id="inputRadiodataModificaProgetto">
+											<input type="radio" id="dataModificaProgetto" name="dataOrdinamentoProgetto" value="dataModificaProgetto" onclick="visualizzaordinamentoListaPiuMenoRecente()">
+											<label for="piuRecente">Data di modifca</label>
 										</div>
-										<div th:text="${progettoPerData.cliente.labelCliente}"
-											class="inline line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
-											cliente</div>
-											<span th:text="|  -  progetto a ${progettoPerData.getTipologia()}" class=" text-slate-500"></span>
-
-										<a th:href="@{/Progetti/{id}(id=${progettoPerData.getId()})}"
-											th:text="${progettoPerData.name}"
-											class="line-clamp-1 block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome
-											progetto </a>
-										<p th:text="${progettoPerData.descrizione}"
-											class="mt-2 text-slate-500 line-clamp-2">descrizione
-											progetto</p>
-
-										<div>
-
-											<span>
-
-												<ul>
-
-													<li class="flex flex-col md:flex-row float-left"><a
-														th:href="@{/Progetti/{id}(id=${progettoPerData.getId()})}"
-														class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
-															vai al dettaglio </a></li>
-												
-												<li class="flex flex-col md:flex-row px-2 mt-6 float-left">
-														
-														<a th:if="${progettoPerData.dataFine == null}"
-														th:href="@{/Task/insert/progetto-{id}(id=${progettoPerData.getId()})}">
-														
-															<div class="tooltip-top col-auto w-8 h-8 ms-2">
-															<span class="tooltiptext-top">Aggiungi task</span>
-															<img th:src="@{/img/sources/icons/add-task-blue.svg}"
-																		alt="aggiungi-task" class="size-8 ml-3 -mt-1 inline">
-																
-															</div>
-															</a>
-														<img class="col-auto w-8 h-8 ms-2" th:unless="${progettoPerData.dataFine == null}" th:src="@{/img/sources/icons/add-task-blue-opacity.svg}">	
-													</li>
-
-													<li th:if="${progettoPerData.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
-														<span class="tooltiptext-top">Chiudi progetto</span>
-														<div class="size-6 flex items-end">
-															<button type="button" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
-																hover:bg-[url(/img/sources/icons/power-red.svg)]" th:onclick="creaModaleChiudiProgetto([[${progettoPerData.getId()}]], [[${progettoPerData.getName()}]])"></button>
-														</div>
-													</li>
-													<li th:unless="${progettoPerData.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
-														<span class="tooltiptext-top">Apri progetto</span>
-														<form th:action="@{/Progetti/apri/{id}(id=${progettoPerData.getId()})}" th:object="${progetto}" method="post"
-															class="size-6 flex items-end">
-															<button type="submit" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
-																hover:bg-[url(/img/sources/icons/power-green.svg)]"></button>															
-														</form>
-													</li>
-													<li class="flex flex-col md:flex-row px-2 mt-6 mr-2 float-right">
-														<a
-														th:href="@{/Progetti/edit/{id}(id=${progettoPerData.getId()})}"><img
-															th:src="@{/img/sources/icons/modify-grey.svg}"
-															alt="modifica-progetto" class="size-5 inline"></a>
-													</li>
-														
-													<li class="tooltip-top flex flex-col md:flex-row px-2 mt-6 float-right">
-														<span class="tooltiptext-top">Archivia progetto</span>
-														<form th:action="@{/Progetti/archivia/{id}(id=${progettoPerData.getId()})}"
-														th:object="${progetto}" method="post">
-														<button type="submit">
-														<img th:src="@{/img/sources/icons/archive.svg}" alt="archivia" class="size-5 inline"></button>
-														</form>
-													</li>
-													<li >
-														<a th:href="@{/Task}"
-														th:text="'task ' + ${progettoPerData.getElencoTask().size()}"
-														class="hover:underline flex flex-col md:flex-row sm:visible lg:visible md:invisible px-2 mt-7 float-right text-[#0057A5]">
-														</a>
-													</li>
-                 
-												</ul>
-											</span>
+										<div class="col-span-1" id="inputRadiodataCreazioneProgetto">
+											<input type="radio" id="dataCreazioneProgetto" name="dataOrdinamentoProgetto" value="dataCreazioneProgetto" onclick="visualizzaordinamentoListaPiuMenoRecente()">
+											<label for="menoRecente">Data di crezione</label>
 										</div>
-
-
-
 									</div>
+									<div id="ordinamentoListaPiuMenoRecente" class="grid grid-cols-3 hidden mb-2 max-md: py-3">
+										<div class="col-span-1"></div>
+										<div class="col-span-1" id="inputRadioOrdinaProgettoPiuRecente">
+											<input type="radio" id="piuRecente" name="ordinaProgetto" value="piuRecente" >
+											<label for="piuRecente">Più recente</label>
+										</div>
+										<div class="col-span-1" id="inputRadioOrdinaProgettoMenoRecente">
+											<input type="radio" id="menoRecente" name="ordinaProgetto" value="menoRecente" >
+											<label for="menoRecente">Meno recente</label>
+										</div>
+									</div>
+								</fieldset>
+								<fieldset class="text-[#0057A5] mb-4 max-lg:text-sm">
+									<div class="grid grid-cols-3">
+										<legend class="col-span-1 font-bold me-4 flex items-center">Filtra per cliente</legend>
+											<div class="col-span-2">
+												<select class="border-red-600 h-8  text-[#0057A5] rounded-lg bg-gray-100
+														block max-lg:w-full w-[300px] focus:outline-none" name="clienteSelezionatoId">
+													<option value="-1">Seleziona cliente</option>
+													<option th:each="cliente : ${listaClienti}" th:value="${cliente.id}" th:text="${cliente.getLabelCliente()}"></option>
+												</select>
+											</div>
+									</div>
+								</fieldset>
+								<fieldset id="ordina-per-stato" class="text-[#0057A5] mb-2 max-lg:text-sm">
+									<div class="grid grid-cols-3">
+										<legend class="col-span-1 font-bold me-4">Stato progetto</legend>
+										<div class="col-span-1 max-xs:ps-[0] max-sm:ps-6" id="inputRadioAperto">
+											<input type="radio" id="aperto" name="statoProgetto" value="aperto" >
+											<label for="aperto">Aperto</label>
+										</div>
+										<div class="col-span-1" id="inputRadioChiuso">
+											<input type="radio" id="chiuso" name="statoProgetto" value="chiuso" >
+											<label for="chiuso">Chiuso</label>
+										</div>
+									</div>
+								</fieldset>
+								<div class="flex justify-center gap-3 mt-4">
+									<button type="submit"
+										class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px] ">Applica
+										filtri</button>
 								</div>
-							 </div>
-							 </div>
-							</div>
-							
-<!-----------------------	card per clienti -------------------->
-							<div id="list-cliente"  class="hidden"> 
-							<div  class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-center w-full">
-							<div th:unless="${progettoCliente.getArchivia()} == true" th:each="progettoCliente : ${listProgettiByCliente}" class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
-														
-							<div class="md:flex" >
-									<div class="md:shrink-0">
-										<img class="aspect-square h-48 w-full object-cover md:w-48" th:src="@{${progettoCliente.cliente.LogoPath}}"
-											alt="logo-cliente">
-									</div>
-							
-									<div class="p-4 w-full">
-										<div>
-											<img th:if="${progettoCliente.getDataFine} == null" th:src="@{/img/sources/icons/contatore-on-start.svg}"
-												alt="progetto-attivo" class="size-5 inline float-right">
-											<img th:if="${progettoCliente.getDataFine} != null" th:src="@{/img/sources/icons/contatore-on-stop.svg}"
-												alt="progetto-chiuso" class="size-5 inline float-right">
-							
-										</div>
-										<div th:text="${progettoCliente.cliente.labelCliente}"
-											class="inline line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">etichetta
-											cliente</div>
-											<span th:text="|  -  progetto a ${progettoCliente.getTipologia()}" class=" text-slate-500"></span>
+							</form>
+						</div>
 										
-											<a th:href="@{/Progetti/{id}(id=${progettoCliente.getId()})}" th:text="${progettoCliente.name}"
-											class="line-clamp-1  block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome
-											progetto </a>
-										<p th:text="${progettoCliente.descrizione}" class="mt-2 text-slate-500 line-clamp-2">descrizione
-											progetto</p>
-							
-										<div>
-							
-											<span>
-							
-												<ul>
-							
-													<li class="flex flex-col md:flex-row float-left"><a
-															th:href="@{/Progetti/{id}(id=${progettoCliente.getId()})}"
-															class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
-															vai al dettaglio </a>
-															</li>
-													<li class="flex flex-col md:flex-row px-2 mt-6 float-left">
-														<a th:if="${progettoCliente.dataFine == null}"
-														th:href="@{/Task/insert/progetto-{id}(id=${progettoCliente.getId()})}">
-														
-															<div class=" t-tooltip col-auto w-8 h-8 ms-2">
-															
-															<img th:src="@{/img/sources/icons/add-task-blue.svg}"
-																		alt="aggiungi-task" class=" size-8 ml-3 -mt-1 inline">
-																<div class=" relative hidden -left-4 bottom-20 t-box w-32 text-center text-nowrap border border-[#0057A5] text-[#0057A5] bg-gray-100 rounded-lg p-1">
-																	Aggiungi Task
-																</div>
-															</div>
-															</a>
-															<img class="col-auto w-8 h-8 ms-2" th:unless="${progettoCliente.dataFine == null}" th:src="@{/img/sources/icons/add-task-blue-opacity.svg}">		
-													</li>
-													<li th:if="${progettoCliente.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
-														<span class="tooltiptext-top">Chiudi progetto</span>
-														<div class="size-6 flex items-end">
-															<button type="button" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
-																hover:bg-[url(/img/sources/icons/power-red.svg)]"
-																th:onclick="creaModaleChiudiProgetto([[${progettoCliente.getId()}]], [[${progettoCliente.getName()}]])"></button>
-														</div>
-													</li>
-													<li th:unless="${progettoCliente.dataFine == null}" class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
-														<span class="tooltiptext-top">Apri progetto</span>
-														<form th:action="@{/Progetti/apri/{id}(id=${progettoCliente.getId()})}" th:object="${progetto}" method="post"
-															class="size-6 flex items-end">
-															<button type="submit" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
-																hover:bg-[url(/img/sources/icons/power-green.svg)]"></button>
-														</form>
-													</li>
-													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
-														<a th:href="@{/Progetti/edit/{id}(id=${progettoCliente.getId()})}"><img
-																th:src="@{/img/sources/icons/modify-grey.svg}" alt="progetto-attivo"
-																class="size-5 inline"></a>
-													</li>
-							
-													<li class="flex flex-col md:flex-row px-2 mt-6 float-right">
-														<form th:action="@{/Progetti/archivia/{id}(id=${progettoCliente.getId()})}"
-														th:object="${progetto}" method="post">
-														<button type="submit">
-														<img th:src="@{/img/sources/icons/archive.svg}" alt="archivia" class="size-5 inline"></button>
-														</form>
-														
-													</li>
-													
-													<li>
-													<a th:href="@{/Task}"
-													th:text="'task ' + ${progettoCliente.getElencoTask().size()}"
-														class="hover:underline flex flex-col md:flex-row px-2 mt-7 float-right text-[#0057A5]">
-														</a>
-														</li>
-												
-												</ul>
-											</span>
+					
+						<div th:if="${searchMode == true}" class="p-10 text-center" th:text="|Risultati per --> '${inputInserito}'|"></div>
+						<div th:if="${filtriAttiviInListaProgetto == true}" class="p-10 text-center" id="stringaFiltri"></div>
+					
+						<!------------------ card --------------------->
+						<div id="list-data-inizio" class="">
+							<div class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-center w-full">
+								<div th:unless="${progettoPerData.getArchivia()} == true"
+									th:each="progettoPerData : ${listProgettiByDataModifica}"
+									class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
+									<div class="md:flex">
+										<div class="md:shrink-0">
+											<img class="aspect-square h-48 w-full object-cover md:w-48"
+												th:src="@{${progettoPerData.cliente.LogoPath}}" alt="logo-cliente">
 										</div>
-							
-							
-							
+					
+										<div class="p-4 w-full">
+											<div>
+												<img th:if="${progettoPerData.getDataFine} == null"
+													th:src="@{/img/sources/icons/contatore-on-start.svg}" alt="progetto-attivo"
+													class="size-5 inline float-right">
+												<img th:if="${progettoPerData.getDataFine} != null"
+													th:src="@{/img/sources/icons/contatore-on-stop.svg}" alt="progetto-chiuso"
+													class="size-5 inline float-right">
+					
+											</div>
+											<div th:text="${progettoPerData.cliente.labelCliente}"
+												class="inline line-clamp-1 uppercase tracking-wide text-sm text-[#FFE541] font-semibold">
+												etichetta
+												cliente</div>
+											<span th:text="|  -  progetto a ${progettoPerData.getTipologia()}"
+												class=" text-slate-500"></span>
+					
+											<a th:href="@{/Progetti/{id}(id=${progettoPerData.getId()})}" th:text="${progettoPerData.name}"
+												class="line-clamp-1 block mt-1 text-lg leading-tight font-medium text-[#0057A5] hover:underline">nome
+												progetto </a>
+											<p th:text="${progettoPerData.descrizione}" class="mt-2 text-slate-500 line-clamp-2">descrizione
+												progetto</p>
+					
+											<div>
+					
+												<span>
+					
+													<ul>
+					
+														<li class="flex flex-col md:flex-row float-left"><a
+																th:href="@{/Progetti/{id}(id=${progettoPerData.getId()})}"
+																class="inline text-center mt-4 mb-4 md:mb-0 lg:mb-0 xl:mb-0 2xl:mb-0 bg-[#0057A5] hover:bg-[#FFE541] text-white hover:text-[#0057A5] font-bold py-2 px-4 rounded-full">
+																vai al dettaglio </a></li>
+					
+														<li class="flex flex-col md:flex-row px-2 mt-6 float-left">
+					
+															<a th:if="${progettoPerData.dataFine == null}"
+																th:href="@{/Task/insert/progetto-{id}(id=${progettoPerData.getId()})}">
+					
+																<div class="tooltip-top col-auto w-8 h-8 ms-2">
+																	<span class="tooltiptext-top">Aggiungi task</span>
+																	<img th:src="@{/img/sources/icons/add-task-blue.svg}"
+																		alt="aggiungi-task" class="size-8 ml-3 -mt-1 inline">
+					
+																</div>
+															</a>
+															<img class="col-auto w-8 h-8 ms-2"
+																th:unless="${progettoPerData.dataFine == null}"
+																th:src="@{/img/sources/icons/add-task-blue-opacity.svg}">
+														</li>
+					
+														<li th:if="${progettoPerData.dataFine == null}"
+															class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
+															<span class="tooltiptext-top">Chiudi progetto</span>
+															<div class="size-6 flex items-end">
+																<button type="button" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
+																					hover:bg-[url(/img/sources/icons/power-red.svg)]"
+																	th:onclick="creaModaleChiudiProgetto([[${progettoPerData.getId()}]], [[${progettoPerData.getName()}]])"></button>
+															</div>
+														</li>
+														<li th:unless="${progettoPerData.dataFine == null}"
+															class="tooltip-top flex flex-col md:flex-row mt-6 float-right">
+															<span class="tooltiptext-top">Apri progetto</span>
+															<form th:action="@{/Progetti/apri/{id}(id=${progettoPerData.getId()})}"
+																th:object="${progetto}" method="post" class="size-6 flex items-end">
+																<button type="submit" class="size-5 inline bg-[url(/img/sources/icons/power.svg)] 
+																					hover:bg-[url(/img/sources/icons/power-green.svg)]"></button>
+															</form>
+														</li>
+														<li class="flex flex-col md:flex-row px-2 mt-6 mr-2 float-right">
+															<a th:href="@{/Progetti/edit/{id}(id=${progettoPerData.getId()})}"><img
+																	th:src="@{/img/sources/icons/modify-grey.svg}" alt="modifica-progetto"
+																	class="size-5 inline"></a>
+														</li>
+					
+														<li class="tooltip-top flex flex-col md:flex-row px-2 mt-6 float-right">
+															<span class="tooltiptext-top">Archivia progetto</span>
+															<form th:action="@{/Progetti/archivia/{id}(id=${progettoPerData.getId()})}"
+																th:object="${progetto}" method="post">
+																<button type="submit">
+																	<img th:src="@{/img/sources/icons/archive.svg}" alt="archivia"
+																		class="size-5 inline"></button>
+															</form>
+														</li>
+														<li>
+															<a th:href="@{/Task}"
+																th:text="'task ' + ${progettoPerData.getElencoTask().size()}"
+																class="hover:underline flex flex-col md:flex-row sm:visible lg:visible md:invisible px-2 mt-7 float-right text-[#0057A5]">
+															</a>
+														</li>
+					
+													</ul>
+												</span>
+											</div>
+					
+					
+					
+										</div>
 									</div>
 								</div>
-							</div>	
-							</div>
-							</div>
-						
-<!--paginazione lista per data-->
-					<div th:unless="${searchMode == true}">
-						<div th:if="${listProgettiByDataInizio.isEmpty()}" id="ricerca-vuota-data" class="text-center text-[#0057A5] p-4">
-							<div>
-								<h1>La ricerca non ha prodotto risultati</h1>
 							</div>
 						</div>
 					
-					
-						<div id="paginazione-data" class="p-[-20px] md:p-4 mb-4">
-					
-							<div class="flex flex-col lg:flex-row justify-between text-center ">
-								<div class="col flex justify-center flex-col lg:flex-row mb-6 ">
-									<div class="max-md:mx-[-20px] inline"
-										th:text="|Progetti totali ordinati per data inizio: ${totalItemByDatainizio}|"></div>
-									<span class="max-lg:hidden">&nbsp; - &nbsp;</span>
-									<div th:text="| Pagina ${currentPage} di ${totalPageByDataInizio}|"></div>
-								</div>
-					
-								<div th:if="${totalPageByDataInizio > 1 and totalPageByDataInizio < 7}"
-									class="col gap-2 flex justify-center">
-									<span
-										class=" h-7 w-7 flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]"
-										th:each="i : ${#numbers.sequence(1, totalPageByDataInizio)}">
-										<a  th:if="${currentPage == i}" class="h-full w-full rounded-lg bg-[#FFE541] text-[#0057A5]" th:href="@{'/Progetti/page/'+${i}}" th:text="${i}"></a>
-										<a  th:if="${currentPage != i}" class="text-[#0057A5]" th:href="@{'/Progetti/page/'+${i}}" th:text="${i}"></a>
-									</span>
-								</div>
-								<div th:if="${totalPageByDataInizio >= 7}" class="col flex gap-1 md:gap-2 flex justify-center">
-									<span th:if="${currentPage == 1}"
-										class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
-										<a class="" th:href="@{'/Progetti/page/1'}">1</a>
-									</span>
-									<span th:if="${currentPage > 1}"
-										class=" h-7 w-auto flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
-										<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
-											th:href="@{'/Progetti/page/'+${currentPage - 1}}">
-											<img th:src="@{/img/sources/icons/arrow-left-blue.svg}" alt="prev"
-												class="max-xs:hidden h-4 w-auto pe-2">
-											<span>Prev</span>
-										</a>
-									</span>
-									<span th:unless="${currentPage == 1}"
-										class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5]" th:href="@{'/Progetti/page/1'}">1</a>
-									</span>
-									<span th:if="${currentPage > 2}"
-										class=" h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										...
-									</span>
-									<span th:if="${currentPage > 2}"
-										class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5]" th:href="@{'/Progetti/page/'+${currentPage - 1}}"
-											th:text="${currentPage - 1}"></a>
-									</span>
-									<span th:if="${currentPage > 1 and currentPage != totalPageByDataInizio}"
-										class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{'/Progetti/page/'+${currentPage}}"
-											th:text="${currentPage}"></a>
-									</span>
-									<span th:if="${currentPage < (totalPageByDataInizio - 1)}"
-										class="h-7 w-7 flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{'/Progetti/page/'+${currentPage + 1}}"
-											th:text="${currentPage + 1}"></a>
-									</span>
-									<span th:if="${currentPage < (totalPageByDataInizio - 2)}"
-										class="h-7 w-7   flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										...
-									</span>
-									<span th:if="${currentPage == totalPageByDataInizio}"
-										class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{'/Progetti/page/'+${totalPageByDataInizio}}"
-											th:text="${totalPageByDataInizio}"></a>
-									</span>
-									<span th:unless="${currentPage == totalPageByDataInizio}"
-										class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{'/Progetti/page/'+${totalPageByDataInizio}}"
-											th:text="${totalPageByDataInizio}"></a>
-									</span>
-									<span th:if="${currentPage < totalPageByDataInizio}"
-										class="h-7 w-auto flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
-											th:href="@{'/Progetti/page/'+${currentPage + 1}}">
-											<span>Next</span>
-											<img th:src="@{/img/sources/icons/arrow-right-blue.svg}" alt="prev"
-												class="max-xs:hidden h-4 w-auto ps-2">
-										</a>
-									</span>
+						<!--paginazione lista per data-->
+						<div th:unless="${searchMode == true}">
+							<div th:if="${listProgettiByDataModifica.isEmpty()}" id="ricerca-vuota-data"
+								class="text-center text-[#0057A5] p-4">
+								<div>
+									<h1>La ricerca non ha prodotto risultati</h1>
 								</div>
 							</div>
-						</div>
 					
-						<!--	paginazione lista per clienti-->
-						 <div th:if="${listProgettiByCliente.isEmpty()}"  id="ricerca-vuota-clienti" class="text-center text-[#0057A5] p-4">
-																			<div >
-																				<h1>La ricerca non ha prodotto risultati</h1>
-																			</div>
-																		</div> 
 					
-						<div id="paginazione-clienti" class="hidden p-[-20px] md:p-4 mb-4">
+							<div id="paginazione-data" class="p-[-20px] md:p-4 mb-4">
 					
-							<div class="flex flex-col lg:flex-row justify-between text-center ">
-								<div class="col flex justify-center flex-col lg:flex-row mb-6 ">
-									<div class="max-md:mx-[-20px] inline"
-										th:text="|Progetti totali ordinati per cliente: ${totalItemByCliente}|"></div>
-									<span class="max-lg:hidden">&nbsp; - &nbsp;</span>
-									<div th:text="| Pagina ${currentPage} di ${totalPageByCliente}|"></div>
-								</div>
-					
-								<div th:if="${totalPageByCliente > 1 and totalPageByDataInizio < 7}" class="col gap-2 flex justify-center">
-									<span
-										class=" h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]"
-										th:each="i : ${#numbers.sequence(1, totalPageByCliente)}">
-										<a  th:if="${currentPage == i}" class="h-full w-full rounded-lg bg-[#FFE541] text-[#0057A5]" th:href="@{'/Progetti/page/'+${i}}" th:text="${i}"></a>
-										<a  th:if="${currentPage != i}" class="text-[#0057A5]" th:href="@{'/Progetti/page/'+${i}}" th:text="${i}"></a>
-									</span>
-								</div>
-								<div th:if="${totalPageByCliente >= 7}" class="col flex gap-1 md:gap-2 flex justify-center">
-									<span th:if="${currentPage == 1}"
-										class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
-										<a class="" th:href="@{'/Progetti/page/1'}">1</a>
-									</span>
-									<span th:if="${currentPage > 1}"
-										class=" h-7 w-auto flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
-										<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
-											th:href="@{'/Progetti/page/'+${currentPage - 1}}">
-											<img th:src="@{/img/sources/icons/arrow-left-blue.svg}" alt="prev"
-												class="max-xs:hidden h-4 w-auto pe-2">
-											<span>Prev</span>
-										</a>
-									</span>
-									<span th:unless="${currentPage == 1}"
-										class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5]" th:href="@{'/Progetti/page/1'}">1</a>
-									</span>
-									<span th:if="${currentPage > 2}"
-										class=" h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										...
-									</span>
-									<span th:if="${currentPage > 2}"
-										class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5]" th:href="@{'/Progetti/page/'+${currentPage - 1}}"
-											th:text="${currentPage - 1}"></a>
-									</span>
-									<span th:if="${currentPage > 1 and currentPage != totalPageByCliente}"
-										class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{'/Progetti/page/'+${currentPage}}"
-											th:text="${currentPage}"></a>
-									</span>
-									<span th:if="${currentPage < (totalPageByDataInizio - 1)}"
-										class="h-7 w-7 flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{'/Progetti/page/'+${currentPage + 1}}"
-											th:text="${currentPage + 1}"></a>
-									</span>
-									<span th:if="${currentPage < (totalPageByCliente - 2)}"
-										class="h-7 w-7   flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										...
-									</span>
-									<span th:if="${currentPage == totalPageByCliente}"
-										class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{'/Progetti/page/'+${totalPageByCliente}}"
-											th:text="${totalPageByDataInizio}"></a>
-									</span>
-									<span th:unless="${currentPage == totalPageByCliente}"
-										class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{'/Progetti/page/'+${totalPageByCliente}}"
-											th:text="${totalPageByDataInizio}"></a>
-									</span>
-									<span th:if="${currentPage < totalPageByCliente}"
-										class="h-7 w-auto flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
-											th:href="@{'/Progetti/page/'+${currentPage + 1}}">
-											<span>Next</span>
-											<img th:src="@{/img/sources/icons/arrow-right-blue.svg}" alt="prev"
-												class="max-xs:hidden h-4 w-auto ps-2">
-										</a>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-						
-						
-	<!-- paginazione per searchMode -->
-
-					<div th:if="${searchMode == true}" class="p-[-20px] md:p-4 mb-4">
-						<div id="paginazione-data" class="p-[-20px] md:p-4 mb-4">
-							<div class="flex flex-col lg:flex-row justify-between text-center ">
-								<div class="col flex justify-center flex-col lg:flex-row mb-6 ">
-									<div class="max-md:mx-[-20px] inline" th:text="|Ricerca per '${inputInserito}' - progetti ordinati per data: ${totalItemByDatainizio}|">
+								<div class="flex flex-col lg:flex-row justify-between text-center ">
+									<div class="col flex justify-center flex-col lg:flex-row mb-6 ">
+										<div th:if="${filtriAttiviInListaProgetto == false}"  class="max-md:mx-[-20px] inline"
+											th:text="|Progetti totali ordinati per data di modifica: ${totalItemByDataModifica}|"></div>
+										<div th:if="${filtriAttiviInListaProgetto == true}" class="max-md:mx-[-20px] inline"
+											th:text="|Progetti filtrati ordinati per data di modifica: ${totalItemByDataModifica}|"></div>	
+										<span class="max-lg:hidden">&nbsp; - &nbsp;</span>
+										<div th:text="| Pagina ${currentPage} di ${totalPageByDataModifica}|"></div>
 									</div>
-									<span class="max-lg:hidden">&nbsp; - &nbsp;</span>
-									<div th:text="| Pagina ${currentPage} di ${totalPageByDataInizio}|"></div>
-								</div>
-							
-								<div th:if="${totalPageByDataInizio > 1 and totalPageByDataInizio < 7}" class="col gap-2 flex justify-center">
-									<span
-										class=" h-7 w-7   flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]"
-										th:each="i : ${#numbers.sequence(1, totalPageByDataInizio)}">
-										<a th:if="${currentPage == i}" class="h-full w-full rounded-lg bg-[#FFE541] text-[#0057A5]" th:href="@{|/progetto-search-input=${inputInserito}/page/${i}|}" th:text="${i}"></a>
-										<a th:if="${currentPage != i}" class=" text-[#0057A5]" th:href="@{|/progetto-search-input=${inputInserito}/page/${i}|}" th:text="${i}"></a>
-									</span>
-								</div>
-								<div th:if="${totalPageByDataInizio >= 7}" class="col flex gap-1 md:gap-2 flex justify-center">
-									<span th:if="${currentPage == 1}"
-										class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
-										<a class="" th:href="@{|/progetto-search-input=${inputInserito}/page/1|}">1</a>
-									</span>
-									<span th:if="${currentPage > 1}"
-										class=" h-7 w-auto flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
-										<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
-											th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage - 1}|}">
-											<img th:src="@{/img/sources/icons/arrow-left-blue.svg}" alt="prev"
-												class="max-xs:hidden h-4 w-auto pe-2">
-											<span>Prev</span>
-										</a>
-									</span>
-									<span th:unless="${currentPage == 1}"
-										class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5]" th:href="@{|/progetto-search-input=${inputInserito}/page/1|}">1</a>
-									</span>
-									<span th:if="${currentPage > 2}"
-										class=" h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										...
-									</span>
-									<span th:if="${currentPage > 2}"
-										class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5]" th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage - 1}|}"
-											th:text="${currentPage - 1}"></a>
-									</span>
-									<span th:if="${currentPage > 1 and currentPage != totalPageByDataInizio}"
-										class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage}|}"
-											th:text="${currentPage}"></a>
-									</span>
-									<span th:if="${currentPage < (totalPageByDataInizio - 1)}"
-										class="h-7 w-7 flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage + 1}|}"
-											th:text="${currentPage + 1}"></a>
-									</span>
-									<span th:if="${currentPage < (totalPageByDataInizio - 2)}"
-										class="h-7 w-7   flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										...
-									</span>
-									<span th:if="${currentPage == totalPageByDataInizio}"
-										class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search-input=${inputInserito}/page/${totalPageByCliente}|}"
-											th:text="${totalPageByDataInizio}"></a>
-									</span>
-									<span th:unless="${currentPage == totalPageByDataInizio}"
-										class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search-input=${inputInserito}/page/${totalPageByCliente}|}"
-											th:text="${totalPageByDataInizio}"></a>
-									</span>
-									<span th:if="${currentPage < totalPageByDataInizio}"
-										class="h-7 w-auto flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
-											th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage + 1}|}">
-											<span>Next</span>
-											<img th:src="@{/img/sources/icons/arrow-right-blue.svg}" alt="prev"
-												class="max-xs:hidden h-4 w-auto ps-2">
-										</a>
-									</span>
-								</div>
-							</div>
-						</div>
-						<div id="paginazione-clienti" class="hidden p-[-20px] md:p-4 mb-4">
-							<div class="flex flex-col lg:flex-row justify-between text-center ">
-								<div class="col flex justify-center flex-col lg:flex-row mb-6 ">
-									<div class="max-md:mx-[-20px] inline" th:text="|Ricerca per '${inputInserito}' - progetti ordinati per cliente: ${totalItemByCliente}|">
+					
+									<div th:if="${totalPageByDataModifica > 1 and totalPageByDataModifica < 7}"
+										class="col gap-2 flex justify-center">
+										<span
+											class=" h-7 w-7 flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]"
+											th:each="i : ${#numbers.sequence(1, totalPageByDataModifica)}">
+											<a th:if="${currentPage == i}" class="h-full w-full rounded-lg bg-[#FFE541] text-[#0057A5]"
+												th:href="@{'/Progetti/page/'+${i}}" th:text="${i}"></a>
+											<a th:if="${currentPage != i}" class="text-[#0057A5]" th:href="@{'/Progetti/page/'+${i}}"
+												th:text="${i}"></a>
+										</span>
 									</div>
-									<span class="max-lg:hidden">&nbsp; - &nbsp;</span>
-									<div th:text="| Pagina ${currentPage} di ${totalPageByCliente}|"></div>
+									<div th:if="${totalPageByDataModifica >= 7}" class="col flex gap-1 md:gap-2 flex justify-center">
+										<span th:if="${currentPage == 1}"
+											class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
+											<a class="" th:href="@{'/Progetti/page/1'}">1</a>
+										</span>
+										<span th:if="${currentPage > 1}"
+											class=" h-7 w-auto flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
+											<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
+												th:href="@{'/Progetti/page/'+${currentPage - 1}}">
+												<img th:src="@{/img/sources/icons/arrow-left-blue.svg}" alt="prev"
+													class="max-xs:hidden h-4 w-auto pe-2">
+												<span>Prev</span>
+											</a>
+										</span>
+										<span th:unless="${currentPage == 1}"
+											class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
+											<a class="p-[3px] text-[#0057A5]" th:href="@{'/Progetti/page/1'}">1</a>
+										</span>
+										<span th:if="${currentPage > 2}"
+											class=" h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											...
+										</span>
+										<span th:if="${currentPage > 2}"
+											class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											<a class="p-[3px] text-[#0057A5]" th:href="@{'/Progetti/page/'+${currentPage - 1}}"
+												th:text="${currentPage - 1}"></a>
+										</span>
+										<span th:if="${currentPage > 1 and currentPage != totalPageByDataModifica}"
+											class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											<a class="p-[3px] text-[#0057A5] " th:href="@{'/Progetti/page/'+${currentPage}}"
+												th:text="${currentPage}"></a>
+										</span>
+										<span th:if="${currentPage < (totalPageByDataModifica - 1)}"
+											class="h-7 w-7 flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											<a class="p-[3px] text-[#0057A5] " th:href="@{'/Progetti/page/'+${currentPage + 1}}"
+												th:text="${currentPage + 1}"></a>
+										</span>
+										<span th:if="${currentPage < (totalPageByDataModifica - 2)}"
+											class="h-7 w-7   flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											...
+										</span>
+										<span th:if="${currentPage == totalPageByDataModifica}"
+											class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											<a class="p-[3px] text-[#0057A5] " th:href="@{'/Progetti/page/'+${totalPageByDataInizio}}"
+												th:text="${totalPageByDataInizio}"></a>
+										</span>
+										<span th:unless="${currentPage == totalPageByDataModifica}"
+											class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											<a class="p-[3px] text-[#0057A5] " th:href="@{'/Progetti/page/'+${totalPageByDataInizio}}"
+												th:text="${totalPageByDataInizio}"></a>
+										</span>
+										<span th:if="${currentPage < totalPageByDataModifica}"
+											class="h-7 w-auto flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
+												th:href="@{'/Progetti/page/'+${currentPage + 1}}">
+												<span>Next</span>
+												<img th:src="@{/img/sources/icons/arrow-right-blue.svg}" alt="prev"
+													class="max-xs:hidden h-4 w-auto ps-2">
+											</a>
+										</span>
+									</div>
 								</div>
-							
-								<div th:if="${totalPageByCliente > 1 and totalPageByCliente < 7}" class="col gap-2 flex justify-center">
-									<span
-										class=" h-7 w-7 flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]"
-										th:each="i : ${#numbers.sequence(1, totalPageByCliente)}">
-										<a th:if="${currentPage == i}" class="h-full w-full rounded-lg bg-[#FFE541] text-[#0057A5]" th:href="@{|/progetto-search-input=${inputInserito}/page/${i}|}" th:text="${i}"></a>
-										<a th:if="${currentPage != i}" class="text-[#0057A5]" th:href="@{|/progetto-search-input=${inputInserito}/page/${i}|}" th:text="${i}"></a>
-									</span>
-								</div>
-								<div th:if="${totalPageByCliente >= 7}" class="col flex gap-1 md:gap-2 flex justify-center">
-									<span th:if="${currentPage == 1}"
-										class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
-										<a class="" th:href="@{|/progetto-search-input=${inputInserito}/page/1|}">1</a>
-									</span>
-									<span th:if="${currentPage > 1}"
-										class=" h-7 w-auto flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
-										<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
-											th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage - 1}|}">
-											<img th:src="@{/img/sources/icons/arrow-left-blue.svg}" alt="prev"
-												class="max-xs:hidden h-4 w-auto pe-2">
-											<span>Prev</span>
-										</a>
-									</span>
-									<span th:unless="${currentPage == 1}"
-										class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5]" th:href="@{|/progetto-search-input=${inputInserito}/page/1|}">1</a>
-									</span>
-									<span th:if="${currentPage > 2}"
-										class=" h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										...
-									</span>
-									<span th:if="${currentPage > 2}"
-										class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5]" th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage - 1}|}"
-											th:text="${currentPage - 1}"></a>
-									</span>
-									<span th:if="${currentPage > 1 and currentPage != totalPageByCliente}"
-										class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage}|}"
-											th:text="${currentPage}"></a>
-									</span>
-									<span th:if="${currentPage < (totalPageByCliente - 1)}"
-										class="h-7 w-7 flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage + 1}|}"
-											th:text="${currentPage + 1}"></a>
-									</span>
-									<span th:if="${currentPage < (totalPageByCliente - 2)}"
-										class="h-7 w-7   flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										...
-									</span>
-									<span th:if="${currentPage == totalPageByCliente}"
-										class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search-input=${inputInserito}/page/${totalPageByCliente}|}"
-											th:text="${totalPageByDataInizio}"></a>
-									</span>
-									<span th:unless="${currentPage == totalPageByCliente}"
-										class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="p-[3px] text-[#0057A5] " th:href="@{|/progetto-search-input=${inputInserito}/page/${totalPageByCliente}|}"
-											th:text="${totalPageByDataInizio}"></a>
-									</span>
-									<span th:if="${currentPage < totalPageByCliente}"
-										class="h-7 w-auto flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
-										<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
-											th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage + 1}|}">
-											<span>Next</span>
-											<img th:src="@{/img/sources/icons/arrow-right-blue.svg}" alt="prev"
-												class="max-xs:hidden h-4 w-auto ps-2">
-										</a>
-									</span>
+							</div>
+									
+						<!-- paginazione per searchMode -->
+					
+						<div th:if="${searchMode == true}" class="p-[-20px] md:p-4 mb-4">
+							<div id="paginazione-data" class="p-[-20px] md:p-4 mb-4">
+								<div class="flex flex-col lg:flex-row justify-between text-center ">
+									<div class="col flex justify-center flex-col lg:flex-row mb-6 ">
+										<div class="max-md:mx-[-20px] inline"
+											th:text="|Ricerca per '${inputInserito}' - progetti ordinati per data modifica: ${totalItemByDataModifica}|">
+										</div>
+										<span class="max-lg:hidden">&nbsp; - &nbsp;</span>
+										<div th:text="| Pagina ${currentPage} di ${totalPageByDataModifica}|"></div>
+									</div>
+					
+									<div th:if="${totalPageByDataModifica > 1 and totalPageByDataModifica < 7}"
+										class="col gap-2 flex justify-center">
+										<span
+											class=" h-7 w-7   flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]"
+											th:each="i : ${#numbers.sequence(1, totalPageByDataModifica)}">
+											<a th:if="${currentPage == i}" class="h-full w-full rounded-lg bg-[#FFE541] text-[#0057A5]"
+												th:href="@{|/progetto-search-input=${inputInserito}/page/${i}|}" th:text="${i}"></a>
+											<a th:if="${currentPage != i}" class=" text-[#0057A5]"
+												th:href="@{|/progetto-search-input=${inputInserito}/page/${i}|}" th:text="${i}"></a>
+										</span>
+									</div>
+									<div th:if="${totalPageByDataModifica >= 7}" class="col flex gap-1 md:gap-2 flex justify-center">
+										<span th:if="${currentPage == 1}"
+											class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
+											<a class="" th:href="@{|/progetto-search-input=${inputInserito}/page/1|}">1</a>
+										</span>
+										<span th:if="${currentPage > 1}"
+											class=" h-7 w-auto flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
+											<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
+												th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage - 1}|}">
+												<img th:src="@{/img/sources/icons/arrow-left-blue.svg}" alt="prev"
+													class="max-xs:hidden h-4 w-auto pe-2">
+												<span>Prev</span>
+											</a>
+										</span>
+										<span th:unless="${currentPage == 1}"
+											class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-semimedium shadow-md shadow-[#0057A5]">
+											<a class="p-[3px] text-[#0057A5]"
+												th:href="@{|/progetto-search-input=${inputInserito}/page/1|}">1</a>
+										</span>
+										<span th:if="${currentPage > 2}"
+											class=" h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											...
+										</span>
+										<span th:if="${currentPage > 2}"
+											class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											<a class="p-[3px] text-[#0057A5]"
+												th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage - 1}|}"
+												th:text="${currentPage - 1}"></a>
+										</span>
+										<span th:if="${currentPage > 1 and currentPage != totalPageByDataModifica}"
+											class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											<a class="p-[3px] text-[#0057A5] "
+												th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage}|}"
+												th:text="${currentPage}"></a>
+										</span>
+										<span th:if="${currentPage < (totalPageByDataModifica - 1)}"
+											class="h-7 w-7 flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											<a class="p-[3px] text-[#0057A5] "
+												th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage + 1}|}"
+												th:text="${currentPage + 1}"></a>
+										</span>
+										<span th:if="${currentPage < (totalPageByDataModifica - 2)}"
+											class="h-7 w-7   flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											...
+										</span>
+										<span th:if="${currentPage == totalPageByDataModifica}"
+											class="h-7 w-7 bg-[#FFE541]  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											<a class="p-[3px] text-[#0057A5] "
+												th:href="@{|/progetto-search-input=${inputInserito}/page/${totalPageByCliente}|}"
+												th:text="${totalPageByDataInizio}"></a>
+										</span>
+										<span th:unless="${currentPage == totalPageByDataModifica}"
+											class="h-7 w-7  flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											<a class="p-[3px] text-[#0057A5] "
+												th:href="@{|/progetto-search-input=${inputInserito}/page/${totalPageByCliente}|}"
+												th:text="${totalPageByDataInizio}"></a>
+										</span>
+										<span th:if="${currentPage < totalPageByDataModifica}"
+											class="h-7 w-auto flex items-center justify-center border border-[#0057A5] rounded-lg text-[#0057A5] font-medium shadow-md shadow-[#0057A5]">
+											<a class="px-[2px] text-[#0057A5] flex justify-center items-center px-2 md:px-4 "
+												th:href="@{|/progetto-search-input=${inputInserito}/page/${currentPage + 1}|}">
+												<span>Next</span>
+												<img th:src="@{/img/sources/icons/arrow-right-blue.svg}" alt="prev"
+													class="max-xs:hidden h-4 w-auto ps-2">
+											</a>
+										</span>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 					
 					</section>
-					
 				
 				</div>
 				<div th:if="${areProjectsOnDb == false}" class="flex flex-col items-center justify-center text-center h-full">
@@ -1021,7 +828,7 @@
 	</main>
 	
 	<!-- Modale TimerRapidButton -->
-		<div id="modalRapidButton" class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
+	<div id="modalRapidButton" class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
 		<div class="w-11/12 md:w-[550px] h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
 			<div class="grid grid-cols-12 p-1">
 				<div class="col-span-11 flex justify-center items-center text-white font-bold">GESTIONE RAPIDA TASK</div>
@@ -1089,51 +896,7 @@
 										</div>
 									</div>
 								</div>
-
 								<!-- Fine searchMode del rapid button -->
-
-								<!-- fine sezione contatore -->
-								<!-- Inizio sezione ore lavorate -->
-								<div id="ore-lavorate-task-rapid-container" class="hidden w-[90%] h-fit">
-									<div class="flex flex-row justify-center p-2">
-										<form id="taskDetailHrefOre" th:object="${contatore}"
-												method="post">
-											<h2 class="text-center font-bold mb-3">Inserimento ore lavorate</h2>
-											<div class="p-1">
-												<div class="grid grid-cols-2 flex items-center mb-2">
-													<p class="col mb-2 font-semibold">Inserisci la data</p>
-													<input type="date" name="date" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
-														class=" col md:text-xl border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-[#ffe541]/50"
-														id="dataOreLavorate">												
-												</div>
-												<div class="grid grid-cols-2 flex items-center mb-2">
-													<p class="col font-semibold">Inserisci ore</p>
-													<input type="time" name="time" value="01:00"
-														class="col h-8 md:text-xl border border-[#0057A5] text-[#0057A5] rounded-lg block w-full text-center	bg-[#ffe541]/50"
-														id="tempoOreLavorate">												
-												</div>
-												<div class="grid grid-cols-1  md:grid-cols-2 flex items-center mb-3">
-													<div class="col text-left  flex items-center justify-start max-md:py-1">
-														<input type="radio" name="aggiungiOre" checked="checked" id="sovrascriviOre" value="0">
-														<label for="sovrascriviOre" class="ps-1">Sovrascrivi e chiudi task</label><br>														
-													</div>
-													<div class="col flex items-center justify-start md:justify-end max-md:py-1">
-														<input type="radio" name="aggiungiOre" id="aggiungiOre" value="1">
-														<label for="aggiungiOre" class="pe-1" >Aggiungi al task attivo</label>														
-													</div>
-												</div>
-												<div class="text-center">
-													<button class="col w-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]" 
-														type="submit">
-															Aggiungi
-													</button>													
-												</div>
-											</div>
-										</form>
-									</div>
-								</div>
-								<!-- fine sezione ore lavorate -->
-
 							</div>
 						</div>
 				</div>
@@ -1228,9 +991,11 @@
 										<div class="p-1">
 											<div class="grid grid-cols-2 flex items-center mb-2">
 												<p class="col mb-2 font-semibold">Inserisci la data</p>
-												<input type="date" name="date" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
-													class=" col md:text-xl p-2 border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-[#ffe541]/50"
-													id="dataOreLavorate">												
+
+												<input type="date" name="date"
+													th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+													class=" col md:text-xl border border-[#0057A5] h-8  text-[#0057A5] rounded-lg block w-full text-center bg-[#ffe541]/50"
+													id="dataOreLavorate">
 											</div>
 											<div class="grid grid-cols-2 flex items-center mb-2">
 												<p class="col font-semibold">Inserisci ore</p>
@@ -1238,14 +1003,20 @@
 													class="col h-8 md:text-xl border border-[#0057A5] text-[#0057A5] rounded-lg block w-full text-center	bg-[#ffe541]/50"
 													id="tempoOreLavorate">												
 											</div>
-											<div class="grid grid-cols-1  md:grid-cols-2 flex items-center mb-3">
-												<div class="col text-left  flex items-center justify-start max-md:py-1">
-													<input type="radio" name="aggiungiOre" checked="checked" id="sovrascriviOre" value="0">
-													<label for="sovrascriviOre" class="ps-1">Sovrascrivi e chiudi task</label><br>														
+											<div
+												class="grid grid-cols-1  md:grid-cols-2 flex items-center mb-3">
+												<div
+													class="col flex items-center justify-start md:justify-end max-md:py-1">
+													<input type="radio" name="aggiungiOre" checked="checked" id="aggiungiOre"
+														value="1"> <label for="aggiungiOre" class="pe-1">Aggiungi
+														al task attivo</label>
 												</div>
-												<div class="col flex items-center justify-start md:justify-end max-md:py-1">
-													<input type="radio" name="aggiungiOre" id="aggiungiOre" value="1">
-													<label for="aggiungiOre" class="pe-1" >Aggiungi al task attivo</label>														
+												<div
+													class="col text-left  flex items-center justify-start max-md:py-1">
+													<input type="radio" name="aggiungiOre" 
+														id="sovrascriviOre" value="0"> <label
+														for="sovrascriviOre" class="ps-1">Sovrascrivi e
+														chiudi task</label><br>
 												</div>
 											</div>
 											<div class="text-center">
@@ -1312,13 +1083,17 @@
 		let taskInUsoName = /*[[${taskInUsoName}]]*/ null;
 		let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
 		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean	
-		let ordinaElencoProgettiPerData = /*[[${ordinaElencoProgettiPerData}]]*/null; //boolean
-		let ordinaElencoProgettiPerCliente = /*[[${ordinaElencoProgettiPerCliente}]]*/null; //boolean
 		let isSearchProjectModeActive = /*[[${searchMode}]]*/null; //boolean
 		let contatoreCliccatoPreRefresh = /*[[${contatoreCliccatoPreRefresh}]]*/ null; //boolean
 		let endPoint = /*[[${endPoint}]]*/ null;
 		let contatoreAttivatoDaRapidButton = /*[[${contatoreAttivatoDaRapidButton}]]*/null; //boolean
 		let descrizioneTaskId = null; 
+		let filtriAttiviInListaProgetto =  /*[[${filtriAttiviInListaProgetto}]]*/ null; // boolean
+		let filtroStatoProgetto = /*[[${filtroStatoProgetto}]]*/ null;
+		let filtroOrdinamentoProgetto = /*[[${filtroOrdinamentoProgetto}]]*/ null;
+		let filtroNomeCliente = /*[[${filtroNomeCliente}]]*/ null;
+		let filtroDataOrdinamentoProgetto = /*[[${filtroDataOrdinamentoProgetto}]]*/ null;
+		console.log("filtriAttiviInListaProgetto: " + filtriAttiviInListaProgetto)
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>

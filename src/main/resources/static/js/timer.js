@@ -14,6 +14,15 @@ let iterazioni = 0;
 	crono = setInterval(tempochescorre, 1000);
 	
 	
+	window.addEventListener('focus', function() {
+
+		console.log("scheda in vista")
+	},false);
+
+	window.addEventListener('blur', function() {
+		tempochescorre();
+		console.log("scheda non in vista")
+	},false);
 	
 	
 //recupero elementi dal DOM per pulsanti pause e play dei contatori
