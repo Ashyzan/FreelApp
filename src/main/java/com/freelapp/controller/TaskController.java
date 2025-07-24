@@ -14,8 +14,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 import com.freelapp.model.Contatore;
 import com.freelapp.model.Progetto;
@@ -726,11 +731,11 @@ public class TaskController {
 	return "/Task/freelapp-editTask";
     }
 
-    @PostMapping("/Task/edit/{id}")
+    @RequestMapping(value = "/Task/edit/{id}", method = {RequestMethod.PATCH, RequestMethod.POST})
     public String updateTask(@PathVariable("id") Integer id, @Valid @ModelAttribute("formTask") Task formTask,
 	    BindingResult bindingResult, Model model) {
-	repositTask.getReferenceById(id);
-
+	Task task = repositTask.getReferenceById(id);
+	
 	if (bindingResult.hasErrors()) {
 	    bindingResult.addError(new ObjectError("Errore", "c'è un errore nel salvataggio del form"));
 	    
@@ -770,9 +775,14 @@ public class TaskController {
 	    return "/Task/freelapp-editTask";
 	}
 
-	 formTask.setDataModifica(LocalDateTime.now());
-	repositTask.save(formTask);
-
+	task.setDataModifica(LocalDateTime.now());
+	 if (formTask.getName() != null) task.setName(formTask.getName());
+	 if (formTask.getDescrizione() != null) task.setDescrizione(formTask.getDescrizione());
+	 if (formTask.getDataInizio() != null) task.setDataInizio(formTask.getDataInizio());
+	 if (formTask.getDataChiusuraStimata() != null) task.setDataChiusuraStimata(formTask.getDataChiusuraStimata()); 
+  
+	repositTask.save(task);
+	
 	return "redirect:/Task/"+id;
 
     }
