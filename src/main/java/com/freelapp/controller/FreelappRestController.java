@@ -174,27 +174,6 @@ public class FreelappRestController {
 		return listaTaskSelectMode;
 
 	}
-
-	@GetMapping("/progetti/cambiaOrdinePerCliente")
-	public void cambiaOrdinePerCliente() {
-		// cambia il valore delle variabili inizializzate ad inizio controller al click
-		// dell'icona
-		// ordina per clienti sul template listaPorogetti
-	
-		ProgettoController.ordinaElencoProgettiPerData = false;
-
-	}
-
-	@GetMapping("/progetti/cambiaOrdinePerData")
-	public void cambiaOrdinePerData() {
-		// cambia il valore delle variabili inizializzate ad inizio controller al click
-		// dell'icona
-		// ordina per clienti sul template listaPorogetti
-	
-		ProgettoController.ordinaElencoProgettiPerData = true;
-
-	}
-	
 	
 // *********************** API PER STATISTICHE **************************
 	
