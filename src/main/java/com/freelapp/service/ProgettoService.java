@@ -422,10 +422,10 @@ public class ProgettoService {
 				if(task.getContatore() != null) {
 					
 					if(!task.getStato().equals("chiuso")) {
-					//	System.out.println("************************************** sono nellif del getstato diverso da chiuso");
+					
 						guadagnoTotaleTaskAttiviResult += ((task.getContatore().getFinaltime().doubleValue())/3600)* progetto.getTariffaOraria();
 						}
-					else {guadagnoTotaleTaskAttiviResult = 0;}
+					
 							}
 						}
 								String guadagnoTotaleTaskAttivi = String.format("%.2f", guadagnoTotaleTaskAttiviResult);

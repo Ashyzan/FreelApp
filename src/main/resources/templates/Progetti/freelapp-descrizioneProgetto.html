@@ -521,48 +521,7 @@
 					</div>
 					<!-- 			second column -->
 					<div class="xl:col-span-2 lg:col-span-3 col-span-6 h-full rounded-lg bg-gray-100 p-4 shadow-lg">
-						<h3 class="text-center text-[#FFE641] text-xl font-bold mb-4">Statistiche</h3>
-						<div class="flex">
-							<div class="w-1/2 m-3">
-					
-								<div class="py-6 mb-2">
-									<p class="col-span-2 md:col-span-1 font-bold pe-1 py-1"
-										th:text="|Tariffa Oraria: ${progetto.getTariffaOraria()} €|">
-									</p>
-									<p th:if="${progetto.getTipologia() == 'budget'}" th:text="|Budget: ${progetto.getBudgetMonetario()} €|"
-										class="col-span-2 md:col-span-1 font-bold pe-1 py-1">
-									</p>
-									<p th:if="${progetto.getTipologia() == 'ore'}" class="col-span-2 md:col-span-1 font-bold pe-1 py-1"
-										th:text="|Budget Ore: ${progetto.budgetOre}|">
-									</p>
-								</div>
-					
-							</div>
-							<div class="w-1/2 mb-3">
-								<div class=" w-full">
-									<div id="" class="flex flex-col justify-center items-center py-2 mb-2">
-										<div class="mx-auto  text-xl font-bold mb-2">Guadagno
-											Attuale</div>
-										<div class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " id="">1200 €
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					
-					
-					
-						<div class="w-full mb-2">
-							<div>
-								<canvas class="m-auto col w-full" id="boundaries"></canvas>
-							</div>
-					
-						</div>
-					
-					</div>
-					<!-- third column -->
-					<div class="xl:col-span-2 lg:col-span-6 col-span-6 h-full rounded-lg bg-gray-100 p-4 xl:p-3 shadow-lg">
-						<section class="w-full">
+											<section class="w-full">
 							<h1 class="text-center">ELENCO TASK ASSOCIATI AL PROGETTO</h1>
 							<table class="block text-[#0057A5] m-auto mb-4">
 								<thead class="block border border-[#0057A5] md:h-12 h-8 text-[#0057A5]  max-sm:text-[12px] mb-3">
@@ -632,6 +591,48 @@
 								</div>
 							</div>
 						</section>
+						
+					
+					</div>
+					<!-- third column -->
+					<div class="xl:col-span-2 lg:col-span-6 col-span-6 h-full rounded-lg bg-gray-100 p-4 xl:p-3 shadow-lg">
+						<h3 class="text-center text-[#FFE641] text-xl font-bold mb-4">Statistiche</h3>
+						<div class="flex">
+							<div class="w-1/2 m-3">
+					
+								<div class="py-6 mb-2">
+									<p class="col-span-2 md:col-span-1 font-bold pe-1 py-1"
+										th:text="|Tariffa Oraria: ${#numbers.formatDecimal(progetto.tariffaOraria,2,2,'COMMA')}  €|">
+									</p>
+									<p th:if="${progetto.getTipologia() == 'budget'}" th:text="|Budget: ${#numbers.formatDecimal(progetto.budgetMonetario,2,2,'COMMA')}  €|"
+										class="col-span-2 md:col-span-1 font-bold pe-1 py-1">
+									</p>
+									<p th:if="${progetto.getTipologia() == 'ore'}" class="col-span-2 md:col-span-1 font-bold pe-1 py-1"
+										th:text="|Budget Ore: ${progetto.budgetOre}|">
+									</p>
+								</div>
+					
+							</div>
+							<div class="w-1/2 mb-3">
+								<div class=" w-full">
+									<div id="" class="flex flex-col justify-center items-center py-2 mb-2">
+										<div class="mx-auto  text-xl font-bold mb-2">Guadagno
+											Attuale</div>
+										<div th:text="${guadagnoTotaleProgetto} + ' €'" class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " id="">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					
+					
+					
+						<div class="w-full mb-2">
+							<div>
+								<canvas class="m-auto col w-full" id="boundaries"></canvas>
+							</div>
+					
+						</div>
 					</div>
 				</div>
 				<!-- CONTATORE -->

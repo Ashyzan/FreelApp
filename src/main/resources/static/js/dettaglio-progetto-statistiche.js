@@ -87,7 +87,7 @@ async function getDataJsonProgetto() {
 		  labels: labels,
 		  datasets: [{
 			barPercentage: 1,
-		    label: 'Task attivi %',
+		    label: 'Task %',
 		    data: json.valori,
 		    backgroundColor: [
 		      'rgba(255, 99, 132, 0.2)',
