@@ -291,6 +291,8 @@ public class FreelappRestController {
 						
 					}
 		}
+		
+		
 		progettoJsonObj.put("valori", percentageValues);
 		progettoJsonObj.put("labels", NomiTask);
 		return progettoJsonObj;

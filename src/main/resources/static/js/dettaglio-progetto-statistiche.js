@@ -82,6 +82,9 @@ async function getDataJsonProgetto() {
 	console.log("json.labels " + json.labels);
 	
 	/* data */
+
+	
+	
 		const labels = json.labels;
 		const data = {
 		  labels: labels,
@@ -89,6 +92,7 @@ async function getDataJsonProgetto() {
 			barPercentage: 1,
 		    label: 'Task %',
 		    data: json.valori,
+			
 		    backgroundColor: [
 		      'rgba(255, 99, 132, 0.2)',
 		      'rgba(255, 159, 64, 0.2)',
@@ -111,31 +115,17 @@ async function getDataJsonProgetto() {
 		  }]
 		};
 
-
+if(json.valori != 0) {
 new Chart ( 
 	document.getElementById('boundaries'),
 	{
 		  type: 'bar',
 		  data: data,
 		  options: {
-//		          scales: {
-//		              
-//		              yAxes: [{
-//		              ticks: {
-//		              
-//		                     min: 0,
-//		                     max: 100,
-//		                     callback: function(value){return value+ "%"}
-//		                  },  
-//		  								scaleLabel: {
-//		                     display: true,
-//		                     labelString: "Percentage"
-//		                  }
-//		              }]
-//		          }
-		      },
+		                 
+		              },
 		});
-
+}
   } catch (error) {
     console.error(error.message);
 	
