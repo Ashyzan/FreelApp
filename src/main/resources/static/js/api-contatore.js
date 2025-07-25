@@ -11,6 +11,10 @@ const dettaglioTaskWorktimeAfterContatoreApi = document.getElementById('dettagli
 const listaTask = document.getElementsByClassName('item-elenco-tasks');
 
 
+//recupero elemeti dal DOM dettaglio progetto per gestione icona di stato task in uso in lista dei task del progetto
+const listaTaskDettaglioProgetto = document.getElementsByClassName('item-elenco-tasks-dettaglio-progetto');
+
+
 
 	//****************** CHIAMATA API PER START CONTATORE ********************************/
 	
@@ -87,6 +91,9 @@ function startContatoreApi(id){
 								
 								//gestione icona di stato del primo elemento in task list template
 								gestioneIconaStatoTaskList()
+								
+								//gestione icona di stato dell'elenco dei task in lista progetto
+								gestioneIconaStatoDettaglioProgetto()
 									
 							});
 								 
@@ -173,6 +180,9 @@ function pauseContatoreApi(id){
 								
 								//gestione icona di stato del primo elemento in task list template
 								gestioneIconaStatoTaskList()
+								
+								//gestione icona di stato dell'elenco dei task in lista progetto
+								gestioneIconaStatoDettaglioProgetto()
 							});
 								 
 		
@@ -275,3 +285,25 @@ function gestioneIconaStatoTaskList(){
 	}
 	
 }
+
+//funzione che gestisce l'icona di stato e della taskList  in DETTAGLIO PROGETTO senza fare il refresh della pagina
+function gestioneIconaStatoDettaglioProgetto(){
+	if(listaTaskDettaglioProgetto != null){
+		console.log("sono in gestioneIconaStatoDettaglioProgetto")
+		console.log("listaTaskDettaglioProgetto valori: " + listaTaskDettaglioProgetto.values)
+		for(i = 0; i <listaTaskDettaglioProgetto.length ; i++){
+			if(taskInUsoId == listaTaskDettaglioProgetto[i].value){
+				
+				console.log("elemento-" + i + "trovato ")
+			}
+			
+		}
+		
+		
+		const iconaStatoOnloadList = document.querySelectorAll('icona-stato-onload');
+		
+	}
+}
+
+
+
