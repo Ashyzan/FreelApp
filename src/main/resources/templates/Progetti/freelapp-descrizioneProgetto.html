@@ -38,7 +38,7 @@
 </head>
 
 <body class="font-sans" style="width: 100vw; height: 100vh;"
-	onload="contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), timerstart(), getDataJsonProgetto()">
+	onload="contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), timerstart(), getDataJsonProgetto(), regolazioneAltezzaColonneLayout()">
 	<section id="rapidButton"
 		class=" fixed bottom-[20%] xs:bottom-[15%]  right-0">
 		<button onclick="getJsonTaskListSelectMode()"
@@ -317,13 +317,13 @@
 				<!-- 					Nuovo dettaglio progetto -->
 				<div class="w-full h-fit grid lg:grid-cols-6 grid-cols-1 gap-4 py-5 ">
 					<!-- first column -->
-					<div class="xl:col-span-2 lg:col-span-3 col-span-6 h-full rounded-lg bg-gray-100 p-4 shadow-lg">
+					<div id="prima-colonna-dettaglio-progetto" class="xl:col-span-2 lg:col-span-3 col-span-6 h-max rounded-lg bg-gray-100 p-4 shadow-lg ">
 						<div class="flex">
 							<div class="w-2/3 truncate mb-3">
 								<p class="inline font-bold py-2">Cliente:</p>
 								<a th:href="@{/Clienti/{id}(id=${progetto.cliente.getId()})}"
 									class="ps-3 inline text-lg text-end leading-tight font-medium hover:underline"
-									th:text="${progetto.cliente.nameContatto}"></a>
+									th:text="${progetto.Cliente.getLabelCliente()}"></a>
 					
 							</div>
 							<div class="w-1/3 mb-3">
@@ -415,14 +415,11 @@
 							<div th:if="${finaltimeTotaleProgetto} == null" class="md:ms-20 col col-span-2 text-center max-md:text-end py-2"
 								id="">00:00:00</div>
 						</div>
-						<div class="grid grid-cols-3 py-2 mb-3">
-							<div class="col-span1 font-bold">Azioni</div>
-							<div class="col-span-2 flex md:ms-20 justify-end md:justify-center  items-center gap-6">
+						<div class="grid grid-cols-4 py-2 mb-3">
+							<div class="col-span-1 font-bold">Azioni</div>
+							<div class="col-span-3 flex md:ms-20 justify-center  items-center gap-6 ">
 					
-								<div>
-					
-					
-					
+								
 									<ul>
 										<li class="flex flex-col md:flex-row mr-3 float-left tooltip-top"><a
 												th:if="${progetto.dataFine == null}"
@@ -483,7 +480,7 @@
 					
 									</ul>
 					
-								</div>
+								
 					
 					
 					
@@ -503,8 +500,8 @@
 					
 					</div>
 					<!-- 			second column -->
-					<div class="xl:col-span-2 lg:col-span-3 col-span-6 h-full rounded-lg bg-gray-100 p-4 shadow-lg">
-											<section class="w-full">
+					<div id="seconda-colonna-dettaglio-progetto" class="xl:col-span-2 lg:col-span-3 col-span-6 rounded-lg bg-gray-100 p-2 shadow-lg ">
+						<section class="w-full h-full ">
 							<h1 class="text-center">ELENCO TASK ASSOCIATI AL PROGETTO</h1>
 							<table class="block text-[#0057A5] m-auto mb-4">
 								<thead class="block border border-[#0057A5] md:h-12 h-8 text-[#0057A5]  max-sm:text-[12px] mb-3">
@@ -514,13 +511,13 @@
 										<th class="md:px-4 px-2 flex items-center">Stato</th>
 										<th class="md:px-4 px-2 flex items-center">Azioni</th>
 									</tr>
-								<tbody class="grid grid-cols-1">
+								<tbody id="t-body-seconda-colonna-dettaglio-progetto" class=" grid grid-cols-1 p-2 overflow-x-hidden overflow-y-auto">
 									<tr th:each="task : ${progetto.elencoTask}" class="item-elenco-tasks-dettaglio-progetto w-full grid max-lg:grid-cols-4 grid-cols-5 border-b-2 text-center max-sm:text-[10px] mb-2"
-												th:id="${taskStat.index}" th:value="${task.getId()}">
+												th:id="|task-${task.getId()}">
 										<td class="col-span-2 mx-4 mt-2 text-start truncate" th:text="${task.getName()}"></td>
 										<td th:text=" ${task.getDataInizio()}" class="col max-lg:p-2 max-lg:hidden xl:text-sm flex items-center justify-center text-nowrap"></td>
 										<td class="col">
-											<div th:value="${task.getName()}" class="icona-stato-onload flex items-center justify-center gap-1 p-1">
+											<div th:id="|icona-stato-onload-task-${task.getId()}|" class="flex items-center justify-center gap-1 p-1">
 												<img th:if="${task.getStato() == 'in corso'}" id="semaforo-start" class="h-5"
 													src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start"> <img
 													th:if="${task.getStato() == 'in pausa'}" id="semaforo-pausa" class="h-5"
@@ -530,6 +527,7 @@
 													th:if="${task.getStato() == 'inattivo'}" id="semaforo-inattivo" class="h-5"
 													src="/img/sources/icons/contatore-inattivo.svg" alt="contatore inattivo">
 											</div>
+											<div th:id="|icona-stato-after-contatore-api-task-${task.getId()}|" class="flex items-center justify-center gap-1 p-1"></div>
 										</td>
 										<td class="col h-full flex items-center justify-center xl:pe-4">
 											<div class="flex justify-center items-center gap-4 md:px-6 px-2 ">
@@ -579,7 +577,7 @@
 					
 					</div>
 					<!-- third column -->
-					<div class="xl:col-span-2 lg:col-span-6 col-span-6 h-full rounded-lg bg-gray-100 p-4 xl:p-3 shadow-lg">
+					<div id="terza-colonna-dettaglio-progetto" class="xl:col-span-2 lg:col-span-6 col-span-6 rounded-lg bg-gray-100 p-4 xl:p-3 shadow-lg">
 						<h3 class="text-center text-[#FFE641] text-xl font-bold mb-4">Statistiche</h3>
 						<div class="flex">
 							<div class="w-1/2 m-3">
@@ -600,9 +598,9 @@
 							<div class="w-1/2 mb-3">
 								<div class=" w-full">
 									<div id="" class="flex flex-col justify-center items-center py-2 mb-2">
-										<div class="mx-auto  text-xl font-bold mb-2">Guadagno
+										<div class="mx-auto md:text-xl font-bold mb-2">Guadagno
 											Attuale</div>
-										<div th:text="${guadagnoTotaleProgetto} + ' €'" class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " id="">
+										<div th:text="${guadagnoTotaleProgetto} + ' €'" class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5]  md:text-3xl font-bold " id="">
 										</div>
 									</div>
 								</div>
@@ -611,9 +609,9 @@
 					
 					
 					
-						<div class="w-full mb-2">
+						<div class="w-full pb-3 mb-2">
 							<div>
-								<canvas class="m-auto col w-full" id="boundaries"></canvas>
+								<canvas class="m-auto col w-full h-full" id="boundaries"></canvas>
 							</div>
 					
 						</div>

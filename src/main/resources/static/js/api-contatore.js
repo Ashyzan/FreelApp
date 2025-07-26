@@ -12,7 +12,8 @@ const listaTask = document.getElementsByClassName('item-elenco-tasks');
 
 
 //recupero elemeti dal DOM dettaglio progetto per gestione icona di stato task in uso in lista dei task del progetto
-const listaTaskDettaglioProgetto = document.getElementsByClassName('item-elenco-tasks-dettaglio-progetto');
+const listaTaskDettaglioProgetto =document.getElementsByClassName('item-elenco-tasks-dettaglio-progetto');
+const arrayListaTaskDettaglioProgetto = [...listaTaskDettaglioProgetto];
 
 
 
@@ -288,19 +289,31 @@ function gestioneIconaStatoTaskList(){
 
 //funzione che gestisce l'icona di stato e della taskList  in DETTAGLIO PROGETTO senza fare il refresh della pagina
 function gestioneIconaStatoDettaglioProgetto(){
+	console.log("**********************")
 	if(listaTaskDettaglioProgetto != null){
-		console.log("sono in gestioneIconaStatoDettaglioProgetto")
-		console.log("listaTaskDettaglioProgetto valori: " + listaTaskDettaglioProgetto.values)
-		for(i = 0; i <listaTaskDettaglioProgetto.length ; i++){
-			if(taskInUsoId == listaTaskDettaglioProgetto[i].value){
-				
-				console.log("elemento-" + i + "trovato ")
+		let taskInUsoId_forWorking = "task-" + taskInUsoId;
+		arrayListaTaskDettaglioProgetto.forEach(item => {
+			if(item.id === taskInUsoId_forWorking){
+				const iconaStatoOnload_forWorking = "icona-stato-onload-" + item.id;
+				console.log("iconaStatoOnload_forWorking: " + iconaStatoOnload_forWorking);
+				const iconaStatoOnload = document.getElementById(iconaStatoOnload_forWorking);
+				const iconaStatoAfterContatoreApi_forWorking = "icona-stato-after-contatore-api-" + item.id;
+				console.log("iconaStatoAfterContatoreApi_forWorking: " + iconaStatoAfterContatoreApi_forWorking)
+				const iconaStatoAfterContatoreApi = document.getElementById(iconaStatoAfterContatoreApi_forWorking);
+				iconaStatoOnload.classList.add('hidden');
+				if(contatoreIsRun === true){
+					if(iconaStatoAfterContatoreApi != null){
+						iconaStatoAfterContatoreApi.innerHTML = `<img class="h-5"
+																	src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start">`	
+					}			
+				}else if(contatoreIsRun === false){
+					if(iconaStatoAfterContatoreApi != null){
+						iconaStatoAfterContatoreApi.innerHTML = `<img class="h-5"
+																	src="/img/sources/icons/contatore-on-pause.svg" alt="contatore in pausa">`
+					}		
+				}
 			}
-			
-		}
-		
-		
-		const iconaStatoOnloadList = document.querySelectorAll('icona-stato-onload');
+		});
 		
 	}
 }
