@@ -6,6 +6,19 @@ const descrizioneEspansa = document.getElementById('descrizioneEspansa');
 const buttonEspandiDescrizione = document.getElementById('buttonEspandiDescrizione');
 const buttonRiduciDescrizione = document.getElementById('buttonRiduciDescrizione');
 
+//recupero elementi da DOM in Dettaglio Progetti
+
+const secondaColonnaDettaglioProgetto = document.getElementById('seconda-colonna-dettaglio-progetto');
+const terzaColonnaDettaglioProgetto = document.getElementById('terza-colonna-dettaglio-progetto');
+const tBodySecondaColonnaDettaglioProgetto = document.getElementById('t-body-seconda-colonna-dettaglio-progetto');
+
+//vengono inizializzate variabili  fuori dalla funzione function regolazioneAltezzaColonneLayout perche poi viene aggiornata man mano che viene utilizzata per
+//l'adattamento della dimenzione delle colonne del dettaglio progetto
+let primaColonnaDettaglioProgetto = document.getElementById('prima-colonna-dettaglio-progetto');
+let altezzaPrimaColonnaDettaglioProgetto = "h-[" + primaColonnaDettaglioProgetto.offsetHeight + "px]";
+let altezzaTbodySecondaColonnaDettaglioProgetto = "max-h-[" + (primaColonnaDettaglioProgetto.offsetHeight-(primaColonnaDettaglioProgetto.offsetHeight*0.13)) + "px]";
+
+
 
 // ************* logica di espansione e riduzione descrizione
 if(buttonEspandiDescrizione != null){
@@ -16,11 +29,13 @@ buttonRiduciDescrizione.addEventListener('click', mostraDescrizioneRidotta);
 function mostraDescrizioneCompleta(){
 	descrizioneContratta.classList.add('hidden');
 	descrizioneEspansa.classList.remove('hidden');
+	regolazioneAltezzaColonneLayout() //regola l'alatezza delle altre colonne - funzione presa da layout.js
 }
 
 function mostraDescrizioneRidotta(){
 	descrizioneContratta.classList.remove('hidden');
 	descrizioneEspansa.classList.add('hidden');
+	regolazioneAltezzaColonneLayout() //regola l'alatezza delle altre colonne - funzione presa da layout.js
 }
 
 //************** logica chiamata API per grafici statistiche */
@@ -132,4 +147,33 @@ new Chart (
   }
 }
 
+//*******  funzione che in Dettaglio Progetto misura le dimensioni della prima colonna e 
+//    l'assegna alla seconda e terza		 ********************
 
+function regolazioneAltezzaColonneLayout(){
+	
+	
+	const nuovaPrimaColonnaDettaglioProgetto = document.getElementById('prima-colonna-dettaglio-progetto');
+	const nuovaAltezzaPrimaColonnaDettaglioProgetto = "h-[" + nuovaPrimaColonnaDettaglioProgetto.offsetHeight + "px]";
+	const nuovaAltezzaTbodySecondaColonnaDettaglioProgetto = "max-h-[" + (nuovaPrimaColonnaDettaglioProgetto.offsetHeight-(nuovaPrimaColonnaDettaglioProgetto.offsetHeight*0.13)) + "px]";	
+	
+	if(altezzaPrimaColonnaDettaglioProgetto === nuovaAltezzaPrimaColonnaDettaglioProgetto){
+		console.log("sono in altezzaPrimaColonnaDettaglioProgetto === nuovaAltezzaPrimaColonnaDettaglioProgetto")
+		secondaColonnaDettaglioProgetto.classList.add(altezzaPrimaColonnaDettaglioProgetto);
+		terzaColonnaDettaglioProgetto.classList.add(altezzaPrimaColonnaDettaglioProgetto);
+		tBodySecondaColonnaDettaglioProgetto.classList.remove(altezzaTbodySecondaColonnaDettaglioProgetto)	
+		tBodySecondaColonnaDettaglioProgetto.classList.add(altezzaTbodySecondaColonnaDettaglioProgetto)	
+				
+	}else {
+		secondaColonnaDettaglioProgetto.classList.remove(altezzaPrimaColonnaDettaglioProgetto);
+		terzaColonnaDettaglioProgetto.classList.remove(altezzaPrimaColonnaDettaglioProgetto);
+		secondaColonnaDettaglioProgetto.classList.add(nuovaAltezzaPrimaColonnaDettaglioProgetto);
+		terzaColonnaDettaglioProgetto.classList.add(nuovaAltezzaPrimaColonnaDettaglioProgetto);
+		tBodySecondaColonnaDettaglioProgetto.classList.remove(altezzaTbodySecondaColonnaDettaglioProgetto)	
+		tBodySecondaColonnaDettaglioProgetto.classList.add(nuovaAltezzaTbodySecondaColonnaDettaglioProgetto)	
+	}
+		
+		altezzaTbodySecondaColonnaDettaglioProgetto = nuovaAltezzaTbodySecondaColonnaDettaglioProgetto;
+		altezzaPrimaColonnaDettaglioProgetto = nuovaAltezzaPrimaColonnaDettaglioProgetto;
+	
+}

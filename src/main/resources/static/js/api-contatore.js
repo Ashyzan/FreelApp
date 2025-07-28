@@ -295,10 +295,10 @@ function gestioneIconaStatoDettaglioProgetto(){
 		arrayListaTaskDettaglioProgetto.forEach(item => {
 			if(item.id === taskInUsoId_forWorking){
 				const iconaStatoOnload_forWorking = "icona-stato-onload-" + item.id;
-				console.log("iconaStatoOnload_forWorking: " + iconaStatoOnload_forWorking);
+				//console.log("iconaStatoOnload_forWorking: " + iconaStatoOnload_forWorking);
 				const iconaStatoOnload = document.getElementById(iconaStatoOnload_forWorking);
 				const iconaStatoAfterContatoreApi_forWorking = "icona-stato-after-contatore-api-" + item.id;
-				console.log("iconaStatoAfterContatoreApi_forWorking: " + iconaStatoAfterContatoreApi_forWorking)
+				//console.log("iconaStatoAfterContatoreApi_forWorking: " + iconaStatoAfterContatoreApi_forWorking)
 				const iconaStatoAfterContatoreApi = document.getElementById(iconaStatoAfterContatoreApi_forWorking);
 				iconaStatoOnload.classList.add('hidden');
 				if(contatoreIsRun === true){

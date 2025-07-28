@@ -27,14 +27,6 @@ const tectAreaCinquecentoError = document.getElementById('textarea-cinquecento-e
 const contatoreCaratteriCinquecentoContainer = document.getElementById('contatore-caratteri-cinquecento-container')
 
 
-//recupero elementi da DOM in Dettaglio Progetti
-
-const secondaColonnaDettaglioProgetto = document.getElementById('seconda-colonna-dettaglio-progetto');
-const terzaColonnaDettaglioProgetto = document.getElementById('terza-colonna-dettaglio-progetto');
-const tBodySecondaColonnaDettaglioProgetto = document.getElementById('t-body-seconda-colonna-dettaglio-progetto');
-
-
-
 
 
 
@@ -124,19 +116,7 @@ if((contatoreCaratteriCinquecento != null) && (textAreaDescrizioneCinquecento !=
 
 
 
-//*******  funzione che in Dettaglio Progetto misura le dimensioni della prima colonna e 
-//    l'assegna alla seconda e terza		 ********************
 
-function regolazioneAltezzaColonneLayout(){
-	
-	let primaColonnaDettaglioProgetto = document.getElementById('prima-colonna-dettaglio-progetto');
-	const altezzaPrimaColonnaDettaglioProgetto = "h-[" + primaColonnaDettaglioProgetto.offsetHeight + "px]";
-	const altezzaTbodySecondaColonnaDettaglioProgetto = "max-h-[" + (primaColonnaDettaglioProgetto.offsetHeight-(primaColonnaDettaglioProgetto.offsetHeight*0.13)) + "px]";
-	secondaColonnaDettaglioProgetto.classList.add(altezzaPrimaColonnaDettaglioProgetto);
-	terzaColonnaDettaglioProgetto.classList.add(altezzaPrimaColonnaDettaglioProgetto);
-	tBodySecondaColonnaDettaglioProgetto.classList.add(altezzaTbodySecondaColonnaDettaglioProgetto)
-	
-}
 
 
 
