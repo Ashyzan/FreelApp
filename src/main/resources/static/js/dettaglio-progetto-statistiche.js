@@ -10,13 +10,13 @@ const buttonRiduciDescrizione = document.getElementById('buttonRiduciDescrizione
 
 const secondaColonnaDettaglioProgetto = document.getElementById('seconda-colonna-dettaglio-progetto');
 const terzaColonnaDettaglioProgetto = document.getElementById('terza-colonna-dettaglio-progetto');
-const tBodySecondaColonnaDettaglioProgetto = document.getElementById('t-body-seconda-colonna-dettaglio-progetto');
+//const tBodySecondaColonnaDettaglioProgetto = document.getElementById('t-body-seconda-colonna-dettaglio-progetto');
 
 //vengono inizializzate variabili  fuori dalla funzione function regolazioneAltezzaColonneLayout perche poi viene aggiornata man mano che viene utilizzata per
 //l'adattamento della dimenzione delle colonne del dettaglio progetto
 let primaColonnaDettaglioProgetto = document.getElementById('prima-colonna-dettaglio-progetto');
 let altezzaPrimaColonnaDettaglioProgetto = "h-[" + primaColonnaDettaglioProgetto.offsetHeight + "px]";
-let altezzaTbodySecondaColonnaDettaglioProgetto = "max-h-[" + (primaColonnaDettaglioProgetto.offsetHeight-(primaColonnaDettaglioProgetto.offsetHeight*0.13)) + "px]";
+//let altezzaTbodySecondaColonnaDettaglioProgetto = "max-h-[" + (primaColonnaDettaglioProgetto.offsetHeight-(primaColonnaDettaglioProgetto.offsetHeight*0.13)) + "px]";
 
 
 
@@ -161,19 +161,19 @@ function regolazioneAltezzaColonneLayout(){
 		console.log("sono in altezzaPrimaColonnaDettaglioProgetto === nuovaAltezzaPrimaColonnaDettaglioProgetto")
 		secondaColonnaDettaglioProgetto.classList.add(altezzaPrimaColonnaDettaglioProgetto);
 		terzaColonnaDettaglioProgetto.classList.add(altezzaPrimaColonnaDettaglioProgetto);
-		tBodySecondaColonnaDettaglioProgetto.classList.remove(altezzaTbodySecondaColonnaDettaglioProgetto)	
-		tBodySecondaColonnaDettaglioProgetto.classList.add(altezzaTbodySecondaColonnaDettaglioProgetto)	
+		//tBodySecondaColonnaDettaglioProgetto.classList.remove(altezzaTbodySecondaColonnaDettaglioProgetto)	
+		//tBodySecondaColonnaDettaglioProgetto.classList.add(altezzaTbodySecondaColonnaDettaglioProgetto)	
 				
 	}else {
 		secondaColonnaDettaglioProgetto.classList.remove(altezzaPrimaColonnaDettaglioProgetto);
 		terzaColonnaDettaglioProgetto.classList.remove(altezzaPrimaColonnaDettaglioProgetto);
 		secondaColonnaDettaglioProgetto.classList.add(nuovaAltezzaPrimaColonnaDettaglioProgetto);
 		terzaColonnaDettaglioProgetto.classList.add(nuovaAltezzaPrimaColonnaDettaglioProgetto);
-		tBodySecondaColonnaDettaglioProgetto.classList.remove(altezzaTbodySecondaColonnaDettaglioProgetto)	
-		tBodySecondaColonnaDettaglioProgetto.classList.add(nuovaAltezzaTbodySecondaColonnaDettaglioProgetto)	
+		//tBodySecondaColonnaDettaglioProgetto.classList.remove(altezzaTbodySecondaColonnaDettaglioProgetto)	
+		//tBodySecondaColonnaDettaglioProgetto.classList.add(nuovaAltezzaTbodySecondaColonnaDettaglioProgetto)	
 	}
 		
-		altezzaTbodySecondaColonnaDettaglioProgetto = nuovaAltezzaTbodySecondaColonnaDettaglioProgetto;
+		//altezzaTbodySecondaColonnaDettaglioProgetto = nuovaAltezzaTbodySecondaColonnaDettaglioProgetto;
 		altezzaPrimaColonnaDettaglioProgetto = nuovaAltezzaPrimaColonnaDettaglioProgetto;
 	
 }
