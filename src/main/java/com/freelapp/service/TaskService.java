@@ -218,4 +218,18 @@ public class TaskService {
 		
 		return parteDiBudgetUsataDaAltriTaskNelProgettoInOre*tariffaOrariaProgetto;
 	}
+	
+	// Lista dei task attivi
+	public List<Task> taskAttivi() {
+		List<Task> listaTaskAttivi = new ArrayList<Task>();
+		List<Task> listaTask = taskRepository.findAll();
+		listaTask.forEach( task1 -> {		
+			if(task1.getStato() == "in corso" || task1.getStato() == "in pausa") {
+				listaTaskAttivi.add(task1);
+			}
+			
+		});
+		
+		return listaTaskAttivi;
+	}
 }

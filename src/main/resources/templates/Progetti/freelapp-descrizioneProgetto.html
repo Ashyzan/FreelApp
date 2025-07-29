@@ -378,7 +378,7 @@
 							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
 								Attivi</div>
 							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
-								th:text="${#lists.size(progetto.elencoTask.?[stato != 'chiuso'])}">
+								th:text="${taskListActive.size()}">
 							</div>
 							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
 								chiusi</div>
@@ -403,7 +403,7 @@
 					
 					
 						<div class="grid grid-cols-3 border-b-4">
-							<div class="col font-bold pe-1 py-2">Stato</div>
+							<div class="col font-bold pe-1 py-2">Stato Progetto</div>
 							<div class="md:ms-20 col col-span-2 text-center max-md:text-end py-2">
 								<img th:if="${progetto.getDataFine} == null" th:src="@{/img/sources/icons/contatore-on-start.svg}"
 									alt="progetto-attivo" class="size-5 inline"> <img th:if="${progetto.getDataFine} != null"
