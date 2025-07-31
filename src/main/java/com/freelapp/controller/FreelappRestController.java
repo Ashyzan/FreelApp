@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,10 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
 import com.freelapp.model.Task;
+import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.repository.TaskRepository;
+import com.freelapp.restModel.RestCliente;
 import com.freelapp.restModel.RestProject;
 import com.freelapp.restModel.RestTask;
 import com.freelapp.service.ContatoreService;
@@ -43,6 +47,9 @@ public class FreelappRestController {
 	
 	@Autowired
 	private ProgettoRepository progettoRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
 	
 	@Autowired
 	private ContatoreService contatoreService;
@@ -301,7 +308,31 @@ public List<RestProject> listaFiltrataProgettiPerFiltriTask(@RequestParam String
 	
 }
 	
+
+//api che restituisce intero elenco di clienti per il filtro select progetto
+@GetMapping("/filtri-task/clienti-all")
+public List<RestCliente> listaInteraClientiPerFiltriTask() {
 	
+	//recupero dal db la lista intera dei clienti
+	List<Cliente> listaClienti = new ArrayList<Cliente>();
+	listaClienti = clienteRepository.findAll(Sort.by("labelCliente").ascending());
+	
+	//creazione list rest progetti vuota
+	List<RestCliente> listaRestClienti= new ArrayList<RestCliente>();
+	
+	//per ogni elemento della lista recuperata da db creo un elemento restProject e lo pusho sulla listaRestProgetti
+	listaClienti.forEach(cliente -> {
+		RestCliente clienteTemporaneo = new RestCliente(null, null, null);
+		clienteTemporaneo.setId(cliente.getId());
+		clienteTemporaneo.setLabelCliente(cliente.getLabelCliente());
+		clienteTemporaneo.setLogoCliente(cliente.getLogoPath());
+		listaRestClienti.add(clienteTemporaneo);
+		
+	});
+	
+	
+	return listaRestClienti;
+}
 	
 	
 //	@GetMapping(value = "/task/timeExceed/{id}", produces = MediaType.TEXT_HTML_VALUE)
