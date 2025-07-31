@@ -79,7 +79,16 @@ async function getJsonListaProgettiSearch(input){
 																		onclick="ripristinaFiltroPerProgetti()">
 																	<img  class="size-6" src="/img/sources/icons/close-button-yellow.svg">
 																</button>` 
+	}else if(input == "" || input == " "){
+		pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = "";
+											
+		pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = `
+																		<button type="button" class="border bg-[#84ABD3] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+																				onclick="ripristinaFiltroPerProgetti()">
+																			<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
+																		</button>` 
 	}
+	
 }
 
 //funzione che al click sul pulsante di lista intera su filtra per progetti restitisce la lista intera di progetti
