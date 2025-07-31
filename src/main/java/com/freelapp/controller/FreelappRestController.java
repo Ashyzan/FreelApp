@@ -24,6 +24,7 @@ import com.freelapp.model.Progetto;
 import com.freelapp.model.Task;
 import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.repository.TaskRepository;
+import com.freelapp.restModel.RestProject;
 import com.freelapp.restModel.RestTask;
 import com.freelapp.service.ContatoreService;
 import com.freelapp.service.ProgettoService;
@@ -243,11 +244,62 @@ public class FreelappRestController {
 				
 	}
 	 
+
+// *********************** API PER FILTRI TASK **************************
 	
-//	@GetMapping("/contatore/{id}/start")
-//	public
+//api che restituisce intero elenco di progetti per il filtro select progetto
+@GetMapping("/filtri-task/progetti-all")
+public List<RestProject> listaInteraProgettiPerFiltriTask() {
+	
+	//recupero dal db la lista intera dei progetti attivi
+	List<Progetto> listaProgetti = new ArrayList<Progetto>();
+	listaProgetti = progettoRepository.findByActiveProject();
+	
+	//creazione list rest progetti vuota
+	List<RestProject> listaRestProgetti= new ArrayList<RestProject>();
+	
+	//per ogni elemento della lista recuperata da db creo un elemento restProject e lo pusho sulla listaRestProgetti
+	listaProgetti.forEach(progetto -> {
+		RestProject progettoTemporaneo = new RestProject(null, null);
+		progettoTemporaneo.setId(progetto.getId());
+		progettoTemporaneo.setName(progetto.getName());
+		listaRestProgetti.add(progettoTemporaneo);
+		
+	});
 	
 	
+	return listaRestProgetti;
+}
+	
+	
+//api che restituisce elenco filtrato di progetti per filtro search progetto
+@GetMapping("/filtri-task/progetti-search")
+public List<RestProject> listaFiltrataProgettiPerFiltriTask(@RequestParam String input){
+	if(input == "") {
+			List<RestProject> taskListOreLAvorateEmpty = new ArrayList<RestProject> ();
+			return taskListOreLAvorateEmpty;
+		}
+	
+	//recupero dal db la lista intera dei progetti attivi
+	List<Progetto> listaProgetti = new ArrayList<Progetto>();
+	listaProgetti = progettoRepository.searchProgettiByNameInput(input);
+	
+	//creazione list rest progetti vuota
+	List<RestProject> listaRestProgetti= new ArrayList<RestProject>();
+	
+	//per ogni elemento della lista recuperata da db creo un elemento restProject e lo pusho sulla listaRestProgetti
+	listaProgetti.forEach(progetto -> {
+		RestProject progettoTemporaneo = new RestProject(null, null);
+		progettoTemporaneo.setId(progetto.getId());
+		progettoTemporaneo.setName(progetto.getName());
+		listaRestProgetti.add(progettoTemporaneo);
+		
+	});
+	
+	
+	return listaRestProgetti;
+	
+}
 	
 	
 	

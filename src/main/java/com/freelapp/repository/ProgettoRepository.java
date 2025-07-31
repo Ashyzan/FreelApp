@@ -105,5 +105,8 @@ public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, Pa
 		
 		
 		public List<Progetto>findByArchivia(boolean value);
+		
+		@Query("SELECT p FROM Progetto p WHERE p.name LIKE '%'||:input||'%'")
+		public List<Progetto>searchProgettiByNameInput(String input);
 	    
 }

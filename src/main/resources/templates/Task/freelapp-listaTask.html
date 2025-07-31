@@ -37,7 +37,7 @@
 <title id="timerTitolo">FreelApp</title>
 </head>
 <body class="font-sans" style="width: 100vw; height: 100vh;"
-	onload="timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
+	onload="timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()", filtriInUsoDaUtente()>
 	<header>
 		<nav id="navbar"
 			class="flex justify-around items-center w-full h-fit md:px-1 md:py-0 p-2 bg-[#0057A5] font-bold  text-sm text-white">
@@ -305,108 +305,136 @@
 							<h1 class="mt-3 text-xl">ELENCO TASK</h1>
 						</div>
 						<!-- RICERCA -->
-						<div id="sezione-filtri-e-ricerca"
-							class="m-auto flex flex-col justify-center">
-								<div id="sezione-ricerca" class="text-center">
-									<form class="flex max-sm:flex-col max-xs:justify-center items-center mx-auto w-50" role="search" method="get"
-										th:object="${Task}" th:action="@{/task-search}">
-										<a th:if="${searchMode == true}" th:href="@{/Task}">
-												<img class="rounded-[35px] hover:bg-[#FFE541] size-10" src="/img/sources/icons/arrow-left-blue.svg">
-										</a>
-										<input type="text" class="border-2 border-[#0057A5] p-1 m-2 rounded-md" name="input"
-											placeholder="Ricerca progetti..." aria-label="Search">
-										<div>
-											<button
-												class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
-												type="submit">Search</button>
-										</div>
-									</form>
-								</div>
-							<div class="md:flex md:flex-row md:items-center md:gap-3 md:justify-center">
-								<div th:if="${filtriAttiviInListaProgetto == false}">
-									<div class="p-4 flex items-center justify-center">
-										<span id="filtra-per-button" class="text-[#0057A5] max-sm:mb-4">Filtra e ordina per</span>
-										<button onclick="mostraFiltri()"><img id="img-filtra-per" src="/img/sources/icons/arrow-down.svg" class="inline size-8 mx-3"></button>
-									</div>									
-								</div>
-								<div th:if="${filtriAttiviInListaProgetto == true}">
-									<form th:action="@{/progetto-list-filtri/reset}" method="post">
-										<button type="submit"
-											class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Resetta filtri
-										</button>										
-									</form>
-								</div>
-							</div>
-							<div id="tabella-filtri-mobile" class="hidden bg-white shadow-sm shadow-[#0057A5] rounded-xl w-full">
-								<form class="max-xs:p-1 sm:p-4"
-										method="post" th:action="@{/progetto-list-filtri}">
-									<fieldset id="ordina-per-asc-desc" class="text-[#0057A5] mb-4">
-										<div class="grid grid-cols-3">
-											<legend class="col-span-1 font-bold me-4">Ordina per</legend>
-											<div class="col-span-1">
-												<input type="radio" id="dataModificaProgetto" name="dataOrdinamentoProgetto" value="dataModificaProgetto"
-													onclick="visualizzaordinamentoListaPiuMenoRecenteMobile()">
-												<label for="piuRecente">Data di modifca</label>
-											</div>
-											<div class="col-span-1">
-												<input type="radio" id="dataCreazioneProgetto" name="dataOrdinamentoProgetto" value="dataCreazioneProgetto"
-													onclick="visualizzaordinamentoListaPiuMenoRecenteMobile()">
-												<label for="menoRecente">Data di crezione</label>
-											</div>
-										</div>
-										<div id="ordinamentoListaPiuMenoRecenteMobile" class="grid grid-cols-3 hidden mb-2">
-											<div class="col-span-1"></div>
-											<div class="col-span-1">
-												<input type="radio" id="piuRecente" name="ordinaProgetto" value="piuRecente">
-												<label for="piuRecente">Più recente</label>
-											</div>
-											<div class="col-span-1">
-												<input type="radio" id="menoRecente" name="ordinaProgetto" value="menoRecente">
-												<label for="menoRecente">Meno recente</label>
-											</div>
-										</div>
-									</fieldset>
-									<fieldset class="text-[#0057A5] mb-4">
-										<div class="grid grid-cols-3">
-											<legend class="col-span-1 font-bold me-4 flex items-center">Filtra per cliente</legend>
-											<div class="col-span-2">
-												<select class="border-red-600 h-8  text-[#0057A5] rounded-lg bg-gray-100
-														block w-full  px-4 focus:outline-none" name="clienteId">
-													<option value="">Seleziona cliente</option>
-													<option th:each="cliente : ${listaClienti}" th:value="${cliente.id}" th:text="${cliente.getLabelCliente()}"></option>
-												</select>
-											</div>
-										</div>
-									</fieldset>
-									<fieldset id="ordina-per-stato" class="text-[#0057A5]">
-										<div class="grid grid-cols-3">
-											<legend class="col-span-1 font-bold me-4">Stato progetto</legend>
-											<div class="col-span-1 max-xs:ps-[0] max-sm:ps-6">
-												<input type="radio" id="aperto" name="statoProgetto" value="aperto">
-												<label for="aperto">Aperto</label>
-											</div>
-											<div class="col-span-1">
-												<input type="radio" id="chiuso" name="statoProgetto" value="chiuso">
-												<label for="chiuso">Chiuso</label>
-											</div>
-										</div>
-									</fieldset>
-									<div class="text-center m-4">
-										<button type="submit"
-											class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">Applica
-											filtri</button>
+						<div id="sezione-filtri-e-ricerca" class="m-auto flex flex-col justify-center">
+							<div id="sezione-ricerca" class="text-center">
+								<form class="flex max-sm:flex-col max-xs:justify-center items-center mx-auto w-50" role="search" method="get"
+									th:object="${Task}" th:action="@{/task-search}">
+									<a th:if="${searchMode == true}" th:href="@{/Task}">
+										<img class="rounded-[35px] hover:bg-[#FFE541] size-10" src="/img/sources/icons/arrow-left-blue.svg">
+									</a>
+									<input type="text" class="border-2 border-[#0057A5] p-1 m-2 rounded-md" name="input"
+										placeholder="Ricerca progetti..." aria-label="Search">
+									<div>
+										<button
+											class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+											type="submit">Search</button>
 									</div>
 								</form>
 							</div>
-							
+						
+							<div class="md:flex md:flex-row md:items-center md:gap-3 md:justify-center">
+								<div class="flex justify-center items-center ">
+									<div th:if="${filtriAttiviInListaProgetto == true}">
+										<form th:action="@{/progetto-list-filtri/reset}" method="post">
+											<button type="submit"
+												class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px] me-4">Resetta
+												filtri
+											</button>
+										</form>
+									</div>
+									<div class="py-4 flex items-center justify-center">
+										<span id="filtra-per-button" class="text-[#0057A5] max-sm:mb-4">Filtra e ordina per</span>
+										<button onclick="mostraFiltri()"><img id="img-filtra-per" src="/img/sources/icons/arrow-down.svg"
+												class="inline size-8 mx-3"></button>
+									</div>
+								</div>
+							</div>
+						<div id="tabella-filtri-task" class="hidden bg-white shadow-sm shadow-[#0057A5] mb-3 m-auto rounded-xl">
+							<form class="p-4" th:action="@{/progetto-lista-filtri}" method="post">
+								<fieldset id="ordina-per-asc-desc" class="text-[#0057A5] mb-4 max-lg:text-sm">
+									<div class="grid grid-cols-3">
+										<legend class="col-span-1 font-bold me-4">Ordina per</legend>
+										<div class="col-span-1" id="inputRadiodataModificaProgetto">
+											<input type="radio" id="dataModificaProgetto" name="dataOrdinamentoProgetto"
+												value="dataModificaProgetto" onclick="visualizzaordinamentoListaPiuMenoRecente()">
+											<label for="piuRecente">Data di modifca</label>
+										</div>
+										<div class="col-span-1" id="inputRadiodataCreazioneProgetto">
+											<input type="radio" id="dataCreazioneProgetto" name="dataOrdinamentoProgetto"
+												value="dataCreazioneProgetto" onclick="visualizzaordinamentoListaPiuMenoRecente()">
+											<label for="menoRecente">Data di crezione</label>
+										</div>
+									</div>
+									<div id="ordinamentoListaPiuMenoRecente" class="grid grid-cols-3 hidden mb-2 max-md: py-3">
+										<div class="col-span-1"></div>
+										<div class="col-span-1" id="inputRadioOrdinaProgettoPiuRecente">
+											<input type="radio" id="piuRecente" name="ordinaProgetto" value="piuRecente">
+											<label for="piuRecente">Più recente</label>
+										</div>
+										<div class="col-span-1" id="inputRadioOrdinaProgettoMenoRecente">
+											<input type="radio" id="menoRecente" name="ordinaProgetto" value="menoRecente">
+											<label for="menoRecente">Meno recente</label>
+										</div>
+									</div>
+								</fieldset>
+								<fieldset class="text-[#0057A5] mb-4 max-lg:text-sm">
+									<div class="grid grid-cols-3">
+										<legend class="col-span-1 font-bold me-4 flex items-center">Filtra per cliente</legend>
+										<div class="col-span-2">
+											<select class="border-red-600 h-8  text-[#0057A5] rounded-lg bg-gray-100
+													block max-lg:w-full w-[300px] focus:outline-none" name="clienteSelezionatoId">
+												<option value="-1">Seleziona cliente</option>
+												<option th:each="cliente : ${listaClienti}" th:value="${cliente.id}"
+													th:text="${cliente.getLabelCliente()}"></option>
+											</select>
+										</div>
+									</div>
+								</fieldset>
+								<fieldset class="text-[#0057A5] mb-4 max-lg:text-sm">
+									<div class="grid grid-cols-3">
+										<legend class="col-span-1 font-bold me-4 flex items-center">Filtra per progetto</legend>
+										<div class="col-span-2 grid grid-cols-8 max-lg:w-full w-[300px]">
+											<div id="filtro-task-per-progetto-select" class="col-span-7 hidden">
+												<input  placeholder="Seleziona progetto" class="ps-2 h-8  text-[#0057A5] rounded-l-lg bg-gray-100 block w-full focus:outline-none">
+											</div>
+											<div id="filtro-task-per-progetto-search" class="col-span-7">
+												<input id="filtro-task-per-progetto-search-input" type="text" placeholder="Cerca/seleziona progetto" class="ps-2 h-8  text-[#0057A5] rounded-l-lg bg-gray-100 block w-full focus:outline-none"
+													name="input" oninput="getJsonListaProgettiSearch(value)">												
+											</div>
+											<div  class="col-span-1" id="pulsante-cambio-search-select-filtro-per-progetti">
+												<button type="button" class="border bg-[#84ABD3] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+													onclick="getJsonListaProgettiAll()">
+													<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
+												</button>
+											</div>
+											<div id="contenitore-progetti-per-filtri" class="w-[300px] relative">
+												<div id="progetti-from-search" class="w-full max-h-40 overflow-y-auto absolute bg-white"></div>
+												<div id="progetti-select-all" class="w-full max-h-40 overflow-y-auto absolute bg-white"></div>																							
+											</div>
+										</div>
+										
+									</div>
+								</fieldset>
+								<fieldset id="ordina-per-stato" class="text-[#0057A5] mb-2 max-lg:text-sm">
+									<div class="grid grid-cols-3">
+										<legend class="col-span-1 font-bold me-4">Stato progetto</legend>
+										<div class="col-span-1 max-xs:ps-[0] max-sm:ps-6" id="inputRadioAperto">
+											<input type="radio" id="aperto" name="statoProgetto" value="aperto">
+											<label for="aperto">Aperto</label>
+										</div>
+										<div class="col-span-1" id="inputRadioChiuso">
+											<input type="radio" id="chiuso" name="statoProgetto" value="chiuso">
+											<label for="chiuso">Chiuso</label>
+										</div>
+									</div>
+								</fieldset>
+								<div class="flex justify-center gap-3 mt-4">
+									<button type="submit"
+										class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px] ">Applica
+										filtri</button>
+								</div>
+							</form>
 						</div>
-						<div th:if="${searchMode == true}" class="p-6 text-center" 
-													th:text="|Risultati per --> '${inputInserito}'|"></div>
+						
+						</div>
+						<div th:if="${searchMode == true}" class="p-10 text-center" th:text="|Risultati per --> '${inputInserito}'|"></div>
+						<div th:if="${filtriAttiviInListaProgetto == true}" class="p-10 text-center" id="stringaFiltri"></div>
+											
 																		
 
 						<!--						ELENCO TASK CON CARD-->
 						<!-- ${taskStat.index} è una sintassi thymeleaf che serve a recuperare dall'elemento dati accesori all'interno dell'elenco come l'index-->
-						<div th:each="task : ${list}" class="item-elenco-tasks container m-auto" th:id="${taskStat.index}" th:value="${task.getId()}"> 
+						<div th:each="task : ${list}" class="item-elenco-tasks container lg:w-3/5 m-auto" th:id="${taskStat.index}" th:value="${task.getId()}"> 
 							<div class="grid lg:grid-cols-1 sm:grid-cols-1 gap-4 p-2 flex justify-between w-full max-md:m-auto">
 								<div id="task-card" class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
 									<div class="md:flex max-md:grid max-md:grid-col-1">
@@ -848,6 +876,7 @@
 	<script type="text/javascript" th:src="@{/js/api-contatore.js}"></script>
 	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
+	<script type="text/javascript" th:src="@{/js/lista-task.js}"></script>
 	<script type="text/javascript" th:src="@{/js/animazione-lista-task.js}"></script>
 </body>
 
