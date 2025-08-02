@@ -37,7 +37,7 @@
 <title id="timerTitolo">FreelApp</title>
 </head>
 <body class="font-sans" style="width: 100vw; height: 100vh;"
-	onload="timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()", filtriInUsoDaUtente()>
+	onload="timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), filtriInUsoDaUtente()">
 	<header>
 		<nav id="navbar"
 			class="flex justify-around items-center w-full h-fit md:px-1 md:py-0 p-2 bg-[#0057A5] font-bold  text-sm text-white">
@@ -324,8 +324,8 @@
 						
 							<div class="md:flex md:flex-row md:items-center md:gap-3 md:justify-center">
 								<div class="flex justify-center items-center ">
-									<div th:if="${filtriAttiviInListaProgetto == true}">
-										<form th:action="@{/progetto-list-filtri/reset}" method="post">
+									<div th:if="${filtriAttiviInListaTask == true}">
+										<form th:action="@{/task-list-filtri/reset}" method="post">
 											<button type="submit"
 												class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px] me-4">Resetta
 												filtri
@@ -340,29 +340,29 @@
 								</div>
 							</div>
 						<div id="tabella-filtri-task" class="hidden bg-white shadow-sm shadow-[#0057A5] mb-3 m-auto rounded-xl">
-							<form class="p-4" th:action="@{/progetto-lista-filtri}" method="post">
+							<form class="p-4" th:action="@{/task-lista-filtri}" method="post" id="form-filtri-task">
 								<fieldset id="ordina-per-asc-desc" class="text-[#0057A5] mb-4 max-lg:text-sm">
 									<div class="grid grid-cols-3">
 										<legend class="col-span-1 font-bold me-4">Ordina per</legend>
-										<div class="col-span-1" id="inputRadiodataModificaProgetto">
-											<input type="radio" id="dataModificaProgetto" name="dataOrdinamentoProgetto"
+										<div class="col-span-1" id="inputRadiodataModificaTask">
+											<input type="radio" id="dataModificaTask" name="dataOrdinamentoTask"
 												value="dataModificaProgetto" onclick="visualizzaordinamentoListaPiuMenoRecente()">
 											<label for="piuRecente">Data di modifca</label>
 										</div>
-										<div class="col-span-1" id="inputRadiodataCreazioneProgetto">
-											<input type="radio" id="dataCreazioneProgetto" name="dataOrdinamentoProgetto"
+										<div class="col-span-1" id="inputRadiodataCreazioneTask">
+											<input type="radio" id="dataCreazioneTask" name="dataOrdinamentoTask"
 												value="dataCreazioneProgetto" onclick="visualizzaordinamentoListaPiuMenoRecente()">
 											<label for="menoRecente">Data di crezione</label>
 										</div>
 									</div>
 									<div id="ordinamentoListaPiuMenoRecente" class="grid grid-cols-3 hidden mb-2 max-md: py-3">
 										<div class="col-span-1"></div>
-										<div class="col-span-1" id="inputRadioOrdinaProgettoPiuRecente">
-											<input type="radio" id="piuRecente" name="ordinaProgetto" value="piuRecente">
+										<div class="col-span-1" id="inputRadioOrdinaTaskPiuRecente">
+											<input type="radio" id="piuRecente" name="ordinaTask" value="piuRecente">
 											<label for="piuRecente">Più recente</label>
 										</div>
-										<div class="col-span-1" id="inputRadioOrdinaProgettoMenoRecente">
-											<input type="radio" id="menoRecente" name="ordinaProgetto" value="menoRecente">
+										<div class="col-span-1" id="inputRadioOrdinaTaskMenoRecente">
+											<input type="radio" id="menoRecente" name="ordinaTask" value="menoRecente">
 											<label for="menoRecente">Meno recente</label>
 										</div>
 									</div>
@@ -372,7 +372,7 @@
 										<legend class="col-span-1 font-bold me-4 flex items-center">Filtra per cliente</legend>
 										<div class="col-span-2 grid grid-cols-8 max-lg:w-full w-[300px]">
 											<div id="filtro-task-per-cliente-select" class="col-span-7">
-												<input name="cliente"  placeholder="Seleziona cliente" class="ps-2 h-8  text-[#0057A5] rounded-l-lg bg-gray-100 block w-full focus:outline-none"
+												<input name="clienteSelezionatoId"  placeholder="Seleziona cliente" class="ps-2 h-8  text-[#0057A5] rounded-l-lg bg-gray-100 block w-full focus:outline-none"
 														id="input-filtro-task-per-cliente-select">
 											</div>
 											<div class="col-span-1" id="pulsante-select-filtro-per-clienti">
@@ -392,11 +392,11 @@
 										<legend class="col-span-1 font-bold me-4 flex items-center">Filtra per progetto</legend>
 										<div class="col-span-2 grid grid-cols-8 max-lg:w-full w-[300px]">
 											<div id="filtro-task-per-progetto-select" class="col-span-7 hidden">
-												<input name="progetto"  placeholder="Seleziona progetto" class="ps-2 h-8  text-[#0057A5] rounded-l-lg bg-gray-100 block w-full focus:outline-none">
+												<input id="filtro-task-per-progetto-select-input" name="progettoSelezionatoId"  placeholder="Seleziona progetto" class="ps-2 h-8  text-[#0057A5] rounded-l-lg bg-gray-100 block w-full focus:outline-none">
 											</div>
 											<div id="filtro-task-per-progetto-search" class="col-span-7">
 												<input id="filtro-task-per-progetto-search-input" type="text" placeholder="Cerca/seleziona progetto" class="ps-2 h-8  text-[#0057A5] rounded-l-lg bg-gray-100 block w-full focus:outline-none"
-													name="input" oninput="getJsonListaProgettiSearch(value)">												
+													oninput="getJsonListaProgettiSearch(value)">												
 											</div>
 											<div  class="col-span-1" id="pulsante-cambio-search-select-filtro-per-progetti">
 												<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
@@ -416,11 +416,11 @@
 									<div class="grid grid-cols-3">
 										<legend class="col-span-1 font-bold me-4">Stato progetto</legend>
 										<div class="col-span-1 max-xs:ps-[0] max-sm:ps-6" id="inputRadioAperto">
-											<input type="radio" id="aperto" name="statoProgetto" value="aperto">
+											<input type="radio" id="aperto" name="statoTask" value="aperto">
 											<label for="aperto">Aperto</label>
 										</div>
 										<div class="col-span-1" id="inputRadioChiuso">
-											<input type="radio" id="chiuso" name="statoProgetto" value="chiuso">
+											<input type="radio" id="chiuso" name="statoTask" value="chiuso">
 											<label for="chiuso">Chiuso</label>
 										</div>
 									</div>
@@ -435,7 +435,7 @@
 						
 						</div>
 						<div th:if="${searchMode == true}" class="p-10 text-center" th:text="|Risultati per --> '${inputInserito}'|"></div>
-						<div th:if="${filtriAttiviInListaProgetto == true}" class="p-10 text-center" id="stringaFiltri"></div>
+						<div th:if="${filtriAttiviInListaTask == true}" class="p-10 text-center" id="stringaFiltri"></div>
 											
 																		
 
@@ -876,7 +876,13 @@
 		let contatoreCliccatoPreRefresh = /*[[${contatoreCliccatoPreRefresh}]]*/ null; //boolean
 		let contatoreAttivatoDaRapidButton = /*[[${contatoreAttivatoDaRapidButton}]]*/null; //boolean
 		let descrizioneTaskId = null; 
-		console.log("contatoreIsRun: " + contatoreIsRun);
+		let filtriAttiviInListaTask =  /*[[${filtriAttiviInListaTask}]]*/ null; // boolean
+		let filtroStatoTask = /*[[${filtroStatoTask}]]*/ null;
+		let filtroOrdinamentoTask = /*[[${filtroOrdinamentoTask}]]*/ null;
+		let filtroNomeCliente = /*[[${filtroNomeCliente}]]*/ null;
+		let filtroNomeProgetto = /*[[${filtroNomeProgetto}]]*/ null;
+		let filtroDataOrdinamentoTask = /*[[${filtroDataOrdinamentoTask}]]*/ null;
+		console.log("filtriAttiviInListaTask: " + filtriAttiviInListaTask)
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>

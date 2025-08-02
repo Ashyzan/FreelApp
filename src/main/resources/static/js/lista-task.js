@@ -1,8 +1,8 @@
 console.log("sono in lista-task.js")
 
-const api_urlFiltriListaClientiAll = 'http://localhost:8080/api/filtri-task/clienti-all';
-const api_urlFiltriListaProgettiSearch = 'http://localhost:8080/api/filtri-task/progetti-search?input=';
-const api_urlFiltriListaProgettiAll = 'http://localhost:8080/api/filtri-task/progetti-all';
+const api_urlFiltriListaClientiAll = 'http://localhost:8080/api/filtri/clienti-all';
+const api_urlFiltriListaProgettiSearch = 'http://localhost:8080/api/filtri/progetti-search?input=';
+const api_urlFiltriListaProgettiAll = 'http://localhost:8080/api/filtri/progetti-all';
 
 
 //recupero dal DOM elementi per i filtri
@@ -10,11 +10,19 @@ const pulsanteSelectFiltroPerClienti = document.getElementById('pulsante-select-
 const pulsanteCambioSearchSelectFiltroPerProgetti = document.getElementById('pulsante-cambio-search-select-filtro-per-progetti');
 const filtroTaskPerProgettoSearch = document.getElementById('filtro-task-per-progetto-search');
 const filtroTaskPerProgettoSelect = document.getElementById('filtro-task-per-progetto-select');
+const ordinamentoListaPiuMenoRecente = document.getElementById('ordinamentoListaPiuMenoRecente');
+const dataModificaProgetto = document.getElementById('dataModificaProgetto');
+const dataCreazioneProgetto = document.getElementById('dataCreazioneProgetto');
+const piuRecente = document.getElementById('piuRecente');
+const menoRecente = document.getElementById('menoRecente');
+const aperto = document.getElementById('aperto');
+const chiuso = document.getElementById('chiuso');
+const formFiltri = document.getElementById('form-filtri-task');
 
 
-//variabili di lavoro per filtri 
-let idClienteSelezionato;
-let idProgettoSelezionato;
+//variabili di lavoro per filtri (se non selezionati cliente o progetti viene mandato al backend in valore -1 corrispondente a quello del relativo static non assegnato)
+let idClienteSelezionato = -1;
+let idProgettoSelezionato = -1;
 
 
 
@@ -200,4 +208,239 @@ function selezionaProgetto(idProgetto, nomeProgetto){
 }
 
 
+//funzione che al click della scelta ordina per Modifica o creazione fa apparire la scelta piu o meno recente
+function visualizzaordinamentoListaPiuMenoRecente(){
+	ordinamentoListaPiuMenoRecente.classList.remove('hidden')
+}
 
+//funzione che se filtri attivi fa visualizzare all'interno del form scelta filtri le scelte attualmente in vigore
+function filtriInUsoDaUtente(){
+	console.log("sono in filtriInUsoDaUtente")
+	const inputRadioAperto = document.getElementById('inputRadioAperto');
+	const inputRadioChiuso = document.getElementById('inputRadioChiuso');
+	const inputRadiodataModificaTask = document.getElementById('inputRadiodataModificaTask');
+	const inputRadiodataCreazioneTask = document.getElementById('inputRadiodataCreazioneTask');
+	const inputRadioOrdinaProgettoPiuRecente = document.getElementById('inputRadioOrdinaTaskPiuRecente');
+	const inputRadioOrdinaProgettoMenoRecente = document.getElementById('inputRadioOrdinaTaskMenoRecente');
+	
+	if(filtriAttiviInListaTask == true){
+		console.log("filtroOrdinamentoTask: " + filtroOrdinamentoTask)
+		if(filtroDataOrdinamentoTask == "data di modifica"){
+			inputRadiodataModificaTask.innerHTTask
+			inputRadiodataModificaTask.innerHTML = `<input type="radio" id="dataModificaProgetto" name="dataOrdinamentoTask" value="dataModificaTask" onclick="visualizzaordinamentoListaPiuMenoRecente()" checked="checked">
+															<label for="piuRecente">Data di modifca</label>`;
+															
+			inputRadiodataCreazioneTask.innerHTML = "";
+			inputRadiodataCreazioneTask.innerHTML = `<input type="radio" id="dataCreazioneProgetto" name="dataOrdinamentoTask" value="dataCreazioneTask" onclick="visualizzaordinamentoListaPiuMenoRecente()">
+														<label for="menoRecente">Data di crezione</label>`;
+															 											
+		} else if(filtroDataOrdinamentoTask == "data di creazione"){
+			inputRadiodataModificaTask.innerHTML = "";
+			inputRadiodataModificaTask.innerHTML = `<input type="radio" id="dataModificaProgetto" name="dataOrdinamentoTask" value="dataModificaTask" onclick="visualizzaordinamentoListaPiuMenoRecente()">
+															<label for="piuRecente">Data di modifca</label>`;
+																		
+			inputRadiodataCreazioneTask.innerHTML = "";
+			inputRadiodataCreazioneTask.innerHTML = `<input type="radio" id="dataCreazioneProgetto" name="dataOrdinamentoTask" value="dataCreazioneTask" onclick="visualizzaordinamentoListaPiuMenoRecente()" checked="checked">
+															<label for="menoRecente">Data di crezione</label>`;
+		}
+		
+		if(filtroDataOrdinamentoTask != ""){
+			visualizzaordinamentoListaPiuMenoRecente();
+			//visualizzaordinamentoListaPiuMenoRecenteMobile();
+			if(filtroOrdinamentoTask == "più recente"){
+				inputRadioOrdinaProgettoPiuRecente.innerHTML = "";
+				inputRadioOrdinaProgettoPiuRecente.innerHTML = `<input type="radio" id="piuRecente" name="ordinaTask" value="piuRecente" checked="checked">
+															<label for="piuRecente">Più recente</label>`;
+				
+				inputRadioOrdinaProgettoMenoRecente.innerHTML = "";
+				inputRadioOrdinaProgettoMenoRecente.innerHTML = `<input type="radio" id="menoRecente" name="ordinaTask" value="menoRecente" >
+															<label for="menoRecente">Meno recente</label>`;
+				
+			}else if(filtroOrdinamentoTask == "meno recente"){
+				inputRadioOrdinaProgettoPiuRecente.innerHTML = "";
+				inputRadioOrdinaProgettoPiuRecente.innerHTML = `<input type="radio" id="piuRecente" name="ordinaTask" value="piuRecente" >
+																	<label for="piuRecente">Più recente</label>`;
+								
+				inputRadioOrdinaProgettoMenoRecente.innerHTML = "";
+				inputRadioOrdinaProgettoMenoRecente.innerHTML = `<input type="radio" id="menoRecente" name="ordinaTask" value="menoRecente" checked="checked">
+																	<label for="menoRecente">Meno recente</label>`;
+			}
+		}
+		
+		if(filtroStatoTask === "APERTO"){
+			inputRadioChiuso.innerHTML ="";
+			inputRadioChiuso.innerHTML = `<input type="radio" id="chiuso" name="statoTask" value="chiuso" >
+											<label for="chiuso">Chiuso</label>`
+			inputRadioAperto.innerHTML = "";
+			inputRadioAperto.innerHTML = `<input type="radio" id="aperto" name="statoTask" value="aperto" checked="checked">
+											<label for="aperto">Aperto</label>`
+		
+		} else if(filtroStatoTask === "CHIUSO"){
+			inputRadioChiuso.innerHTML ="";
+						inputRadioChiuso.innerHTML = `<input type="radio" id="chiuso" name="statoTask" value="chiuso" checked="checked">
+														<label for="chiuso">Chiuso</label>`
+						inputRadioAperto.innerHTML = "";
+						inputRadioAperto.innerHTML = `<input type="radio" id="aperto" name="statoTask" value="aperto">
+														<label for="aperto">Aperto</label>`
+		}
+	
+		if(filtroNomeCliente != null){
+			document.getElementById('input-filtro-task-per-cliente-select').value = filtroNomeCliente;
+		}
+	}
+}
+
+
+//********************** inserimento lista filtri se applicati  *******************************/
+
+const stringaFiltri = document.getElementById('stringaFiltri');
+console.log("filtroStatoTask: " + filtroStatoTask);
+console.log("filtroOrdinamentoTask: " + filtroOrdinamentoTask);
+console.log("filtroNomeCliente: " + filtroNomeCliente);
+console.log("filtroDataOrdinamentoTask: " + filtroDataOrdinamentoTask);
+if(stringaFiltri != null){
+		if(filtroStatoTask != null && filtroDataOrdinamentoTask != null && filtroNomeCliente != null){
+			if(filtroOrdinamentoTask != null){
+				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+												<div class="col col-span-2 text-start">
+													<ul class="ps-4">
+														<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong> <strong>${filtroOrdinamentoTask}</strong></li>
+														<li>- cliente <strong>${filtroNomeCliente}</strong></li>
+														<li>- stato task <strong>${filtroStatoTask}</strong></li>
+											   		</ul>
+												</div>
+										   </div>`				
+			} else if(filtroOrdinamentoTask == null){
+				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+													<div class="col col-span-2 text-start">
+														<ul class="ps-4">
+															<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong></li>
+															<li>- cliente <strong>${filtroNomeCliente}</strong></li>
+															<li>- stato task <strong>${filtroStatoTask}</strong></li>
+												   		</ul>
+													</div>
+											   </div>`		
+			}
+		}
+	
+			
+		if(filtroStatoTask == null && filtroDataOrdinamentoTask != null && filtroNomeCliente != null){
+			if(filtroOrdinamentoTask != null){
+				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+												<div class="col col-span-2 text-start">
+													<ul class="ps-4">
+														<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong> <strong>${filtroOrdinamentoTask}</strong></li>
+														<li>- cliente <strong>${filtroNomeCliente}</strong></li>
+											   		</ul>
+												</div>
+										   </div>`				
+			}else if(filtroOrdinamentoTask == null){
+				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+													<div class="col col-span-2 text-start">
+														<ul class="ps-4">
+															<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong></li>
+															<li>- cliente <strong>${filtroNomeCliente}</strong></li>
+												   		</ul>
+													</div>
+												 </div>`			
+			}
+		}
+			
+		if(filtroStatoTask != null && filtroDataOrdinamentoTask == null && filtroNomeCliente != null){
+			stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+											<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+												<div class="col col-span-2 text-start">
+													<ul class="ps-4">
+														<li>- cliente <strong>${filtroNomeCliente}</strong></li>
+														<li>- stato task <strong>${filtroStatoTask}</strong></li>
+											   		</ul>
+												</div>
+									   </div>`
+		}
+
+		if(filtroStatoTask != null && filtroDataOrdinamentoTask != null && filtroNomeCliente == null){
+			if(filtroOrdinamentoTask != null){
+				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+													<div class="col col-span-2 text-start">
+														<ul class="ps-4">
+															<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong> <strong>${filtroOrdinamentoTask}</strong></li>
+															<li>- stato task <strong>${filtroStatoTask}</strong></li>
+												   		</ul>
+													</div>
+											   </div>`							
+			}else if(filtroOrdinamentoTask == null){
+				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+													<div class="col col-span-2 text-start">
+														<ul class="ps-4">
+															<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong></li>
+															<li>- stato task <strong>${filtroStatoTask}</strong></li>
+												   		</ul>
+													</div>
+											   </div>`			
+			}
+		}
+		
+		if(filtroStatoTask != null && filtroDataOrdinamentoTask == null && filtroNomeCliente == null){
+			stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+											<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+												<div class="col col-span-2 text-start">
+													<ul class="ps-4">
+														<li>- stato task <strong>${filtroStatoTask}</strong></li>
+											   		</ul>
+												</div>
+										   </div>`			
+		}
+		
+		if(filtroStatoTask == null && filtroDataOrdinamentoTask != null && filtroNomeCliente == null){
+			if(filtroOrdinamentoTask != null){
+				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+													<div class="col col-span-2 text-start">
+														<ul class="ps-4">
+															<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong> <strong>${filtroOrdinamentoTask}</strong></li>
+												   		</ul>
+													</div>
+											   </div>`			
+				
+			}else if(filtroOrdinamentoTask == null){
+				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+													<div class="col col-span-2 text-start">
+														<ul class="ps-4">
+															<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong></li>
+												   		</ul>
+													</div>
+											   </div>`						
+			}
+		}
+		
+		if(filtroStatoTask == null && filtroDataOrdinamentoTask == null && filtroNomeCliente != null){
+			stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
+											<div class="col col-span-1 text-end">Elenco filtrato per:</div>
+												<div class="col col-span-2 text-start">
+													<ul class="ps-4">
+														<li>- cliente <strong>${filtroNomeCliente}</strong></li>
+											   		</ul>
+												</div>
+										   </div>`			
+		}
+}
+
+
+//funzione che intercetta il form dei filtri e assegna come valore all'id progetto e cliente quelli corretti
+//intercettazione form prima del submit per validazione
+formFiltri.addEventListener('submit', validation)
+		
+function validation(e){
+	e.preventDefault()
+	document.getElementById('filtro-task-per-progetto-select-input').value = idProgettoSelezionato;
+	document.getElementById('input-filtro-task-per-cliente-select').value = idClienteSelezionato;
+	console.log("sono in preventDefault formFiltri")
+	formFiltri.submit(); 
+}

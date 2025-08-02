@@ -255,8 +255,8 @@ public class FreelappRestController {
 // *********************** API PER FILTRI TASK **************************
 	
 //api che restituisce intero elenco di progetti per il filtro select progetto
-@GetMapping("/filtri-task/progetti-all")
-public List<RestProject> listaInteraProgettiPerFiltriTask() {
+@GetMapping("/filtri/progetti-all")
+public List<RestProject> listaInteraProgettiPerFiltr() {
 	
 	//recupero dal db la lista intera dei progetti attivi
 	List<Progetto> listaProgetti = new ArrayList<Progetto>();
@@ -279,9 +279,9 @@ public List<RestProject> listaInteraProgettiPerFiltriTask() {
 }
 	
 	
-//api che restituisce elenco filtrato di progetti per filtro search progetto
-@GetMapping("/filtri-task/progetti-search")
-public List<RestProject> listaFiltrataProgettiPerFiltriTask(@RequestParam String input){
+//api che restituisce elenco filtrato di progetti per filtro search
+@GetMapping("/filtri/progetti-search")
+public List<RestProject> listaFiltrataProgettiPerFiltri(@RequestParam String input){
 	if(input == "") {
 			List<RestProject> taskListOreLAvorateEmpty = new ArrayList<RestProject> ();
 			return taskListOreLAvorateEmpty;
@@ -308,9 +308,38 @@ public List<RestProject> listaFiltrataProgettiPerFiltriTask(@RequestParam String
 	
 }
 	
+//api che restituisce elenco filtrato di clienti per filtro search 
+@GetMapping("/filtri/clienti-search")
+public List<RestCliente> listaFiltrataClientiPerFiltri(@RequestParam String input){
+	if(input == "") {
+			List<RestCliente> taskListOreLAvorateEmpty = new ArrayList<RestCliente> ();
+			return taskListOreLAvorateEmpty;
+		}
+	
+	//recupero dal db la lista intera dei progetti attivi
+	List<Cliente> listaClienti = new ArrayList<Cliente>();
+	listaClienti = clienteRepository.searchClientiByNameInput(input);
+	
+	//creazione list rest progetti vuota
+	List<RestCliente> listaRestClienti= new ArrayList<RestCliente>();
+	
+	//per ogni elemento della lista recuperata da db creo un elemento restProject e lo pusho sulla listaRestProgetti
+	listaClienti.forEach(cliente -> {
+		RestCliente clienteTemporaneo = new RestCliente(null, null, input);
+		clienteTemporaneo.setId(cliente.getId());
+		clienteTemporaneo.setLabelCliente(cliente.getLabelCliente());
+		clienteTemporaneo.setLogoCliente(cliente.getLogoPath());
+		listaRestClienti.add(clienteTemporaneo);
+		
+	});
+	
+	
+	return listaRestClienti;
+	
+}
 
 //api che restituisce intero elenco di clienti per il filtro select progetto
-@GetMapping("/filtri-task/clienti-all")
+@GetMapping("/filtri/clienti-all")
 public List<RestCliente> listaInteraClientiPerFiltriTask() {
 	
 	//recupero dal db la lista intera dei clienti

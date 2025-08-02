@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.freelapp.model.Cliente;
+import com.freelapp.model.Progetto;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Integer>, PagingAndSortingRepository<Cliente, Integer>{
 	
@@ -38,6 +39,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer>, Pagi
     
     public List<Cliente> findAll();
     
-    
+    @Query("SELECT c FROM Cliente c WHERE c.labelCliente LIKE '%'||:input||'%'")
+	public List<Cliente>searchClientiByNameInput(String input);
    
 }

@@ -33,6 +33,14 @@ import jakarta.validation.Valid;
 @Controller
 public class TaskController {
 	
+	//static per la gestione dei filtri lista progetto
+	public static boolean filtriAttiviInListaTask = false;
+	public static String statoTaskInListaTask = "";
+	public static String ordinaTaskInListaTask = "";
+	public static int clienteIdTaskInListaTask = -1;
+	public static int progettoIdTaskInListaTask = -1;
+	public static String dataPerOrdinamentoTask = "";
+	
 	//variabile che passo al model del search task per dirgli che siamo in modalità search
 	private boolean searchMode = false;
 	
@@ -81,6 +89,10 @@ public class TaskController {
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
 		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+		model.addAttribute("filtriAttiviInListaTask", filtriAttiviInListaTask);
+		
+		//metodo del serviceProgetto che passa al model la stringa per indicare all'utente i filtri selezionati
+		taskService.stringaFiltriInListaTask(model);
 		
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -179,6 +191,10 @@ public class TaskController {
 		model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
 		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+		model.addAttribute("filtriAttiviInListaTask", filtriAttiviInListaTask);
+		
+		//metodo del serviceProgetto che passa al model la stringa per indicare all'utente i filtri selezionati
+		taskService.stringaFiltriInListaTask(model);
 		
 		//invio al model il booleano del contatore attivato
 		//se contatoreAttivato = true avvio animazione su titolo task al contatore;
@@ -340,6 +356,51 @@ public class TaskController {
 
 	return "/Task/freelApp-listaTask";
     }
+    
+    
+    @PostMapping("/task-lista-filtri")
+			public String filtriListaProgetto(Model model, @ModelAttribute("statoTask") String statoTask,
+					@ModelAttribute("ordinaTask") String ordinaTask, @ModelAttribute("dataOrdinamentoTask") String dataOrdinamentoTask,
+					@ModelAttribute("clienteSelezionatoId") Integer clienteSelezionatoId, @ModelAttribute("progettoSelezionatoId") Integer progettoSelezionatoId) {
+				 
+				filtriAttiviInListaTask = true;
+				System.out.println("filtriAttiviInListaProgetto: " + filtriAttiviInListaTask);
+				statoTaskInListaTask = statoTask;
+					System.out.println("statoProgetto: " + statoTaskInListaTask);
+				ordinaTaskInListaTask = ordinaTask;
+					System.out.println("ordinaProgetto: " + ordinaTaskInListaTask);
+				dataPerOrdinamentoTask = dataOrdinamentoTask;
+				System.out.println("dataOrdinamentoProgetto: " + dataPerOrdinamentoTask);
+				clienteIdTaskInListaTask = clienteSelezionatoId;
+					System.out.println("clienteId: " + clienteIdTaskInListaTask);
+				progettoIdTaskInListaTask = progettoSelezionatoId;
+					System.out.println("progettoId: " + progettoIdTaskInListaTask);
+				
+				return "redirect:/Task";
+			}
+    
+    
+    @PostMapping("/task-list-filtri/reset")
+			public String resetFiltriProgetto(Model model) {
+				
+				filtriAttiviInListaTask = false;
+				System.out.println("filtriAttiviInListaProgetto: " + filtriAttiviInListaTask);
+				statoTaskInListaTask = "";
+					System.out.println("statoProgetto: " + statoTaskInListaTask);
+				ordinaTaskInListaTask = "";
+					System.out.println("statoProgetto: " + ordinaTaskInListaTask);
+				clienteIdTaskInListaTask = -1;
+					System.out.println("clienteId: " + clienteIdTaskInListaTask);
+				progettoIdTaskInListaTask = -1;
+					System.out.println("clienteId: " + clienteIdTaskInListaTask);
+				dataPerOrdinamentoTask = "";
+					System.out.println("dataOrdinamentoProgetto: " + dataPerOrdinamentoTask);
+					
+				model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaTask);
+				
+				return "redirect:/Task";
+			}
+    
 
     @GetMapping("/Task/{id}")
     public String descrizioneTask(@PathVariable("id") int taskId, Model model) {

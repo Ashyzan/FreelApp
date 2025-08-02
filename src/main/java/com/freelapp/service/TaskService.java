@@ -19,8 +19,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.freelapp.controller.ContatoreController;
+import com.freelapp.controller.TaskController;
 import com.freelapp.model.Progetto;
 import com.freelapp.model.Task;
+import com.freelapp.repository.ClienteRepository;
+import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.repository.TaskRepository;
 
 @Service
@@ -28,6 +31,12 @@ public class TaskService {
 
 	@Autowired
 	private TaskRepository taskRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private ProgettoRepository progettoRepository;
 	
 	//variabile che viene utilizzata nel metodo di statistica "calcoloParteDiBudgetUsataDaAltriTaskNelProgetto"
 	Long finalTimeAltriTaskDelProgetto = 0l;
@@ -38,11 +47,291 @@ public class TaskService {
 	}
 	
 	public Page<Task> findPage(int pageNumber){
-		Pageable pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
-		//restituisce la lista dei task attivi(non chiusi)
-		return taskRepository.findAllNotClosed(pageable);
+		
+		Pageable pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+		//returnString viene personalizzato ogni volta a seconda dei filtri selezionati 
+		Page<Task> returnString = null;
+		returnString =  taskRepository.findAll(pageable1);
+		
+		//condizione di inserimento solo filtro di STATO
+		if(!TaskController.statoTaskInListaTask.equals("") && TaskController.ordinaTaskInListaTask.equals("") 
+				&& TaskController.clienteIdTaskInListaTask == -1 && TaskController.dataPerOrdinamentoTask.equals("")) {
+			if(TaskController.statoTaskInListaTask.equals("aperto")) {
+				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+				returnString = taskRepository.findByActiveTaskPageable(pageable1);
+						
+			} else if (TaskController.statoTaskInListaTask.equals("chiuso")) {
+				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());	
+				returnString = taskRepository.findByNotActiveTaskPageable(pageable1);
+						
+			}
+		}
+		
+		//condizione di inserimento solo filtro di ORDINAMENTO(solo scelta se data modifica o data creazione - di default la piuù recente per prima)
+		if(TaskController.statoTaskInListaTask.equals("") && TaskController.ordinaTaskInListaTask.equals("") 
+			&& TaskController.clienteIdTaskInListaTask == -1 && !TaskController.dataPerOrdinamentoTask.equals("")) {
+			if(TaskController.dataPerOrdinamentoTask.equals("dataModificaTask")) {
+				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+				returnString = taskRepository.findAll(pageable1);
+						
+			}else if(TaskController.dataPerOrdinamentoTask.equals("dataCreazioneTask")) {
+				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+				returnString = taskRepository.findAll(pageable1);
+						
+			}
+		}
+		
+		//condizione di inserimento solo filtro di ORDINAMENTO(completo di scelta piu o meno recente)
+		if(TaskController.statoTaskInListaTask.equals("") && !TaskController.ordinaTaskInListaTask.equals("") 
+			&& TaskController.clienteIdTaskInListaTask == -1 && !TaskController.dataPerOrdinamentoTask.equals("")) {
+			if(TaskController.dataPerOrdinamentoTask.equals("dataModificaTask")) {
+				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+					returnString = taskRepository.findAll(pageable1);
+				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").ascending());
+					returnString = taskRepository.findAll(pageable1);
+				}
+				
+			}else if(TaskController.dataPerOrdinamentoTask.equals("dataCreazioneTask")) {
+				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+					returnString = taskRepository.findAll(pageable1);
+				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").ascending());
+					returnString = taskRepository.findAll(pageable1);
+				}
+			}
+		}
+		
+		//condizione di inserimento solo filtro CLIENTE
+		if(TaskController.statoTaskInListaTask.equals("") && TaskController.ordinaTaskInListaTask.equals("") 
+			&& TaskController.clienteIdTaskInListaTask != -1 && TaskController.dataPerOrdinamentoTask.equals("")) {
+				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+				returnString = taskRepository.findByClienteId(TaskController.clienteIdTaskInListaTask, pageable1);
+						
+		}
+		
+//		//condizione di inserimento solo filtro PROGETTO
+//		if(TaskController.statoTaskInListaTask.equals("") && TaskController.ordinaTaskInListaTask.equals("") 
+//			&& TaskController.clienteIdTaskInListaTask == -1 && TaskController.dataPerOrdinamentoTask.equals("") && TaskController.progettoIdTaskInListaTask != -1) {
+//				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+//				returnString = taskRepository.findByProgettoId(TaskController.clienteIdTaskInListaTask, pageable1);
+//						
+//		}
+	
+		//condizione filtri selezionati --> STATO e ORDINAMENTO (per ORDINAMENTO solo scelta se data modifica o data creazione - di default la piuù recente per prima)
+		if(!TaskController.statoTaskInListaTask.equals("") && TaskController.ordinaTaskInListaTask.equals("") 
+			&& TaskController.clienteIdTaskInListaTask == -1  && !TaskController.dataPerOrdinamentoTask.equals("")) {
+					System.out.println("condizione filtri selezionati --> STATO e ORDINAMENTO (per ORDINAMENTO solo scelta se data modifica o data creazione - di default la piuù recente per prima)");
+		   if(TaskController.statoTaskInListaTask.equals("aperto")) {
+				if(TaskController.dataPerOrdinamentoTask.equals("dataModificaTask")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+					returnString = taskRepository.findByActiveTaskPageable(pageable1);
+						
+				}else if(TaskController.dataPerOrdinamentoTask.equals("dataCreazioneTask")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+					returnString = taskRepository.findByActiveTaskPageable(pageable1);
+						
+				}
+				
+			}
+		   if(TaskController.statoTaskInListaTask.equals("chiuso")) {
+				if(TaskController.dataPerOrdinamentoTask.equals("dataModificaTask")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+					returnString = taskRepository.findByNotActiveTaskPageable(pageable1);
+						
+				}else if(TaskController.dataPerOrdinamentoTask.equals("dataCreazioneTask")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+					returnString = taskRepository.findByNotActiveTaskPageable(pageable1);
+						
+				}
+				
+			}
+		}
+		
+		//condizione filtri selezionati --> STATO e ORDINAMENTO (per ORDINAMENTO completo di scelta piu o meno recente)
+		if(!TaskController.statoTaskInListaTask.equals("") && !TaskController.ordinaTaskInListaTask.equals("") 
+			&& TaskController.clienteIdTaskInListaTask == -1  && !TaskController.dataPerOrdinamentoTask.equals("")) {
+					System.out.println("condizione filtri selezionati --> STATO e ORDINAMENTO (per ORDINAMENTO completo di scelta piu o meno recente)");
+		   if(TaskController.statoTaskInListaTask.equals("aperto")) {
+				if(TaskController.dataPerOrdinamentoTask.equals("dataModificaTask")) {
+				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+					returnString = taskRepository.findByActiveTaskPageable(pageable1);
+				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").ascending());
+					returnString = taskRepository.findByActiveTaskPageable(pageable1);
+				}
+				
+			}else if(TaskController.dataPerOrdinamentoTask.equals("dataCreazioneTask")) {
+				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+					returnString = taskRepository.findByActiveTaskPageable(pageable1);
+				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").ascending());
+					returnString = taskRepository.findByActiveTaskPageable(pageable1);
+					}
+				}
+				
+			}
+		   
+		    if(TaskController.statoTaskInListaTask.equals("chiuso")) {
+				if(TaskController.dataPerOrdinamentoTask.equals("dataModificaTask")) {
+				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+					returnString = taskRepository.findByNotActiveTaskPageable(pageable1);
+				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").ascending());
+					returnString = taskRepository.findByNotActiveTaskPageable(pageable1);
+				}
+				
+			}else if(TaskController.dataPerOrdinamentoTask.equals("dataCreazioneTask")) {
+				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+					returnString = taskRepository.findByNotActiveTaskPageable(pageable1);
+				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").ascending());
+					returnString = taskRepository.findByNotActiveTaskPageable(pageable1);
+				}
+			}
+				
+			}
+		}
+		
+		//condizione filtri selezionati --> ORDINAMENTO e CLIENTE(per ORDINAMENTO solo scelta se data modifica o data creazione - di default la piuù recente per prima)
+		if(TaskController.statoTaskInListaTask.equals("") && TaskController.ordinaTaskInListaTask.equals("") 
+			&& TaskController.clienteIdTaskInListaTask != -1 && !TaskController.dataPerOrdinamentoTask.equals("")) {
+					System.out.println("condizione filtri selezionati --> ORDINAMENTO e CLIENTE (per ORDINAMENTO solo scelta se data modifica o data creazione - di default la piuù recente per prima)");
+			if(TaskController.ordinaTaskInListaTask.equals("dataModificaTask")) {
+				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+				returnString = taskRepository.findByClienteId(TaskController.clienteIdTaskInListaTask, pageable1);
+						
+			} else if(TaskController.ordinaTaskInListaTask.equals("dataCreazioneTask")) {
+				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+				returnString = taskRepository.findByClienteId(TaskController.clienteIdTaskInListaTask, pageable1);
+						
+			}
+		}
+		
+		//condizione filtri selezionati --> ORDINAMENTO e CLIENTE(per ORDINAMENTO completo di scelta piu o meno recente)
+		if(TaskController.statoTaskInListaTask.equals("") && !TaskController.ordinaTaskInListaTask.equals("") 
+			&& TaskController.clienteIdTaskInListaTask != -1 && !TaskController.dataPerOrdinamentoTask.equals("")) {
+					System.out.println("condizione filtri selezionati --> ORDINAMENTO e CLIENTE (per ORDINAMENTO completo di scelta piu o meno recente)");
+			if(TaskController.dataPerOrdinamentoTask.equals("dataModificaTask")) {
+				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+					returnString = taskRepository.findByClienteId(TaskController.clienteIdTaskInListaTask,pageable1);
+				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").ascending());
+					returnString = taskRepository.findByClienteId(TaskController.clienteIdTaskInListaTask,pageable1);
+				}
+				
+			}else if(TaskController.dataPerOrdinamentoTask.equals("dataCreazioneTask")) {
+				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+					returnString = taskRepository.findByClienteId(TaskController.clienteIdTaskInListaTask,pageable1);
+				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").ascending());
+					returnString = taskRepository.findByClienteId(TaskController.clienteIdTaskInListaTask,pageable1);
+					}
+				}
+		}
+		
+		//condizione filtri selezionati --> STATO e CLIENTE (progetto con modifica più recente per primo)
+		if(!TaskController.statoTaskInListaTask.equals("") && TaskController.ordinaTaskInListaTask.equals("") 
+			&& TaskController.clienteIdTaskInListaTask != -1) {
+					System.out.println("condizione filtri selezionati --> STATO e CLIENTE");
+			if(TaskController.statoTaskInListaTask.equals("aperto")) {
+				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+				returnString = taskRepository.findByClienteIdWhereTaskIsActive(TaskController.clienteIdTaskInListaTask, pageable1);
+			}else if(TaskController.statoTaskInListaTask.equals("chiuso")) {
+				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+				returnString = taskRepository.findByClienteIdWhereTaskIsNotActive(TaskController.clienteIdTaskInListaTask, pageable1);
+			}
+		}
+		
+		//condizione filtri selezionati --> STATO, ORDINAMENTO e CLIENTE(per ORDINAMENTO completo di scelta piu o meno recente)
+		if(!TaskController.statoTaskInListaTask.equals("") && !TaskController.ordinaTaskInListaTask.equals("") 
+			&& TaskController.clienteIdTaskInListaTask != -1  && !TaskController.dataPerOrdinamentoTask.equals("")) {
+					System.out.println("condizione filtri selezionati --> STATO, ORDINAMENTO e CLIENTE (per ORDINAMENTO completo di scelta piu o meno recente)");
+			if(TaskController.statoTaskInListaTask.equals("aperto")) {
+				if(TaskController.dataPerOrdinamentoTask.equals("dataModificaTask")) {
+				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+					returnString = taskRepository.findByClienteIdWhereTaskIsActive(TaskController.clienteIdTaskInListaTask, pageable1);
+				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").ascending());
+					returnString = taskRepository.findByClienteIdWhereTaskIsActive(TaskController.clienteIdTaskInListaTask, pageable1);
+				}
+				
+			}else if(TaskController.dataPerOrdinamentoTask.equals("dataCreazioneTask")) {
+				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+					returnString = taskRepository.findByClienteIdWhereTaskIsActive(TaskController.clienteIdTaskInListaTask, pageable1);
+				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").ascending());
+					returnString = taskRepository.findByClienteIdWhereTaskIsActive(TaskController.clienteIdTaskInListaTask, pageable1);
+					}
+				}
+				
+			}
+		   
+		    if(TaskController.statoTaskInListaTask.equals("chiuso")) {
+				if(TaskController.dataPerOrdinamentoTask.equals("dataModificaTask")) {
+				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+					returnString = taskRepository.findByClienteIdWhereTaskIsNotActive(TaskController.clienteIdTaskInListaTask, pageable1);
+				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").ascending());
+					returnString = taskRepository.findByClienteIdWhereTaskIsNotActive(TaskController.clienteIdTaskInListaTask, pageable1);
+				}
+				
+			}else if(TaskController.dataPerOrdinamentoTask.equals("dataCreazioneTask")) {
+				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+					returnString = taskRepository.findByClienteIdWhereTaskIsNotActive(TaskController.clienteIdTaskInListaTask, pageable1);
+				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").ascending());
+					returnString = taskRepository.findByClienteIdWhereTaskIsNotActive(TaskController.clienteIdTaskInListaTask, pageable1);
+				}
+			}
+				
+			}
+		}
+		
+		//condizione filtri selezionati --> STATO, ORDINAMENTO e CLIENTE(per ORDINAMENTO solo scelta se data modifica o data creazione - di default la più recente per prima)
+		if(!TaskController.statoTaskInListaTask.equals("") && !TaskController.ordinaTaskInListaTask.equals("") 
+			&& TaskController.clienteIdTaskInListaTask != -1  && !TaskController.dataPerOrdinamentoTask.equals("")) {
+					System.out.println("condizione filtri selezionati --> STATO, ORDINAMENTO e CLIENTE (per ORDINAMENTO solo scelta se data modifica o data creazione - di default la più recente per prima)");
+			if(TaskController.statoTaskInListaTask.equals("aperto")) {
+				if(TaskController.dataPerOrdinamentoTask.equals("dataModificaTask")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+					returnString = taskRepository.findByClienteIdWhereTaskIsActive(TaskController.clienteIdTaskInListaTask, pageable1);
+				
+			}else if(TaskController.dataPerOrdinamentoTask.equals("dataCreazioneTask")) {
+				pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+				returnString = taskRepository.findByClienteIdWhereTaskIsActive(TaskController.clienteIdTaskInListaTask, pageable1);
+				}
+			}
+		   
+		    if(TaskController.statoTaskInListaTask.equals("chiuso")) {
+				if(TaskController.dataPerOrdinamentoTask.equals("dataModificaTask")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+					returnString = taskRepository.findByClienteIdWhereTaskIsNotActive(TaskController.clienteIdTaskInListaTask, pageable1);
+				
+			}else if(TaskController.dataPerOrdinamentoTask.equals("dataCreazioneTask")) {
+					pageable1 = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+					returnString = taskRepository.findByClienteIdWhereTaskIsNotActive(TaskController.clienteIdTaskInListaTask, pageable1);
+			}
+				
+			}
+		}
+		
+		return returnString;
 		
 	}
+	
 	
 	public Page<Task> findSearchedPage(int pageNumber, String input){
 		Pageable pageable = PageRequest.of(pageNumber -1, 12);
@@ -218,4 +507,61 @@ public class TaskService {
 		
 		return parteDiBudgetUsataDaAltriTaskNelProgettoInOre*tariffaOrariaProgetto;
 	}
+	
+	
+	
+	
+	//metodo che genera la stringa dei filtri applicati da far vedere all'utente in lista progetti
+			public void stringaFiltriInListaTask(Model model) {
+				
+				//inizializzo le tre stringhe che poi verranno passate al model e utilizzate da javascript per riempire la lista dei filtri applicati
+				String statoTask = null;
+				String ordinamentoTask = null;
+				String nomeCliente = null; 
+				String nomeProgetto = null;
+				String dataOrdinamentoTask = null;
+				if(TaskController.statoTaskInListaTask != null || TaskController.ordinaTaskInListaTask != null || TaskController.clienteIdTaskInListaTask != -1
+								|| TaskController.progettoIdTaskInListaTask != -1) {
+					
+					if(TaskController.statoTaskInListaTask.equals("aperto")) {
+						statoTask = "APERTO";
+					}else if(TaskController.statoTaskInListaTask.equals("chiuso")) {
+						statoTask = "CHIUSO";
+					}
+					
+					if(TaskController.dataPerOrdinamentoTask.equals("dataModificaTask")) {
+						dataOrdinamentoTask = "data di modifica";
+					}else if(TaskController.dataPerOrdinamentoTask.equals("dataCreazioneTask")) {
+						dataOrdinamentoTask = "data di creazione";
+					}
+					
+					if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+						ordinamentoTask = "più recente";
+						
+					}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+						ordinamentoTask = "meno recente";
+					}
+					
+					if(TaskController.clienteIdTaskInListaTask != -1) {
+						
+						Integer idClienteSelezionato = TaskController.clienteIdTaskInListaTask;
+						nomeCliente = clienteRepository.findById(idClienteSelezionato).get().getLabelCliente();
+					}
+					
+					if(TaskController.progettoIdTaskInListaTask != -1) {
+						
+						Integer idProgettoSelezionato = TaskController.progettoIdTaskInListaTask;
+						nomeProgetto = progettoRepository.findById(idProgettoSelezionato).get().getName();
+					}
+					
+				}
+				
+				model.addAttribute("filtroStatoTask", statoTask);
+				model.addAttribute("filtroOrdinamentoTask", ordinamentoTask);
+				model.addAttribute("filtroNomeCliente", nomeCliente);
+				model.addAttribute("filtroNomeProgetto", nomeProgetto);
+				model.addAttribute("filtroDataOrdinamentoTask", dataOrdinamentoTask);
+				
+			}
+	
 }

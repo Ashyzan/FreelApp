@@ -39,7 +39,7 @@ public class ProgettoController {
 	//private static final boolean Task = false;
 	
 	//variablili che verranno utilizzate per memorizzare la scelta effettuata durante la sessione
-	public static boolean ordinaElencoProgettiPerData = true;
+	//public static boolean ordinaElencoProgettiPerData = true;
 
 	//public static boolean ordinaElencoProgettiPerCliente = false;
 	
@@ -346,7 +346,7 @@ public class ProgettoController {
 					ContatoreController.contatoreCliccatoPreRefresh = false;
 					
 					//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
-					model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
+					//model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
 //					model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
 		
 					//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
