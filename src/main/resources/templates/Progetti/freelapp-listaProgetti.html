@@ -351,16 +351,18 @@
 							</div>
 						</div>
 						<div id="tabella-filtri-desktop" class="hidden bg-white shadow-sm shadow-[#0057A5] w-3/5 m-auto rounded-xl">
-							<form class="p-4" th:action="@{/progetto-lista-filtri}" method="post">
+							<form class="p-4" th:action="@{/progetto-lista-filtri}" method="post" id="form-filtri-progetto">
 								<fieldset id="ordina-per-asc-desc" class="text-[#0057A5] mb-4 max-lg:text-sm">
 									<div class="grid grid-cols-3">
 										<legend class="col-span-1 font-bold me-4">Ordina per</legend>
 										<div class="col-span-1" id="inputRadiodataModificaProgetto">
-											<input type="radio" id="dataModificaProgetto" name="dataOrdinamentoProgetto" value="dataModificaProgetto" onclick="visualizzaordinamentoListaPiuMenoRecente()">
+											<input type="radio" id="dataModificaProgetto" name="dataOrdinamentoProgetto" 
+												value="dataModificaProgetto" onclick="visualizzaordinamentoListaPiuMenoRecente()">
 											<label for="piuRecente">Data di modifca</label>
 										</div>
 										<div class="col-span-1" id="inputRadiodataCreazioneProgetto">
-											<input type="radio" id="dataCreazioneProgetto" name="dataOrdinamentoProgetto" value="dataCreazioneProgetto" onclick="visualizzaordinamentoListaPiuMenoRecente()">
+											<input type="radio" id="dataCreazioneProgetto" name="dataOrdinamentoProgetto"
+												value="dataCreazioneProgetto" onclick="visualizzaordinamentoListaPiuMenoRecente()">
 											<label for="menoRecente">Data di crezione</label>
 										</div>
 									</div>
@@ -1108,7 +1110,8 @@
 		let filtroOrdinamentoProgetto = /*[[${filtroOrdinamentoProgetto}]]*/ null;
 		let filtroNomeCliente = /*[[${filtroNomeCliente}]]*/ null;
 		let filtroDataOrdinamentoProgetto = /*[[${filtroDataOrdinamentoProgetto}]]*/ null;
-		console.log("filtriAttiviInListaProgetto: " + filtriAttiviInListaProgetto)
+		let filtroIdClienteSelezionato  = /*[[${filtroIdClienteSelezionato}]]*/ -1;
+		console.log("filtroIdClienteSelezionato: " + filtroIdClienteSelezionato)
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>

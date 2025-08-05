@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -12,7 +13,8 @@ import com.freelapp.model.Progetto;
 
 import jakarta.transaction.Transactional;
 
-public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, PagingAndSortingRepository<Progetto, Integer>{
+public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, PagingAndSortingRepository<Progetto, Integer>,
+				JpaSpecificationExecutor<Progetto>{
 
 	 @Query("SELECT p FROM Progetto p "
 	 		+ "LEFT JOIN Task t ON p.id=t.progetto.id "

@@ -101,6 +101,7 @@ public class ProgettoController {
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
 				model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
 				model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaProgetto);
+				model.addAttribute("filtroIdClienteSelezionato", ProgettoController.clienteIdProgettoInListaProgetto);
 				
 				
 				//metodo del serviceProgetto che passa al model la stringa per indicare all'utente i filtri selezionati
@@ -192,6 +193,7 @@ public class ProgettoController {
 					model.addAttribute("taskInUso", ContatoreController.taskInUso);
 					model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
 					model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaProgetto);
+					model.addAttribute("filtroIdClienteSelezionato", ProgettoController.clienteIdProgettoInListaProgetto);
 		
 					//inizializzo a false così al reload successivo js non genera i tasti del contatore
 					ContatoreController.contatoreAttivatoDaRapidButton = false;
@@ -387,7 +389,6 @@ public class ProgettoController {
 				System.out.println("dataOrdinamentoProgetto: " + dataPerOrdinamentoProgetto);
 				clienteIdProgettoInListaProgetto = clienteSelezionatoId;
 					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
-				
 				return "redirect:/Progetti";
 			}
 			
@@ -404,7 +405,7 @@ public class ProgettoController {
 					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
 				dataPerOrdinamentoProgetto = "";
 					System.out.println("dataOrdinamentoProgetto: " + dataPerOrdinamentoProgetto);
-					
+//					
 				model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaProgetto);
 				
 				return "redirect:/Progetti";

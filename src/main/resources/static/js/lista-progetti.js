@@ -18,11 +18,13 @@ const aperto = document.getElementById('aperto');
 const chiuso = document.getElementById('chiuso');
 const inputFiltroProgettoPerClienteSelect = document.getElementById('input-filtro-task-per-cliente-select');
 const inputFiltroProgettoPerClienteSearch = document.getElementById('filtro-task-per-cliente-search-input');
-const filtroTaskPerClienteSearch = document.getElementById('filtro-task-per-cliente-search');
-const filtroTaskPerClienteSelect = document.getElementById('filtro-task-per-cliente-select');
+const filtroProgettoPerClienteSearch = document.getElementById('filtro-task-per-cliente-search');
+const filtroProgettoPerClienteSelect = document.getElementById('filtro-task-per-cliente-select');
+const formFiltri = document.getElementById('form-filtri-progetto');
 
 //variabile di lavoro per filtri (se non selezionato cliente viene mandato al backend il valore -1 corrispondente a quello del relativo static non assegnato)
-let idClienteSelezionato = -1
+let idClienteSelezionato = -1;
+let nomeClienteSelezionato;
 
 
 //addeventlistener che cambia il pulsante del filtro cliente se il campo, precedentemente riepito per selezione, viene cancellato a mano
@@ -98,10 +100,12 @@ function ripristinaFiltroPerClienti(){
 //funzione che al click sul cliente del filtro per clienti lo seleziona
 function selezionaCliente(idCliente, nomeCliente){
 	idClienteSelezionato = idCliente;
+	nomeClienteSelezionato = nomeCliente;
+	console.log("nomeClienteSelezionato --- in seleziona cliente: " + nomeClienteSelezionato);
 	passaAFiltroClientiSelectMode()
 	document.getElementById('input-filtro-task-per-cliente-select').value = nomeCliente;
-	filtroTaskPerClienteSearch.classList.add('hidden');
-	filtroTaskPerClienteSelect.classList.remove('hidden')
+	filtroProgettoPerClienteSearch.classList.add('hidden');
+	filtroProgettoPerClienteSelect.classList.remove('hidden')
 	document.getElementById('clienti-select-all').innerHTML =` `;
 	pulsanteSelectFiltroPerClienti.innerHTML = `
 				<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
@@ -134,18 +138,18 @@ async function getJsonListaClientiSearch(input){
 		pulsanteSelectFiltroPerClienti.innerHTML = "";
 									
 		pulsanteSelectFiltroPerClienti.innerHTML = `
-																<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
-																		onclick="ripristinaFiltroPerClienti()">
-																	<img  class="size-6" src="/img/sources/icons/close-button-yellow.svg">
-																</button>` 
+					<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+							onclick="ripristinaFiltroPerClienti()">
+							<img  class="size-6" src="/img/sources/icons/close-button-yellow.svg">
+					</button>` 
 	}else if(input == "" || input == " "){
 		pulsanteSelectFiltroPerClienti.innerHTML = "";
 											
 		pulsanteSelectFiltroPerClienti.innerHTML = `
-																		<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
-																				onclick="ripristinaFiltroPerClienti()">
-																			<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
-																		</button>` 
+					<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+							onclick="ripristinaFiltroPerClienti()">
+							<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
+					</button>` 
 	}
 	
 }
@@ -153,8 +157,8 @@ async function getJsonListaClientiSearch(input){
 
 //funzione che da filtro per clienti per ricerca passa a quello per select all 
 function passaAFiltroClientiSelectMode(){
-	filtroTaskPerClienteSearch.classList.add('hidden');
-	filtroTaskPerClienteSelect.classList.remove('hidden');
+	filtroProgettoPerClienteSearch.classList.add('hidden');
+	filtroProgettoPerClienteSelect.classList.remove('hidden');
 	document.getElementById('clienti-from-search').innerHTML =` `;
 	document.getElementById('clienti-select-all').innerHTML =` `;
 	
@@ -165,8 +169,8 @@ function passaAFiltroClientiSelectMode(){
 //funzione che da filtro per clienti per select all passa a quello per ricerca 
 function passaAFiltroClientiSearchMode(){
 	inputFiltroProgettoPerClienteSearch.value ="";
-	filtroTaskPerClienteSearch.classList.remove('hidden');
-	filtroTaskPerClienteSelect.classList.add('hidden');
+	filtroProgettoPerClienteSearch.classList.remove('hidden');
+	filtroProgettoPerClienteSelect.classList.add('hidden');
 	document.getElementById('clienti-from-search').innerHTML =` `;
 	document.getElementById('clienti-select-all').innerHTML =` `;
 	
@@ -335,6 +339,7 @@ function mostraFiltri(){
 			imgFiltraPer.src="/img/sources/icons/arrow-down.svg"
 		}
 	
+		console.log("nomeClienteSelezionato: " + nomeClienteSelezionato)
 }
 
 
@@ -415,8 +420,22 @@ function filtriInUsoDaUtente(){
 						inputRadioAperto.innerHTML = `<input type="radio" id="aperto" name="statoProgetto" value="aperto">
 														<label for="aperto">Aperto</label>`
 		}
+		
+		if(filtroNomeCliente != null){
+			idClienteSelezionato = filtroIdClienteSelezionato;
+			inputFiltroProgettoPerClienteSearch.value = filtroNomeCliente;
+			
+		}
 	
 	}
 }
 
+//funzione che intercetta il form dei filtri e assegna come valore all'id progetto quello corretti
+//intercettazione form prima del submit per validazione
+formFiltri.addEventListener('submit', validation)
 		
+function validation(e){
+	e.preventDefault()
+	document.getElementById('input-filtro-task-per-cliente-select').value = idClienteSelezionato;
+	formFiltri.submit(); 
+}		
