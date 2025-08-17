@@ -76,6 +76,9 @@ public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, Pa
 	    // transitional usato per modifica e cancellazione
 	    @Transactional
 	    void deleteByClienteId(Integer id);
+	    
+	    @Query("SELECT p FROM Progetto p WHERE p.cliente.id=:input")
+	    public List<Progetto> findByClienteId(int input);
 
 
 		public Page<Progetto> findByArchivia(boolean i, Pageable pageable2);
@@ -96,14 +99,14 @@ public interface ProgettoRepository extends JpaRepository<Progetto, Integer>, Pa
 		@Query("SELECT p FROM Progetto p WHERE p.dataFine IS NOT NULL")
 		public Page<Progetto> findByNotActiveProjectPageable(Pageable pageable);
 		
-		 @Query("SELECT p FROM Progetto p WHERE p.cliente.id=:input")
-		 public Page<Progetto> findByClienteId(int input,  Pageable pageable);
+		@Query("SELECT p FROM Progetto p WHERE p.cliente.id=:input")
+		public Page<Progetto> findByClienteId(int input,  Pageable pageable);
 		 
-		 @Query("SELECT p FROM Progetto p WHERE p.cliente.id=:input AND p.dataFine IS NULL")
-		 public Page<Progetto> findByClienteIdWhereProjectIsActive(int input,  Pageable pageable);
+		@Query("SELECT p FROM Progetto p WHERE p.cliente.id=:input AND p.dataFine IS NULL")
+		public Page<Progetto> findByClienteIdWhereProjectIsActive(int input,  Pageable pageable);
 		  
-		 @Query("SELECT p FROM Progetto p WHERE p.cliente.id=:input AND p.dataFine IS NOT NULL")
-		 public Page<Progetto> findByClienteIdWhereProjectIsNotActive(int input,  Pageable pageable);
+		@Query("SELECT p FROM Progetto p WHERE p.cliente.id=:input AND p.dataFine IS NOT NULL")
+		public Page<Progetto> findByClienteIdWhereProjectIsNotActive(int input,  Pageable pageable);
 		
 		
 		public List<Progetto>findByArchivia(boolean value);

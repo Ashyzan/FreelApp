@@ -16,10 +16,10 @@ const piuRecente = document.getElementById('piuRecente');
 const menoRecente = document.getElementById('menoRecente');
 const aperto = document.getElementById('aperto');
 const chiuso = document.getElementById('chiuso');
-const inputFiltroProgettoPerClienteSelect = document.getElementById('input-filtro-task-per-cliente-select');
-const inputFiltroProgettoPerClienteSearch = document.getElementById('filtro-task-per-cliente-search-input');
-const filtroProgettoPerClienteSearch = document.getElementById('filtro-task-per-cliente-search');
-const filtroProgettoPerClienteSelect = document.getElementById('filtro-task-per-cliente-select');
+const inputFiltroProgettoPerClienteSelect = document.getElementById('input-filtro-progetto-per-cliente-select');
+const inputFiltroProgettoPerClienteSearch = document.getElementById('filtro-progetto-per-cliente-search-input');
+const filtroProgettoPerClienteSearch = document.getElementById('filtro-progetto-per-cliente-search');
+const filtroProgettoPerClienteSelect = document.getElementById('filtro-progetto-per-cliente-select');
 const formFiltri = document.getElementById('form-filtri-progetto');
 
 //variabile di lavoro per filtri (se non selezionato cliente viene mandato al backend il valore -1 corrispondente a quello del relativo static non assegnato)
@@ -27,7 +27,7 @@ let idClienteSelezionato = -1;
 let nomeClienteSelezionato;
 
 
-//addeventlistener che cambia il pulsante del filtro cliente se il campo, precedentemente riepito per selezione, viene cancellato a mano
+//addeventlistener che cambia il pulsante del filtro cliente se il campo, precedentemente riempito per selezione, viene cancellato a mano
 inputFiltroProgettoPerClienteSelect.addEventListener ('keyup', function (){
 	if(inputFiltroProgettoPerClienteSelect.value == ""){
 		passaAFiltroClientiSearchMode()

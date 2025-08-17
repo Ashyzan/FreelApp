@@ -1,8 +1,13 @@
 console.log("sono in lista-task.js")
 
 const api_urlFiltriListaClientiAll = 'http://localhost:8080/api/filtri/clienti-all';
+const api_urlFiltriListaClientiSearch = 'http://localhost:8080/api/filtri/clienti-search?input=';
 const api_urlFiltriListaProgettiSearch = 'http://localhost:8080/api/filtri/progetti-search?input=';
 const api_urlFiltriListaProgettiAll = 'http://localhost:8080/api/filtri/progetti-all';
+const api_urlFiltriListaProgettiByCliente = 'http://localhost:8080/api/filtri/progetti-by-cliente-?input=';
+
+
+
 
 
 //recupero dal DOM elementi per i filtri
@@ -19,10 +24,17 @@ const aperto = document.getElementById('aperto');
 const chiuso = document.getElementById('chiuso');
 const formFiltri = document.getElementById('form-filtri-task');
 
+const inputFiltroTaskPerClienteSelect = document.getElementById('input-filtro-task-per-cliente-select');
+const inputFiltroTaskPerClienteSearch = document.getElementById('filtro-task-per-cliente-search-input');
+const filtroTaskPerClienteSearch = document.getElementById('filtro-task-per-cliente-search');
+const filtroTaskPerClienteSelect = document.getElementById('filtro-task-per-cliente-select');
+
 
 //variabili di lavoro per filtri (se non selezionati cliente o progetti viene mandato al backend in valore -1 corrispondente a quello del relativo static non assegnato)
 let idClienteSelezionato = -1;
 let idProgettoSelezionato = -1;
+let nomeClienteSelezionato;
+let nomeProgettoSelezionato;
 
 
 
@@ -44,7 +56,29 @@ function mostraFiltri(){
 	
 }
 
+//addeventlistener che cambia il pulsante del filtro cliente se il campo, precedentemente riempito per selezione, viene cancellato a mano
+inputFiltroTaskPerClienteSelect.addEventListener ('keyup', function (){
+	if(inputFiltroTaskPerClienteSelect.value == ""){
+		passaAFiltroClientiSearchMode()
+		pulsanteSelectFiltroPerClienti.innerHTML = `
+							<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+									onclick="getJsonListaClientiAll()">
+								<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
+							</button>`
+	}
+});
 
+//addeventlistener che cambia il pulsante del filtro cliente se il campo, precedentemente riepito per input, viene cancellato a mano
+inputFiltroTaskPerClienteSearch.addEventListener ('keyup', function (){
+	if(inputFiltroTaskPerClienteSearch.value == ""){
+		passaAFiltroClientiSearchMode()
+		pulsanteSelectFiltroPerClienti.innerHTML = `
+							<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+									onclick="getJsonListaClientiAll()">
+								<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
+							</button>`
+	}
+});
 
 //funzione che al click sul pulsante di lista intera su filtra per clienti restitisce la lista intera dei clienti
 async function getJsonListaClientiAll(){
@@ -68,7 +102,7 @@ async function getJsonListaClientiAll(){
 		pulsanteSelectFiltroPerClienti.innerHTML = `
 			<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
 					onclick="ripristinaFiltroPerClienti()">
-					<img  class="size-6" src="/img/sources/icons/close-button-yellow.svg">
+					<img  class="size-6" src="/img/sources/icons/arrow-up.svg">
 			</button>` 
 		
 		
@@ -76,26 +110,88 @@ async function getJsonListaClientiAll(){
 }
 
 
+
+//funzione che all'inserimento dell'input filtra per clienti restituisce la lista filtrata di clienti
+async function getJsonListaClientiSearch(input){
+	
+	document.getElementById('clienti-from-search').innerHTML =` `;
+	document.getElementById('clienti-select-all').innerHTML =` `;
+	if(input != "" || input != " "){
+		const response = await fetch(api_urlFiltriListaClientiSearch + input);
+		const list = await response.json();
+				
+		list.forEach(item =>{
+			document.getElementById('clienti-from-search').innerHTML += 
+					`<button type="button" value="${item.id}" id="cliente-${item.id}"
+								class="border-b-1 p-1 shadow-sm w-full hover:bg-[#FFE541]/50  px-1 grid grid-cols-5" onclick="selezionaCliente(${item.id},'${item.labelCliente}')">
+								<img class="col-span-1 size-6 flex justify-center items-center" src="${item.logoCliente}">
+								<div class="col-span-4 text-[#0057A5] text-start truncate">${item.labelCliente}</div>
+						</button>`
+				});				
+	
+		pulsanteSelectFiltroPerClienti.innerHTML = "";
+									
+		pulsanteSelectFiltroPerClienti.innerHTML = `
+					<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+							onclick="ripristinaFiltroPerClienti()">
+							<img  class="size-6" src="/img/sources/icons/close-button-yellow.svg">
+					</button>` 
+	}else if(input == "" || input == " "){
+		pulsanteSelectFiltroPerClienti.innerHTML = "";
+											
+		pulsanteSelectFiltroPerClienti.innerHTML = `
+					<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+							onclick="ripristinaFiltroPerClienti()">
+							<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
+					</button>` 
+	}
+	
+}
+
+
 //funzione che al click sul cliente del filtro per clienti lo seleziona
 function selezionaCliente(idCliente, nomeCliente){
 	idClienteSelezionato = idCliente;
+	nomeClienteSelezionato = nomeCliente;
+	console.log("nomeClienteSelezionato --- in seleziona cliente: " + nomeClienteSelezionato);
+	passaAFiltroClientiSelectMode()
+	getJsonListaProgettiByCliente(idClienteSelezionato)
 	document.getElementById('input-filtro-task-per-cliente-select').value = nomeCliente;
+	filtroTaskPerClienteSearch.classList.add('hidden');
+	filtroTaskPerClienteSelect.classList.remove('hidden')
+	document.getElementById('clienti-select-all').innerHTML =` `;
+	pulsanteSelectFiltroPerClienti.innerHTML = `
+				<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+						onclick="ripristinaFiltroPerClienti()">
+						<img  class="size-6" src="/img/sources/icons/close-button-yellow.svg">
+				</button>` 
 	
-	ripristinaFiltroPerClienti();
+}
+
+
+//funzione che da filtro per clienti per ricerca passa a quello per select all 
+function passaAFiltroClientiSelectMode(){
+	filtroTaskPerClienteSearch.classList.add('hidden');
+	filtroTaskPerClienteSelect.classList.remove('hidden');
+	document.getElementById('clienti-from-search').innerHTML =` `;
+	document.getElementById('clienti-select-all').innerHTML =` `;
+	
+	
 }
 
 //funzione che chiude e ripristina il filtro per clienti
 function ripristinaFiltroPerClienti(){
+	
 	document.getElementById('clienti-select-all').innerHTML =` `;
+	passaAFiltroClientiSearchMode()
 	pulsanteSelectFiltroPerClienti.innerHTML = `
 					<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
 							onclick="getJsonListaClientiAll()">
 						<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
 					</button>`
-
+	document.getElementById('input-filtro-task-per-cliente-select').value = null;
 	
 }
-
 
 //funzione che da filtro task per progetti select all passa a quello di ricerca
 function ripristinaFiltroPerProgetti(){
@@ -180,13 +276,49 @@ async function getJsonListaProgettiAll(){
 		pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = `
 			<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
 					onclick="ripristinaFiltroPerProgetti()">
-					<img  class="size-6" src="/img/sources/icons/close-button-yellow.svg">
+					<img  class="size-6" src="/img/sources/icons/arrow-up.svg">
 			</button>` 
 			
 }
 
 
+//funzione che alla selezione del cliente restituisce la lista filtrata di progetti relativi al quel cliente
+async function getJsonListaProgettiByCliente(input){
+	
+	document.getElementById('progetti-select-all').classList.add('hidden')
+	document.getElementById('progetti-select-all').innerHTML =` `;
+	
+		const response = await fetch(api_urlFiltriListaProgettiByCliente + input);
+		const list = await response.json();
+		
+		list.forEach(item =>{
+			document.getElementById('progetti-select-all').innerHTML += 
+			`<button type="button" value="${item.id}" id="progetto-${item.id}" onclick="selezionaProgetto(${item.id}, '${item.name}')"
+					class="border-b-1 p-1 shadow-sm w-full hover:bg-[#FFE541]/50 text-start text-[#0057A5] px-1 truncate">
+					${item.name}
+			</button>`
+		});
+		
+		pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = "";
+											
+		pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = `
+			<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+					onclick="sbloccaListaProgettiFiltrataPerCliente()">
+					<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
+			</button>` 
+			
+}
 
+//funzione che dopo aver selezionato cliente rende visibile la lista dei progetti filtrati per la successiva selezione
+function sbloccaListaProgettiFiltrataPerCliente(){
+	document.getElementById('progetti-select-all').classList.remove('hidden')
+	pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = `
+				<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+						onclick="ripristinaFiltroPerProgetti()">
+						<img  class="size-6" src="/img/sources/icons/arrow-up.svg">
+				</button>` 
+	
+}
 
 //funzione che al click sul progetto del filtro per clienti lo seleziona
 function selezionaProgetto(idProgetto, nomeProgetto){
@@ -201,10 +333,10 @@ function selezionaProgetto(idProgetto, nomeProgetto){
 		pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = "";
 								
 		pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = `
-					<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
-							onclick="getJsonListaProgettiAll()">
-						<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
-					</button>`
+						<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+								onclick="ripristinaFiltroPerProgetti()">
+								<img  class="size-6" src="/img/sources/icons/close-button-yellow.svg">
+						</button>` 
 }
 
 
@@ -288,6 +420,18 @@ function filtriInUsoDaUtente(){
 			document.getElementById('input-filtro-task-per-cliente-select').value = filtroNomeCliente;
 		}
 	}
+}
+
+
+//funzione che da filtro per clienti per select all passa a quello per ricerca 
+function passaAFiltroClientiSearchMode(){
+	inputFiltroTaskPerClienteSearch.value ="";
+	filtroTaskPerClienteSearch.classList.remove('hidden');
+	filtroTaskPerClienteSelect.classList.add('hidden');
+	document.getElementById('clienti-from-search').innerHTML =` `;
+	document.getElementById('clienti-select-all').innerHTML =` `;
+	
+	
 }
 
 
@@ -431,6 +575,8 @@ if(stringaFiltri != null){
 										   </div>`			
 		}
 }
+
+
 
 
 //funzione che intercetta il form dei filtri e assegna come valore all'id progetto e cliente quelli corretti

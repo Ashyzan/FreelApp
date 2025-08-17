@@ -252,7 +252,7 @@ public class FreelappRestController {
 	}
 	 
 
-// *********************** API PER FILTRI TASK **************************
+// *********************** API PER FILTRI **************************
 	
 //api che restituisce intero elenco di progetti per il filtro select progetto
 @GetMapping("/filtri/progetti-all")
@@ -362,7 +362,31 @@ public List<RestCliente> listaInteraClientiPerFiltriTask() {
 	
 	return listaRestClienti;
 }
+
+
+//api che restituisce intero elenco di progetti dopo aver selezionato il cliente
+@GetMapping("/filtri/progetti-by-cliente-")
+public List<RestProject> listaProgettiFiltrataPerCliente(@RequestParam int input) {
 	
+	//recupero dal db la lista di progetti filtrata per cliente
+	List<Progetto> listaProgettiFiltrataPerCliente = new ArrayList<Progetto>();
+	listaProgettiFiltrataPerCliente = progettoRepository.findByClienteId(input);
+	
+	//creazione list rest progetti vuota
+	List<RestProject> listaRestProgetti= new ArrayList<RestProject>();
+	
+	//per ogni elemento della lista recuperata da db creo un elemento restProject e lo pusho sulla listaRestProgetti
+	listaProgettiFiltrataPerCliente.forEach(progetto -> {
+		RestProject progettoTemporaneo = new RestProject(null, null);
+		progettoTemporaneo.setId(progetto.getId());
+		progettoTemporaneo.setName(progetto.getName());
+		listaRestProgetti.add(progettoTemporaneo);
+		
+	});
+	
+	
+	return listaRestProgetti;
+}
 	
 //	@GetMapping(value = "/task/timeExceed/{id}", produces = MediaType.TEXT_HTML_VALUE)
 //	public String timeExceedError(@PathVariable("id")Integer id, Model model) {
