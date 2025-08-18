@@ -92,7 +92,7 @@ function ripristinaFiltroPerClienti(){
 							onclick="getJsonListaClientiAll()">
 						<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
 					</button>`
-	document.getElementById('input-filtro-task-per-cliente-select').value = null;
+	document.getElementById('input-filtro-progetto-per-cliente-select').value = null;
 	
 }
 
@@ -103,7 +103,7 @@ function selezionaCliente(idCliente, nomeCliente){
 	nomeClienteSelezionato = nomeCliente;
 	console.log("nomeClienteSelezionato --- in seleziona cliente: " + nomeClienteSelezionato);
 	passaAFiltroClientiSelectMode()
-	document.getElementById('input-filtro-task-per-cliente-select').value = nomeCliente;
+	document.getElementById('input-filtro-progetto-per-cliente-select').value = nomeCliente;
 	filtroProgettoPerClienteSearch.classList.add('hidden');
 	filtroProgettoPerClienteSelect.classList.remove('hidden')
 	document.getElementById('clienti-select-all').innerHTML =` `;
@@ -436,6 +436,6 @@ formFiltri.addEventListener('submit', validation)
 		
 function validation(e){
 	e.preventDefault()
-	document.getElementById('input-filtro-task-per-cliente-select').value = idClienteSelezionato;
+	document.getElementById('input-filtro-progetto-per-cliente-select').value = idClienteSelezionato;
 	formFiltri.submit(); 
 }		
