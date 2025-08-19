@@ -63,6 +63,13 @@ public interface TaskRepository extends JpaRepository<Task, Integer>, PagingAndS
 	
      @Query("SELECT t FROM Task t WHERE t.stato !='chiuso' ORDER BY t.dataModifica DESC")
     public List<Task> findAllNotClosed();
+     
+     @Query("SELECT t FROM Task t WHERE t.stato ='inattivo' ORDER BY t.dataModifica DESC")
+     public List<Task> findAllInActive();
+     
+     @Query("SELECT t FROM Task t WHERE t.stato = 'in corso' OR t.stato = 'in pausa' ORDER BY t.dataModifica DESC")
+	public List<Task> findAllActive();
+     
     @Transactional
     void deleteByProgettoId(Integer id);
     

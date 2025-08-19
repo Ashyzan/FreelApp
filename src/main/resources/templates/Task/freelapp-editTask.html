@@ -311,6 +311,7 @@
 		    </div>					
 		     <div class="w-11/12 md:w-3/5 h-auto lg:max-w-[600px] border border-[#0057A5] rounded-[8px] bg-white shadow-md shadow-blue-500/50 p-3 mb-6">
 		       <form class="py-3" id="task" th:object="${formTask}" th:action="@{|/Task/edit/${id}|}" method="post">
+		       
 				
 				<input type="hidden" th:field="*{progetto}" name="progetto" th:value="${progetto}">
 				 <div class="mb-4">

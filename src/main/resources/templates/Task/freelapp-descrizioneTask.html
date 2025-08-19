@@ -357,7 +357,7 @@
 									<div class="md:ms-20 col-span-1 md:col-span-2 py-2 text-center max-md:text-end" th:text="${#temporals.format(task.getDataChiusuraStimata(),'dd MMM yyyy')}">
 									</div>
 									<div th:if="${task.getDataChiusuraDefinitiva() != null}" class="col-span-2 md:col-span-1  font-bold pe-1 py-2">Chiusura effettiva</div>
-									<div th:if="${task.getDataChiusuraDefinitiva() != null}" class="md:ms-20 col-span-1 md:col-span-2 py-2 max-md:text-end"
+									<div th:if="${task.getDataChiusuraDefinitiva() != null}" class="md:ms-20 col-span-1 md:col-span-2 text-center max-md:text-end py-2"
 										th:text=" ${#temporals.format(task.getDataChiusuraDefinitiva(), 'dd MMM yyyy')}"></div>
 									<div class="col-span-2 md:col-span-1 font-bold pe-1 py-2">Tipologia progetto</div>
 									<div class="md:ms-20 col-span-1 md:col-span-2 text-center max-md:text-end py-2"
