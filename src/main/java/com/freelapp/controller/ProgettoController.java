@@ -448,10 +448,11 @@ public class ProgettoController {
 				taskService.informationFromTaskInUsoToModel(model);
 				
 				//passa al model la lista di tutti i task esclusi quelli chiusi
-				List<Task> taskList = new ArrayList<Task> ();
-				taskList = repositTask.findAllNotClosed();
-				List<Task> taskListActive = repositTask.findAllActive();
+				List<Task> taskList = repositTask.findAllNotClosed();
+				//List<Task> taskListActive = repositTask.findAllActive();
+	
 				model.addAttribute("taskList", taskList);
+			   // model.addAttribute("taskListActive", taskListActive);
 				
 				//passa a modello nel caso in base alla tipologia i risultati delle statistiche
 				progettoService.calcoloStatisticheTipologiaFromProgettoToModel(progetto, model);
@@ -468,11 +469,6 @@ public class ProgettoController {
 				//passo al modello nel dettaglio progetto il finaltime totale
 				progettoService.finaltimeTotaleProgetto(progetto,model);
 				
-				//passo al modello nel dettaglio progetto il finaltime totale
-				
-				model.addAttribute("taskListActive", taskListActive);
-				
-				
 				//se si arriva al dettaglio progetto dalla ricerca su lista progetti passo al model
 				// questo booleano per dirgli che siamo in modalità search, l'ultima pagina visita in search 
 				//e l'input inserito (variabili inizializzata ad inizio controller) che verranno usati nel button dedicato
@@ -482,7 +478,6 @@ public class ProgettoController {
 					model.addAttribute("lastVisitedPageInProgettiSearch", lastVisitedPageInProgettiSearch);
 					model.addAttribute("lastInputInProgettiSearch", lastInputInProgettiSearch);
 				}
-				
 				
 				return "/Progetti/freelapp-descrizioneProgetto";
 		   }

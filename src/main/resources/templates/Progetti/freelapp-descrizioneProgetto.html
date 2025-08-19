@@ -378,7 +378,7 @@
 							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
 								Attivi</div>
 							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
-								th:text="${taskListActive.size()}">
+								th:text="${#lists.size(progetto.elencoTask.?[stato == 'in pausa' || stato == 'in corso'])}">
 							</div>
 							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
 								chiusi</div>
