@@ -520,6 +520,7 @@ public class TaskService {
 				String nomeCliente = null; 
 				String nomeProgetto = null;
 				String dataOrdinamentoTask = null;
+				String testoFinale = null;
 				if(TaskController.statoTaskInListaTask != null || TaskController.ordinaTaskInListaTask != null || TaskController.clienteIdTaskInListaTask != -1
 								|| TaskController.progettoIdTaskInListaTask != -1) {
 					
@@ -556,12 +557,13 @@ public class TaskService {
 					
 				}
 				
+				testoFinale = statoTask + "<br>" + ordinamentoTask;
 				model.addAttribute("filtroStatoTask", statoTask);
 				model.addAttribute("filtroOrdinamentoTask", ordinamentoTask);
 				model.addAttribute("filtroNomeCliente", nomeCliente);
 				model.addAttribute("filtroNomeProgetto", nomeProgetto);
 				model.addAttribute("filtroDataOrdinamentoTask", dataOrdinamentoTask);
-				
+				model.addAttribute("testoFinale", testoFinale);	
 			}
 	
 }

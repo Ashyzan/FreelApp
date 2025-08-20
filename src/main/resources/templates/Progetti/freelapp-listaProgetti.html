@@ -428,7 +428,14 @@
 										
 					
 						<div th:if="${searchMode == true}" class="p-10 text-center" th:text="|Risultati per --> '${inputInserito}'|"></div>
-						<div th:if="${filtriAttiviInListaProgetto == true}" class="p-10 text-center" id="stringaFiltri"></div>
+						<div th:if="${filtriAttiviInListaProgetto == true}" class="p-10 text-center">
+							<div class="grid grid-cols-3">
+								<div class="col col-span-1 text-end">Elenco filtrato per: </div>
+								<div class="col col-span-2 text-start ps-2">
+									<div id="stringaFiltri">Nessun filtro selezionato</div>
+								</div>
+							</div>
+						</div>
 					
 						<!------------------ card --------------------->
 						<div id="list-data-inizio" class="">
@@ -1111,6 +1118,7 @@
 		let filtroNomeCliente = /*[[${filtroNomeCliente}]]*/ null;
 		let filtroDataOrdinamentoProgetto = /*[[${filtroDataOrdinamentoProgetto}]]*/ null;
 		let filtroIdClienteSelezionato  = /*[[${filtroIdClienteSelezionato}]]*/ -1;
+		let testoFinaleFiltri = /*[[${testoFinale}]]*/ null;
 		console.log("filtroIdClienteSelezionato: " + filtroIdClienteSelezionato)
 		/*]]>*/
 	</script>

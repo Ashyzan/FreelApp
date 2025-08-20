@@ -578,44 +578,56 @@ public class ProgettoService {
 			public void stringaFiltriInListaProgetti(Model model) {
 				
 				//inizializzo le tre stringhe che poi verranno passate al model e utilizzate da javascript per riempire la lista dei filtri applicati
-				String statoProgetto = null;
-				String ordinamentoProgetto = null;
-				String nomeCliente = null; 
-				String dataOrdinamentoProgetto = null;
+				String statoProgetto = "";
+				String filtroStatoProgetto = null;
+				String ordinamentoProgetto = "";
+				String filtroOrdinamentoProgetto = null;
+				String nomeCliente = ""; 
+				String filtroNomeCliente = null;
+				String dataOrdinamentoProgetto = "";
+				String filtroDataOrdinamentoProgetto = null;
+				String testoFinale = "";
 				if(ProgettoController.statoProgettoInListaProgetto != null || ProgettoController.ordinaProgettoInListaProgetto != null && ProgettoController.clienteIdProgettoInListaProgetto != -1) {
-					
-					if(ProgettoController.statoProgettoInListaProgetto.equals("aperto")) {
-						statoProgetto = "APERTO";
-					}else if(ProgettoController.statoProgettoInListaProgetto.equals("chiuso")) {
-						statoProgetto = "CHIUSO";
-					}
-					
+
 					if(ProgettoController.dataPerOrdinamentoProgetto.equals("dataModificaProgetto")) {
-						dataOrdinamentoProgetto = "data di modifica";
+						dataOrdinamentoProgetto = "<span>- ordinamento per <strong>data di modifica</strong></span>";
+						filtroDataOrdinamentoProgetto = "data di modifica";
 					}else if(ProgettoController.dataPerOrdinamentoProgetto.equals("dataCreazioneProgetto")) {
-						dataOrdinamentoProgetto = "data di creazione";
+						dataOrdinamentoProgetto ="<span>- ordinamento per <strong>data di creazione</strong></div>";
+						filtroDataOrdinamentoProgetto = "data di creazione";
 					}
 					
 					if(ProgettoController.ordinaProgettoInListaProgetto.equals("piuRecente")) {
-						ordinamentoProgetto = "più recente";
+						ordinamentoProgetto = "<span> <strong>più recente<span> </strong>";
+						filtroOrdinamentoProgetto = "più recente";
 						
 					}else if(ProgettoController.ordinaProgettoInListaProgetto.equals("menoRecente")) {
-						ordinamentoProgetto = "meno recente";
+						ordinamentoProgetto = "<span> <strong>meno recente<span> </strong>";
+						filtroOrdinamentoProgetto = "meno recente";
 					}
 					
 					if(ProgettoController.clienteIdProgettoInListaProgetto != -1) {
 						
 						Integer idClienteSelezionato = ProgettoController.clienteIdProgettoInListaProgetto;
-						nomeCliente = clienteRepository.findById(idClienteSelezionato).get().getLabelCliente();
-						
+						filtroNomeCliente = clienteRepository.findById(idClienteSelezionato).get().getLabelCliente();
+						nomeCliente ="<div>- cliente <strong>" +  filtroNomeCliente + "</strong></div>";
 					}
 					
+					if(ProgettoController.statoProgettoInListaProgetto.equals("aperto")) {
+						statoProgetto = "<div>- stato progetto <strong>APERTO</strong></div>";
+						filtroStatoProgetto = "APERTO";
+					}else if(ProgettoController.statoProgettoInListaProgetto.equals("chiuso")) {
+						statoProgetto = "<div>- stato progetto <strong>CHIUSO</strong></div>";
+						filtroStatoProgetto = "CHIUSO";
+					}
+
+					testoFinale = dataOrdinamentoProgetto + ordinamentoProgetto + nomeCliente + statoProgetto;
 				}
-				
-				model.addAttribute("filtroStatoProgetto", statoProgetto);
-				model.addAttribute("filtroOrdinamentoProgetto", ordinamentoProgetto);
-				model.addAttribute("filtroNomeCliente", nomeCliente);
-				model.addAttribute("filtroDataOrdinamentoProgetto", dataOrdinamentoProgetto);
+				model.addAttribute("filtroStatoProgetto", filtroStatoProgetto = "APERTO");
+				model.addAttribute("filtroOrdinamentoProgetto", filtroOrdinamentoProgetto);
+				model.addAttribute("filtroNomeCliente",filtroNomeCliente);
+				model.addAttribute("filtroDataOrdinamentoProgetto", filtroDataOrdinamentoProgetto);
+				model.addAttribute("testoFinale", testoFinale);
 				
 			}
 	

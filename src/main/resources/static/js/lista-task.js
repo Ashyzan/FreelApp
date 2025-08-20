@@ -516,6 +516,7 @@ console.log("filtroStatoTask: " + filtroStatoTask);
 console.log("filtroOrdinamentoTask: " + filtroOrdinamentoTask);
 console.log("filtroNomeCliente: " + filtroNomeCliente);
 console.log("filtroDataOrdinamentoTask: " + filtroDataOrdinamentoTask);
+
 if(stringaFiltri != null){
 		if(filtroStatoTask != null && filtroDataOrdinamentoTask != null && filtroNomeCliente != null){
 			if(filtroOrdinamentoTask != null){
