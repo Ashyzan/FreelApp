@@ -16,8 +16,8 @@ const pulsanteCambioSearchSelectFiltroPerProgetti = document.getElementById('pul
 const filtroTaskPerProgettoSearch = document.getElementById('filtro-task-per-progetto-search');
 const filtroTaskPerProgettoSelect = document.getElementById('filtro-task-per-progetto-select');
 const ordinamentoListaPiuMenoRecente = document.getElementById('ordinamentoListaPiuMenoRecente');
-const dataModificaProgetto = document.getElementById('dataModificaProgetto');
-const dataCreazioneProgetto = document.getElementById('dataCreazioneProgetto');
+const dataModificaTask = document.getElementById('dataModificaTask');
+const dataCreazioneTask = document.getElementById('dataCreazioneTask');
 const piuRecente = document.getElementById('piuRecente');
 const menoRecente = document.getElementById('menoRecente');
 const aperto = document.getElementById('aperto');
@@ -512,145 +512,13 @@ function passaAFiltroClientiSearchMode(){
 //********************** inserimento lista filtri se applicati  *******************************/
 
 const stringaFiltri = document.getElementById('stringaFiltri');
-console.log("filtroStatoTask: " + filtroStatoTask);
-console.log("filtroOrdinamentoTask: " + filtroOrdinamentoTask);
-console.log("filtroNomeCliente: " + filtroNomeCliente);
-console.log("filtroDataOrdinamentoTask: " + filtroDataOrdinamentoTask);
 
 if(stringaFiltri != null){
-		if(filtroStatoTask != null && filtroDataOrdinamentoTask != null && filtroNomeCliente != null){
-			if(filtroOrdinamentoTask != null){
-				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
-												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
-												<div class="col col-span-2 text-start">
-													<ul class="ps-4">
-														<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong> <strong>${filtroOrdinamentoTask}</strong></li>
-														<li>- cliente <strong>${filtroNomeCliente}</strong></li>
-														<li>- stato task <strong>${filtroStatoTask}</strong></li>
-											   		</ul>
-												</div>
-										   </div>`				
-			} else if(filtroOrdinamentoTask == null){
-				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
-												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
-													<div class="col col-span-2 text-start">
-														<ul class="ps-4">
-															<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong></li>
-															<li>- cliente <strong>${filtroNomeCliente}</strong></li>
-															<li>- stato task <strong>${filtroStatoTask}</strong></li>
-												   		</ul>
-													</div>
-											   </div>`		
-			}
-		}
-	
-			
-		if(filtroStatoTask == null && filtroDataOrdinamentoTask != null && filtroNomeCliente != null){
-			if(filtroOrdinamentoTask != null){
-				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
-												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
-												<div class="col col-span-2 text-start">
-													<ul class="ps-4">
-														<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong> <strong>${filtroOrdinamentoTask}</strong></li>
-														<li>- cliente <strong>${filtroNomeCliente}</strong></li>
-											   		</ul>
-												</div>
-										   </div>`				
-			}else if(filtroOrdinamentoTask == null){
-				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
-												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
-													<div class="col col-span-2 text-start">
-														<ul class="ps-4">
-															<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong></li>
-															<li>- cliente <strong>${filtroNomeCliente}</strong></li>
-												   		</ul>
-													</div>
-												 </div>`			
-			}
-		}
-			
-		if(filtroStatoTask != null && filtroDataOrdinamentoTask == null && filtroNomeCliente != null){
-			stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
-											<div class="col col-span-1 text-end">Elenco filtrato per:</div>
-												<div class="col col-span-2 text-start">
-													<ul class="ps-4">
-														<li>- cliente <strong>${filtroNomeCliente}</strong></li>
-														<li>- stato task <strong>${filtroStatoTask}</strong></li>
-											   		</ul>
-												</div>
-									   </div>`
-		}
-
-		if(filtroStatoTask != null && filtroDataOrdinamentoTask != null && filtroNomeCliente == null){
-			if(filtroOrdinamentoTask != null){
-				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
-												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
-													<div class="col col-span-2 text-start">
-														<ul class="ps-4">
-															<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong> <strong>${filtroOrdinamentoTask}</strong></li>
-															<li>- stato task <strong>${filtroStatoTask}</strong></li>
-												   		</ul>
-													</div>
-											   </div>`							
-			}else if(filtroOrdinamentoTask == null){
-				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
-												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
-													<div class="col col-span-2 text-start">
-														<ul class="ps-4">
-															<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong></li>
-															<li>- stato task <strong>${filtroStatoTask}</strong></li>
-												   		</ul>
-													</div>
-											   </div>`			
-			}
-		}
+	if(testoFinaleFiltri != ""){
+		stringaFiltri.innerHTML = testoFinaleFiltri;		
+	}
 		
-		if(filtroStatoTask != null && filtroDataOrdinamentoTask == null && filtroNomeCliente == null){
-			stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
-											<div class="col col-span-1 text-end">Elenco filtrato per:</div>
-												<div class="col col-span-2 text-start">
-													<ul class="ps-4">
-														<li>- stato task <strong>${filtroStatoTask}</strong></li>
-											   		</ul>
-												</div>
-										   </div>`			
-		}
-		
-		if(filtroStatoTask == null && filtroDataOrdinamentoTask != null && filtroNomeCliente == null){
-			if(filtroOrdinamentoTask != null){
-				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
-												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
-													<div class="col col-span-2 text-start">
-														<ul class="ps-4">
-															<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong> <strong>${filtroOrdinamentoTask}</strong></li>
-												   		</ul>
-													</div>
-											   </div>`			
-				
-			}else if(filtroOrdinamentoTask == null){
-				stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
-												<div class="col col-span-1 text-end">Elenco filtrato per:</div>
-													<div class="col col-span-2 text-start">
-														<ul class="ps-4">
-															<li>- ordinamento per <strong>${filtroDataOrdinamentoTask}</strong></li>
-												   		</ul>
-													</div>
-											   </div>`						
-			}
-		}
-		
-		if(filtroStatoTask == null && filtroDataOrdinamentoTask == null && filtroNomeCliente != null){
-			stringaFiltri.innerHTML = `<div class="grid grid-cols-3">
-											<div class="col col-span-1 text-end">Elenco filtrato per:</div>
-												<div class="col col-span-2 text-start">
-													<ul class="ps-4">
-														<li>- cliente <strong>${filtroNomeCliente}</strong></li>
-											   		</ul>
-												</div>
-										   </div>`			
-		}
 }
-
 
 
 
@@ -662,6 +530,5 @@ function validation(e){
 	e.preventDefault()
 	document.getElementById('filtro-task-per-progetto-select-input').value = idProgettoSelezionato;
 	document.getElementById('input-filtro-task-per-cliente-select').value = idClienteSelezionato;
-	console.log("sono in preventDefault formFiltri")
 	formFiltri.submit(); 
 }

@@ -180,10 +180,7 @@ function passaAFiltroClientiSearchMode(){
 //********************** inserimento lista filtri se applicati  *******************************/
 
 const stringaFiltri = document.getElementById('stringaFiltri');
-console.log("filtroStatoProgetto: " + filtroStatoProgetto);
-console.log("filtroOrdinamentoProgetto: " + filtroOrdinamentoProgetto);
-console.log("filtroNomeCliente: " + filtroNomeCliente);
-console.log("filtroDataOrdinamentoProgetto: " + filtroDataOrdinamentoProgetto);
+
 if(stringaFiltri != null){
 	if(testoFinaleFiltri != ""){
 		stringaFiltri.innerHTML = testoFinaleFiltri;		

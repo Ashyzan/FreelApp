@@ -593,7 +593,7 @@ public class ProgettoService {
 						dataOrdinamentoProgetto = "<span>- ordinamento per <strong>data di modifica</strong></span>";
 						filtroDataOrdinamentoProgetto = "data di modifica";
 					}else if(ProgettoController.dataPerOrdinamentoProgetto.equals("dataCreazioneProgetto")) {
-						dataOrdinamentoProgetto ="<span>- ordinamento per <strong>data di creazione</strong></div>";
+						dataOrdinamentoProgetto = "<span>- ordinamento per <strong>data di creazione</strong></div>";
 						filtroDataOrdinamentoProgetto = "data di creazione";
 					}
 					
@@ -623,7 +623,7 @@ public class ProgettoService {
 
 					testoFinale = dataOrdinamentoProgetto + ordinamentoProgetto + nomeCliente + statoProgetto;
 				}
-				model.addAttribute("filtroStatoProgetto", filtroStatoProgetto = "APERTO");
+				model.addAttribute("filtroStatoProgetto", filtroStatoProgetto);
 				model.addAttribute("filtroOrdinamentoProgetto", filtroOrdinamentoProgetto);
 				model.addAttribute("filtroNomeCliente",filtroNomeCliente);
 				model.addAttribute("filtroDataOrdinamentoProgetto", filtroDataOrdinamentoProgetto);

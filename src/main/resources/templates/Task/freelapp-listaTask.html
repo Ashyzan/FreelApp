@@ -346,12 +346,12 @@
 										<legend class="col-span-1 font-bold me-4">Ordina per</legend>
 										<div class="col-span-1" id="inputRadiodataModificaTask">
 											<input type="radio" id="dataModificaTask" name="dataOrdinamentoTask"
-												value="dataModificaProgetto" onclick="visualizzaordinamentoListaPiuMenoRecente()">
+												value="dataModificaTask" onclick="visualizzaordinamentoListaPiuMenoRecente()">
 											<label for="piuRecente">Data di modifca</label>
 										</div>
 										<div class="col-span-1" id="inputRadiodataCreazioneTask">
 											<input type="radio" id="dataCreazioneTask" name="dataOrdinamentoTask"
-												value="dataCreazioneProgetto" onclick="visualizzaordinamentoListaPiuMenoRecente()">
+												value="dataCreazioneTask" onclick="visualizzaordinamentoListaPiuMenoRecente()">
 											<label for="menoRecente">Data di crezione</label>
 										</div>
 									</div>
@@ -442,7 +442,14 @@
 						
 						</div>
 						<div th:if="${searchMode == true}" class="p-10 text-center" th:text="|Risultati per --> '${inputInserito}'|"></div>
-						<div th:if="${filtriAttiviInListaTask == true}" class="p-10 text-center" id="stringaFiltri"></div>
+						<div th:if="${filtriAttiviInListaTask == true}" class="p-10 text-center">
+							<div class="grid grid-cols-3">
+								<div class="col col-span-1 text-end">Elenco filtrato per: </div>
+								<div class="col col-span-2 text-start ps-2">
+									<div id="stringaFiltri">Nessun filtro selezionato</div>
+								</div>
+								</div>
+						</div>
 											
 																		
 
@@ -891,7 +898,7 @@
 		let filtroDataOrdinamentoTask = /*[[${filtroDataOrdinamentoTask}]]*/ null;
 		let filtroIdClienteSelezionato  = /*[[${filtroIdClienteSelezionato}]]*/ -1;
 		let filtroIdProgettoSelezionato = /*[[${filtroIdProgettoSelezionato}]]*/ -1;
-		let filtroTestoFinale = /*[[${testoFinale}]]*/ null;
+		let testoFinaleFiltri = /*[[${testoFinale}]]*/ null;
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
