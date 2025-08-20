@@ -306,7 +306,7 @@
 						</div>
 						<!-- RICERCA -->
 						<div id="sezione-filtri-e-ricerca" class="m-auto flex flex-col justify-center">
-							<div id="sezione-ricerca" class="text-center">
+							<div id="sezione-ricerca" class="text-center m-auto">
 								<form class="flex max-sm:flex-col max-xs:justify-center items-center mx-auto w-50" role="search" method="get"
 									th:object="${Task}" th:action="@{/task-search}">
 									<a th:if="${searchMode == true}" th:href="@{/Task}">
@@ -397,7 +397,7 @@
 								<fieldset class="text-[#0057A5] mb-4 max-lg:text-sm">
 									<div class="grid grid-cols-3">
 										<legend class="col-span-1 font-bold me-4 flex items-center">Filtra per progetto</legend>
-										<div class="col-span-2 grid grid-cols-8 max-lg:w-full w-[300px]">
+										<div class="col-span-2 grid grid-cols-8 w-full xl:w-[300px]">
 											<div id="filtro-task-per-progetto-select" class="col-span-7 hidden">
 												<input id="filtro-task-per-progetto-select-input" name="progettoSelezionatoId"  placeholder="Seleziona progetto" class="ps-2 h-8  text-[#0057A5] rounded-l-lg bg-gray-100 block w-full focus:outline-none">
 											</div>
@@ -411,7 +411,7 @@
 													<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
 												</button>
 											</div>
-											<div id="contenitore-progetti-per-filtri" class="w-[300px] relative">
+											<div id="contenitore-progetti-per-filtri" class="col-span-8 w-full relative">
 												<div id="progetti-from-search" class="w-full max-h-40 overflow-y-auto absolute bg-white"></div>
 												<div id="progetti-select-all" class="w-full max-h-40 overflow-y-auto absolute bg-white"></div>																							
 											</div>
@@ -889,7 +889,8 @@
 		let filtroNomeCliente = /*[[${filtroNomeCliente}]]*/ null;
 		let filtroNomeProgetto = /*[[${filtroNomeProgetto}]]*/ null;
 		let filtroDataOrdinamentoTask = /*[[${filtroDataOrdinamentoTask}]]*/ null;
-		console.log("filtriAttiviInListaTask: " + filtriAttiviInListaTask)
+		let filtroIdClienteSelezionato  = /*[[${filtroIdClienteSelezionato}]]*/ -1;
+		let filtroIdProgettoSelezionato = /*[[${filtroIdProgettoSelezionato}]]*/ -1;
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>

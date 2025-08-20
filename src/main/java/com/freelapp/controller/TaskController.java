@@ -90,6 +90,8 @@ public class TaskController {
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
 		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
 		model.addAttribute("filtriAttiviInListaTask", filtriAttiviInListaTask);
+		model.addAttribute("filtroIdClienteSelezionato", clienteIdTaskInListaTask);
+		model.addAttribute("filtroIdProgettoSelezionato", progettoIdTaskInListaTask);
 		
 		//metodo del serviceProgetto che passa al model la stringa per indicare all'utente i filtri selezionati
 		taskService.stringaFiltriInListaTask(model);
@@ -192,6 +194,8 @@ public class TaskController {
 		model.addAttribute("taskInUso", ContatoreController.taskInUso);
 		model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
 		model.addAttribute("filtriAttiviInListaTask", filtriAttiviInListaTask);
+		model.addAttribute("filtroIdClienteSelezionato", clienteIdTaskInListaTask);
+		model.addAttribute("filtroIdProgettoSelezionato", progettoIdTaskInListaTask);
 		
 		//metodo del serviceProgetto che passa al model la stringa per indicare all'utente i filtri selezionati
 		taskService.stringaFiltriInListaTask(model);
@@ -376,6 +380,9 @@ public class TaskController {
 				progettoIdTaskInListaTask = progettoSelezionatoId;
 					System.out.println("progettoId: " + progettoIdTaskInListaTask);
 				
+				//riporto la lista alla prima pagina
+				currentPageListaTask = 1;
+					
 				return "redirect:/Task";
 			}
     
@@ -397,6 +404,9 @@ public class TaskController {
 					System.out.println("dataOrdinamentoProgetto: " + dataPerOrdinamentoTask);
 					
 				model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaTask);
+				
+				//riporto la lista alla prima pagina
+				currentPageListaTask = 1;
 				
 				return "redirect:/Task";
 			}

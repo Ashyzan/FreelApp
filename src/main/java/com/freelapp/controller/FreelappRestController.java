@@ -267,9 +267,11 @@ public List<RestProject> listaInteraProgettiPerFiltr() {
 	
 	//per ogni elemento della lista recuperata da db creo un elemento restProject e lo pusho sulla listaRestProgetti
 	listaProgetti.forEach(progetto -> {
-		RestProject progettoTemporaneo = new RestProject(null, null);
+		RestProject progettoTemporaneo = new RestProject(null, null, null, null);
 		progettoTemporaneo.setId(progetto.getId());
 		progettoTemporaneo.setName(progetto.getName());
+		progettoTemporaneo.setIdCliente(progetto.getCliente().getId());
+		progettoTemporaneo.setNomeCliente(progetto.getCliente().getLabelCliente());
 		listaRestProgetti.add(progettoTemporaneo);
 		
 	});
@@ -296,9 +298,11 @@ public List<RestProject> listaFiltrataProgettiPerFiltri(@RequestParam String inp
 	
 	//per ogni elemento della lista recuperata da db creo un elemento restProject e lo pusho sulla listaRestProgetti
 	listaProgetti.forEach(progetto -> {
-		RestProject progettoTemporaneo = new RestProject(null, null);
+		RestProject progettoTemporaneo = new RestProject(null, null, null, input);
 		progettoTemporaneo.setId(progetto.getId());
 		progettoTemporaneo.setName(progetto.getName());
+		progettoTemporaneo.setIdCliente(progetto.getCliente().getId());
+		progettoTemporaneo.setNomeCliente(progetto.getCliente().getLabelCliente());
 		listaRestProgetti.add(progettoTemporaneo);
 		
 	});
@@ -377,9 +381,11 @@ public List<RestProject> listaProgettiFiltrataPerCliente(@RequestParam int input
 	
 	//per ogni elemento della lista recuperata da db creo un elemento restProject e lo pusho sulla listaRestProgetti
 	listaProgettiFiltrataPerCliente.forEach(progetto -> {
-		RestProject progettoTemporaneo = new RestProject(null, null);
+		RestProject progettoTemporaneo = new RestProject(null, null, input, null);
 		progettoTemporaneo.setId(progetto.getId());
 		progettoTemporaneo.setName(progetto.getName());
+		progettoTemporaneo.setIdCliente(progetto.getCliente().getId());
+		progettoTemporaneo.setNomeCliente(progetto.getCliente().getLabelCliente());
 		listaRestProgetti.add(progettoTemporaneo);
 		
 	});

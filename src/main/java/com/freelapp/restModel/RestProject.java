@@ -6,10 +6,16 @@ public class RestProject {
 	
 	private String name;
 	
-	public RestProject(Integer id, String name) {
+	private Integer idCliente;
+	
+	private String nomeCliente;
+	
+	public RestProject(Integer id, String name, Integer idCliente, String nomeCliente) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.idCliente = idCliente;
+		this.nomeCliente = nomeCliente;
 		
 	}
 
@@ -27,6 +33,22 @@ public class RestProject {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Integer getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(Integer idCliente) {
+		this.idCliente = idCliente;
+	}
+
+	public String getNomeCliente() {
+		return nomeCliente;
+	}
+
+	public void setNomeCliente(String nomeCliente) {
+		this.nomeCliente = nomeCliente;
 	}
 
 	

@@ -29,6 +29,9 @@ const inputFiltroTaskPerClienteSearch = document.getElementById('filtro-task-per
 const filtroTaskPerClienteSearch = document.getElementById('filtro-task-per-cliente-search');
 const filtroTaskPerClienteSelect = document.getElementById('filtro-task-per-cliente-select');
 
+const inputFiltroTaskPerProgettoSearch = document.getElementById('filtro-task-per-progetto-search-input');
+const inputFiltroPerProgettoSelect = document.getElementById('filtro-task-per-progetto-select-input');
+
 
 //variabili di lavoro per filtri (se non selezionati cliente o progetti viene mandato al backend in valore -1 corrispondente a quello del relativo static non assegnato)
 let idClienteSelezionato = -1;
@@ -58,6 +61,7 @@ function mostraFiltri(){
 
 //addeventlistener che cambia il pulsante del filtro cliente se il campo, precedentemente riempito per selezione, viene cancellato a mano
 inputFiltroTaskPerClienteSelect.addEventListener ('keyup', function (){
+	ripristinaFiltroPerClienti()
 	if(inputFiltroTaskPerClienteSelect.value == ""){
 		passaAFiltroClientiSearchMode()
 		pulsanteSelectFiltroPerClienti.innerHTML = `
@@ -75,6 +79,20 @@ inputFiltroTaskPerClienteSearch.addEventListener ('keyup', function (){
 		pulsanteSelectFiltroPerClienti.innerHTML = `
 							<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
 									onclick="getJsonListaClientiAll()">
+								<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
+							</button>`
+	}
+});
+
+
+
+//addeventlistener che cambia il pulsante del filtro progetti se il campo, precedentemente riepito per input, viene cancellato a mano
+inputFiltroTaskPerProgettoSearch.addEventListener ('keyup', function (){
+	ripristinaFiltroPerProgetti()
+	if(inputFiltroTaskPerProgettoSearch.value == ""){
+		pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = `
+							<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+									onclick="getJsonListaProgettiByCliente(${idClienteSelezionato}), sbloccaListaProgettiFiltrataPerCliente()">
 								<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
 							</button>`
 	}
@@ -153,7 +171,7 @@ async function getJsonListaClientiSearch(input){
 function selezionaCliente(idCliente, nomeCliente){
 	idClienteSelezionato = idCliente;
 	nomeClienteSelezionato = nomeCliente;
-	console.log("nomeClienteSelezionato --- in seleziona cliente: " + nomeClienteSelezionato);
+	sbloccaListaProgettiFiltrataPerCliente()
 	passaAFiltroClientiSelectMode()
 	getJsonListaProgettiByCliente(idClienteSelezionato)
 	document.getElementById('input-filtro-task-per-cliente-select').value = nomeCliente;
@@ -166,6 +184,11 @@ function selezionaCliente(idCliente, nomeCliente){
 						<img  class="size-6" src="/img/sources/icons/close-button-yellow.svg">
 				</button>` 
 	
+	pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = `
+				<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+						onclick="sbloccaListaProgettiFiltrataPerCliente()">
+						<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
+				</button>` 
 }
 
 
@@ -181,7 +204,7 @@ function passaAFiltroClientiSelectMode(){
 
 //funzione che chiude e ripristina il filtro per clienti
 function ripristinaFiltroPerClienti(){
-	
+	idClienteSelezionato = -1
 	document.getElementById('clienti-select-all').innerHTML =` `;
 	passaAFiltroClientiSearchMode()
 	pulsanteSelectFiltroPerClienti.innerHTML = `
@@ -191,6 +214,12 @@ function ripristinaFiltroPerClienti(){
 					</button>`
 	document.getElementById('input-filtro-task-per-cliente-select').value = null;
 	
+	pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = `
+					<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+							onclick="getJsonListaProgettiAll()">
+							<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
+					</button>` 
+	ripristinaFiltroPerProgetti()
 }
 
 //funzione che da filtro task per progetti select all passa a quello di ricerca
@@ -201,12 +230,19 @@ function ripristinaFiltroPerProgetti(){
 	document.getElementById('progetti-from-search').innerHTML =` `;
 	document.getElementById('progetti-select-all').innerHTML =` `;
 	pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = "";
-							
-	pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = `
-				<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
-						onclick="getJsonListaProgettiAll()">
-					<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
-				</button>`
+	if(idClienteSelezionato == -1){
+		pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = `
+					<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+							onclick="getJsonListaProgettiAll()">
+						<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
+					</button>`		
+	}else if(idClienteSelezionato != -1){
+		pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = `
+					<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+							onclick="getJsonListaProgettiByCliente(${idClienteSelezionato}), sbloccaListaProgettiFiltrataPerCliente()">
+						<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
+					</button>`	
+	}
 }
 
 //funzione che da filtro task per progetti per ricerca passa a quello per select all 
@@ -265,7 +301,7 @@ async function getJsonListaProgettiAll(){
 		
 		list.forEach(item =>{
 			document.getElementById('progetti-select-all').innerHTML += 
-			`<button type="button" value="${item.id}" id="progetto-${item.id}" onclick="selezionaProgetto(${item.id}, '${item.name}')"
+			`<button type="button" value="${item.id}" id="progetto-${item.id}" onclick="selezionaProgetto(${item.id}, '${item.name}', ${item.idCliente}, '${item.nomeCliente}')"
 					class="border-b-1 p-1 shadow-sm w-full hover:bg-[#FFE541]/50 text-start text-[#0057A5] px-1 truncate">
 					${item.name}
 			</button>`
@@ -290,22 +326,19 @@ async function getJsonListaProgettiByCliente(input){
 	
 		const response = await fetch(api_urlFiltriListaProgettiByCliente + input);
 		const list = await response.json();
-		
+		if(list.length == 0){
+			document.getElementById('progetti-select-all').innerHTML += 
+						`<div class="border-b-1 p-1 shadow-sm w-full pointer-events-none text-start text-[#0057A5] px-1 truncate">Nessun progetto per il cliente selezionato</div>`
+		}
 		list.forEach(item =>{
 			document.getElementById('progetti-select-all').innerHTML += 
-			`<button type="button" value="${item.id}" id="progetto-${item.id}" onclick="selezionaProgetto(${item.id}, '${item.name}')"
+			`<button type="button" value="${item.id}" id="progetto-${item.id}" onclick="selezionaProgetto(${item.id}, '${item.name}', ${item.idCliente}, '${item.nomeCliente}')"
 					class="border-b-1 p-1 shadow-sm w-full hover:bg-[#FFE541]/50 text-start text-[#0057A5] px-1 truncate">
 					${item.name}
 			</button>`
 		});
 		
-		pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = "";
-											
-		pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = `
-			<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
-					onclick="sbloccaListaProgettiFiltrataPerCliente()">
-					<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
-			</button>` 
+		
 			
 }
 
@@ -321,7 +354,7 @@ function sbloccaListaProgettiFiltrataPerCliente(){
 }
 
 //funzione che al click sul progetto del filtro per clienti lo seleziona
-function selezionaProgetto(idProgetto, nomeProgetto){
+function selezionaProgetto(idProgetto, nomeProgetto, idCliente, nomeCliente){
 	idProgettoSelezionato = idProgetto;
 	
 	
@@ -335,6 +368,22 @@ function selezionaProgetto(idProgetto, nomeProgetto){
 		pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = `
 						<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
 								onclick="ripristinaFiltroPerProgetti()">
+								<img  class="size-6" src="/img/sources/icons/close-button-yellow.svg">
+						</button>` 
+						
+		//selezione automatica del cliente relativo al progetto selezionato
+		idClienteSelezionato = idCliente;
+			nomeClienteSelezionato = nomeCliente;
+			//sbloccaListaProgettiFiltrataPerCliente()
+			passaAFiltroClientiSelectMode()
+			//getJsonListaProgettiByCliente(idClienteSelezionato)
+			document.getElementById('input-filtro-task-per-cliente-select').value = nomeCliente;
+			filtroTaskPerClienteSearch.classList.add('hidden');
+			filtroTaskPerClienteSelect.classList.remove('hidden')
+			document.getElementById('clienti-select-all').innerHTML =` `;
+			pulsanteSelectFiltroPerClienti.innerHTML = `
+						<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+								onclick="ripristinaFiltroPerClienti()">
 								<img  class="size-6" src="/img/sources/icons/close-button-yellow.svg">
 						</button>` 
 }
@@ -417,7 +466,32 @@ function filtriInUsoDaUtente(){
 		}
 	
 		if(filtroNomeCliente != null){
-			document.getElementById('input-filtro-task-per-cliente-select').value = filtroNomeCliente;
+					idClienteSelezionato = filtroIdClienteSelezionato;
+					nomeClienteSelezionato = filtroNomeCliente;
+					inputFiltroTaskPerClienteSearch.value = filtroNomeCliente;
+					pulsanteSelectFiltroPerClienti.innerHTML = `
+									<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+											onclick="ripristinaFiltroPerClienti()">
+											<img  class="size-6" src="/img/sources/icons/close-button-yellow.svg">
+									</button>` 
+					getJsonListaProgettiByCliente(filtroIdClienteSelezionato);
+					pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = `
+									<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+											onclick="sbloccaListaProgettiFiltrataPerCliente()">
+											<img  class="size-6" src="/img/sources/icons/arrow-down.svg">
+									</button>`
+		}
+		
+		if(filtroNomeProgetto != null){
+			idProgettoSelezionato = filtroIdProgettoSelezionato;
+			nomeProgettoSelezionato = filtroNomeProgetto;
+			document.getElementById('filtro-task-per-progetto-search-input').value = nomeProgettoSelezionato;
+			pulsanteCambioSearchSelectFiltroPerProgetti.innerHTML = `
+									<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+											onclick="ripristinaFiltroPerProgetti()">
+											<img  class="size-6" src="/img/sources/icons/close-button-yellow.svg">
+									</button>`
+			
 		}
 	}
 }

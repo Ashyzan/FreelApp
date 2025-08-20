@@ -389,6 +389,8 @@ public class ProgettoController {
 				System.out.println("dataOrdinamentoProgetto: " + dataPerOrdinamentoProgetto);
 				clienteIdProgettoInListaProgetto = clienteSelezionatoId;
 					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
+				//riporto la lista alla prima pagina
+				currentPageListaProgetti = 1;
 				return "redirect:/Progetti";
 			}
 			
@@ -407,6 +409,9 @@ public class ProgettoController {
 					System.out.println("dataOrdinamentoProgetto: " + dataPerOrdinamentoProgetto);
 //					
 				model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaProgetto);
+				
+				//riporto la lista alla prima pagina
+				currentPageListaProgetti = 1;
 				
 				return "redirect:/Progetti";
 			}

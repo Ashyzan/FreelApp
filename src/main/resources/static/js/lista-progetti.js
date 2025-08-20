@@ -84,7 +84,7 @@ async function getJsonListaClientiAll(){
 
 //funzione che chiude e ripristina il filtro per clienti
 function ripristinaFiltroPerClienti(){
-	
+	idClienteSelezionato = -1
 	document.getElementById('clienti-select-all').innerHTML =` `;
 	passaAFiltroClientiSearchMode()
 	pulsanteSelectFiltroPerClienti.innerHTML = `
@@ -424,7 +424,11 @@ function filtriInUsoDaUtente(){
 		if(filtroNomeCliente != null){
 			idClienteSelezionato = filtroIdClienteSelezionato;
 			inputFiltroProgettoPerClienteSearch.value = filtroNomeCliente;
-			
+			pulsanteSelectFiltroPerClienti.innerHTML = `
+								<button type="button" class="border bg-[#0057A5] rounded-r-lg shadow-md w-full h-8 flex items-center justify-center"
+										onclick="ripristinaFiltroPerClienti()">
+										<img  class="size-6" src="/img/sources/icons/close-button-yellow.svg">
+								</button>` 
 		}
 	
 	}
