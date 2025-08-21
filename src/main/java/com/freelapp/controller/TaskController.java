@@ -365,7 +365,7 @@ public class TaskController {
     @PostMapping("/task-lista-filtri")
 			public String filtriListaProgetto(Model model, @ModelAttribute("statoTask") String statoTask,
 					@ModelAttribute("ordinaTask") String ordinaTask, @ModelAttribute("dataOrdinamentoTask") String dataOrdinamentoTask,
-					@ModelAttribute("clienteSelezionatoId") Integer clienteSelezionatoId, @ModelAttribute("progettoSelezionatoId") Integer progettoSelezionatoId) {
+					@ModelAttribute("clienteSelezionatoIdPerBackEnd") Integer clienteSelezionatoIdPerBackEnd, @ModelAttribute("progettoSelezionatoId") Integer progettoSelezionatoId) {
 				 
 				filtriAttiviInListaTask = true;
 				System.out.println("filtriAttiviInListaProgetto: " + filtriAttiviInListaTask);
@@ -375,7 +375,7 @@ public class TaskController {
 					System.out.println("ordinaProgetto: " + ordinaTaskInListaTask);
 				dataPerOrdinamentoTask = dataOrdinamentoTask;
 				System.out.println("dataOrdinamentoProgetto: " + dataPerOrdinamentoTask);
-				clienteIdTaskInListaTask = clienteSelezionatoId;
+				clienteIdTaskInListaTask = clienteSelezionatoIdPerBackEnd;
 					System.out.println("clienteId: " + clienteIdTaskInListaTask);
 				progettoIdTaskInListaTask = progettoSelezionatoId;
 					System.out.println("progettoId: " + progettoIdTaskInListaTask);

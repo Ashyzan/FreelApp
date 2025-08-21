@@ -31,7 +31,7 @@ const filtroTaskPerClienteSelect = document.getElementById('filtro-task-per-clie
 
 const inputFiltroTaskPerProgettoSearch = document.getElementById('filtro-task-per-progetto-search-input');
 const inputFiltroPerProgettoSelect = document.getElementById('filtro-task-per-progetto-select-input');
-
+const inputFiltroTaskClientePerBackend = document.getElementById('input-filtro-task-per-cliente-backend');
 
 //variabili di lavoro per filtri (se non selezionati cliente o progetti viene mandato al backend in valore -1 corrispondente a quello del relativo static non assegnato)
 let idClienteSelezionato = -1;
@@ -205,6 +205,7 @@ function passaAFiltroClientiSelectMode(){
 //funzione che chiude e ripristina il filtro per clienti
 function ripristinaFiltroPerClienti(){
 	idClienteSelezionato = -1
+	idProgettoSelezionato = -1
 	document.getElementById('clienti-select-all').innerHTML =` `;
 	passaAFiltroClientiSearchMode()
 	pulsanteSelectFiltroPerClienti.innerHTML = `
@@ -529,6 +530,6 @@ formFiltri.addEventListener('submit', validation)
 function validation(e){
 	e.preventDefault()
 	document.getElementById('filtro-task-per-progetto-select-input').value = idProgettoSelezionato;
-	document.getElementById('input-filtro-task-per-cliente-select').value = idClienteSelezionato;
+	inputFiltroTaskClientePerBackend.value = idClienteSelezionato;
 	formFiltri.submit(); 
 }

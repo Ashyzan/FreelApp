@@ -355,7 +355,7 @@ public class TaskService {
 				String filtroNomeProgetto = null;
 				String dataOrdinamentoTask = "";
 				String filtroDataOrdinamentoTask = null;
-				String testoFinale = "";
+				String testoFinale = "Nessun filtro applicato";
 				if(TaskController.statoTaskInListaTask != null || TaskController.ordinaTaskInListaTask != null || TaskController.clienteIdTaskInListaTask != -1
 								|| TaskController.progettoIdTaskInListaTask != -1) {
 					
