@@ -50,22 +50,27 @@ public class TaskService {
 		
 		//criterio di default della lista dei progetti senza alcun filtro selezionato
 		Pageable pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
-		
+		System.out.println("TaskController.dataPerOrdinamentoTask --> " + TaskController.dataPerOrdinamentoTask);
+			System.out.println("TaskController.ordinaTaskInListaTask --> " + TaskController.ordinaTaskInListaTask);
 		//if che in base al tipo di ordinamento scelto varia il criterio di orninamento di pageable1 e lo manda nella query dinamica
-		if(TaskController.ordinaTaskInListaTask.equals("dataModificaTask")) {
+		if(TaskController.dataPerOrdinamentoTask.equals("dataModificaTask")) {
 				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					System.out.println("SONO IN PIU RECENTE - MODIFICA TASK");
 					pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
 					
 				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					System.out.println("SONO IN MENO RECENTE - MODIFICA TASK");
 					pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").ascending());
 					
 				}
 				
-			}else if(TaskController.ordinaTaskInListaTask.equals("dataCreazioneProgetto")) {
+			}else if(TaskController.dataPerOrdinamentoTask.equals("dataCreazioneTask")) {
 				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					System.out.println("SONO IN PIU RECENTE - CREAZIONE TASK");
 					pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
 					
 				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					System.out.println("SONO IN MENO RECENTE - CREAZIONE TASK");
 					pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").ascending());
 					
 				}
