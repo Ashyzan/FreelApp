@@ -443,7 +443,7 @@
 						</div>
 						
 						</div>
-						<div th:if="${searchMode == true}" class="pb-3 text-center" th:text="|Risultati per --> '${inputInserito}'|"></div>
+						<div th:if="${searchMode == true}" class="pb-3 text-center text-[#0057A5]" th:text="|Risultati per --> '${inputInserito}'|"></div>
 						<div th:if="${filtriAttiviInListaTask == true}" class="p-3 text-center">
 							<div class="text-[#0057A5] text-xs">	
 								<div class="m-auto flex flex-col justify-center w-fit">
@@ -673,8 +673,8 @@
 							</div>
 							<div th:if="${searchMode == true}" id="paginazione" class="p-[-20px] md:p-4 mb-4">
 								<div class="flex flex-col lg:flex-row justify-center text-center gap-[6vw]">
-									<div class="col flex justify-center items-center flex-col lg:flex-row">
-										<div class="max-md:mx-[-20px] inline"
+									<div class="col flex justify-center items-center flex-col lg:flex-row text-[#0057A5]">
+										<div class="max-md:mx-[-20px] inline "
 											th:text="|Ricerca per '${inputInserito}' - Task trovati: ${totalItems}|"></div>
 										<span class="max-lg:hidden">&nbsp; - &nbsp;</span>
 										<div th:text="| Pagina ${currentPage} di ${totalPages}|"></div>

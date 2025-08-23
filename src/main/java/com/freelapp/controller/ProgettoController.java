@@ -377,7 +377,7 @@ public class ProgettoController {
 			@PostMapping("/progetto-lista-filtri")
 			public String filtriListaProgetto(Model model, @ModelAttribute("statoProgetto") String statoProgetto,
 					@ModelAttribute("ordinaProgetto") String ordinaProgetto, @ModelAttribute("dataOrdinamentoProgetto") String dataOrdinamentoProgetto,
-					@ModelAttribute("clienteSelezionatoId") Integer clienteSelezionatoId) {
+					@ModelAttribute("clienteSelezionatoIdPerBackEnd") Integer clienteSelezionatoIdPerBackEnd) {
 				
 				filtriAttiviInListaProgetto = true;
 				System.out.println("filtriAttiviInListaProgetto: " + filtriAttiviInListaProgetto);
@@ -387,7 +387,7 @@ public class ProgettoController {
 					System.out.println("ordinaProgetto: " + ordinaProgettoInListaProgetto);
 				dataPerOrdinamentoProgetto = dataOrdinamentoProgetto;
 				System.out.println("dataOrdinamentoProgetto: " + dataPerOrdinamentoProgetto);
-				clienteIdProgettoInListaProgetto = clienteSelezionatoId;
+				clienteIdProgettoInListaProgetto = clienteSelezionatoIdPerBackEnd;
 					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
 				//riporto la lista alla prima pagina
 				currentPageListaProgetti = 1;

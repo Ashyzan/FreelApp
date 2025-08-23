@@ -318,7 +318,7 @@
 						</div>
 						<div id="sezione-filtri-e-ricerca"
 							class="m-auto flex flex-col justify-center">
-								<div id="sezione-ricerca" class="text-center">
+								<div id="sezione-ricerca" class="m-auto text-center">
 									<form class="flex max-sm:flex-col max-xs:justify-center items-center mx-auto w-50" role="search" method="get"
 										th:object="${progetto}" th:action="@{/progetto-search}">
 										<a th:if="${searchMode == true}" th:href="@{/Progetti}">
@@ -338,13 +338,13 @@
 									<div th:if="${filtriAttiviInListaProgetto == true}">
 										<form th:action="@{/progetto-list-filtri/reset}" method="post">
 											<button type="submit"
-												class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px] me-4">Resetta
+												class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px] me-4 max-xs:text-[10px]">Resetta
 												filtri
 											</button>
 										</form>
 									</div>
-									<div class="py-4 flex items-center justify-center">
-										<span id="filtra-per-button" class="text-[#0057A5] max-sm:mb-4">Filtra e ordina per</span>
+									<div class="py-2 flex items-center justify-center">
+										<span id="filtra-per-button" class="text-[#0057A5] max-xs:text-[10px]">Filtra e ordina per</span>
 										<button onclick="mostraFiltri()"><img id="img-filtra-per" src="/img/sources/icons/arrow-down.svg" class="inline size-8 mx-3"></button>
 									</div>	
 								</div>
@@ -386,6 +386,7 @@
 												<input name="clienteSelezionatoId" placeholder="Seleziona cliente"
 													class="ps-2 h-8  text-[#0057A5] rounded-l-lg bg-gray-100 block w-full focus:outline-none"
 													id="input-filtro-progetto-per-cliente-select" value="">
+													<input type="hidden" name="clienteSelezionatoIdPerBackEnd" value="" id="input-filtro-task-per-cliente-backend">
 											</div>
 											<div id="filtro-progetto-per-cliente-search" class="col-span-7">
 												<input id="filtro-progetto-per-cliente-search-input" type="text" placeholder="Cerca/seleziona cliente"
@@ -427,12 +428,12 @@
 						</div>
 										
 					
-						<div th:if="${searchMode == true}" class="p-10 text-center" th:text="|Risultati per --> '${inputInserito}'|"></div>
-						<div th:if="${filtriAttiviInListaProgetto == true}" class="p-10 text-center">
-							<div class="grid grid-cols-3">
-								<div class="col col-span-1 text-end">Elenco filtrato per: </div>
-								<div class="col col-span-2 text-start ps-2">
-									<div id="stringaFiltri">Nessun filtro selezionato</div>
+						<div th:if="${searchMode == true}" class="p-10 text-center text-[#0057A5]" th:text="|Risultati per --> '${inputInserito}'|"></div>
+						<div th:if="${filtriAttiviInListaProgetto == true}" class="p-3 text-center">
+							<div class="text-[#0057A5] text-xs">
+								<div class="m-auto flex flex-col justify-center w-fit">
+									<div class="text-start">Elenco filtrato per: </div>
+									<div class="text-start" id="stringaFiltri"></div>
 								</div>
 							</div>
 						</div>
@@ -553,7 +554,7 @@
 						</div>
 					
 						<!--paginazione lista per data-->
-						<div th:unless="${searchMode == true}">
+						<div th:if="${searchMode == false}">
 							<div th:if="${listProgettiByDataModifica.isEmpty()}" id="ricerca-vuota-data"
 								class="text-center text-[#0057A5] p-4">
 								<div>
@@ -564,12 +565,12 @@
 					
 							<div id="paginazione-data" class="p-[-20px] md:p-4 mb-4">
 					
-								<div class="flex flex-col lg:flex-row justify-between text-center ">
-									<div class="col flex justify-center flex-col lg:flex-row mb-6 ">
+								<div class="flex flex-col lg:flex-row justify-center text-center gap-[6vw]">
+									<div class="col flex justify-center flex-col lg:flex-row text-[#0057A5] ">
 										<div th:if="${filtriAttiviInListaProgetto == false}"  class="max-md:mx-[-20px] inline"
-											th:text="|Progetti totali ordinati per data di modifica: ${totalItemByDataModifica}|"></div>
+											th:text="|Numero totale di progetti: ${totalItemByDataModifica}|"></div>
 										<div th:if="${filtriAttiviInListaProgetto == true}" class="max-md:mx-[-20px] inline"
-											th:text="|Progetti filtrati ordinati per data di modifica: ${totalItemByDataModifica}|"></div>	
+											th:text="|Numero totale progetti filtrati: ${totalItemByDataModifica}|"></div>	
 										<span class="max-lg:hidden">&nbsp; - &nbsp;</span>
 										<div th:text="| Pagina ${currentPage} di ${totalPageByDataModifica}|"></div>
 									</div>
@@ -648,13 +649,13 @@
 									</div>
 								</div>
 							</div>
-									
+						</div>		
 						<!-- paginazione per searchMode -->
 					
 						<div th:if="${searchMode == true}" class="p-[-20px] md:p-4 mb-4">
 							<div id="paginazione-data" class="p-[-20px] md:p-4 mb-4">
-								<div class="flex flex-col lg:flex-row justify-between text-center ">
-									<div class="col flex justify-center flex-col lg:flex-row mb-6 ">
+								<div class="flex flex-col lg:flex-row justify-center text-center gap-[6vw] ">
+									<div class="col flex justify-center items-center flex-col lg:flex-row text-[#0057A5]">
 										<div class="max-md:mx-[-20px] inline"
 											th:text="|Ricerca per '${inputInserito}' - progetti ordinati per data modifica: ${totalItemByDataModifica}|">
 										</div>

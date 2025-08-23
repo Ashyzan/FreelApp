@@ -21,7 +21,7 @@ const inputFiltroProgettoPerClienteSearch = document.getElementById('filtro-prog
 const filtroProgettoPerClienteSearch = document.getElementById('filtro-progetto-per-cliente-search');
 const filtroProgettoPerClienteSelect = document.getElementById('filtro-progetto-per-cliente-select');
 const formFiltri = document.getElementById('form-filtri-progetto');
-
+const inputFiltroTaskClientePerBackend = document.getElementById('input-filtro-task-per-cliente-backend');
 //variabile di lavoro per filtri (se non selezionato cliente viene mandato al backend il valore -1 corrispondente a quello del relativo static non assegnato)
 let idClienteSelezionato = -1;
 let nomeClienteSelezionato;
@@ -310,6 +310,6 @@ formFiltri.addEventListener('submit', validation)
 		
 function validation(e){
 	e.preventDefault()
-	document.getElementById('input-filtro-progetto-per-cliente-select').value = idClienteSelezionato;
+	inputFiltroTaskClientePerBackend.value = idClienteSelezionato;
 	formFiltri.submit(); 
 }		
