@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,10 +24,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
 import com.freelapp.model.Task;
+import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.repository.TaskRepository;
+import com.freelapp.restModel.RestCliente;
+import com.freelapp.restModel.RestProject;
 import com.freelapp.restModel.RestTask;
 import com.freelapp.service.ContatoreService;
 import com.freelapp.service.ProgettoService;
@@ -43,6 +48,9 @@ public class FreelappRestController {
 	@Autowired
 	private ProgettoRepository progettoRepository;
 
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
 	@Autowired
 	private ContatoreService contatoreService;
 
@@ -242,6 +250,151 @@ public class FreelappRestController {
 
 	}
 
+	 
+
+// *********************** API PER FILTRI **************************
+	
+//api che restituisce intero elenco di progetti per il filtro select progetto
+@GetMapping("/filtri/progetti-all")
+public List<RestProject> listaInteraProgettiPerFiltr() {
+	
+	//recupero dal db la lista intera dei progetti attivi
+	List<Progetto> listaProgetti = new ArrayList<Progetto>();
+	listaProgetti = progettoRepository.findByActiveProject();
+	
+	//creazione list rest progetti vuota
+	List<RestProject> listaRestProgetti= new ArrayList<RestProject>();
+	
+	//per ogni elemento della lista recuperata da db creo un elemento restProject e lo pusho sulla listaRestProgetti
+	listaProgetti.forEach(progetto -> {
+		RestProject progettoTemporaneo = new RestProject(null, null, null, null);
+		progettoTemporaneo.setId(progetto.getId());
+		progettoTemporaneo.setName(progetto.getName());
+		progettoTemporaneo.setIdCliente(progetto.getCliente().getId());
+		progettoTemporaneo.setNomeCliente(progetto.getCliente().getLabelCliente());
+		listaRestProgetti.add(progettoTemporaneo);
+		
+	});
+	
+	
+	return listaRestProgetti;
+}
+	
+	
+//api che restituisce elenco filtrato di progetti per filtro search
+@GetMapping("/filtri/progetti-search")
+public List<RestProject> listaFiltrataProgettiPerFiltri(@RequestParam String input){
+	if(input == "") {
+			List<RestProject> taskListOreLAvorateEmpty = new ArrayList<RestProject> ();
+			return taskListOreLAvorateEmpty;
+		}
+	
+	//recupero dal db la lista intera dei progetti attivi
+	List<Progetto> listaProgetti = new ArrayList<Progetto>();
+	listaProgetti = progettoRepository.searchProgettiByNameInput(input);
+	
+	//creazione list rest progetti vuota
+	List<RestProject> listaRestProgetti= new ArrayList<RestProject>();
+	
+	//per ogni elemento della lista recuperata da db creo un elemento restProject e lo pusho sulla listaRestProgetti
+	listaProgetti.forEach(progetto -> {
+		RestProject progettoTemporaneo = new RestProject(null, null, null, input);
+		progettoTemporaneo.setId(progetto.getId());
+		progettoTemporaneo.setName(progetto.getName());
+		progettoTemporaneo.setIdCliente(progetto.getCliente().getId());
+		progettoTemporaneo.setNomeCliente(progetto.getCliente().getLabelCliente());
+		listaRestProgetti.add(progettoTemporaneo);
+		
+	});
+	
+	
+	return listaRestProgetti;
+	
+}
+	
+//api che restituisce elenco filtrato di clienti per filtro search 
+@GetMapping("/filtri/clienti-search")
+public List<RestCliente> listaFiltrataClientiPerFiltri(@RequestParam String input){
+	if(input == "") {
+			List<RestCliente> taskListOreLAvorateEmpty = new ArrayList<RestCliente> ();
+			return taskListOreLAvorateEmpty;
+		}
+	
+	//recupero dal db la lista intera dei progetti attivi
+	List<Cliente> listaClienti = new ArrayList<Cliente>();
+	listaClienti = clienteRepository.searchClientiByNameInput(input);
+	
+	//creazione list rest progetti vuota
+	List<RestCliente> listaRestClienti= new ArrayList<RestCliente>();
+	
+	//per ogni elemento della lista recuperata da db creo un elemento restProject e lo pusho sulla listaRestProgetti
+	listaClienti.forEach(cliente -> {
+		RestCliente clienteTemporaneo = new RestCliente(null, null, input);
+		clienteTemporaneo.setId(cliente.getId());
+		clienteTemporaneo.setLabelCliente(cliente.getLabelCliente());
+		clienteTemporaneo.setLogoCliente(cliente.getLogoPath());
+		listaRestClienti.add(clienteTemporaneo);
+		
+	});
+	
+	
+	return listaRestClienti;
+	
+}
+
+//api che restituisce intero elenco di clienti per il filtro select progetto
+@GetMapping("/filtri/clienti-all")
+public List<RestCliente> listaInteraClientiPerFiltriTask() {
+	
+	//recupero dal db la lista intera dei clienti
+	List<Cliente> listaClienti = new ArrayList<Cliente>();
+	listaClienti = clienteRepository.findAll(Sort.by("labelCliente").ascending());
+	
+	//creazione list rest progetti vuota
+	List<RestCliente> listaRestClienti= new ArrayList<RestCliente>();
+	
+	//per ogni elemento della lista recuperata da db creo un elemento restProject e lo pusho sulla listaRestProgetti
+	listaClienti.forEach(cliente -> {
+		RestCliente clienteTemporaneo = new RestCliente(null, null, null);
+		clienteTemporaneo.setId(cliente.getId());
+		clienteTemporaneo.setLabelCliente(cliente.getLabelCliente());
+		clienteTemporaneo.setLogoCliente(cliente.getLogoPath());
+		listaRestClienti.add(clienteTemporaneo);
+		
+	});
+	
+	
+	return listaRestClienti;
+}
+
+
+//api che restituisce intero elenco di progetti dopo aver selezionato il cliente
+@GetMapping("/filtri/progetti-by-cliente-")
+public List<RestProject> listaProgettiFiltrataPerCliente(@RequestParam int input) {
+	
+	//recupero dal db la lista di progetti filtrata per cliente
+	List<Progetto> listaProgettiFiltrataPerCliente = new ArrayList<Progetto>();
+	listaProgettiFiltrataPerCliente = progettoRepository.findByClienteId(input);
+	
+	//creazione list rest progetti vuota
+	List<RestProject> listaRestProgetti= new ArrayList<RestProject>();
+	
+	//per ogni elemento della lista recuperata da db creo un elemento restProject e lo pusho sulla listaRestProgetti
+	listaProgettiFiltrataPerCliente.forEach(progetto -> {
+		RestProject progettoTemporaneo = new RestProject(null, null, input, null);
+		progettoTemporaneo.setId(progetto.getId());
+		progettoTemporaneo.setName(progetto.getName());
+		progettoTemporaneo.setIdCliente(progetto.getCliente().getId());
+		progettoTemporaneo.setNomeCliente(progetto.getCliente().getLabelCliente());
+		listaRestProgetti.add(progettoTemporaneo);
+		
+	});
+	
+	
+	return listaRestProgetti;
+}
+
+
 	// api che ritorna json con statistiche dettaglio progetto
 	@GetMapping("/statistiche-dettaglio-progetto/{id}")
 	public JSONObject ProgettoJson(@PathVariable("id") Integer id) throws InterruptedException {
@@ -256,6 +409,7 @@ public class FreelappRestController {
 		List<Long> percentageValues = new ArrayList<Long>();
 		List<String> NomiTask = new ArrayList<String>();
 		JSONObject progettoJsonObj = new JSONObject();
+
 	
 
 		if(progetto.getElencoTask().size() != 0) {

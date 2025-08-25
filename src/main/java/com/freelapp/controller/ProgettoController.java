@@ -39,7 +39,7 @@ public class ProgettoController {
 	//private static final boolean Task = false;
 	
 	//variablili che verranno utilizzate per memorizzare la scelta effettuata durante la sessione
-	public static boolean ordinaElencoProgettiPerData = true;
+	//public static boolean ordinaElencoProgettiPerData = true;
 
 	//public static boolean ordinaElencoProgettiPerCliente = false;
 	
@@ -101,6 +101,7 @@ public class ProgettoController {
 				model.addAttribute("taskInUso", ContatoreController.taskInUso);
 				model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
 				model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaProgetto);
+				model.addAttribute("filtroIdClienteSelezionato", ProgettoController.clienteIdProgettoInListaProgetto);
 				
 				
 				//metodo del serviceProgetto che passa al model la stringa per indicare all'utente i filtri selezionati
@@ -192,6 +193,7 @@ public class ProgettoController {
 					model.addAttribute("taskInUso", ContatoreController.taskInUso);
 					model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
 					model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaProgetto);
+					model.addAttribute("filtroIdClienteSelezionato", ProgettoController.clienteIdProgettoInListaProgetto);
 		
 					//inizializzo a false così al reload successivo js non genera i tasti del contatore
 					ContatoreController.contatoreAttivatoDaRapidButton = false;
@@ -346,7 +348,7 @@ public class ProgettoController {
 					ContatoreController.contatoreCliccatoPreRefresh = false;
 					
 					//passo al model la scelta effettuata per ordinamento lista progetti per data o cliente
-					model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
+					//model.addAttribute("ordinaElencoProgettiPerData", ordinaElencoProgettiPerData);
 //					model.addAttribute("ordinaElencoProgettiPerCliente", ordinaElencoProgettiPerCliente);
 		
 					//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
@@ -375,7 +377,7 @@ public class ProgettoController {
 			@PostMapping("/progetto-lista-filtri")
 			public String filtriListaProgetto(Model model, @ModelAttribute("statoProgetto") String statoProgetto,
 					@ModelAttribute("ordinaProgetto") String ordinaProgetto, @ModelAttribute("dataOrdinamentoProgetto") String dataOrdinamentoProgetto,
-					@ModelAttribute("clienteSelezionatoId") Integer clienteSelezionatoId) {
+					@ModelAttribute("clienteSelezionatoIdPerBackEnd") Integer clienteSelezionatoIdPerBackEnd) {
 				
 				filtriAttiviInListaProgetto = true;
 				System.out.println("filtriAttiviInListaProgetto: " + filtriAttiviInListaProgetto);
@@ -385,9 +387,10 @@ public class ProgettoController {
 					System.out.println("ordinaProgetto: " + ordinaProgettoInListaProgetto);
 				dataPerOrdinamentoProgetto = dataOrdinamentoProgetto;
 				System.out.println("dataOrdinamentoProgetto: " + dataPerOrdinamentoProgetto);
-				clienteIdProgettoInListaProgetto = clienteSelezionatoId;
+				clienteIdProgettoInListaProgetto = clienteSelezionatoIdPerBackEnd;
 					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
-				
+				//riporto la lista alla prima pagina
+				currentPageListaProgetti = 1;
 				return "redirect:/Progetti";
 			}
 			
@@ -404,8 +407,11 @@ public class ProgettoController {
 					System.out.println("clienteId: " + clienteIdProgettoInListaProgetto);
 				dataPerOrdinamentoProgetto = "";
 					System.out.println("dataOrdinamentoProgetto: " + dataPerOrdinamentoProgetto);
-					
+//					
 				model.addAttribute("filtriAttiviInListaProgetto", filtriAttiviInListaProgetto);
+				
+				//riporto la lista alla prima pagina
+				currentPageListaProgetti = 1;
 				
 				return "redirect:/Progetti";
 			}

@@ -15,12 +15,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.freelapp.controller.ContatoreController;
-import com.freelapp.model.Progetto;
+import com.freelapp.controller.TaskController;
 import com.freelapp.model.Task;
+import com.freelapp.repository.ClienteRepository;
+import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.repository.TaskRepository;
 
 @Service
@@ -28,6 +31,12 @@ public class TaskService {
 
 	@Autowired
 	private TaskRepository taskRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private ProgettoRepository progettoRepository;
 	
 	//variabile che viene utilizzata nel metodo di statistica "calcoloParteDiBudgetUsataDaAltriTaskNelProgetto"
 	Long finalTimeAltriTaskDelProgetto = 0l;
@@ -38,11 +47,122 @@ public class TaskService {
 	}
 	
 	public Page<Task> findPage(int pageNumber){
+		
+		//criterio di default della lista dei progetti senza alcun filtro selezionato
 		Pageable pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
-		//restituisce la lista dei task attivi(non chiusi)
-		return taskRepository.findAllNotClosed(pageable);
+		System.out.println("TaskController.dataPerOrdinamentoTask --> " + TaskController.dataPerOrdinamentoTask);
+			System.out.println("TaskController.ordinaTaskInListaTask --> " + TaskController.ordinaTaskInListaTask);
+		//if che in base al tipo di ordinamento scelto varia il criterio di orninamento di pageable1 e lo manda nella query dinamica
+		if(TaskController.dataPerOrdinamentoTask.equals("dataModificaTask")) {
+				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").descending());
+					
+				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataModifica").ascending());
+					
+				}
+				
+			}else if(TaskController.dataPerOrdinamentoTask.equals("dataCreazioneTask")) {
+				if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+					pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").descending());
+					
+				}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+					pageable = PageRequest.of(pageNumber -1, 12, Sort.by("dataInizio").ascending());
+					
+				}
+	}
+		
+		//returnString viene personalizzato ogni volta a seconda dei filtri selezionati 
+		Page<Task> returnString = null;
+
+		
+		//inizializza le due specifiche per le query che verranno poi assegnate solo se selezionati i filtri di stato o la selezione cliente
+		Specification<Task> specification_SelezioneCliente = null;
+		Specification<Task> specification_SelezioneProgetto = null;
+		Specification<Task> specificationStato;
+		
+		//switch che assegna la specifica per la query di stato
+		switch(TaskController.statoTaskInListaTask) {
+				case "aperto":
+					specificationStato = filtroTask_StatoAttivo();
+					
+					break;
+				case "chiuso":
+					specificationStato = filtroTask_StatoNonAttivo();
+					break;
+				default: specificationStato = null;
+   
+		}
+		
+		//if che assegna la specifica per la query se è stato scelto il cliente
+		if(TaskController.clienteIdTaskInListaTask != -1) {
+			specification_SelezioneCliente = filtroTask_SelezioneCliente();
+		}
+		
+		//if che assegna la specifica per la query se è stato scelto il progetto
+		if(TaskController.progettoIdTaskInListaTask != -1) {
+			specification_SelezioneProgetto = filtroTask_SelezioneProgetto();
+		}
+		
+		//if che a secondo che sia stato selezionato come filtro il progetto, lo stato o nessuno dei due costruisce la query dinamica
+		if(TaskController.progettoIdTaskInListaTask == -1 && TaskController.statoTaskInListaTask == "" && TaskController.clienteIdTaskInListaTask == -1) {
+			returnString =  taskRepository.findAll( pageable);
+		}else if (TaskController.progettoIdTaskInListaTask != -1){
+							
+			returnString =  taskRepository.findAll(specification_SelezioneProgetto.and(specificationStato) , pageable);
+		}else if(TaskController.clienteIdTaskInListaTask != -1){
+			returnString =  taskRepository.findAll(specification_SelezioneCliente.and(specificationStato) , pageable);
+		}else {
+		
+			returnString =  taskRepository.findAll(specificationStato , pageable);
+		}
+		
+		return returnString;
+	}
+	
+	
+	//specificazione che genera la quey di filtro per task attivi
+	Specification<Task> filtroTask_StatoAttivo(){
+		return (root, query, criteriaBuilder) ->{		
+			
+			return criteriaBuilder.isNull(root.get("dataChiusuraDefinitiva"));
+					
+		};
 		
 	}
+	
+	//specificazione che genera la quey di filtro per task non attivi
+	Specification<Task> filtroTask_StatoNonAttivo(){
+		return (root, query, criteriaBuilder) ->{			
+			
+			return criteriaBuilder.isNotNull(root.get("dataChiusuraDefinitiva"));
+					
+		};
+		
+	}
+	
+	//specificazione che genera la quey di filtro per cliente selezionato
+	Specification<Task> filtroTask_SelezioneCliente(){
+		
+		return (root, query, criteriaBuilder) ->{
+			
+			return criteriaBuilder.equal(root.get("progetto").get("cliente").as(Integer.class), TaskController.clienteIdTaskInListaTask);
+					
+		};
+		
+	}
+	
+	//specificazione che genera la quey di filtro per progetto selezionato
+	Specification<Task> filtroTask_SelezioneProgetto(){
+		
+		return (root, query, criteriaBuilder) ->{
+			
+			return criteriaBuilder.equal(root.get("progetto").as(Integer.class), TaskController.progettoIdTaskInListaTask);
+					
+		};
+		
+	}
+	
 	
 	public Page<Task> findSearchedPage(int pageNumber, String input){
 		Pageable pageable = PageRequest.of(pageNumber -1, 12);
@@ -218,7 +338,78 @@ public class TaskService {
 		
 		return parteDiBudgetUsataDaAltriTaskNelProgettoInOre*tariffaOrariaProgetto;
 	}
+
+	//metodo che genera la stringa dei filtri applicati da far vedere all'utente in lista progetti
+			public void stringaFiltriInListaTask(Model model) {
+				
+				//inizializzo le tre stringhe che poi verranno passate al model e utilizzate da javascript per riempire la lista dei filtri applicati
+				String statoTask = "";
+				String filtroStatoTask = null;
+				String ordinamentoTask = "";
+				String filtroOrdinamentoTask = null;
+				String nomeCliente = "";
+				String filtroNomeCliente = null;
+				String nomeProgetto = "";
+				String filtroNomeProgetto = null;
+				String dataOrdinamentoTask = "";
+				String filtroDataOrdinamentoTask = null;
+				String testoFinale = "Nessun filtro applicato";
+				if(TaskController.statoTaskInListaTask != null || TaskController.ordinaTaskInListaTask != null || TaskController.clienteIdTaskInListaTask != -1
+								|| TaskController.progettoIdTaskInListaTask != -1) {
+					
+					if(TaskController.statoTaskInListaTask.equals("aperto")) {
+						statoTask = "<div>- stato task <strong>APERTO</strong></div>";
+						filtroStatoTask = "APERTO";
+					}else if(TaskController.statoTaskInListaTask.equals("chiuso")) {
+						statoTask = "<div>- stato task <strong>CHIUSO</strong></div>";
+						filtroStatoTask = "CHIUSO";
+					}
+					
+					if(TaskController.dataPerOrdinamentoTask.equals("dataModificaTask")) {
+						dataOrdinamentoTask = "<span>- ordinamento per <strong>data di modifica</strong></span>";
+						filtroDataOrdinamentoTask = "data di modifica";
+					}else if(TaskController.dataPerOrdinamentoTask.equals("dataCreazioneTask")) {
+						dataOrdinamentoTask = "<span>- ordinamento per <strong>data di creazione</strong></div>";
+						filtroDataOrdinamentoTask = "data di creazione";
+					}
+					
+					if(TaskController.ordinaTaskInListaTask.equals("piuRecente")) {
+						ordinamentoTask = "<span> <strong>più recente<span> </strong>";
+						filtroOrdinamentoTask = "più recente";
+						
+					}else if(TaskController.ordinaTaskInListaTask.equals("menoRecente")) {
+						ordinamentoTask = "<span> <strong>meno recente<span> </strong>";
+						filtroOrdinamentoTask = "meno recente";
+					}
+					
+					if(TaskController.clienteIdTaskInListaTask != -1) {
+						
+						Integer idClienteSelezionato = TaskController.clienteIdTaskInListaTask;
+						filtroNomeCliente = clienteRepository.findById(idClienteSelezionato).get().getLabelCliente();
+						nomeCliente ="<div>- cliente <strong>" +  filtroNomeCliente + "</strong></div>";
+					}
+					
+					if(TaskController.progettoIdTaskInListaTask != -1) {
+						
+						Integer idProgettoSelezionato = TaskController.progettoIdTaskInListaTask;
+						filtroNomeProgetto = progettoRepository.findById(idProgettoSelezionato).get().getName();
+						nomeProgetto ="<div>- progetto <strong>" +  filtroNomeProgetto + "</strong></div>";
+					}
+					
+					testoFinale = dataOrdinamentoTask + ordinamentoTask + nomeCliente + nomeProgetto + statoTask;
+					
+				}
+				
+				
+				model.addAttribute("filtroStatoTask", filtroStatoTask);
+				model.addAttribute("filtroOrdinamentoTask", filtroOrdinamentoTask);
+				model.addAttribute("filtroNomeCliente", filtroNomeCliente);
+				model.addAttribute("filtroNomeProgetto", filtroNomeProgetto);
+				model.addAttribute("filtroDataOrdinamentoTask", filtroDataOrdinamentoTask);
+				model.addAttribute("testoFinale", testoFinale);	
+			}
 	
+
 	// Lista dei task attivi
 	public List<Task> taskAttivi() {
 		List<Task> listaTaskAttivi = new ArrayList<Task>();
@@ -232,4 +423,4 @@ public class TaskService {
 		
 		return listaTaskAttivi;
 	}
-}
+
