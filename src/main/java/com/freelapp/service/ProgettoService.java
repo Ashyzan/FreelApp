@@ -227,7 +227,7 @@ public class ProgettoService {
 			guadagnoTotaleProgettoR += ((task.getContatore().getFinaltime().doubleValue())/3600)* progetto.getTariffaOraria();							
 	
 						}
-		else {guadagnoTotaleProgettoR = 0;}
+		else {}
 				}
 			String guadagnoTotaleProgetto = String.format("%.2f", guadagnoTotaleProgettoR);
 			model.addAttribute("guadagnoTotaleProgetto", guadagnoTotaleProgetto);
@@ -238,14 +238,18 @@ public class ProgettoService {
 				
 			double guadagnoTotaleTaskAttiviResult = 0;
 			
+			
 			for(Task task : progetto.getElencoTask()) {
+				
+				Boolean stato = task.getStato().equals("chiuso");
+				
 				if(task.getContatore() != null) {
 					
-					if(!task.getStato().equals("chiuso")) {
-					//	System.out.println("************************************** sono nellif del getstato diverso da chiuso");
+					if(!stato) {
+					
 						guadagnoTotaleTaskAttiviResult += ((task.getContatore().getFinaltime().doubleValue())/3600)* progetto.getTariffaOraria();
 						}
-					else {guadagnoTotaleTaskAttiviResult = 0;}
+					
 							}
 						}
 								String guadagnoTotaleTaskAttivi = String.format("%.2f", guadagnoTotaleTaskAttiviResult);

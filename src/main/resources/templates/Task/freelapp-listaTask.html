@@ -451,6 +451,7 @@
 									<div class="text-start" id="stringaFiltri"></div>
 								</div>
 							</div>
+
 						</div>
 											
 																		
@@ -458,6 +459,7 @@
 						<!--						ELENCO TASK CON CARD-->
 						<!-- ${taskStat.index} è una sintassi thymeleaf che serve a recuperare dall'elemento dati accesori all'interno dell'elenco come l'index-->
 						<div th:each="task : ${list}" class="item-elenco-tasks container lg:w-3/5 m-auto" th:id="${taskStat.index}" th:value="${task.getId()}"> 
+
 							<div class="grid lg:grid-cols-1 sm:grid-cols-1 gap-4 p-2 flex justify-between w-full max-md:m-auto">
 								<div id="task-card" class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
 									<div class="md:flex max-md:grid max-md:grid-col-1">
