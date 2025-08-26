@@ -488,16 +488,6 @@
 					
 						</div>
 					
-					
-						<!--					<div class="text-center mt-2 p-2">-->
-						<!--						<a-->
-						<!--							class="inline mx-3 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"-->
-						<!--							th:href="@{/Progetti}">Tutti i progetti </a> <a-->
-						<!--							class="inline mx-3 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"-->
-						<!--							th:href="@{/Progetti}">Lista task</a>-->
-						<!--					</div>-->
-					
-					
 					</div>
 					<!-- 			second column -->
 					<div id="seconda-colonna-dettaglio-progetto" class="xl:col-span-2 lg:col-span-3 col-span-6 rounded-lg bg-gray-100 p-2 shadow-lg ">
@@ -513,18 +503,7 @@
 							</div>
 							<div class="h-5/6 overflow-x-hidden overflow-y-auto">
 								<table class="block text-[#0057A5] m-auto mb-4" >
-									<!--
-										<thead class="block border border-[#0057A5] md:h-12 h-8 text-[#0057A5]  max-sm:text-[12px] mb-3">
-											<tr class="block grid grid-cols-4 lg:grid-cols-5 justify-items-center h-full">
-												<th class="md:px-4 px-2 flex items-center col-span-2">Nome</th>
-												<th class="md:px-4 px-2 max-lg:hidden flex items-center">Data</th>
-												<th class="md:px-4 px-2 flex items-center">Stato</th>
-												<th class="md:px-4 px-2 flex items-center">Azioni</th>
-											</tr>
-										</thead>
-										
-									-->
-										
+
 									<tbody id="t-body-seconda-colonna-dettaglio-progetto" class=" grid grid-cols-1 p-2 ">
 										<tr th:each="task : ${progetto.elencoTask}" class="item-elenco-tasks-dettaglio-progetto w-full grid max-lg:grid-cols-4 grid-cols-5 border-b-2 text-center max-sm:text-[10px] mb-2"
 													th:id="|task-${task.getId()}">
