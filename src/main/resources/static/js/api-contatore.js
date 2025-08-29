@@ -40,6 +40,8 @@ function startContatoreApi(id){
 								minutes = (finalTimeSec % 3600) / 60;
 								seconds = finalTimeSec % 60;
 								
+								inizializzaNuovoWorker()
+								
 								//contatore-basso (mobile)
 									//dopo aver caricato i pulsanti tramite thymelaf secondo quanto preso dal model, al click 
 									//del play vengono nascosti e sostituiti da quelli generati da javascritp
@@ -124,6 +126,8 @@ function pauseContatoreApi(id){
 								hours = finalTimeSec / 3600;
 								minutes = (finalTimeSec % 3600) / 60;
 								seconds = finalTimeSec % 60;
+								
+								terminaWorker()
 								
 								//contatore-basso (mobile)
 									//dopo aver caricato i pulsanti tramite thymelaf secondo quanto preso dal model, al click 
