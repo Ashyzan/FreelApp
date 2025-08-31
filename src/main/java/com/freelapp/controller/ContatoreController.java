@@ -71,7 +71,7 @@ public class ContatoreController {
 	// richiamo l'id del task
 	Task task = repositTask.getReferenceById(taskId);
 	
-	SessioniTask SessioniTask = SessioniTaskRepository.getReferenceById(contatore.getId());
+	SessioniTask SessioniTask = new SessioniTask();
 
 	// CONTATORE IN RESTART
 	if ((task.getContatore() != null) && (task.getContatore().getStop() == null)
@@ -139,6 +139,7 @@ public class ContatoreController {
 		SessioniTask.setTime(task.getDataModifica());
 		SessioniTask.setWorktime(contatore.getFinaltime());
 		SessioniTaskRepository.save(SessioniTask);
+		System.out.println("********************************************************** SessioniTask********************* + " + SessioniTask);
 
 		// parte per javascript
 //		model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
@@ -182,6 +183,7 @@ public class ContatoreController {
 		SessioniTask.setTime(task.getDataModifica());
 		SessioniTask.setWorktime(contatore.getFinaltime());
 		SessioniTaskRepository.save(SessioniTask);
+		System.out.println("********************************************************** SessioniTask********************* + " + SessioniTask);
 	    
 
 	    // Parte per Javascript
@@ -230,6 +232,7 @@ public class ContatoreController {
 		SessioniTask.setTime(task.getDataModifica());
 		SessioniTask.setWorktime(contatore.getFinaltime());
 		SessioniTaskRepository.save(SessioniTask);
+		System.out.println("********************************************************** SessioniTask********************* + " + SessioniTask);
 	    
 	    // parte per javascript: serve per collegare il finaltime da java a javascript
 	    // sul frontend
@@ -265,7 +268,7 @@ public class ContatoreController {
 	Task task = repositTask.getReferenceById(taskId);
 	Contatore contatore = task.getContatore();
 	
-	SessioniTask SessioniTask = SessioniTaskRepository.getReferenceById(contatore.getId());
+	SessioniTask SessioniTask = new SessioniTask();
 	
 	//creazione json
 		JSONObject JsonObj = new JSONObject();
@@ -316,6 +319,7 @@ public class ContatoreController {
 		SessioniTask.setTime(task.getDataModifica());
 		SessioniTask.setWorktime(contatore.getFinaltime());
 		SessioniTaskRepository.save(SessioniTask);
+		System.out.println("********************************************************** PAUSA SessioniTask********************* + " + SessioniTask);
 
 		if (task.getContatore() != null) {
 //			model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
@@ -359,6 +363,7 @@ public class ContatoreController {
 			SessioniTask.setTime(task.getDataModifica());
 			SessioniTask.setWorktime(contatore.getFinaltime());
 			SessioniTaskRepository.save(SessioniTask);
+			System.out.println("********************************************************** PAUSA SessioniTask********************* + " + SessioniTask);
 		}
 
 //		model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
@@ -391,7 +396,7 @@ public class ContatoreController {
 		// richiamo l'id del task
 		Task task = repositTask.getReferenceById(taskId);
 		Contatore contatore = task.getContatore();
-		SessioniTask SessioniTask = SessioniTaskRepository.getReferenceById(contatore.getId());
+		SessioniTask SessioniTask = new SessioniTask();
 
 		// verifica che il contatore esista
 		if (task.getContatore() != null) {
@@ -436,6 +441,7 @@ public class ContatoreController {
 					SessioniTask.setTime(task.getDataModifica());
 					SessioniTask.setWorktime(contatore.getFinaltime());
 					SessioniTaskRepository.save(SessioniTask);
+					System.out.println("********************************************************** STOP SessioniTask********************* + " + SessioniTask);
 				}
 
 				// CASO 2: IL CONTATORE è FERMO: RESTART è prima della PAUSA
@@ -495,6 +501,7 @@ public class ContatoreController {
 					SessioniTask.setTime(task.getDataModifica());
 					SessioniTask.setWorktime(contatore.getFinaltime());
 					SessioniTaskRepository.save(SessioniTask);
+					System.out.println("**********************************************************  STOP SessioniTask********************* + " + SessioniTask);
 
 					// Parte per Javascript
 					model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
@@ -535,6 +542,7 @@ public class ContatoreController {
 					SessioniTask.setTime(task.getDataModifica());
 					SessioniTask.setWorktime(contatore.getFinaltime());
 					SessioniTaskRepository.save(SessioniTask);
+					System.out.println("********************************************************** STOP SessioniTask********************* + " + SessioniTask);
 				}
 
 			}
@@ -543,7 +551,7 @@ public class ContatoreController {
 			else if (STOP != null) {
 				// Parte per Javascript
 				Long FinalTime = task.getContatore().getFinaltime();
-				model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
+				model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsRun(task));
 				 model.addAttribute("contatoreIsRun", contatoreservice.contatoreIsRun(task));
 				model.addAttribute("finaltime", FinalTime);
 			}
@@ -612,7 +620,7 @@ public class ContatoreController {
     //metodo che al cambio contatore da rapid button ritorna sulla stessa pagina cambiando il task in uso
     @PostMapping("/redirect-endpoint/start/{id}")
     public String aggiornaTaskInUsoStart(@PathVariable("id")Integer taskId,
-    		// l'endpoint passato dal model serve a far ritornare sulla pagina di partenza dopo aver cliccato su pause
+    		// l'endpoint passato dal model serve a far ritornare sulla pagina di partenza dopo aver cliccato su start
     		@ModelAttribute("endPoint") String endPoint) {
     	
     		contatoreInUso = repositTask.getReferenceById(taskId).getContatore();
@@ -623,14 +631,14 @@ public class ContatoreController {
     		
 //    		Task task = repositTask.getReferenceById(taskId);
 //    		task.setStato("in corso");
-//    		repositTask.save(task);
+//    	repositTask.save(task);
     		
     	return "redirect:" + endPoint;
     }
     
     @PostMapping("/redirect-endpoint/pause/{id}")
     public String aggiornaTaskInUsoPause( @PathVariable("id")Integer taskId,
-    		// l'endpoint passato dal model serve a far ritornare sulla pagina di partenza dopo aver cliccato su pause
+    		// l'endpoint passato dal model serve a far ritornare sulla pagina di partenza dopo aver cliccato su start
     		@ModelAttribute("endPoint") String endPoint) {
     	
     		contatoreInUso = repositTask.getReferenceById(taskId).getContatore();

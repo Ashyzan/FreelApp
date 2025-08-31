@@ -1,13 +1,13 @@
 package com.freelapp.model;
 
-//import java.sql.Time;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -15,75 +15,133 @@ import jakarta.persistence.Table;
 @Table(name = "SessioniTask")
 public class SessioniTask {
 
-	  @Id
-	    @Column(name = "contatore_id")
-	    private int id;
-	  	  
-	@OneToOne
-    @MapsId
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @OneToOne
     @JoinColumn(name = "contatore_id")
     private Contatore contatore;
-	
-    @JoinColumn(name = "tempo")
-	private LocalDateTime Time;
     
-    @JoinColumn(name = "azione")
-	private String Azione;
+    @Column(name = "tempo")
+    private LocalDateTime time;
     
-    @JoinColumn(name = "worktime")
-	private Long Worktime;
+    @Column(name = "azione")
+    private String azione;
+    
+    @Column(name = "worktime")
+    private Long worktime;
 
-	public int getId() {
-		return id;
-	}
+    // Costruttore vuoto
+    public SessioniTask() {
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    // Costruttore con parametri
+    public SessioniTask(Contatore contatore, LocalDateTime time, String azione, Long worktime) {
+        this.contatore = contatore;
+        this.time = time;
+        this.azione = azione;
+        this.worktime = worktime;
+    }
 
-	public Contatore getContatore() {
-		return contatore;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setContatore(Contatore contatore) {
-		this.contatore = contatore;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public LocalDateTime getTime() {
-		return Time;
-	}
+    public Contatore getContatore() {
+        return contatore;
+    }
 
-	public void setTime(LocalDateTime time) {
-		Time = contatore.getTask().getDataModifica();
-	}
+    public void setContatore(Contatore contatore) {
+        this.contatore = contatore;
+        // Popola automaticamente i campi dal contatore se disponibile
+        if (contatore != null) {
+            populateFromContatore();
+        }
+    }
 
-	public String getAzione() {
-		return Azione;
-	}
+    public LocalDateTime getTime() {
+        return time;
+    }
 
-	public void setAzione(String azione) {
-		Azione = contatore.getTask().getStato();
-		if (Azione == "inattivo") {
-			Azione = "-";
-		}
-		else if (Azione == "in pausa") {
-			Azione = "pausa";
-		}
-		else if (Azione == "in corso") {
-			Azione = "avvio";
-		}
-		else if (Azione == "chiuso") {
-			Azione = "stop";
-		}
-	}
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
 
-	public Long getWorktime() {
-		return Worktime;
-	}
+    public String getAzione() {
+        return azione;
+    }
 
-	public void setWorktime(Long worktime) {
-		Worktime = contatore.getFinaltime();
-	}
-	
-	
+    public void setAzione(String azione) {
+        this.azione = azione;
+    }
+
+    public Long getWorktime() {
+        return worktime;
+    }
+
+    public void setWorktime(Long worktime) {
+        this.worktime = worktime;
+    }
+
+    /**
+     * Metodo per popolare i campi dal contatore
+     * Chiamato automaticamente quando si imposta il contatore
+     */
+    public void populateFromContatore() {
+        if (contatore != null && contatore.getTask() != null) {
+            // Imposta il tempo dalla data di modifica del task
+            this.time = contatore.getTask().getDataModifica();
+            
+            // Imposta il worktime dal finaltime del contatore
+            if (contatore.getFinaltime() != null) {
+                this.worktime = contatore.getFinaltime();
+            }
+            
+            // Imposta l'azione basata sullo stato del task
+            String stato = contatore.getTask().getStato();
+            if (stato != null) {
+                switch (stato) {
+                    case "inattivo":
+                        this.azione = "-";
+                        break;
+                    case "in pausa":
+                        this.azione = "pausa";
+                        break;
+                    case "in corso":
+                        this.azione = "avvio";
+                        break;
+                    case "chiuso":
+                        this.azione = "stop";
+                        break;
+                    default:
+                        this.azione = stato;
+                        break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Metodo per aggiornare i campi dal contatore
+     * Utile per aggiornamenti successivi
+     */
+    public void updateFromContatore() {
+        populateFromContatore();
+    }
+
+    @Override
+    public String toString() {
+        return "SessioniTask{" +
+                "id=" + id +
+                ", contatore=" + (contatore != null ? contatore.getId() : "null") +
+                ", time=" + time +
+                ", azione='" + azione + '\'' +
+                ", worktime=" + worktime +
+                '}';
+    }
 }
