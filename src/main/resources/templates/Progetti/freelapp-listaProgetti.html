@@ -520,9 +520,14 @@
 															</form>
 														</li>
 														<li class="flex flex-col md:flex-row px-2 mt-6 mr-2 float-right">
-															<a th:href="@{/Progetti/edit/{id}(id=${progettoPerData.getId()})}"><img
-																	th:src="@{/img/sources/icons/modify-grey.svg}" alt="modifica-progetto"
-																	class="size-5 inline"></a>
+															<a th:href="@{/Progetti/edit/{id}(id=${progettoPerData.getId()})}">
+																<div class="tooltip-top col-auto w-8 h-8 ms-2">
+																	<span class="tooltiptext-top">Modifica task</span>
+																	<img
+																		th:src="@{/img/sources/icons/modify-grey.svg}" alt="modifica-progetto"
+																		class="size-5 inline">
+																</div>
+															</a>
 														</li>
 					
 														<li class="tooltip-top flex flex-col md:flex-row px-2 mt-6 float-right">

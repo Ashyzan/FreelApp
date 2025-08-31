@@ -1,4 +1,6 @@
-
+//worker di timer.js che riceve ore, minuti e secondo e li da in pasto con un setInterval di un secondo alla
+//funzione incrementoTimer che fa scorrere il tempo e ad ogni iterazione manda il postMessage al timer.js con 
+//la stringa del timer nel formato 00:00:00 all addEventListner che li stampa sul DOM nei relativi timers
 let hours;
 let minutes;
 let seconds;
@@ -13,13 +15,13 @@ self.onmessage = function(event){
 		seconds = event.data.seconds;
 		message = event.data.message	
 		console.log(message)
-		//console.log(stampaRisultati(hours, minutes, seconds));
+		
 		incrementoTimer()
 }
  
 	
 	function incrementoTimer(){
-		console.log("sono in incrementoTimer - worker")
+	
 				seconds++;							
 				if (seconds == 60) {
 					seconds = 0;
@@ -35,7 +37,8 @@ self.onmessage = function(event){
 				
 				let stringaRisultato = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
 				self.postMessage(stringaRisultato)
-				console.log("HO INVIATO I RISULTATI DA WORKER");
+				console.log("**RISULTATO DA WORKER: " + stringaRisultato)
+				
 				
 	}
 

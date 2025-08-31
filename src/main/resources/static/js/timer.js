@@ -38,6 +38,10 @@ let iterazioni = 0;
 		let timerWorker = new Worker('/js/worker.js');
 		timerWorker.terminate()
 	
+	//funzione che termina worker precedente e ne instanzia  uno nuovo worker così che ad ogni start si avvia un nuovo worker
+	//la funzione passa al worker i valori i ore,minuti e secondi calcolati dal finaltime che li farà scorrere.
+	//viene posso avviato (sia in focus che non) un addeventlistner che ad ogni messaggio ricevuto dal worker contenente 
+	//il tempo istantaneo lo inserisce con innerHtml nei vari timer
 	function inizializzaNuovoWorker(){
 		timerWorker.terminate();
 		timerWorker = new Worker('/js/worker.js');
@@ -45,7 +49,7 @@ let iterazioni = 0;
 			seconds: seconds,
 			minutes: minutes,
 			hours: hours,
-			message : 'dati passati al worker in dopo istanziato worker'
+			
 		})		
 		if(!document.hasFocus() || document.hasFocus()){
 			timerWorker.addEventListener('message', function(event){
@@ -61,8 +65,7 @@ let iterazioni = 0;
 				if(timerDue != null){
 					timerDue.innerHTML = event.data;
 				}	
-					
-					console.log("###DA WORKER --> " + event.data)
+		
 			})			
 		}
 	}
@@ -71,34 +74,20 @@ let iterazioni = 0;
 		timerWorker.terminate()
 		console.log("worker terminato")
 	}
+	
+if(contatoreAttivatoDaRapidButton != null){
+	if (contatoreAttivatoDaRapidButton == true) {
+		inizializzaNuovoWorker();
+	}
+}
 		
-
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-	//console.log("finalTimeSec iniziale: " + finalTimeSec)
-	//console.log("ore iniziali: " + hours);
-	//console.log("minuti iniziali: " + minutes);
-	//console.log("secondi iniziali: " + seconds);
 				
 	function tempochescorre() {
 		if(contatoreIsRun !== true){
 			
 			stampacontatore();
 		} else{ 
-			
+			//******** porzione di codice spostata sul worker ********
 				//	iterazioni ++;
 				//	seconds++;							
 				//	if (seconds == 59) {
@@ -112,6 +101,7 @@ let iterazioni = 0;
 				//			hours++;
 				//		}
 				//	}	
+			//******** fine porzione di codice spostata sul worker ********
 				inizializzaNuovoWorker()
 				}
 					//verifica ogni secondo se il timer ha raggiuno il massimo consentito
