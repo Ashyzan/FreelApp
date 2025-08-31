@@ -264,7 +264,7 @@ public class ContatoreService {
 			}
 	}
     
-   // metodo che restituisce il finaltime formattato per caricamento template(usato in importContatoreInGet e passato al model
+   // metodo che restituisce il finaltime formattato (per caricamento template usato in importContatoreInGet e passato al model)
     public String calcoloFinalTimeString(Task task) {
     	
     	double finalTimeInSeconds = task.getContatore().getFinaltime().doubleValue();
