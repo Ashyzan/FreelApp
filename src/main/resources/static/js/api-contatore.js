@@ -40,8 +40,6 @@ function startContatoreApi(id){
 								minutes = (finalTimeSec % 3600) / 60;
 								seconds = finalTimeSec % 60;
 								
-								inizializzaNuovoWorker()
-								
 								//contatore-basso (mobile)
 									//dopo aver caricato i pulsanti tramite thymelaf secondo quanto preso dal model, al click 
 									//del play vengono nascosti e sostituiti da quelli generati da javascritp
@@ -293,7 +291,6 @@ function gestioneIconaStatoTaskList(){
 
 //funzione che gestisce l'icona di stato e della taskList  in DETTAGLIO PROGETTO senza fare il refresh della pagina
 function gestioneIconaStatoDettaglioProgetto(){
-	console.log("**********************")
 	if(listaTaskDettaglioProgetto != null){
 		let taskInUsoId_forWorking = "task-" + taskInUsoId;
 		arrayListaTaskDettaglioProgetto.forEach(item => {

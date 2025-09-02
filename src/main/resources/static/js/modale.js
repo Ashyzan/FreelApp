@@ -1,4 +1,3 @@
-console.log("leggo il file modale.js");
 
 // per attivare la modale è necessario inserire nell'html le seguenti funzioni al click:
 //onclick="apriModale()" per aprire la modale

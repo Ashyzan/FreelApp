@@ -1,4 +1,4 @@
-console.log("sono in lista-task.js")
+
 
 const api_urlFiltriListaClientiAll = 'http://localhost:8080/api/filtri/clienti-all';
 const api_urlFiltriListaClientiSearch = 'http://localhost:8080/api/filtri/clienti-search?input=';
@@ -397,7 +397,7 @@ function visualizzaordinamentoListaPiuMenoRecente(){
 
 //funzione che se filtri attivi fa visualizzare all'interno del form scelta filtri le scelte attualmente in vigore
 function filtriInUsoDaUtente(){
-	console.log("sono in filtriInUsoDaUtente")
+	
 	const inputRadioAperto = document.getElementById('inputRadioAperto');
 	const inputRadioChiuso = document.getElementById('inputRadioChiuso');
 	const inputRadiodataModificaTask = document.getElementById('inputRadiodataModificaTask');
@@ -406,7 +406,7 @@ function filtriInUsoDaUtente(){
 	const inputRadioOrdinaProgettoMenoRecente = document.getElementById('inputRadioOrdinaTaskMenoRecente');
 	
 	if(filtriAttiviInListaTask == true){
-		console.log("filtroOrdinamentoTask: " + filtroOrdinamentoTask)
+	
 		if(filtroDataOrdinamentoTask == "data di modifica"){
 			inputRadiodataModificaTask.innerHTTask
 			inputRadiodataModificaTask.innerHTML = `<input type="radio" id="dataModificaProgetto" name="dataOrdinamentoTask" value="dataModificaTask" onclick="visualizzaordinamentoListaPiuMenoRecente()" checked="checked">

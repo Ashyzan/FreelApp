@@ -74,7 +74,6 @@ if(selectTaskButton != null){
 }
 //funzione che richiama api del task selezionato
 async function getJsonTask(id){
-	console.log("sono in getJsonTask")
 	
 	if(id != 0 && id != null){
 		const response = await fetch(api_urlTaskSelected+id);
@@ -88,8 +87,6 @@ async function getJsonTask(id){
 		document.getElementById('taskLogoPath').src = data.logoCliente;	
 		document.getElementById('task-stato').src = assegnaSvgStatoItem(data.stato);
 		finalTimeTaskSelezionato = data.finalTime;
-		console.log("finalTime task selezionato: " + finalTimeTaskSelezionato)
-		console.log("task attualmente in uso: " + data.taskAttualmenteInUso)
 			
 
 		stampaContatore(data.finalTime, data.taskAttualmenteInUso, id)
