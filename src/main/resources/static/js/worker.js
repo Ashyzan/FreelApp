@@ -4,7 +4,7 @@
 let hours;
 let minutes;
 let seconds;
-let message;
+let iterazioni;
 
 crono = setInterval(incrementoTimer, 1000);
 
@@ -13,16 +13,14 @@ self.onmessage = function(event){
 		hours = event.data.hours;
 		minutes = event.data.minutes;
 		seconds = event.data.seconds;
-		message = event.data.message	
-		console.log(message)
-		
 		incrementoTimer()
 }
  
 	
 	function incrementoTimer(){
-	
-				seconds++;							
+				iterazioni++;
+				seconds++;		
+								
 				if (seconds == 60) {
 					seconds = 0;
 									
@@ -36,7 +34,10 @@ self.onmessage = function(event){
 				}
 				
 				let stringaRisultato = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
-				self.postMessage(stringaRisultato)
+				self.postMessage({
+					stringaRisultato: stringaRisultato,
+					iterazioni: iterazioni,
+				})
 				console.log("**RISULTATO DA WORKER: " + stringaRisultato)
 				
 				

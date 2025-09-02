@@ -1,17 +1,27 @@
-console.log("leggo il file timer.js");
 
 const formContatoreErroreFinalSecond = document.getElementById('formContatoreErroreFinalsecond');
 let iterazioni = 0;
+let timerWorker = null;
+
+//azione che compensa il lag di un secondo al reload della pagina
+if(contatoreIsRun == true){
+	console.log("finalTime pre: " + finalTimeSec)
+	finalTimeSec++
+	console.log("finalTime post: " + finalTimeSec)
+}
+
+
 
 	let hours = finalTimeSec / 3600;
 	let minutes = (finalTimeSec % 3600) / 60;
 	let seconds = finalTimeSec % 60;
+	console.log("FINALTIME IN ONLOAD --> " + ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2));
 	const timerElement = document.querySelector("#timer");
 	const timerTitolo = document.getElementById('timerTitolo');
 	const timerUno = document.getElementById('timerUno');
 	const timerDue = document.getElementById('timerDue');
 	
-	crono = setInterval(tempochescorre, 1000);
+	//crono = setInterval(tempochescorre, 1000);
 	
 	
 	window.addEventListener('focus', function() {
@@ -20,7 +30,6 @@ let iterazioni = 0;
 	},false);
 
 	window.addEventListener('blur', function() {
-		tempochescorre();
 		console.log("scheda non in vista")
 	},false);
 	
@@ -62,30 +71,28 @@ let iterazioni = 0;
 				
 	function tempochescorre() {
 		
-		if(contatoreIsRun !== true){
+		if(contatoreIsRun == true){
 			
-			stampacontatore();
-		} else{ 
 			
-			iterazioni ++;
-					
-					seconds++;
-					stampacontatore();
-					
-					if (seconds == 59) {
-						seconds = -1;
-						
-						if(minutes <= 59){
-							minutes++;
-						}
-							else {
-							minutes = 0;
-							seconds = -1;
-							hours++;
-						}
-					}
-					//verifica ogni secondo se il timer ha raggiuno il massimo consentito
+								iterazioni ++;
+								seconds++;							
+								if (seconds == 59) {
+										seconds = -1;
+															
+									if(minutes <= 59){
+										minutes++;
+									}else {
+										minutes = 0;
+										seconds = -1;
+										hours++;
+									}
+								}	
+						//******** fine porzione di codice spostata sul worker ********
+					//inizializzaNuovoWorker()
+					//verifica se il timer ha raggiuno il massimo consentito
 					timeExceed(iterazioni);
+		} else if(contatoreIsRun != true){ 
+			stampacontatore();
 
 		}
 		
@@ -117,18 +124,16 @@ let iterazioni = 0;
 	
 	function timerstart(){
 		//verifica se il contatore è stato attivato da rapid button
-					
-//			if(contatoreAttivatoDaRapidButton === true){
-//				contatoreTrue = true;
-//				contatoreIsRun = true;
-//				pulsantiContatoreInStart()
-//			}
-		
+		if(contatoreAttivatoDaRapidButton == true){
+				contatoreIsRun =true;
+				contatoreTrue = true;
+				switchPulsantiContatore()
+			}		
 		
 		if (contatoreTrue && contatoreIsRun) {
-				// eseguo prim la funzione una volta per togliere il lag di 1 secondo, poi entro nel ciclo
-				
-				tempochescorre();
+				inizializzaNuovoWorker()
+				//verifica se il timer ha raggiuno il massimo consentito
+				timeExceed(iterazioni);
 				//setInterval(tempochescorre, 1000);
 
 			}
@@ -159,9 +164,93 @@ function timeExceed(iterazioni){
 
 
 
+//funzione che termina worker precedente e ne instanzia  uno nuovo worker così che ad ogni start si avvia un nuovo worker
+	//la funzione passa al worker i valori i ore,minuti e secondi calcolati dal finaltime che li farà scorrere.
+	//viene avviato (sia in focus che non) un addeventlistner che ad ogni messaggio ricevuto dal worker contenente 
+	//il tempo istantaneo lo inserisce con innerHtml nei vari timer e che verifica il timeExceed
+	function inizializzaNuovoWorker(){
+		stampacontatore()
+		if(timerWorker != null){
+			console.log("non ho inizializzato worker perchè già esistente")		
+		}else if(timerWorker == null){
+			timerWorker = new Worker('/js/worker.js');
+			console.log("inizializzato nuovo worker")
+		}
+			timerWorker.postMessage({
+							seconds: seconds,
+							minutes: minutes,
+							hours: hours,
+						})				
+		if(!document.hasFocus() || document.hasFocus()){
+							timerWorker.addEventListener('message', function(event){
+								if(timerElement != null){
+									timerElement.innerHTML = event.data.stringaRisultato;
+								}
+								if(timerTitolo != null){
+									timerTitolo.innerHTML = "FreelApp - " + event.data.stringaRisultato;					
+								}
+								if(timerUno != null){
+									timerUno.innerHTML = event.data.stringaRisultato;
+								}
+								if(timerDue != null){
+									timerDue.innerHTML = event.data.stringaRisultato;
+								}	
+								timeExceed(event.data.iterazioni)	
+										
+							})	
+						}
+	}
+	
+	
+	
+	function terminaWorker(){
+		timerWorker.terminate()
+		timerWorker = null;
+		console.log("worker terminato")
+	}
 
 
-
-
+function switchPulsantiContatore(){
+		//contatore-basso (mobile)
+		//dopo aver caricato i pulsanti tramite thymelaf secondo quanto preso dal model, al click 
+		//del play vengono nascosti e sostituiti da quelli generati da javascritp
+		if (pauseBottomSvgBeforeApiContatoreNotRun != null && pauseBottomSvgBeforeApiContatoreNotRun.display != "none") {
+			pauseBottomSvgBeforeApiContatoreNotRun.classList.add('hidden');
+		}
+		if (playBottomSvgBeforeApiContatorIsRun != null && playBottomSvgBeforeApiContatorIsRun.display != "none") {
+			playBottomSvgBeforeApiContatorIsRun.classList.add('hidden');
+		}
+	
+		//rende non cliccabile il pulsante play del contatore con il contatore in run
+		playBottomAfterApi.innerHTML = `<img class="h-[45px] w-[45px]"
+																		src="/img/sources/icons/play-blue.svg" alt="start">`;
+	
+		//rende cliccabile il pulsante pause del contatore con il contatore in run		
+		pauseBottomAfterApi.innerHTML = `<button type="button" class="hover:opacity-75 " onclick="pauseContatoreApi(${taskInUsoId})">
+																			<img class="h-[45px] w-[45px]"
+																				src="/img/sources/icons/pause-blue.svg" alt="pause">
+																		</button>`;
+	
+		//contatore-alto ( desktop)
+		//dopo aver caricato i pulsanti tramite thymelaf secondo quanto preso dal model, al click 
+		//del play vengono nascosti e sostituiti da quelli generati da javascritp
+		if (pauseTopSvgBeforeApiContatoreNotRun != null && pauseTopSvgBeforeApiContatoreNotRun.display != "none") {
+			pauseTopSvgBeforeApiContatoreNotRun.classList.add('hidden');
+		}
+		if (playTopSvgBeforeApiContatorIsRun != null && playTopSvgBeforeApiContatorIsRun.display != "none") {
+			playTopSvgBeforeApiContatorIsRun.classList.add('hidden');
+		}
+	
+	
+		//rende non cliccabile il pulsante play del contatore con il contatore in run
+		playTopAfterApi.innerHTML = `<img class="h-[29px] w-[29px]"
+																					src="/img/sources/icons/play-blue.svg" alt="start">`;
+	
+		//rende cliccabile il pulsante pause del contatore con il contatore in run		
+		pauseTopAfterApi.innerHTML = `<button type="button" class="hover:opacity-75 " onclick="pauseContatoreApi(${taskInUsoId})">
+																					<img class="h-[29px] w-[29px]"
+																						src="/img/sources/icons/pause-blue.svg" alt="pause">
+																				</button>`;
+}
 	
 	

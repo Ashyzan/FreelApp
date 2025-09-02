@@ -1,0 +1,212 @@
+console.log("FINALTIME DA TEMPLATE ONLOAD --> " + finalTimeSec)
+console.log("taskInUsoId DA TEMPLATE ONLOAD -->" + taskInUsoId)
+
+const formContatoreErroreFinalSecond = document.getElementById('formContatoreErroreFinalsecond');
+let iterazioni = 0;
+
+	const url_apiUpdateFinalTime = 'http://localhost:8080/api/finaltime-real-time';
+	let hours = finalTimeSec / 3600;
+	let minutes = (finalTimeSec % 3600) / 60;
+	let seconds = finalTimeSec % 60;
+	console.log("TIMER CARICAMENTO PAGINA: " + ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2))
+	const timerElement = document.querySelector("#timer");
+	const timerTitolo = document.getElementById('timerTitolo');
+	const timerUno = document.getElementById('timerUno');
+	const timerDue = document.getElementById('timerDue');
+	
+//recupero elementi dal DOM per pulsanti pause e play dei contatori
+	//    ------ pause TOP -------
+	const pauseTopSvgBeforeApiContatoreNotRun = document.getElementById('pause-top-svg-before-api-contatoreNotRun');
+	const pauseTopSvgBeforeApiContatorIsRun = document.getElementById('pause-top-svg-before-api-contatoreIsRun');
+	const pauseTopAfterApi = document.getElementById('pause-top-after-api');
+
+	//    ------ play TOP --------
+	const playTopSvgBeforeApiContatoreNotRun = document.getElementById('play-top-svg-before-api-contatoreNotRun');
+	const playTopSvgBeforeApiContatorIsRun = document.getElementById('play-top-svg-before-api-contatoreIsRun');
+	const playTopAfterApi = document.getElementById('play-top-after-api');
+
+	//    ------ pause BOTTOM -------
+	const pauseBottomSvgBeforeApiContatoreNotRun = document.getElementById('pause-bottom-svg-before-api-contatoreNotRun');
+	const pauseBottomSvgBeforeApiContatorIsRun = document.getElementById('pause-bottom-svg-before-api-contatoreIsRun');
+	const pauseBottomAfterApi = document.getElementById('pause-bottom-after-api');
+
+	//    ------ play BOTTOM --------
+	const playBottomSvgBeforeApiContatoreNotRun = document.getElementById('play-bottom-svg-before-api-contatoreNotRun');
+	const playBottomSvgBeforeApiContatorIsRun = document.getElementById('play-bottom-svg-before-api-contatoreIsRun');
+	const playBottomAfterApi = document.getElementById('play-bottom-after-api');
+	
+	//crono = setInterval(tempochescorre, 1000);
+	
+	//istanzia nuovo web worker che anche se la finestra perde il focus continua ad eseguire la funzione tempo che scorre
+		let timerWorker = new Worker('/js/worker.js');
+		timerWorker.terminate()
+	
+	//funzione che termina worker precedente e ne instanzia  uno nuovo worker così che ad ogni start si avvia un nuovo worker
+	//la funzione passa al worker i valori i ore,minuti e secondi calcolati dal finaltime che li farà scorrere.
+	//viene posso avviato (sia in focus che non) un addeventlistner che ad ogni messaggio ricevuto dal worker contenente 
+	//il tempo istantaneo lo inserisce con innerHtml nei vari timer
+	function inizializzaNuovoWorker(){
+		timerWorker.terminate();
+		timerWorker = new Worker('/js/worker.js');
+		console.log("inizializzato nuovo worker")
+		
+		timerWorker.postMessage({
+			seconds: seconds,
+			minutes: minutes,
+			hours: hours,
+			
+		})		
+		if(!document.hasFocus() || document.hasFocus()){
+			timerWorker.addEventListener('message', function(event){
+				if(timerElement != null){
+					timerElement.innerHTML = event.data;
+				}
+				if(timerTitolo != null){
+					timerTitolo.innerHTML = "FreelApp - " + event.data;					
+				}
+				if(timerUno != null){
+					timerUno.innerHTML = event.data;
+				}
+				if(timerDue != null){
+					timerDue.innerHTML = event.data;
+				}	
+		
+			})			
+		}
+	}
+	
+	function terminaWorker(){
+		timerWorker.terminate()
+		console.log("worker terminato")
+	}
+	
+//if(contatoreAttivatoDaRapidButton != null){
+//	if (contatoreAttivatoDaRapidButton == true) {
+//		inizializzaNuovoWorker();
+//	}
+//}
+		
+				
+	function tempochescorre() {
+		if(contatoreIsRun !== true){
+			
+			stampacontatore();
+		} else{ 
+			//******** porzione di codice spostata sul worker ********
+				//	iterazioni ++;
+				//	seconds++;							
+				//	if (seconds == 59) {
+				//			seconds = -1;
+				//								
+				//		if(minutes <= 59){
+				//			minutes++;
+				//		}else {
+				//			minutes = 0;
+				//			seconds = -1;
+				//			hours++;
+				//		}
+				//	}	
+			//******** fine porzione di codice spostata sul worker ********
+				sincronizzaFinalTime()
+				inizializzaNuovoWorker()
+				}
+					//verifica ogni secondo se il timer ha raggiuno il massimo consentito
+					timeExceed(iterazioni);
+
+		}
+		
+	
+
+	
+	function stampacontatore() {
+		sincronizzaFinalTime()
+		// formattato con 2 cifre, per difetto dopo aver verificato la condizione che gli oggetti HTML esistono
+		if(timerElement != null){
+			document.getElementById('timer').innerHTML = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
+		}
+		
+		if(timerUno != null){
+			document.getElementById('timerUno').innerHTML = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
+		}
+		
+		if(timerDue != null){
+			document.getElementById('timerDue').innerHTML = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
+		}
+		
+		if(timerTitolo != null){
+			document.getElementById('timerTitolo').innerHTML = "FreelApp - " + ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
+		}
+
+
+	}
+	
+	function timerstart(){
+		//verifica se il contatore è stato attivato da rapid button
+					
+//			if(contatoreAttivatoDaRapidButton === true){
+//				contatoreTrue = true;
+//				contatoreIsRun = true;
+//				pulsantiContatoreInStart()
+//			}
+		
+
+		if (contatoreTrue && contatoreIsRun) {
+				// eseguo prim la funzione una volta per togliere il lag di 1 secondo, poi entro nel ciclo
+				tempochescorre()
+
+			}
+
+			else if (contatoreIsRun !== true) {
+
+				stampacontatore();
+				//console.log("contatore non attivo , finaltime = " + finalTimeSec  );
+			}
+
+			else {
+				
+				//console.log("finaltime is not defined , finaltime = " + finalTimeSec);
+			}
+		
+	
+		
+	}
+
+//funzione che se il finaltime ha raggiunto il massimo assegna al form precompilato sul contatoreTop 
+//un action e lo manda al backend per la validazione e la generazione del template di errore
+function timeExceed(iterazioni){
+	
+			if((finalTimeSec + iterazioni) >= 31557600){
+				
+				formContatoreErroreFinalSecond.action = `/task/timeExceed/${taskInUsoId}`
+				formContatoreErroreFinalSecond.submit(); 					
+			}
+}
+
+
+
+//funzione che tramite api sincronizza finaltime in tempo reale e lo restituisce in secondi
+function sincronizzaFinalTime(){
+	if(taskInUsoId != 0){
+		console.log("sono in sincronizzaFinalTime")
+		fetch(url_apiUpdateFinalTime).then(response =>{
+				
+							if (!response.ok) {
+								throw new Error('Network response was not ok');
+							}
+							return response.json();
+						})
+							.then(data => {
+								hours = data.OffsetFinalTimeRealTime / 3600;
+								minutes = (data.OffsetFinalTimeRealTime % 3600) / 60;
+								seconds = data.OffsetFinalTimeRealTime % 60;
+								let timeInSec = data.OffsetFinalTimeRealTime;
+							console.log("ho sincronizzato il final time --> " + ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2) + " /// IN SECONDI --> " + timeInSec);
+							})
+				
+	}
+}
+
+
+
+	
+	

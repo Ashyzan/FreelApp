@@ -146,6 +146,8 @@ public class ProgettoController {
 				}
 				model.addAttribute("areProjectsOnDb", areProjectsOnDb);
 				
+				contatoreservice.importContatoreInGet(model);
+				
 				//se siamo ad inizio sessione currentPageListaProgetti == 1 altrimenti terrà in memoria l'ultima pagina visitata
 				return getOnePage(currentPageListaProgetti, model);
 			}
