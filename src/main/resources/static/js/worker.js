@@ -10,27 +10,12 @@ let stringaRisultato
 clearInterval()
 crono = setInterval(incrementoTimer, 1000);
 
-//blocco di codice che elimina lag di caricamento pagina e viene eseguito una volta sola
-iterazioni++;
-seconds++;		
-								
-if (seconds == 60) {
-		seconds = 0;
-									
-	if(minutes <= 60){
-		minutes++;
-	}else {
-		minutes = 0;
-		seconds = 0;
-		hours++;
-	}
-}	
-// fineblocco di codice che elimina lag di caricamento pagina 
 
 self.onmessage = function(event){
 		hours = event.data.hours;
 		minutes = event.data.minutes;
 		seconds = event.data.seconds;
+
 		self.postMessage({
 							stringaRisultato: stringaRisultato,
 							iterazioni: iterazioni,
