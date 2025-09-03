@@ -113,6 +113,7 @@ if(contatoreIsRun == true){
 	}
 	
 	function timerstart(){
+		console.log("FINALTIME IN TIMESTART --> " + ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2));
 		//verifica se il contatore è stato attivato da rapid button
 		console.log("°°CONTATORETRUE: " + contatoreTrue);
 		console.log("°°CONTATOREISRUN: " + contatoreIsRun)
@@ -164,7 +165,7 @@ function timeExceed(iterazioni){
 	//il tempo istantaneo lo inserisce con innerHtml nei vari timer e che verifica il timeExceed
 	function inizializzaNuovoWorker(){
 		//stampacontatore()
-			
+		console.log("FINALTIME IN INIZIALIZZAWORKER PRE --> " + ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2));
 			timerWorker = new Worker('/js/worker.js');
 			console.log("inizializzato nuovo worker")
 			timerWorker.postMessage({
@@ -190,6 +191,7 @@ function timeExceed(iterazioni){
 										
 							})	
 						}
+						console.log("FINALTIME IN INIZIALIZZAWORKER POST --> " + ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2));
 	}
 	
 	

@@ -150,7 +150,7 @@ public class TaskController {
 								}
 					model.addAttribute("taskListOreLavorate", taskListOreLavorate);
 						} );
-			contatoreservice.importContatoreInGet(model);
+			//contatoreservice.importContatoreInGet(model);
 	//se siamo ad inizio sessione currentPageListaTask == 1 altrimenti terrà in memoria l'ultima pagina visitata
 	return getOnePage(currentPageListaTask, model);
     }
