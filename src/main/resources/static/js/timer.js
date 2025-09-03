@@ -24,16 +24,6 @@ if(contatoreIsRun == true){
 	//crono = setInterval(tempochescorre, 1000);
 	
 	
-	window.addEventListener('focus', function() {
-
-		console.log("scheda in vista")
-	},false);
-
-	window.addEventListener('blur', function() {
-		console.log("scheda non in vista")
-	},false);
-	
-	
 //recupero elementi dal DOM per pulsanti pause e play dei contatori
 	//    ------ pause TOP -------
 	const pauseTopSvgBeforeApiContatoreNotRun = document.getElementById('pause-top-svg-before-api-contatoreNotRun');
@@ -69,34 +59,34 @@ if(contatoreIsRun == true){
 	//console.log("minuti iniziali: " + minutes);
 	//console.log("secondi iniziali: " + seconds);
 				
-	function tempochescorre() {
+	//function tempochescorre() {
 		
-		if(contatoreIsRun == true){
+	//	if(contatoreIsRun == true){
 			
 			
-								iterazioni ++;
-								seconds++;							
-								if (seconds == 59) {
-										seconds = -1;
+	//							iterazioni ++;
+	//							seconds++;							
+	//							if (seconds == 59) {
+	//									seconds = -1;
 															
-									if(minutes <= 59){
-										minutes++;
-									}else {
-										minutes = 0;
-										seconds = -1;
-										hours++;
-									}
-								}	
+	//								if(minutes <= 59){
+	//									minutes++;
+	//								}else {
+	//									minutes = 0;
+	//									seconds = -1;
+	//									hours++;
+	//								}
+	//							}	
 						//******** fine porzione di codice spostata sul worker ********
 					//inizializzaNuovoWorker()
 					//verifica se il timer ha raggiuno il massimo consentito
-					timeExceed(iterazioni);
-		} else if(contatoreIsRun != true){ 
-			stampacontatore();
+				//	timeExceed(iterazioni);
+	//	} else if(contatoreIsRun != true){ 
+	//		stampacontatore();
 
-		}
+	//	}
 		
-	}
+	//}
 
 	
 	function stampacontatore() {
@@ -124,13 +114,11 @@ if(contatoreIsRun == true){
 	
 	function timerstart(){
 		//verifica se il contatore è stato attivato da rapid button
-		if(contatoreAttivatoDaRapidButton == true){
-				contatoreIsRun =true;
-				contatoreTrue = true;
-				switchPulsantiContatore()
-			}		
-		
+		console.log("°°CONTATORETRUE: " + contatoreTrue);
+		console.log("°°CONTATOREISRUN: " + contatoreIsRun)
+		console.log("°°TIMERWORKER: " + timerWorker)
 		if (contatoreTrue && contatoreIsRun) {
+				
 				inizializzaNuovoWorker()
 				//verifica se il timer ha raggiuno il massimo consentito
 				timeExceed(iterazioni);
@@ -140,7 +128,7 @@ if(contatoreIsRun == true){
 
 			else if (contatoreIsRun !== true) {
 
-				stampacontatore();
+				//stampacontatore();
 				//console.log("contatore non attivo , finaltime = " + finalTimeSec  );
 			}
 
@@ -148,6 +136,12 @@ if(contatoreIsRun == true){
 				
 				//console.log("finaltime is not defined , finaltime = " + finalTimeSec);
 			}
+		if(contatoreAttivatoDaRapidButton == true){
+				contatoreIsRun =true;
+				contatoreTrue = true;
+				switchPulsantiContatore()
+			}		
+		
 		
 	}
 
@@ -169,13 +163,10 @@ function timeExceed(iterazioni){
 	//viene avviato (sia in focus che non) un addeventlistner che ad ogni messaggio ricevuto dal worker contenente 
 	//il tempo istantaneo lo inserisce con innerHtml nei vari timer e che verifica il timeExceed
 	function inizializzaNuovoWorker(){
-		stampacontatore()
-		if(timerWorker != null){
-			console.log("non ho inizializzato worker perchè già esistente")		
-		}else if(timerWorker == null){
+		//stampacontatore()
+			
 			timerWorker = new Worker('/js/worker.js');
 			console.log("inizializzato nuovo worker")
-		}
 			timerWorker.postMessage({
 							seconds: seconds,
 							minutes: minutes,

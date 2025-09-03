@@ -80,8 +80,7 @@ function startContatoreApi(id){
 																			<img class="h-[29px] w-[29px]"
 																				src="/img/sources/icons/pause-blue.svg" alt="pause">
 																		</button>`;				
-								
-								inizializzaNuovoWorker()										
+																	
 								timerstart();
 								
 								//gestione icona di stato per contatore api senza refresh template

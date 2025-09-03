@@ -5,8 +5,26 @@ let hours;
 let minutes;
 let seconds;
 let iterazioni;
-
+let stringaRisultato
+clearInterval()
 crono = setInterval(incrementoTimer, 1000);
+
+//blocco di codice che elimina lag di caricamento pagina e viene eseguito una volta sola
+iterazioni++;
+seconds++;		
+								
+if (seconds == 60) {
+		seconds = 0;
+									
+	if(minutes <= 60){
+		minutes++;
+	}else {
+		minutes = 0;
+		seconds = 0;
+		hours++;
+	}
+}
+// fineblocco di codice che elimina lag di caricamento pagina 
 
 self.onmessage = function(event){
 	
@@ -33,12 +51,12 @@ self.onmessage = function(event){
 					}
 				}
 				
-				let stringaRisultato = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
+				stringaRisultato = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
+				console.log("**RISULTATO DA WORKER: " + stringaRisultato)
 				self.postMessage({
 					stringaRisultato: stringaRisultato,
 					iterazioni: iterazioni,
 				})
-				console.log("**RISULTATO DA WORKER: " + stringaRisultato)
 				
 				
 	}
