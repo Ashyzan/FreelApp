@@ -116,10 +116,10 @@ if(contatoreIsRun == true){
 		//verifica se il contatore è stato attivato da rapid button
 		console.log("°°CONTATORETRUE: " + contatoreTrue);
 		console.log("°°CONTATOREISRUN: " + contatoreIsRun)
-		console.log("°°TIMERWORKER: " + timerWorker)
 		if (contatoreTrue && contatoreIsRun) {
 				
 				inizializzaNuovoWorker()
+		console.log("°°TIMERWORKER: " + timerWorker)
 				//verifica se il timer ha raggiuno il massimo consentito
 				timeExceed(iterazioni);
 				//setInterval(tempochescorre, 1000);
