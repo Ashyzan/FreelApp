@@ -12,10 +12,7 @@ if(contatoreIsRun == true){
 
 
 
-	let hours = finalTimeSec / 3600;
-	let minutes = (finalTimeSec % 3600) / 60;
-	let seconds = finalTimeSec % 60;
-	console.log("FINALTIME IN ONLOAD --> " + ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2));
+	
 	const timerElement = document.querySelector("#timer");
 	const timerTitolo = document.getElementById('timerTitolo');
 	const timerUno = document.getElementById('timerUno');
@@ -113,14 +110,9 @@ if(contatoreIsRun == true){
 	}
 	
 	function timerstart(){
-		console.log("FINALTIME IN TIMESTART --> " + ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2));
-		//verifica se il contatore è stato attivato da rapid button
-		console.log("°°CONTATORETRUE: " + contatoreTrue);
-		console.log("°°CONTATOREISRUN: " + contatoreIsRun)
 		if (contatoreTrue && contatoreIsRun) {
 				
 				inizializzaNuovoWorker()
-		console.log("°°TIMERWORKER: " + timerWorker)
 				//verifica se il timer ha raggiuno il massimo consentito
 				timeExceed(iterazioni);
 				//setInterval(tempochescorre, 1000);
@@ -166,14 +158,13 @@ function timeExceed(iterazioni){
 	//il tempo istantaneo lo inserisce con innerHtml nei vari timer e che verifica il timeExceed
 	function inizializzaNuovoWorker(){
 		//stampacontatore()
-		console.log("FINALTIME IN INIZIALIZZAWORKER PRE --> " + ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2));
 			timerWorker = new Worker('/js/worker.js');
-			console.log("inizializzato nuovo worker")
+			console.log("inizializzato nuovo worker");
+			
 			timerWorker.postMessage({
-							seconds: seconds,
-							minutes: minutes,
-							hours: hours,
-						})				
+							finalTimeSec: finalTimeSec,
+						})	
+			console.log("finalTimeSec inviato al worker: " + finalTimeSec);			
 		if(!document.hasFocus() || document.hasFocus()){
 							timerWorker.addEventListener('message', function(event){
 								if(timerElement != null){
