@@ -140,6 +140,7 @@ if(contatoreIsRun == true){
 		if(contatoreAttivatoDaRapidButton == true){
 				contatoreIsRun =true;
 				contatoreTrue = true;
+				inizializzaNuovoWorker()
 				switchPulsantiContatore()
 			}		
 		
