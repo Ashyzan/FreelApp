@@ -3,6 +3,7 @@ const formContatoreErroreFinalSecond = document.getElementById('formContatoreErr
 let iterazioni = 0;
 let timerWorker = null;
 
+
 //azione che compensa il lag di un secondo al reload della pagina
 if(contatoreIsRun == true){
 	console.log("finalTime pre: " + finalTimeSec)
