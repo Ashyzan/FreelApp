@@ -399,6 +399,9 @@ public class ClientController {
 		taskList = repositTask.findAllNotClosed();
 		model.addAttribute("taskList", taskList);
 		
+		//passa al model il numero di progetti del cliente
+		clienteService.numeroProgettiDelCliente(repositoryCliente.getReferenceById(clienteId), model);
+		
 		//se si arriva al dettaglio progetto dalla ricerca su lista clienti passo al model
 		// questo booleano per dirgli che siamo in modalità search, l'ultima pagina visita in search 
 		//e l'input inserito (variabili inizializzata ad inizio controller) che verranno usati nel button dedicato

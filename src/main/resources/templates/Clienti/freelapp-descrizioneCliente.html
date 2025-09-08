@@ -312,72 +312,68 @@
 			</div>
 			<div id="main-section"
 				class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto">
-				<div class="flex flex-col justify-center items-center w-full">
-					<div
-						class="flex flex-col w-auto md:w-4/5 lg:w-[600px] h-auto border-2 border-[#0057A5] rounded-lg p-2 md:p-4 bg-gray-100 m-2">
-						<div class="flex justify-between items-center border-b-4">
-							<div class="text-center font-bold text-[30px] mb-3">
-								<h1 th:text="${cliente.getLabelCliente()}">
-								</h1>
-							</div>
-							<div class="flex justify-center items-center gap-6">
-								<a th:href="@{/Clienti/edit/{id}(id=${cliente.getId()})}">
-									<div class="t-tooltip w-5 h-5">
-										<img class="h-[100%] w-[100%]" src="/img/sources/icons/modify-blue.svg" alt="modifica task">
-										<div
-											class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-											Modifica
-										</div>
-									</div>
-								</a>
-								<button type="button" id="deleteButton" th:onclick="creaApriModaleDeleteCliente([[${cliente.id}]] ,[[ ${cliente.getLabelCliente()}]])">
-									<div class="t-tooltip w-5 h-5">
-										<img class="h-[100%] w-[100%]" src="/img/sources/icons/garbage-red.svg" alt="elimina">
-										<div
-											class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-20px] mt-[5px]">
-											Elimina
-										</div>
-									</div>
-								</button>
-							</div>
-						</div>
+				<div class="w-11/12 grid lg:grid-cols-2 md:grid-cols-1">
+					<!-- 	prima column -->
+					<div class="gap-4 rounded-lg bg-gray-100 p-6 m-3 shadow-lg">
 						<div>
-							<div class="grid md:grid-cols-3  grid-cols-4 mb-2 py-2 px-3">
-								<div class="col font-bold pe-3 p-2">
-									E-mail</div>
-								<div class="col md:col-span-2 col-span-3 p-2" th:text="${cliente.getEmail()}">
+							<div class="flex justify-end items-center mb-3 text-[#0057A5] text-end">
+								<div class="block text-end leading-tight"
+									th:text="${'cliente dal '+cliente.dataInserimentoCliente}"></div>
+							</div>
+							<div class="grid grid-cols-5">
+								<div class="sm:col-span-2 col-span-5 border-2 border-red-300 flex flex-row sm:flex-col ">
+									<div class="w-full h-auto py-2 flex justify-center items-center">
+										<img class="w-32 h-32 rounded-full object-cover m-auto"
+												th:src="@{${cliente.LogoPath}}" alt="logo">										
+									</div>
+									<div class="border-2 border-gray-300 py-4 ps-6">
+										<h3 class="font-bold">Dati di contatto</h3>
+										<ul>
+											<li th:text="${cliente.getEmail()}"></li>
+											<li th:text="${cliente.getTelefono()}"></li>
+											<li th:text="${cliente.getSito()}"></li>
+										</ul>										
+									</div>
 								</div>
-								<div class="col font-bold pe-3 p-2">
-									Telefono</div>
-								<div class="col md:col-span-2 col-span-3 p-2" th:text="${cliente.getTelefono()}">
-								</div>
-								<div class="col font-bold pe-3 p-2">
-									Indirizzo</div>
-								<div class="col md:col-span-2 col-span-3 p-2"
-									th:text="|${cliente.getIndirizzo()} ${cliente.civico} ${cliente.getCity()}|">
-								</div>
-								<div class="col font-bold pe-3 p-2">
-									Ragione Sociale
-								</div>
-								<div class="col md:col-span-2 col-span-3 p-2" th:text="${cliente.getRagioneSociale()}">
-								</div>
-								<div class="col font-bold pe-3 p-2">
-									Partita Iva</div>
-								<div class="col md:col-span-2 col-span-3 p-2" th:text="${cliente.getPartitaIva()}">
+								<div class="sm:col-span-3 col-span-5 border-2 border-green-300">
+									<h1 class="text-[#0057A5] text-[32px] border-b-4 pb-3" th:text="${cliente.getLabelCliente()}" ></h1>
+									<div class="grid grid-cols-3 mb-2 py-2 border-b-4">
+										<div class="col-span-2 font-bold pe-1 py-2">Tipologia cliente</div>
+										<div class="col-span-1 text-center max-md:text-end py-2"
+											th:text="${cliente.getTipologia()}"></div>
+										<div class="col-span-2 font-bold pe-1 py-2">Numero di progetti</div>
+										<div class="col-span-1 text-center max-md:text-end py-2"
+											th:text="${numeroProgettiDelCliente}"></div>
+									</div>
 								</div>
 							</div>
+							
+							
+					
+				<!--
+							<h1 class="text-[#0057A5] text-[32px]" th:text="${task.getName()}"></h1>
+					
+				-->
+							
+							
+				
+				
+							<div class="text-center mt-5 p-4">
+								<a class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+									th:href="@{/Clienti}">Torna alla lista dei Clienti </a>
+							</div>
+					<!--
+						
+							<div th:if="${searchMode == true}" class="text-center mt-5 p-4">
+								<a class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+									th:href="@{|/task-search-input=${lastInputInTaskSearch}/page/${lastVisitedPageInTaskSearch}|}">Torna
+									alla ricerca </a>
+							</div>
+					-->
 						</div>
-						<div class="text-center mt-5 p-4">
-							<a class="border-2 border-[#0057A5] bg-[#ffe541] rounded-[35px] px-3 py-1 shadow-slate-400 shadow-md"
-								th:href="@{/Clienti}">
-								Torna alla lista dei
-								clienti </a>
-						</div>
-						<div th:if="${searchMode == true}" class="text-center mt-5 p-4">
-							<a class="border-2 border-[#0057A5] bg-[#ffe541] rounded-[35px] px-3 py-1 shadow-slate-400 shadow-md"
-								th:href="@{|/cliente-search-input=${lastInputInProgettiSearch}/page/${lastVisitedPageInProgettiSearch}|}">Torna
-								alla ricerca </a>
-						</div>
+					</div>
+					<!-- 			second column -->
+					<div class="gap-4 rounded-lg bg-gray-100 p-2 md:p-6 m-3 shadow-lg">
 					</div>
 				</div>
 				<!-- CONTATORE -->
