@@ -1,4 +1,4 @@
-console.log("leggo il file animazione-lista-task");
+
 //dimensione box 172px
 
 const containers = document.getElementsByClassName('container');

@@ -136,6 +136,8 @@ public class ClientController {
 		}
 		model.addAttribute("areClientsOnDb", areClientsOnDb);
 		
+		//contatoreservice.importContatoreInGet(model);
+		
 		//se siamo ad inizio sessione currentPageListaClienti == 1 altrimenti terrà in memoria l'ultima pagina visitata
 		return getOnePage(currentPageListaClienti, model );
 	} 
