@@ -28,7 +28,6 @@ self.onmessage = function(event){
 	
 	stringaRisultato = (`${hh}:${mm}:${ss}`);
 	
-	console.log("**RISULTATO DA WORKER: " + stringaRisultato)
 					self.postMessage({
 						stringaRisultato: stringaRisultato,
 						iterazioni: iterazioni,

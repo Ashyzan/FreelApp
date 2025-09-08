@@ -169,7 +169,7 @@ function pauseContatoreApi(id){
 								
 								//azzera il setInterval per evitare che agli start successivi la velocità del contatore aumenti
 								//clearInterval(crono);
-								stampacontatore();
+								//stampacontatore();
 								
 								//gestione icona di stato per contatore api senza refresh template
 								if(descrizioneTaskId != null){

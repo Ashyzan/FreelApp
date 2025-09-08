@@ -87,28 +87,28 @@ if(contatoreIsRun == true){
 	//}
 
 	
-	function stampacontatore() {
+	//function stampacontatore() {
 		//console.log("sono in stampa contatore")
 
 		// formattato con 2 cifre, per difetto dopo aver verificato la condizione che gli oggetti HTML esistono
-		if(timerElement != null){
-			document.getElementById('timer').innerHTML = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
-		}
+	//	if(timerElement != null){
+	//		document.getElementById('timer').innerHTML = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
+	//	}
 		
-		if(timerUno != null){
-			document.getElementById('timerUno').innerHTML = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
-		}
+	//	if(timerUno != null){
+	//		document.getElementById('timerUno').innerHTML = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
+	//	}
 		
-		if(timerDue != null){
-			document.getElementById('timerDue').innerHTML = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
-		}
+	//	if(timerDue != null){
+	//		document.getElementById('timerDue').innerHTML = ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
+	//	}
 		
-		if(timerTitolo != null){
-			document.getElementById('timerTitolo').innerHTML = "FreelApp - " + ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
-		}
+	//	if(timerTitolo != null){
+	//		document.getElementById('timerTitolo').innerHTML = "FreelApp - " + ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2);			
+	//	}
 
 
-	}
+//	}
 	
 	function timerstart(){
 		if (contatoreTrue && contatoreIsRun) {
@@ -153,19 +153,17 @@ function timeExceed(iterazioni){
 
 
 
-//funzione che termina worker precedente e ne instanzia  uno nuovo worker così che ad ogni start si avvia un nuovo worker
-	//la funzione passa al worker i valori i ore,minuti e secondi calcolati dal finaltime che li farà scorrere.
+//funzione che  instanzia  uno nuovo worker così che ad ogni start si avvia un nuovo worker
+	//la funzione passa al worker il valore  finaltime che servirà a far scorrere il tempo.
 	//viene avviato (sia in focus che non) un addeventlistner che ad ogni messaggio ricevuto dal worker contenente 
 	//il tempo istantaneo lo inserisce con innerHtml nei vari timer e che verifica il timeExceed
 	function inizializzaNuovoWorker(){
 		//stampacontatore()
 			timerWorker = new Worker('/js/worker.js');
-			console.log("inizializzato nuovo worker");
 			
 			timerWorker.postMessage({
 							finalTimeSec: finalTimeSec,
-						})	
-			console.log("finalTimeSec inviato al worker: " + finalTimeSec);			
+						})				
 		if(!document.hasFocus() || document.hasFocus()){
 							timerWorker.addEventListener('message', function(event){
 								if(timerElement != null){
@@ -184,7 +182,6 @@ function timeExceed(iterazioni){
 										
 							})	
 						}
-						console.log("FINALTIME IN INIZIALIZZAWORKER POST --> " + ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2));
 	}
 	
 	
@@ -192,7 +189,6 @@ function timeExceed(iterazioni){
 	function terminaWorker(){
 		timerWorker.terminate()
 		timerWorker = null;
-		console.log("worker terminato")
 	}
 
 

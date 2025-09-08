@@ -1020,13 +1020,8 @@
 			const endTime = performance.now(); // Tempo di fine
 			  const loadTime = endTime - startTime;
 			  if(contatoreIsRun){
-				  finalTimeSec = finalTimeSec + Math.ceil((loadTime/1000));
-				  console.log("Nuovo finalTimeSec più ritardo di caricamento pagina " + finalTimeSec)			
+				  finalTimeSec = finalTimeSec + Math.ceil((loadTime/1000));			
 			  }
-			  let hours = finalTimeSec / 3600;
-			  	let minutes = (finalTimeSec % 3600) / 60;
-			  	let seconds = finalTimeSec % 60;
-			  	console.log("FINALTIME IN ONLOAD --> " + ('0' + Math.floor(hours)).slice(-4) + ":" + ('0' + Math.floor(minutes)).slice(-2) + ":" + ('0' + Math.floor(seconds)).slice(-2));
 		</script>
 </body>
 </html>
