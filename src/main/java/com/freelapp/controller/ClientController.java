@@ -554,6 +554,8 @@ public class ClientController {
 		String endPoint = "/Clienti/edit/" + repositoryCliente.findById(id).get().getId();
 		
 		model.addAttribute("endPoint", endPoint);
+		//passo al model la data di inserimento cliente così da poterla nuovamente confermare a db
+		model.addAttribute("dataInserimentoCliente", repositoryCliente.getReferenceById(id).getDataInserimentoCliente());
 		
 		contatoreservice.importContatoreInGet(model);
 		//passo al model i contatore e task in uso (gli static)

@@ -312,64 +312,101 @@
 			</div>
 			<div id="main-section"
 				class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto">
-				<div class="w-11/12 grid lg:grid-cols-2 md:grid-cols-1">
+				<div class="w-11/12 grid xl:grid-cols-2 lg:grid-cols-1">
 					<!-- 	prima column -->
-					<div class="gap-4 rounded-lg bg-gray-100 p-6 m-3 shadow-lg">
+					<div class="gap-4 rounded-lg bg-gray-100 p-3 m-3 shadow-lg">
 						<div>
-							<div class="flex justify-end items-center mb-3 text-[#0057A5] text-end">
+							<div class="flex justify-end items-center mb-3 text-[#0057A5] text-end text-xs">
 								<div class="block text-end leading-tight"
 									th:text="${'cliente dal '+cliente.dataInserimentoCliente}"></div>
 							</div>
 							<div class="grid grid-cols-5">
-								<div class="sm:col-span-2 col-span-5 border-2 border-red-300 flex flex-row sm:flex-col ">
-									<div class="w-full h-auto py-2 flex justify-center items-center">
+								<h1 class=" col-span-5 text-[#0057A5] text-4xl border-b-4 pb-2 font-bold sm:hidden text-center mb-5" th:text="${cliente.getLabelCliente()}" ></h1>
+								<div class="sm:col-span-2 col-span-5 flex flex-row sm:flex-col ">
+									<div class="md:w-full w-2/5 h-auto py-2 flex justify-center items-center">
 										<img class="w-32 h-32 rounded-full object-cover m-auto"
 												th:src="@{${cliente.LogoPath}}" alt="logo">										
 									</div>
-									<div class="border-2 border-gray-300 py-4 ps-6">
-										<h3 class="font-bold">Dati di contatto</h3>
-										<ul>
-											<li th:text="${cliente.getEmail()}"></li>
-											<li th:text="${cliente.getTelefono()}"></li>
-											<li th:text="${cliente.getSito()}"></li>
+									<div class="py-4 ps-10 sm:ps-4 max-sm:w-full">
+										<h3 class="font-bold text-xl">Dati di contatto</h3>
+										<ul class="relative">
+											<li th:if="${cliente.tipologia == 'azienda'}" th:text="${cliente.getNameContatto()}" class="truncate hover:overflow-visible hover:bg-gray-100"></li>
+											<li th:if="${cliente.tipologia == 'azienda'}" th:text="${cliente.getSurnameContatto()}" class="truncate hover:overflow-visible hover:bg-gray-100"></li>
+											<li th:text="${cliente.getTelefono()}" class="static truncate hover:overflow-visible hover:bg-gray-100"></li>
+											<li th:text="${cliente.getEmail()}" class="truncate hover:overflow-visible hover:bg-white hover:absolute hover:rounded-lg hover:shadow-md hover:px-2 hover:w-fit"></li>
+											<li th:text="${cliente.getSito()}" class="truncate hover:overflow-visible hover:bg-white hover:absolute hover:rounded-lg hover:shadow-md hover:px-2 hover:w-fit"></li>
 										</ul>										
 									</div>
 								</div>
-								<div class="sm:col-span-3 col-span-5 border-2 border-green-300">
-									<h1 class="text-[#0057A5] text-[32px] border-b-4 pb-3" th:text="${cliente.getLabelCliente()}" ></h1>
+								<div class="sm:col-span-3 col-span-5">
+									<h1 class="text-[#0057A5] text-4xl border-b-4 pb-2 font-bold max-sm:hidden" th:text="${cliente.getLabelCliente()}" ></h1>
 									<div class="grid grid-cols-3 mb-2 py-2 border-b-4">
-										<div class="col-span-2 font-bold pe-1 py-2">Tipologia cliente</div>
-										<div class="col-span-1 text-center max-md:text-end py-2"
+										<div class="col-span-1 font-semibold pe-1 ">Tipologia cliente</div>
+										<div class="col-span-2 text-end pe-3 "
 											th:text="${cliente.getTipologia()}"></div>
-										<div class="col-span-2 font-bold pe-1 py-2">Numero di progetti</div>
-										<div class="col-span-1 text-center max-md:text-end py-2"
+										<div class="col-span-1 font-semibold pe-1 ">Numero di progetti</div>
+										<div class="col-span-2 text-end pe-3"
 											th:text="${numeroProgettiDelCliente}"></div>
+									</div>
+									<div class="grid grid-cols-3 mb-2 py-2 border-b-4 ">
+										<h3 class="col-span-3 font-bold text-xl">Dati Fiscali</h3>
+										
+										<div th:if="${cliente.tipologia == 'privato'}" class="col-span-1 font-semibold pe-1 ">Nome</div>
+										<div th:if="${cliente.tipologia == 'privato'}" class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getName()}">
+										</div>
+										<div th:if="${cliente.tipologia == 'privato'}" class="col-span-1 font-semibold pe-1 ">Cognome</div>
+										<div th:if="${cliente.tipologia == 'privato'}" class="col-span-2 text-end pe-3 truncate hover:overflow-visible"
+											th:text="${cliente.getSurname()}"></div>
+										
+										
+										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-1 font-semibold pe-1 ">Ragione sociale</div>
+										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-2 text-end pe-3 truncate hover:overflow-visible"
+											th:text="${cliente.getRagioneSociale()}"></div>
+										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-1 font-semibold pe-1 ">Partita Iva</div>
+										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-2 text-end pe-3 truncate hover:overflow-visible"
+											th:text="${cliente.getPartitaIva()}"></div>
+										
+										<div class="col-span-1 font-semibold pe-1">Codice Fiscale</div>
+										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getCodiceFiscale()}"></div>											
+										<div class="col-span-1 font-semibold pe-1">Indirizzo Pec</div>
+										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getPec()}"></div>
+										<div class="col-span-1 font-semibold pe-1 ">Indirizzo</div>
+										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getIndirizzo()}"></div>
+										<div class="col-span-1 font-semibold pe-1 ">Civico</div>
+										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getCivico()}"></div>
+										<div class="col-span-1 font-semibold pe-1 ">Città</div>
+										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getCity()}"></div>
+										<div class="col-span-1 font-semibold pe-1 ">CAP</div>
+										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getCap()}"></div>
+										<div class="col-span-1 font-semibold pe-1 ">Nazione</div>
+										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getNazionalita()}"></div>
+									</div>
+									<div class="grid grid-cols-3">
+										<div class="col-span-1 font-bold text-xl">Azioni</div>
+										<div class="col-span-2 flex justify-end items-center gap-4 pe-3">
+											<a th:href="@{/Clienti/edit/{id}(id=${cliente.getId()})}">
+												<div class="t-tooltip w-5 h-5">
+													<img class="h-[100%] w-[100%]" src="/img/sources/icons/modify-blue.svg" alt="modifica task">
+													<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
+														Modifica</div>
+												</div>
+											</a>
+											<button type="button" id="deleteButton"
+												th:onclick="creaApriModaleDeleteCliente([[${cliente.id}]], [[${cliente.getLabelCliente()}]])">
+												<div class="t-tooltip w-5 h-5">
+													<img class="h-[100%] w-[100%]" src="/img/sources/icons/garbage-red.svg" alt="elimina">
+													<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-20px] mt-[5px]">
+														Elimina</div>
+												</div>
+											</button>
+										</div>
 									</div>
 								</div>
 							</div>
-							
-							
-					
-				<!--
-							<h1 class="text-[#0057A5] text-[32px]" th:text="${task.getName()}"></h1>
-					
-				-->
-							
-							
-				
-				
 							<div class="text-center mt-5 p-4">
 								<a class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
 									th:href="@{/Clienti}">Torna alla lista dei Clienti </a>
 							</div>
-					<!--
-						
-							<div th:if="${searchMode == true}" class="text-center mt-5 p-4">
-								<a class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
-									th:href="@{|/task-search-input=${lastInputInTaskSearch}/page/${lastVisitedPageInTaskSearch}|}">Torna
-									alla ricerca </a>
-							</div>
-					-->
 						</div>
 					</div>
 					<!-- 			second column -->

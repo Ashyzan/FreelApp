@@ -320,6 +320,7 @@
 						<form class="" id="formCliente" th:object="${formCliente}"
 							th:action="@{'/Clienti/edit/{id}'(id=${formCliente.id})}" method="post"
 							enctype="multipart/form-data">
+							<input type="hidden" name="dataInserimentoCliente" th:value="${dataInserimentoCliente}">
 							<div class="accordion-item mb-4 border-b-2">
 								<button type="button" onclick="toggleAccordion(1)"
 									class=" w-full flex justify-between items-center py-2 hover:underline hover:underline-offset-2">
