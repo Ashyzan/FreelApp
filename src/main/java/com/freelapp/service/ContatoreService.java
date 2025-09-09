@@ -259,8 +259,12 @@ public class ContatoreService {
 			    model.addAttribute("finaltime", task.getContatore().getFinaltime());
 			    model.addAttribute("contatoreIsRun", contatoreIsRun);
 			    model.addAttribute("contatoreIsTrue", contatoreIsTrue(task));
-			    model.addAttribute("finalTimeFormatted", calcoloFinalTimeString(task));
 
+			    if(contatoreIsRun == true) {
+			    	model.addAttribute("finalTimeFormatted", "...");
+			    }else if(contatoreIsRun == false) {
+			    	model.addAttribute("finalTimeFormatted", calcoloFinalTimeString(task));			    	
+			    }
 			}
 	}
     

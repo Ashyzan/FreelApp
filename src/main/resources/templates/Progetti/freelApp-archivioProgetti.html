@@ -10,6 +10,9 @@
 <link rel="stylesheet" href="/animate.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
+		let startTime = performance.now()
+	</script>
+<script>
 			tailwind.config = {
 				theme: {
 					extend: {
@@ -814,6 +817,13 @@
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
 	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 	<script type="text/javascript" th:src="@{/js/timerRapidButton.js}"></script>
+	<script>
+		const endTime = performance.now(); // Tempo di fine
+		const loadTime = endTime - startTime;
+		if (contatoreIsRun) {
+			finalTimeSec = finalTimeSec + Math.ceil((loadTime / 1000));
+		}
+	</script>
 </body>
 
 </html>

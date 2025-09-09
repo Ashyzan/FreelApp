@@ -80,6 +80,7 @@ function startContatoreApi(id){
 																			<img class="h-[29px] w-[29px]"
 																				src="/img/sources/icons/pause-blue.svg" alt="pause">
 																		</button>`;				
+																	
 								timerstart();
 								
 								//gestione icona di stato per contatore api senza refresh template
@@ -125,6 +126,8 @@ function pauseContatoreApi(id){
 								minutes = (finalTimeSec % 3600) / 60;
 								seconds = finalTimeSec % 60;
 								
+								terminaWorker()
+								
 								//contatore-basso (mobile)
 									//dopo aver caricato i pulsanti tramite thymelaf secondo quanto preso dal model, al click 
 									//del pause vengono nascosti e sostituiti da quelli generati da javascritp
@@ -166,7 +169,7 @@ function pauseContatoreApi(id){
 								
 								//azzera il setInterval per evitare che agli start successivi la velocità del contatore aumenti
 								//clearInterval(crono);
-								stampacontatore();
+								//stampacontatore();
 								
 								//gestione icona di stato per contatore api senza refresh template
 								if(descrizioneTaskId != null){
@@ -289,7 +292,6 @@ function gestioneIconaStatoTaskList(){
 
 //funzione che gestisce l'icona di stato e della taskList  in DETTAGLIO PROGETTO senza fare il refresh della pagina
 function gestioneIconaStatoDettaglioProgetto(){
-	console.log("**********************")
 	if(listaTaskDettaglioProgetto != null){
 		let taskInUsoId_forWorking = "task-" + taskInUsoId;
 		arrayListaTaskDettaglioProgetto.forEach(item => {

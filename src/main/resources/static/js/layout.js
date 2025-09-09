@@ -1,4 +1,4 @@
-console.log("leggo il file layout.js");
+
 // elementi DOM per animazione lista task al click su contatore
 let taskCardList = document.getElementById('task-card');
 let buttontest = document.getElementById('buttontest');
@@ -71,11 +71,9 @@ function controlloContatoreAttivato(){
 
 //******************* animazione se contatore cliccato su play/pause prima del refresh in mobile  ************/
 function contatoreCliccatoPlayPauseInMobile(){
-	console.log("sono in contatoreCliccatoPlayPauseInMobile()");
-	console.log("contatoreCliccatoPreRefresh in contatoreCliccatoPlayPauseInMobile() " + contatoreCliccatoPreRefresh)
+	
 	if(contatoreCliccatoPreRefresh == true && window.innerWidth < 1024){
-		document.getElementById('bottom').scrollIntoView({ behavior: "smooth"});
-		console.log("ho eseguito l'animazione contatoreCliccatoPlayPauseInMobile()")
+		document.getElementById('bottom').scrollIntoView({ behavior: "smooth"})
 	}
 }
 

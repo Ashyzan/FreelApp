@@ -11,6 +11,9 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
+	let startTime = performance.now()
+</script>
+<script>
 			tailwind.config = {
 				theme: {
 					extend: {
@@ -443,7 +446,7 @@
 							<div class="grid lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-4 p-4 gap-8 flex justify-center w-full">
 								<div th:unless="${progettoPerData.getArchivia()} == true"
 									th:each="progettoPerData : ${listProgettiByDataModifica}"
-									class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
+									class="mx-auto max-w-md bg-white rounded-xl shadow-md  min-w-full">
 									<div class="md:flex">
 										<div class="md:shrink-0">
 											<img class="aspect-square h-48 w-full object-cover md:w-48"
@@ -520,9 +523,14 @@
 															</form>
 														</li>
 														<li class="flex flex-col md:flex-row px-2 mt-6 mr-2 float-right">
-															<a th:href="@{/Progetti/edit/{id}(id=${progettoPerData.getId()})}"><img
-																	th:src="@{/img/sources/icons/modify-grey.svg}" alt="modifica-progetto"
-																	class="size-5 inline"></a>
+															<a th:href="@{/Progetti/edit/{id}(id=${progettoPerData.getId()})}">
+																<div class="tooltip-top col-auto w-8 h-8 ms-2">
+																	<span class="tooltiptext-top">Modifica task</span>
+																	<img
+																		th:src="@{/img/sources/icons/modify-grey.svg}" alt="modifica-progetto"
+																		class="size-5 inline">
+																</div>
+															</a>
 														</li>
 					
 														<li class="tooltip-top flex flex-col md:flex-row px-2 mt-6 float-right">
@@ -1128,6 +1136,13 @@
 	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 	<script type="text/javascript" th:src="@{/js/lista-progetti.js}"></script>
 	<script type="text/javascript" th:src="@{/js/timerRapidButton.js}"></script>
+	<script>
+			const endTime = performance.now(); // Tempo di fine
+			  const loadTime = endTime - startTime;
+			  if(contatoreIsRun){
+				  finalTimeSec = finalTimeSec + Math.ceil((loadTime/1000));			
+			  }
+	</script>
 </body>
 
 </html>

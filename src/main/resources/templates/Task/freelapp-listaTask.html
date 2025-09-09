@@ -12,8 +12,9 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 <link rel="stylesheet" href="/animate.css">
 <script src="https://cdn.tailwindcss.com"></script>
-
-
+<script>
+	let startTime = performance.now()
+</script>
 <script>
 		tailwind.config = {
 			theme: {
@@ -461,7 +462,7 @@
 						<div th:each="task : ${list}" class="item-elenco-tasks container lg:w-3/5 m-auto" th:id="${taskStat.index}" th:value="${task.getId()}"> 
 
 							<div class="grid lg:grid-cols-1 sm:grid-cols-1 gap-4 p-2 flex justify-between w-full max-md:m-auto">
-								<div id="task-card" class="mx-auto max-w-md bg-white rounded-xl shadow-md overflow-hidden min-w-full">
+								<div id="task-card" class="mx-auto max-w-md bg-white rounded-xl shadow-md min-w-full">
 									<div class="md:flex max-md:grid max-md:grid-col-1">
 										<div class="md:shrink-0 content-center">
 											<a th:href="@{|/Clienti/${task.progetto.cliente.id}|}">
@@ -567,7 +568,8 @@
 																</button>
 															</div>
 														</li>
-														<li class="flex flex-col md:flex-row px-2 mt-6 float-right ms-4">
+														<li class="tooltip-top flex flex-col md:flex-row px-2 mt-6 float-right ms-4">
+															<span class="tooltiptext-top">Modifica Task</span>
 															<a th:href="@{|/Task/edit/${task.id}|}"><img th:src="@{/img/sources/icons/modify-grey.svg}"
 																	alt="modifica-task" class="size-5 inline"></a>
 														</li>
@@ -914,6 +916,13 @@
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
 	<script type="text/javascript" th:src="@{/js/lista-task.js}"></script>
 	<script type="text/javascript" th:src="@{/js/animazione-lista-task.js}"></script>
+	<script>
+		const endTime = performance.now(); // Tempo di fine
+		  const loadTime = endTime - startTime;
+		  if(contatoreIsRun){
+			  finalTimeSec = finalTimeSec + Math.ceil((loadTime/1000));			
+		  }	 
+	</script>
 </body>
 
 </html>

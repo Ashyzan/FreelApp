@@ -106,7 +106,7 @@ public class ProgettoController {
 				
 				//metodo del serviceProgetto che passa al model la stringa per indicare all'utente i filtri selezionati
 				progettoService.stringaFiltriInListaProgetti(model);
-		
+				
 				//inizializzo a false così al reload successivo js non genera i tasti del contatore
 				ContatoreController.contatoreAttivatoDaRapidButton = false;
 				
@@ -145,6 +145,8 @@ public class ProgettoController {
 					areProjectsOnDb = true;
 				}
 				model.addAttribute("areProjectsOnDb", areProjectsOnDb);
+				
+				//contatoreservice.importContatoreInGet(model);
 				
 				//se siamo ad inizio sessione currentPageListaProgetti == 1 altrimenti terrà in memoria l'ultima pagina visitata
 				return getOnePage(currentPageListaProgetti, model);
