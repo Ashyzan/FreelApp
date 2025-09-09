@@ -8,6 +8,7 @@
 		<link rel="stylesheet" th:href="@{/main.css}">		
 	-->
 	<link rel="stylesheet" href="/animate.css">	
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 	<script src="https://cdn.tailwindcss.com"></script>
 	<script>
 		let startTime = performance.now()
@@ -314,7 +315,7 @@
 				class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto">
 				<div class="w-11/12 grid xl:grid-cols-2 lg:grid-cols-1">
 					<!-- 	prima column -->
-					<div class="gap-4 rounded-lg bg-gray-100 p-3 m-3 shadow-lg">
+					<div id="prima-colonna-dettaglio-cliente" class="gap-4 rounded-lg bg-gray-100 p-3 m-3 shadow-lg">
 						<div>
 							<div class="flex justify-end items-center mb-3 text-[#0057A5] text-end text-xs">
 								<div class="block text-end leading-tight"
@@ -322,19 +323,19 @@
 							</div>
 							<div class="grid grid-cols-5">
 								<h1 class=" col-span-5 text-[#0057A5] text-4xl border-b-4 pb-2 font-bold sm:hidden text-center mb-5" th:text="${cliente.getLabelCliente()}" ></h1>
-								<div class="sm:col-span-2 col-span-5 flex flex-row sm:flex-col ">
+								<div class="sm:col-span-2 col-span-5 flex flex-row sm:flex-col z-20">
 									<div class="md:w-full w-2/5 h-auto py-2 flex justify-center items-center">
 										<img class="w-32 h-32 rounded-full object-cover m-auto"
 												th:src="@{${cliente.LogoPath}}" alt="logo">										
 									</div>
 									<div class="py-4 ps-10 sm:ps-4 max-sm:w-full">
 										<h3 class="font-bold text-xl">Dati di contatto</h3>
-										<ul class="relative">
+										<ul class="">
 											<li th:if="${cliente.tipologia == 'azienda'}" th:text="${cliente.getNameContatto()}" class="truncate hover:overflow-visible hover:bg-gray-100"></li>
 											<li th:if="${cliente.tipologia == 'azienda'}" th:text="${cliente.getSurnameContatto()}" class="truncate hover:overflow-visible hover:bg-gray-100"></li>
-											<li th:text="${cliente.getTelefono()}" class="static truncate hover:overflow-visible hover:bg-gray-100"></li>
-											<li th:text="${cliente.getEmail()}" class="truncate hover:overflow-visible hover:bg-white hover:absolute hover:rounded-lg hover:shadow-md hover:px-2 hover:w-fit"></li>
-											<li th:text="${cliente.getSito()}" class="truncate hover:overflow-visible hover:bg-white hover:absolute hover:rounded-lg hover:shadow-md hover:px-2 hover:w-fit"></li>
+											<li th:text="${cliente.getTelefono()}" class="truncate hover:overflow-visible hover:bg-gray-100"></li>
+											<li th:text="${cliente.getEmail()}" class="truncate hover:overflow-visible hover:bg-white hover:z-50 hover:rounded-lg hover:shadow-md hover:px-2 hover:w-fit"></li>
+											<li th:text="${cliente.getSito()}" class="truncate hover:overflow-visible hover:bg-white hover:z-50 hover:rounded-lg hover:shadow-md hover:px-2 hover:w-fit"></li>
 										</ul>										
 									</div>
 								</div>
@@ -359,17 +360,17 @@
 											th:text="${cliente.getSurname()}"></div>
 										
 										
-										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-1 font-semibold pe-1 ">Ragione sociale</div>
+										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-1 font-semibold pe-1 z-0">Ragione sociale</div>
 										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-2 text-end pe-3 truncate hover:overflow-visible"
 											th:text="${cliente.getRagioneSociale()}"></div>
-										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-1 font-semibold pe-1 ">Partita Iva</div>
+										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-1 font-semibold pe-1 z-0">Partita Iva</div>
 										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-2 text-end pe-3 truncate hover:overflow-visible"
 											th:text="${cliente.getPartitaIva()}"></div>
 										
 										<div class="col-span-1 font-semibold pe-1">Codice Fiscale</div>
 										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getCodiceFiscale()}"></div>											
-										<div class="col-span-1 font-semibold pe-1">Indirizzo Pec</div>
-										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getPec()}"></div>
+										<div class="col-span-1 font-semibold pe-1 z-0">Indirizzo Pec</div>
+										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible hover:bg-white hover:z-50 hover:rounded-lg hover:shadow-md hover:px-2 hover:w-fit" th:text="${cliente.getPec()}"></div>
 										<div class="col-span-1 font-semibold pe-1 ">Indirizzo</div>
 										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getIndirizzo()}"></div>
 										<div class="col-span-1 font-semibold pe-1 ">Civico</div>
@@ -410,7 +411,88 @@
 						</div>
 					</div>
 					<!-- 			second column -->
-					<div class="gap-4 rounded-lg bg-gray-100 p-2 md:p-6 m-3 shadow-lg">
+					<div id="seconda-colonna-dettaglio-cliente" class="gap-4 rounded-lg bg-gray-100 p-2 md:p-6 m-3 shadow-lg">
+						<h2 class="text-center text-lg text-[#0057A5]">ELENCO PROGETTI ASSOCIATI AL CLIENTE</h2>
+						<div class="h-1/6">	
+							<div
+									class="grid grid-cols-4 lg:grid-cols-5 justify-items-center  h-2/3 border border-[#0057A5] md:h-10 h-8 text-[#0057A5]  max-sm:text-[12px] align-bottom">
+								<span class="md:px-4 px-2 flex items-center col-span-2">Nome</span>
+								<span class="md:px-4 px-2 max-lg:hidden flex items-center">Data</span>
+								<span class="md:px-4 px-2 flex items-center">Stato</span>
+								<span class="md:px-4 px-2 flex items-center">Azioni</span>
+							</div>
+						</div>
+						<div class="h-5/6 overflow-x-hidden overflow-y-auto">
+							<table class="block text-[#0057A5] m-auto mb-4">
+								<tbody id="t-body-seconda-colonna-dettaglio-cliente" class=" grid grid-cols-1 p-2 ">
+									<tr th:each="progetto : ${cliente.progetti}"
+										class="item-elenco-tasks-dettaglio-progetto w-full grid max-lg:grid-cols-4 grid-cols-5 border-b-2 text-center max-sm:text-[10px] mb-2">
+										<td class="col-span-2 mx-4 mt-2 text-start truncate" th:text="${progetto.getName()}"></td>
+										<td th:text=" ${progetto.getDataInizio()}"
+											class="col max-lg:p-2 max-lg:hidden xl:text-sm flex items-center justify-center text-nowrap"></td>
+										<td class="col">
+											<div class="flex items-center justify-center gap-1 p-1">
+												<img th:if="${progetto.getDataFine() == null}" id="semaforo-start" class="h-5"
+													src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start"> 
+												<img th:if="${progetto.getDataFine() != null}" id="semaforo-stop" class="h-5"
+													src="/img/sources/icons/contatore-on-stop.svg" alt="contatore in stop"> 
+											</div>
+										</td>
+										<td class="col h-full flex items-center justify-center xl:pe-4">
+											<div class="flex justify-center items-center gap-3 md:px-6 px-2 ">
+												<a th:href="@{|/Progetti/${progetto.id}|}">
+													<div class="t-tooltip size-6">
+														<img class="h-[100%] w-[100%]" src="/img/sources/icons/info.svg"
+															alt="dettaglio progetto">
+														<div
+															class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
+															Dettaglio</div>
+													</div>
+												</a> 
+												<a th:href="@{|/Progetti/edit/${progetto.id}|}">
+													<div class="t-tooltip w-5 h-5">
+														<img class="h-[100%] w-[100%]" src="/img/sources/icons/modify-blue.svg"
+															alt="modifica progetto">
+														<div
+															class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
+															Modifica</div>
+													</div>
+												</a>
+												<div th:if="${progetto.dataFine == null}" class="tooltip-top flex flex-col md:flex-row float-left">
+													<span class="tooltiptext-top">Chiudi progetto</span>
+												
+													<button type="button" class="size-6 inline bg-[url(/img/sources/icons/power.svg)] 
+																																														hover:bg-[url(/img/sources/icons/power-red.svg)]"
+														th:onclick="creaModaleChiudiProgetto([[${progetto.id}]], [[${progetto.name}]])">
+													</button>
+												
+												</div>
+												<div th:unless="${progetto.dataFine == null}" class="tooltip-top flex flex-col md:flex-row float-left">
+													<span class="tooltiptext-top">Apri progetto</span>
+													<form th:action="@{/Progetti/apri/{id}(id=${progetto.getId()})}" th:object="${progetto}" method="post">
+														<button type="submit" class="size-6 inline bg-[url(/img/sources/icons/power.svg)] 
+																																														hover:bg-[url(/img/sources/icons/power-green.svg)]"></button>
+													</form>
+												</div>
+												<div class="tooltip-top">
+													<span class="tooltiptext-top">Elimina</span>
+													<button type="button" id="deleteButton" class="size-6 mb-[2px]"
+														th:onclick="creaApriModaleDeleteProgetto([[${progetto.id}]], [[${progetto.getName()}]], [[${progetto.cliente.getLabelCliente()}]])">
+														<img class="size-6 inline" src="/img/sources/icons/garbage-red.svg" alt="elimina">
+													</button>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						
+						<div th:if="${cliente.progetti.isEmpty()}">
+							<div class="text-center text-[#0057A5] p-4">
+								<h1>Nessun progetto è stato ancora aperto per questo cliente.</h1>
+							</div>							
+						</div>
+						</div>
 					</div>
 				</div>
 				<!-- CONTATORE -->
