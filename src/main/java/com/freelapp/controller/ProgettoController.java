@@ -988,7 +988,7 @@ public class ProgettoController {
 				ContatoreController.contatoreInUso = null;
 				ContatoreController.taskInUso = null;
 				
-				return "redirect:/Progetti";
+				return "redirect:/Progetti/"+id;
 				
 			}
 			

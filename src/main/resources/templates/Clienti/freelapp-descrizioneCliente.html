@@ -42,7 +42,7 @@
 	<title id="timerTitolo">FreelApp</title>
 </head>
 
-<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart(), truncateElements(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart(), truncateElements(), regolazioneAltezzaColonneLayout(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 			<button
 				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5]" onclick="getJsonTaskListSelectMode()">
@@ -315,7 +315,7 @@
 				class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto">
 				<div class="w-11/12 grid xl:grid-cols-2 lg:grid-cols-1">
 					<!-- 	prima column -->
-					<div id="prima-colonna-dettaglio-cliente" class="gap-4 rounded-lg bg-gray-100 p-3 m-3 shadow-lg">
+					<div id="prima-colonna-dettaglio-cliente" class="gap-4 rounded-lg bg-gray-100 p-3 m-3 shadow-lg h-fit">
 						<div>
 							<div class="flex justify-end items-center mb-3 text-[#0057A5] text-end text-xs">
 								<div class="block text-end leading-tight"
@@ -324,8 +324,8 @@
 							<div class="grid grid-cols-5">
 								<h1 class=" col-span-5 text-[#0057A5] text-4xl border-b-4 pb-2 font-bold sm:hidden text-center mb-5" th:text="${cliente.getLabelCliente()}" ></h1>
 								<div class="sm:col-span-2 col-span-5 flex flex-row sm:flex-col z-20">
-									<div class="md:w-full w-2/5 h-auto py-2 flex justify-center items-center">
-										<img class="w-32 h-32 rounded-full object-cover m-auto"
+									<div class="md:w-full w-2/5 h-auto py-2 flex justify-start items-center ps-4">
+										<img class="w-36 h-36 rounded-full object-cover"
 												th:src="@{${cliente.LogoPath}}" alt="logo">										
 									</div>
 									<div class="py-4 ps-10 sm:ps-4 max-sm:w-full">
@@ -380,9 +380,17 @@
 									<div class="grid grid-cols-3">
 										<div class="col-span-1 font-bold text-xl">Azioni</div>
 										<div class="col-span-2 flex justify-end items-center gap-4 pe-3">
+											<!-- th:href="@{/Progetti/insert/1} diventera poi th:href="@{'/Progetti/insert/{id}'(id=${userLogged.getId()})'} quando sara implementata autentizazione-->
+											<a th:href="@{/Progetti/insert/1}">
+												<div class="t-tooltip w-6 h-6">
+													<img class="h-[100%] w-[100%]" src="/img/sources/icons/add-project-blue.svg" alt="nuovo progetto">
+													<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
+														Nuovo progetto</div>
+												</div>
+											</a>
 											<a th:href="@{/Clienti/edit/{id}(id=${cliente.getId()})}">
 												<div class="t-tooltip w-5 h-5">
-													<img class="h-[100%] w-[100%]" src="/img/sources/icons/modify-blue.svg" alt="modifica task">
+													<img class="h-[100%] w-[100%]" src="/img/sources/icons/modify-blue.svg" alt="modifica cliente">
 													<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
 														Modifica</div>
 												</div>
@@ -406,9 +414,9 @@
 						</div>
 					</div>
 					<!-- 			second column -->
-					<div id="seconda-colonna-dettaglio-cliente" class="gap-4 rounded-lg bg-gray-100 p-2 md:p-6 m-3 shadow-lg">
-						<h2 class="text-center text-lg text-[#0057A5]">ELENCO PROGETTI ASSOCIATI AL CLIENTE</h2>
+					<div id="seconda-colonna-dettaglio-cliente" class="gap-4 rounded-lg bg-gray-100 p-3 md:p-6 m-3 shadow-lg">
 						<div class="h-1/6">	
+						<h2 class="text-center text-lg text-[#0057A5] mb-2">ELENCO PROGETTI ASSOCIATI AL CLIENTE</h2>
 							<div
 									class="grid grid-cols-4 lg:grid-cols-5 justify-items-center  h-2/3 border border-[#0057A5] md:h-10 h-8 text-[#0057A5]  max-sm:text-[12px] align-bottom">
 								<span class="md:px-4 px-2 flex items-center col-span-2">Nome</span>
@@ -418,7 +426,7 @@
 							</div>
 						</div>
 						<div class="h-5/6 overflow-x-hidden overflow-y-auto">
-							<table class="block text-[#0057A5] m-auto mb-4">
+							<table class="block text-[#0057A5] m-auto mb-4 ">
 								<tbody id="t-body-seconda-colonna-dettaglio-cliente" class=" grid grid-cols-1 p-2 ">
 									<tr th:each="progetto : ${cliente.progetti}"
 										class="item-elenco-tasks-dettaglio-progetto w-full grid max-lg:grid-cols-4 grid-cols-5 border-b-2 text-center max-sm:text-[10px] mb-2">
