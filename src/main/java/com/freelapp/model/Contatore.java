@@ -24,7 +24,15 @@ public class Contatore{
     @Column(name = "start", nullable = true)
     private LocalDateTime start;
     
-    @Column(name = "restart", nullable = true)
+    public List<SessioniTask> getSessioniTask() {
+		return sessioniTask;
+	}
+
+	public void setSessioniTask(List<SessioniTask> sessioniTask) {
+		this.sessioniTask = sessioniTask;
+	}
+
+	@Column(name = "restart", nullable = true)
     private LocalDateTime restart;
 
     @Column(name = "pause", nullable = true)

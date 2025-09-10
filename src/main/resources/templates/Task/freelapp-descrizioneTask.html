@@ -483,8 +483,8 @@
 						<div class="h-5/6 overflow-x-hidden overflow-y-auto">
 								<table class="block text-[#0057A5] m-auto mb-4" >
 									<tbody id="t-body-seconda-colonna-dettaglio-progetto" class=" grid grid-cols-1 p-2 ">
-										<tr class="item-elenco-tasks-dettaglio-progetto w-full grid max-lg:grid-cols-4 grid-cols-5 border-b-2 text-center max-sm:text-[10px] mb-2">
-											<td class="col-span-2 mx-4 mt-2 text-start truncate">
+										<tr  th:each="sessioni : sessioniTask" class="item-elenco-tasks-dettaglio-progetto w-full grid max-lg:grid-cols-4 grid-cols-5 border-b-2 text-center max-sm:text-[10px] mb-2">
+											<td  th:text=" ${sessioni.getTime()}"  class="col-span-2 mx-4 mt-2 text-start truncate">
 											</td> </tr>
 								</table>
 					 </div>

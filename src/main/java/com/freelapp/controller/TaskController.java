@@ -24,9 +24,11 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 import com.freelapp.model.Contatore;
 import com.freelapp.model.Progetto;
+import com.freelapp.model.SessioniTask;
 import com.freelapp.model.Task;
 import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
+import com.freelapp.repository.SessionitaskRepository;
 //import com.freelapp.model.Stato;
 //import com.freelapp.repository.StatoRepository;
 import com.freelapp.repository.TaskRepository;
@@ -74,6 +76,9 @@ public class TaskController {
     
     @Autowired
     private ContatoreService contatoreservice;
+    
+    @Autowired
+    private SessionitaskRepository sessioniTaskRepo;
 
 //	@Autowired
 //	private StatoRepository repositStato;
@@ -422,7 +427,11 @@ public class TaskController {
     public String descrizioneTask(@PathVariable("id") int taskId, Model model) {
 
 		Task task = repositTask.getReferenceById(taskId);
+		
+		List <SessioniTask> sessioniTask = sessioniTaskRepo.findAll();
+	
 		model.addAttribute("task", task);
+		model.addAttribute("sessioniTask", sessioniTask);
 
 		// passo il finaltime formattato per la voce "timer" di tipo string sul
 		// dettaglio task
