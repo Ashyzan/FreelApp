@@ -42,7 +42,7 @@
 	<title id="timerTitolo">FreelApp</title>
 </head>
 
-<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart(), truncateElements(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 			<button
 				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5]" onclick="getJsonTaskListSelectMode()">
@@ -331,11 +331,11 @@
 									<div class="py-4 ps-10 sm:ps-4 max-sm:w-full">
 										<h3 class="font-bold text-xl">Dati di contatto</h3>
 										<ul class="">
-											<li th:if="${cliente.tipologia == 'azienda'}" th:text="${cliente.getNameContatto()}" class="truncate hover:overflow-visible hover:bg-gray-100"></li>
-											<li th:if="${cliente.tipologia == 'azienda'}" th:text="${cliente.getSurnameContatto()}" class="truncate hover:overflow-visible hover:bg-gray-100"></li>
-											<li th:text="${cliente.getTelefono()}" class="truncate hover:overflow-visible hover:bg-gray-100"></li>
-											<li th:text="${cliente.getEmail()}" class="truncate hover:overflow-visible hover:bg-white hover:z-50 hover:rounded-lg hover:shadow-md hover:px-2 hover:w-fit"></li>
-											<li th:text="${cliente.getSito()}" class="truncate hover:overflow-visible hover:bg-white hover:z-50 hover:rounded-lg hover:shadow-md hover:px-2 hover:w-fit"></li>
+											<li th:if="${cliente.tipologia == 'azienda'}" th:text="${cliente.getNameContatto()}" class="elemento-informativo-cliente "></li>
+											<li th:if="${cliente.tipologia == 'azienda'}" th:text="${cliente.getSurnameContatto()}" class="elemento-informativo-cliente"></li>
+											<li th:text="${cliente.getTelefono()}" class="elemento-informativo-cliente "></li>
+											<li th:text="${cliente.getEmail()}" class="elemento-informativo-cliente "></li>
+											<li th:text="${cliente.getSito()}" class="elemento-informativo-cliente "></li>
 										</ul>										
 									</div>
 								</div>
@@ -353,34 +353,29 @@
 										<h3 class="col-span-3 font-bold text-xl">Dati Fiscali</h3>
 										
 										<div th:if="${cliente.tipologia == 'privato'}" class="col-span-1 font-semibold pe-1 ">Nome</div>
-										<div th:if="${cliente.tipologia == 'privato'}" class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getName()}">
-										</div>
+										<div th:if="${cliente.tipologia == 'privato'}" class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getName()}"></div>
 										<div th:if="${cliente.tipologia == 'privato'}" class="col-span-1 font-semibold pe-1 ">Cognome</div>
-										<div th:if="${cliente.tipologia == 'privato'}" class="col-span-2 text-end pe-3 truncate hover:overflow-visible"
-											th:text="${cliente.getSurname()}"></div>
-										
+										<div th:if="${cliente.tipologia == 'privato'}" class="col-span-2 text-end pe-3 elemento-informativo-cliente"th:text="${cliente.getSurname()}"></div>
 										
 										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-1 font-semibold pe-1 z-0">Ragione sociale</div>
-										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-2 text-end pe-3 truncate hover:overflow-visible"
+										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-2 text-end pe-3 elemento-informativo-cliente"
 											th:text="${cliente.getRagioneSociale()}"></div>
 										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-1 font-semibold pe-1 z-0">Partita Iva</div>
-										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-2 text-end pe-3 truncate hover:overflow-visible"
-											th:text="${cliente.getPartitaIva()}"></div>
-										
+										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getPartitaIva()}"></div>
 										<div class="col-span-1 font-semibold pe-1">Codice Fiscale</div>
-										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getCodiceFiscale()}"></div>											
+										<div class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getCodiceFiscale()}"></div>											
 										<div class="col-span-1 font-semibold pe-1 z-0">Indirizzo Pec</div>
-										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible hover:bg-white hover:z-50 hover:rounded-lg hover:shadow-md hover:px-2 hover:w-fit" th:text="${cliente.getPec()}"></div>
+										<div class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getPec()}"></div>
 										<div class="col-span-1 font-semibold pe-1 ">Indirizzo</div>
-										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getIndirizzo()}"></div>
+										<div class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getIndirizzo()}"></div>
 										<div class="col-span-1 font-semibold pe-1 ">Civico</div>
-										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getCivico()}"></div>
+										<div class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getCivico()}"></div>
 										<div class="col-span-1 font-semibold pe-1 ">Città</div>
-										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getCity()}"></div>
+										<div class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getCity()}"></div>
 										<div class="col-span-1 font-semibold pe-1 ">CAP</div>
-										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getCap()}"></div>
+										<div class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getCap()}"></div>
 										<div class="col-span-1 font-semibold pe-1 ">Nazione</div>
-										<div class="col-span-2 text-end pe-3 truncate hover:overflow-visible" th:text="${cliente.getNazionalita()}"></div>
+										<div class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getNazionalita()}"></div>
 									</div>
 									<div class="grid grid-cols-3">
 										<div class="col-span-1 font-bold text-xl">Azioni</div>
@@ -853,6 +848,7 @@
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
 	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 	<script type="text/javascript" th:src="@{/js/timerRapidButton.js}"></script>
+	<script type="text/javascript"th:src="@{/js/dettaglio-cliente.js}"></script>
 	<script>
 		const endTime = performance.now(); // Tempo di fine
 		const loadTime = endTime - startTime;
