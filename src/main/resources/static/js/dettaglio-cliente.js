@@ -6,7 +6,6 @@ let secondaColonnaDettaglioCliente = document.getElementById('seconda-colonna-de
 let primaColonnaDettaglioCliente = document.getElementById('prima-colonna-dettaglio-cliente');
 
 
-
 //listeners che al variare delle dimensioni della window richiamano la funzione per troncare se nesserio o ripristinare il testo, e la funzione per
 //ridimensionare l'altezza max della seconda colonna
 window.addEventListener('resize', truncateElements );
@@ -40,4 +39,18 @@ function regolazioneAltezzaColonneLayout(){
 	secondaColonnaDettaglioCliente.classList.remove('max-h-['+ altezzaPrecedentePrimaColonnaDettaglioCliente + 'px]')
 	secondaColonnaDettaglioCliente.classList.add('max-h-['+ altezzaPrimaColonnaDettaglioCliente + 'px]')
 	altezzaPrecedentePrimaColonnaDettaglioCliente = altezzaPrimaColonnaDettaglioCliente;
+}
+
+const tooltipdettaglio = document.getElementById('tooltipdettaglio');
+function tooltipDettaglio(event){
+	tooltipdettaglio.classList.remove('hidden')
+	console.log("coordinata x: " + event.clientX)
+	console.log("coordinata y: " + event.clientY)
+	tooltipdettaglio.style.left = (event.clientX - 70)+'px'
+	tooltipdettaglio.style.top = (event.clientY - 40)+'px'
+	
+}
+
+function terminaTooltipDettaglio(){
+	tooltipdettaglio.classList.add('hidden')
 }

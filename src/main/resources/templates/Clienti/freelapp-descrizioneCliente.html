@@ -382,25 +382,22 @@
 										<div class="col-span-2 flex justify-end items-center gap-4 pe-3">
 											<!-- th:href="@{/Progetti/insert/1} diventera poi th:href="@{'/Progetti/insert/{id}'(id=${userLogged.getId()})'} quando sara implementata autentizazione-->
 											<a th:href="@{/Progetti/insert/1}">
-												<div class="t-tooltip w-6 h-6">
+												<div class="tooltip-top w-6 h-6">
 													<img class="h-[100%] w-[100%]" src="/img/sources/icons/add-project-blue.svg" alt="nuovo progetto">
-													<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-														Nuovo progetto</div>
+													<div class="tooltiptext-top">Nuovo progetto</div>
 												</div>
 											</a>
 											<a th:href="@{/Clienti/edit/{id}(id=${cliente.getId()})}">
-												<div class="t-tooltip w-5 h-5">
+												<div class="tooltip-top w-5 h-5">
 													<img class="h-[100%] w-[100%]" src="/img/sources/icons/modify-blue.svg" alt="modifica cliente">
-													<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-														Modifica</div>
+													<div class="tooltiptext-top">Modifica</div>
 												</div>
 											</a>
 											<button type="button" id="deleteButton"
 												th:onclick="creaApriModaleDeleteCliente([[${cliente.id}]], [[${cliente.getLabelCliente()}]])">
-												<div class="t-tooltip w-5 h-5">
+												<div class="tooltip-top w-5 h-5">
 													<img class="h-[100%] w-[100%]" src="/img/sources/icons/garbage-red.svg" alt="elimina">
-													<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-20px] mt-[5px]">
-														Elimina</div>
+													<div class="tooltiptext-top">Elimina</div>
 												</div>
 											</button>
 										</div>
@@ -414,6 +411,9 @@
 						</div>
 					</div>
 					<!-- 			second column -->
+				
+						<div id="tooltipdettaglio" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Dettaglio</div>	
+					
 					<div id="seconda-colonna-dettaglio-cliente" class="gap-4 rounded-lg bg-gray-100 p-3 md:p-6 m-3 shadow-lg">
 						<div class="h-1/6">	
 						<h2 class="text-center text-lg text-[#0057A5] mb-2">ELENCO PROGETTI ASSOCIATI AL CLIENTE</h2>
@@ -426,10 +426,10 @@
 							</div>
 						</div>
 						<div class="h-5/6 overflow-x-hidden overflow-y-auto">
-							<table class="block text-[#0057A5] m-auto mb-4 ">
-								<tbody id="t-body-seconda-colonna-dettaglio-cliente" class=" grid grid-cols-1 p-2 ">
+							<table class="block text-[#0057A5] m-auto mb-4">
+								<tbody id="t-body-seconda-colonna-dettaglio-cliente" class=" grid grid-cols-1 p-2">
 									<tr th:each="progetto : ${cliente.progetti}"
-										class="item-elenco-tasks-dettaglio-progetto w-full grid max-lg:grid-cols-4 grid-cols-5 border-b-2 text-center max-sm:text-[10px] mb-2">
+										class="item-elenco-tasks-dettaglio-progetto w-full grid max-lg:grid-cols-4 grid-cols-5 border-b-2 text-center max-sm:text-[10px] mb-2 overflow-visible">
 										<td class="col-span-2 mx-4 mt-2 text-start truncate" th:text="${progetto.getName()}"></td>
 										<td th:text=" ${progetto.getDataInizio()}"
 											class="col max-lg:p-2 max-lg:hidden xl:text-sm flex items-center justify-center text-nowrap"></td>
@@ -442,23 +442,19 @@
 											</div>
 										</td>
 										<td class="col h-full flex items-center justify-center xl:pe-4">
-											<div class="flex justify-center items-center gap-3 md:px-6 px-2 ">
-												<a th:href="@{|/Progetti/${progetto.id}|}">
-													<div class="t-tooltip size-6">
+											<div class="flex justify-center items-center gap-3 md:px-6 px-2">
+												<a th:href="@{|/Progetti/${progetto.id}|}" class="relative">
+													<div class="tooltip-top size-6" onmouseover="tooltipDettaglio(event)" onmouseout="terminaTooltipDettaglio()">
 														<img class="h-[100%] w-[100%]" src="/img/sources/icons/info.svg"
 															alt="dettaglio progetto">
-														<div
-															class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-															Dettaglio</div>
+														
 													</div>
 												</a> 
 												<a th:href="@{|/Progetti/edit/${progetto.id}|}">
-													<div class="t-tooltip w-5 h-5">
+													<div class="tooltip-top w-5 h-5">
 														<img class="h-[100%] w-[100%]" src="/img/sources/icons/modify-blue.svg"
 															alt="modifica progetto">
-														<div
-															class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-															Modifica</div>
+														<div class="tooltiptext-top">Modifica</div>
 													</div>
 												</a>
 												<div th:if="${progetto.dataFine == null}" class="tooltip-top flex flex-col md:flex-row float-left">
