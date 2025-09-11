@@ -489,6 +489,86 @@ public class ProgettoController {
 				
 				return "/Progetti/freelapp-descrizioneProgetto";
 		   }
+			
+			
+			 @GetMapping("/Progetti/insert/cliente-{id}")
+    public String insertProgetto(@PathVariable("id") Integer id, Model model) {
+				
+				//una volta implementato spring security l'id dell'utente verrà preso da quello loggato
+				User utente = repositUser.findById(1).get();
+				
+				//richiamo il cliente tramite id
+				Cliente cliente = repositClient.getReferenceById(id);
+
+				Progetto formProgetto = new Progetto();
+				
+				formProgetto.setUtente(utente);
+				
+				//riporto al model l'id del cliente in uso
+				model.addAttribute("cliente", cliente);
+	
+				//riporta al model il nome del cliente in uso
+				model.addAttribute("progettoClienteName", cliente.getLabelCliente());
+				
+				
+//				List<Cliente> listaClienti = repositClient.findAll();  
+//				
+//				model.addAttribute("formClienti", listaClienti);
+
+				model.addAttribute("formProgetto", formProgetto);
+				
+				
+				//passo al model l'endpoint da dare come input hidden a start/pause/stop del contatore
+				String endPoint = "/Progetti/insert/" + utente.getId();
+				
+				model.addAttribute("endPoint", endPoint);
+				
+				contatoreservice.importContatoreInGet(model);
+				//passo al model i contatore e task in uso (gli static)
+				model.addAttribute("contatoreInUso", ContatoreController.contatoreInUso);
+				model.addAttribute("taskInUso", ContatoreController.taskInUso);
+				model.addAttribute("contatoreAttivatoDaRapidButton", ContatoreController.contatoreAttivatoDaRapidButton);
+		
+				//inizializzo a false così al reload successivo js non genera i tasti del contatore
+				ContatoreController.contatoreAttivatoDaRapidButton = false;
+				
+				//metodo che passa al model le informazioni sul task in uso per generare la modale STOP
+				taskService.informationFromTaskInUsoToModel(model);
+				
+				//passa al model la lista di tutti i task esclusi quelli chiusi
+				List<Task> taskList = new ArrayList<Task> ();
+				taskList = repositTask.findAllNotClosed();
+				model.addAttribute("taskList", taskList);
+				
+				//invio al model il booleano del contatore attivato
+				//se contatoreAttivato = true avvio animazione su titolo task al contatore;
+				model.addAttribute("contatoreAttivato", ContatoreController.contatoreAttivato);
+		
+				//inizializzo a false così che al refresh o cambio pagina non esegue animazione ma solo allo start
+				ContatoreController.contatoreAttivato = false;
+				
+				// invio al model il booleano del contatore cliccato prima del refresh pagina
+				// se contatoreCliccatoPreRefresh = true avvio animazione che porta la schermata in basso su mobile;
+				model.addAttribute("contatoreCliccatoPreRefresh", ContatoreController.contatoreCliccatoPreRefresh);
+
+				// inizializzo a false così che al refresh esegue animazione solo se era stato cliccato in precedenza
+				ContatoreController.contatoreCliccatoPreRefresh = false;
+				
+				//metodo che passa al model i valori inerenti la tipologia progetto per le statistiche
+				progettoService.tipologiaFromProgettoToModel(formProgetto, model);
+				
+				//restituisce al model questo valore booleano false se non ci sono clienti a db
+				//e restituisce true se ci sono clienti a db
+				boolean areClientsOnDb = false;
+				if(!repositClient.findAll().isEmpty()) {
+					areClientsOnDb = true;
+				}
+				model.addAttribute("areClientsOnDb", areClientsOnDb);
+				 
+				 
+				 return "/Progetti/freelapp-insertProgetto-daDettaglioCliente";
+			 }
+			
 	
 			@GetMapping("/Progetti/insert/{id}")
 			public String insertProject(@PathVariable("id") Integer id, Model model) {

@@ -380,8 +380,7 @@
 									<div class="grid grid-cols-3">
 										<div class="col-span-1 font-bold text-xl">Azioni</div>
 										<div class="col-span-2 flex justify-end items-center gap-4 pe-3">
-											<!-- th:href="@{/Progetti/insert/1} diventera poi th:href="@{'/Progetti/insert/{id}'(id=${userLogged.getId()})'} quando sara implementata autentizazione-->
-											<a th:href="@{/Progetti/insert/1}">
+											<a th:href="@{|/Progetti/insert/cliente-${cliente.id}|}">
 												<div class="tooltip-top w-6 h-6">
 													<img class="h-[100%] w-[100%]" src="/img/sources/icons/add-project-blue.svg" alt="nuovo progetto">
 													<div class="tooltiptext-top">Nuovo progetto</div>
