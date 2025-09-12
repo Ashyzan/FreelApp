@@ -409,15 +409,13 @@
 							</div>
 						</div>
 					</div>
-					<!-- 			second column -->
-				
-						<div id="tooltipdettaglio" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Dettaglio</div>	
-					
+					<!-- 			second column -->			
 					<div id="seconda-colonna-dettaglio-cliente" class="gap-4 rounded-lg bg-gray-100 p-3 md:p-6 m-3 shadow-lg">
+						<section class="w-full h-full">
 						<div class="h-1/6">	
 						<h2 class="text-center text-lg text-[#0057A5] mb-2">ELENCO PROGETTI ASSOCIATI AL CLIENTE</h2>
 							<div
-									class="grid grid-cols-4 lg:grid-cols-5 justify-items-center  h-2/3 border border-[#0057A5] md:h-10 h-8 text-[#0057A5]  max-sm:text-[12px] align-bottom">
+									class="mb-[180px] xl:mb-2 grid grid-cols-4 lg:grid-cols-5 justify-items-center  h-2/3 border border-[#0057A5] md:h-10 h-8 text-[#0057A5]  max-sm:text-[12px] align-bottom">
 								<span class="md:px-4 px-2 flex items-center col-span-2">Nome</span>
 								<span class="md:px-4 px-2 max-lg:hidden flex items-center">Data</span>
 								<span class="md:px-4 px-2 flex items-center">Stato</span>
@@ -428,7 +426,7 @@
 							<table class="block text-[#0057A5] m-auto mb-4">
 								<tbody id="t-body-seconda-colonna-dettaglio-cliente" class=" grid grid-cols-1 p-2">
 									<tr th:each="progetto : ${cliente.progetti}"
-										class="item-elenco-tasks-dettaglio-progetto w-full grid max-lg:grid-cols-4 grid-cols-5 border-b-2 text-center max-sm:text-[10px] mb-2 overflow-visible">
+										class="item-elenco-tasks-dettaglio-progetto w-full grid max-lg:grid-cols-4 grid-cols-5 border-b-2 text-center max-sm:text-[10px] mb-2">
 										<td class="col-span-2 mx-4 mt-2 text-start truncate" th:text="${progetto.getName()}"></td>
 										<td th:text=" ${progetto.getDataInizio()}"
 											class="col max-lg:p-2 max-lg:hidden xl:text-sm flex items-center justify-center text-nowrap"></td>
@@ -442,40 +440,36 @@
 										</td>
 										<td class="col h-full flex items-center justify-center xl:pe-4">
 											<div class="flex justify-center items-center gap-3 md:px-6 px-2">
-												<a th:href="@{|/Progetti/${progetto.id}|}" class="relative">
-													<div class="tooltip-top size-6" onmouseover="tooltipDettaglio(event)" onmouseout="terminaTooltipDettaglio()">
+												<a th:href="@{|/Progetti/${progetto.id}|}">
+													<div class="size-6" onmouseover="avviaTooltipDettaglio(event)" onmouseout="terminaTooltipDettaglio()">
 														<img class="h-[100%] w-[100%]" src="/img/sources/icons/info.svg"
-															alt="dettaglio progetto">
-														
+															alt="dettaglio progetto">	
 													</div>
 												</a> 
 												<a th:href="@{|/Progetti/edit/${progetto.id}|}">
-													<div class="tooltip-top w-5 h-5">
+													<div class="w-5 h-5 flex items-center" onmouseover="avviaTooltipModifica(event)" onmouseout="terminaTooltipModifica()">
 														<img class="h-[100%] w-[100%]" src="/img/sources/icons/modify-blue.svg"
 															alt="modifica progetto">
-														<div class="tooltiptext-top">Modifica</div>
 													</div>
 												</a>
-												<div th:if="${progetto.dataFine == null}" class="tooltip-top flex flex-col md:flex-row float-left">
-													<span class="tooltiptext-top">Chiudi progetto</span>
-												
+												<div th:if="${progetto.dataFine == null}" class="flex flex-col md:flex-row float-left">
 													<button type="button" class="size-6 inline bg-[url(/img/sources/icons/power.svg)] 
-																																														hover:bg-[url(/img/sources/icons/power-red.svg)]"
+															hover:bg-[url(/img/sources/icons/power-red.svg)]" onmouseover="avviaTooltipChiudiProgetto(event)" onmouseout="terminaTooltipChiudiProgetto()"
 														th:onclick="creaModaleChiudiProgetto([[${progetto.id}]], [[${progetto.name}]])">
 													</button>
 												
 												</div>
-												<div th:unless="${progetto.dataFine == null}" class="tooltip-top flex flex-col md:flex-row float-left">
-													<span class="tooltiptext-top">Apri progetto</span>
+												<div th:unless="${progetto.dataFine == null}" class="flex flex-col md:flex-row float-left">
 													<form th:action="@{/Progetti/apri/{id}(id=${progetto.getId()})}" th:object="${progetto}" method="post">
 														<button type="submit" class="size-6 inline bg-[url(/img/sources/icons/power.svg)] 
-																																														hover:bg-[url(/img/sources/icons/power-green.svg)]"></button>
+															hover:bg-[url(/img/sources/icons/power-green.svg)]" onmouseover="avviaTooltipApriProgetto(event)" onmouseout="terminaTooltipApriProgetto()">
+														</button>
 													</form>
 												</div>
-												<div class="tooltip-top">
-													<span class="tooltiptext-top">Elimina</span>
+												<div class="">
 													<button type="button" id="deleteButton" class="size-6 mb-[2px]"
-														th:onclick="creaApriModaleDeleteProgetto([[${progetto.id}]], [[${progetto.getName()}]], [[${progetto.cliente.getLabelCliente()}]])">
+														th:onclick="creaApriModaleDeleteProgetto([[${progetto.id}]], [[${progetto.getName()}]], [[${progetto.cliente.getLabelCliente()}]])"
+														onmouseover="avviaTooltipElimina(event)" onmouseout="terminaTooltipElimina()">
 														<img class="size-6 inline" src="/img/sources/icons/garbage-red.svg" alt="elimina">
 													</button>
 												</div>
@@ -491,6 +485,7 @@
 							</div>							
 						</div>
 						</div>
+						</section>
 					</div>
 				</div>
 				<!-- CONTATORE -->
@@ -829,6 +824,15 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- tooltip per elenco in overflow -->
+	<div id="tooltip-dettaglio" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Dettaglio</div>
+	<div id="tooltip-modifica" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Modifica</div>
+	<div id="tooltip-chiudi-progetto" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Chiudi progetto</div>
+	<div id="tooltip-apri-progetto" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Apri progetto</div>
+	<div id="tooltip-elimina" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Elimina</div>
+	<!-- fine tooltip per elenco in overflow -->
+	
 	
 	<!-- Script -->
 	<script th:inline="javascript">

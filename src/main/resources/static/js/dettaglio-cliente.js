@@ -5,6 +5,12 @@ const arrayElementiInformativiCliente = [...elementiInformativiCliente];
 let secondaColonnaDettaglioCliente = document.getElementById('seconda-colonna-dettaglio-cliente');
 let primaColonnaDettaglioCliente = document.getElementById('prima-colonna-dettaglio-cliente');
 
+//tooltip per elenco in overflow
+const tooltipDettaglio = document.getElementById('tooltip-dettaglio');
+const tooltipModifica = document.getElementById('tooltip-modifica');
+const tooltipChiudiProgetto = document.getElementById('tooltip-chiudi-progetto');
+const tooltipApriProgetto = document.getElementById('tooltip-apri-progetto');
+const tooltipElimina = document.getElementById('tooltip-elimina');
 
 //listeners che al variare delle dimensioni della window richiamano la funzione per troncare se nesserio o ripristinare il testo, e la funzione per
 //ridimensionare l'altezza max della seconda colonna
@@ -41,16 +47,68 @@ function regolazioneAltezzaColonneLayout(){
 	altezzaPrecedentePrimaColonnaDettaglioCliente = altezzaPrimaColonnaDettaglioCliente;
 }
 
-const tooltipdettaglio = document.getElementById('tooltipdettaglio');
-function tooltipDettaglio(event){
-	tooltipdettaglio.classList.remove('hidden')
-	console.log("coordinata x: " + event.clientX)
-	console.log("coordinata y: " + event.clientY)
-	tooltipdettaglio.style.left = (event.clientX - 70)+'px'
-	tooltipdettaglio.style.top = (event.clientY - 40)+'px'
+//************** funzioni per attivazione e chiusura tooltip in elenco overflow ******************/
+
+//tooltip DETTAGLIO
+function avviaTooltipDettaglio(event){
+	tooltipDettaglio.classList.remove('hidden')
+	tooltipDettaglio.style.left = (event.clientX - 70)+'px'
+	tooltipDettaglio.style.top = (event.clientY - 50)+'px'
 	
 }
 
 function terminaTooltipDettaglio(){
-	tooltipdettaglio.classList.add('hidden')
+	tooltipDettaglio.classList.add('hidden')
+}
+
+
+//tooltip MODIFICA
+function avviaTooltipModifica(event){
+	tooltipModifica.classList.remove('hidden')
+	tooltipModifica.style.left = (event.clientX - 70)+'px'
+	tooltipModifica.style.top = (event.clientY - 50)+'px'
+	
+}
+
+function terminaTooltipModifica(){
+	tooltipModifica.classList.add('hidden')
+}
+
+
+//tooltip CHIUDI-PROGETTO
+function avviaTooltipChiudiProgetto(event){
+	tooltipChiudiProgetto.classList.remove('hidden')
+	tooltipChiudiProgetto.style.left = (event.clientX - 70)+'px'
+	tooltipChiudiProgetto.style.top = (event.clientY - 50)+'px'
+	
+}
+
+function terminaTooltipChiudiProgetto(){
+	tooltipChiudiProgetto.classList.add('hidden')
+}
+
+
+//tooltip APRI-PROGETTO
+function avviaTooltipApriProgetto(event){
+	tooltipApriProgetto.classList.remove('hidden')
+	tooltipApriProgetto.style.left = (event.clientX - 70)+'px'
+	tooltipApriProgetto.style.top = (event.clientY - 50)+'px'
+	
+}
+
+function terminaTooltipApriProgetto(){
+	tooltipApriProgetto.classList.add('hidden')
+}
+
+
+//tooltip ELIMINA
+function avviaTooltipElimina(event){
+	tooltipElimina.classList.remove('hidden')
+	tooltipElimina.style.left = (event.clientX - 70)+'px'
+	tooltipElimina.style.top = (event.clientY - 50)+'px'
+	
+}
+
+function terminaTooltipElimina(){
+	tooltipElimina.classList.add('hidden')
 }

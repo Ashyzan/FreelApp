@@ -387,8 +387,7 @@
 											<label for="cliente">Cliente
 												progetto</label>
 										</div>
-										<input type="hidden" th:field="*{cliente}" id="cliente"
-											name="cliente" th:value="${cliente.id}">
+										<input type="hidden" th:value="${cliente.id}" id="cliente" name="cliente">
 										<div class="col md:col-span-2 col-span-3">
 											<div th:text="${progettoClienteName}"></div>
 											<div id="clienteProgettoError" class="text-red-600 text-[12px] text-center w-full"></div>

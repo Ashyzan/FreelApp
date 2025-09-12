@@ -507,7 +507,7 @@
 						<section class="w-full h-full">
 							<div class="h-1/6">
 								<h1 class="text-center mb-2 h-1/3">ELENCO TASK ASSOCIATI AL PROGETTO</h1>
-								<div class="grid grid-cols-4 lg:grid-cols-5 justify-items-center  h-2/3 border border-[#0057A5] md:h-12 h-8 text-[#0057A5]  max-sm:text-[12px] align-bottom">
+								<div class="mb-[200px] lg:mb-2 grid grid-cols-4 lg:grid-cols-5 justify-items-center  h-2/3 border border-[#0057A5] md:h-10 h-8 text-[#0057A5]  max-sm:text-[12px] align-bottom">
 									<span class="md:px-4 px-2 flex items-center col-span-2">Nome</span>
 									<span class="md:px-4 px-2 max-lg:hidden flex items-center">Data</span>
 									<span class="md:px-4 px-2 flex items-center">Stato</span>
@@ -549,20 +549,14 @@
 											<td class="col h-full flex items-center justify-center xl:pe-4">
 												<div class="flex justify-center items-center gap-4 md:px-6 px-2 ">
 													<a th:href="@{|/Task/${task.id}|}">
-														<div class="t-tooltip w-5 h-5">
+														<div class="w-5 h-5" onmouseover="avviaTooltipDettaglio(event)" onmouseout="terminaTooltipDettaglio()">
 															<img class="h-[100%] w-[100%]" src="/img/sources/icons/board-tabloid-blue.svg"
 																alt="dettaglio task">
-															<div
-																class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-																Dettaglio</div>
 														</div>
 													</a> <a th:href="@{|/Task/edit/${task.id}|}">
-														<div class="t-tooltip w-5 h-5">
+														<div class="w-5 h-5" onmouseover="avviaTooltipModifica(event)" onmouseout="terminaTooltipModifica()">
 															<img class="h-[100%] w-[100%]" src="/img/sources/icons/modify-blue.svg"
 																alt="modifica task">
-															<div
-																class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-																Modifica</div>
 														</div>
 													</a>
 													<div th:if="${task.id == taskInUsoId or task.getStato() == 'chiuso'}" class="w-5 h-5">
@@ -572,11 +566,8 @@
 														<form th:action="@{|/contatore/cambio/${task.id}|}" th:object="${contatore}"
 															method="post" class="flex items-center justify-center">
 															<input type="hidden" name="endPoint" th:value="${endPoint}">
-															<button type="submit" class="t-tooltip w-5 h-5">
+															<button type="submit" class="w-5 h-5" onmouseover="avviaTooltipSelezionaContatore(event)" onmouseout="terminaTooltipSelezionaContatore()">
 																<img src="/img/sources/icons/contatore-blue.svg">
-																<div
-																	class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-50px] mt-[5px] text-nowrap">
-																	Seleziona Contatore</div>
 															</button>
 														</form>
 													</div>
@@ -958,6 +949,12 @@
 		</div>
 	</div>
 
+	<!-- tooltip per elenco in overflow -->
+		<div id="tooltip-dettaglio" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Dettaglio</div>
+		<div id="tooltip-modifica" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Modifica</div>
+		<div id="tooltip-seleziona-contatore" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Seleziona contatore</div>
+	<!-- fine tooltip per elenco in overflow -->
+	
 	<!-- Script -->
 	<script th:inline="javascript">
 			/*<![CDATA[*/
