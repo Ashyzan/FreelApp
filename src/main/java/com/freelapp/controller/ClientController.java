@@ -399,6 +399,9 @@ public class ClientController {
 		taskList = repositTask.findAllNotClosed();
 		model.addAttribute("taskList", taskList);
 		
+		//passa al model il numero di progetti del cliente
+		clienteService.numeroProgettiDelCliente(repositoryCliente.getReferenceById(clienteId), model);
+		
 		//se si arriva al dettaglio progetto dalla ricerca su lista clienti passo al model
 		// questo booleano per dirgli che siamo in modalità search, l'ultima pagina visita in search 
 		//e l'input inserito (variabili inizializzata ad inizio controller) che verranno usati nel button dedicato
@@ -551,6 +554,8 @@ public class ClientController {
 		String endPoint = "/Clienti/edit/" + repositoryCliente.findById(id).get().getId();
 		
 		model.addAttribute("endPoint", endPoint);
+		//passo al model la data di inserimento cliente così da poterla nuovamente confermare a db
+		model.addAttribute("dataInserimentoCliente", repositoryCliente.getReferenceById(id).getDataInserimentoCliente());
 		
 		contatoreservice.importContatoreInGet(model);
 		//passo al model i contatore e task in uso (gli static)

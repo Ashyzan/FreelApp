@@ -7,7 +7,6 @@ const buttonEspandiDescrizione = document.getElementById('buttonEspandiDescrizio
 const buttonRiduciDescrizione = document.getElementById('buttonRiduciDescrizione');
 
 //recupero elementi da DOM in Dettaglio Progetti
-
 const secondaColonnaDettaglioProgetto = document.getElementById('seconda-colonna-dettaglio-progetto');
 const terzaColonnaDettaglioProgetto = document.getElementById('terza-colonna-dettaglio-progetto');
 //const tBodySecondaColonnaDettaglioProgetto = document.getElementById('t-body-seconda-colonna-dettaglio-progetto');
@@ -16,9 +15,16 @@ const terzaColonnaDettaglioProgetto = document.getElementById('terza-colonna-det
 //l'adattamento della dimenzione delle colonne del dettaglio progetto
 let primaColonnaDettaglioProgetto = document.getElementById('prima-colonna-dettaglio-progetto');
 let altezzaPrimaColonnaDettaglioProgetto = "h-[" + primaColonnaDettaglioProgetto.offsetHeight + "px]";
+let altezzaPrecedentePrimaColonnaDettaglioProgetto = primaColonnaDettaglioProgetto.offsetHeight;
 //let altezzaTbodySecondaColonnaDettaglioProgetto = "max-h-[" + (primaColonnaDettaglioProgetto.offsetHeight-(primaColonnaDettaglioProgetto.offsetHeight*0.13)) + "px]";
 
+//tooltip per elenco in overflow dal DOM
+const tooltipDettaglio = document.getElementById('tooltip-dettaglio');
+const tooltipModifica = document.getElementById('tooltip-modifica');
+const tooltipSelezionaContatore = document.getElementById('tooltip-seleziona-contatore');
 
+//listeners che al variare delle dimensioni della window richiamano la funzione per ridimensionare l'altezza max delle colonne
+window.addEventListener('resize', regolazioneAltezzaColonneLayout );
 
 // ************* logica di espansione e riduzione descrizione
 if(buttonEspandiDescrizione != null){
@@ -155,25 +161,74 @@ function regolazioneAltezzaColonneLayout(){
 	
 	const nuovaPrimaColonnaDettaglioProgetto = document.getElementById('prima-colonna-dettaglio-progetto');
 	const nuovaAltezzaPrimaColonnaDettaglioProgetto = "h-[" + nuovaPrimaColonnaDettaglioProgetto.offsetHeight + "px]";
-	const nuovaAltezzaTbodySecondaColonnaDettaglioProgetto = "max-h-[" + (nuovaPrimaColonnaDettaglioProgetto.offsetHeight-(nuovaPrimaColonnaDettaglioProgetto.offsetHeight*0.13)) + "px]";	
+	//const nuovaAltezzaTbodySecondaColonnaDettaglioProgetto = "max-h-[" + (nuovaPrimaColonnaDettaglioProgetto.offsetHeight-(nuovaPrimaColonnaDettaglioProgetto.offsetHeight*0.13)) + "px]";	
 	
 	if(altezzaPrimaColonnaDettaglioProgetto === nuovaAltezzaPrimaColonnaDettaglioProgetto){
 		console.log("sono in altezzaPrimaColonnaDettaglioProgetto === nuovaAltezzaPrimaColonnaDettaglioProgetto")
 		secondaColonnaDettaglioProgetto.classList.add(altezzaPrimaColonnaDettaglioProgetto);
 		terzaColonnaDettaglioProgetto.classList.add(altezzaPrimaColonnaDettaglioProgetto);
-		//tBodySecondaColonnaDettaglioProgetto.classList.remove(altezzaTbodySecondaColonnaDettaglioProgetto)	
-		//tBodySecondaColonnaDettaglioProgetto.classList.add(altezzaTbodySecondaColonnaDettaglioProgetto)	
 				
 	}else {
 		secondaColonnaDettaglioProgetto.classList.remove(altezzaPrimaColonnaDettaglioProgetto);
 		terzaColonnaDettaglioProgetto.classList.remove(altezzaPrimaColonnaDettaglioProgetto);
 		secondaColonnaDettaglioProgetto.classList.add(nuovaAltezzaPrimaColonnaDettaglioProgetto);
 		terzaColonnaDettaglioProgetto.classList.add(nuovaAltezzaPrimaColonnaDettaglioProgetto);
-		//tBodySecondaColonnaDettaglioProgetto.classList.remove(altezzaTbodySecondaColonnaDettaglioProgetto)	
-		//tBodySecondaColonnaDettaglioProgetto.classList.add(nuovaAltezzaTbodySecondaColonnaDettaglioProgetto)	
 	}
 		
-		//altezzaTbodySecondaColonnaDettaglioProgetto = nuovaAltezzaTbodySecondaColonnaDettaglioProgetto;
 		altezzaPrimaColonnaDettaglioProgetto = nuovaAltezzaPrimaColonnaDettaglioProgetto;
 	
+}
+
+
+
+
+//*******  funzione che in Dettaglio Cliente misura le dimensioni della prima colonna e 
+//    l'assegna alla seconda 		 ********************
+function regolazioneAltezzaColonneLayout(){
+	altezzaPrimaColonnaDettaglioProgetto = primaColonnaDettaglioProgetto.offsetHeight;
+	secondaColonnaDettaglioProgetto.classList.remove('max-h-['+ altezzaPrecedentePrimaColonnaDettaglioProgetto + 'px]')
+	secondaColonnaDettaglioProgetto.classList.add('max-h-['+ altezzaPrimaColonnaDettaglioProgetto + 'px]')
+	altezzaPrecedentePrimaColonnaDettaglioProgetto = altezzaPrimaColonnaDettaglioProgetto;
+}
+
+
+
+//************** funzioni per attivazione e chiusura tooltip in elenco overflow ******************/
+
+//tooltip DETTAGLIO
+function avviaTooltipDettaglio(event){
+	tooltipDettaglio.classList.remove('hidden')
+	tooltipDettaglio.style.left = (event.clientX - 70)+'px'
+	tooltipDettaglio.style.top = (event.clientY - 50)+'px'
+	
+}
+
+function terminaTooltipDettaglio(){
+	tooltipDettaglio.classList.add('hidden')
+}
+
+
+//tooltip MODIFICA
+function avviaTooltipModifica(event){
+	tooltipModifica.classList.remove('hidden')
+	tooltipModifica.style.left = (event.clientX - 70)+'px'
+	tooltipModifica.style.top = (event.clientY - 50)+'px'
+	
+}
+
+function terminaTooltipModifica(){
+	tooltipModifica.classList.add('hidden')
+}
+
+
+//tooltip SELEZIONA-CONTATORE
+function avviaTooltipSelezionaContatore(event){
+	tooltipSelezionaContatore.classList.remove('hidden')
+	tooltipSelezionaContatore.style.left = (event.clientX - 90)+'px'
+	tooltipSelezionaContatore.style.top = (event.clientY - 50)+'px'
+	
+}
+
+function terminaTooltipSelezionaContatore(){
+	tooltipSelezionaContatore.classList.add('hidden')
 }

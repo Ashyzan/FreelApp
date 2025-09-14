@@ -8,6 +8,7 @@
 		<link rel="stylesheet" th:href="@{/main.css}">		
 	-->
 	<link rel="stylesheet" href="/animate.css">	
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 	<script src="https://cdn.tailwindcss.com"></script>
 	<script>
 		let startTime = performance.now()
@@ -41,7 +42,7 @@
 	<title id="timerTitolo">FreelApp</title>
 </head>
 
-<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart(), truncateElements(), regolazioneAltezzaColonneLayout(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 			<button
 				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5]" onclick="getJsonTaskListSelectMode()">
@@ -312,72 +313,179 @@
 			</div>
 			<div id="main-section"
 				class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto">
-				<div class="flex flex-col justify-center items-center w-full">
-					<div
-						class="flex flex-col w-auto md:w-4/5 lg:w-[600px] h-auto border-2 border-[#0057A5] rounded-lg p-2 md:p-4 bg-gray-100 m-2">
-						<div class="flex justify-between items-center border-b-4">
-							<div class="text-center font-bold text-[30px] mb-3">
-								<h1 th:text="${cliente.getLabelCliente()}">
-								</h1>
-							</div>
-							<div class="flex justify-center items-center gap-6">
-								<a th:href="@{/Clienti/edit/{id}(id=${cliente.getId()})}">
-									<div class="t-tooltip w-5 h-5">
-										<img class="h-[100%] w-[100%]" src="/img/sources/icons/modify-blue.svg" alt="modifica task">
-										<div
-											class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-											Modifica
-										</div>
-									</div>
-								</a>
-								<button type="button" id="deleteButton" th:onclick="creaApriModaleDeleteCliente([[${cliente.id}]] ,[[ ${cliente.getLabelCliente()}]])">
-									<div class="t-tooltip w-5 h-5">
-										<img class="h-[100%] w-[100%]" src="/img/sources/icons/garbage-red.svg" alt="elimina">
-										<div
-											class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-20px] mt-[5px]">
-											Elimina
-										</div>
-									</div>
-								</button>
-							</div>
-						</div>
+				<div class="w-11/12 grid xl:grid-cols-2 lg:grid-cols-1">
+					<!-- 	prima column -->
+					<div id="prima-colonna-dettaglio-cliente" class="gap-4 rounded-lg bg-gray-100 p-3 m-3 shadow-lg h-fit">
 						<div>
-							<div class="grid md:grid-cols-3  grid-cols-4 mb-2 py-2 px-3">
-								<div class="col font-bold pe-3 p-2">
-									E-mail</div>
-								<div class="col md:col-span-2 col-span-3 p-2" th:text="${cliente.getEmail()}">
+							<div class="flex justify-end items-center mb-3 text-[#0057A5] text-end text-xs">
+								<div class="block text-end leading-tight"
+									th:text="${'cliente dal '+cliente.dataInserimentoCliente}"></div>
+							</div>
+							<div class="grid grid-cols-5">
+								<h1 class=" col-span-5 text-[#0057A5] text-4xl border-b-4 pb-2 font-bold sm:hidden text-center mb-5" th:text="${cliente.getLabelCliente()}" ></h1>
+								<div class="sm:col-span-2 col-span-5 flex flex-row sm:flex-col z-20">
+									<div class="md:w-full w-2/5 h-auto py-2 flex justify-start items-center ps-4">
+										<img class="w-36 h-36 rounded-full object-cover"
+												th:src="@{${cliente.LogoPath}}" alt="logo">										
+									</div>
+									<div class="py-4 ps-10 sm:ps-4 max-sm:w-full">
+										<h3 class="font-bold text-xl">Dati di contatto</h3>
+										<ul class="">
+											<li th:if="${cliente.tipologia == 'azienda'}" th:text="${cliente.getNameContatto()}" class="elemento-informativo-cliente "></li>
+											<li th:if="${cliente.tipologia == 'azienda'}" th:text="${cliente.getSurnameContatto()}" class="elemento-informativo-cliente"></li>
+											<li th:text="${cliente.getTelefono()}" class="elemento-informativo-cliente "></li>
+											<li th:text="${cliente.getEmail()}" class="elemento-informativo-cliente "></li>
+											<li th:text="${cliente.getSito()}" class="elemento-informativo-cliente "></li>
+										</ul>										
+									</div>
 								</div>
-								<div class="col font-bold pe-3 p-2">
-									Telefono</div>
-								<div class="col md:col-span-2 col-span-3 p-2" th:text="${cliente.getTelefono()}">
-								</div>
-								<div class="col font-bold pe-3 p-2">
-									Indirizzo</div>
-								<div class="col md:col-span-2 col-span-3 p-2"
-									th:text="|${cliente.getIndirizzo()} ${cliente.civico} ${cliente.getCity()}|">
-								</div>
-								<div class="col font-bold pe-3 p-2">
-									Ragione Sociale
-								</div>
-								<div class="col md:col-span-2 col-span-3 p-2" th:text="${cliente.getRagioneSociale()}">
-								</div>
-								<div class="col font-bold pe-3 p-2">
-									Partita Iva</div>
-								<div class="col md:col-span-2 col-span-3 p-2" th:text="${cliente.getPartitaIva()}">
+								<div class="sm:col-span-3 col-span-5">
+									<h1 class="text-[#0057A5] text-4xl border-b-4 pb-2 font-bold max-sm:hidden" th:text="${cliente.getLabelCliente()}" ></h1>
+									<div class="grid grid-cols-3 mb-2 py-2 border-b-4">
+										<div class="col-span-1 font-semibold pe-1 ">Tipologia cliente</div>
+										<div class="col-span-2 text-end pe-3 "
+											th:text="${cliente.getTipologia()}"></div>
+										<div class="col-span-1 font-semibold pe-1 ">Numero di progetti</div>
+										<div class="col-span-2 text-end pe-3"
+											th:text="${numeroProgettiDelCliente}"></div>
+									</div>
+									<div class="grid grid-cols-3 mb-2 py-2 border-b-4 ">
+										<h3 class="col-span-3 font-bold text-xl">Dati Fiscali</h3>
+										
+										<div th:if="${cliente.tipologia == 'privato'}" class="col-span-1 font-semibold pe-1 ">Nome</div>
+										<div th:if="${cliente.tipologia == 'privato'}" class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getName()}"></div>
+										<div th:if="${cliente.tipologia == 'privato'}" class="col-span-1 font-semibold pe-1 ">Cognome</div>
+										<div th:if="${cliente.tipologia == 'privato'}" class="col-span-2 text-end pe-3 elemento-informativo-cliente"th:text="${cliente.getSurname()}"></div>
+										
+										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-1 font-semibold pe-1 z-0">Ragione sociale</div>
+										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-2 text-end pe-3 elemento-informativo-cliente"
+											th:text="${cliente.getRagioneSociale()}"></div>
+										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-1 font-semibold pe-1 z-0">Partita Iva</div>
+										<div th:if="${cliente.tipologia == 'azienda'}" class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getPartitaIva()}"></div>
+										<div class="col-span-1 font-semibold pe-1">Codice Fiscale</div>
+										<div class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getCodiceFiscale()}"></div>											
+										<div class="col-span-1 font-semibold pe-1 z-0">Indirizzo Pec</div>
+										<div class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getPec()}"></div>
+										<div class="col-span-1 font-semibold pe-1 ">Indirizzo</div>
+										<div class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getIndirizzo()}"></div>
+										<div class="col-span-1 font-semibold pe-1 ">Civico</div>
+										<div class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getCivico()}"></div>
+										<div class="col-span-1 font-semibold pe-1 ">Città</div>
+										<div class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getCity()}"></div>
+										<div class="col-span-1 font-semibold pe-1 ">CAP</div>
+										<div class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getCap()}"></div>
+										<div class="col-span-1 font-semibold pe-1 ">Nazione</div>
+										<div class="col-span-2 text-end pe-3 elemento-informativo-cliente" th:text="${cliente.getNazionalita()}"></div>
+									</div>
+									<div class="grid grid-cols-3">
+										<div class="col-span-1 font-bold text-xl">Azioni</div>
+										<div class="col-span-2 flex justify-end items-center gap-4 pe-3">
+											<a th:href="@{|/Progetti/insert/cliente-${cliente.id}|}">
+												<div class="tooltip-top w-6 h-6">
+													<img class="h-[100%] w-[100%]" src="/img/sources/icons/add-project-blue.svg" alt="nuovo progetto">
+													<div class="tooltiptext-top">Nuovo progetto</div>
+												</div>
+											</a>
+											<a th:href="@{/Clienti/edit/{id}(id=${cliente.getId()})}">
+												<div class="tooltip-top w-5 h-5">
+													<img class="h-[100%] w-[100%]" src="/img/sources/icons/modify-blue.svg" alt="modifica cliente">
+													<div class="tooltiptext-top">Modifica</div>
+												</div>
+											</a>
+											<button type="button" id="deleteButton"
+												th:onclick="creaApriModaleDeleteCliente([[${cliente.id}]], [[${cliente.getLabelCliente()}]])">
+												<div class="tooltip-top w-5 h-5">
+													<img class="h-[100%] w-[100%]" src="/img/sources/icons/garbage-red.svg" alt="elimina">
+													<div class="tooltiptext-top">Elimina</div>
+												</div>
+											</button>
+										</div>
+									</div>
 								</div>
 							</div>
+							<div class="text-center mt-5 p-4">
+								<a class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+									th:href="@{/Clienti}">Torna alla lista dei Clienti </a>
+							</div>
 						</div>
-						<div class="text-center mt-5 p-4">
-							<a class="border-2 border-[#0057A5] bg-[#ffe541] rounded-[35px] px-3 py-1 shadow-slate-400 shadow-md"
-								th:href="@{/Clienti}">
-								Torna alla lista dei
-								clienti </a>
+					</div>
+					<!-- 			second column -->			
+					<div id="seconda-colonna-dettaglio-cliente" class="gap-4 rounded-lg bg-gray-100 p-3 md:p-6 m-3 shadow-lg">
+						<section class="w-full h-full">
+						<div class="h-1/6">	
+						<h2 class="text-center text-lg text-[#0057A5] mb-2">ELENCO PROGETTI ASSOCIATI AL CLIENTE</h2>
+							<div
+									class="mb-[180px] xl:mb-2 grid grid-cols-4 lg:grid-cols-5 justify-items-center  h-2/3 border border-[#0057A5] md:h-10 h-8 text-[#0057A5]  max-sm:text-[12px] align-bottom">
+								<span class="md:px-4 px-2 flex items-center col-span-2">Nome</span>
+								<span class="md:px-4 px-2 max-lg:hidden flex items-center">Data</span>
+								<span class="md:px-4 px-2 flex items-center">Stato</span>
+								<span class="md:px-4 px-2 flex items-center">Azioni</span>
+							</div>
 						</div>
-						<div th:if="${searchMode == true}" class="text-center mt-5 p-4">
-							<a class="border-2 border-[#0057A5] bg-[#ffe541] rounded-[35px] px-3 py-1 shadow-slate-400 shadow-md"
-								th:href="@{|/cliente-search-input=${lastInputInProgettiSearch}/page/${lastVisitedPageInProgettiSearch}|}">Torna
-								alla ricerca </a>
+						<div class="h-5/6 overflow-x-hidden overflow-y-auto">
+							<table class="block text-[#0057A5] m-auto mb-4">
+								<tbody id="t-body-seconda-colonna-dettaglio-cliente" class=" grid grid-cols-1 p-2">
+									<tr th:each="progetto : ${cliente.progetti}"
+										class="item-elenco-tasks-dettaglio-progetto w-full grid max-lg:grid-cols-4 grid-cols-5 border-b-2 text-center max-sm:text-[10px] mb-2">
+										<td class="col-span-2 mx-4 mt-2 text-start truncate" th:text="${progetto.getName()}"></td>
+										<td th:text=" ${progetto.getDataInizio()}"
+											class="col max-lg:p-2 max-lg:hidden xl:text-sm flex items-center justify-center text-nowrap"></td>
+										<td class="col">
+											<div class="flex items-center justify-center gap-1 p-1">
+												<img th:if="${progetto.getDataFine() == null}" id="semaforo-start" class="h-5"
+													src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start"> 
+												<img th:if="${progetto.getDataFine() != null}" id="semaforo-stop" class="h-5"
+													src="/img/sources/icons/contatore-on-stop.svg" alt="contatore in stop"> 
+											</div>
+										</td>
+										<td class="col h-full flex items-center justify-center xl:pe-4">
+											<div class="flex justify-center items-center gap-3 md:px-6 px-2">
+												<a th:href="@{|/Progetti/${progetto.id}|}">
+													<div class="size-6" onmouseover="avviaTooltipDettaglio(event)" onmouseout="terminaTooltipDettaglio()">
+														<img class="h-[100%] w-[100%]" src="/img/sources/icons/info.svg"
+															alt="dettaglio progetto">	
+													</div>
+												</a> 
+												<a th:href="@{|/Progetti/edit/${progetto.id}|}">
+													<div class="w-5 h-5 flex items-center" onmouseover="avviaTooltipModifica(event)" onmouseout="terminaTooltipModifica()">
+														<img class="h-[100%] w-[100%]" src="/img/sources/icons/modify-blue.svg"
+															alt="modifica progetto">
+													</div>
+												</a>
+												<div th:if="${progetto.dataFine == null}" class="flex flex-col md:flex-row float-left">
+													<button type="button" class="size-6 inline bg-[url(/img/sources/icons/power.svg)] 
+															hover:bg-[url(/img/sources/icons/power-red.svg)]" onmouseover="avviaTooltipChiudiProgetto(event)" onmouseout="terminaTooltipChiudiProgetto()"
+														th:onclick="creaModaleChiudiProgetto([[${progetto.id}]], [[${progetto.name}]])">
+													</button>
+												
+												</div>
+												<div th:unless="${progetto.dataFine == null}" class="flex flex-col md:flex-row float-left">
+													<form th:action="@{/Progetti/apri/{id}(id=${progetto.getId()})}" th:object="${progetto}" method="post">
+														<button type="submit" class="size-6 inline bg-[url(/img/sources/icons/power.svg)] 
+															hover:bg-[url(/img/sources/icons/power-green.svg)]" onmouseover="avviaTooltipApriProgetto(event)" onmouseout="terminaTooltipApriProgetto()">
+														</button>
+													</form>
+												</div>
+												<div class="">
+													<button type="button" id="deleteButton" class="size-6 mb-[2px]"
+														th:onclick="creaApriModaleDeleteProgetto([[${progetto.id}]], [[${progetto.getName()}]], [[${progetto.cliente.getLabelCliente()}]])"
+														onmouseover="avviaTooltipElimina(event)" onmouseout="terminaTooltipElimina()">
+														<img class="size-6 inline" src="/img/sources/icons/garbage-red.svg" alt="elimina">
+													</button>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						
+						<div th:if="${cliente.progetti.isEmpty()}">
+							<div class="text-center text-[#0057A5] p-4">
+								<h1>Nessun progetto è stato ancora aperto per questo cliente.</h1>
+							</div>							
 						</div>
+						</div>
+						</section>
 					</div>
 				</div>
 				<!-- CONTATORE -->
@@ -717,6 +825,15 @@
 		</div>
 	</div>
 	
+	<!-- tooltip per elenco in overflow -->
+	<div id="tooltip-dettaglio" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Dettaglio</div>
+	<div id="tooltip-modifica" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Modifica</div>
+	<div id="tooltip-chiudi-progetto" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Chiudi progetto</div>
+	<div id="tooltip-apri-progetto" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Apri progetto</div>
+	<div id="tooltip-elimina" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Elimina</div>
+	<!-- fine tooltip per elenco in overflow -->
+	
+	
 	<!-- Script -->
 	<script th:inline="javascript">
 		/*<![CDATA[*/
@@ -738,6 +855,7 @@
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
 	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 	<script type="text/javascript" th:src="@{/js/timerRapidButton.js}"></script>
+	<script type="text/javascript"th:src="@{/js/dettaglio-cliente.js}"></script>
 	<script>
 		const endTime = performance.now(); // Tempo di fine
 		const loadTime = endTime - startTime;

@@ -2,60 +2,52 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--
 		<link rel="stylesheet" th:href="@{/main.css}">		
 	-->
-<link rel="stylesheet" href="/animate.css">
-<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js"></script>
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-		let startTime = performance.now()
-</script>
-<script>
-			tailwind.config = {
-				theme: {
-					extend: {
-						colors: {
-							clifford: '#da373d',
-						},
-						screens: {
-							xs: '375px'
-						},
-					}
+	<link rel="stylesheet" href="/animate.css">
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>
+			let startTime = performance.now()
+	</script>
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					colors: {
+						clifford: '#da373d',
+					},
+					screens: {
+						xs: '375px'
+					},
 				}
 			}
-		</script>
-<style type="text/tailwindcss">
-			@layer utilities {
+		}
+	</script>
+	<style type="text/tailwindcss">
+		@layer utilities {
 	          .content-auto {
 	            content-visibility: auto;
 	          }
-
 	        }
 	      </style>
-
-<title id="timerTitolo">FreelApp</title>
+	<title id="timerTitolo">FreelApp</title>
 </head>
 
-<body class="font-sans" style="width: 100vw; height: 100vh;"
-	onload="contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), timerstart(), getDataJsonProgetto(), regolazioneAltezzaColonneLayout()">
-	<section id="rapidButton"
-		class=" fixed bottom-[20%] xs:bottom-[15%]  right-0">
-		<button onclick="getJsonTaskListSelectMode()"
-			class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5] ">
-			<div class="t-tooltip col-auto w-8 h-8 ms-2">
-				<img class="h-[100%] w-[100%]"
-					src="/img/sources/icons/speed-up-blue.svg" alt="avvio rapido task">
-				<div
-					class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-80px] mt-[10px]">
-					Avvio rapido</div>
-			</div>
-		</button>
-	</section>
-
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
+	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
+			<button
+				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5]" onclick="getJsonTaskListSelectMode()">
+				<div class="t-tooltip col-auto w-8 h-8 ms-2">
+					<img class="h-[100%] w-[100%]" src="/img/sources/icons/speed-up-blue.svg" alt="avvio rapido task">
+					<div class="t-box hidden text-nowrap border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-80px] mt-[10px]">
+						Avvio rapido
+					</div>
+				</div>
+			</button>
+		</section>
 	<header>
 		<nav id="navbar"
 			class="flex justify-around items-center w-full h-fit md:px-1 md:py-0 p-2 bg-[#0057A5] font-bold  text-sm text-white">
@@ -99,9 +91,9 @@
 						</span> <span class="pt-1">ESCI</span>
 					</a>
 					</li>
-					<!-- 					<li class=" max-lg:hidden" id="dettaglio-contatore-top"> -->
+<!-- 					<li class=" max-lg:hidden" id="dettaglio-contatore-top"> -->
 
-					<!-- 					</li> -->
+<!-- 					</li> -->
 					<li class="md:mx-4 py-5 md:py-0">
 						<button class=" hover:text-gray-400 cursor-pointer md:hidden"
 							onclick="onToggleOptionsMobile(this)">
@@ -133,8 +125,8 @@
 					</li>
 				</ul>
 			</div>
-
-			<!-- CONTATORE -->
+			
+		<!-- CONTATORE -->
 			<div id="dettaglio-contatore-top"
 				class="max-lg:hidden h-fit border-4 border-[#FFE541] bg-white rounded-[30px] mt-2 mb-2 p-2 py-1">
 				<div class="flex items-center text-[#0057A5] font-bold">
@@ -175,7 +167,7 @@
 								<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
 							</div>
 							<div th:if="${contatoreIsRun}" id="pause-top-svg-before-api-contatoreIsRun">
-								<button type="button" class="hover:opacity-75 " id="button-top-pause-top-svg-before-api-contatoreIsRun"
+								<button type="button" class="hover:opacity-75 "
 									th:onclick="pauseContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()">
 									<img class="h-[29px] w-[29px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
 								</button>
@@ -200,7 +192,7 @@
 					</div>
 				</div>
 			</div>
-
+			
 			<div>
 				<button class="px-1 rounded cursor-pointer md:hidden"
 					onclick="onToggleMenu(this)" name="menu">
@@ -242,7 +234,6 @@
 	</header>
 	<main class="bg-[#f2f1f1]">
 		<div class="flex flex-col-reverse md:flex-row w-screen" style="height: calc(100vh - 10vh);">
-	<!-- 	sidebar -->
 			<div id="side-bar"
 				class="fixed md:relative md:basis-16 bottom-0 flex md:flex-col md:justify-between justify-around items-center md:p-2 p-1 h-fit md:h-full w-full text-[#FFE541] font-bold border-t-2 bg-[#0057A5]">
 				<div class="flex w-full justify-around">
@@ -250,398 +241,229 @@
 						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[65px] sm:h-[65px] w-[45px] h-[45px]">
-								<a th:href="@{/dashboard}"> <img class="h-[30px] w-[30px]"
-									src="/img/sources/icons/dashboard.svg" alt="dashboard">
+								<a th:href="@{/dashboard}">
+									<img class="h-[30px] w-[30px]" src="/img/sources/icons/dashboard.svg"
+										alt="dashboard">
 								</a>
-								<div class="pt-1 text-[8px]">DASHBOARD</div>
+								<div class="pt-1 text-[8px]">
+									DASHBOARD</div>
 							</div>
 						</li>
 						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
-								<a th:href="@{/Task/newTask}"> <img
-									class="h-[30px] w-[30px]" src="/img/sources/icons/add-task.svg"
-									alt="nuovo task">
+								<a th:href="@{/Task/newTask}">
+									<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-task.svg"
+										alt="nuovo task">
 								</a>
-								<div class="pt-1 text-[8px]">TASK</div>
+								<div class="pt-1 text-[8px]">
+									TASK</div>
 							</div>
 						</li>
 						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
 								<!-- th:href="@{/Progetti/insert/1} diventera poi th:href="@{'/Progetti/insert/{id}'(id=${userLogged.getId()})'} quando sara implementata autentizazione-->
-								<a th:href="@{/Progetti/insert/1}"> <img
-									class="h-[30px] w-[30px]"
-									src="/img/sources/icons/add-project.svg" alt="nuovo progetto">
+								<a class="pointer-events-none">
+									<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-project.svg"
+										alt="nuovo progetto">
 								</a>
-								<div class="pt-1 text-[8px]">PROGETTO</div>
+								<div class="pt-1 text-[8px]">
+									PROGETTO</div>
 							</div>
 						</li>
 						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
-								<a th:href="@{/Clienti/insert}"> <img
-									class="h-[30px] w-[30px]"
-									src="/img/sources/icons/add-client.svg" alt="nuovo cliente">
+								<a th:href="@{/Clienti/insert}">
+									<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-client.svg"
+										alt="nuovo cliente">
 								</a>
-								<div class="pt-1 text-[8px]">CLIENTE</div>
+								<div class="pt-1 text-[8px]">
+									CLIENTE</div>
 							</div>
 						</li>
 						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
-								<a th:href="@{/Progetti/archivio}"> <img
-									class="h-[30px] w-[30px]"
-									src="/img/sources/icons/archive-yellow.svg" alt="statistiche">
+								<a th:href="@{/Progetti/archivio}">
+									<img class="h-[30px] w-[30px]" src="/img/sources/icons/archive-yellow.svg" alt="statistiche">
 								</a>
-								<div class="pt-1 text-[8px]">ARCHIVIO</div>
+								<div class="pt-1 text-[8px]">
+									ARCHIVIO</div>
 							</div>
 						</li>
 						<li class="py-4 px-2 sm:mx-6 md:m-0 mx-1 md:my-3">
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
-								<a href="#"> <img class="h-[30px] w-[30px]"
-									src="/img/sources/icons/stats.svg" alt="statistiche">
+								<a href="#">
+									<img class="h-[30px] w-[30px]" src="/img/sources/icons/stats.svg" alt="statistiche">
 								</a>
-								<div class="pt-1 text-[8px]">STATISTICHE</div>
+								<div class="pt-1 text-[8px]">
+									STATISTICHE</div>
 							</div>
 						</li>
 					</ul>
 				</div>
 				<a class="col-auto py-2 max-md:hidden cursor-pointer" href="#">
-					<img class="h-[35px] w-[35px]" src="/img/sources/icons/exit.svg"
-					alt="logout">
+					<img class="h-[35px] w-[35px]" src="/img/sources/icons/exit.svg" alt="logout">
 				</a>
 			</div>
-	<!-- fine sidebar -->
-	<!-- main section -->
-			<div id="main-section"
-				class="flex w-full flex-wrap justify-center items-center text-[#0057A5] overflow-y-auto p-2">
-				<!-- 					Nuovo dettaglio progetto -->
-				<div class="w-full h-fit grid lg:grid-cols-6 grid-cols-1 gap-4 py-5 ">
-					<!-- first column -->
-					<div id="prima-colonna-dettaglio-progetto" class="xl:col-span-2 lg:col-span-3 col-span-6 h-max rounded-lg bg-gray-100 p-4 shadow-lg ">
-						<div class="flex">
-							<div class="w-2/3 truncate mb-3">
-								<p class="inline font-bold py-2">Cliente:</p>
-								<a th:href="@{/Clienti/{id}(id=${progetto.cliente.getId()})}"
-									class="ps-3 inline text-lg text-end leading-tight font-medium hover:underline"
-									th:text="${progetto.Cliente.getLabelCliente()}"></a>
-					
-							</div>
-							<div class="w-1/3 mb-3">
-								<p class="float-right text-[#FFE641] font-bold text-end">
-									Tipologia:<span class="ps-3 text-lg text-end leading-tight font-medium text-[#0057A5]"
-										th:text="${progetto.getTipologia()}"></span>
-								</p>
-					
-							</div>
+			<div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto">
+				<div th:if="${areClientsOnDb == true}" class="w-full">
+					<div class="flex flex-col justify-center items-center w-full">
+						<div class="h-12 text-center font-bold items-center m-3">
+							<h1>INSERIMENTO NUOVO PROGETTO</h1>
 						</div>
-						<h1 class="text-[#0057A5] text-[32px]" th:text="${progetto.getName()}"></h1>
-						<!-- Se la descrizione è superiore a 150 caratteri la mostra in forma contratta con sintassi thymeleaf + tasto espandi -->
-						<div id="descrizioneContratta" class="border-b-4 ">
-							<h3 class="text-gray-600 text-lg pb-4" th:text="${#strings.abbreviate(progetto.getDescrizione(),150)}">
-							</h3>
-							<div th:if="${#strings.length(progetto.descrizione) >= 150}" class="text-end mb-3">
-								<button id="buttonEspandiDescrizione" type="button" 
-									class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg py-[2px] px-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5] ">
-									Espandi</button>
-							</div>
-						</div>
-						<div id="descrizioneEspansa" class="hidden border-b-4">
-							<h3 class="text-gray-600 text-lg pb-4" th:text="${progetto.descrizione}"></h3>
-							<div class="text-end mb-3">
-								<button id="buttonRiduciDescrizione" type="button"
-									class="bg-[#FFE541] border-2 border-[#0057A5] rounded-lg py-[2px] px-[9px] text-[#0057A5] font-bold shadow-md shadow-[#0057A5] ">
-									Leggi meno</button>
-							</div>
-						</div>
-					
-						<div class="grid grid-cols-3 mb-2 py-2 border-b-4">
-							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-2">Data
-								inizio</div>
-							<div class="md:ms-20 col-span-1 md:col-span-2 py-2 text-center max-md:text-end"
-								th:text="${#temporals.format(progetto.getDataInizio(),'dd MMM yyyy')}">
-							</div>
-					
-							<div th:if="${progetto.getDataFine() != null}" class="col-span-2 md:col-span-1  font-bold pe-1 py-2">Data
-								Chiusura</div>
-					
-							<div th:if="${progetto.getDataFine() != null}"
-								class="md:ms-20 col-span-1 md:col-span-2 py-2 text-center max-md:text-end"
-								th:text=" ${#temporals.format(progetto.getDataFine(), 'dd MMM yyyy')}">
-							</div>
-					
-						</div>
-						<div class="grid grid-cols-3 mb-2 py-2 border-b-4">
-							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
-								Totali</div>
-							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
-								th:text="${progetto.getElencoTask().size()}"></div>
-							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
-								Attivi</div>
-							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
-								th:text="${#lists.size(progetto.elencoTask.?[stato == 'in pausa' || stato == 'in corso'])}">
-							</div>
-							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Task
-								chiusi</div>
-							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
-								th:text="${#lists.size(progetto.elencoTask.?[stato == 'chiuso'])}">
-							</div>
-							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Guadagno
-								Totale</div>
-							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
-								th:text="${guadagnoTotaleProgetto}"></div>
-							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Guadagno
-								Task Attivi</div>
-							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
-								th:text="${guadagnoTotaleTaskAttivi}"></div>
-							<div class="col-span-2 md:col-span-1 font-bold pe-1 py-1">Guadagno
-								Task Chiusi</div>
-							<div class="md:ms-20 col-span-1 md:col-span-2 py-1 text-center max-md:text-end"
-								th:text="${guadagnoTotaleTaskChiusi}"></div>
-						</div>
-					
-					
-					
-					
-						<div class="grid grid-cols-3 border-b-4">
-							<div class="col font-bold pe-1 py-2">Stato Progetto</div>
-							<div class="md:ms-20 col col-span-2 text-center max-md:text-end py-2">
-								<img th:if="${progetto.getDataFine} == null" th:src="@{/img/sources/icons/contatore-on-start.svg}"
-									alt="progetto-attivo" class="size-5 inline"> <img th:if="${progetto.getDataFine} != null"
-									th:src="@{/img/sources/icons/contatore-on-stop.svg}" alt="progetto-chiuso" class="size-5 inline">
-							</div>
-							<div class="col font-bold pe-1 py-2">Tempo lavorato</div>
-							<div th:if="${finaltimeTotaleProgetto} != null" th:text="${finaltimeTotaleProgetto}"
-								class="md:ms-20 col col-span-2 text-center max-md:text-end py-2" id="">00:00:00</div>
-							<div th:if="${finaltimeTotaleProgetto} == null" class="md:ms-20 col col-span-2 text-center max-md:text-end py-2"
-								id="">00:00:00</div>
-						</div>
-						<div class="grid grid-cols-4 py-2 mb-3">
-							<div class="col-span-1 font-bold">Azioni</div>
-							<div class="col-span-3 flex md:ms-20 justify-center  items-center gap-6 ">
-					
-								
-									<ul>
-										<li class="flex flex-col md:flex-row mr-3 float-left tooltip-top"><a
-												th:if="${progetto.dataFine == null}"
-												th:href="@{/Task/insert/progetto-{id}(id=${progetto.getId()})}">
-					
-												<img th:src="@{/img/sources/icons/add-task-blue.svg}" alt="aggiungi-task"
-													class=" size-6 inline"> <span class="tooltiptext-top"> Aggiungi Task</span>
-					
-											</a> <img class="size-6 inline" th:unless="${progetto.dataFine == null}"
-												th:src="@{/img/sources/icons/add-task-blue-opacity.svg}">
-										</li>
-										<li class="flex flex-col md:flex-row mr-3 float-left tooltip-top"><a
-												th:href="@{/Progetti/edit/{id}(id=${progetto.getId()})}">
-					
-												<img class="size-5 inline" src="/img/sources/icons/modify-blue.svg" alt="modifica progetto">
-												<span class="tooltiptext-top">
-													Modifica</span>
-					
-											</a></li>
-										<li th:if="${progetto.dataFine == null}"
-											class="tooltip-top flex flex-col md:flex-row mr-3 float-left">
-											<span class="tooltiptext-top">Chiudi progetto</span>
-					
-											<button type="button" class="size-6 inline bg-[url(/img/sources/icons/power.svg)] 
-																						hover:bg-[url(/img/sources/icons/power-red.svg)]"
-												th:onclick="creaModaleChiudiProgetto([[${progetto.id}]], [[${progetto.name}]])">
-											</button>
-					
-										</li>
-										<li th:unless="${progetto.dataFine == null}"
-											class="tooltip-top flex flex-col md:flex-row mr-3 float-left">
-											<span class="tooltiptext-top">Apri progetto</span>
-											<form th:action="@{/Progetti/apri/{id}(id=${progetto.getId()})}" th:object="${progetto}"
-												method="post">
-												<button type="submit" class="size-6 inline bg-[url(/img/sources/icons/power.svg)] 
-																						hover:bg-[url(/img/sources/icons/power-green.svg)]"></button>
-											</form>
-										</li>
-					
-										<li class="flex flex-col md:flex-row mr-3 float-left tooltip-top">
-											<form th:action="@{/Progetti/archivia/{id}(id=${progetto.getId()})}" th:object="${progetto}"
-												method="post">
-												<span class="tooltiptext-top">Archivia progetto</span>
-												<button type="submit">
-													<img th:src="@{/img/sources/icons/archive.svg}" alt="archivia" class="size-5 inline">
-												</button>
-											</form>
-					
-										</li>
-										<li class="flex flex-col md:flex-row mr-3 float-left tooltip-top"><button type="button"
-												id="deleteButton"
-												th:onclick="creaApriModaleDeleteProgetto([[${progetto.id}]], [[${progetto.getName()}]], [[${progetto.cliente.getLabelCliente()}]])">
-					
-												<img class="size-5 inline" src="/img/sources/icons/garbage-red.svg" alt="elimina">
-												<span class="tooltiptext-top"> Elimina</span>
-					
-											</button></li>
-					
-									</ul>
-					
-								
-					
-					
-					
-							</div>
-					
-						</div>
-					
-					
-						<!--					<div class="text-center mt-2 p-2">-->
-						<!--						<a-->
-						<!--							class="inline mx-3 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"-->
-						<!--							th:href="@{/Progetti}">Tutti i progetti </a> <a-->
-						<!--							class="inline mx-3 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"-->
-						<!--							th:href="@{/Progetti}">Lista task</a>-->
-						<!--					</div>-->
-					
-					
-					</div>
-					<!-- 			second column -->
-					<div id="seconda-colonna-dettaglio-progetto" class="xl:col-span-2 lg:col-span-3 col-span-6 rounded-lg bg-gray-100 p-2 shadow-lg ">
-						<section class="w-full h-full">
-							<div class="h-1/6">
-								<h1 class="text-center mb-2 h-1/3">ELENCO TASK ASSOCIATI AL PROGETTO</h1>
-								<div class="mb-[200px] lg:mb-2 grid grid-cols-4 lg:grid-cols-5 justify-items-center  h-2/3 border border-[#0057A5] md:h-10 h-8 text-[#0057A5]  max-sm:text-[12px] align-bottom">
-									<span class="md:px-4 px-2 flex items-center col-span-2">Nome</span>
-									<span class="md:px-4 px-2 max-lg:hidden flex items-center">Data</span>
-									<span class="md:px-4 px-2 flex items-center">Stato</span>
-									<span class="md:px-4 px-2 flex items-center">Azioni</span>
-								</div>
-							</div>
-							<div class="h-5/6 overflow-x-hidden overflow-y-auto">
-								<table class="block text-[#0057A5] m-auto mb-4" >
-									<!--
-										<thead class="block border border-[#0057A5] md:h-12 h-8 text-[#0057A5]  max-sm:text-[12px] mb-3">
-											<tr class="block grid grid-cols-4 lg:grid-cols-5 justify-items-center h-full">
-												<th class="md:px-4 px-2 flex items-center col-span-2">Nome</th>
-												<th class="md:px-4 px-2 max-lg:hidden flex items-center">Data</th>
-												<th class="md:px-4 px-2 flex items-center">Stato</th>
-												<th class="md:px-4 px-2 flex items-center">Azioni</th>
-											</tr>
-										</thead>
-										
-									-->
-										
-									<tbody id="t-body-seconda-colonna-dettaglio-progetto" class=" grid grid-cols-1 p-2 ">
-										<tr th:each="task : ${progetto.elencoTask}" class="item-elenco-tasks-dettaglio-progetto w-full grid max-lg:grid-cols-4 grid-cols-5 border-b-2 text-center max-sm:text-[10px] mb-2"
-													th:id="|task-${task.getId()}">
-											<td class="col-span-2 mx-4 mt-2 text-start truncate" th:text="${task.getName()}"></td>
-											<td th:text=" ${task.getDataInizio()}" class="col max-lg:p-2 max-lg:hidden xl:text-sm flex items-center justify-center text-nowrap"></td>
-											<td class="col">
-												<div th:id="|icona-stato-onload-task-${task.getId()}|" class="flex items-center justify-center gap-1 p-1">
-													<img th:if="${task.getStato() == 'in corso'}" id="semaforo-start" class="h-5"
-														src="/img/sources/icons/contatore-on-start.svg" alt="contatore in start"> <img
-														th:if="${task.getStato() == 'in pausa'}" id="semaforo-pausa" class="h-5"
-														src="/img/sources/icons/contatore-on-pause.svg" alt="contatore in pausa"> <img
-														th:if="${task.getStato() == 'chiuso'}" id="semaforo-stop" class="h-5"
-														src="/img/sources/icons/contatore-on-stop.svg" alt="contatore in stop"> <img
-														th:if="${task.getStato() == 'inattivo'}" id="semaforo-inattivo" class="h-5"
-														src="/img/sources/icons/contatore-inattivo.svg" alt="contatore inattivo">
-												</div>
-												<div th:id="|icona-stato-after-contatore-api-task-${task.getId()}|" class="flex items-center justify-center gap-1 p-1"></div>
-											</td>
-											<td class="col h-full flex items-center justify-center xl:pe-4">
-												<div class="flex justify-center items-center gap-4 md:px-6 px-2 ">
-													<a th:href="@{|/Task/${task.id}|}">
-														<div class="w-5 h-5" onmouseover="avviaTooltipDettaglio(event)" onmouseout="terminaTooltipDettaglio()">
-															<img class="h-[100%] w-[100%]" src="/img/sources/icons/board-tabloid-blue.svg"
-																alt="dettaglio task">
-														</div>
-													</a> <a th:href="@{|/Task/edit/${task.id}|}">
-														<div class="w-5 h-5" onmouseover="avviaTooltipModifica(event)" onmouseout="terminaTooltipModifica()">
-															<img class="h-[100%] w-[100%]" src="/img/sources/icons/modify-blue.svg"
-																alt="modifica task">
-														</div>
-													</a>
-													<div th:if="${task.id == taskInUsoId or task.getStato() == 'chiuso'}" class="w-5 h-5">
-														<img src="/img/sources/icons/contatore-blue-inattivo.svg">
-													</div>
-													<div th:unless="${task.id == taskInUsoId or task.getStato() == 'chiuso'}">
-														<form th:action="@{|/contatore/cambio/${task.id}|}" th:object="${contatore}"
-															method="post" class="flex items-center justify-center">
-															<input type="hidden" name="endPoint" th:value="${endPoint}">
-															<button type="submit" class="w-5 h-5" onmouseover="avviaTooltipSelezionaContatore(event)" onmouseout="terminaTooltipSelezionaContatore()">
-																<img src="/img/sources/icons/contatore-blue.svg">
-															</button>
-														</form>
-													</div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-								
-							</div>
-							<div th:if="${progetto.elencoTask.isEmpty()}">
-								<div class="text-center text-[#0057A5] p-4">
-									<h1>Nessun task è stato ancora aperto su questo progetto.</h1>
-								</div>
-							</div>
-						</section>
-						
-					
-					</div>
-					<!-- third column -->
-					<div id="terza-colonna-dettaglio-progetto" class="xl:col-span-2 lg:col-span-6 col-span-6 rounded-lg bg-gray-100 p-4 xl:p-3 shadow-lg">
-						<h3 class="text-center text-[#FFE641] text-xl font-bold mb-4">Statistiche</h3>
-						<div class="flex">
-							<div class="w-1/2 m-3">
-					
-								<div class="py-6 mb-2">
-									<p class="col-span-2 md:col-span-1 font-bold pe-1 py-1"
-										th:text="|Tariffa Oraria: ${#numbers.formatDecimal(progetto.tariffaOraria,2,2,'COMMA')}  €|">
-									</p>
-									<p th:if="${progetto.getTipologia() == 'budget'}" th:text="|Budget: ${#numbers.formatDecimal(progetto.budgetMonetario,2,2,'COMMA')}  €|"
-										class="col-span-2 md:col-span-1 font-bold pe-1 py-1">
-									</p>
-									<p th:if="${progetto.getTipologia() == 'ore'}" class="col-span-2 md:col-span-1 font-bold pe-1 py-1"
-										th:text="|Budget Ore: ${progetto.budgetOre}|">
-									</p>
-								</div>
-					
-							</div>
-							<div class="w-1/2 mb-3">
-								<div class=" w-full">
-									<div id="" class="flex flex-col justify-center items-center py-2 mb-2">
-										<div class="mx-auto md:text-xl font-bold mb-2">Guadagno
-											Attuale</div>
-										<div th:text="${guadagnoTotaleProgetto} + ' €'" class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5]  md:text-3xl font-bold " id="">
+						<div
+							class="w-11/12 md:w-3/5 h-auto lg:max-w-[600px] border border-[#0057A5] rounded-[8px] bg-white shadow-md shadow-blue-500/50 p-3 mb-6">
+							<form class="py-3" id="formProgetto" th:object="${formProgetto}" th:action="@{/Progetti/insert}"
+								method="post">
+	
+								<div class="mb-4">
+									<input type="hidden" th:field="*{utente}" id="utente">
+									<div class="grid md:grid-cols-3  grid-cols-4 mb-2 py-2">
+										<div class="col">
+											<label for="name">Nome
+												del progetto*</label>
+										</div>
+										<div class=" col md:col-span-2 col-span-3">
+											<input type="text" placeholder="titolo progetto.."
+												class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
+												id="name" th:field="*{name}" th:errorClass="border">
+											<div id="nomeProgettoError" class="text-red-600 text-[12px] text-center w-full"></div>
+											<div th:if="${#fields.hasErrors('name')}"
+												class="text-red-600 text-[12px] text-center w-full">
+												<ul>
+													<li th:each="err: ${#fields.errors('name')}" th:text="${err}">
+													</li>
+												</ul>
+											</div>
 										</div>
 									</div>
+	
+									<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
+										<div class="col">
+											<label for="textarea-cinquecento">Descrizione*</label>
+										</div>
+										<div class="col md:col-span-2 col-span-3 mb-2">
+											<textarea type="text" class="border-red-600 w-full h-full ps-4 rounded-lg bg-gray-100"
+												id="textarea-cinquecento" placeholder="Inserisci descrizione dettagliata..."
+												maxlength="500" th:field="*{descrizione}" th:errorClass="border"></textarea>
+											<div class="text-xs text-end px-2" id="contatore-caratteri-cinquecento-container">
+												   Numero di caratteri rimasti: <span id="contatore-caratteri-cinquecento">00</span>
+											</div>
+											<div id="textarea-cinquecento-error" class="text-red-600 text-[12px] text-center w-full"></div>	
+											<div th:if="${#fields.hasErrors('descrizione')}"
+												class="text-red-600 text-[12px] text-center w-full">
+												<ul>
+													<li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}">
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+	
+									<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
+										<div class="col">
+											<label for="dataInizio">Data inizio*</label>
+										</div>
+										<div class="col md:col-span-2 col-span-3">
+											<input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
+												id="dataInizio" th:field="*{dataInizio}" th:errorClass="border">
+											<div id="dataInizioProgettoError" class="text-red-600 text-[12px] text-center w-full"></div>
+											<div th:if="${#fields.hasErrors('dataInizio')}"
+												class="text-red-600 text-[12px] text-center w-full">
+												<ul>
+													<li th:each="err:${#fields.errors('dataInizio')}" th:text="${err}">
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+	
+									<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
+										<div class="col">
+											<label for="cliente">Cliente
+												progetto</label>
+										</div>
+										<input type="hidden" th:value="${cliente.id}" id="cliente" name="cliente">
+										<div class="col md:col-span-2 col-span-3">
+											<div th:text="${progettoClienteName}"></div>
+											<div id="clienteProgettoError" class="text-red-600 text-[12px] text-center w-full"></div>
+											<div th:if="${#fields.hasErrors('cliente')}"
+												class="text-red-600 text-[12px] text-center w-full">
+												<ul>
+													<li th:each="err : ${#fields.errors('cliente')}" th:text="${err}">
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+										<div class="grid md:grid-cols-3 grid-cols-4 mb-4 py-2">
+											<div class="col">
+												<label for="tipologia-select">Tipologia*</label>
+											</div>
+											<div class="col md:col-span-2 col-span-3">
+												<select onchange="tipologiaStatisticaSelect(value)"
+													class="border-red-600 h-8  text-[#0057A5] w-full h-8 ps-4 rounded-lg 
+														bg-gray-100" id="tipologia-select" name="tipologia"
+														th:field="*{tipologia}">
+													<option value="">Seleziona tipologia</option>
+													<option value="budget">Budget</option>
+													<option value="ore">Limite di tempo</option>
+													<option value="tariffa">Tariffa oraria</option>
+												</select>
+												<div id="inputSelectTipologiaError" class="text-red-600 text-[12px] text-center w-full"></div>	
+											</div>
+										</div>
+									<div id="contenuto-form-statistiche">
+										
+									</div>
 								</div>
-							</div>
-						</div>
-					
-					
-					
-						<div class="w-full pb-3 mb-2">
-							<div>
-								<canvas class="m-auto col w-full h-full" id="boundaries"></canvas>
-							</div>
-					
+								<div class="text-center mt-3 p-3">
+									<button type="submit"
+										class="shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
+										Aggiungi </button>
+								</div>
+								<div class="text-[12px]"><span> *</span>Campi obbligatori</div>
+							</form>
 						</div>
 					</div>
 				</div>
+				<div th:if="${areClientsOnDb == false}">
+					<h2 class="text-[#0057A5] font-bold m-auto py-10">NON E' POSSIBILE CREARE UN NUOVO PROGETTO PERCHE' NESSUN CLIENTE ANCORA REGISTRATO</h2>
+					<a th:href="@{/Clienti/insert}" class="text-center flex justify-center">
+						<button
+							class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
+							Aggiunti Cliente
+						</button>
+					</a>
+				</div>
 				<!-- CONTATORE -->
-				<div class="m-auto md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden" id="dettaglio-contatore-bottom">
-					<div class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1 mb-40 md:mb-20">
-						<div class="flex justify-between items-center text-[#0057A5] font-bold">
+				<div class="m-auto md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden"
+					id="dettaglio-contatore-bottom">
+					<div
+						class="w-full h-fit border-4 border-[#0057A5] bg-[#ffe541] rounded-[35px] p-1 mb-40 md:mb-20">
+						<div
+							class="flex justify-between items-center text-[#0057A5] font-bold">
 							<div id="icona-contatore" class="max-xs:hidden col-auto ps-3 w-[15%]">
-								<img class="h-[45px] w-[45px]" src="/img/sources/icons/contatore-blue.svg" alt="contatore">
+								<img class="h-[45px] w-[45px]"
+									src="/img/sources/icons/contatore-blue.svg" alt="contatore">
 							</div>
-							<div th:if="${taskInUso == null}" class="flex flex-col items-center justify-center w-auto max-xs:ps-4">
-								<div th:unless="${contatoreIsTrue}" class="col-auto text-[14px] p-0">...</div>
-								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}" class="col-auto text-[14px] p-0"></div>
+							<div th:if="${taskInUso == null}"
+								class="flex flex-col items-center justify-center w-auto max-xs:ps-4">
+								<div th:unless="${contatoreIsTrue}"
+									class="col-auto text-[14px] p-0">...</div>
+								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
+									class="col-auto text-[14px] p-0"></div>
 								<div class="col-auto text-[24px] p-0" id="timerDue">00:00:00</div>
 							</div>
-							<a th:unless="${taskInUso == null}" th:href="@{|/Task/${taskInUso.id}|}"
+							<a th:unless="${taskInUso == null}"
+								th:href="@{|/Task/${taskInUso.id}|}"
 								class="t-tooltip flex flex-col items-center relative w-[40%] justify-center max-xs:ps-4">
-								<div th:unless="${contatoreIsTrue}" class="col-auto text-[14px] p-0">...</div>
+								<div th:unless="${contatoreIsTrue}"
+									class="col-auto text-[14px] p-0">...</div>
 								<div th:if="${contatoreIsTrue}" th:text="${taskInUso.getName()}"
 									class="col-auto text-[14px] text-left p-0 w-full ml-4 truncate"></div>
 								<div class="col-auto text-[24px] p-0" id="timerDue" th:text="${finalTimeFormatted}">00:00:00</div>
@@ -651,42 +473,51 @@
 							</a>
 							<div class="col-auto flex items-center w-[40%] max-xs:w-full max-xs:ps-2">
 								<div th:if="${taskInUso == null}" class="mx-2 flex items-center">
-									<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg" alt="stop">
+									<img class="h-[45px] w-[45px]"
+										src="/img/sources/icons/stop-blue.svg" alt="stop">
 								</div>
-								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
-									<button id="stopButtonBottom" type="button" class="hover:opacity-75" onclick="creaModaleStop()">
-										<img class="h-[45px] w-[45px]" src="/img/sources/icons/stop-blue.svg" alt="stop">
+								<div th:unless="${taskInUso == null}"
+									class="mx-2 flex items-center">
+									<button id="stopButtonBottom" type="button"
+										class="hover:opacity-75" onclick="creaModaleStop()">
+										<img class="h-[45px] w-[45px]"
+											src="/img/sources/icons/stop-blue.svg" alt="stop">
 									</button>
 								</div>
 								<div th:if="${taskInUso == null}" class="mx-2 flex items-center">
-									<img class="h-[45px] w-[45px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
+									<img class="h-[45px] w-[45px]"
+										src="/img/sources/icons/pause-blue.svg" alt="pause">
 								</div>
-								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
+								<div th:unless="${taskInUso == null}"
+									class="mx-2 flex items-center">
 									<div th:unless="${contatoreIsRun}" id="pause-bottom-svg-before-api-contatoreNotRun">
-										<img class="h-[45px] w-[45px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
+										<img class="h-[45px] w-[45px]"
+											src="/img/sources/icons/pause-blue.svg" alt="pause">
 									</div>
 									<div th:if="${contatoreIsRun}" id="pause-bottom-svg-before-api-contatoreIsRun">
-										<button type="button"
-											th:onclick="pauseContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()"
-											class="hover:opacity-75 flex items-center">
-											<img class="h-[45px] w-[45px]" src="/img/sources/icons/pause-blue.svg" alt="pause">
-										</button>
+											<button type="button" th:onclick="pauseContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()"
+												class="hover:opacity-75 flex items-center">
+												<img class="h-[45px] w-[45px]"
+													src="/img/sources/icons/pause-blue.svg" alt="pause">
+											</button>
 									</div>
 									<div id="pause-bottom-after-api" class="flex items-center"></div>
 								</div>
 								<div th:if="${taskInUso == null}" class="mx-2 flex items-center">
-									<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg" alt="start">
+									<img class="h-[45px] w-[45px]"
+										src="/img/sources/icons/play-blue.svg" alt="start">
 								</div>
 								<div th:unless="${taskInUso == null}" class="mx-2 flex items-center">
 									<div th:if="${contatoreIsRun}" id="play-bottom-svg-before-api-contatoreNotRun">
-										<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg" alt="start">
+										<img class="h-[45px] w-[45px]"
+											src="/img/sources/icons/play-blue.svg" alt="start">
 									</div>
 									<div th:unless="${contatoreIsRun}" id="play-bottom-svg-before-api-contatoreIsRun">
-										<button type="button"
-											th:onclick="startContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()"
-											class="hover:opacity-75 flex items-center">
-											<img class="h-[45px] w-[45px]" src="/img/sources/icons/play-blue.svg" alt="start">
-										</button>
+											<button type="button" th:onclick="startContatoreApi([[${taskInUso.id}]]), getJsonTaskListSelectMode()"
+												class="hover:opacity-75 flex items-center">
+												<img class="h-[45px] w-[45px]"
+													src="/img/sources/icons/play-blue.svg" alt="start">
+											</button>
 									</div>
 									<div id="play-bottom-after-api" class="flex items-center"></div>
 								</div>
@@ -697,11 +528,8 @@
 				</div>
 				<!-- FINE CONTATORE -->
 			</div>
-	<!-- fine main section -->
-							
-		</div>
 	</main>
-
+	
 	<!-- Modale TimerRapidButton -->
 	<div id="modalRapidButton" class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
 		<div class="w-11/12 md:w-[550px] h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
@@ -931,7 +759,7 @@
 			</div>
 		</div>
 	</div>
-
+	
 	<!-- Modale -->
 	<div id="modale"
 		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
@@ -944,41 +772,38 @@
 						src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
 				</div>
 			</div>
-			<div id="contenuto-modale"
-				class="w-full h-auto bg-white rounded-b-lg"></div>
+			<div id="contenuto-modale" class="w-full h-auto bg-white rounded-b-lg">		
+			</div>
 		</div>
 	</div>
-
-	<!-- tooltip per elenco in overflow -->
-		<div id="tooltip-dettaglio" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Dettaglio</div>
-		<div id="tooltip-modifica" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Modifica</div>
-		<div id="tooltip-seleziona-contatore" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Seleziona contatore</div>
-	<!-- fine tooltip per elenco in overflow -->
-	
 	<!-- Script -->
+	
 	<script th:inline="javascript">
-			/*<![CDATA[*/
-			let finalTimeSec = /*[[${finaltime}]]*/ null;
-			let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
-			let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean
-			let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
-			let taskInUsoId = /*[[${taskInUsoId}]]*/ null;
-			let taskInUsoName = /*[[${taskInUsoName}]]*/ null;
-			let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
-			let progettoId = /*[[${progetto.id}]]*/ null;
-			let endPoint = /*[[${endPoint}]]*/ null;
-			let descrizioneTaskId = null; 
-			let contatoreAttivatoDaRapidButton = /*[[${contatoreAttivatoDaRapidButton}]]*/null; //boolean
-			let contatoreCliccatoPreRefresh = /*[[${contatoreCliccatoPreRefresh}]]*/ null; //boolean
-			
-			/*]]>*/
-		</script>
+		/*<![CDATA[*/
+		let finalTimeSec = /*[[${finaltime}]]*/ null;
+		let contatoreTrue = /*[[${contatoreIsTrue}]]*/ null; // boolean
+		let contatoreIsRun = /*[[${contatoreIsRun}]]*/ null; // boolean
+		let taskInUsoId = /*[[${taskInUsoId}]]*/ null;
+		let taskInUsoName = /*[[${taskInUsoName}]]*/ null;
+		let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
+		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
+		let endPoint =/*[[${endPoint}]]*/null //String
+		let tipologia =/*[[${tipologia}]]*/null; //String
+		let budgetMonetario =/*[[${budgetMonetario}]]*/null; //double
+		let tariffaOraria =/*[[${tariffaOraria}]]*/null; //double
+		let budgetOre =/*[[${budgetOre}]]*/null; //int
+		let contatoreCliccatoPreRefresh = /*[[${contatoreCliccatoPreRefresh}]]*/ null; //boolean
+		let contatoreAttivatoDaRapidButton = /*[[${contatoreAttivatoDaRapidButton}]]*/null; //boolean
+		let descrizioneTaskId = null; 
+		let clienteId =  /*[[${clienteId}]]*/null;
+		/*]]>*/
+	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
 	<script type="text/javascript" th:src="@{/js/api-contatore.js}"></script>
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
 	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 	<script type="text/javascript" th:src="@{/js/timerRapidButton.js}"></script>
-	<script type="text/javascript" th:src="@{/js/dettaglio-progetto-statistiche.js}"></script>
+	<script type="text/javascript" th:src="@{/js/insert-edit-Progetto.js}"></script>
 	<script>
 		const endTime = performance.now(); // Tempo di fine
 		const loadTime = endTime - startTime;
