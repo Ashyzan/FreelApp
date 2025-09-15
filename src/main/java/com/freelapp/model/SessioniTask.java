@@ -179,22 +179,23 @@ public class SessioniTask {
     public String variazioneToString() {
     	Long finaltime = contatore.getFinaltime();
     	String stato = contatore.getTask().getStato();
-    	if(stato == "avvio") {
+    	if(stato != null) {
+    		if(stato == "in corso") {
+    			
+    			System.out.println("********************************************    in corso " + stato);
+    		}
     		
-    		System.out.println("********************************************    primo if");
+    		System.out.println("********************************************  diverso da null " + stato);
     		
-    		return " -- " ;
+    		return " -non in pausa - " ;
     	//	LocalDateTime ora = LocalDateTime.now();
     		
     		
     	}
     	
-    	else if(stato == "pausa") {
-    		System.out.println("********************************************     secondo if");
-    		return  "differenza";
-    	}
-    	System.out.println("********************************************     altro if");
-    	return " - - ";
+    
+    	System.out.println("********************************************     altro if " + stato );
+    	return " - -in pausa ";
         		
     }
 }
