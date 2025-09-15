@@ -3,8 +3,11 @@ package com.freelapp.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.freelapp.service.ContatoreService;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +23,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "SessioniTask")
 public class SessioniTask {
-
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -69,8 +72,10 @@ public class SessioniTask {
             populateFromContatore();
         }
     }
-
+ 
+    
     public LocalDateTime getTime() {
+
         return time;
     }
 
@@ -139,15 +144,38 @@ public class SessioniTask {
     public void updateFromContatore() {
         populateFromContatore();
     }
+ // metodo che restituisce il finaltime formattato in HH:MM:SS
+ 	public String Timer(Contatore contatore) {		
+ 	    Long finaltime = contatore.getFinaltime(); 
+ 	    Long HH = finaltime / 3600;
+ 	    Long MM= (finaltime % 3600) / 60;
+ 	    Long SS = finaltime % 60;  
+ 	    String timer = String.format("%02d:%02d:%02d", HH, MM, SS);	    
+ 		return timer;
+ 	}
 
-    @Override
-    public String toString() {
-        return "SessioniTask{" +
-                "id=" + id +
-                ", contatore=" + (contatore != null ? contatore.getId() : "null") +
-                ", time=" + time +
-                ", azione='" + azione + '\'' +
-                ", worktime=" + worktime +
-                '}';
+ 	public String dateToString() {
+        return  time.getDayOfMonth() + "/" + time.getMonthValue()  + "/" + time.getYear();
+    }
+ 	
+    public String timeToString() {
+        return  time.getHour() + ":" + time.getMinute() ;
+        		
+    }
+    public String azioneToString() {
+        return  azione;
+        		
+    } 
+    
+    public String tempoToString() {
+        return  Timer(contatore);
+        		
+    } 
+    
+    public String variazioneToString(Contatore contatore) {
+    	Long finaltime = contatore.getFinaltime();
+    	
+        return  Timer(contatore);
+        		
     }
 }

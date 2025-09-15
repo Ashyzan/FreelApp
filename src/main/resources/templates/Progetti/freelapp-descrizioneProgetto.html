@@ -511,7 +511,7 @@
 										<tr th:each="task : ${progetto.elencoTask}" class="item-elenco-tasks-dettaglio-progetto w-full grid max-lg:grid-cols-4 grid-cols-5 border-b-2 text-center max-sm:text-[10px] mb-2"
 													th:id="|task-${task.getId()}">
 											<td class="col-span-2 mx-4 mt-2 text-start truncate" th:text="${task.getName()}"></td>
-											<td th:text=" ${task.getDataInizio()}" class="col max-lg:p-2 max-lg:hidden xl:text-sm flex items-center justify-center text-nowrap"></td>
+											<td th:text="${task.getDataInizio()}" class="col max-lg:p-2 max-lg:hidden xl:text-sm flex items-center justify-center text-nowrap"></td>
 											<td class="col">
 												<div th:id="|icona-stato-onload-task-${task.getId()}|" class="flex items-center justify-center gap-1 p-1">
 													<img th:if="${task.getStato() == 'in corso'}" id="semaforo-start" class="h-5"
