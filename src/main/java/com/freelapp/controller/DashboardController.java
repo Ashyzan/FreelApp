@@ -80,23 +80,23 @@ public class DashboardController {
 		model.addAttribute("taskList", taskList);
 		
 		
+		//passo al model la lista completa dei task
+		List<Task> taskListCompleta = new ArrayList<Task>();
+		taskListCompleta= taskRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+		model.addAttribute("taskListCompleta", taskListCompleta);
+		
+		//passo al model la lista completa dei clienti
+		List<Cliente> clienteList = new ArrayList<Cliente> ();
+		clienteList = clienteRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+		model.addAttribute("clientiList", clienteList);
+
+		
+		//passo al model la lista completa dei progetti
+		List<Progetto> progettiList = new ArrayList<Progetto> ();
+		progettiList = progettoRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+		model.addAttribute("progettiList", progettiList);
 		
 		
-//		List<Cliente> clienteList = new ArrayList<Cliente> ();
-//
-//		clienteList = clienteRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
-//
-//		model.addAttribute("clientiList", clienteList);
-//
-//		
-//		
-//		List<Progetto> progettiList = new ArrayList<Progetto> ();
-//
-//		progettiList = progettoRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
-//
-//		model.addAttribute("progettiList", progettiList);
-//		
-//		
 		
 	
 
