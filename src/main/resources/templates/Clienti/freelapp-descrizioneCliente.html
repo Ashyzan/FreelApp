@@ -42,7 +42,7 @@
 	<title id="timerTitolo">FreelApp</title>
 </head>
 
-<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart(), truncateElements(), regolazioneAltezzaColonneLayout(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart(), truncateElements(), truncateTitle(), regolazioneAltezzaColonneLayout(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 			<button
 				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5]" onclick="getJsonTaskListSelectMode()">
@@ -322,10 +322,11 @@
 									th:text="${'cliente dal '+cliente.dataInserimentoCliente}"></div>
 							</div>
 							<div class="grid grid-cols-5">
-								<h1 class=" col-span-5 text-[#0057A5] text-4xl border-b-4 pb-2 font-bold sm:hidden text-center mb-5" th:text="${cliente.getLabelCliente()}" ></h1>
+								<h1 class="elemento-informativo-cliente-titolo col-span-5 text-[#0057A5] text-4xl border-b-4 pb-2 font-bold sm:hidden text-center mb-5 hover:text-opacity-25"
+									onmouseout="terminaTooltipTitolo()"	 th:text="${cliente.getLabelCliente()}" ></h1>
 								<div class="sm:col-span-2 col-span-5 flex flex-row sm:flex-col z-20">
-									<div class="md:w-full w-2/5 h-auto py-2 flex justify-start items-center ps-4">
-										<img class="w-36 h-36 rounded-full object-cover"
+									<div class="md:w-full w-2/5 h-auto md:py-2 flex justify-start items-center md:ps-4">
+										<img class="md:w-36 md:h-36 w-full h-auto rounded-full object-cover"
 												th:src="@{${cliente.LogoPath}}" alt="logo">										
 									</div>
 									<div class="py-4 ps-10 sm:ps-4 max-sm:w-full">
@@ -340,7 +341,8 @@
 									</div>
 								</div>
 								<div class="sm:col-span-3 col-span-5">
-									<h1 class="text-[#0057A5] text-4xl border-b-4 pb-2 font-bold max-sm:hidden" th:text="${cliente.getLabelCliente()}" ></h1>
+									<h1 class="elemento-informativo-cliente-titolo text-[#0057A5] text-4xl border-b-4 pb-2 font-bold max-sm:hidden hover:text-opacity-25"
+										onmouseout="terminaTooltipTitolo()"	 th:text="${cliente.getLabelCliente()}"></h1>
 									<div class="grid grid-cols-3 mb-2 py-2 border-b-4">
 										<div class="col-span-1 font-semibold pe-1 ">Tipologia cliente</div>
 										<div class="col-span-2 text-end pe-3 "
@@ -415,7 +417,7 @@
 						<div class="h-1/6">	
 						<h2 class="text-center text-lg text-[#0057A5] mb-2">ELENCO PROGETTI ASSOCIATI AL CLIENTE</h2>
 							<div
-									class="mb-[180px] xl:mb-2 grid grid-cols-4 lg:grid-cols-5 justify-items-center  h-2/3 border border-[#0057A5] md:h-10 h-8 text-[#0057A5]  max-sm:text-[12px] align-bottom">
+									class="z-0 mb-[180px] xl:mb-2 grid grid-cols-4 lg:grid-cols-5 justify-items-center  h-2/3 border border-[#0057A5] md:h-10 h-8 text-[#0057A5]  max-sm:text-[12px] align-bottom">
 								<span class="md:px-4 px-2 flex items-center col-span-2">Nome</span>
 								<span class="md:px-4 px-2 max-lg:hidden flex items-center">Data</span>
 								<span class="md:px-4 px-2 flex items-center">Stato</span>
@@ -831,6 +833,7 @@
 	<div id="tooltip-chiudi-progetto" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Chiudi progetto</div>
 	<div id="tooltip-apri-progetto" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Apri progetto</div>
 	<div id="tooltip-elimina" class="hidden overflow-visible z-50 min-w-[137px] max-w-[250px] bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md">Elimina</div>
+	<h1 id="tooltip-titolo" class="hidden overflow-visible z-50 w-fit bg-gray-100/100 text-[#0057A5] border border-[#0057A5] text-center rounded-[6px] px-5 py-[5px] absolute shadow-md" th:text="${cliente.getLabelCliente()}" ></h1>
 	<!-- fine tooltip per elenco in overflow -->
 	
 	

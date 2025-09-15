@@ -2,6 +2,8 @@
 //recupero elementi dal DOM
 const elementiInformativiCliente = document.getElementsByClassName('elemento-informativo-cliente');
 const arrayElementiInformativiCliente = [...elementiInformativiCliente];
+const elementiInformativiClienteTitolo = document.getElementsByClassName('elemento-informativo-cliente-titolo');
+const arrayElementiInformativiClienteTitolo = [...elementiInformativiClienteTitolo];
 let secondaColonnaDettaglioCliente = document.getElementById('seconda-colonna-dettaglio-cliente');
 let primaColonnaDettaglioCliente = document.getElementById('prima-colonna-dettaglio-cliente');
 
@@ -11,11 +13,13 @@ const tooltipModifica = document.getElementById('tooltip-modifica');
 const tooltipChiudiProgetto = document.getElementById('tooltip-chiudi-progetto');
 const tooltipApriProgetto = document.getElementById('tooltip-apri-progetto');
 const tooltipElimina = document.getElementById('tooltip-elimina');
+const tooltipTitolo = document.getElementById('tooltip-titolo');
 
 //listeners che al variare delle dimensioni della window richiamano la funzione per troncare se nesserio o ripristinare il testo, e la funzione per
 //ridimensionare l'altezza max della seconda colonna
 window.addEventListener('resize', truncateElements );
 window.addEventListener('resize', regolazioneAltezzaColonneLayout );
+window.addEventListener('resize', truncateTitle );
 
 
 //vengono inizializzate variabili  fuori dalla funzione function regolazioneAltezzaColonneLayout perche poi viene aggiornata man mano che viene utilizzata per
@@ -38,6 +42,26 @@ function truncateElements(){
 	
 }
 
+//funzione che al caricamento della pagina dettaglio cliente vede se ci sono testi di elementi da troncare e ne applica le classi necessarie
+function truncateTitle(){
+
+	arrayElementiInformativiClienteTitolo.forEach(item =>{
+			
+		if(item.offsetWidth < item.scrollWidth){
+			item.classList.add('truncate')
+			item.addEventListener('mouseover', (event) =>{
+					tooltipTitolo.classList.remove('hidden')
+					tooltipTitolo.style.left = (event.clientX - (item.offsetWidth / 2))+'px'
+					tooltipTitolo.style.top = (event.clientY - 50)+'px'
+			});
+		} else if(item.offsetWidth >= item.scrollWidth){
+			item.classList.remove('truncate')
+		}
+	})
+	
+}
+
+
 //*******  funzione che in Dettaglio Cliente misura le dimensioni della prima colonna e 
 //    l'assegna alla seconda 		 ********************
 function regolazioneAltezzaColonneLayout(){
@@ -46,6 +70,23 @@ function regolazioneAltezzaColonneLayout(){
 	secondaColonnaDettaglioCliente.classList.add('max-h-['+ altezzaPrimaColonnaDettaglioCliente + 'px]')
 	altezzaPrecedentePrimaColonnaDettaglioCliente = altezzaPrimaColonnaDettaglioCliente;
 }
+
+
+//************** funzioni per attivazione e chiusura tooltip titolo se truncate ******************/
+
+//tooltip TITOLO
+function avviaTooltipTitolo(event){
+	tooltipTitolo.classList.remove('hidden')
+	tooltipTitolo.style.left = (event.clientX - 300)+'px'
+	tooltipTitolo.style.top = (event.clientY - 50)+'px'
+	
+}
+
+function terminaTooltipTitolo(){
+	tooltipTitolo.classList.add('hidden')
+	tooltipTitolo.classList.remove('text-opacity-25')
+}
+
 
 //************** funzioni per attivazione e chiusura tooltip in elenco overflow ******************/
 
