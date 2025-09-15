@@ -1,6 +1,8 @@
 package com.freelapp.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -172,10 +174,27 @@ public class SessioniTask {
         		
     } 
     
-    public String variazioneToString(Contatore contatore) {
+
+    
+    public String variazioneToString() {
     	Long finaltime = contatore.getFinaltime();
+    	String stato = contatore.getTask().getStato();
+    	if(stato == "avvio") {
+    		
+    		System.out.println("********************************************    primo if");
+    		
+    		return " -- " ;
+    	//	LocalDateTime ora = LocalDateTime.now();
+    		
+    		
+    	}
     	
-        return  Timer(contatore);
+    	else if(stato == "pausa") {
+    		System.out.println("********************************************     secondo if");
+    		return  "differenza";
+    	}
+    	System.out.println("********************************************     altro if");
+    	return " - - ";
         		
     }
 }

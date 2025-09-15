@@ -232,7 +232,7 @@ public class ContatoreController {
 		SessioniTask.setTime(task.getDataModifica());
 		SessioniTask.setWorktime(contatore.getFinaltime());
 		SessioniTaskRepository.save(SessioniTask);
-		System.out.println("********************************************************** SessioniTask********************* + " + SessioniTask);
+		//System.out.println("********************************************************** SessioniTask********************* + " + SessioniTask);
 	    
 	    // parte per javascript: serve per collegare il finaltime da java a javascript
 	    // sul frontend
