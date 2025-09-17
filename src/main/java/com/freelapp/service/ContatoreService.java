@@ -113,7 +113,7 @@ public class ContatoreService {
 	Long hours = FinalTimeSeconds / 3600;
 	Long minutes = (FinalTimeSeconds % 3600) / 60;
 	Long seconds = FinalTimeSeconds % 60;
-	String finalTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+	String finalTime = String.format("%5dh %1dm %1ds",  hours, minutes, seconds);
 
 	return finalTime;
     }

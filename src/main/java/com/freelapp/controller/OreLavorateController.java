@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.freelapp.model.Contatore;
+import com.freelapp.model.SessioniTask;
 import com.freelapp.model.Task;
 import com.freelapp.repository.ContatoreRepository;
+import com.freelapp.repository.SessionitaskRepository;
 import com.freelapp.repository.TaskRepository;
 import com.freelapp.service.ContatoreService;
 import com.freelapp.service.OreLavorateService;
@@ -40,6 +42,11 @@ public class OreLavorateController {
     @Autowired
     private OreLavorateService orelavorateservice;
     
+    @Autowired
+    private ContatoreService contatoreservice;
+    
+    @Autowired
+    private SessionitaskRepository SessioniTaskRepository;
 
     
     @PostMapping("/orelavorate/{id}")
@@ -62,6 +69,8 @@ public class OreLavorateController {
 	    
 	    // calcolo lo stop a partire dallo start e dal finaltime (in secondi) richiamando il metodo perposto dal service
 	    LocalDateTime STOP = orelavorateservice.findStop(START, finalTime);
+	   
+	    SessioniTask SessioniTask = new SessioniTask();
 	    
 	    if(task.getContatore() == null) {
 	    	if(!aggiungiOre) { // sovrascrivi e chiudi
@@ -71,6 +80,14 @@ public class OreLavorateController {
 	    	task.getContatore().setStart(START);
 	    	task.getContatore().setStop(STOP);
 	    	task.setStato("chiuso");
+	    	
+	    	// sessione cronologia task
+			SessioniTask.setContatore(contatore);
+			SessioniTask.setAzione("ore lavorate");
+			SessioniTask.setTime(task.getDataModifica());
+			SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
+			SessioniTask.setVariazione(contatoreservice.findTimeToString(START, STOP));
+			SessioniTaskRepository.save(SessioniTask);
 	    	
 	    	// salvo in automatico la data fine task in corrispondenza dello stop contatore
 	    	taskservice.setStopTaskDate(STOP, taskId);
@@ -84,6 +101,14 @@ public class OreLavorateController {
 	    		task.getContatore().setStart(START);
 	    		task.getContatore().setPause(STOP);
 	    		task.setStato("in pausa");
+	    		
+		    	// sessione cronologia task
+				SessioniTask.setContatore(contatore);
+				SessioniTask.setAzione("ore lavorate");
+				SessioniTask.setTime(task.getDataModifica());
+				SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
+				SessioniTask.setVariazione(contatoreservice.findTimeToString(START, task.getContatore().getPause()));
+				SessioniTaskRepository.save(SessioniTask);
 	    		
 	    	}
 	    }
@@ -100,6 +125,14 @@ public class OreLavorateController {
 				    		task.getContatore().setFinaltime(finalTimeAdd);
 				    		task.setStato("in pausa");
 				    		repositTask.save(task); 
+				    		
+					    	// sessione cronologia task
+							SessioniTask.setContatore(contatore);
+							SessioniTask.setAzione("ore lavorate");
+							SessioniTask.setTime(task.getDataModifica());
+							SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
+							SessioniTask.setVariazione(contatoreservice.findTimeToString(START, task.getContatore().getPause()));
+							SessioniTaskRepository.save(SessioniTask);
 				    	}
 					    	else {		// sovrascrivi e chiudi
 						    	task.getContatore().setStart(START);
@@ -112,6 +145,14 @@ public class OreLavorateController {
 						    	//setto lo stato in chiuso
 						    	task.setStato("chiuso");
 								repositTask.save(task); 
+								
+						    	// sessione cronologia task
+								SessioniTask.setContatore(contatore);
+								SessioniTask.setAzione("ore lavorate");
+								SessioniTask.setTime(task.getDataModifica());
+								SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
+								SessioniTask.setVariazione(contatoreservice.findTimeToString(START, task.getContatore().getPause()));
+								SessioniTaskRepository.save(SessioniTask);
 						    	}
 		    	
 	    		
