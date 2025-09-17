@@ -106,6 +106,18 @@ public class ContatoreService {
 	return FinalTimeSeconds;
     }
     
+    public String findTimeToString(LocalDateTime start_date, LocalDateTime end_date) {
+
+	Long FinalTimeSeconds = start_date.until(end_date, ChronoUnit.SECONDS);
+
+	Long hours = FinalTimeSeconds / 3600;
+	Long minutes = (FinalTimeSeconds % 3600) / 60;
+	Long seconds = FinalTimeSeconds % 60;
+	String finalTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+	return finalTime;
+    }
+    
     // metodo che calcola lo STOP a partire dallo Start e dal finaltime
     public LocalDateTime findStop(LocalDateTime start_date, Long oreLavorate) {
     	// .plusSeconds() aggiunge secondi al localdatetime 

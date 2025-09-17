@@ -485,11 +485,17 @@
 								<table class="block text-[#0057A5] m-auto mb-4" >
 									<tbody id="t-body-seconda-colonna-dettaglio-progetto" class=" grid grid-cols-1 p-2 ">
 										<tr  th:each="sessione : ${sessioniTask}" class="item-elenco-tasks-dettaglio-progetto w-full grid max-lg:grid-cols-4 grid-cols-5 border-b-2 text-center max-sm:text-[10px] mb-2">
-											<td  th:text=" ${sessione.dateToString()}"  ></td>
-											<td  th:text=" ${sessione.timeToString()}"  ></td>
-											<td  th:text=" ${sessione.azioneToString()}"  ></td>
-											<td  th:text=" ${sessione.tempoToString()}"  ></td>
-											<td  th:text=" ${sessione.variazioneToString()}"  ></td>
+											<td  th:text=" ${#temporals.format(sessione.getTime(),'dd MMM yyyy')}"  ></td>
+											<td  th:text=" ${#temporals.format(sessione.getTime(),'HH:mm')}"  ></td>
+											<td  th:text=" ${sessione.getAzione()}"  ></td>
+											<td  th:text=" ${sessione.getWorktime}"  ></td>
+											<td th:if="${sessione.variazione != ' - '}"
+												th:text="${'+ ' + sessione.variazione}">
+												</td>
+												<td th:if="${sessione.variazione == ' - '}"
+												th:text="${sessione.variazione}">
+												</td>
+											
 										</tr>
 								</table>
 					 </div>

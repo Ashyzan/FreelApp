@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.freelapp.controller.ProgettoController;
 import com.freelapp.service.ContatoreService;
 
 import jakarta.persistence.Column;
@@ -22,13 +23,17 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+
+
 @Entity
 @Table(name = "SessioniTask")
 public class SessioniTask {
 	
+
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     
     @Column(name = "tempo")
     private LocalDateTime time;
@@ -37,8 +42,19 @@ public class SessioniTask {
     private String azione;
     
     @Column(name = "worktime")
-    private Long worktime;
+    private String worktime;
     
+    @Column(name = "variazione")
+    private String variazione;
+    
+	public String getVariazione() {
+		return variazione;
+	}
+
+	public void setVariazione(String variazione) {
+		this.variazione = variazione;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "contatore_id", nullable = false)
 	private Contatore contatore;
@@ -48,18 +64,18 @@ public class SessioniTask {
     }
 
     // Costruttore con parametri
-    public SessioniTask(Contatore contatore, LocalDateTime time, String azione, Long worktime) {
+    public SessioniTask(Contatore contatore, LocalDateTime time, String azione, String worktime) {
         this.contatore = contatore;
         this.time = time;
         this.azione = azione;
         this.worktime = worktime;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -93,11 +109,11 @@ public class SessioniTask {
         this.azione = azione;
     }
 
-    public Long getWorktime() {
+    public String getWorktime() {
         return worktime;
     }
 
-    public void setWorktime(Long worktime) {
+    public void setWorktime(String worktime) {
         this.worktime = worktime;
     }
 
@@ -105,15 +121,14 @@ public class SessioniTask {
      * Metodo per popolare i campi dal contatore
      * Chiamato automaticamente quando si imposta il contatore
      */
+    
+
     public void populateFromContatore() {
         if (contatore != null && contatore.getTask() != null) {
             // Imposta il tempo dalla data di modifica del task
             this.time = contatore.getTask().getDataModifica();
             
-            // Imposta il worktime dal finaltime del contatore
-            if (contatore.getFinaltime() != null) {
-                this.worktime = contatore.getFinaltime();
-            }
+           
             
             // Imposta l'azione basata sullo stato del task
             String stato = contatore.getTask().getStato();
@@ -146,56 +161,8 @@ public class SessioniTask {
     public void updateFromContatore() {
         populateFromContatore();
     }
- // metodo che restituisce il finaltime formattato in HH:MM:SS
- 	public String Timer(Contatore contatore) {		
- 	    Long finaltime = contatore.getFinaltime(); 
- 	    Long HH = finaltime / 3600;
- 	    Long MM= (finaltime % 3600) / 60;
- 	    Long SS = finaltime % 60;  
- 	    String timer = String.format("%02d:%02d:%02d", HH, MM, SS);	    
- 		return timer;
- 	}
-
- 	public String dateToString() {
-        return  time.getDayOfMonth() + "/" + time.getMonthValue()  + "/" + time.getYear();
-    }
- 	
-    public String timeToString() {
-        return  time.getHour() + ":" + time.getMinute() ;
-        		
-    }
-    public String azioneToString() {
-        return  azione;
-        		
-    } 
-    
-    public String tempoToString() {
-        return  Timer(contatore);
-        		
-    } 
-    
+ 
 
     
-    public String variazioneToString() {
-    	Long finaltime = contatore.getFinaltime();
-    	String stato = contatore.getTask().getStato();
-    	if(stato != null) {
-    		if(stato == "in corso") {
-    			
-    			System.out.println("********************************************    in corso " + stato);
-    		}
-    		
-    		System.out.println("********************************************  diverso da null " + stato);
-    		
-    		return " -non in pausa - " ;
-    	//	LocalDateTime ora = LocalDateTime.now();
-    		
-    		
-    	}
-    	
-    
-    	System.out.println("********************************************     altro if " + stato );
-    	return " - -in pausa ";
-        		
-    }
+
 }

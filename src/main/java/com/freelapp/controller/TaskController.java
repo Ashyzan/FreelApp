@@ -428,7 +428,7 @@ public class TaskController {
 
 		Task task = repositTask.getReferenceById(taskId);
 		
-		List <SessioniTask> sessioniTask = sessioniTaskRepo.findAll();
+		List <SessioniTask> sessioniTask = sessioniTaskRepo.findByContatoreId(taskId);
 	
 		model.addAttribute("task", task);
 		model.addAttribute("sessioniTask", sessioniTask);

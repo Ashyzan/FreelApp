@@ -73,6 +73,7 @@ public class ContatoreController {
 	
 	SessioniTask SessioniTask = new SessioniTask();
 
+
 	// CONTATORE IN RESTART
 	if ((task.getContatore() != null) && (task.getContatore().getStop() == null)
 		&& (task.getContatore().getStart() != null)) {
@@ -105,11 +106,8 @@ public class ContatoreController {
 //		model.addAttribute("finaltime", task.getContatore().getFinaltime());
 		Integer finalTime = task.getContatore().getFinaltime().intValue();
 		JsonObj.put("finaltime", finalTime);
-		// parte per javascript
 		
-//		model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
-		//contatoreservice.contatoreIsRun(task, model);
-//		 model.addAttribute("contatoreIsRun", contatoreservice.contatoreIsRun(task));
+		// parte per javascript
 		 JsonObj.put("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
 		 JsonObj.put("contatoreIsRun", contatoreservice.contatoreIsRun(task));
 	    }
@@ -124,9 +122,6 @@ public class ContatoreController {
 		Long FinalTime = task.getContatore().getFinaltime();
 
 		// collego nel modello html il task e il contatore
-//		model.addAttribute("task", task);
-//		model.addAttribute("contatore", contatore);
-//		model.addAttribute("finaltime", FinalTime);
 		JsonObj.put("task", task.getId());
 		JsonObj.put("contatore", contatore.getId());
 		JsonObj.put("finaltime", FinalTime);
@@ -137,13 +132,12 @@ public class ContatoreController {
 		SessioniTask.setContatore(contatore);
 		SessioniTask.setAzione(task.getStato());
 		SessioniTask.setTime(task.getDataModifica());
-		SessioniTask.setWorktime(contatore.getFinaltime());
+		SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
+		SessioniTask.setVariazione(" - ");
 		SessioniTaskRepository.save(SessioniTask);
-		System.out.println("********************************************************** SessioniTask********************* + " + SessioniTask);
+		//System.out.println("********************************************************** SessioniTask********************* + " + SessioniTask);
 
 		// parte per javascript
-//		model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
-//		model.addAttribute("contatoreIsRun", contatoreservice.contatoreIsRun(task));
 		JsonObj.put("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
 		JsonObj.put("contatoreIsRun", contatoreservice.contatoreIsRun(task));
 	    }
@@ -178,19 +172,18 @@ public class ContatoreController {
 	    repositContatore.save(task.getContatore());
 	    
 		//sezione relativa alla cronologia del task/contatore
-		SessioniTask.setContatore(contatore);
+	    SessioniTask.setContatore(contatore);
 		SessioniTask.setAzione(task.getStato());
 		SessioniTask.setTime(task.getDataModifica());
-		SessioniTask.setWorktime(contatore.getFinaltime());
+		SessioniTask.setVariazione(" - ");
+		SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
 		SessioniTaskRepository.save(SessioniTask);
-		System.out.println("********************************************************** SessioniTask********************* + " + SessioniTask);
-	    
+		
+
+		
 
 	    // Parte per Javascript
 	    Long FinalTime = task.getContatore().getFinaltime();
-//	    model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
-//	    model.addAttribute("contatoreIsRun", contatoreservice.contatoreIsRun(task));
-//	    model.addAttribute("finaltime", FinalTime);
 	    JsonObj.put("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
 		JsonObj.put("contatoreIsRun", contatoreservice.contatoreIsRun(task));
 		JsonObj.put("finaltime", FinalTime);
@@ -217,8 +210,6 @@ public class ContatoreController {
 	    contatore.setFinaltime(0l);
 
 	    // collego nel modello html il task e il contatore
-//	    model.addAttribute("task", task);
-//	    model.addAttribute("contatore", contatore);
 	    JsonObj.put("task", task.getId());
 	    JsonObj.put("contatore", contatore.getId());
 	    
@@ -230,7 +221,8 @@ public class ContatoreController {
 		SessioniTask.setContatore(contatore);
 		SessioniTask.setAzione(task.getStato());
 		SessioniTask.setTime(task.getDataModifica());
-		SessioniTask.setWorktime(contatore.getFinaltime());
+		SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
+		SessioniTask.setVariazione(" - ");
 		SessioniTaskRepository.save(SessioniTask);
 		//System.out.println("********************************************************** SessioniTask********************* + " + SessioniTask);
 	    
@@ -317,9 +309,10 @@ public class ContatoreController {
 		SessioniTask.setContatore(contatore);
 		SessioniTask.setAzione(task.getStato());
 		SessioniTask.setTime(task.getDataModifica());
-		SessioniTask.setWorktime(contatore.getFinaltime());
+		SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
+		SessioniTask.setVariazione(contatoreservice.findTimeToString(START, PAUSE));
 		SessioniTaskRepository.save(SessioniTask);
-		System.out.println("********************************************************** PAUSA SessioniTask********************* + " + SessioniTask);
+		//System.out.println("********************************************************** PAUSA SessioniTask********************* + " + SessioniTask);
 
 		if (task.getContatore() != null) {
 //			model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
@@ -361,9 +354,10 @@ public class ContatoreController {
 			SessioniTask.setContatore(contatore);
 			SessioniTask.setAzione(task.getStato());
 			SessioniTask.setTime(task.getDataModifica());
-			SessioniTask.setWorktime(contatore.getFinaltime());
+			SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
+			SessioniTask.setVariazione(contatoreservice.findTimeToString(RESTART, PAUSE));
 			SessioniTaskRepository.save(SessioniTask);
-			System.out.println("********************************************************** PAUSA SessioniTask********************* + " + SessioniTask);
+			//System.out.println("********************************************************** PAUSA SessioniTask********************* + " + SessioniTask);
 		}
 
 //		model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
@@ -439,9 +433,10 @@ public class ContatoreController {
 					SessioniTask.setContatore(contatore);
 					SessioniTask.setAzione(task.getStato());
 					SessioniTask.setTime(task.getDataModifica());
-					SessioniTask.setWorktime(contatore.getFinaltime());
+					SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
+					SessioniTask.setVariazione(contatoreservice.findTimeToString(START, STOP));
 					SessioniTaskRepository.save(SessioniTask);
-					System.out.println("********************************************************** STOP SessioniTask********************* + " + SessioniTask);
+					//System.out.println("********************************************************** STOP SessioniTask********************* + " + SessioniTask);
 				}
 
 				// CASO 2: IL CONTATORE è FERMO: RESTART è prima della PAUSA
@@ -466,7 +461,8 @@ public class ContatoreController {
 					SessioniTask.setContatore(contatore);
 					SessioniTask.setAzione(task.getStato());
 					SessioniTask.setTime(task.getDataModifica());
-					SessioniTask.setWorktime(contatore.getFinaltime());
+					SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
+					SessioniTask.setVariazione(contatoreservice.findTimeToString(RESTART, STOP));
 					SessioniTaskRepository.save(SessioniTask);
 
 					model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
@@ -499,9 +495,10 @@ public class ContatoreController {
 					SessioniTask.setContatore(contatore);
 					SessioniTask.setAzione(task.getStato());
 					SessioniTask.setTime(task.getDataModifica());
-					SessioniTask.setWorktime(contatore.getFinaltime());
+					SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
+					SessioniTask.setVariazione(contatoreservice.findTimeToString(START, STOP));
 					SessioniTaskRepository.save(SessioniTask);
-					System.out.println("**********************************************************  STOP SessioniTask********************* + " + SessioniTask);
+					//System.out.println("**********************************************************  STOP SessioniTask********************* + " + SessioniTask);
 
 					// Parte per Javascript
 					model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
@@ -540,9 +537,10 @@ public class ContatoreController {
 					SessioniTask.setContatore(contatore);
 					SessioniTask.setAzione(task.getStato());
 					SessioniTask.setTime(task.getDataModifica());
-					SessioniTask.setWorktime(contatore.getFinaltime());
+					SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
+					SessioniTask.setVariazione(contatoreservice.findTimeToString(RESTART, STOP));
 					SessioniTaskRepository.save(SessioniTask);
-					System.out.println("********************************************************** STOP SessioniTask********************* + " + SessioniTask);
+					//System.out.println("********************************************************** STOP SessioniTask********************* + " + SessioniTask);
 				}
 
 			}
@@ -579,6 +577,7 @@ public class ContatoreController {
 
 		// richiamo l'id del task
 		Task task = repositTask.getReferenceById(taskId);
+		SessioniTask SessioniTask = new SessioniTask();
 		
 		// verifica che il contatore esista
 		if (task.getContatore() != null) {
@@ -600,13 +599,13 @@ public class ContatoreController {
 			// sul frontend
 			model.addAttribute("contatoreIsTrue", contatoreservice.contatoreIsTrue(task));
 			model.addAttribute("contatoreIsRun", contatoreservice.contatoreIsRun(task));
-//			Contatore contatoreSelected = task.getContatore();
-			//riassegno con il nuovo task e contatore quelli in uso
-//			contatoreInUso = contatoreSelected;
-//			taskInUso = task;
-		
-			//valore booleano che serve per l'animazione
-//			contatoreAttivato = true;
+
+			SessioniTask.setContatore(task.getContatore());
+			SessioniTask.setAzione("reset");
+			SessioniTask.setTime(task.getDataModifica());
+			SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
+			SessioniTask.setVariazione(" - ");
+			SessioniTaskRepository.save(SessioniTask);
 
 		}
 
