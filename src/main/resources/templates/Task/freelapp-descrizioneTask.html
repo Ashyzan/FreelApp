@@ -473,25 +473,21 @@
 		<!-- 			second column -->
 					<div class="gap-4 rounded-lg bg-gray-100 p-2 md:p-6 m-3 shadow-lg">
 					<div id="azioni" class="float-right">
-						<form th:action="@{/resetsessioni/{id}(id=${task.contatore.id})}" method="post" class="float-left">
-						    <button type="submit">
-						        <div class="t-tooltip w-5 h-5">
-						           <img class="h-[100%] w-[100%]" src="/img/sources/icons/garbage-red.svg" alt="reset sessioni">
-						           <div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">Reset Sessioni</div>
-						        </div>
-						    </button>
-						</form>
+						<button type="button" class="float-left ml-3"
+							th:onclick="creaApriModaleCancellaSessioniTask([[${task.id}]], [[${task.getName()}]])">
+							<div class="t-tooltip w-5 h-5">
+								<img class="h-[100%] w-[100%]" src="/img/sources/icons/garbage-red.svg" alt="elimina">
+								<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
+									Pulisci</div>
+							</div>
+						</button>
 						<a th:href="@{|/refreshSessioni/${task.id}|}" class="float-left ml-3">
-														<div class="t-tooltip w-5 h-5">
-															<img class="h-[100%] w-[100%]" src="/img/sources/icons/reset-blue.svg"
-																alt="refresh">
-															<div
-																class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
-																Refresh</div>
-														</div>
-													</a>
-					
-					
+							<div class="t-tooltip w-5 h-5">
+								<img class="h-[100%] w-[100%]" src="/img/sources/icons/reset-blue.svg" alt="refresh">
+								<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
+									Refresh</div>
+							</div>
+						</a>
 					</div>
 						
 						<h3 class="text-center text-[#FFE641] text-xl font-bold mb-4 ">Cronologia</h3>
