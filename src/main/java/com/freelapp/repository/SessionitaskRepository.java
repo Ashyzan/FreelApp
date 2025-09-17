@@ -12,5 +12,6 @@ import com.freelapp.model.SessioniTask;
 public interface SessionitaskRepository extends JpaRepository<SessioniTask, Integer> {
 	
 	List<SessioniTask> findByContatoreId(Integer contatoreId);
+	void deleteByContatoreId(Integer contatoreId);
 
 }
