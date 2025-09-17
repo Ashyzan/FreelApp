@@ -476,14 +476,14 @@
 						<form th:action="@{/resetsessioni/{id}(id=${task.contatore.id})}" method="post" class="float-left">
 						    <button type="submit">
 						        <div class="t-tooltip w-5 h-5">
-						           <img class="h-[100%] w-[100%]" src="/img/sources/icons/reset-blue.svg" alt="reset sessioni">
+						           <img class="h-[100%] w-[100%]" src="/img/sources/icons/garbage-red.svg" alt="reset sessioni">
 						           <div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">Reset Sessioni</div>
 						        </div>
 						    </button>
 						</form>
 						<a th:href="@{|/refreshSessioni/${task.id}|}" class="float-left ml-3">
 														<div class="t-tooltip w-5 h-5">
-															<img class="h-[100%] w-[100%]" src="/img/sources/icons/garbage-red.svg"
+															<img class="h-[100%] w-[100%]" src="/img/sources/icons/reset-blue.svg"
 																alt="refresh">
 															<div
 																class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
