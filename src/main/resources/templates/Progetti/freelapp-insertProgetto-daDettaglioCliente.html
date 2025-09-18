@@ -7,10 +7,10 @@
 	<!--
 		<link rel="stylesheet" th:href="@{/main.css}">		
 	-->
-	<link rel="stylesheet" href="/animate.css">	
+	<link rel="stylesheet" href="/animate.css">
 	<script src="https://cdn.tailwindcss.com"></script>
 	<script>
-		let startTime = performance.now()
+			let startTime = performance.now()
 	</script>
 	<script>
 		tailwind.config = {
@@ -18,7 +18,7 @@
 				extend: {
 					colors: {
 						clifford: '#da373d',
-					},					
+					},
 					screens: {
 						xs: '375px'
 					},
@@ -33,11 +33,10 @@
 	          }
 	        }
 	      </style>
-
 	<title id="timerTitolo">FreelApp</title>
 </head>
 
-<body class="font-sans" style="width: 100vw; height: 100vh;"   onload="timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 			<button
 				class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5]" onclick="getJsonTaskListSelectMode()">
@@ -234,7 +233,7 @@
 		</nav>
 	</header>
 	<main class="bg-[#f2f1f1]">
-		<div class="flex flex-col-reverse md:flex-row w-screen max-md-" style="height: calc(100vh - 10vh);">
+		<div class="flex flex-col-reverse md:flex-row w-screen" style="height: calc(100vh - 10vh);">
 			<div id="side-bar"
 				class="fixed md:relative md:basis-16 bottom-0 flex md:flex-col md:justify-between justify-around items-center md:p-2 p-1 h-fit md:h-full w-full text-[#FFE541] font-bold border-t-2 bg-[#0057A5]">
 				<div class="flex w-full justify-around">
@@ -243,7 +242,8 @@
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[65px] sm:h-[65px] w-[45px] h-[45px]">
 								<a th:href="@{/dashboard}">
-									<img class="h-[30px] w-[30px]" src="/img/sources/icons/dashboard.svg" alt="dashboard">
+									<img class="h-[30px] w-[30px]" src="/img/sources/icons/dashboard.svg"
+										alt="dashboard">
 								</a>
 								<div class="pt-1 text-[8px]">
 									DASHBOARD</div>
@@ -253,7 +253,8 @@
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
 								<a th:href="@{/Task/newTask}">
-									<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-task.svg" alt="nuovo task">
+									<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-task.svg"
+										alt="nuovo task">
 								</a>
 								<div class="pt-1 text-[8px]">
 									TASK</div>
@@ -263,8 +264,9 @@
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
 								<!-- th:href="@{/Progetti/insert/1} diventera poi th:href="@{'/Progetti/insert/{id}'(id=${userLogged.getId()})'} quando sara implementata autentizazione-->
-								<a th:href="@{/Progetti/insert/1}">
-									<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-project.svg" alt="nuovo progetto">
+								<a class="pointer-events-none">
+									<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-project.svg"
+										alt="nuovo progetto">
 								</a>
 								<div class="pt-1 text-[8px]">
 									PROGETTO</div>
@@ -274,7 +276,8 @@
 							<div
 								class="flex flex-col justify-center items-center md:w-[35px] md:h-[35px] sm:w-[60px] sm:h-[60px] w-[40px] h-[40px]">
 								<a th:href="@{/Clienti/insert}">
-									<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-client.svg" alt="nuovo cliente">
+									<img class="h-[30px] w-[30px]" src="/img/sources/icons/add-client.svg"
+										alt="nuovo cliente">
 								</a>
 								<div class="pt-1 text-[8px]">
 									CLIENTE</div>
@@ -306,141 +309,136 @@
 					<img class="h-[35px] w-[35px]" src="/img/sources/icons/exit.svg" alt="logout">
 				</a>
 			</div>
-			<div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center text-[#0057A5]">
-				<div class="flex flex-col justify-center items-center w-full">
-					<div class="h-12 text-center font-bold items-center m-3">
-						<h1>INSERIMENTO NUOVO TASK</h1>
-					</div>
+			<div id="main-section" class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto">
+				<div th:if="${areClientsOnDb == true}" class="w-full">
 					<div class="flex flex-col justify-center items-center w-full">
+						<div class="h-12 text-center font-bold items-center m-3">
+							<h1>INSERIMENTO NUOVO PROGETTO</h1>
+						</div>
 						<div
 							class="w-11/12 md:w-3/5 h-auto lg:max-w-[600px] border border-[#0057A5] rounded-[8px] bg-white shadow-md shadow-blue-500/50 p-3 mb-6">
-							<form class="py-3" id="task"
-								th:object="${task}"
-								th:action="@{/Task/insert/progetto}"
+							<form class="py-3" id="formProgetto" th:object="${formProgetto}" th:action="@{/Progetti/insert}"
 								method="post">
-								<input type="hidden"
-									th:field="*{progetto}"
-									name="progetto"
-									th:value="${progetto.id}">
+	
 								<div class="mb-4">
-									<div
-										class="grid md:grid-cols-3  grid-cols-4 mb-2 py-2">
+									<input type="hidden" th:field="*{utente}" id="utente">
+									<div class="grid md:grid-cols-3  grid-cols-4 mb-2 py-2">
 										<div class="col">
-											<label
-												for="name" >Nome
-												Task*</label>
+											<label for="name">Nome
+												del progetto*</label>
 										</div>
-										<div
-											class=" col md:col-span-2 col-span-3">
-											<input
-												type="text"
+										<div class=" col md:col-span-2 col-span-3">
+											<input type="text" placeholder="titolo progetto.."
 												class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
-												id="name"
-												placeholder="titolo task.."
-												th:field="*{name}"
-												th:errorClass="border">
+												id="name" th:field="*{name}" th:errorClass="border">
+											<div id="nomeProgettoError" class="text-red-600 text-[12px] text-center w-full"></div>
 											<div th:if="${#fields.hasErrors('name')}"
 												class="text-red-600 text-[12px] text-center w-full">
 												<ul>
-													<li th:each="err: ${#fields.errors('name')}"
-														th:text="${err}">
+													<li th:each="err: ${#fields.errors('name')}" th:text="${err}">
 													</li>
 												</ul>
 											</div>
 										</div>
 									</div>
-								</div>
-									<div
-										class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
+	
+									<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
 										<div class="col">
-											<label
-												for="textarea-cinquecento">Descrizione*</label>
+											<label for="textarea-cinquecento">Descrizione*</label>
 										</div>
-										<div
-											class="col md:col-span-2 col-span-3 mb-2">
-											
-											
-											<textarea
-												type="text"
-												placeholder="Inserisci una descrizione dettagliata del Task.."
-												class="border-red-600 w-full h-full ps-4 rounded-lg bg-gray-100"
-												id="textarea-cinquecento"
-												th:field="*{descrizione}"
-												th:errorClass="border"></textarea>
-												<div class="text-xs text-end px-2" id="contatore-caratteri-cinquecento-container">
-													Numero di caratteri rimasti: <span id="contatore-caratteri-cinquecento">00</span>
-												</div>
-												<div id="textarea-cinquecento-error" class="text-red-600 text-[12px] text-center w-full"></div>
-										<div th:if="${#fields.hasErrors('descrizione')}"
-											class="text-red-600 text-[12px] text-center w-full">
-											<ul>
-												<li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}">
-												</li>
-											</ul>
+										<div class="col md:col-span-2 col-span-3 mb-2">
+											<textarea type="text" class="border-red-600 w-full h-full ps-4 rounded-lg bg-gray-100"
+												id="textarea-cinquecento" placeholder="Inserisci descrizione dettagliata..."
+												maxlength="500" th:field="*{descrizione}" th:errorClass="border"></textarea>
+											<div class="text-xs text-end px-2" id="contatore-caratteri-cinquecento-container">
+												   Numero di caratteri rimasti: <span id="contatore-caratteri-cinquecento">00</span>
+											</div>
+											<div id="textarea-cinquecento-error" class="text-red-600 text-[12px] text-center w-full"></div>	
+											<div th:if="${#fields.hasErrors('descrizione')}"
+												class="text-red-600 text-[12px] text-center w-full">
+												<ul>
+													<li th:each="err : ${#fields.errors('descrizione')}" th:text="${err}">
+													</li>
+												</ul>
+											</div>
 										</div>
 									</div>
-								</div>
-									<div
-										class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
+	
+									<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
 										<div class="col">
-											<label
-												for="dataInizio">Data
-												inizio*</label>
+											<label for="dataInizio">Data inizio*</label>
 										</div>
-										<div
-											class="col md:col-span-2 col-span-3">
-											<input
-												type="date"
-												class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
-												id="dataInizio"
-												th:field="*{dataInizio}"
-												th:errorClass="border">
-										<div th:if="${#fields.hasErrors('dataInizio')}"
-											class="text-red-600 text-[12px] text-center w-full">
-											<ul>
-												<li th:each="err:${#fields.errors('dataInizio')}" th:text="${err}">
-												</li>
-											</ul>
+										<div class="col md:col-span-2 col-span-3">
+											<input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
+												id="dataInizio" th:field="*{dataInizio}" th:errorClass="border">
+											<div id="dataInizioProgettoError" class="text-red-600 text-[12px] text-center w-full"></div>
+											<div th:if="${#fields.hasErrors('dataInizio')}"
+												class="text-red-600 text-[12px] text-center w-full">
+												<ul>
+													<li th:each="err:${#fields.errors('dataInizio')}" th:text="${err}">
+													</li>
+												</ul>
+											</div>
 										</div>
 									</div>
-								</div>
-
-								<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
-									<div class="col">
-										<label for="dataChiusuraStimata">Chiusura
-											stimata</label>
-									</div>
-									<div class="col md:col-span-2 col-span-3">
-										<input type="date" class="border-red-600 w-full h-8 ps-4 rounded-lg bg-gray-100"
-											id="dataChiusuraStimata" th:field="*{dataChiusuraStimata}"
-											th:errorClass="border">
-
-										<div th:if="${#fields.hasErrors('dataChiusuraStimata')}"
-											class="text-red-600 text-[12px] text-center w-full">
-											<ul>
-												<li th:each="err:${#fields.errors('dataChiusuraStimata')}"
-													th:text="${err}">
-												</li>
-											</ul>
+	
+									<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
+										<div class="col">
+											<label for="cliente">Cliente
+												progetto</label>
+										</div>
+										<input type="hidden" th:value="${cliente.id}" id="cliente" name="cliente">
+										<div class="col md:col-span-2 col-span-3">
+											<div th:text="${progettoClienteName}"></div>
+											<div id="clienteProgettoError" class="text-red-600 text-[12px] text-center w-full"></div>
+											<div th:if="${#fields.hasErrors('cliente')}"
+												class="text-red-600 text-[12px] text-center w-full">
+												<ul>
+													<li th:each="err : ${#fields.errors('cliente')}" th:text="${err}">
+													</li>
+												</ul>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div class="grid md:grid-cols-3 grid-cols-4 mb-2 py-2">
-									<div class="col">
-										<label for="cliente">Progetto</label>
+										<div class="grid md:grid-cols-3 grid-cols-4 mb-4 py-2">
+											<div class="col">
+												<label for="tipologia-select">Tipologia*</label>
+											</div>
+											<div class="col md:col-span-2 col-span-3">
+												<select onchange="tipologiaStatisticaSelect(value)"
+													class="border-red-600 h-8  text-[#0057A5] w-full h-8 ps-4 rounded-lg 
+														bg-gray-100" id="tipologia-select" name="tipologia"
+														th:field="*{tipologia}">
+													<option value="">Seleziona tipologia</option>
+													<option value="budget">Budget</option>
+													<option value="ore">Limite di tempo</option>
+													<option value="tariffa">Tariffa oraria</option>
+												</select>
+												<div id="inputSelectTipologiaError" class="text-red-600 text-[12px] text-center w-full"></div>	
+											</div>
+										</div>
+									<div id="contenuto-form-statistiche">
+										
 									</div>
-									<div class="col md:col-span-2 col-span-3">
-										<div th:text="${taskProgettoName}"></div>
-									</div>
 								</div>
-							<div class="text-center mt-3 p-3">
-								<button type="submit"
-									class="shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
-									Aggiungi </button>
-							</div>
-							</div>
-						</form>
+								<div class="text-center mt-3 p-3">
+									<button type="submit"
+										class="shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
+										Aggiungi </button>
+								</div>
+								<div class="text-[12px]"><span> *</span>Campi obbligatori</div>
+							</form>
+						</div>
 					</div>
+				</div>
+				<div th:if="${areClientsOnDb == false}">
+					<h2 class="text-[#0057A5] font-bold m-auto py-10">NON E' POSSIBILE CREARE UN NUOVO PROGETTO PERCHE' NESSUN CLIENTE ANCORA REGISTRATO</h2>
+					<a th:href="@{/Clienti/insert}" class="text-center flex justify-center">
+						<button
+							class="border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]">
+							Aggiunti Cliente
+						</button>
+					</a>
 				</div>
 				<!-- CONTATORE -->
 				<div class="m-auto md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden"
@@ -530,7 +528,6 @@
 				</div>
 				<!-- FINE CONTATORE -->
 			</div>
-		</div>
 	</main>
 	
 	<!-- Modale TimerRapidButton -->
@@ -764,23 +761,23 @@
 	</div>
 	
 	<!-- Modale -->
-		<div id="modale"
-			class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
-			<div
-				class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
-				<div class=" w-full h-auto">
-					<div id="modale-close-button" onclick="chiudiModale()"
-						class="flex justify-end items-center p-2 cursor-pointer">
-						<img class="h-[30px] w-[30px]"
-							src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
-					</div>
-				</div>
-				<div id="contenuto-modale" class="w-full h-auto bg-white rounded-b-lg">		
+	<div id="modale"
+		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
+		<div
+			class="w-4/5 md:w-96 h-auto border-2 border-[#0057A5] bg-[#0057A5] rounded-lg z-10 scale-100 duration-500">
+			<div class=" w-full h-auto">
+				<div id="modale-close-button" onclick="chiudiModale()"
+					class="flex justify-end items-center p-2 cursor-pointer">
+					<img class="h-[30px] w-[30px]"
+						src="/img/sources/icons/close-button-yellow.svg" alt="chiudi">
 				</div>
 			</div>
+			<div id="contenuto-modale" class="w-full h-auto bg-white rounded-b-lg">		
+			</div>
 		</div>
-	
+	</div>
 	<!-- Script -->
+	
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 		let finalTimeSec = /*[[${finaltime}]]*/ null;
@@ -789,13 +786,16 @@
 		let taskInUsoId = /*[[${taskInUsoId}]]*/ null;
 		let taskInUsoName = /*[[${taskInUsoName}]]*/ null;
 		let taskInUsoProgetto = /*[[${taskInUsoProgetto}]]*/ null;
-		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean	
-		let taskProgettoName = /*[[${taskProgettoName}]]*/null;
-		let progettoId = /*[[${progettoId}]]*/null;
-		let endPoint =/*[[${endPoint}]]*/null; //String
-		let contatoreCliccatoPreRefresh = /*[[${contatoreCliccatoPreRefresh}]]*/ null;
+		let contatoreAttivato = /*[[${contatoreAttivato}]]*/null; //boolean
+		let endPoint =/*[[${endPoint}]]*/null //String
+		let tipologia =/*[[${tipologia}]]*/null; //String
+		let budgetMonetario =/*[[${budgetMonetario}]]*/null; //double
+		let tariffaOraria =/*[[${tariffaOraria}]]*/null; //double
+		let budgetOre =/*[[${budgetOre}]]*/null; //int
+		let contatoreCliccatoPreRefresh = /*[[${contatoreCliccatoPreRefresh}]]*/ null; //boolean
 		let contatoreAttivatoDaRapidButton = /*[[${contatoreAttivatoDaRapidButton}]]*/null; //boolean
 		let descrizioneTaskId = null; 
+		let clienteId =  /*[[${clienteId}]]*/null;
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
@@ -803,6 +803,7 @@
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
 	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 	<script type="text/javascript" th:src="@{/js/timerRapidButton.js}"></script>
+	<script type="text/javascript" th:src="@{/js/insert-edit-Progetto.js}"></script>
 	<script>
 		const endTime = performance.now(); // Tempo di fine
 		const loadTime = endTime - startTime;
