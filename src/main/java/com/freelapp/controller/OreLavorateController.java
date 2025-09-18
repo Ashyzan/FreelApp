@@ -84,7 +84,7 @@ public class OreLavorateController {
 
 				// sessione cronologia task
 				SessioniTask.setContatore(contatore);
-				SessioniTask.setAzione("ore lavorate");
+				SessioniTask.setAzione("sovrascritto");
 				SessioniTask.setTime(task.getDataModifica());
 				SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
 				SessioniTask.setVariazione(contatoreservice.findTimeToString(START, STOP));
@@ -146,7 +146,7 @@ public class OreLavorateController {
 
 				// sessione cronologia task
 				SessioniTask.setContatore(contatore);
-				SessioniTask.setAzione("ore lavorate");
+				SessioniTask.setAzione("sovrascritto");
 				SessioniTask.setTime(task.getDataModifica());
 				SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
 				SessioniTask.setVariazione(contatoreservice.findTimeToString(START, STOP));

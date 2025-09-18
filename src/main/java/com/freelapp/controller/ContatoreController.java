@@ -613,7 +613,7 @@ public class ContatoreController {
 		taskInUso = null;
 		contatoreAttivato = false;
 
-		return "redirect:/Task";
+		return "redirect:/Task/" + task.getId();
 	}
     
     //metodo che al cambio contatore da rapid button ritorna sulla stessa pagina cambiando il task in uso
