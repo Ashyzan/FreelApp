@@ -25,10 +25,12 @@ const buttonBottomPauseContatoreIsRun = document.getElementById('pause-bottom-af
 const primaColonnaDettaglioTask = document.getElementById('prima-colonna-dettaglio-task');
 const secondaColonnaDettaglioTask = document.getElementById('seconda-colonna-dettaglio-task');
 const terzaColonnaDettaglioTask = document.getElementById('terza-colonna-dettaglio-task');
+const contenitoreGraficoDonut = document.getElementById('contenitore-donut');
 //const nuovaAltezzaPrimaColonnaDettaglioTask = "h-[" + nuovaPrimaColonnaDettaglioTask.offsetHeight + "px]";	
 
 //vengono inizializzate variabili  fuori dalla funzione function regolazioneAltezzaColonneLayout perche poi viene aggiornata man mano che viene utilizzata per
 //l'adattamento della dimenzione delle colonne del dettaglio progetto
+
 let altezzaPrimaColonnaDettaglioTask = primaColonnaDettaglioTask.offsetHeight;
 let altezzaPrecedentePrimaColonnaDettaglioTask = primaColonnaDettaglioTask.offsetHeight;
 
@@ -129,7 +131,7 @@ function apiStatisticheJson(idTask){
 							dettaglioTaskPauseAfterContatoreApi.innerHTML = `<div class="text-center">${datajson.pauseTask}</div>`;										
 								
 							//aggiornamento guadagno
-							dettaglioTaskGuadagnoAptferContatoreApi.innerHTML =`<div class="bg-[#FFE541]  rounded-lg py-4 px-4 text-[#0057A5] text-xl font-bold ">${datajson.guadagnoAttualeTask}</div>`
+							dettaglioTaskGuadagnoAptferContatoreApi.innerHTML =`<div class="bg-[#FFE541]  rounded-lg py-4 px-4 text-[#0057A5] text-md lg:text-xl font-bold ">${datajson.guadagnoAttualeTask}</div>`
 					   })
 					   .catch(error => {
 					     console.error('Error:', error);
@@ -259,6 +261,7 @@ function creaGraficoGiorniStimati(datajson){
 
 function tempoBudgetParzialeDaTipologia(datajson){
 	
+	
 	if(datajson.tipologiaProgetto != "tariffa"){
 		
 		let titoloGrafico = null;
@@ -299,7 +302,8 @@ function tempoBudgetParzialeDaTipologia(datajson){
 			type: 'doughnut',
 			data: data,
 			options: {
-				responsive: false,
+				maintainAspectRatio: false,
+				responsive: true,
 				plugins: {
 					legend: {
 						position: 'top',
@@ -326,6 +330,8 @@ function regolazioneAltezzaColonneLayout(){
 	
 	
 	altezzaPrimaColonnaDettaglioTask = primaColonnaDettaglioTask.offsetHeight;
+	contenitoreGraficoDonut.classList.remove('h-[' + (altezzaPrecedentePrimaColonnaDettaglioTask/3) + 'px]')
+	contenitoreGraficoDonut.classList.add('h-[' + (altezzaPrimaColonnaDettaglioTask/3) + 'px]')
 	secondaColonnaDettaglioTask.classList.remove('max-h-['+ altezzaPrecedentePrimaColonnaDettaglioTask + 'px]')
 	secondaColonnaDettaglioTask.classList.add('max-h-['+ altezzaPrimaColonnaDettaglioTask + 'px]')
 	terzaColonnaDettaglioTask.classList.remove('max-h-['+ altezzaPrecedentePrimaColonnaDettaglioTask + 'px]')
