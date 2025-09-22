@@ -15,7 +15,7 @@
         <div id="chatStep1">
             <div class="radio-group">
            <p class="radio-description">Hai problemi con la app? Vuoi suggerirci nuove funzionalità?</p>
-                <input type="radio" id="radioMessage" name="chatType" value="message" checked>
+                <input type="radio" id="radioMessage" name="chatType" value="message">
                 <label for="radioMessage">Inviaci un messaggio! <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></label>
                 
                 	<p class="radio-description">Ti piace la app? Vuoi lasciarci un feedback, una recensione?</p>
@@ -31,7 +31,7 @@
                 Il messaggio che ci invierai genera un ticket che puoi trovare nella pagina di assistenza dedicata.
             </div>
             <textarea id="messageText" rows="2" placeholder="Digita qui il tuo messaggio..."></textarea>
-            <button id="sendMessageBtn">Invia <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></button>
+			  <button id="sendMessageBtn">Invia <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></button>           
         </div>
         <!-- STEP 2b: invio feedback -->
         <div id="chatStepFeedback" style="display:none;">
@@ -44,18 +44,23 @@
         </div>
         <!-- Conferma invio messaggio -->
         <div id="chatConfirmationMessage" style="display:none;">
-            <div><b>Messaggio inviato!</b></div>
+            <div><img class="chat-icons" src="/img/sources/icons/check-ok.svg"><b>Messaggio inviato!</b></div>
             <div class="radio-description" >Grazie per il tuo messaggio, ti risponderemo il prima possibile.<br>Controlla la mail e la sezione ticket.</div>
-            <button class="closeChatBtn">Chiudi</button>
+              
         </div>
+     
+        
         <!-- Conferma invio feedback -->
         <div id="chatConfirmationFeedback" style="display:none;">
-            <div><b>Feedback inviato!</b></div>
+            <div><img class="chat-icons" src="/img/sources/icons/check-ok.svg"><b>Feedback inviato!</b></div>
             <div>Grazie per il tuo messaggio, ne faremo tesoro!</div>
-            <button class="closeChatBtn">Chiudi</button>
+          
         </div>
+        
+         
         <!-- Banda inferiore blu -->
-        <div class="bottom-bar">Il Team ti ascolta!  <button id="nextBtn">Invia <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></button></div>
-       
+        <div class="bottom-bar">
+        <p class="text-bar">Il Team ti ascolta!</p></div>
+        <button class="closeChatBtn">Chiudi <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></button>
     </div>
 </div>

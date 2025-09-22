@@ -54,13 +54,16 @@
 #chatWidget .bottom-bar {
     padding: 12px 0 10px 0;
     background: #185591;
-    color: #fff;
     border-radius: 0 0 10px 10px;
-    text-align: center;
+    min-height:50px;
+    
+}
+#chatWidget .text-bar{
+	color: #fff;
+	text-align: center;
     font-size: 1.2rem;
     font-weight: 500;
 }
-
 
 
 
@@ -90,7 +93,7 @@
 .radio-description {
 	color: #2166b0;
     font-weight: 300;
-    margin: 0px 20px 0px 20px;
+    margin: 20px 20px 0px 20px;
     background-color:#fff;
     border-radius:7px;
     padding:10px;
@@ -139,6 +142,7 @@
 #sendMessageBtn,
 #sendFeedbackBtn {
     float: right;
+    margin-top:14px;
 }
 .closeChatBtn {
     float: none;
@@ -155,7 +159,7 @@ margin: 0 10px 0 10px;
 }
 #chatStepMessage textarea,
 #chatStepFeedback textarea {
-    width: 80%;
+    width: 88%;
     border-radius: 7px;
     border: 1.5px solid #e4e6ea;
     min-height: 44px;
@@ -167,10 +171,13 @@ margin: 0 10px 0 10px;
 
 /* Conferme */
 #chatConfirmationMessage, #chatConfirmationFeedback {
-    color: #1e9128;
+    color:  #2166b0;
     font-size: 1rem;
     background: #f1fbf6;
+    border: 1px solid;
     border-radius: 8px;
+    padding: 0px 20px 0px 20px;
+    margin: 0px 20px 0px 20px;
     box-shadow: 0 1px 6px rgba(33,102,176,0.05);
     margin-bottom: 6px;
 }

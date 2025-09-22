@@ -22,16 +22,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Bottone avanti dal primo step
-    document.getElementById('nextBtn').addEventListener('click', function() {
-        let selected = document.querySelector('input[name="chatType"]:checked').value;
-        document.getElementById('chatStep1').style.display = 'none';
-        if (selected === 'message') {
-            document.getElementById('chatStepMessage').style.display = 'block';
-        } else {
-            document.getElementById('chatStepFeedback').style.display = 'block';
-        }
-    });
+	document.querySelectorAll('input[name="chatType"]').forEach(function(radio) {
+	    radio.addEventListener('change', function() {
+	        let selected = this.value;
+	        document.getElementById('chatStep1').style.display = 'none';
+	        if (selected === 'message') {
+	            document.getElementById('chatStepMessage').style.display = 'block';
+	        } else {
+	            document.getElementById('chatStepFeedback').style.display = 'block';
+	        }
+	        // (Facoltativo) nascondi il pulsante avanti o altre parti UI se necessario
+	        document.querySelector('.text-bar' , '.closeChatBtn').style.display = 'none';
+	    });
+	});
+
 
     // Invio messaggio
     document.getElementById('sendMessageBtn').addEventListener('click', function() {
