@@ -16,36 +16,36 @@
             <div class="radio-group">
            <p class="radio-description">Hai problemi con la app? Vuoi suggerirci nuove funzionalità?</p>
                 <input type="radio" id="radioMessage" name="chatType" value="message" checked>
-                <label for="radioMessage">Inviaci un messaggio!</label>
+                <label for="radioMessage">Inviaci un messaggio! <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></label>
                 
                 	<p class="radio-description">Ti piace la app? Vuoi lasciarci un feedback, una recensione?</p>
                 <input type="radio" id="radioFeedback" name="chatType" value="feedback">
-                <label for="radioFeedback">Inviaci un feedback!</label>
+                <label for="radioFeedback">Inviaci un feedback! <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></label>
             </div>
-            <button id="nextBtn">Avanti</button>
+           
         </div>
         <!-- STEP 2a: invio messaggio -->
         <div id="chatStepMessage" style="display:none;">
-            <div>
+            <div class="radio-description">
                 <strong>Teniamo molto a comunicare con te!</strong>
                 Il messaggio che ci invierai genera un ticket che puoi trovare nella pagina di assistenza dedicata.
             </div>
             <textarea id="messageText" rows="2" placeholder="Digita qui il tuo messaggio..."></textarea>
-            <button id="sendMessageBtn">Invia</button>
+            <button id="sendMessageBtn">Invia <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></button>
         </div>
         <!-- STEP 2b: invio feedback -->
         <div id="chatStepFeedback" style="display:none;">
-            <div>
+            <div class="radio-description">
                 <strong>Teniamo molto a comunicare con te!</strong>
                 Il feedback che ci invierai è molto prezioso per noi, cerchiamo di migliorare continuamente il servizio!
             </div>
             <textarea id="feedbackText" rows="2" placeholder="Digita qui il feedback..."></textarea>
-            <button id="sendFeedbackBtn">Invia</button>
+            <button id="sendFeedbackBtn">Invia <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></button>
         </div>
         <!-- Conferma invio messaggio -->
         <div id="chatConfirmationMessage" style="display:none;">
             <div><b>Messaggio inviato!</b></div>
-            <div>Grazie per il tuo messaggio, ti risponderemo il prima possibile.<br>Controlla la mail e la sezione ticket.</div>
+            <div class="radio-description" >Grazie per il tuo messaggio, ti risponderemo il prima possibile.<br>Controlla la mail e la sezione ticket.</div>
             <button class="closeChatBtn">Chiudi</button>
         </div>
         <!-- Conferma invio feedback -->
@@ -55,6 +55,7 @@
             <button class="closeChatBtn">Chiudi</button>
         </div>
         <!-- Banda inferiore blu -->
-        <div class="bottom-bar">Il Team ti ascolta!</div>
+        <div class="bottom-bar">Il Team ti ascolta!  <button id="nextBtn">Invia <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></button></div>
+       
     </div>
 </div>

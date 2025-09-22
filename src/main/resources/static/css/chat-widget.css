@@ -52,23 +52,25 @@
     font-weight: bold;
 }
 #chatWidget .bottom-bar {
-    margin-top: 16px;
     padding: 12px 0 10px 0;
     background: #185591;
     color: #fff;
     border-radius: 0 0 10px 10px;
     text-align: center;
-    font-size: 1.03rem;
+    font-size: 1.2rem;
     font-weight: 500;
 }
+
+
+
 
 #chatStep1,
 #chatStepMessage,
 #chatStepFeedback,
 #chatConfirmationMessage,
 #chatConfirmationFeedback {
-    padding: 18px 18px 8px 18px;
-    background: #fff;
+    padding: 5px 5px 5px 5px;
+    background: #87D1F5;
 }
 
 /* Radio che sembrano pulsanti */
@@ -89,6 +91,9 @@
 	color: #2166b0;
     font-weight: 300;
     margin: 0px 20px 0px 20px;
+    background-color:#fff;
+    border-radius:7px;
+    padding:10px;
 }
 
 
@@ -96,13 +101,15 @@
     flex: 1;
     cursor: pointer;
     display: block;
-    padding: 15px 0;
+    padding: 12px 0;
     border-radius: 7px;
     border: 2.2px solid #e4e6ea;
     background: #f9fafc;
     color: #2166b0;
     text-align: center;
     font-weight: 300;
+    font-weight: bold;
+    line-height:2em;
     margin: 0px 20px 0px 20px;
     font-size: 1rem;
     transition: all 0.16s;
@@ -119,14 +126,11 @@
 #sendMessageBtn,
 #sendFeedbackBtn,
 .closeChatBtn {
-    background: #2166b0;
     color: white;
     border: none;
-    border-radius: 28px;
-    padding: 9px 25px;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    line-height:30px;
     font-weight: 600;
-    margin-top: 12px;
     box-shadow: 0 1px 6px rgba(33,102,176,0.10);
     cursor: pointer;
     display: inline-block;
@@ -143,16 +147,22 @@
     display: block;
 }
 
+.chat-icons {
+width:32px;	
+display:inline;
+float:right;
+margin: 0 10px 0 10px;
+}
 #chatStepMessage textarea,
 #chatStepFeedback textarea {
-    width: 100%;
+    width: 80%;
     border-radius: 7px;
     border: 1.5px solid #e4e6ea;
     min-height: 44px;
     font-size: 1rem;
-    padding: 8px 12px;
+    padding: 20px;
     resize: vertical;
-    margin: 13px 0 8px 0;
+    margin: 20px;
 }
 
 /* Conferme */
@@ -169,3 +179,5 @@
     font-size: 1.11em;
     color: #1e9128;
 }
+
+
