@@ -21,6 +21,23 @@ const dettaglioTaskGuadagnoAptferContatoreApi = document.getElementById('dettagl
 const buttonTopPauseContatoreIsRun = document.getElementById('pause-top-after-api');
 const buttonBottomPauseContatoreIsRun = document.getElementById('pause-bottom-after-api')
 
+//recupero elementi da DOM in Dettaglio Task
+const primaColonnaDettaglioTask = document.getElementById('prima-colonna-dettaglio-task');
+const secondaColonnaDettaglioTask = document.getElementById('seconda-colonna-dettaglio-task');
+const terzaColonnaDettaglioTask = document.getElementById('terza-colonna-dettaglio-task');
+//const nuovaAltezzaPrimaColonnaDettaglioTask = "h-[" + nuovaPrimaColonnaDettaglioTask.offsetHeight + "px]";	
+
+//vengono inizializzate variabili  fuori dalla funzione function regolazioneAltezzaColonneLayout perche poi viene aggiornata man mano che viene utilizzata per
+//l'adattamento della dimenzione delle colonne del dettaglio progetto
+let altezzaPrimaColonnaDettaglioTask = primaColonnaDettaglioTask.offsetHeight;
+let altezzaPrecedentePrimaColonnaDettaglioTask = primaColonnaDettaglioTask.offsetHeight;
+
+
+
+//listener che al variare delle dimensioni della window richiamano la funzione per
+//ridimensionare l'altezza max della seconda colonna
+window.addEventListener('resize', regolazioneAltezzaColonneLayout );
+
 
 // ************* logica di espansione e riduzione descrizione
 if(buttonEspandiDescrizione != null){
@@ -112,7 +129,7 @@ function apiStatisticheJson(idTask){
 							dettaglioTaskPauseAfterContatoreApi.innerHTML = `<div class="text-center">${datajson.pauseTask}</div>`;										
 								
 							//aggiornamento guadagno
-							dettaglioTaskGuadagnoAptferContatoreApi.innerHTML =`<div class="bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold ">${datajson.guadagnoAttualeTask}</div>`
+							dettaglioTaskGuadagnoAptferContatoreApi.innerHTML =`<div class="bg-[#FFE541]  rounded-lg py-4 px-4 text-[#0057A5] text-xl font-bold ">${datajson.guadagnoAttualeTask}</div>`
 					   })
 					   .catch(error => {
 					     console.error('Error:', error);
@@ -242,64 +259,81 @@ function creaGraficoGiorniStimati(datajson){
 
 function tempoBudgetParzialeDaTipologia(datajson){
 	
+	if(datajson.tipologiaProgetto != "tariffa"){
+		
+		let titoloGrafico = null;
+		let unitaLabel = null;
+		if(datajson.tipologiaProgetto ==  "budget"){
+			titoloGrafico ="Budget totale progetto: " + datajson.budgetTotaleProgetto + " €"
+			unitaLabel = " €";
+		}
+		
+		if(datajson.tipologiaProgetto ==  "ore"){
+				titoloGrafico ="Monte ore progetto: " + datajson.budgetTotaleProgetto + " ore"
+				unitaLabel = " ore";
+			}
+		
+		const data = {
+			labels: [
+				'Residuo',
+				'Task',
+				'Altri task'
+			],
+			datasets: [{
+				label: unitaLabel,
+				data: [(datajson.budgetTotaleProgetto - datajson.budgetImpiegatoDalTask), datajson.budgetImpiegatoDalTask, datajson.budgetImpiegatoDaAltriTask],
+				backgroundColor: [
+					'rgba(0, 87, 165, 0.3)',
+					'rgb(255, 87, 165)',
+					'rgb(0, 87, 165)'
+				],
+				hoverOffset: 4
+			}]
+		};
 	
-	let titoloGrafico = null;
-	let unitaLabel = null;
-	if(datajson.tipologiaProgetto ==  "budget"){
-		titoloGrafico ="Budget totale progetto: " + datajson.budgetTotaleProgetto + " €"
-		unitaLabel = " €";
+		// richiamo id ciambella nel file html
+		const donut = document.getElementById('myChart');
+		// inserisco i data	 
+		
+			 new Chart(donut, {
+			type: 'doughnut',
+			data: data,
+			options: {
+				responsive: false,
+				plugins: {
+					legend: {
+						position: 'top',
+					},
+					title: {
+						display: true,
+						text: titoloGrafico
+					}
+				}
+			},
+		});
 	}
 	
-	if(datajson.tipologiaProgetto ==  "ore"){
-			titoloGrafico ="Monte ore progetto: " + datajson.budgetTotaleProgetto + " ore"
-			unitaLabel = " ore";
-		}
-	
-	const data = {
-		labels: [
-			'Residuo',
-			'Task',
-			'Altri task'
-		],
-		datasets: [{
-			label: unitaLabel,
-			data: [(datajson.budgetTotaleProgetto - datajson.budgetImpiegatoDalTask), datajson.budgetImpiegatoDalTask, datajson.budgetImpiegatoDaAltriTask],
-			backgroundColor: [
-				'rgba(0, 87, 165, 0.3)',
-				'rgb(255, 87, 165)',
-				'rgb(0, 87, 165)'
-			],
-			hoverOffset: 4
-		}]
-	};
-
-	// richiamo id ciambella nel file html
-	const donut = document.getElementById('myChart');
-	// inserisco i data	 
-	
-		 new Chart(donut, {
-		type: 'doughnut',
-		data: data,
-		options: {
-			responsive: false,
-			plugins: {
-				legend: {
-					position: 'top',
-				},
-				title: {
-					display: true,
-					text: titoloGrafico
-				}
-			}
-		},
-	});
 
 }
 
 
 //***************************** FUNZIONE AGGIORNAMENTO DATI STATISTICI (NO GRAFICI) al click del pause ************************/
 
+//*******  funzione che in Dettaglio Progetto misura le dimensioni della prima colonna e 
+//    l'assegna alla seconda e terza		 ********************
 
+function regolazioneAltezzaColonneLayout(){
+	
+	
+	altezzaPrimaColonnaDettaglioTask = primaColonnaDettaglioTask.offsetHeight;
+	secondaColonnaDettaglioTask.classList.remove('max-h-['+ altezzaPrecedentePrimaColonnaDettaglioTask + 'px]')
+	secondaColonnaDettaglioTask.classList.add('max-h-['+ altezzaPrimaColonnaDettaglioTask + 'px]')
+	terzaColonnaDettaglioTask.classList.remove('max-h-['+ altezzaPrecedentePrimaColonnaDettaglioTask + 'px]')
+	terzaColonnaDettaglioTask.classList.add('max-h-['+ altezzaPrimaColonnaDettaglioTask + 'px]')
+	
+	altezzaPrecedentePrimaColonnaDettaglioTask = altezzaPrimaColonnaDettaglioTask;
+	
+}
 
 
 
