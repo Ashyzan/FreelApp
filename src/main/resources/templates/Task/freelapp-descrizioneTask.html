@@ -504,7 +504,7 @@
 						<div class="h-5/6 overflow-x-hidden overflow-y-auto">
 								<table class="block text-[#0057A5] m-auto mb-4" >
 									<tbody id="t-body-seconda-colonna-dettaglio-progetto" class=" grid grid-cols-1 p-2 ">
-										<tr  th:each="sessione : ${sessioniTask}" class="item-elenco-tasks-dettaglio-progetto w-full grid max-lg:grid-cols-4 grid-cols-5 border-b-2 text-center max-sm:text-[10px] mb-2">
+										<tr  th:each="sessione : ${sessioniTask}" class="item-elenco-tasks-dettaglio-progetto w-full grid grid-cols-5 border-b-2 text-center max-sm:text-[12px] mb-2">
 											<td  th:text=" ${#temporals.format(sessione.getTime(),'dd/MM/yyyy')}"  ></td>
 											<td  th:text=" ${#temporals.format(sessione.getTime(),'HH:mm')}"  ></td>
 											<td  th:text=" ${sessione.getWorktime}"  ></td>
