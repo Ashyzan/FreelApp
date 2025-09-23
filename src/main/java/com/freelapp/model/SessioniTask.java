@@ -75,9 +75,6 @@ public class SessioniTask {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Contatore getContatore() {
         return contatore;

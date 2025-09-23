@@ -1,19 +1,30 @@
 package com.freelapp.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import jakarta.persistence.Column;
-import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Utenti")
 public class User {
+
+	public enum Role {
+		STAFF,
+		USER,
+		ADMIN
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +40,7 @@ public class User {
 	@NotBlank(message = "Il cognome non può essere blank ")
 	private String cognome;
 
-	@Column(name = "email", nullable = false)
+	@Column(name = "email", nullable = false, unique = true)
 	@NotNull(message = "L'email non può essere null")
 	@NotBlank(message = "L'email non può essere blank ")
 	private String email;
@@ -50,15 +61,29 @@ public class User {
 	@OneToMany(mappedBy = "utente")
 	private List<Progetto> progetti;
 	
-	@OneToMany(mappedBy = "tickets")
+	@OneToMany(mappedBy = "utente")
 	private List<Tickets> tickets;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "role", nullable = false)
+	private Role role = Role.USER;
+
+	@Column(name = "created_at", nullable = false)
+	private LocalDateTime createdAt;
+
+	@Column(name = "updated_at", nullable = false)
+	private LocalDateTime updatedAt;
 		
-	public int getId() {
-		return id;
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public int getId() {
+		return id;
 	}
 	
 	public String getName() {
@@ -85,6 +110,14 @@ public class User {
 		this.email = email;
 	}
 
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	public String getTelefono() {
 		return telefono;
 	}
@@ -109,13 +142,41 @@ public class User {
 		this.ral= ral;
 	}
 	
-
+	
 	public List<Progetto> getProgetti() {
 		return progetti;
 	}
 
 	public void setProgetti(List<Progetto> progetti) {
 		this.progetti = progetti;
+	}
+
+	public List<Tickets> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(List<Tickets> tickets) {
+		this.tickets = tickets;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	@PrePersist
+	protected void onCreate() {
+		LocalDateTime now = LocalDateTime.now();
+		this.createdAt = now;
+		this.updatedAt = now;
+	}
+
+	@PreUpdate
+	protected void onUpdate() {
+		this.updatedAt = LocalDateTime.now();
 	}
 }
 
