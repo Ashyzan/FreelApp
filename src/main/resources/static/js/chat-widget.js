@@ -43,15 +43,18 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         
         // Validazione
-        if (!validateTextarea('messageText')) {
+        const subjectOk = validateSubject('messageSubject');
+        const bodyOk = validateTextarea('messageText');
+        if (!subjectOk || !bodyOk) {
             return false;
         }
         
-        let text = document.getElementById('messageText').value;
+        let subject = document.getElementById('messageSubject').value.trim();
+        let text = document.getElementById('messageText').value.trim();
         fetch('/api/support/message', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({message:text})
+            body: JSON.stringify({subject: subject, message: text})
         }).then(() => {
             document.getElementById('chatStepMessage').style.display = 'none';
             document.getElementById('chatConfirmationMessage').style.display = 'block';
@@ -63,15 +66,16 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         
         // Validazione
-        if (!validateTextarea('feedbackText')) {
+        const bodyOk = validateTextarea('feedbackText');
+        if (!bodyOk) {
             return false;
         }
         
-        let text = document.getElementById('feedbackText').value;
+        let text = document.getElementById('feedbackText').value.trim();
         fetch('/api/support/feedback', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({feedback:text})
+            body: JSON.stringify({feedback: text})
         }).then(() => {
             document.getElementById('chatStepFeedback').style.display = 'none';
             document.getElementById('chatConfirmationFeedback').style.display = 'block';
@@ -85,12 +89,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 	
-	// Nel file JavaScript della chat-widget
+    // Nel file JavaScript della chat-widget
 	function resetChatForm() {
 	    document.getElementById('radioMessage').checked = false;
 	    document.getElementById('radioFeedback').checked = false;
 	    
 	    // Reset anche dei textarea
+        const ms = document.getElementById('messageSubject');
+        if (ms) { ms.value = ''; ms.style.borderColor = '#e4e6ea'; }
+        const fs = document.getElementById('feedbackSubject');
+        if (fs) { fs.value = ''; fs.style.borderColor = '#e4e6ea'; }
 	    document.getElementById('messageText').value = '';
 	    document.getElementById('feedbackText').value = '';
 	    
@@ -127,6 +135,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('chatStepFeedback').style.display = 'none';
         document.getElementById('chatConfirmationMessage').style.display = 'none';
         document.getElementById('chatConfirmationFeedback').style.display = 'none';
+        const ms = document.getElementById('messageSubject');
+        if (ms) { ms.value = ''; ms.style.borderColor = '#e4e6ea'; }
         document.getElementById('messageText').value = '';
         document.getElementById('feedbackText').value = '';
         
@@ -150,7 +160,20 @@ function validateTextarea(textareaId) {
         textarea.style.borderColor = '#ff4444';
         return false;
     } else {
-        textarea.style.borderColor = '#ccc';
+        textarea.style.borderColor = '#e4e6ea';
+        return true;
+    }
+}
+
+// Validazione subject (3..120)
+function validateSubject(inputId) {
+    const input = document.getElementById(inputId);
+    const value = (input?.value || '').trim();
+    if (value.length < 3 || value.length > 120) {
+        if (input) input.style.borderColor = '#ff4444';
+        return false;
+    } else {
+        if (input) input.style.borderColor = '#e4e6ea';
         return true;
     }
 }
@@ -182,4 +205,9 @@ document.getElementById('messageText').addEventListener('input', function() {
 document.getElementById('feedbackText').addEventListener('input', function() {
     validateTextarea('feedbackText');
     updateCharacterCounter('feedbackText', 'feedbackCount', 40);
+});
+
+// Subject live validation
+document.getElementById('messageSubject').addEventListener('input', function() {
+    validateSubject('messageSubject');
 });

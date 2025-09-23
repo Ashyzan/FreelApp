@@ -25,8 +25,9 @@ import jakarta.validation.constraints.Size;
 @Table(name = "tickets")
 public class Tickets {
 	
-	public enum Status { OPEN, PENDING, CLOSED }
+	public enum Status { OPEN, PENDING, CLOSED } // pending si usa in attesa della risposta del cliente
 	public enum Priority { LOW, MEDIUM, HIGH }
+    public enum Category { TICKET, FEEDBACK }
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,10 +41,6 @@ public class Tickets {
 	@Column(name = "subject", nullable = false)
 	private String subject;
 	
-	@Size(min = 1, max =2000 , message="massimo 2000 caratteri")
-	@Column(name = "messaggio", nullable = false)
-	private String messaggio;
-	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = false)
 	private Status status = Status.OPEN;
@@ -52,8 +49,9 @@ public class Tickets {
 	@Column(name = "priority", nullable = true)
 	private Priority priority;
 	
-	@Column(name = "tipologia")
-	private String tipologiaTicket;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "category", nullable = false)
+	private Category category = Category.TICKET;
 
 	@ManyToOne
 	@JoinColumn(name = "assigned_to", nullable = true)
@@ -88,14 +86,6 @@ public class Tickets {
 		this.utente = utente;
 	}
 
-	public String getMessaggio() {
-		return messaggio;
-	}
-
-	public void setMessaggio(String messaggio) {
-		this.messaggio = messaggio;
-	}
-
 	public String getSubject() {
 		return subject;
 	}
@@ -128,12 +118,12 @@ public class Tickets {
 		this.priority = priority;
 	}
 
-	public String getTipologiaTicket() {
-		return tipologiaTicket;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setTipologiaTicket(String tipologiaTicket) {
-		this.tipologiaTicket = tipologiaTicket;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	public User getAssignedTo() {
