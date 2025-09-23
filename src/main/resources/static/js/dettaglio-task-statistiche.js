@@ -330,8 +330,10 @@ function regolazioneAltezzaColonneLayout(){
 	
 	
 	altezzaPrimaColonnaDettaglioTask = primaColonnaDettaglioTask.offsetHeight;
-	contenitoreGraficoDonut.classList.remove('h-[' + (altezzaPrecedentePrimaColonnaDettaglioTask/3) + 'px]')
-	contenitoreGraficoDonut.classList.add('h-[' + (altezzaPrimaColonnaDettaglioTask/3) + 'px]')
+	if(contenitoreGraficoDonut!=null){
+		contenitoreGraficoDonut.classList.remove('h-[' + (altezzaPrecedentePrimaColonnaDettaglioTask/3) + 'px]')
+		contenitoreGraficoDonut.classList.add('h-[' + (altezzaPrimaColonnaDettaglioTask/3) + 'px]')		
+	}
 	secondaColonnaDettaglioTask.classList.remove('max-h-['+ altezzaPrecedentePrimaColonnaDettaglioTask + 'px]')
 	secondaColonnaDettaglioTask.classList.add('max-h-['+ altezzaPrimaColonnaDettaglioTask + 'px]')
 	terzaColonnaDettaglioTask.classList.remove('max-h-['+ altezzaPrecedentePrimaColonnaDettaglioTask + 'px]')
