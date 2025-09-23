@@ -9,6 +9,8 @@
     -->
 <link rel="stylesheet" href="/animate.css">
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+<link rel="stylesheet" type="text/css" href="/css/chat-widget.css">
+
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 	let startTime = performance.now()
@@ -525,7 +527,7 @@
 														<li class="flex flex-col md:flex-row px-2 mt-6 mr-2 float-right">
 															<a th:href="@{/Progetti/edit/{id}(id=${progettoPerData.getId()})}">
 																<div class="tooltip-top col-auto w-8 h-8 ms-2">
-																	<span class="tooltiptext-top">Modifica task</span>
+																	<span class="tooltiptext-top">Modifica progetto</span>
 																	<img
 																		th:src="@{/img/sources/icons/modify-grey.svg}" alt="modifica-progetto"
 																		class="size-5 inline">
@@ -1089,6 +1091,9 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 	chat widget -->
+	<div th:insert="fragments/chat-widget :: chatWidget"></div>
 
 		<!-- Modale -->
 	<div id="modale"
@@ -1136,6 +1141,7 @@
 	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 	<script type="text/javascript" th:src="@{/js/lista-progetti.js}"></script>
 	<script type="text/javascript" th:src="@{/js/timerRapidButton.js}"></script>
+	<script type="text/javascript" th:src="@{/js/chat-widget.js}"></script>
 	<script>
 			const endTime = performance.now(); // Tempo di fine
 			  const loadTime = endTime - startTime;

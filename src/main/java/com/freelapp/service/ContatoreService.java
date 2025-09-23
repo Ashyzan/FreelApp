@@ -106,6 +106,18 @@ public class ContatoreService {
 	return FinalTimeSeconds;
     }
     
+    public String findTimeToString(LocalDateTime start_date, LocalDateTime end_date) {
+
+	Long FinalTimeSeconds = start_date.until(end_date, ChronoUnit.SECONDS);
+
+	Long hours = FinalTimeSeconds / 3600;
+	Long minutes = (FinalTimeSeconds % 3600) / 60;
+	Long seconds = FinalTimeSeconds % 60;
+	String finalTime = String.format("%5dh %1dm %1ds",  hours, minutes, seconds);
+
+	return finalTime;
+    }
+    
     // metodo che calcola lo STOP a partire dallo Start e dal finaltime
     public LocalDateTime findStop(LocalDateTime start_date, Long oreLavorate) {
     	// .plusSeconds() aggiunge secondi al localdatetime 
@@ -268,7 +280,7 @@ public class ContatoreService {
 			}
 	}
     
-   // metodo che restituisce il finaltime formattato per caricamento template(usato in importContatoreInGet e passato al model
+   // metodo che restituisce il finaltime formattato (per caricamento template usato in importContatoreInGet e passato al model)
     public String calcoloFinalTimeString(Task task) {
     	
     	double finalTimeInSeconds = task.getContatore().getFinaltime().doubleValue();
