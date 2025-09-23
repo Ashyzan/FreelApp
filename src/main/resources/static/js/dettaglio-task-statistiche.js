@@ -115,7 +115,7 @@ function apiStatisticheJson(idTask){
 								if(datajson.giorniChiusuraStimata.giorniAncoraDisponibili > 0){
 									contenitoreGiorniChiusuraStimata.innerHTML = `	<div class="text-center font-bold pe-1 py-1">Countdown chiusura stimata</div>
 																					<div class="md:hidden text-center mb-2"> giorni rimanenti ${datajson.giorniChiusuraStimata.giorniAncoraDisponibili }</div>
-																					<canvas class="m-auto  mb-2" id="chiusuraStimata"></canvas>`
+																					<canvas class="m-auto mb-2" id="chiusuraStimata"></canvas>`
 									creaGraficoGiorniStimati(datajson);	 
 								} else if(datajson.giorniChiusuraStimata.giorniAncoraDisponibili == 0 && datajson.giorniChiusuraStimata.giorniOltreChiusuraStimata  == 0){
 									contenitoreGiorniChiusuraStimata.innerHTML = `<div class="text-center mb-3">Oggi è il giorno di chiusura Stimata</div>`
