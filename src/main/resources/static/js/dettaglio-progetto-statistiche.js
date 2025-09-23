@@ -184,12 +184,12 @@ function regolazioneAltezzaColonneLayout(){
 
 //*******  funzione che in Dettaglio Cliente misura le dimensioni della prima colonna e 
 //    l'assegna alla seconda 		 ********************
-function regolazioneAltezzaColonneLayout(){
-	altezzaPrimaColonnaDettaglioProgetto = primaColonnaDettaglioProgetto.offsetHeight;
-	secondaColonnaDettaglioProgetto.classList.remove('max-h-['+ altezzaPrecedentePrimaColonnaDettaglioProgetto + 'px]')
-	secondaColonnaDettaglioProgetto.classList.add('max-h-['+ altezzaPrimaColonnaDettaglioProgetto + 'px]')
-	altezzaPrecedentePrimaColonnaDettaglioProgetto = altezzaPrimaColonnaDettaglioProgetto;
-}
+//function regolazioneAltezzaColonneLayout(){
+//	altezzaPrimaColonnaDettaglioProgetto = primaColonnaDettaglioProgetto.offsetHeight;
+//	secondaColonnaDettaglioProgetto.classList.remove('max-h-['+ altezzaPrecedentePrimaColonnaDettaglioProgetto + 'px]')
+//	secondaColonnaDettaglioProgetto.classList.add('max-h-['+ altezzaPrimaColonnaDettaglioProgetto + 'px]')
+//	altezzaPrecedentePrimaColonnaDettaglioProgetto = altezzaPrimaColonnaDettaglioProgetto;
+//}
 
 
 
