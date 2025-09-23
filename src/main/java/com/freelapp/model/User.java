@@ -49,6 +49,9 @@ public class User {
 	
 	@OneToMany(mappedBy = "utente")
 	private List<Progetto> progetti;
+	
+	@OneToMany(mappedBy = "tickets")
+	private List<Tickets> tickets;
 		
 	public int getId() {
 		return id;
