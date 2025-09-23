@@ -44,7 +44,7 @@
 </head>
 
 <body class="font-sans" style="width: 100vw; height: 100vh;"
-	th:onload="timerstart(), controlloContatoreAttivato(),contatoreCliccatoPlayPauseInMobile(), apiStatisticheJson([[ ${task.getId()}]])">
+	th:onload="timerstart(),regolazioneAltezzaColonneLayout(), controlloContatoreAttivato(), contatoreCliccatoPlayPauseInMobile(), apiStatisticheJson([[ ${task.getId()}]])">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 		<button
 			class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5]" onclick="getJsonTaskListSelectMode()">
@@ -315,12 +315,12 @@
 				</a>
 			</div>
 			<div id="main-section"
-				class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto">
+				class="flex w-full flex-wrap h-full justify-center items-center  text-[#0057A5] overflow-y-auto p-2">
 
-				<div class="md:w-11/12 grid lg:grid-cols-2 md:grid-cols-1">
-		<!-- 	prima column -->
-					<div
-						class="gap-4 rounded-lg bg-gray-100 p-6 m-3 shadow-lg">
+				<div class="w-full h-fit grid lg:grid-cols-6 grid-cols-1 gap-4 py-5 ">
+		
+		<!----------------- 	prima column --------------------------->
+					<div id="prima-colonna-dettaglio-task" class="xl:col-span-2 lg:col-span-3 col-span-6 h-fit rounded-lg bg-gray-100 p-4 shadow-lg ">
 						<div>
 							<div class="flex justify-end items-center mb-3">
 								<div class=" text-[#FFE641] font-bold py-2 text-end">Progetto: </div>
@@ -471,7 +471,70 @@
 						</div>
 					</div>
 		<!-- 			second column -->
-					<div class="gap-4 rounded-lg bg-gray-100 p-2 md:p-6 m-3 shadow-lg">
+					<div id="seconda-colonna-dettaglio-task" class="xl:col-span-2 lg:col-span-3 col-span-6 rounded-lg bg-gray-100 p-2 shadow-lg ">
+						<div class="h-1/6">
+							<div id="azioni" class="float-right">
+								<button type="button" class="float-left ml-3"
+									th:onclick="creaApriModaleCancellaSessioniTask([[${task.id}]], [[${task.getName()}]])">
+									<div class="t-tooltip w-5 h-5">
+										<img class="h-[100%] w-[100%]" src="/img/sources/icons/garbage-red.svg" alt="elimina">
+										<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
+											Pulisci</div>
+									</div>
+								</button>
+								<a th:href="@{|/refreshSessioni/${task.id}|}" class="float-left ml-3">
+									<div class="t-tooltip w-5 h-5">
+										<img class="h-[100%] w-[100%]" src="/img/sources/icons/reset-blue.svg" alt="refresh">
+										<div class="t-box hidden border border-[#0057A5] bg-gray-100 rounded-lg absolute p-1 ms-[-25px] mt-[5px]">
+											Refresh</div>
+									</div>
+								</a>
+							</div>
+							
+							<h3 class="text-center text-[#FFE641] text-xl font-bold max-xs:mb-4 mb-2">Cronologia</h3>
+									<div class="grid max-xs:grid-cols-3 xs:grid-cols-5 justify-items-center border border-[#0057A5] md:h-12 h-8 text-[#0057A5]  max-sm:text-[12px] align-bottom md:mb-3">
+										<span class=" flex items-center text-center max-xs:hidden">Data</span>
+										<span class="flex items-center text-center max-xs:hidden">Ora</span>
+										<span class="flex items-center text-center xs:hidden">Data/Ora</span>
+										<span class="flex items-center text-center max-xs:hidden">Worktime</span>
+										<span class="flex items-center text-center max-xs:hidden">Azione</span>
+										<span class="flex items-center text-center xs:hidden">WorkTime/azione</span>
+										<span class="flex items-center text-center">Variazione</span>
+									</div>
+							
+						</div>
+								
+						<div class="h-5/6 overflow-x-hidden overflow-y-auto">
+								<table class="block text-[#0057A5] m-auto mb-4" >
+									<tbody id="t-body-seconda-colonna-dettaglio-progetto" class="grid grid-cols-1 p-4">
+										<tr th:each="sessione : ${sessioniTask}" class="item-elenco-tasks-dettaglio-progetto flex justify-center items-center w-full grid max-xs:grid-cols-3 xs:grid-cols-5 
+												border-b-2 text-center max-sm:text-[12px] mb-2">
+											<td  th:text=" ${#temporals.format(sessione.getTime(),'dd/MM/yyyy')}" class="max-xs:hidden"></td>
+											<td  th:text=" ${#temporals.format(sessione.getTime(),'HH:mm')}" class="max-xs:hidden"></td>
+											<td class="xs:hidden">
+												<div th:text=" ${#temporals.format(sessione.getTime(),'dd/MM/yyyy')}"></div>
+												<div th:text=" ${#temporals.format(sessione.getTime(),'HH:mm')}"></div>
+											</td>
+											<td  th:text=" ${sessione.getWorktime}" class="max-xs:hidden"></td>
+											<td  th:text=" ${sessione.getAzione()}"  class="max-xs:hidden"></td>
+											<td class="xs:hidden">
+												<div th:text="  ${sessione.getWorktime}"></div>
+												<div th:text=" ${sessione.getAzione()}"></div>
+											</td>
+											<td th:if="${sessione.variazione != ' - '}"
+												th:text="${'+ ' + sessione.variazione}">
+												</td>
+												<td th:if="${sessione.variazione == ' - '}"
+												th:text="${sessione.variazione}">
+												</td>
+											
+										</tr>
+								</table>
+					 </div>
+					</div>
+					
+					<!-- 			3 column -->
+					<div id="terza-colonna-dettaglio-task" class="xl:col-span-2 lg:col-span-6 col-span-6 rounded-lg bg-gray-100 p-4 xl:p-3 shadow-lg">
 						<h3 class="text-center text-[#FFE641] text-xl font-bold mb-4">Statistiche</h3>
 							<div th:if="${dataChiusuraStimataNonDisponibile != null}" class="border-b-4 ">
 								<div class="col font-bold text-center pe-1 py-1 ">Chiusura Stimata</div>
@@ -507,8 +570,8 @@
 							
 						</div>
 						<div th:if="${task.getStato() != 'inattivo'}">
-							<div th:if="${task.progetto.getTipologia() != 'tariffa'}" class="md:grid grid-cols-2 w-full mb-4">
-								<div id="guadagno" class="col flex flex-col justify-center items-center py-8 mb-2">
+							<div th:if="${task.progetto.getTipologia() != 'tariffa'}" class="grid grid-cols-3 w-full mb-4">
+								<div id="guadagno" class="col-span-1 flex flex-col justify-center items-center py-8 mb-2">
 									<div class="mx-auto  text-xl font-bold mb-2">Guadagno</div>
 									<!--
 									<div class=" bg-[#FFE541]  rounded-lg py-4 px-7 text-[#0057A5] text-3xl font-bold " id="guadagnoAttualeTask"
@@ -516,8 +579,8 @@
 										-->
 									<div id="dettaglio-task-guadagno-after-contatore-api"></div>
 								</div>
-								<div th:if="${task.getStato != 'inattivo'}">
-									<canvas  class="m-auto col w-3/4" id="myChart"></canvas>
+								<div th:if="${task.getStato != 'inattivo'}" id="contenitore-donut" class="col-span-2">
+									<canvas  class="w-11/12" id="myChart"></canvas>
 								</div>
 							</div>
 							<div th:if="${task.progetto.getTipologia() == 'tariffa'}" class=" w-full">
@@ -543,6 +606,7 @@
 						</div>
 						<div class="text-center text-xs pt-3">I dati visualizzati sono riferiti all'ultima pausa</div>
 					</div>
+					
 					</div>
 		<!-- CONTATORE -->
 				<div class="m-auto md:pb-2 lg:pt-2 pt-4 w-11/12 lg:hidden"
@@ -902,8 +966,8 @@
 				let contatoreAttivatoDaRapidButton = /*[[${contatoreAttivatoDaRapidButton}]]*/null; //boolean
 				let descrizioneTaskId = /*[[${task.getId()}]]*/null; //int
 				/*]]>*/
-				console.log("contatoreIsRun: " + contatoreIsRun);
-				console.log("contatoreCliccatoPreRefresh in dettaglio task: " + contatoreCliccatoPreRefresh)
+				console.log("statotask: " + statoTask);
+				
 			</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
 	<script type="text/javascript" th:src="@{/js/api-contatore.js}"></script>
