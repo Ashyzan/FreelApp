@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Validazione
         const subjectOk = validateSubject('messageSubject');
-        const bodyOk = validateTextarea('messageText');
+        const bodyOk = validateTextarea('messageText', 40, 2000);
         if (!subjectOk || !bodyOk) {
             return false;
         }
@@ -66,16 +66,18 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         
         // Validazione
-        const bodyOk = validateTextarea('feedbackText');
-        if (!bodyOk) {
+        const subjectOk = validateSubject('feedbackSubject');
+        const bodyOk = validateTextarea('feedbackText', 40, 2000);
+        if (!subjectOk || !bodyOk) {
             return false;
         }
         
+        let subject = document.getElementById('feedbackSubject').value.trim();
         let text = document.getElementById('feedbackText').value.trim();
         fetch('/api/support/feedback', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({feedback: text})
+            body: JSON.stringify({subject: subject, feedback: text})
         }).then(() => {
             document.getElementById('chatStepFeedback').style.display = 'none';
             document.getElementById('chatConfirmationFeedback').style.display = 'block';
@@ -137,6 +139,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('chatConfirmationFeedback').style.display = 'none';
         const ms = document.getElementById('messageSubject');
         if (ms) { ms.value = ''; ms.style.borderColor = '#e4e6ea'; }
+        const fs2 = document.getElementById('feedbackSubject');
+        if (fs2) { fs2.value = ''; fs2.style.borderColor = '#e4e6ea'; }
         document.getElementById('messageText').value = '';
         document.getElementById('feedbackText').value = '';
         
@@ -151,18 +155,47 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Validazione textarea
-function validateTextarea(textareaId) {
+// Validazione textarea con min e max (default min=40, max=2000)
+function validateTextarea(textareaId, minLength = 40, maxLength = 2000) {
     const textarea = document.getElementById(textareaId);
     const value = textarea.value.trim();
     
-    if (value.length < 40) {
+    // gestione errore max
+    const counterId = textareaId === 'messageText' ? 'messageCount' : 'feedbackCount';
+    const errorId = textareaId + 'MaxError';
+    let errorEl = document.getElementById(errorId);
+    if (!errorEl) {
+        errorEl = document.createElement('div');
+        errorEl.id = errorId;
+        errorEl.style.fontSize = '11px';
+        errorEl.style.color = '#ff4444';
+        errorEl.style.margin = '4px 20px 0 20px';
+        errorEl.style.display = 'none';
+        // inserisci dopo il counter
+        const counterWrapper = document.getElementById(counterId)?.parentElement;
+        if (counterWrapper && counterWrapper.parentElement) {
+            counterWrapper.parentElement.insertBefore(errorEl, counterWrapper.nextSibling);
+        }
+    }
+
+    // condizioni
+    if (value.length > maxLength) {
+        textarea.style.borderColor = '#ff4444';
+        errorEl.textContent = `Hai superato il limite massimo di ${maxLength} caratteri`;
+        errorEl.style.display = 'block';
+        return false;
+    }
+
+    // nascondi errore max se rientra
+    if (errorEl) errorEl.style.display = 'none';
+
+    if (value.length < minLength) {
         textarea.style.borderColor = '#ff4444';
         return false;
-    } else {
-        textarea.style.borderColor = '#e4e6ea';
-        return true;
     }
+
+    textarea.style.borderColor = '#e4e6ea';
+    return true;
 }
 
 // Validazione subject (3..120)
@@ -181,7 +214,7 @@ function validateSubject(inputId) {
 
 // VALIDAZIONE FORM
 // Funzione per aggiornare il contatore caratteri
-function updateCharacterCounter(textareaId, counterId, minLength = 40) {
+function updateCharacterCounter(textareaId, counterId, minLength = 40, maxLength = 2000) {
     const textarea = document.getElementById(textareaId);
     const counter = document.getElementById(counterId);
     const count = textarea.value.length;
@@ -189,7 +222,9 @@ function updateCharacterCounter(textareaId, counterId, minLength = 40) {
     counter.textContent = count;
     
     // Cambia colore in base al raggiungimento del minimo
-    if (count >= minLength) {
+    if (count > maxLength) {
+        counter.style.color = '#ff4444'; // Rosso per overflow
+    } else if (count >= minLength) {
         counter.style.color = '#28a745'; // Verde
     } else {
         counter.style.color = '#999'; // Grigio
@@ -198,16 +233,19 @@ function updateCharacterCounter(textareaId, counterId, minLength = 40) {
 
 // Event listener per validazione in tempo reale
 document.getElementById('messageText').addEventListener('input', function() {
-    validateTextarea('messageText');
-    updateCharacterCounter('messageText', 'messageCount', 40);
+    validateTextarea('messageText', 40, 2000);
+    updateCharacterCounter('messageText', 'messageCount', 40, 2000);
 });
 
 document.getElementById('feedbackText').addEventListener('input', function() {
-    validateTextarea('feedbackText');
-    updateCharacterCounter('feedbackText', 'feedbackCount', 40);
+    validateTextarea('feedbackText', 40, 2000);
+    updateCharacterCounter('feedbackText', 'feedbackCount', 40, 2000);
 });
 
 // Subject live validation
 document.getElementById('messageSubject').addEventListener('input', function() {
     validateSubject('messageSubject');
+});
+document.getElementById('feedbackSubject').addEventListener('input', function() {
+    validateSubject('feedbackSubject');
 });
