@@ -1,0 +1,72 @@
+<!-- fragments/chat-widget.html -->
+<div th:fragment="chatWidget">
+    <!-- Bottone chat in basso a destra -->
+    <div id="chatCircle">
+        <button id="openChat">
+            <span><img src="/img/sources/icons/chat-widget.svg" alt="Chat Widget"></span>
+        </button>
+    </div>
+
+    <!-- Modulo chat supporto -->
+    <div id="chatWidget">
+        <!-- Banda superiore blu -->
+        <h4>Benvenuta/o in Assistenza!</h4>
+        <!-- STEP 1: scelta tra messaggio o feedback -->
+        <div id="chatStep1">
+            <div class="radio-group">
+           <p class="radio-description">Hai problemi con la app? Vuoi suggerirci nuove funzionalità?</p>
+                <input type="radio" id="radioMessage" name="chatType" value="message">
+                <label class="text-radiobutton" for="radioMessage"  checked="" autocomplete="off">Inviaci un messaggio! <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></label>
+                
+                	<p class="radio-description">Ti piace la app? Vuoi lasciarci un feedback, una recensione?</p>
+                <input type="radio" id="radioFeedback" name="chatType" value="feedback">
+                <label class="text-radiobutton" for="radioFeedback"  checked="" autocomplete="off">Inviaci un feedback! <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></label>
+            </div>
+           
+        </div>
+        <!-- STEP 2a: invio messaggio -->
+        <div id="chatStepMessage" style="display:none;">
+            <div class="radio-description">
+                <strong>Teniamo molto a comunicare con te!</strong>
+                Il messaggio che ci invierai genera un ticket che puoi trovare nella pagina di assistenza dedicata.
+            </div>
+            <textarea id="messageText" rows="2" placeholder="Digita qui il tuo messaggio... (minimo 40 caratteri)" minlength="40" required></textarea>
+            <div id="messageCounter" style="text-align: right; font-size: 11px; color: #999; margin-top: 2px;">
+                <span id="messageCount">0</span>/40 caratteri
+            </div>
+			  <button id="sendMessageBtn">Invia <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></button>           
+        </div>
+        <!-- STEP 2b: invio feedback -->
+        <div id="chatStepFeedback" style="display:none;">
+            <div class="radio-description">
+                <strong>Teniamo molto a comunicare con te!</strong>
+                Il feedback che ci invierai è molto prezioso per noi, cerchiamo di migliorare continuamente il servizio!
+            </div>
+            <textarea id="feedbackText" rows="2" placeholder="Digita qui il feedback... (minimo 40 caratteri)" minlength="40" required></textarea>
+            <div id="feedbackCounter" style="text-align: right; font-size: 11px; color: #999; margin-top: 2px;">
+                <span id="feedbackCount">0</span>/40 caratteri
+            </div>
+            <button id="sendFeedbackBtn">Invia <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></button>
+        </div>
+        <!-- Conferma invio messaggio -->
+        <div id="chatConfirmationMessage" style="display:none;">
+            <div><img class="ok-icons" src="/img/sources/icons/check-ok.svg"><b>Messaggio inviato!</b></div>
+            <div class="success-message" >Grazie per il tuo messaggio, ti risponderemo il prima possibile.<br>Controlla la mail e la sezione ticket.</div>
+              <button class="closeChatBtn">Chiudi <img class="chat-icons" src="/img/sources/icons/chiudi.svg"></button>
+        </div>
+     
+        
+        <!-- Conferma invio feedback -->
+        <div id="chatConfirmationFeedback" style="display:none;">
+            <div class="feedback-inviato"><img class="ok-icons" src="/img/sources/icons/check-ok.svg"><b>Feedback inviato!</b></div>
+            <div class="success-message">Grazie per il tuo messaggio, ne faremo tesoro!</div>
+          <button class="closeChatBtn">Chiudi <img class="chat-icons" src="/img/sources/icons/chiudi.svg"></button>
+        </div>
+        
+         
+        <!-- Banda inferiore blu -->
+        <div class="bottom-bar">
+        <p class="text-bar">Il Team ti ascolta!</p></div>
+        
+    </div>
+</div>

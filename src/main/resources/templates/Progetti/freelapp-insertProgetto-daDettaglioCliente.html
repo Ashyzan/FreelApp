@@ -8,6 +8,8 @@
 		<link rel="stylesheet" th:href="@{/main.css}">		
 	-->
 	<link rel="stylesheet" href="/animate.css">
+	<link rel="stylesheet" type="text/css" href="/css/chat-widget.css">
+	
 	<script src="https://cdn.tailwindcss.com"></script>
 	<script>
 			let startTime = performance.now()
@@ -760,6 +762,9 @@
 		</div>
 	</div>
 	
+	<!-- 	chat widget -->
+	<div th:insert="fragments/chat-widget :: chatWidget"></div>
+	
 	<!-- Modale -->
 	<div id="modale"
 		class="fixed top-0 left-0 w-full h-full bg-[#0057A5] bg-opacity-50  flex justify-center items-center z-0 scale-0">
@@ -804,6 +809,7 @@
 	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 	<script type="text/javascript" th:src="@{/js/timerRapidButton.js}"></script>
 	<script type="text/javascript" th:src="@{/js/insert-edit-Progetto.js}"></script>
+	<script type="text/javascript" th:src="@{/js/chat-widget.js}"></script>
 	<script>
 		const endTime = performance.now(); // Tempo di fine
 		const loadTime = endTime - startTime;
