@@ -321,18 +321,18 @@
 								<h2 class="flex justify-center items-center h-full">STATISTICHE</h2>
 							</div>
 						</div>
-						<div class="lg:w-1/3 w-full lg:h-1/2 p-2">
+						<div class="lg:w-1/3 w-full xl:h-1/2 p-2">
 							<div id="task-recenti" class="rounded-lg shadow-lg p-4 h-full bg-white">
 								<div class="h-1/6 flex justify-between items-center mb-4">
-									<h1 class="text-[#0057A5] font-bold">TASK RECENTI</h1>
-									<div class="text-end flex items-top">
-										<a class="w-fit h-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+									<h1 class="text-[#0057A5] font-bold w-full">ULTIMI TASK</h1>
+									<div class="text-end flex justify-end items-top w-fit">
+										<a class="w-fit h-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-nowrap text-xs text-[#0057A5] font-bold px-2 py-1 rounded-full"
 											th:href="@{/Task}">Mostra tutti</a>
 									</div>
 								</div>
 								<div class="h-5/6 grid lg:grid-cols-1 grid-cols-2 max-xs:grid-cols-1 xl:overflow-y-auto md:pe-2">
 									<a th:each="taskDaListaCompleta: ${taskListCompleta}" th:if="${taskDaListaCompletaStat.index < 6}"
-										class="col flex items-center hover:bg-sky-200 mb-2 max-md:pe-2 "
+										class="col flex items-center hover:bg-sky-100 mb-2 max-md:pe-2 "
 										th:href="@{|/Task/${taskDaListaCompleta.id}|}">
 										<img th:src="${taskDaListaCompleta.progetto.cliente.LogoPath}"
 											class="size-8 rounded-full object-cover mx-2">
@@ -344,42 +344,42 @@
 								</div>
 							</div>
 						</div>
-						<div class="lg:w-1/3 w-full lg:h-1/2 p-2">
+						<div class="lg:w-1/3 w-full xl:h-1/2 p-2">
 							<div id="progetti-recenti" class="rounded-lg shadow-lg p-4 h-full bg-white">
 								<div class="h-1/6 flex justify-between items-center mb-4">
-									<h1 class="text-[#0057A5] font-bold">PROGETTI RECENTI</h1>
-									<div class="text-end flex justify-end items-top w-full">
-										<a class="w-fit h-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+									<h1 class="text-[#0057A5] font-bold w-full">ULTIMI PROGETTI</h1>
+									<div class="text-end flex justify-end items-top w-fit">
+										<a class="w-fit h-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-nowrap text-xs text-[#0057A5] font-bold px-2 py-1 rounded-full"
 											th:href="@{/Progetti}">Mostra tutti</a>
 									</div>
 								</div>
 								<div class="h-5/6 grid lg:grid-cols-1 grid-cols-2 max-xs:grid-cols-1 xl:overflow-y-auto md:pe-2">
 									<a th:each="progetto: ${progettiList}" th:if="${progettoStat.index < 6}"
-										class="col flex items-center hover:bg-sky-200 mb-2 max-md:pe-2 "
+										class="col flex items-center hover:bg-sky-100 mb-2 max-md:pe-2 "
 										th:href="@{|/Progetti/${progetto.id}|}">
 										<img th:src="${progetto.cliente.LogoPath}"
 											class="size-8 rounded-full object-cover mx-2">
 										<div class="text-[#0057A5] w-3/4 md:w-full ps-2 ">
 											<div th:text="${progetto.getName()}" class="font-semibold md:text-md text-sm truncate"></div>
-											<div th:text="${#temporals.format(progetto.dataInizio,'dd-MM-yyyy')}"
-												class="md:text-sm text-xs truncate"></div>
+											<div th:text="${#temporals.format(progetto.dataModifica,'dd/MM/yy')}"
+												class="md:text-xs text-[10px] truncate"></div>
 										</div>
 									</a>
 								</div>
 							</div>
 						</div>
-						<div class="lg:w-1/3 w-full lg:h-1/2 p-2">
+						<div class="lg:w-1/3 w-full xl:h-1/2 p-2">
 							<div id="clienti-recenti" class="rounded-lg shadow-lg p-4 h-full bg-white">
 								<div class="h-1/6 flex justify-between items-center mb-4">
-									<h1 class="text-[#0057A5] font-bold">CLIENTI RECENTI</h1>
-									<div class="text-end flex justify-end items-top w-full">
-										<a class="w-fit h-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-[#0057A5] font-bold px-3 py-[5px] rounded-[35px]"
+									<h1 class="text-[#0057A5] font-bold w-full">I TUOI CLIENTI</h1>
+									<div class="text-end flex justify-end items-top w-fit">
+										<a class="w-fit h-fit shadow-md shadow-blue-500/50 border-2 border-[#0057A5] hover:bg-[#FFE541] text-nowrap text-xs text-[#0057A5] font-bold px-2 py-1 rounded-full"
 											th:href="@{/Clienti}">Mostra tutti</a>
 									</div>
 								</div>
 								<div class="h-5/6 grid lg:grid-cols-1 grid-cols-2 max-xs:grid-cols-1 xl:overflow-y-auto md:pe-2">
 									<a th:each="cliente: ${clientiList}" th:if="${clienteStat.index < 6}"
-										class="col flex items-center hover:bg-sky-200 mb-2 max-md:pe-2 "
+										class="col flex items-center hover:bg-sky-100 mb-2 max-md:pe-2 "
 										th:href="@{|/Clienti/${cliente.id}|}">
 										<img th:src="${cliente.LogoPath}" class="size-8 rounded-full object-cover mx-2">
 										<div class="text-[#0057A5] w-3/4 ps-2 ">
