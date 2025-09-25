@@ -30,12 +30,23 @@
                 <strong>Teniamo molto a comunicare con te!</strong>
                 Il messaggio che ci invierai genera un ticket che puoi trovare nella pagina di assistenza dedicata.
             </div>
-            <input id="messageSubject" type="text" placeholder="Oggetto" minlength="3" maxlength="120" required style="width:88%; border-radius:7px; border:1.5px solid #e4e6ea; font-size:1rem; padding:12px 20px; margin: 10px 20px 0 20px;" />
-            <textarea id="messageText" rows="2" placeholder="Digita qui il tuo messaggio... (minimo 40 caratteri)" minlength="40" required></textarea>
+            
+            
+            <form th:action="@{/api/inserimento-ticket}" method="post" id="formMessage">
+  <input type="hidden" name="category" value="TICKET"/>
+  <input id="messageSubject" type="text" th:value="${subject}" placeholder="Oggetto" minlength="3" maxlength="120" required style="width:88%; border-radius:7px; border:1.5px solid #e4e6ea; font-size:1rem; padding:12px 20px; margin: 10px 20px 0 20px;" />
+            <textarea id="messageText" th:value="${body}" rows="2" placeholder="Digita qui il tuo messaggio... (minimo 40 caratteri)" minlength="40" required></textarea>
             <div id="messageCounter" style="text-align: right; font-size: 11px; color: #999; margin-top: 2px;">
                 <span id="messageCount">0</span>/40 caratteri
             </div>
-			  <button id="sendMessageBtn">Invia <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></button>           
+<button type="submit" id="sendFeedbackBtn">Invia <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></button>
+   
+  <!-- CSRF (se usi Spring Security) -->
+<!--   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/> -->
+<!--   <button type="submit" id="sendMessageBtn">Invia <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></button> -->
+
+</form>
+
         </div>
         <!-- STEP 2b: invio feedback -->
         <div id="chatStepFeedback" style="display:none;">

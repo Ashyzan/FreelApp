@@ -1,5 +1,6 @@
 package com.freelapp.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,15 +28,23 @@ import org.springframework.web.bind.annotation.RestController;
 import com.freelapp.model.Cliente;
 import com.freelapp.model.Progetto;
 import com.freelapp.model.Task;
+import com.freelapp.model.TicketMessage;
+import com.freelapp.model.Tickets;
+import com.freelapp.model.User;
 import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.repository.TaskRepository;
+import com.freelapp.repository.TicketsMessageRepository;
+import com.freelapp.repository.TicketsRepository;
+import com.freelapp.repository.UserRepository;
 import com.freelapp.restModel.RestCliente;
 import com.freelapp.restModel.RestProject;
 import com.freelapp.restModel.RestTask;
 import com.freelapp.service.ContatoreService;
 import com.freelapp.service.ProgettoService;
 import com.freelapp.service.TaskService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin
@@ -56,6 +65,15 @@ public class FreelappRestController {
 
 	@Autowired
 	private TaskService taskService;
+	
+	@Autowired
+	private TicketsRepository ticketsRepository;
+	
+	@Autowired 
+	private TicketsMessageRepository ticketMessageRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@Autowired
 	private ProgettoService progettoService;
@@ -452,4 +470,44 @@ public List<RestProject> listaProgettiFiltrataPerCliente(@RequestParam int input
 		return progettoJsonObj;
 
 	}
+	
+	// invia il form dalla chat widget e crea il ticket
+	@PostMapping(value = "/inserimento-ticket", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public JSONObject nuovoTicket(@RequestParam("subject") String subject,
+	                              @RequestParam("body") String body,
+	                              @RequestParam(value = "category", required = false) Tickets.Category category,
+	                              Principal principal) {
+	    JSONObject out = new JSONObject();
+	    try {
+	        User user = userRepository.findByEmail(principal.getName())
+	                .orElseThrow(() -> new IllegalStateException("Utente non trovato"));
+
+	        // Crea ticket
+	        Tickets t = new Tickets();
+	        t.setUtente(user);
+	        t.setSubject(subject);
+	        t.setCategory(category != null ? category : Tickets.Category.TICKET);
+	        t.setStatus(Tickets.Status.OPEN);
+	        t = ticketsRepository.save(t);
+
+	        // Primo messaggio (il testo del form)
+	        TicketMessage m = new TicketMessage();
+	        m.setTicket(t);
+	        m.setAuthor(user);
+	        m.setBody(body);
+	        ticketMessageRepository.save(m);
+
+	        out.put("success", true);
+	        out.put("ticketId", t.getId());
+	        out.put("message", "Ticket creato correttamente");
+	        return out;
+	    } catch (Exception e) {
+	        out.put("success", false);
+	        out.put("error", e.getMessage());
+	        return out;
+	    }
+	}
+	
+	
+	
 }
