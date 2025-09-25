@@ -16,6 +16,7 @@ import com.freelapp.repository.ClienteRepository;
 import com.freelapp.repository.ProgettoRepository;
 import com.freelapp.repository.TaskRepository;
 import com.freelapp.service.ContatoreService;
+import com.freelapp.service.ProgettoService;
 import com.freelapp.service.TaskService;
 
 
@@ -37,6 +38,9 @@ public class DashboardController {
 	
 	@Autowired
 	private TaskService taskService;
+	
+	@Autowired
+	private ProgettoService progettoService;
 	
 
 	@GetMapping("/dashboard")
@@ -82,18 +86,18 @@ public class DashboardController {
 		
 		//passo al model la lista completa dei task
 		List<Task> taskListCompleta = new ArrayList<Task>();
-		taskListCompleta= taskRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+		taskListCompleta= taskRepository.findAll(Sort.by(Sort.Direction.DESC, "DataModifica"));
 		model.addAttribute("taskListCompleta", taskListCompleta);
 		
 		//passo al model la lista completa dei clienti
 		List<Cliente> clienteList = new ArrayList<Cliente> ();
-		clienteList = clienteRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+		clienteList = clienteRepository.findAll(Sort.by(Sort.Direction.ASC, "dataInserimentoCliente"));
 		model.addAttribute("clientiList", clienteList);
 
 		
-		//passo al model la lista completa dei progetti
+		//passo al model la lista dei primi 6 progetti ordinati per data di modifica più recente tra il progetto stesso ed i suoi task
 		List<Progetto> progettiList = new ArrayList<Progetto> ();
-		progettiList = progettoRepository.findAll(Sort.by(Sort.Direction.ASC, "Name"));
+		progettiList = progettoService.ordinaListaProgettiPerDataModificaPiuRecenteTraProgettoETask();
 		model.addAttribute("progettiList", progettiList);
 		
 		

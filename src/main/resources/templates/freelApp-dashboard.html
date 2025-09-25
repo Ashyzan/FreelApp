@@ -361,7 +361,10 @@
 											class="size-8 rounded-full object-cover mx-2">
 										<div class="text-[#0057A5] w-3/4 md:w-full ps-2 ">
 											<div th:text="${progetto.getName()}" class="font-semibold md:text-md text-sm truncate"></div>
-											<div th:text="${#temporals.format(progetto.dataModifica,'dd/MM/yy')}"
+											<!--
+												${#temporals.format(progetto.dataModifica,'dd/MM/yy')}
+											-->
+											<div th:text="${progetto.ultimaModificaAiTask()}"
 												class="md:text-xs text-[10px] truncate"></div>
 										</div>
 									</a>

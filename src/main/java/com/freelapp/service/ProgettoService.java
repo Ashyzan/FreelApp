@@ -2,6 +2,9 @@ package com.freelapp.service;
 
 
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +44,9 @@ public class ProgettoService {
 		return progettoRepository.findAll();
 		
 	}
+	
+	//inizializzata variabile per metodo ordinaListaProgettiPerDataModificaPiuRecenteTraProgettoETask
+	LocalDateTime dataModificaPiuRecente = null;
 	
 	public Page<Progetto> orderByDataModifica(int pageNumber){
 		//criterio di default della lista dei progetti senza alcun filtro selezionato
@@ -351,8 +357,31 @@ public class ProgettoService {
 				model.addAttribute("testoFinale", testoFinale);
 				
 			}
-	
-	
+			
+		
+		//metodo che ordina lista dei progetti in base alla data di modifica piu recente tra se stesso ed i suoi progetti
+		public List<Progetto> ordinaListaProgettiPerDataModificaPiuRecenteTraProgettoETask(){
+			//ini
+			List<Progetto> listaProgetti = new ArrayList<Progetto>();
+			List<Progetto> listaInteraProgetti = progettoRepository.findAll();
+			
+			listaInteraProgetti.forEach(progetto ->{
+				dataModificaPiuRecente = progetto.getDataModifica();
+				progetto.getElencoTask().forEach(task ->{
+					if(task.getDataModifica().isAfter(dataModificaPiuRecente)) {
+						dataModificaPiuRecente = task.getDataModifica();
+					}
+				});
+				progetto.setDataModifica(dataModificaPiuRecente);
+				listaProgetti.add(progetto);
+				dataModificaPiuRecente = null;
+			});
+			
+			listaProgetti.sort(Comparator.comparing(Progetto::getDataModifica).reversed());
+				
+			
+			return listaProgetti;
+		}
 }
 
 

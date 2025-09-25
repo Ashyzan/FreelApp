@@ -4,11 +4,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.freelapp.service.ProgettoService;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +27,11 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "Progetti")
 public class Progetto {
-
+	
+	//inizializzata variabile utilizzata nel metodo "cercaDataModificaPiuRecenteTraProgettoEdSuoiTask()"
+	String testoProvvisorio = null;
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "progetto_id")
@@ -210,6 +215,27 @@ public class Progetto {
 
 	public void setArchivia(Boolean archivia) {
 		this.archivia = archivia;
+	}
+	
+	
+	public String ultimaModificaAiTask() {
+		
+		String testoDataUltimaModifica = new String("Mod. il " + String.valueOf(dataModifica.getDayOfMonth()) + "-"
+						+ String.valueOf(dataModifica.getMonthValue()) + "-"
+						+ String.valueOf(dataModifica.getYear()));
+
+				elencoTask.forEach(task ->{
+					if (task.getDataModifica().isAfter(dataModifica)) {
+						testoProvvisorio = String.valueOf("Mod. il " + task.getDataModifica().getDayOfMonth()) + "-"
+								+ String.valueOf(task.getDataModifica().getMonthValue()) + "-"
+								+ String.valueOf(task.getDataModifica().getYear());
+					}
+				});
+				if(testoProvvisorio != null) {
+					testoDataUltimaModifica = testoProvvisorio;
+				}
+
+		return testoDataUltimaModifica;
 	}
 }
 
