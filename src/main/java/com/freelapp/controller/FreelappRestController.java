@@ -478,6 +478,13 @@ public List<RestProject> listaProgettiFiltrataPerCliente(@RequestParam int input
 	                              @RequestParam(value = "category", required = false) Tickets.Category category,
 	                              Principal principal) {
 	    JSONObject out = new JSONObject();
+	    
+	    System.out.println("=== DEBUG TICKET ===");
+	    System.out.println("Principal: " + principal);
+	    System.out.println("Subject: " + subject);
+	    System.out.println("Body: " + body);
+	    System.out.println("Category: " + category);
+	    
 	    try {
 	        User user = userRepository.findByEmail(principal.getName())
 	                .orElseThrow(() -> new IllegalStateException("Utente non trovato"));

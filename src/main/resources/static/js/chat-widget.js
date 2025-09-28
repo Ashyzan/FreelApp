@@ -38,28 +38,42 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 
 
-    // Invio messaggio
-    document.getElementById('sendMessageBtn').addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Validazione
-        const subjectOk = validateSubject('messageSubject');
-        const bodyOk = validateTextarea('messageText', 40, 2000);
-        if (!subjectOk || !bodyOk) {
-            return false;
-        }
-        
-        let subject = document.getElementById('messageSubject').value.trim();
-        let text = document.getElementById('messageText').value.trim();
-        fetch('/api/support/message', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({subject: subject, message: text})
-        }).then(() => {
-            document.getElementById('chatStepMessage').style.display = 'none';
-            document.getElementById('chatConfirmationMessage').style.display = 'block';
-        });
-    });
+	// Invio messaggio
+	document.getElementById('sendMessageBtn').addEventListener('click', async (e) => {
+	    e.preventDefault();
+	    
+	    // Validazione (mantieni quelle che hai)
+	    const subjectOk = validateSubject('messageSubject');
+	    const bodyOk = validateTextarea('messageText', 40, 2000);
+	    if (!subjectOk || !bodyOk) {
+	        return false;
+	    }
+	    
+	    		// Prepara i dati
+		const formData = new FormData();
+		formData.append('subject', document.getElementById('messageSubject').value.trim());
+		formData.append('body', document.getElementById('messageText').value.trim());
+		formData.append('category', 'TICKET');
+
+		try {
+		    const response = await fetch('/api/inserimento-ticket', {
+		        method: 'POST',
+		        body: formData
+		    });
+	        
+	        const result = await response.json();
+	        if (result.success) {
+	            // Mostra conferma
+	            document.getElementById('chatStepMessage').style.display = 'none';
+	            document.getElementById('chatConfirmationMessage').style.display = 'block';
+	        } else {
+	            alert('Errore: ' + result.error);
+	        }
+	    } catch (error) {
+	        console.error('Errore:', error);
+	        alert('Errore di connessione');
+	    }
+	});
 
     // Invio feedback
     document.getElementById('sendFeedbackBtn').addEventListener('click', function(e) {
