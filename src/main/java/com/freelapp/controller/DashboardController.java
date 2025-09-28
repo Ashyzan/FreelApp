@@ -91,7 +91,7 @@ public class DashboardController {
 		
 		//passo al model la lista completa dei clienti
 		List<Cliente> clienteList = new ArrayList<Cliente> ();
-		clienteList = clienteRepository.findAll(Sort.by(Sort.Direction.ASC, "dataInserimentoCliente"));
+		clienteList = clienteRepository.findAll(Sort.by(Sort.Direction.DESC, "dataInserimentoCliente"));
 		model.addAttribute("clientiList", clienteList);
 
 		

@@ -6,7 +6,6 @@ const dettaglioTaskWorktimeOnload = document.getElementById('dettaglio-task-work
 const dettaglioTaskWorktimeAfterContatoreApi = document.getElementById('dettaglio-task-work-time-after-contatore-api');
 
 
-
 //recuper elementi dal DOM da lista task per gestione icona di stato task in uso
 const listaTask = document.getElementsByClassName('item-elenco-tasks');
 
@@ -82,6 +81,10 @@ function startContatoreApi(id){
 																		</button>`;				
 																	
 								timerstart();
+								//se siamo nella dashboard al click sul play richiama la funzione attivaElementoInTaskList da dashboard.js
+								if(tasks != null){
+									attivaElementoInTaskList();
+								}
 								
 								//gestione icona di stato per contatore api senza refresh template
 								if(descrizioneTaskId != null){
@@ -127,6 +130,10 @@ function pauseContatoreApi(id){
 								seconds = finalTimeSec % 60;
 								
 								terminaWorker()
+								//se siamo nella dashboard al click sul pause richiama la funzione disattivaElementoInTaskList da dashboard.js
+								if(tasks != null){
+									disattivaElementoInTaskList();
+								}
 								
 								//contatore-basso (mobile)
 									//dopo aver caricato i pulsanti tramite thymelaf secondo quanto preso dal model, al click 

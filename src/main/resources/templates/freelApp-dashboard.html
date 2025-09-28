@@ -44,7 +44,7 @@
 
 </head>
 
-<body class="font-sans" style="width: 100vw; height: 100vh;" onload="regolazioneMainContainer(), timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato()">
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="regolazioneMainContainer(), timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), attivaElementoInTaskList()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 		<button
 			class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5]" onclick="getJsonTaskListSelectMode()">
@@ -332,13 +332,16 @@
 								</div>
 								<div class="h-5/6 grid lg:grid-cols-1 grid-cols-2 max-xs:grid-cols-1 xl:overflow-y-auto md:pe-2">
 									<a th:each="taskDaListaCompleta: ${taskListCompleta}" th:if="${taskDaListaCompletaStat.index < 6}"
-										class="col flex items-center hover:bg-sky-100 mb-2 max-md:pe-2 "
-										th:href="@{|/Task/${taskDaListaCompleta.id}|}">
+										class="lista-ultimi-task col flex items-center hover:bg-sky-100 mb-2 max-md:pe-2 "
+										th:href="@{|/Task/${taskDaListaCompleta.id}|}" th:id="${taskDaListaCompleta.id}">
 										<img th:src="${taskDaListaCompleta.progetto.cliente.LogoPath}"
 											class="size-8 rounded-full object-cover mx-2">
-										<div class="text-[#0057A5] w-3/4 md:w-full ps-2 ">
+										<div class="text-[#0057A5] w-2/5 lg:w-3/5 ps-2 ">
 											<div th:text="${taskDaListaCompleta.getName()}" class="font-semibold md:text-md text-sm truncate"></div>
 											<div th:text="${taskDaListaCompleta.progetto.cliente.getLabelCliente()}" class="md:text-sm text-xs truncate"></div>
+										</div>
+										<div class="w-2/5 lg:w-1/5 flex justify-center items-center" th:id="|task-in-uso-${taskDaListaCompleta.id}">
+											
 										</div>
 									</a>
 								</div>
@@ -359,13 +362,16 @@
 										th:href="@{|/Progetti/${progetto.id}|}">
 										<img th:src="${progetto.cliente.LogoPath}"
 											class="size-8 rounded-full object-cover mx-2">
-										<div class="text-[#0057A5] w-3/4 md:w-full ps-2 ">
-											<div th:text="${progetto.getName()}" class="font-semibold md:text-md text-sm truncate"></div>
-											<!--
-												${#temporals.format(progetto.dataModifica,'dd/MM/yy')}
-											-->
+										<div class="text-[#0057A5] w-2/5 lg:w-3/5 ps-2 ">
+											<div th:text="${progetto.getName()}" class="font-semibold md:text-xs text-[10px] truncate"></div>
 											<div th:text="${progetto.ultimaModificaAiTask()}"
 												class="md:text-xs text-[10px] truncate"></div>
+										</div>
+										<div class="w-2/5 lg:w-1/5 flex justify-center items-center">
+											<img th:if="${progetto.getDataFine} == null" th:src="@{/img/sources/icons/contatore-on-start.svg}"
+												alt="progetto-attivo" class="size-5 inline float-right">
+											<img th:if="${progetto.getDataFine} != null" th:src="@{/img/sources/icons/contatore-on-stop.svg}"
+												alt="progetto-chiuso" class="size-5 inline float-right">
 										</div>
 									</a>
 								</div>
@@ -757,6 +763,7 @@
 	</script>
 	<script type="text/javascript" th:src="@{/js/timer.js}"></script>
 	<script type="text/javascript" th:src="@{/js/api-contatore.js}"></script>
+	<script type="text/javascript" th:src="@{/js/dashboard.js}"></script>
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
 	<script type="text/javascript" th:src="@{/js/modale.js}"></script>
 	<script type="text/javascript" th:src="@{/js/timerRapidButton.js}"></script>

@@ -220,14 +220,14 @@ public class Progetto {
 	
 	public String ultimaModificaAiTask() {
 		
-		String testoDataUltimaModifica = new String("Mod. il " + String.valueOf(dataModifica.getDayOfMonth()) + "-"
-						+ String.valueOf(dataModifica.getMonthValue()) + "-"
+		String testoDataUltimaModifica = new String("mod. " + String.valueOf(dataModifica.getDayOfMonth()) + "/"
+						+ String.valueOf(dataModifica.getMonthValue()) + "/"
 						+ String.valueOf(dataModifica.getYear()));
 
 				elencoTask.forEach(task ->{
 					if (task.getDataModifica().isAfter(dataModifica)) {
-						testoProvvisorio = String.valueOf("Mod. il " + task.getDataModifica().getDayOfMonth()) + "-"
-								+ String.valueOf(task.getDataModifica().getMonthValue()) + "-"
+						testoProvvisorio = String.valueOf("mod. " + task.getDataModifica().getDayOfMonth()) + "/"
+								+ String.valueOf(task.getDataModifica().getMonthValue()) + "/"
 								+ String.valueOf(task.getDataModifica().getYear());
 					}
 				});
