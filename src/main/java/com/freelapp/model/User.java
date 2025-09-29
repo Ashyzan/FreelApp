@@ -45,6 +45,10 @@ public class User {
 	@NotBlank(message = "L'email non può essere blank ")
 	private String email;
 	
+	@NotBlank(message = "Inserimento password obbligatorio")
+	@Column(name = "password")
+	private String password;
+	
 	@Column(name = "Telefono", nullable = false)
 	@NotNull(message = "Il telefono non può essere null")
 	private String telefono;
@@ -74,6 +78,17 @@ public class User {
 	@Column(name = "updated_at", nullable = true)
 	private LocalDateTime updatedAt;
 		
+	
+	
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}

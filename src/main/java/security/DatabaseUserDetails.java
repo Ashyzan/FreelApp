@@ -1,4 +1,4 @@
-package Security;
+package security;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,20 +14,19 @@ import com.freelapp.model.User.Role;
 
 public class DatabaseUserDetails implements UserDetails{
 
-	private final Long id;
+	//private final Long id;
 	private final String username;
 	private final String password;
 	private final Set<GrantedAuthority> authorities;
+	private final Role role;
 	
-	public DatabaseUserDetails(User utente) {
-		this.id = utente.getId();
-		this.username = utente.getEmail();
-		this.password = utente.getPassword();
+	public DatabaseUserDetails(User user) {
+		//this.id = user.getId();
+		this.username = user.getEmail();
+		this.password = user.getPassword();
 		this.authorities = new HashSet<GrantedAuthority>();
-		for(Roles ruolo : utente.getRuolo()) {
-			this.authorities.add(new SimpleGrantedAuthority(ruolo.getRuolo()));
-		}
-		
+		this.authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
+		this.role = null;
 		
 	}
 
@@ -49,9 +48,13 @@ public class DatabaseUserDetails implements UserDetails{
 		return this.username;
 	}
 	
-	public long getId() {
-		
-		return id;
+	public Role getRole() {
+		return this.role;
 	}
+	
+//	public long getId() {
+//		
+//		return id;
+//	}
 
 }
