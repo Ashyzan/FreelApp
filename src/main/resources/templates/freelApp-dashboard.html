@@ -12,6 +12,7 @@
 	<script>
 		let startTime = performance.now()
 	</script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js"></script>
 	<script>
 		tailwind.config = {
 			theme: {
@@ -44,7 +45,7 @@
 
 </head>
 
-<body class="font-sans" style="width: 100vw; height: 100vh;" onload="regolazioneMainContainer(), timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), attivaElementoInTaskList()">
+<body class="font-sans" style="width: 100vw; height: 100vh;" onload="regolazioneMainContainer(), timerstart(), contatoreCliccatoPlayPauseInMobile(), controlloContatoreAttivato(), attivaElementoInTaskList(), apiStatisticheDashboard()">
 	<section id="rapidButton" class="fixed bottom-[20%] xs:bottom-[15%]  right-0">
 		<button
 			class=" pe-4 bg-[#FFE541] border-2 border-[#0057A5] rounded-l-lg p-2 text-[#0057A5] font-bold shadow-md shadow-[#0057A5]" onclick="getJsonTaskListSelectMode()">
@@ -314,11 +315,57 @@
 				</a>
 			</div>
 			<div id="main-section" class="w-full max-xl:overflow-y-auto h-[100%]" >
-				<section id="contenuto-dashboard" class="w-full lg:h-full flex xl:flex-row flex-col-reverse p-2">
+				<section id="contenuto-dashboard" class="w-full xl:h-full flex xl:flex-row flex-col-reverse p-2">
 					<div class="flex flex-row flex-wrap xl:w-3/4 w-full h-full">
-						<div class="w-full xl:h-1/2 h-[200px] p-2">
-							<div class="h-full rounded-lg shadow-lg bg-indigo-300">
-								<h2 class="flex justify-center items-center h-full">STATISTICHE</h2>
+						<div class="w-full xl:h-1/2 h-fit">
+							<div class="h-full rounded-lg shadow-lg bg-violet-100">
+								<div class="lg:flex justify-between w-full lg:flex-col lg:h-2/6 h-fit">
+									<div class="w-full h-full">
+										<!--
+											<h2 class="text-[#0057A5] text-xl font-bold w-full px-2 pt-2 h-fit text-start " th:text="|ANNO ${annoCorrente}|"></h2>
+										-->
+										<div class="grid grid-cols-6 text-[#0057A5] ">
+											<div class="col-span-4 w-full text-center font-bold">GOAL FINANZIARIO</div>
+											<div class="col-span-2 w-full text-center font-bold">GUADAGNO ATTUALE</div>
+										</div>
+										<div class="grid grid-cols-6 text-[#0057A5] text-sm">
+											<div class="col-span-4 w-full  px-4">
+												<div class="w-full flex justify-between items-center font-bold">
+													<div>0 €</div>
+													<div> 3000 €</div>
+												</div>
+												<div class="progress w-full h-4 bg-white rounded-xl overflow-hidden relative">
+													<div class="progress-bar-uno h-full bg-fuchsia-300 rounded-xl absolute"></div>
+													<div class="progress-bar-due h-full bg-fuchsia-500 rounded-xl absolute"></div>
+												</div>
+												<div class="w-full flex justify-around items-center py-[2px]">
+													<div class="flex items-center gap-2">
+														<div class="h-3 w-3 border border-black bg-white rounded-full"></div>
+														<span class="text-[#0057A5] text-xs"><strong>Goal annuale:</strong> 3000€</span>
+													</div>
+													<div class="flex items-center gap-2">
+														<div class="h-3 w-3 border border-black bg-fuchsia-500 rounded-full"></div>
+														<span class="text-[#0057A5] text-xs"><strong>Fatturato:</strong> 955€</span>
+													</div>
+													<div class="flex items-center gap-2">
+														<div class="h-3 w-3 border border-black bg-fuchsia-300 rounded-full"></div>
+														<span class="text-[#0057A5] text-xs"><strong>Guadagno:</strong> 1350€</span>
+													</div>
+												</div>
+											</div>
+											<div class="col-span-2 text-[#0057A5] font-bold text-md text-center flex flex-col items-center p-2">
+												<div class="bg-[#FFE541] px-4 py-2 rounded-xl w-fit">1220,50 €</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="w-full h-4/6">
+									<div class="grid grid-cols-12 w-full h-full">
+										<div class="col-span-3 w-full h-full bg-white border border-red-200">task</div>
+										<div class="col-span-4 w-full h-full bg-white border border-red-200">progetti</div>
+										<div class="col-span-5 w-full h-full bg-white border border-red-200">grafico</div>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="lg:w-1/3 w-full xl:h-1/2 p-2">
@@ -332,7 +379,7 @@
 								</div>
 								<div class="h-5/6 grid lg:grid-cols-1 grid-cols-2 max-xs:grid-cols-1 xl:overflow-y-auto md:pe-2">
 									<a th:each="taskDaListaCompleta: ${taskListCompleta}" th:if="${taskDaListaCompletaStat.index < 6}"
-										class="lista-ultimi-task col flex items-center hover:bg-sky-100 mb-2 max-md:pe-2 "
+										class="lista-ultimi-task col flex items-center hover:bg-sky-100 mb-2 max-md:pe-2 h-fit"
 										th:href="@{|/Task/${taskDaListaCompleta.id}|}" th:id="${taskDaListaCompleta.id}">
 										<img th:src="${taskDaListaCompleta.progetto.cliente.LogoPath}"
 											class="size-8 rounded-full object-cover mx-2">
@@ -358,7 +405,7 @@
 								</div>
 								<div class="h-5/6 grid lg:grid-cols-1 grid-cols-2 max-xs:grid-cols-1 xl:overflow-y-auto md:pe-2">
 									<a th:each="progetto: ${progettiList}" th:if="${progettoStat.index < 6}"
-										class="col flex items-center hover:bg-sky-100 mb-2 max-md:pe-2 "
+										class="col flex items-center hover:bg-sky-100 mb-2 max-md:pe-2 h-fit"
 										th:href="@{|/Progetti/${progetto.id}|}">
 										<img th:src="${progetto.cliente.LogoPath}"
 											class="size-8 rounded-full object-cover mx-2">
@@ -388,7 +435,7 @@
 								</div>
 								<div class="h-5/6 grid lg:grid-cols-1 grid-cols-2 max-xs:grid-cols-1 xl:overflow-y-auto md:pe-2">
 									<a th:each="cliente: ${clientiList}" th:if="${clienteStat.index < 6}"
-										class="col flex items-center hover:bg-sky-100 mb-2 max-md:pe-2 "
+										class="col flex items-center hover:bg-sky-100 mb-2 max-md:pe-2 h-fit"
 										th:href="@{|/Clienti/${cliente.id}|}">
 										<img th:src="${cliente.LogoPath}" class="size-8 rounded-full object-cover mx-2">
 										<div class="text-[#0057A5] w-3/4 ps-2 ">
@@ -399,8 +446,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="grid grid-cols-1 xl:w-1/4 w-full h-full p-2">
-						<div class="col-span-1 h-full w-full rounded-lg shadow-lg bg-sky-300">
+					<div class="flex grid grid-cols-1 xl:w-1/4 w-full h-[fit] xl:h-full p-2">
+						<div class="col-span-1 h-[fit] xl:h-full w-full rounded-lg shadow-lg bg-sky-300">
 							<h2 class="flex justify-center items-center h-full">NOTIFICHE</h2>
 						</div>					
 					</div>					

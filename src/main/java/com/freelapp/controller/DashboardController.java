@@ -1,5 +1,6 @@
 package com.freelapp.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,7 +102,10 @@ public class DashboardController {
 		model.addAttribute("progettiList", progettiList);
 		
 		
-		
+		//passo al model l'anno corrente e l'anno precedente
+		Integer annoCorrente = LocalDate.now().getYear();
+		model.addAttribute("annoCorrente", annoCorrente);
+		model.addAttribute("annoPrecedente", annoCorrente-1);
 	
 
 		
