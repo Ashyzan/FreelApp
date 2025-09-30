@@ -12,72 +12,60 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "Utenti")
 public class User {
 
-//	public enum Role {
-//		STAFF,
-//		USER,
-//		ADMIN
-//	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(name = "NomeUtente", nullable = false)
-	@NotNull(message = "Il nome non può essere null")
-	@NotBlank(message = "Il nome non può essere blank ")
-	private String name;
-	
-	@Column(name = "Cognome", nullable = false)
-	@NotNull(message = "Il cognome non può essere null")
-	@NotBlank(message = "Il cognome non può essere blank ")
-	private String cognome;
 
+	@Email(message = "Formato email non valido")
+	@NotBlank(message = "L'email è obbligatoria")
 	@Column(name = "email", nullable = false, unique = true)
-	@NotNull(message = "L'email non può essere null")
-	@NotBlank(message = "L'email non può essere blank ")
 	private String email;
 	
-	@NotBlank(message = "Inserimento password obbligatorio")
-	@Column(name = "password")
+	@NotBlank(message = "La password è obbligatoria")
+	@Size(min = 8, message = "La password deve avere almeno 8 caratteri")
+	@Pattern(
+	    regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{8,}$",
+	    message = "La password deve contenere almeno una maiuscola, una minuscola, un numero e un carattere speciale"
+	)
+	@Column(name = "password", nullable = false)
 	private String password;
-	
-	@Column(name = "Telefono", nullable = false)
-	@NotNull(message = "Il telefono non può essere null")
-	private String telefono;
-	
-	@Column(name = "PartitaIva", nullable = false)
-	@NotNull(message = "La partitaIva non può essere null")
-	@NotBlank(message = "La partitaIva non può essere blank ")
-	private String partitaIva;
-	
-	@Column(name = "RAL", nullable = false)
-	@NotNull(message = "Il RAL non può essere null")
-	private int ral;
-	
+
+
 	@OneToMany(mappedBy = "utente")
 	private List<Progetto> progetti;
 	
 	@OneToMany(mappedBy = "utente")
 	private List<Tickets> tickets;
 
-//	@Enumerated(EnumType.STRING)
-//	@Column(name = "role", nullable = false)
-//	private Role role = Role.USER;
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "role_id", nullable = false)
+	private Roles role;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	private List<Roles> roles;
+
+	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+	private UserProfile profile;
+	
+	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+	private UserFiscalData fiscal;
 
 	@Column(name = "created_at", nullable = true)
 	private LocalDateTime createdAt;
@@ -85,121 +73,34 @@ public class User {
 	@Column(name = "updated_at", nullable = true)
 	private LocalDateTime updatedAt;
 	
+	public String getPassword() { return password; }
+	public void setPassword(String password) { this.password = password; }
+	public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+	public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+	public int getId() { return id; }
+	public List<Progetto> getProgetti() { return progetti; }
+	public void setProgetti(List<Progetto> progetti) { this.progetti = progetti; }
+	public List<Tickets> getTickets() { return tickets; }
+	public void setTickets(List<Tickets> tickets) { this.tickets = tickets; }
+	public LocalDateTime getCreatedAt() { return createdAt; }
+	public LocalDateTime getUpdatedAt() { return updatedAt; }
+	public Roles getRole() { return role; }
+	public void setRole(Roles role) { this.role = role; }
+	public UserProfile getProfile() { return profile; }
+	public void setProfile(UserProfile profile) { this.profile = profile; }
+	public UserFiscalData getFiscal() { return fiscal; }
+	public void setFiscal(UserFiscalData fiscal) { this.fiscal = fiscal; }
 	
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
-	public int getId() {
-		return id;
-	}
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getCognome() {
-		return cognome;
-	}
-
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
 
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-//	public Role getRole() {
-//		return role;
-//	}
-//
-//	public void setRole(Role role) {
-//		this.role = role;
-//	}
-	
-
-	public String getTelefono() {
-		return telefono;
-	}
-
-	public List<Roles> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Roles> roles) {
-		this.roles = roles;
-	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-
-	public String getPartitaIva() {
-		return partitaIva;
-	}
-
-	public void setPartitaIva(String partitaIva) {
-		this.partitaIva = partitaIva;
-	}
-	
-	public int getRal() {
-		return ral;
-	}
-
-	public void setRal(int ral) {
-		this.ral= ral;
-	}
-	
-	
-	public List<Progetto> getProgetti() {
-		return progetti;
-	}
-
-	public void setProgetti(List<Progetto> progetti) {
-		this.progetti = progetti;
-	}
-
-	public List<Tickets> getTickets() {
-		return tickets;
-	}
-
-	public void setTickets(List<Tickets> tickets) {
-		this.tickets = tickets;
-	}
-
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
-
 	@PrePersist
 	protected void onCreate() {
 		LocalDateTime now = LocalDateTime.now();
