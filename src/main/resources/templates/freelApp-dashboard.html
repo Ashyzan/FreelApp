@@ -349,7 +349,7 @@
 									<div class="grid grid-cols-12 w-full h-full">
 										<div class="lg:col-span-3 sm:col-span-6 col-span-12 w-full h-full p-[3px]">
 											<div class="bg-white w-full h-full rounded-lg">
-												<div class="text-center text-md font-bold text-[#0057A5] pb-2">TASK 2025</div>
+												<div class="text-center text-md font-bold text-[#0057A5] pb-2" th:text="|TASK ${annoCorrente}|"></div>
 												<div id="container-task-bars" class="px-3">
 													<div id="task-creati-ac" class="pb-2">
 														<div class="flex justify-start items-center text-xs text-[#0057A5] gap-2 px-[2px]">
@@ -392,8 +392,18 @@
 												</div>
 											</div>
 										</div>
-										<div class="lg:col-span-3 sm:col-span-6 col-span-12  w-full h-full bg-white border border-red-200">progetti</div>
-										<div class="lg:col-span-6 col-span-12 w-full h-full bg-white border border-red-200">grafico</div>
+										<div class="lg:col-span-3 sm:col-span-6 col-span-12  w-full h-full p-[3px]">
+											<div class="bg-white w-full h-full rounded-lg">
+												<div class="text-center text-md font-bold text-[#0057A5] pb-2" th:text="|PROGETTI ${annoCorrente}|"></div>
+												<div id="container-task-bars" class="px-3">
+												</div>
+											</div>
+										</div>
+										<div class="lg:col-span-6 col-span-12 w-full h-full p-[3px]">
+											<div class="bg-white w-full h-full rounded-lg">
+												grafici
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
