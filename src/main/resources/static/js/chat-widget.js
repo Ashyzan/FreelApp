@@ -49,11 +49,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	        return false;
 	    }
 	    
-	    		// Prepara i dati
-		const formData = new FormData();
-		formData.append('subject', document.getElementById('messageSubject').value.trim());
-		formData.append('body', document.getElementById('messageText').value.trim());
-		formData.append('category', 'TICKET');
+		const form = document.getElementById('formMessage');
+		const formData = new FormData(form); // Questo include automaticamente il CSRF token
 
 		try {
 		    const response = await fetch('/api/inserimento-ticket', {
@@ -75,28 +72,38 @@ document.addEventListener('DOMContentLoaded', function() {
 	    }
 	});
 
-    // Invio feedback
-    document.getElementById('sendFeedbackBtn').addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Validazione
-        const subjectOk = validateSubject('feedbackSubject');
-        const bodyOk = validateTextarea('feedbackText', 40, 2000);
-        if (!subjectOk || !bodyOk) {
-            return false;
-        }
-        
-        let subject = document.getElementById('feedbackSubject').value.trim();
-        let text = document.getElementById('feedbackText').value.trim();
-        fetch('/api/support/feedback', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({subject: subject, feedback: text})
-        }).then(() => {
-            document.getElementById('chatStepFeedback').style.display = 'none';
-            document.getElementById('chatConfirmationFeedback').style.display = 'block';
-        });
-    });
+	// Invio feedback
+	document.getElementById('sendFeedbackBtn').addEventListener('click', async (e) => {
+	    e.preventDefault();
+	    
+	    // Validazione
+	    const subjectOk = validateSubject('feedbackSubject');
+	    const bodyOk = validateTextarea('feedbackText', 40, 2000);
+	    if (!subjectOk || !bodyOk) {
+	        return false;
+	    }
+	    
+	    const form = document.getElementById('formFeedback');
+	    const formData = new FormData(form);
+
+	    try {
+	        const response = await fetch('/api/inserimento-feedback', {
+	            method: 'POST',
+	            body: formData
+	        });
+	        
+	        const result = await response.json();
+	        if (result.success) {
+	            document.getElementById('chatStepFeedback').style.display = 'none';
+	            document.getElementById('chatConfirmationFeedback').style.display = 'block';
+	        } else {
+	            alert('Errore: ' + result.error);
+	        }
+	    } catch (error) {
+	        console.error('Errore:', error);
+	        alert('Errore di connessione');
+			    }
+			});
 
     // Chiudi chat tramite pulsanti "Chiudi"
     document.querySelectorAll('.closeChatBtn').forEach(function(btn){

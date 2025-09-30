@@ -472,65 +472,109 @@ public List<RestProject> listaProgettiFiltrataPerCliente(@RequestParam int input
 	}
 	
 	
-	@PostMapping("/inserimento-ticket")
-	public void nuovoTicketnojson() {
-		
-		System.out.println("SONO IN POST **********************************************************************");
-	}
-	
-
-	@GetMapping("/inserimento-ticket")
-	public void nuovoTicketno() {
-		
-		System.out.println("sono in GET **********************************************************************");
-	}
-	
-	
-
-//	
-//	// invia il form dalla chat widget e crea il ticket
-//	@GetMapping("/inserimento-ticket")
-//	public String nuovoTicket(@RequestParam("subject") String subject,
-//	                              @RequestParam("body") String body,
-//	                              @RequestParam(value = "category", required = false) Tickets.Category category,
-//	                              Principal principal) {
-//	    JSONObject out = new JSONObject();
-//	    
-//	    System.out.println("=== DEBUG TICKET ===");
-//	    System.out.println("Principal: " + principal);
-//	    System.out.println("Subject: " + subject);
-//	    System.out.println("Body: " + body);
-//	    System.out.println("Category: " + category);
-//	    
-//	    try {
-//	        User user = userRepository.findByEmail(principal.getName())
-//	                .orElseThrow(() -> new IllegalStateException("Utente non trovato"));
-//
-//	        // Crea ticket
-//	        Tickets t = new Tickets();
-//	        t.setUtente(user);
-//	        t.setSubject(subject);
-//	        t.setCategory(category != null ? category : Tickets.Category.TICKET);
-//	        t.setStatus(Tickets.Status.OPEN);
-//	        t = ticketsRepository.save(t);
-//
-//	        // Primo messaggio (il testo del form)
-//	        TicketMessage m = new TicketMessage();
-//	        m.setTicket(t);
-//	        m.setAuthor(user);
-//	        m.setBody(body);
-//	        ticketMessageRepository.save(m);
-//
-//	        out.put("success", true);
-//	        out.put("ticketId", t.getId());
-//	        out.put("message", "Ticket creato correttamente");
-//	        return "pippo";
-//	    } catch (Exception e) {
-//	        out.put("success", false);
-//	        out.put("error", e.getMessage());
-//	        return "pippo";
-//	    }
+//	@PostMapping("/inserimento-ticket")
+//	public void nuovoTicketnojson() {
+//		
+//		System.out.println("SONO IN POST **********************************************************************");
 //	}
+//	
+//
+//	@GetMapping("/inserimento-ticket")
+//	public void nuovoTicketno() {
+//		
+//		System.out.println("sono in GET **********************************************************************");
+//	}
+	
+	
+
+	
+	// invia il form dalla chat widget e crea il ticket
+	@PostMapping("/inserimento-ticket")
+	public JSONObject nuovoTicket(@RequestParam("subject") String subject,
+	                              @RequestParam("body") String body,
+	                              @RequestParam(value = "category", required = false) Tickets.Category category,
+	                              Principal principal) {
+	    JSONObject out = new JSONObject();
+	    
+	    System.out.println("=== DEBUG TICKET ===");
+	    System.out.println("Principal: " + principal);
+	    System.out.println("Subject: " + subject);
+	    System.out.println("Body: " + body);
+	    System.out.println("Category: " + category);
+	    
+	    try {
+	        User user = userRepository.findByEmail(principal.getName())
+	                .orElseThrow(() -> new IllegalStateException("Utente non trovato"));
+
+	        // Crea ticket
+	        Tickets t = new Tickets();
+	        t.setUtente(user);
+	        t.setSubject(subject);
+	        t.setCategory(category != null ? category : Tickets.Category.TICKET);
+	        t.setStatus(Tickets.Status.OPEN);
+	        t = ticketsRepository.save(t);
+
+	        // Primo messaggio (il testo del form)
+	        TicketMessage m = new TicketMessage();
+	        m.setTicket(t);
+	        m.setAuthor(user);
+	        m.setBody(body);
+	        ticketMessageRepository.save(m);
+
+	        out.put("success", true);
+	        out.put("ticketId", t.getId());
+	        out.put("message", "Ticket creato correttamente");
+	        return out;
+	    } catch (Exception e) {
+	        out.put("success", false);
+	        out.put("error", e.getMessage());
+	        return out;
+	    }
+	}
+	
+	@PostMapping("/inserimento-feedback")
+	public JSONObject nuovoFeedback(@RequestParam("subject") String subject,
+	                               @RequestParam("body") String body,
+	                               @RequestParam(value = "category", required = false) Tickets.Category category,
+	                               Principal principal) {
+	    JSONObject out = new JSONObject();
+	    
+	    System.out.println("=== DEBUG FEEDBACK ===");
+	    System.out.println("Principal: " + principal);
+	    System.out.println("Subject: " + subject);
+	    System.out.println("Body: " + body);
+	    System.out.println("Category: " + category);
+	    
+	    try {
+	        User user = userRepository.findByEmail(principal.getName())
+	                .orElseThrow(() -> new IllegalStateException("Utente non trovato"));
+
+	        // Crea ticket di feedback
+	        Tickets ticket = new Tickets();
+	        ticket.setUtente(user);
+	        ticket.setSubject(subject);
+	        ticket.setCategory(Tickets.Category.FEEDBACK);
+	        ticket.setStatus(Tickets.Status.OPEN);
+	        ticket = ticketsRepository.save(ticket);
+
+	        // Primo messaggio
+	        TicketMessage message = new TicketMessage();
+	        message.setTicket(ticket);
+	        message.setAuthor(user);
+	        message.setBody(body);
+	        ticketMessageRepository.save(message);
+
+	        out.put("success", true);
+	        out.put("ticketId", ticket.getId());
+	        out.put("message", "Feedback inviato correttamente");
+	        
+	    } catch (Exception e) {
+	        out.put("success", false);
+	        out.put("error", e.getMessage());
+	    }
+	    
+	    return out;
+	}
 	
 	
 	

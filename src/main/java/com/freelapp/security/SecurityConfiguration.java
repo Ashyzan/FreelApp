@@ -19,7 +19,7 @@ public class SecurityConfiguration {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		System.out.println("=== SECURITY CONFIG (com.freelapp.security) CARICATO ===");
 		http
-			.csrf(csrf -> csrf.disable())
+		.csrf(csrf -> csrf.ignoringRequestMatchers("/api/**")) // ← Ignora CSRF solo per /api/**
 			.authorizeHttpRequests(auth -> auth
 				.requestMatchers("/api/**", "/css/**", "/js/**", "/webjars/**", "/images/**", "/", "/login", "/logout", "/error").permitAll()
 				.anyRequest().authenticated()

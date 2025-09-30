@@ -33,6 +33,7 @@
             
             
  <form th:action="@{/api/inserimento-ticket}" method="post" id="formMessage">
+<!--   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/> -->
   <input type="hidden" name="category" value="TICKET"/>
   <input id="messageSubject" type="text" name="subject" placeholder="Oggetto" minlength="3" maxlength="120" required style="width:88%; border-radius:7px; border:1.5px solid #e4e6ea; font-size:1rem; padding:12px 20px; margin: 10px 20px 0 20px;" />
   <textarea id="messageText" name="body" rows="2" placeholder="Digita qui il tuo messaggio... (minimo 40 caratteri)" minlength="40" required></textarea>
@@ -42,20 +43,30 @@
   <button type="submit" id="sendMessageBtn">Invia <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></button>
 </form>
 
+
         </div>
+        
         <!-- STEP 2b: invio feedback -->
-        <div id="chatStepFeedback" style="display:none;">
-            <div class="radio-description">
-                <strong>Teniamo molto a comunicare con te!</strong>
-                Il feedback che ci invierai è molto prezioso per noi, cerchiamo di migliorare continuamente il servizio!
-            </div>
-            <input id="feedbackSubject" type="text" placeholder="Oggetto" minlength="3" maxlength="120" required style="width:88%; border-radius:7px; border:1.5px solid #e4e6ea; font-size:1rem; padding:12px 20px; margin: 10px 20px 0 20px;" />
-            <textarea id="feedbackText" rows="2" placeholder="Digita qui il feedback... (minimo 40 caratteri)" minlength="40" required></textarea>
-            <div id="feedbackCounter" style="text-align: right; font-size: 11px; color: #999; margin-top: 2px;">
-                <span id="feedbackCount">0</span>/40 caratteri
-            </div>
-            <button id="sendFeedbackBtn">Invia <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></button>
+<div id="chatStepFeedback" style="display:none;">
+    <div class="radio-description">
+        <strong>Teniamo molto a comunicare con te!</strong>
+        Il feedback che ci invierai è molto prezioso per noi, cerchiamo di migliorare continuamente il servizio!
+    </div>
+    
+    <form th:action="@{/api/inserimento-feedback}" method="post" id="formFeedback">
+<!--     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/> -->
+<input type="hidden" name="category" value="FEEDBACK"/>
+        <input id="feedbackSubject" type="text" name="subject" placeholder="Oggetto" minlength="3" maxlength="120" required style="width:88%; border-radius:7px; border:1.5px solid #e4e6ea; font-size:1rem; padding:12px 20px; margin: 10px 20px 0 20px;" />
+        <textarea id="feedbackText" name="body" rows="2" placeholder="Digita qui il feedback... (minimo 40 caratteri)" minlength="40" required></textarea>
+        <div id="feedbackCounter" style="text-align: right; font-size: 11px; color: #999; margin-top: 2px;">
+            <span id="feedbackCount">0</span>/40 caratteri
         </div>
+        <button type="submit" id="sendFeedbackBtn">Invia <img class="chat-icons" src="/img/sources/icons/arrow-right-yellow.svg"></button>
+    </form>
+</div>
+        
+        
+        
         <!-- Conferma invio messaggio -->
         <div id="chatConfirmationMessage" style="display:none;">
             <div><img class="ok-icons" src="/img/sources/icons/check-ok.svg"><b>Messaggio inviato!</b></div>

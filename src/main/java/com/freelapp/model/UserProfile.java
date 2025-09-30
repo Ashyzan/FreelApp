@@ -36,6 +36,21 @@ public class UserProfile {
 	@Column(name = "telefono", nullable = true)
 	private String telefono;
 	
+	@Column(name = "indirizzo")
+	private String indirizzo;
+	
+	@Column(name = "cap", length = 10)
+	private String cap;
+	
+	@Column(name = "citta")
+	private String citta;
+	
+	@Column(name = "provincia", length = 2)
+	private String provincia;
+	
+	@Column(name = "nazione", length = 2)
+	private String nazione;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -65,5 +80,45 @@ public class UserProfile {
 	}
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+	
+	public String getIndirizzo() {
+		return indirizzo;
+	}
+	
+	public void setIndirizzo(String indirizzo) {
+		this.indirizzo = indirizzo;
+	}
+	
+	public String getCap() {
+		return cap;
+	}
+	
+	public void setCap(String cap) {
+		this.cap = cap;
+	}
+	
+	public String getCitta() {
+		return citta;
+	}
+	
+	public void setCitta(String citta) {
+		this.citta = citta;
+	}
+	
+	public String getProvincia() {
+		return provincia;
+	}
+	
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
+	
+	public String getNazione() {
+		return nazione;
+	}
+	
+	public void setNazione(String nazione) {
+		this.nazione = nazione;
 	}
 }
