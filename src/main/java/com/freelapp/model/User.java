@@ -2,13 +2,17 @@ package com.freelapp.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -20,11 +24,11 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "Utenti")
 public class User {
 
-	public enum Role {
-		STAFF,
-		USER,
-		ADMIN
-	}
+//	public enum Role {
+//		STAFF,
+//		USER,
+//		ADMIN
+//	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,17 +72,18 @@ public class User {
 	@OneToMany(mappedBy = "utente")
 	private List<Tickets> tickets;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "role", nullable = false)
-	private Role role = Role.USER;
+//	@Enumerated(EnumType.STRING)
+//	@Column(name = "role", nullable = false)
+//	private Role role = Role.USER;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Roles> roles;
 
 	@Column(name = "created_at", nullable = true)
 	private LocalDateTime createdAt;
 
 	@Column(name = "updated_at", nullable = true)
 	private LocalDateTime updatedAt;
-		
-	
 	
 	
 	public String getPassword() {
@@ -125,16 +130,29 @@ public class User {
 		this.email = email;
 	}
 
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
+//	public Role getRole() {
+//		return role;
+//	}
+//
+//	public void setRole(Role role) {
+//		this.role = role;
+//	}
+	
 
 	public String getTelefono() {
 		return telefono;
+	}
+
+	public List<Roles> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Roles> roles) {
+		this.roles = roles;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setTelefono(String telefono) {
