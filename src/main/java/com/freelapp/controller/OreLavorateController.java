@@ -86,6 +86,7 @@ public class OreLavorateController {
 				SessioniTask.setContatore(contatore);
 				SessioniTask.setAzione("sovrascritto");
 				SessioniTask.setTime(task.getDataModifica());
+				SessioniTask.setData(date);
 				SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
 				SessioniTask.setVariazione(contatoreservice.findTimeToString(START, STOP));
 				SessioniTaskRepository.save(SessioniTask);
@@ -106,6 +107,7 @@ public class OreLavorateController {
 				SessioniTask.setContatore(contatore);
 				SessioniTask.setAzione("ore lavorate");
 				SessioniTask.setTime(task.getDataModifica());
+				SessioniTask.setData(date);
 				SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
 				SessioniTask.setVariazione(contatoreservice.findTimeToString(START, task.getContatore().getPause()));
 				SessioniTaskRepository.save(SessioniTask);
@@ -129,6 +131,7 @@ public class OreLavorateController {
 				SessioniTask.setContatore(contatore);
 				SessioniTask.setAzione("ore lavorate");
 				SessioniTask.setTime(task.getDataModifica());
+				SessioniTask.setData(date);
 				SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
 				SessioniTask.setVariazione(contatoreservice.findTimeToString(START, task.getContatore().getPause()));
 				SessioniTaskRepository.save(SessioniTask);
@@ -148,6 +151,7 @@ public class OreLavorateController {
 				SessioniTask.setContatore(contatore);
 				SessioniTask.setAzione("sovrascritto");
 				SessioniTask.setTime(task.getDataModifica());
+				SessioniTask.setData(date);
 				SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
 				SessioniTask.setVariazione(contatoreservice.findTimeToString(START, STOP));
 				SessioniTaskRepository.save(SessioniTask);

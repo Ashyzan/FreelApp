@@ -133,7 +133,7 @@ public class ContatoreController {
 		SessioniTask.setAzione(task.getStato());
 		SessioniTask.setTime(task.getDataModifica());
 		SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
-		SessioniTask.setVariazione(" - ");
+		SessioniTask.setVariazione(" -- ");
 		SessioniTaskRepository.save(SessioniTask);
 		//System.out.println("********************************************************** SessioniTask********************* + " + SessioniTask);
 
@@ -175,7 +175,7 @@ public class ContatoreController {
 	    SessioniTask.setContatore(contatore);
 		SessioniTask.setAzione(task.getStato());
 		SessioniTask.setTime(task.getDataModifica());
-		SessioniTask.setVariazione(" - ");
+		SessioniTask.setVariazione(" -- ");
 		SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
 		SessioniTaskRepository.save(SessioniTask);
 		
@@ -222,7 +222,7 @@ public class ContatoreController {
 		SessioniTask.setAzione(task.getStato());
 		SessioniTask.setTime(task.getDataModifica());
 		SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
-		SessioniTask.setVariazione(" - ");
+		SessioniTask.setVariazione(" -- ");
 		SessioniTaskRepository.save(SessioniTask);
 		//System.out.println("********************************************************** SessioniTask********************* + " + SessioniTask);
 	    
@@ -604,7 +604,7 @@ public class ContatoreController {
 			SessioniTask.setAzione("reset");
 			SessioniTask.setTime(task.getDataModifica());
 			SessioniTask.setWorktime(contatoreservice.calcoloFinalTimeString(task));
-			SessioniTask.setVariazione(" - ");
+			SessioniTask.setVariazione(" -- ");
 			SessioniTaskRepository.save(SessioniTask);
 
 		}

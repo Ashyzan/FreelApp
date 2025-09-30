@@ -38,6 +38,9 @@ public class SessioniTask {
     @Column(name = "tempo")
     private LocalDateTime time;
     
+    @Column(name = "data-orelavorate")
+    private LocalDate data;
+    
     @Column(name = "azione")
     private String azione;
     
@@ -47,6 +50,14 @@ public class SessioniTask {
     @Column(name = "variazione")
     private String variazione;
     
+	public LocalDate getData() {
+		return data;
+	}
+
+	public void setData(LocalDate data) {
+		this.data = data;
+	}
+
 	public String getVariazione() {
 		return variazione;
 	}
