@@ -317,7 +317,7 @@
 			<div id="main-section" class="w-full max-xl:overflow-y-auto h-[100%]" >
 				<section id="contenuto-dashboard" class="w-full xl:h-full flex xl:flex-row flex-col-reverse p-2">
 					<div class="flex flex-row flex-wrap xl:w-3/4 w-full h-full">
-						<div class="w-full xl:h-1/2 h-fit">
+						<div class="w-full xl:h-1/2 h-fit p-2">
 							<div class="h-full rounded-lg shadow-lg bg-violet-100">
 								<div class="lg:flex justify-between w-full lg:flex-col lg:h-2/6 h-fit">
 									<div class="w-full h-full">
@@ -325,36 +325,24 @@
 											<h2 class="text-[#0057A5] text-xl font-bold w-full px-2 pt-2 h-fit text-start " th:text="|ANNO ${annoCorrente}|"></h2>
 										-->
 										<div class="grid grid-cols-6 text-[#0057A5] ">
-											<div class="col-span-4 w-full text-center font-bold">GOAL FINANZIARIO</div>
+											<div class="col-span-4 w-full text-center font-bold" th:text="|GOAL ANNO ${annoCorrente}|"></div>
 											<div class="col-span-2 w-full text-center font-bold">GUADAGNO ATTUALE</div>
 										</div>
 										<div class="grid grid-cols-6 text-[#0057A5] text-sm">
 											<div class="col-span-4 w-full  px-4">
 												<div class="w-full flex justify-between items-center font-bold">
 													<div>0 €</div>
-													<div> 3000 €</div>
+													<div id="etichetta-progress-bar-goal"></div>
 												</div>
-												<div class="progress w-full h-4 bg-white rounded-xl overflow-hidden relative">
+												<div class="progress w-full h-4 bg-white rounded-xl overflow-hidden relative" onmouseover="avviaTooltipProgressBar(event)" onmouseout="terminaTooltipProgressBar()">
 													<div class="progress-bar-uno h-full bg-fuchsia-300 rounded-xl absolute"></div>
 													<div class="progress-bar-due h-full bg-fuchsia-500 rounded-xl absolute"></div>
 												</div>
-												<div class="w-full flex justify-around items-center py-[2px]">
-													<div class="flex items-center gap-2">
-														<div class="h-3 w-3 border border-black bg-white rounded-full"></div>
-														<span class="text-[#0057A5] text-xs"><strong>Goal annuale:</strong> 3000€</span>
-													</div>
-													<div class="flex items-center gap-2">
-														<div class="h-3 w-3 border border-black bg-fuchsia-500 rounded-full"></div>
-														<span class="text-[#0057A5] text-xs"><strong>Fatturato:</strong> 955€</span>
-													</div>
-													<div class="flex items-center gap-2">
-														<div class="h-3 w-3 border border-black bg-fuchsia-300 rounded-full"></div>
-														<span class="text-[#0057A5] text-xs"><strong>Guadagno:</strong> 1350€</span>
-													</div>
+												<div id="legenda-progress-bar-goal" class="w-full flex justify-around items-center py-[2px]">
 												</div>
 											</div>
 											<div class="col-span-2 text-[#0057A5] font-bold text-md text-center flex flex-col items-center p-2">
-												<div class="bg-[#FFE541] px-4 py-2 rounded-xl w-fit">1220,50 €</div>
+												<div id="guadagno-attuale" class="bg-[#FFE541] px-4 py-2 rounded-xl w-fit"></div>
 											</div>
 										</div>
 									</div>
@@ -791,7 +779,8 @@
 	</div>
 
 	<!-- Fine Modale -->
-
+	<!-- tooltip per progressBar -->
+		<div id="tooltip-progress-bar" class="hidden overflow-visible z-50 w-fit bg-gray-100 text-[10px] border border-[#0057A5] text-fuchsia-500 text-center rounded-[6px] px-5 py-[5px] absolute shadow-md"></div>
   <!-- Script -->
 	<script th:inline="javascript">
 		/*<![CDATA[*/

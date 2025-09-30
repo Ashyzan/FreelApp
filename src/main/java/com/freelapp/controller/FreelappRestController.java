@@ -34,7 +34,6 @@ import com.freelapp.restModel.RestCliente;
 import com.freelapp.restModel.RestProject;
 import com.freelapp.restModel.RestTask;
 import com.freelapp.service.ContatoreService;
-import com.freelapp.service.DashboardService;
 import com.freelapp.service.ProgettoService;
 import com.freelapp.service.TaskService;
 
@@ -60,9 +59,6 @@ public class FreelappRestController {
 
 	@Autowired
 	private ProgettoService progettoService;
-	
-	@Autowired
-	private DashboardService dashboardService;
 
 	@GetMapping("/task/{id}")
 	public Optional<RestTask> get(@PathVariable("id") Integer id) {
@@ -262,15 +258,20 @@ public class FreelappRestController {
 			//@PathVariable("id") Integer id
 			)throws InterruptedException{
 		
-		//va cambiato endpoint in "/statistiche-dashboard/utente-{id}" authentication per usare spring security con utente loggato
+		//inizializzate fittizie per ora
+		double goalAnnualeUtente = 15000;
+		double fatturatoAnnoCorrente = 1850;
 		
-		Integer goalAnnualeUtente = 5000;
+		//richiamata Map dal TaskService con le statistiche relative ai task
+		Map<String,Integer> statisticheTask = taskService.statisticheTaskAnnoCorrentePerDashboard();
 		
 		// creazione json
 		JSONObject JsonObj = new JSONObject();
 		
 		JsonObj.put("goalAnnualeUtente", goalAnnualeUtente);
-		JsonObj.put("guadagnoAnnoCorrente", dashboardService.guadagnotototaleAnnoInCorsoProgetti());
+		JsonObj.put("fatturatoAnnoCorrente", fatturatoAnnoCorrente);
+		JsonObj.put("guadagnoAnnoCorrente", taskService.guadagnotototaleAnnoCorrente());
+		JsonObj.put("statisticheTask", statisticheTask);
 		
 		return JsonObj;
 		

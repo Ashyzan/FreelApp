@@ -130,6 +130,11 @@ function pauseContatoreApi(id){
 								seconds = finalTimeSec % 60;
 								
 								terminaWorker()
+								
+								//se siamo nella dashboard aggiorna le statistiche
+								if(legendaProgressBarGoal != null){
+									apiStatisticheDashboard()									
+								}
 								//se siamo nella dashboard al click sul pause richiama la funzione disattivaElementoInTaskList da dashboard.js
 								if(tasks != null){
 									disattivaElementoInTaskList();

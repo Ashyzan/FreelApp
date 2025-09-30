@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,6 +41,9 @@ public class TaskService {
 	
 	//variabile che viene utilizzata nel metodo di statistica "calcoloParteDiBudgetUsataDaAltriTaskNelProgetto"
 	Long finalTimeAltriTaskDelProgetto = 0l;
+
+	////variabile che viene utilizzata nel metodo di statistica "guadagnotototaleAnnoCorrente"
+	double guadagnoAnnuo = 0;
 
 	public List<Task> findAllNotClosed(){
 		//restituisce la lista dei task attivi(non chiusi)
@@ -120,48 +124,6 @@ public class TaskService {
 		return returnString;
 	}
 	
-	
-	//specificazione che genera la quey di filtro per task attivi
-	Specification<Task> filtroTask_StatoAttivo(){
-		return (root, query, criteriaBuilder) ->{		
-			
-			return criteriaBuilder.isNull(root.get("dataChiusuraDefinitiva"));
-					
-		};
-		
-	}
-	
-	//specificazione che genera la quey di filtro per task non attivi
-	Specification<Task> filtroTask_StatoNonAttivo(){
-		return (root, query, criteriaBuilder) ->{			
-			
-			return criteriaBuilder.isNotNull(root.get("dataChiusuraDefinitiva"));
-					
-		};
-		
-	}
-	
-	//specificazione che genera la quey di filtro per cliente selezionato
-	Specification<Task> filtroTask_SelezioneCliente(){
-		
-		return (root, query, criteriaBuilder) ->{
-			
-			return criteriaBuilder.equal(root.get("progetto").get("cliente").as(Integer.class), TaskController.clienteIdTaskInListaTask);
-					
-		};
-		
-	}
-	
-	//specificazione che genera la quey di filtro per progetto selezionato
-	Specification<Task> filtroTask_SelezioneProgetto(){
-		
-		return (root, query, criteriaBuilder) ->{
-			
-			return criteriaBuilder.equal(root.get("progetto").as(Integer.class), TaskController.progettoIdTaskInListaTask);
-					
-		};
-		
-	}
 	
 	
 	public Page<Task> findSearchedPage(int pageNumber, String input){
@@ -423,5 +385,150 @@ public class TaskService {
 		
 		return listaTaskAttivi;
 	}
+
+	
+	//metodo che genera un map contente i dati realitivi ai task dell'anno in corso per la DASHBOARD
+	public Map<String, Integer> statisticheTaskAnnoCorrentePerDashboard(){
+		Integer annoCorrente = LocalDate.now().getYear();
+		//richiamo le specification da usare per generare le query per estrazione dati da db
+		Specification<Task> taskAttivi = filtroTask_StatoAttivo();
+		Specification<Task> taskNonAttivi = filtroTask_StatoNonAttivo();
+		Specification<Task> taskApertiAnnoIncorso = queryTaskApertiAnnoInCorso(annoCorrente);
+		Specification<Task> taskApertiAnniPrecedenti = queryTaskApertiAnniPrecedenti(annoCorrente);
+		
+		//creo nuova Map
+		Map<String,Integer> statisticheTask = new HashMap<String,Integer>();
+		
+		//popolo la map
+		statisticheTask.put("taskApertiAnnoCorrente", taskRepository.findAll(taskApertiAnnoIncorso).size());
+		statisticheTask.put("taskApertiAnnoCorrente_Attivi", taskRepository.findAll(taskApertiAnnoIncorso.and(taskAttivi)).size());
+		statisticheTask.put("taskApertiAnnoCorrente_NonAttivi", taskRepository.findAll(taskApertiAnnoIncorso.and(taskNonAttivi)).size());
+		statisticheTask.put("taskTotali_Attivi", taskRepository.findAll(taskAttivi).size());
+		statisticheTask.put("taskApertiAnniPrecedenti_Attivi", taskRepository.findAll(taskApertiAnniPrecedenti.and(taskAttivi)).size());
+		
+		return statisticheTask;
+		
+	}
+	
+	
+	
+	
+	//metodo che genera il guadagno dell'anno in corso utilizzando tutti i task dove la data di chiusura effettiva è 
+	//compresa nell'anno in corso oppure == null e quindi ancora attivi
+	public double guadagnotototaleAnnoCorrente() {
+		
+		//riporto a zero la variabile guadagnoAnnuo inizializzata ad inizio classe
+		guadagnoAnnuo =0;
+		
+		Integer annoCorrente = LocalDate.now().getYear();
+		
+		//richiamo le specification da usare per generare le query per estrazione dati da db
+		Specification<Task> taskAttivi = filtroTask_StatoAttivo();
+		Specification<Task> taskChiusiAnnoIncorso = queryTaskChiusiAnnoInCorso(annoCorrente);
+		
+		//genero lista comprendente concatendando la lista dei task attivi e di quelli chiusi nell'anno in corso
+		List<Task> listaTask = Stream.concat(taskRepository.findAll(taskAttivi).stream(), taskRepository.findAll(taskChiusiAnnoIncorso).stream()).toList();
+		
+		
+		
+		//per ogni task della listaTask ne calcolo il guadagno e incremento quello annuale
+		listaTask.forEach(task ->{
+
+			if(task.getContatore()!= null) {
+				double finalTimeAttualeInOre = (task.getContatore().getFinaltime().doubleValue() / 3600);
+				double tariffaOrariaProgetto = task.getProgetto().getTariffaOraria();
+				double guadagnoTask = (finalTimeAttualeInOre*tariffaOrariaProgetto);
+				guadagnoAnnuo += guadagnoTask;
+			}
+		});
+		
+		//devo andare a prendere tutti i task dove la data di chiusura effettiva è compresa nell'anno in corso oppure == null e quindi ancora attivi
+		
+		return guadagnoAnnuo;
+	}
+	
+	
+	//*************************** SPECIFICATIONS ************
+	//specificazioni che generano la query dinamiche
+	
+	
+	//specificazione che genera la query dei task creati nell'anno in corso
+	Specification<Task> queryTaskApertiAnnoInCorso(Integer annoCorrente){
+		
+		return (root, query, criteriaBuilder) ->{
+			
+			return criteriaBuilder.equal(criteriaBuilder.function("YEAR", Integer.class, root.get("dataInizio")), annoCorrente);
+					
+		};
+		
+	}
+	
+	//specificazione che genera la query dei task chiusi nell'anno in corso
+	Specification<Task> queryTaskChiusiAnnoInCorso(Integer annoCorrente){
+		
+		return (root, query, criteriaBuilder) ->{
+			
+			return criteriaBuilder.equal(criteriaBuilder.function("YEAR", Integer.class, root.get("dataChiusuraDefinitiva")), annoCorrente);
+					
+		};
+		
+	}
+	
+	//specificazione che genera la query dei task aperti gli anni precedenti a quello corrente
+	Specification<Task> queryTaskApertiAnniPrecedenti(Integer annoCorrente){
+		
+		return (root, query, criteriaBuilder) ->{
+			
+			return criteriaBuilder.notEqual(criteriaBuilder.function("YEAR", Integer.class, root.get("dataInizio")), annoCorrente);
+					
+		};
+		
+	}
+	
+	//specificazione che genera la query di filtro per task attivi
+	Specification<Task> filtroTask_StatoAttivo(){
+		return (root, query, criteriaBuilder) ->{		
+			
+			return criteriaBuilder.isNull(root.get("dataChiusuraDefinitiva"));
+					
+		};
+		
+	}
+	
+	//specificazione che genera la query di filtro per task non attivi
+	Specification<Task> filtroTask_StatoNonAttivo(){
+		return (root, query, criteriaBuilder) ->{			
+			
+			return criteriaBuilder.isNotNull(root.get("dataChiusuraDefinitiva"));
+					
+		};
+		
+	}
+	
+	//specificazione che genera la query di filtro per cliente selezionato
+	Specification<Task> filtroTask_SelezioneCliente(){
+		
+		return (root, query, criteriaBuilder) ->{
+			
+			return criteriaBuilder.equal(root.get("progetto").get("cliente").as(Integer.class), TaskController.clienteIdTaskInListaTask);
+					
+		};
+		
+	}
+	
+	//specificazione che genera la query di filtro per progetto selezionato
+	Specification<Task> filtroTask_SelezioneProgetto(){
+		
+		return (root, query, criteriaBuilder) ->{
+			
+			return criteriaBuilder.equal(root.get("progetto").as(Integer.class), TaskController.progettoIdTaskInListaTask);
+					
+		};
+		
+	}
+	
+	
 }
+
+
 
