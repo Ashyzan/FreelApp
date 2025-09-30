@@ -6,7 +6,12 @@ const legendaProgressBarGoal = document.getElementById('legenda-progress-bar-goa
 const guadagnoAttualeDiv = document.getElementById('guadagno-attuale');
 const tooltipProgressBarGoalAnnuale = document.getElementById('tooltip-progress-bar');
 
-
+const containerGraficiStatisticheTask = document.getElementById('container-task-bars');
+const etichettaTaskBarCreati = document.getElementById('etichetta-task-creati');
+const etichettaTaskBarAttivi = document.getElementById('etichetta-task-incorso');
+const etichettaTaskBarChiusi = document.getElementById('etichetta-task-chiusi');
+const etichettaTaskTotali = document.getElementById('etichetta-task-totali');
+const etichettaTaskParzialiTotali = document.getElementById('etichetta-parziali-task-totali');
 
 
 //*************** funzioni per attivazione/disattivazione animazione per task in uso da lista task recenti ************************/
@@ -57,7 +62,8 @@ function apiStatisticheDashboard(){
 					     return response.json();
 					   })
 					   .then(datajson => {
-							creaProgressBar(datajson);	 
+							creaProgressBar(datajson);	
+							creaGraficiStatisticheTask(datajson) 
 					   })
 					   .catch(error => {
 					     console.error('Error:', error);
@@ -70,12 +76,11 @@ function apiStatisticheDashboard(){
 
 function creaProgressBar(datajson){
 	
-	var progressBarGuadagno = document.querySelector('.progress-bar-uno');
-	var progressBarFatturato = document.querySelector('.progress-bar-due');
-	  //var maxWidth = document.querySelector('.progress').offsetWidth; // Larghezza del contenitore
-	  var widthGuadagno = 0;
-	  var widthFatturato = 0;
-	  var interval = setInterval(function() {
+	const progressBarGuadagno = document.querySelector('.progress-bar-uno');
+	const progressBarFatturato = document.querySelector('.progress-bar-due');
+	let widthGuadagno = 0;
+	let widthFatturato = 0;
+	let interval = setInterval(function() {
 	    if (widthGuadagno >= ((datajson.guadagnoAnnoCorrente/datajson.goalAnnualeUtente)*100) && widthGuadagno >= ((datajson.fatturatoAnnoCorrente/datajson.goalAnnualeUtente)*100)){
 	      clearInterval(interval);
 	    } 
@@ -96,17 +101,17 @@ function creaProgressBar(datajson){
 function creazioneEtichettaLegendaProgressBarGoal(datajson){
 	guadagnoAttualeDiv.innerHTML = datajson.guadagnoAnnoCorrente.toFixed(2).replace(".",",") + " €";
 	etichettaProgressBarGoal.innerHTML = datajson.goalAnnualeUtente + "€";
-	legendaProgressBarGoal.innerHTML = `<div class="flex items-center gap-2 pt-2">
-												<div class="h-3 w-3 border border-black bg-white rounded-full"></div>
-												<span class="text-[#0057A5] text-xs"><strong>Goal annuale: </strong>${datajson.goalAnnualeUtente}€</span>
-											</div>
-											<div class="flex items-center gap-2">
+		legendaProgressBarGoal.innerHTML = `<div class="flex items-center gap-2">
 												<div class="h-3 w-3 border border-black bg-fuchsia-500 rounded-full"></div>
 												<span class="text-[#0057A5] text-xs"><strong>Fatturato: </strong>${datajson.fatturatoAnnoCorrente.toFixed(2).replace(".",",")}€</span>
 											</div>
 											<div class="flex items-center gap-2">
 												<div class="h-3 w-3 border border-black bg-fuchsia-300 rounded-full"></div>
 												<span class="text-[#0057A5] text-xs"><strong>Guadagno: </strong>${datajson.guadagnoAnnoCorrente.toFixed(2).replace(".",",")}€</span>
+											</div>
+											<div class="flex items-center gap-2">
+												<div class="h-3 w-3 border border-black bg-white rounded-full"></div>
+												<span class="text-[#0057A5] text-xs"><strong>Goal annuale: </strong>${datajson.goalAnnualeUtente}€</span>
 											</div>`;
 	
 }
@@ -128,4 +133,64 @@ function avviaTooltipProgressBar(event){
 function terminaTooltipProgressBar(){
 	tooltipProgressBarGoalAnnuale.classList.add('hidden')
 	tooltipProgressBarGoalAnnuale.classList.remove('text-opacity-25')
+}
+
+
+//funzione che crea grafici statistiche task
+function creaGraficiStatisticheTask(datajson){
+	
+	const taskBarCreati = document.getElementById('task-bar-creati');
+	const taskBarInCorso = document.getElementById('task-bar-incorso');
+	const taskBarChiusi = document.getElementById('task-bar-chiusi');
+	const taskBarTotaliAC = document.getElementById('task-bar-totali-ac');
+	const taskBarTotaliAP = document.getElementById('task-bar-totali-ap');
+	
+	//dimensioni bar dei task totali in basso
+	taskBarTotaliAC.style.width = ((datajson.statisticheTask.taskApertiAnnoCorrente_Attivi/datajson.statisticheTask.taskTotali_Attivi)*100)+ '%'
+	taskBarTotaliAP.style.width = ((datajson.statisticheTask.taskApertiAnniPrecedenti_Attivi/datajson.statisticheTask.taskTotali_Attivi)*100)+ '%'
+	
+	//dimensionamento con animazione delle bar dei task dell'anno in corso
+	let widthTaskBarCreati = 0;
+	let widthTaskBarInCorso = 0;
+	let widthTaskBarChiusi = 0;
+	
+		let interval = setInterval(function() {
+		    if (widthTaskBarCreati >= (datajson.statisticheTask.taskApertiAnnoCorrente/datajson.statisticheTask.taskApertiAnnoCorrente)*100 
+						&& widthTaskBarInCorso >= ((datajson.statisticheTask.taskApertiAnnoCorrente_Attivi/datajson.statisticheTask.taskApertiAnnoCorrente)*100)
+						&& widthTaskBarChiusi >= ((datajson.statisticheTask.taskApertiAnnoCorrente_NonAttivi/datajson.statisticheTask.taskApertiAnnoCorrente)*100)){
+		      clearInterval(interval);
+		    } 
+			if(widthTaskBarCreati < (datajson.statisticheTask.taskApertiAnnoCorrente/datajson.statisticheTask.taskApertiAnnoCorrente)*100){
+		      widthTaskBarCreati += 1; // Incrementa la larghezza di 1%
+		      taskBarCreati.style.width = widthTaskBarCreati + '%';
+		    }
+			if(widthTaskBarInCorso < ((datajson.statisticheTask.taskApertiAnnoCorrente_Attivi/datajson.statisticheTask.taskApertiAnnoCorrente)*100)){
+			  widthTaskBarInCorso += 1
+			  taskBarInCorso.style.width = widthTaskBarInCorso + '%';
+			}
+			if(widthTaskBarChiusi < ((datajson.statisticheTask.taskApertiAnnoCorrente_NonAttivi/datajson.statisticheTask.taskApertiAnnoCorrente)*100)){
+			  widthTaskBarChiusi += 1
+			  taskBarChiusi.style.width = widthTaskBarChiusi + '%';
+			}
+		  }, 10); // Aggiorna ogni 10 millisecondi
+ 	riempimentoetichetteTaskBars(datajson)
+}
+
+function riempimentoetichetteTaskBars(datajson){
+	//creazione data di oggi
+	const timeElapsed = Date.now();
+	const today = new Date(timeElapsed);
+	
+	etichettaTaskBarCreati.innerHTML = datajson.statisticheTask.taskApertiAnnoCorrente;
+	etichettaTaskBarAttivi.innerHTML = datajson.statisticheTask.taskApertiAnnoCorrente_Attivi;
+	etichettaTaskBarChiusi.innerHTML = datajson.statisticheTask.taskApertiAnnoCorrente_NonAttivi;
+	etichettaTaskTotali.innerHTML = datajson.statisticheTask.taskTotali_Attivi + " task attivi al " + today.toLocaleDateString()
+	etichettaTaskParzialiTotali.innerHTML = `	<div class="flex items-center">
+													<div class="h-2 w-2 border border-black bg-orange-500 rounded-full"></div>
+													<span class="text-[#0057A5] text-[10px] ps-2"><strong>Anno corrente: </strong>${datajson.statisticheTask.taskApertiAnnoCorrente_Attivi}</span>
+												</div>
+												<div class="flex items-center ">
+													<div class="h-2 w-2 border border-black bg-yellow-500 rounded-full"></div>
+													<span class="text-[#0057A5] text-[10px] ps-2"><strong>Anni precedenti: </strong>${datajson.statisticheTask.taskApertiAnniPrecedenti_Attivi}</span>
+												</div>`
 }
