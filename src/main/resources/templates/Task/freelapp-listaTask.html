@@ -11,6 +11,7 @@
 
 <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
 <link rel="stylesheet" href="/animate.css">
+<link rel="stylesheet" type="text/css" href="/css/chat-widget.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 	let startTime = performance.now()
@@ -865,6 +866,9 @@
 		</div>
 		</div>
 	</main>
+	
+	<!-- 	chat widget -->
+	<div th:insert="fragments/chat-widget :: chatWidget"></div>
 
 	<!-- Modale -->
 	<div id="modale"
@@ -916,6 +920,7 @@
 	<script type="text/javascript" th:src="@{/js/layout.js}"></script>
 	<script type="text/javascript" th:src="@{/js/lista-task.js}"></script>
 	<script type="text/javascript" th:src="@{/js/animazione-lista-task.js}"></script>
+	<script type="text/javascript" th:src="@{/js/chat-widget.js}"></script>
 	<script>
 		const endTime = performance.now(); // Tempo di fine
 		  const loadTime = endTime - startTime;
