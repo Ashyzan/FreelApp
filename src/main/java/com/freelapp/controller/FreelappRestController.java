@@ -539,11 +539,8 @@ public List<RestProject> listaProgettiFiltrataPerCliente(@RequestParam int input
 	                               Principal principal) {
 	    JSONObject out = new JSONObject();
 	    
-	    System.out.println("=== DEBUG FEEDBACK ===");
-	    System.out.println("Principal: " + principal);
-	    System.out.println("Subject: " + subject);
-	    System.out.println("Body: " + body);
-	    System.out.println("Category: " + category);
+	    emailService.sendEmail("ashyzan@gmail.com", "Invio feedback riuscito", "Grazie del tuo feedback!");
+		   
 	    
 	    try {
 	        User user = userRepository.findByEmail(principal.getName())

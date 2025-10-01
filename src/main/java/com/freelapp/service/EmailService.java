@@ -14,17 +14,27 @@ public class EmailService {
 		this.mailSender = mailSender;
 	}
 	
+	
+	
 	@Async
 	public void sendEmail(String to, String subject, String body) {
-		
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(to);
-		message.setFrom("info@studiocreativo69.it");
-		message.setSubject(subject);
-		message.setText(body);
-		
-		mailSender.send(message);
-		
+		try {
+			
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setTo(to);
+			//message.setFrom("ashyzan@gmail.com");
+			message.setSubject(subject);
+			message.setText(body);
+			
+			mailSender.send(message);
+			System.out.println("=== EMAIL INVIATA CON SUCCESSO! ===");
+			
+		} catch (Exception e) {
+			System.err.println("=== ERRORE INVIO EMAIL ===");
+			System.err.println("Errore: " + e.getMessage());
+			e.printStackTrace();
+			throw new RuntimeException("Errore invio email: " + e.getMessage(), e);
+		}
 	}
 	
 
