@@ -116,6 +116,13 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+<!--		 email-->
+
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-mail</artifactId>
+	</dependency>
 
 <dependency>
   <groupId>org.thymeleaf.extras</groupId>

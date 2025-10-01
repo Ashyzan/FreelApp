@@ -41,6 +41,7 @@ import com.freelapp.restModel.RestCliente;
 import com.freelapp.restModel.RestProject;
 import com.freelapp.restModel.RestTask;
 import com.freelapp.service.ContatoreService;
+import com.freelapp.service.EmailService;
 import com.freelapp.service.ProgettoService;
 import com.freelapp.service.TaskService;
 
@@ -56,6 +57,9 @@ public class FreelappRestController {
 
 	@Autowired
 	private ProgettoRepository progettoRepository;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@Autowired
 	private ClienteRepository clienteRepository;
@@ -496,11 +500,7 @@ public List<RestProject> listaProgettiFiltrataPerCliente(@RequestParam int input
 	                              Principal principal) {
 	    JSONObject out = new JSONObject();
 	    
-	    System.out.println("=== DEBUG TICKET ===");
-	    System.out.println("Principal: " + principal);
-	    System.out.println("Subject: " + subject);
-	    System.out.println("Body: " + body);
-	    System.out.println("Category: " + category);
+	    emailService.sendEmail("ashyzan@gmail.com", "Invio ticket riuscito", "Grazie del tuo ticket, ti risponderemo prima possibile.");
 	    
 	    try {
 	        User user = userRepository.findByEmail(principal.getName())
