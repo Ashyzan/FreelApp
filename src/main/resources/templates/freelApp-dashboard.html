@@ -395,8 +395,11 @@
 										<div class="lg:col-span-3 sm:col-span-6 col-span-12  w-full h-full p-[3px]">
 											<div class="bg-white w-full h-full rounded-lg">
 												<div class="text-center text-md font-bold text-[#0057A5] pb-2" th:text="|PROGETTI ${annoCorrente}|"></div>
-												<div id="container-task-bars" class="px-3">
+												<div id="container-statistiche-progetti" class="px-3 w-full h-2/3 flex justify-between item-center">
+													<span id="legenda-grafico-progetti" class="flex items-center"></span>
+													<canvas id="grafico-statistiche-progetti" class="w-full h-full"></canvas>
 												</div>
+												<div id="progetti-totali-attivi" class="text-center text-[#0057A5] text-sm"></div>
 											</div>
 										</div>
 										<div class="lg:col-span-6 col-span-12 w-full h-full p-[3px]">

@@ -1,17 +1,28 @@
 
 //recupero elementi dal DOM
 const tasks = document.getElementsByClassName('lista-ultimi-task');
+
+//elementi dal DOM per progressBar
 const etichettaProgressBarGoal = document.getElementById('etichetta-progress-bar-goal');
 const legendaProgressBarGoal = document.getElementById('legenda-progress-bar-goal');
 const guadagnoAttualeDiv = document.getElementById('guadagno-attuale');
 const tooltipProgressBarGoalAnnuale = document.getElementById('tooltip-progress-bar');
 
+//elementi dal DOM per statistiche task
 const containerGraficiStatisticheTask = document.getElementById('container-task-bars');
 const etichettaTaskBarCreati = document.getElementById('etichetta-task-creati');
 const etichettaTaskBarAttivi = document.getElementById('etichetta-task-incorso');
 const etichettaTaskBarChiusi = document.getElementById('etichetta-task-chiusi');
 const etichettaTaskTotali = document.getElementById('etichetta-task-totali');
 const etichettaTaskParzialiTotali = document.getElementById('etichetta-parziali-task-totali');
+
+//elementi dal DOM per statistiche progetti
+const containerStatisticheProgetti = document.getElementById('container-statistiche-progetti');
+
+
+//creazione data di oggi
+const timeElapsed = Date.now();
+const today = new Date(timeElapsed);
 
 
 //*************** funzioni per attivazione/disattivazione animazione per task in uso da lista task recenti ************************/
@@ -28,7 +39,6 @@ function attivaElementoInTaskList(){
 	
 }
 
-
 function disattivaElementoInTaskList(){
 	for(i=0; i<tasks.length; i++){
 		console.log('tasks[i].id -> ' + tasks[i].id)
@@ -40,12 +50,6 @@ function disattivaElementoInTaskList(){
 	}
 	
 }
-
-
-
-
-
-
 
 
 //************** logica chiamata API per grafici statistiche */
@@ -63,7 +67,8 @@ function apiStatisticheDashboard(){
 					   })
 					   .then(datajson => {
 							creaProgressBar(datajson);	
-							creaGraficiStatisticheTask(datajson) 
+							creaGraficiStatisticheTask(datajson)
+							creaGraficoStatisticheProgetti(datajson) 
 					   })
 					   .catch(error => {
 					     console.error('Error:', error);
@@ -96,6 +101,7 @@ function creaProgressBar(datajson){
 
 	  creazioneEtichettaLegendaProgressBarGoal(datajson);
 	  creaTooltipProgressBar(datajson);
+	  creaGraficoStatisticheProgetti(datajson)
 }
 
 function creazioneEtichettaLegendaProgressBarGoal(datajson){
@@ -136,7 +142,7 @@ function terminaTooltipProgressBar(){
 }
 
 
-//funzione che crea grafici statistiche task
+//******************* funzioni per creazione grafici statistiche task ****************************
 function creaGraficiStatisticheTask(datajson){
 	
 	const taskBarCreati = document.getElementById('task-bar-creati');
@@ -177,20 +183,123 @@ function creaGraficiStatisticheTask(datajson){
 }
 
 function riempimentoetichetteTaskBars(datajson){
-	//creazione data di oggi
-	const timeElapsed = Date.now();
-	const today = new Date(timeElapsed);
+	
 	
 	etichettaTaskBarCreati.innerHTML = datajson.statisticheTask.taskApertiAnnoCorrente;
 	etichettaTaskBarAttivi.innerHTML = datajson.statisticheTask.taskApertiAnnoCorrente_Attivi;
 	etichettaTaskBarChiusi.innerHTML = datajson.statisticheTask.taskApertiAnnoCorrente_NonAttivi;
 	etichettaTaskTotali.innerHTML = datajson.statisticheTask.taskTotali_Attivi + " task attivi al " + today.toLocaleDateString()
 	etichettaTaskParzialiTotali.innerHTML = `	<div class="flex items-center">
-													<div class="h-2 w-2 border border-black bg-orange-500 rounded-full"></div>
+													<div class="h-3 w-3 border border-black bg-orange-500 rounded-full"></div>
 													<span class="text-[#0057A5] text-[10px] ps-2"><strong>Anno corrente: </strong>${datajson.statisticheTask.taskApertiAnnoCorrente_Attivi}</span>
 												</div>
 												<div class="flex items-center ">
-													<div class="h-2 w-2 border border-black bg-yellow-500 rounded-full"></div>
+													<div class="h-3 w-3 border border-black bg-yellow-500 rounded-full"></div>
 													<span class="text-[#0057A5] text-[10px] ps-2"><strong>Anni precedenti: </strong>${datajson.statisticheTask.taskApertiAnniPrecedenti_Attivi}</span>
 												</div>`
 }
+
+
+
+
+
+//************** funzioni per la creazione dei grafici delle statistiche progetti ******************/
+function creaGraficoStatisticheProgetti(datajson) {
+	
+	creaLegendaStatisticheProgetti(datajson)
+	
+	const progettiTotaliAttivi = document.getElementById('progetti-totali-attivi')
+	progettiTotaliAttivi.innerHTML = datajson.statisticheProgetti.progettiTotali_Attivi + " progetti attivi al " + today.toLocaleDateString()
+	
+		let titoloGrafico ="Progetti del "+ today.getFullYear() + ": ";
+		
+		
+		const data = {
+			labels: [
+				'Creati nel ' + today.getFullYear(),
+				'Chiusi',
+				'Residui anni scorsi',
+			],
+			datasets: [{
+				labels: '',
+				data: [
+					datajson.statisticheProgetti.progettiApertiAnnoCorrente,
+					0,
+					datajson.statisticheProgetti.progettiApertiAnniPrecedenti_Attivi
+				],
+				backgroundColor: [
+					'rgb(13, 165, 234)',
+					'rgb(255, 255, 255)',
+					'rgb(234, 179, 8)'
+				],
+				hoverOffset: 4
+			},
+			{label: [''],
+						data: [
+							datajson.statisticheProgetti.progettiApertiAnnoCorrente_Attivi,
+							datajson.statisticheProgetti.progettiApertiAnnoCorrente_NonAttivi,
+							datajson.statisticheProgetti.progettiApertiAnniPrecedenti_Attivi
+						],
+						backgroundColor: [
+							'rgb(34, 198, 46)',
+							'rgb(279, 68, 21)',
+							'rgb(255, 255, 255)'
+						],
+						hoverOffset: 4
+					}]
+		};
+
+		//distruggo eventuali generazioni precedenti di questo grafico
+		let chartStatus = Chart.getChart("grafico-statistiche-progetti"); // <canvas> id
+		if (chartStatus != undefined) {
+				  chartStatus.destroy();
+				}
+				
+				
+		// richiamo id ciambella nel file html
+		const donutProgetti = document.getElementById('grafico-statistiche-progetti');
+		// inserisco i data	 
+		
+			 new Chart(donutProgetti, {
+			type: 'doughnut',
+			data: data,
+			options: {
+				responsive: true,
+				plugins: {
+					legend: {
+						display: false,
+						position: 'top',
+					},
+					title: {
+						display: false,
+						text: titoloGrafico
+					}
+				}
+			},
+		});
+}
+
+//funzione che crea  legenda grafico progetti
+function creaLegendaStatisticheProgetti(datajson){
+	const legendaGraficoProgetti = document.getElementById('legenda-grafico-progetti');
+	legendaGraficoProgetti.innerHTML = `	<ul class="w-full">
+												<li class="flex gap-2 mb-2">
+													<div class="h-3 w-3 border border-black bg-sky-500 rounded-full"></div>
+													<span class="text-[8px]">Creati: ${datajson.statisticheProgetti.progettiApertiAnnoCorrente}</span>
+												</li>
+												<li class="flex gap-2 mb-2">
+													<div class="h-3 w-3 border border-black bg-yellow-500 rounded-full"></div>
+													<span class="text-[8px]">Attivi anni scorsi: ${datajson.statisticheProgetti.progettiApertiAnniPrecedenti_Attivi}</span>
+												</li>
+												<li class="flex gap-2 mb-2">
+													<div class="h-3 w-3 border border-black bg-green-500 rounded-full"></div>
+													<span class="text-[8px]">In corso: ${datajson.statisticheProgetti.progettiApertiAnnoCorrente_Attivi}</span>
+												</li>
+												<li class="flex gap-2 mb-2">
+													<div class="h-3 w-3 border border-black bg-red-500 rounded-full"></div>
+													<span class="text-[8px]">Chiusi: ${datajson.statisticheProgetti.progettiApertiAnnoCorrente_NonAttivi}</span>
+												</li>
+											</ul>`;
+}	
+	
+

@@ -265,6 +265,9 @@ public class FreelappRestController {
 		//richiamata Map dal TaskService con le statistiche relative ai task
 		Map<String,Integer> statisticheTask = taskService.statisticheTaskAnnoCorrentePerDashboard();
 		
+		//richiamata Map dal ProgettoService con le statistiche relative ai progetti
+		Map<String,Integer> statisticheProgetti = progettoService.statisticheProgettiAnnoCorrentePerDashboard();
+		
 		// creazione json
 		JSONObject JsonObj = new JSONObject();
 		
@@ -272,6 +275,7 @@ public class FreelappRestController {
 		JsonObj.put("fatturatoAnnoCorrente", fatturatoAnnoCorrente);
 		JsonObj.put("guadagnoAnnoCorrente", taskService.guadagnotototaleAnnoCorrente());
 		JsonObj.put("statisticheTask", statisticheTask);
+		JsonObj.put("statisticheProgetti", statisticheProgetti);
 		
 		return JsonObj;
 		

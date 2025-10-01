@@ -2,10 +2,13 @@ package com.freelapp.service;
 
 
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,11 +86,11 @@ public class ProgettoService {
 		//switch che assegna la specifica per la query di stato
 		switch(ProgettoController.statoProgettoInListaProgetto) {
 				case "aperto":
-					specificationStato = firltroProgetti_StatoAttivo();
+					specificationStato = filtroProgetti_StatoAttivo();
 					
 					break;
 				case "chiuso":
-					specificationStato = firltroProgetti_StatoNonAttivo();
+					specificationStato = filtroProgetti_StatoNonAttivo();
 					break;
 				default: specificationStato = null;
    
@@ -95,7 +98,7 @@ public class ProgettoService {
 		
 		//if che assegna la specifica per la query se è stato scelto il cliente
 		if(ProgettoController.clienteIdProgettoInListaProgetto != -1) {
-			specification_SelezioneCliente = firltroProgetti_SelezioneCliente();
+			specification_SelezioneCliente = filtroProgetti_SelezioneCliente();
 		}
 		
 		//if che a secondo che sia stato selezionato come filtro il cliente, lo stato o nessuno dei due costruisce la query dinamica
@@ -115,36 +118,6 @@ public class ProgettoService {
 		
 	}
 	
-	//specificazione che genera la quey di filtro per progetti attivi
-	Specification<Progetto> firltroProgetti_StatoAttivo(){
-		return (root, query, criteriaBuilder) ->{		
-			
-			return criteriaBuilder.isNull(root.get("dataFine"));
-					
-		};
-		
-	}
-	
-	//specificazione che genera la quey di filtro per progetti non attivi
-	Specification<Progetto> firltroProgetti_StatoNonAttivo(){
-		return (root, query, criteriaBuilder) ->{			
-			
-			return criteriaBuilder.isNotNull(root.get("dataFine"));
-					
-		};
-		
-	}
-	
-	//specificazione che genera la quey di filtro per cliente selezionato
-	Specification<Progetto> firltroProgetti_SelezioneCliente(){
-		
-		return (root, query, criteriaBuilder) ->{
-			
-			return criteriaBuilder.equal(root.get("cliente").as(Integer.class), ProgettoController.clienteIdProgettoInListaProgetto);
-					
-		};
-		
-	}
 	
 	
 
@@ -382,6 +355,98 @@ public class ProgettoService {
 			
 			return listaProgetti;
 		}
+		
+		
+		//metodo che genera un map contente i dati realitivi ai progetti dell'anno in corso per la DASHBOARD
+	public Map<String, Integer> statisticheProgettiAnnoCorrentePerDashboard(){
+		Integer annoCorrente = LocalDate.now().getYear();
+		//richiamo le specification da usare per generare le query per estrazione dati da db
+		Specification<Progetto> progettiAttivi = filtroProgetti_StatoAttivo();
+		Specification<Progetto> progettiNonAttivi = filtroProgetti_StatoNonAttivo();
+		Specification<Progetto> progettiApertiAnnoIncorso = queryProgettiApertiAnnoInCorso(annoCorrente);
+		Specification<Progetto> progettiApertiAnniPrecedenti = queryProgettiApertiAnniPrecedenti(annoCorrente);
+		
+		//creo nuova Map
+		Map<String,Integer> statisticheProgetti = new HashMap<String,Integer>();
+		
+		//popolo la map
+		statisticheProgetti.put("progettiApertiAnnoCorrente", progettoRepository.findAll(progettiApertiAnnoIncorso).size());
+		statisticheProgetti.put("progettiApertiAnnoCorrente_Attivi", progettoRepository.findAll(progettiApertiAnnoIncorso.and(progettiAttivi)).size());
+		statisticheProgetti.put("progettiApertiAnnoCorrente_NonAttivi", progettoRepository.findAll(progettiApertiAnnoIncorso.and(progettiNonAttivi)).size());
+		statisticheProgetti.put("progettiTotali_Attivi", progettoRepository.findAll(progettiAttivi).size());
+		statisticheProgetti.put("progettiApertiAnniPrecedenti_Attivi", progettoRepository.findAll(progettiApertiAnniPrecedenti.and(progettiAttivi)).size());
+		
+		return statisticheProgetti;
+		
+	}
+		
+		//*************************** SPECIFICATIONS ************
+	//specificazioni che generano la query dinamiche
+		
+	//specificazione che genera la quey di filtro per progetti attivi
+	Specification<Progetto> filtroProgetti_StatoAttivo(){
+		return (root, query, criteriaBuilder) ->{		
+			
+			return criteriaBuilder.isNull(root.get("dataFine"));
+					
+		};
+		
+	}
+	
+	//specificazione che genera la quey di filtro per progetti non attivi
+	Specification<Progetto> filtroProgetti_StatoNonAttivo(){
+		return (root, query, criteriaBuilder) ->{			
+			
+			return criteriaBuilder.isNotNull(root.get("dataFine"));
+					
+		};
+		
+	}
+	
+	//specificazione che genera la quey di filtro per cliente selezionato
+	Specification<Progetto> filtroProgetti_SelezioneCliente(){
+		
+		return (root, query, criteriaBuilder) ->{
+			
+			return criteriaBuilder.equal(root.get("cliente").as(Integer.class), ProgettoController.clienteIdProgettoInListaProgetto);
+					
+		};
+		
+	}
+	
+	//specificazione che genera la query dei progetti creati nell'anno in corso
+	Specification<Progetto> queryProgettiApertiAnnoInCorso(Integer annoCorrente){
+		
+		return (root, query, criteriaBuilder) ->{
+			
+			return criteriaBuilder.equal(criteriaBuilder.function("YEAR", Integer.class, root.get("dataInizio")), annoCorrente);
+					
+		};
+		
+	}
+	
+	//specificazione che genera la query dei progetti chiusi nell'anno in corso
+	Specification<Progetto> queryProgettiChiusiAnnoInCorso(Integer annoCorrente){
+		
+		return (root, query, criteriaBuilder) ->{
+			
+			return criteriaBuilder.equal(criteriaBuilder.function("YEAR", Integer.class, root.get("dataFine")), annoCorrente);
+					
+		};
+		
+	}
+	
+	//specificazione che genera la query dei progetti aperti gli anni precedenti a quello corrente
+	Specification<Progetto> queryProgettiApertiAnniPrecedenti(Integer annoCorrente){
+		
+		return (root, query, criteriaBuilder) ->{
+			
+			return criteriaBuilder.notEqual(criteriaBuilder.function("YEAR", Integer.class, root.get("dataInizio")), annoCorrente);
+					
+		};
+		
+	}
+	
 		
 }
 
