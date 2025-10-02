@@ -1,6 +1,8 @@
 package com.freelapp.service;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
@@ -64,38 +66,45 @@ public class EmailService {
 		    
 		    helper.addAttachment("Invoice.pdf", file);
 		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
+			System.err.println("=== ERRORE INVIO EMAIL ===");
+			System.err.println("Errore: " + e.getMessage());
 			e.printStackTrace();
 		}
 
 
 	    mailSender.send(message);
+	    System.out.println("=== EMAIL INVIATA CON SUCCESSO! ===");
 	    // ...
 	}
 	
 	// invio email HTML
-//	public String sendHtmlEmail() {
-//        try {
-//            MimeMessage message = mailSender.createMimeMessage();
-//            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-//
-//            helper.setFrom("tutorial.genuinecoder@gmail.com");
-//            helper.setTo("tutorial.genuinecoder@gmail.com");
-//            helper.setSubject("Java email with attachment | From GC");
-//
-//            try (var inputStream = Objects.requireNonNull(EmailController.class.getResourceAsStream("/EmailTemplates/template-email-ticket-creation.html"))) {
-//                helper.setText(
-//                        new String(inputStream.readAllBytes(), StandardCharsets.UTF_8),
-//                        true
-//                );
-//            }
-//            helper.addInline("logo.png", new File("C:\\Users\\Genuine Coder\\Documents\\Attachments\\logo.png"));
-//            mailSender.send(message);
-//            return "success!";
-//        } catch (Exception e) {
-//            return e.getMessage();
-//        }
-//    }
+	public void sendHtmlEmail(String to, String subject) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setFrom("info@studiocreativo69.it");
+		    helper.setTo(to);
+		    helper.setSubject(subject);
+		   // helper.setText(text);
+
+            try (var inputStream = Objects.requireNonNull(EmailService.class.getResourceAsStream("/templates/EmailTemplates/template-email-ticket-creation.html"))) {
+                helper.setText(
+                        new String(inputStream.readAllBytes(), StandardCharsets.UTF_8),
+                        true
+                );
+            }
+            helper.addInline("1840435.jpg", new File("//Users//ashyzan//Desktop//1840435.jpg"));
+            mailSender.send(message);
+            System.out.println("=== EMAIL INVIATA CON SUCCESSO! ===");
+           
+        } catch (Exception e) {
+        	System.err.println("=== ERRORE INVIO EMAIL ===");
+			System.err.println("Errore: " + e.getMessage());
+			e.printStackTrace();
+			throw new RuntimeException("Errore invio email: " + e.getMessage(), e);
+        }
+    }
 
 
 	

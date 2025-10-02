@@ -504,7 +504,7 @@ public List<RestProject> listaProgettiFiltrataPerCliente(@RequestParam int input
 	    //emailService.sendEmail("ashyzan@gmail.com", "Invio ticket riuscito", "Grazie del tuo ticket, ti risponderemo prima possibile.");
 	    
 	    // invio email HTML
-	    emailService.sendEmail("ashyzan@gmail.com", "Invio email HTML", "<div th:insert=\\\"fragments/template-email-ticket-creation :: template-1\\\"></div>");
+	    emailService.sendHtmlEmail("ashyzan@gmail.com", "Invio email HTML");
 	    
 	    // invio email con allegati
 	   // emailService.sendMessageWithAttachment("ashyzan@gmail.com", "Invio con allegati", "test invio allegati", "//Users//ashyzan//Desktop//test.pdf");
