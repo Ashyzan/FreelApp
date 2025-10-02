@@ -108,15 +108,15 @@ function creazioneEtichettaLegendaProgressBarGoal(datajson){
 	guadagnoAttualeDiv.innerHTML = datajson.guadagnoAnnoCorrente.toFixed(2).replace(".",",") + " €";
 	etichettaProgressBarGoal.innerHTML = datajson.goalAnnualeUtente + "€";
 		legendaProgressBarGoal.innerHTML = `<div class="flex items-center gap-2">
-												<div class="h-3 w-3 border border-black bg-fuchsia-500 rounded-full"></div>
+												<div class="h-3 w-3 bg-fuchsia-500 rounded-full"></div>
 												<span class="text-[#0057A5] text-xs"><strong>Fatturato: </strong>${datajson.fatturatoAnnoCorrente.toFixed(2).replace(".",",")}€</span>
 											</div>
 											<div class="flex items-center gap-2">
-												<div class="h-3 w-3 border border-black bg-fuchsia-300 rounded-full"></div>
+												<div class="h-3 w-3 bg-fuchsia-300 rounded-full"></div>
 												<span class="text-[#0057A5] text-xs"><strong>Guadagno: </strong>${datajson.guadagnoAnnoCorrente.toFixed(2).replace(".",",")}€</span>
 											</div>
 											<div class="flex items-center gap-2">
-												<div class="h-3 w-3 border border-black bg-white rounded-full"></div>
+												<div class="h-3 w-3 bg-white rounded-full"></div>
 												<span class="text-[#0057A5] text-xs"><strong>Goal annuale: </strong>${datajson.goalAnnualeUtente}€</span>
 											</div>`;
 	
@@ -190,11 +190,11 @@ function riempimentoetichetteTaskBars(datajson){
 	etichettaTaskBarChiusi.innerHTML = datajson.statisticheTask.taskApertiAnnoCorrente_NonAttivi;
 	etichettaTaskTotali.innerHTML = datajson.statisticheTask.taskTotali_Attivi + " task attivi al " + today.toLocaleDateString()
 	etichettaTaskParzialiTotali.innerHTML = `	<div class="flex items-center">
-													<div class="h-3 w-3 border border-black bg-orange-500 rounded-full"></div>
+													<div class="h-3 w-3 bg-orange-400 rounded-full"></div>
 													<span class="text-[#0057A5] text-[10px] ps-2"><strong>Anno corrente: </strong>${datajson.statisticheTask.taskApertiAnnoCorrente_Attivi}</span>
 												</div>
 												<div class="flex items-center ">
-													<div class="h-3 w-3 border border-black bg-yellow-500 rounded-full"></div>
+													<div class="h-3 w-3 bg-yellow-400 rounded-full"></div>
 													<span class="text-[#0057A5] text-[10px] ps-2"><strong>Anni precedenti: </strong>${datajson.statisticheTask.taskApertiAnniPrecedenti_Attivi}</span>
 												</div>`
 }
@@ -221,28 +221,27 @@ function creaGraficoStatisticheProgetti(datajson) {
 				'Residui anni scorsi',
 			],
 			datasets: [{
-				labels: '',
 				data: [
 					datajson.statisticheProgetti.progettiApertiAnnoCorrente,
 					0,
 					datajson.statisticheProgetti.progettiApertiAnniPrecedenti_Attivi
 				],
 				backgroundColor: [
-					'rgb(13, 165, 234)',
+					'rgb(56, 189, 249)',
 					'rgb(255, 255, 255)',
-					'rgb(234, 179, 8)'
+					'rgb(250, 204, 20)'
 				],
 				hoverOffset: 4
 			},
-			{label: [''],
+			{label: [],
 						data: [
 							datajson.statisticheProgetti.progettiApertiAnnoCorrente_Attivi,
 							datajson.statisticheProgetti.progettiApertiAnnoCorrente_NonAttivi,
 							datajson.statisticheProgetti.progettiApertiAnniPrecedenti_Attivi
 						],
 						backgroundColor: [
-							'rgb(34, 198, 46)',
-							'rgb(279, 68, 21)',
+							'rgb(74, 223, 129)',
+							'rgb(248, 113, 113)',
 							'rgb(255, 255, 255)'
 						],
 						hoverOffset: 4
@@ -270,6 +269,9 @@ function creaGraficoStatisticheProgetti(datajson) {
 						display: false,
 						position: 'top',
 					},
+					labels:{
+					datalabels:['in corso']	
+					},
 					title: {
 						display: false,
 						text: titoloGrafico
@@ -282,22 +284,22 @@ function creaGraficoStatisticheProgetti(datajson) {
 //funzione che crea  legenda grafico progetti
 function creaLegendaStatisticheProgetti(datajson){
 	const legendaGraficoProgetti = document.getElementById('legenda-grafico-progetti');
-	legendaGraficoProgetti.innerHTML = `	<ul class="w-full">
+	legendaGraficoProgetti.innerHTML = `	<ul class="w-full text-[#0057A5]">
 												<li class="flex gap-2 mb-2">
-													<div class="h-3 w-3 border border-black bg-sky-500 rounded-full"></div>
-													<span class="text-[8px]">Creati: ${datajson.statisticheProgetti.progettiApertiAnnoCorrente}</span>
+													<div class="h-3 w-3 bg-sky-400 rounded-full"></div>
+													<span class="text-[10px]">Creati: ${datajson.statisticheProgetti.progettiApertiAnnoCorrente}</span>
 												</li>
 												<li class="flex gap-2 mb-2">
-													<div class="h-3 w-3 border border-black bg-yellow-500 rounded-full"></div>
-													<span class="text-[8px]">Attivi anni scorsi: ${datajson.statisticheProgetti.progettiApertiAnniPrecedenti_Attivi}</span>
+													<div class="h-3 w-3 bg-yellow-400 rounded-full"></div>
+													<span class="text-[10px]">Attivi anni scorsi: ${datajson.statisticheProgetti.progettiApertiAnniPrecedenti_Attivi}</span>
 												</li>
 												<li class="flex gap-2 mb-2">
-													<div class="h-3 w-3 border border-black bg-green-500 rounded-full"></div>
-													<span class="text-[8px]">In corso: ${datajson.statisticheProgetti.progettiApertiAnnoCorrente_Attivi}</span>
+													<div class="h-3 w-3 bg-green-400 rounded-full"></div>
+													<span class="text-[10px]">In corso: ${datajson.statisticheProgetti.progettiApertiAnnoCorrente_Attivi}</span>
 												</li>
 												<li class="flex gap-2 mb-2">
-													<div class="h-3 w-3 border border-black bg-red-500 rounded-full"></div>
-													<span class="text-[8px]">Chiusi: ${datajson.statisticheProgetti.progettiApertiAnnoCorrente_NonAttivi}</span>
+													<div class="h-3 w-3 bg-red-400 rounded-full"></div>
+													<span class="text-[10px]">Chiusi: ${datajson.statisticheProgetti.progettiApertiAnnoCorrente_NonAttivi}</span>
 												</li>
 											</ul>`;
 }	
