@@ -500,14 +500,17 @@ public List<RestProject> listaProgettiFiltrataPerCliente(@RequestParam int input
 	                              Principal principal) {
 	    JSONObject out = new JSONObject();
 	    
+	    // dal momento che il nome utente dell'user loggato corrisponde alla sua email, da qui si ricava l'email stessa
+	    String userEmail = principal.getName();
+	    
 	    // invio email semplice
-	    //emailService.sendEmail("ashyzan@gmail.com", "Invio ticket riuscito", "Grazie del tuo ticket, ti risponderemo prima possibile.");
+	    //emailService.sendEmail(userEmail, "Invio ticket riuscito", "Grazie del tuo ticket, ti risponderemo prima possibile.");
 	    
 	    // invio email HTML
-	    emailService.sendHtmlEmail("ashyzan@gmail.com", "Invio email HTML");
+	    emailService.sendHtmlEmail(userEmail, "Invio email HTML", "/templates/EmailTemplates/template-email-ticket-creation.html");
 	    
 	    // invio email con allegati
-	   // emailService.sendMessageWithAttachment("ashyzan@gmail.com", "Invio con allegati", "test invio allegati", "//Users//ashyzan//Desktop//test.pdf");
+	   // emailService.sendMessageWithAttachment(userEmail, "Invio con allegati", "test invio allegati", "//Users//ashyzan//Desktop//test.pdf");
 	    
 	    
 	    try {

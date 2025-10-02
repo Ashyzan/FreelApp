@@ -78,7 +78,7 @@ public class EmailService {
 	}
 	
 	// invio email HTML
-	public void sendHtmlEmail(String to, String subject) {
+	public void sendHtmlEmail(String to, String subject, String pathToAttachment) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -88,7 +88,7 @@ public class EmailService {
 		    helper.setSubject(subject);
 		   // helper.setText(text);
 
-            try (var inputStream = Objects.requireNonNull(EmailService.class.getResourceAsStream("/templates/EmailTemplates/template-email-ticket-creation.html"))) {
+            try (var inputStream = Objects.requireNonNull(EmailService.class.getResourceAsStream(pathToAttachment))) {
                 helper.setText(
                         new String(inputStream.readAllBytes(), StandardCharsets.UTF_8),
                         true
